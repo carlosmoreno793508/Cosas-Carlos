@@ -77,15 +77,36 @@ RiskScore = Tendencia·0.40 + Volatilidad·0.30 + Drawdown·0.30
 
 Ver `runbook.md` para reglas por grupo de activo y operación diaria.
 
+## 🧪 Etapa 1 — ¿funciona? (backtest)
+
+El evaluador corre la estrategia sobre toda la historia con **costos reales**
+(slippage 0.1% + comisión 0.1%) y reporta rendimiento, max drawdown, # de
+operaciones y % de aciertos:
+
+```bash
+python -m app.core.backtest        # o GET /backtest
+```
+
+Criterio para pasar a Etapa 2: la estrategia sobrevive a los costos y el max
+drawdown es tolerable para tu perfil.
+
+## 🔀 Modelo híbrido
+
+- **Cripto** (`BTC/USDT`, …) → el sistema **ejecuta** (paper, luego real).
+- **Acciones/ETFs** (`SPY`, `QQQ`) → **advisory**: el sistema avisa, tú
+  ejecutas en IBKR. Como es tu propio dinero, esto **no** es asesoría regulada.
+
 ## 🗺️ Roadmap corto
 
 - [x] Estructura + config + Risk Engine con pruebas
 - [x] Ingesta con fallback multi-exchange
 - [x] API + alertas Telegram
-- [ ] Persistir candles/risk en Postgres (hoy es CSV)
+- [x] Motor de oportunidades + paper trading (slippage + comisión)
+- [x] Backtest (evaluador de Etapa 1)
 - [ ] APScheduler para el reporte diario automático
-- [ ] Motor de oportunidades (paper trading con slippage + comisión)
 - [ ] Dashboard (Streamlit)
+- [ ] Persistir candles/risk en Postgres (hoy es CSV)
+- [ ] Etapa 2: multi-usuario (solo si Etapa 1 convence)
 
 ## ⚠️ Nota
 

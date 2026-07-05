@@ -10,9 +10,12 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException
 
 from app.config import all_symbols, settings
+from app.core.backtest import run_backtests
+from app.core.opportunity_engine import OpportunityEngine
 from app.core.risk_engine import RiskEngine
 
 engine = RiskEngine()
+opportunities = OpportunityEngine(engine)
 
 # Estado en memoria (en produccion viviria en Redis, ver docker-compose).
 STATE = {"kill_switch": settings.kill_switch}
@@ -57,6 +60,26 @@ def risk_portfolio():
         raise HTTPException(404, "Sin datos. Corre la ingesta primero.")
     global_score = round(sum(r["risk_score"] for r in reports) / len(reports))
     return {"global_risk": global_score, "level": RiskEngine.autonomy_level(global_score), "assets": reports}
+
+
+@app.get("/proposals")
+def proposals(capital: float = 10_000.0):
+    """Propuestas de trade vigentes para el universo cripto."""
+    out = []
+    for symbol in all_symbols(settings.quote_currency):
+        df = engine.load_data(symbol)
+        if df is None:
+            continue
+        prop = opportunities.build_proposal(symbol, df, capital)
+        if prop:
+            out.append(prop)
+    return {"count": len(out), "proposals": out}
+
+
+@app.get("/backtest")
+def backtest(capital: float = 10_000.0):
+    """Corre el backtest del universo cripto (evaluador de Etapa 1)."""
+    return {"results": run_backtests(all_symbols(settings.quote_currency), capital)}
 
 
 @app.post("/killswitch")

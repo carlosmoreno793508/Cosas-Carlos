@@ -17,9 +17,24 @@ UNIVERSE: dict[str, list[str]] = {
     "utility": ["XLM", "ALGO", "IOTA", "XDC"],
 }
 
+# Acciones / ETFs. Modelo hibrido de Carlos: la cripto la EJECUTA el sistema
+# (paper/live), pero la bolsa es solo ADVISORY (el sistema avisa, tu ejecutas
+# en IBKR). Ver execution_mode() abajo.
+EQUITIES: list[str] = ["SPY", "QQQ"]
+
+# Multiplicador de ATR para el stop, por grupo (runbook: core holgado, utility
+# estricto). Las acciones usan un stop holgado por defecto.
+STOP_MULT: dict[str, float] = {
+    "core": 2.0,
+    "infra": 1.5,
+    "utility": 1.0,
+    "equity": 2.0,
+    "unknown": 2.0,
+}
+
 
 def all_symbols(quote: str = "USDT") -> list[str]:
-    """Devuelve la lista plana de pares, ej. ['BTC/USDT', 'ETH/USDT', ...]."""
+    """Devuelve la lista plana de pares cripto, ej. ['BTC/USDT', ...]."""
     out: list[str] = []
     for coins in UNIVERSE.values():
         out.extend(f"{c}/{quote}" for c in coins)
@@ -27,12 +42,28 @@ def all_symbols(quote: str = "USDT") -> list[str]:
 
 
 def group_of(symbol: str) -> str:
-    """Regresa el grupo ('core'/'infra'/'utility') de un simbolo dado."""
+    """Regresa el grupo ('core'/'infra'/'utility'/'equity') de un simbolo."""
+    if asset_class(symbol) == "equity":
+        return "equity"
     base = symbol.split("/")[0]
     for grp, coins in UNIVERSE.items():
         if base in coins:
             return grp
     return "unknown"
+
+
+def asset_class(symbol: str) -> str:
+    """'crypto' si es un par (BTC/USDT); 'equity' si es un ticker suelto (SPY)."""
+    return "crypto" if "/" in symbol else "equity"
+
+
+def execution_mode(symbol: str) -> str:
+    """Modo hibrido: cripto -> 'paper' (ejecuta simulado); bolsa -> 'advisory'."""
+    return "paper" if asset_class(symbol) == "crypto" else "advisory"
+
+
+def stop_mult(symbol: str) -> float:
+    return STOP_MULT.get(group_of(symbol), 2.0)
 
 
 class Settings(BaseSettings):
