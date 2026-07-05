@@ -1,0 +1,17 @@
+# Entorno
+.env
+.env.*
+!.env.example
+venv/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Datos descargados (no se versionan, se regeneran con backfill)
+data_storage/*.csv
+!data_storage/.gitkeep
+
+# Sistema
+.DS_Store
+*.log

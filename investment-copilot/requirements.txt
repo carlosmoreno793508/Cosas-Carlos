@@ -1,0 +1,23 @@
+# --- Núcleo API ---
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+pydantic==2.10.4
+pydantic-settings==2.7.0
+
+# --- Datos de mercado y análisis ---
+ccxt==4.4.50
+pandas==2.2.3
+numpy==2.2.1
+
+# --- Persistencia (opcional en MVP, listo para Día 1 completo) ---
+SQLAlchemy==2.0.36
+psycopg2-binary==2.9.10
+alembic==1.14.0
+
+# --- Alertas / utilidades ---
+requests==2.32.3
+python-dotenv==1.0.1
+APScheduler==3.11.0
+
+# --- Testing ---
+pytest==8.3.4
