@@ -1,18 +1,22 @@
 """Backtest — el evaluador de la Etapa 1.
 
-Corre la estrategia (motor de oportunidades + paper trading) sobre toda la
-historia de un activo y responde la pregunta clave: **¿esto funciona?**
+Corre la estrategia sobre toda la historia de un activo y responde la pregunta
+clave: **¿esto funciona?** Y, mas importante, **¿le gana a solo comprar y
+aguantar (buy & hold)?**
 
-Metricas que devuelve:
-  * return_pct   : rendimiento total sobre el capital inicial
-  * max_drawdown : peor caida pico-a-valle de la cartera (cuanto te dolio)
-  * trades       : cuantas operaciones cerro
-  * win_rate_pct : % de operaciones ganadoras
+Estrategia v2 (trend following):
+  * ENTRA cuando la tendencia es alcista (precio > MA200) y el riesgo no esta
+    en zona roja.
+  * NO usa objetivo fijo (eso cortaba a los ganadores). En su lugar usa un
+    TRAILING STOP: el stop sube solo mientras el precio sube, dejando correr
+    la ganancia, y te saca cuando el precio retrocede N*ATR desde su maximo.
+  * Tambien sale si la tendencia se voltea bajista (close < MA200).
 
-Reglas de salida de una posicion abierta:
-  1. Toca el stop      -> vende (perdida controlada)
-  2. Toca el objetivo  -> vende (toma ganancia)
-  3. Tendencia se voltea bajista (close < MA200) -> vende (cambio de regimen)
+Metricas:
+  * return_pct    : rendimiento de la estrategia
+  * buy_hold_pct  : rendimiento de solo comprar el primer dia y aguantar
+  * max_drawdown  : peor caida pico-a-valle de la cartera
+  * trades / win  : numero de operaciones y % ganadoras
 """
 from __future__ import annotations
 
@@ -21,7 +25,7 @@ import os
 import pandas as pd
 
 from app.config import stop_mult
-from app.core.opportunity_engine import MAX_RISK_SCORE, RISK_PER_TRADE, RR_TARGET
+from app.core.opportunity_engine import MAX_RISK_SCORE, RISK_PER_TRADE
 from app.core.paper_engine import COMMISSION, SLIPPAGE, PaperBroker
 from app.core.risk_engine import RiskEngine
 
@@ -35,41 +39,51 @@ def backtest_symbol(symbol: str, df: pd.DataFrame, capital: float = 10_000.0) ->
         return {"symbol": symbol, "error": "historia insuficiente"}
 
     broker = PaperBroker(cash=capital)
-    peak = capital
+    mult = stop_mult(symbol)
+    peak_equity = capital
     max_dd = 0.0
+    peak_price = 0.0  # maximo precio desde que se abrio la posicion (para el trailing)
 
     for when, row in ind.iterrows():
         price = float(row["close"])
+        high, low, atr = float(row["high"]), float(row["low"]), float(row["atr"])
         day = when.date().isoformat()
         pos = broker.positions.get(symbol)
 
         if pos is not None:
-            low, high = float(row["low"]), float(row["high"])
+            # Trailing stop: el stop solo sube, nunca baja.
+            peak_price = max(peak_price, high)
+            trail = peak_price - mult * atr
+            pos.stop = max(pos.stop, trail)
+
             if low <= pos.stop:
-                broker.sell(symbol, pos.stop, day, "stop")
-            elif high >= pos.target:
-                broker.sell(symbol, pos.target, day, "target")
+                broker.sell(symbol, pos.stop, day, "trailing_stop")
             elif price < float(row["ma200"]):
                 broker.sell(symbol, price, day, "trend_flip")
         else:
-            # Mismo filtro que el motor de oportunidades.
-            atr = float(row["atr"])
             bullish = price > float(row["ma200"])
             if bullish and float(row["total_risk"]) <= MAX_RISK_SCORE and atr > 0:
-                stop = price - stop_mult(symbol) * atr
+                stop = price - mult * atr
                 risk_per_unit = price - stop
                 if risk_per_unit > 0:
                     size = (broker.equity({symbol: price}) * RISK_PER_TRADE) / risk_per_unit
-                    target = price + RR_TARGET * risk_per_unit
-                    broker.buy(symbol, price, size, stop, target, day)
+                    broker.buy(symbol, price, size, stop, stop, day)  # target no se usa (trailing)
+                    peak_price = price
 
         eq = broker.equity({symbol: price})
-        peak = max(peak, eq)
-        max_dd = min(max_dd, eq / peak - 1)
+        peak_equity = max(peak_equity, eq)
+        max_dd = min(max_dd, eq / peak_equity - 1)
 
-    last_price = float(ind.iloc[-1]["close"])
-    stats = broker.stats({symbol: last_price})
-    stats.update({"symbol": symbol, "max_drawdown_pct": round(max_dd * 100, 2)})
+    first_close = float(ind.iloc[0]["close"])
+    last_close = float(ind.iloc[-1]["close"])
+    stats = broker.stats({symbol: last_close})
+    stats.update(
+        {
+            "symbol": symbol,
+            "max_drawdown_pct": round(max_dd * 100, 2),
+            "buy_hold_pct": round((last_close / first_close - 1) * 100, 2),
+        }
+    )
     return stats
 
 
@@ -87,16 +101,19 @@ def run_backtests(symbols: list[str], capital: float = 10_000.0, data_dir: str =
 if __name__ == "__main__":
     from app.config import all_symbols, settings
 
-    print("\n📈 BACKTEST — ¿la estrategia funciona?")
+    print("\n📈 BACKTEST v2 — estrategia vs comprar-y-aguantar")
     print(f"   (slippage {SLIPPAGE:.1%} + comision {COMMISSION:.1%} por lado)")
-    print("=" * 55)
+    print("=" * 70)
+    print(f"   {'activo':<12} {'estrategia':>11} {'buy&hold':>11} {'maxDD':>9} {'trades':>7} {'win':>7}")
+    print("-" * 70)
     for r in run_backtests(all_symbols(settings.quote_currency)):
         if r.get("error"):
-            print(f"🔹 {r['symbol']}: {r['error']}")
+            print(f"🔹 {r['symbol']:<12} {r['error']}")
             continue
+        beat = "✅" if r["return_pct"] > r["buy_hold_pct"] else "  "
         print(
-            f"🔹 {r['symbol']:<12} ret {r['return_pct']:>7.2f}%  "
-            f"maxDD {r['max_drawdown_pct']:>7.2f}%  "
-            f"trades {r['trades_closed']:>3}  win {r['win_rate_pct']:>5.1f}%"
+            f"{beat} {r['symbol']:<12} {r['return_pct']:>9.2f}%  {r['buy_hold_pct']:>9.2f}%  "
+            f"{r['max_drawdown_pct']:>7.2f}%  {r['trades_closed']:>6}  {r['win_rate_pct']:>5.1f}%"
         )
-    print("=" * 55)
+    print("=" * 70)
+    print("✅ = la estrategia le gano a solo comprar y aguantar")

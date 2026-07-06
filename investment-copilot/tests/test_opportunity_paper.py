@@ -81,4 +81,13 @@ def test_backtest_runs_and_reports():
     stats = backtest_symbol("BTC/USDT", _make_df(closes, 0.01), capital=10_000)
     assert "return_pct" in stats
     assert "max_drawdown_pct" in stats
+    assert "buy_hold_pct" in stats  # benchmark de comprar-y-aguantar
     assert stats["max_drawdown_pct"] <= 0  # el drawdown nunca es positivo
+
+
+def test_trailing_stop_lets_winner_run():
+    # En una tendencia alcista fuerte, el trailing stop debe capturar buena
+    # parte del movimiento (mas que un objetivo fijo 2:1 que cortaria temprano).
+    closes = list(100 * (1.004 ** np.arange(500)))  # +0.4% diario compuesto
+    stats = backtest_symbol("BTC/USDT", _make_df(closes, 0.008), capital=10_000)
+    assert stats["return_pct"] > 20  # captura una porcion grande del trend
