@@ -69,9 +69,10 @@ def run_bot_cycle(update_data: bool = True, notify: bool = True) -> dict:
         rows[symbol] = row
         prices[symbol] = float(row["close"])
 
-    # Reparto equitativo: cada activo apunta a 1/N del capital total.
+    # Reparto equitativo con dial de exposicion: cada activo apunta a
+    # max_exposure/N del capital total (el resto queda en efectivo).
     total_equity = broker.equity(prices)
-    target_per_asset = total_equity / max(len(symbols), 1)
+    target_per_asset = total_equity * settings.max_exposure / max(len(symbols), 1)
     day = None
 
     # 2do paso: decidir y ejecutar.

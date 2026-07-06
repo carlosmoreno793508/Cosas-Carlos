@@ -97,6 +97,11 @@ class Settings(BaseSettings):
     kill_switch: bool = False
     paper_capital: float = 10_000.0  # capital simulado inicial del bot
 
+    # Dial de riesgo: fraccion MAXIMA del capital que puede estar invertida.
+    # 1.0 = 100% invertido (mas retorno, mas drawdown).
+    # 0.6 = deja 40% en efectivo siempre (menos retorno, menos drawdown).
+    max_exposure: float = 1.0
+
     @property
     def exchange_list(self) -> list[str]:
         return [x.strip() for x in self.exchange_ids.split(",") if x.strip()]

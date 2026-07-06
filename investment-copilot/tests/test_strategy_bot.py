@@ -78,3 +78,21 @@ def test_portfolio_diversifies_drawdown(tmp_path):
     port = backtest_portfolio(syms, data_dir=str(tmp_path))
     # la cartera no cae tan hondo como la peor moneda individual
     assert port["max_drawdown_pct"] > min(singles)
+
+
+def test_exposure_dial_reduces_drawdown(tmp_path):
+    # Menos exposicion debe dar un drawdown menos profundo (y menos retorno).
+    from app.core.backtest import backtest_portfolio
+
+    up = list(100 * (1.006 ** np.arange(300)))
+    peak = up[-1]
+    crash = list(np.linspace(peak, peak * 0.5, 100))
+    for s in ["BTC/USDT", "ETH/USDT"]:
+        df = _make_df(up + crash, 0.01)
+        df.index.name = "date"
+        df.to_csv(tmp_path / f"{s.replace('/', '_')}_1d.csv")
+
+    full = backtest_portfolio(["BTC/USDT", "ETH/USDT"], data_dir=str(tmp_path), max_exposure=1.0)
+    half = backtest_portfolio(["BTC/USDT", "ETH/USDT"], data_dir=str(tmp_path), max_exposure=0.5)
+    assert half["max_drawdown_pct"] > full["max_drawdown_pct"]  # menos hondo
+    assert half["return_pct"] < full["return_pct"]              # y menos retorno

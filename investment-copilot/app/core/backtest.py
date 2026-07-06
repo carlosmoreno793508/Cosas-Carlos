@@ -69,11 +69,19 @@ def backtest_symbol(symbol: str, df: pd.DataFrame, capital: float = 10_000.0) ->
     return stats
 
 
-def backtest_portfolio(symbols: list[str], capital: float = 10_000.0, data_dir: str = DATA_DIR) -> dict:
+def backtest_portfolio(
+    symbols: list[str],
+    capital: float = 10_000.0,
+    data_dir: str = DATA_DIR,
+    max_exposure: float = 1.0,
+) -> dict:
     """Backtest de CARTERA: las N monedas juntas, reparto 1/N (como opera el bot).
 
     Es la foto honesta de lo que vivirias: al no caer todas a la vez, el
     drawdown de la cartera suele ser menor que el de la peor moneda sola.
+
+    `max_exposure` es el dial de riesgo: fraccion maxima del capital invertida
+    (1.0 = todo; 0.6 = deja 40% en efectivo -> menos drawdown y menos retorno).
     """
     engine = RiskEngine(data_dir)
     inds: dict[str, pd.DataFrame] = {}
@@ -98,7 +106,7 @@ def backtest_portfolio(symbols: list[str], capital: float = 10_000.0, data_dir: 
         for s, ind in inds.items():
             if d in ind.index:
                 last_prices[s] = float(ind.loc[d, "close"])
-        target_per_asset = broker.equity(last_prices) / n
+        target_per_asset = broker.equity(last_prices) * max_exposure / n
         day = d.date().isoformat()
 
         for s, ind in inds.items():
@@ -170,7 +178,7 @@ if __name__ == "__main__":
             f"{r['max_drawdown_pct']:>7.2f}%  {r['trades_closed']:>6}  {r['win_rate_pct']:>5.1f}%"
         )
 
-    p = backtest_portfolio(syms)
+    p = backtest_portfolio(syms, max_exposure=settings.max_exposure)
     if not p.get("error"):
         print("-" * 70)
         beat = "✅" if p["return_pct"] > p["buy_hold_pct"] else "  "
@@ -180,3 +188,15 @@ if __name__ == "__main__":
         )
     print("=" * 70)
     print("✅ = le gano al buy & hold  |  CARTERA = las 3 juntas (lo que vives de verdad)")
+
+    # Frontera riesgo/retorno: como cambia todo segun cuanto capital inviertes.
+    print("\n🎚️  DIAL DE EXPOSICION — elige tu punto de comodidad")
+    print("-" * 70)
+    print(f"   {'invertido':<12} {'retorno':>10} {'maxDD':>10} {'efectivo':>10}")
+    for e in (1.0, 0.75, 0.60, 0.50, 0.30):
+        fp = backtest_portfolio(syms, max_exposure=e)
+        if not fp.get("error"):
+            print(f"   {int(e*100):>3}%{'':<9} {fp['return_pct']:>8.2f}%  {fp['max_drawdown_pct']:>8.2f}%"
+                  f"  {int((1-e)*100):>7}%")
+    print("-" * 70)
+    print("   Menos exposicion = menos drawdown Y menos retorno. Ajusta max_exposure en .env")
