@@ -53,3 +53,28 @@ def test_broker_roundtrip():
     assert restored.cash == b.cash
     assert "BTC/USDT" in restored.positions
     assert restored.positions["BTC/USDT"].peak == 150.0
+
+
+def test_portfolio_diversifies_drawdown(tmp_path):
+    # 3 activos con caidas en momentos DISTINTOS -> el drawdown de la cartera
+    # debe ser menor (menos negativo) que el de la peor moneda sola.
+    from app.core.backtest import backtest_portfolio, backtest_symbol
+
+    def series(shift):
+        base = list(100 * (1.004 ** np.arange(500)))
+        # inserta un desplome de -40% en una ventana distinta por activo
+        for i in range(200 + shift, 240 + shift):
+            base[i] = base[200 + shift] * 0.6
+        return base
+
+    syms = ["BTC/USDT", "ETH/USDT", "XRP/USDT"]
+    for i, s in enumerate(syms):
+        df = _make_df(series(i * 60), 0.01)
+        df.index.name = "date"
+        df.to_csv(tmp_path / f"{s.replace('/', '_')}_1d.csv")
+
+    singles = [backtest_symbol(s, _make_df(series(i * 60), 0.01))["max_drawdown_pct"]
+               for i, s in enumerate(syms)]
+    port = backtest_portfolio(syms, data_dir=str(tmp_path))
+    # la cartera no cae tan hondo como la peor moneda individual
+    assert port["max_drawdown_pct"] > min(singles)
