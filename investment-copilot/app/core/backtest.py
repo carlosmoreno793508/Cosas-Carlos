@@ -1,22 +1,22 @@
 """Backtest — el evaluador de la Etapa 1.
 
-Corre la estrategia sobre toda la historia de un activo y responde la pregunta
-clave: **¿esto funciona?** Y, mas importante, **¿le gana a solo comprar y
-aguantar (buy & hold)?**
+Corre la estrategia sobre toda la historia y responde: **¿le gana a solo
+comprar y aguantar (buy & hold)?**
 
-Estrategia v2 (trend following):
-  * ENTRA cuando la tendencia es alcista (precio > MA200) y el riesgo no esta
-    en zona roja.
-  * NO usa objetivo fijo (eso cortaba a los ganadores). En su lugar usa un
-    TRAILING STOP: el stop sube solo mientras el precio sube, dejando correr
-    la ganancia, y te saca cuando el precio retrocede N*ATR desde su maximo.
-  * Tambien sale si la tendencia se voltea bajista (close < MA200).
+Estrategia v3 (filtro de regimen — "time in the market"):
+  Las versiones con micro-stops (objetivo fijo 2:1, trailing) picaban la
+  posicion a muerte en cada bajada normal: muchas operaciones, muchos costos,
+  y se perdian la tendencia grande. v3 hace lo contrario, simple y aburrido:
 
-Metricas:
-  * return_pct    : rendimiento de la estrategia
-  * buy_hold_pct  : rendimiento de solo comprar el primer dia y aguantar
-  * max_drawdown  : peor caida pico-a-valle de la cartera
-  * trades / win  : numero de operaciones y % ganadoras
+    * DENTRO mientras el precio > MA200 (regimen alcista).
+    * FUERA cuando el precio cierra por debajo de la MA200 (rompe tendencia).
+    * Sin objetivo, sin trailing. Pocas operaciones, deja correr la tendencia
+      y esquiva los grandes desplomes.
+
+  El Risk Score se sigue calculando (alimenta alertas y niveles de autonomia),
+  pero solo bloquea ENTRAR si esta en zona roja; no fuerza salidas (eso churneaba).
+
+Metricas: return_pct vs buy_hold_pct, max_drawdown, trades, win_rate.
 """
 from __future__ import annotations
 
@@ -24,51 +24,39 @@ import os
 
 import pandas as pd
 
-from app.config import stop_mult
-from app.core.opportunity_engine import MAX_RISK_SCORE, RISK_PER_TRADE
+from app.core.opportunity_engine import MAX_RISK_SCORE
 from app.core.paper_engine import COMMISSION, SLIPPAGE, PaperBroker
 from app.core.risk_engine import RiskEngine
 
 DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "data_storage")
 
+INVEST_FRACTION = 0.98  # fraccion del capital que se pone al activo mientras esta dentro
+
 
 def backtest_symbol(symbol: str, df: pd.DataFrame, capital: float = 10_000.0) -> dict:
-    """Simula la estrategia dia por dia sobre `df` (un solo activo)."""
-    ind = RiskEngine.calculate_indicators(df).dropna(subset=["ma200", "atr"])
+    """Simula la estrategia de regimen dia por dia sobre `df`."""
+    ind = RiskEngine.calculate_indicators(df).dropna(subset=["ma200"])
     if ind.empty:
         return {"symbol": symbol, "error": "historia insuficiente"}
 
     broker = PaperBroker(cash=capital)
-    mult = stop_mult(symbol)
     peak_equity = capital
     max_dd = 0.0
-    peak_price = 0.0  # maximo precio desde que se abrio la posicion (para el trailing)
 
     for when, row in ind.iterrows():
         price = float(row["close"])
-        high, low, atr = float(row["high"]), float(row["low"]), float(row["atr"])
+        ma200 = float(row["ma200"])
         day = when.date().isoformat()
         pos = broker.positions.get(symbol)
 
         if pos is not None:
-            # Trailing stop: el stop solo sube, nunca baja.
-            peak_price = max(peak_price, high)
-            trail = peak_price - mult * atr
-            pos.stop = max(pos.stop, trail)
-
-            if low <= pos.stop:
-                broker.sell(symbol, pos.stop, day, "trailing_stop")
-            elif price < float(row["ma200"]):
-                broker.sell(symbol, price, day, "trend_flip")
+            if price < ma200:                       # rompe tendencia -> fuera
+                broker.sell(symbol, price, day, "trend_break")
         else:
-            bullish = price > float(row["ma200"])
-            if bullish and float(row["total_risk"]) <= MAX_RISK_SCORE and atr > 0:
-                stop = price - mult * atr
-                risk_per_unit = price - stop
-                if risk_per_unit > 0:
-                    size = (broker.equity({symbol: price}) * RISK_PER_TRADE) / risk_per_unit
-                    broker.buy(symbol, price, size, stop, stop, day)  # target no se usa (trailing)
-                    peak_price = price
+            entrable = price > ma200 and float(row["total_risk"]) <= MAX_RISK_SCORE
+            if entrable:
+                size = (broker.cash * INVEST_FRACTION) / price
+                broker.buy(symbol, price, size, ma200, price, day)
 
         eq = broker.equity({symbol: price})
         peak_equity = max(peak_equity, eq)
@@ -101,7 +89,7 @@ def run_backtests(symbols: list[str], capital: float = 10_000.0, data_dir: str =
 if __name__ == "__main__":
     from app.config import all_symbols, settings
 
-    print("\n📈 BACKTEST v2 — estrategia vs comprar-y-aguantar")
+    print("\n📈 BACKTEST v3 — filtro de regimen (MA200) vs comprar-y-aguantar")
     print(f"   (slippage {SLIPPAGE:.1%} + comision {COMMISSION:.1%} por lado)")
     print("=" * 70)
     print(f"   {'activo':<12} {'estrategia':>11} {'buy&hold':>11} {'maxDD':>9} {'trades':>7} {'win':>7}")
@@ -116,4 +104,4 @@ if __name__ == "__main__":
             f"{r['max_drawdown_pct']:>7.2f}%  {r['trades_closed']:>6}  {r['win_rate_pct']:>5.1f}%"
         )
     print("=" * 70)
-    print("✅ = la estrategia le gano a solo comprar y aguantar")
+    print("✅ = la estrategia le gano al buy & hold  |  clave: menos maxDD con parte del upside")

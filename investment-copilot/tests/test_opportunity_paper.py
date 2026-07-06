@@ -85,9 +85,20 @@ def test_backtest_runs_and_reports():
     assert stats["max_drawdown_pct"] <= 0  # el drawdown nunca es positivo
 
 
-def test_trailing_stop_lets_winner_run():
-    # En una tendencia alcista fuerte, el trailing stop debe capturar buena
-    # parte del movimiento (mas que un objetivo fijo 2:1 que cortaria temprano).
+def test_regime_captures_uptrend():
+    # En una tendencia alcista sostenida, el filtro de regimen se queda DENTRO
+    # y captura la mayor parte del movimiento con MUY pocas operaciones.
     closes = list(100 * (1.004 ** np.arange(500)))  # +0.4% diario compuesto
     stats = backtest_symbol("BTC/USDT", _make_df(closes, 0.008), capital=10_000)
-    assert stats["return_pct"] > 20  # captura una porcion grande del trend
+    assert stats["return_pct"] > 100    # captura gran parte del trend
+    assert stats["trades_closed"] <= 3  # pocas operaciones (no churnea)
+
+
+def test_regime_avoids_crash():
+    # Sube 300 dias y luego se desploma. El regimen debe SALIR al romper la
+    # MA200 y evitar la mayor parte del desplome -> mejor que buy & hold.
+    up = list(100 * (1.005 ** np.arange(300)))
+    peak = up[-1]
+    crash = list(np.linspace(peak, peak * 0.35, 200))
+    stats = backtest_symbol("BTC/USDT", _make_df(up + crash, 0.01), capital=10_000)
+    assert stats["return_pct"] > stats["buy_hold_pct"]  # le gana esquivando el crash
