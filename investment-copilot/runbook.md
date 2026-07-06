@@ -50,6 +50,31 @@ Activar manualmente: `POST /killswitch?activate=true`.
 - [ ] Kill Switch detiene todo en < 2s.
 - [ ] Logs completos. **Nada pasa a DONE sin log.**
 
+## 🧪 Forward test (Etapa 1.5) — el bot en paper hacia adelante
+
+Objetivo: ver al bot operar en mercado que aún no conoce, con dinero simulado,
+antes de arriesgar un peso real. Duración sugerida: 2–6 semanas.
+
+Arranque (una vez):
+1. Crear bot de Telegram con `@BotFather` → obtener token y chat_id.
+2. `cp .env.example .env` y poner `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`,
+   `PAPER_CAPITAL` y `MAX_EXPOSURE`.
+3. Primer ciclo manual: `python3 -m app.services.bot` (debe llegar mensaje a Telegram).
+
+Mantenerlo corriendo (elige uno):
+- **Manual** (más simple y a prueba de fallos): `python3 -m app.services.bot` una vez
+  al día, más o menos a la misma hora. Con velas diarias, esto basta.
+- **Automático**: `python3 -m app.services.scheduler` (deja la ventana abierta y el
+  Mac despierto), o un cron: `30 8 * * * cd <ruta> && ./venv/bin/python -m app.services.bot >> bot.log 2>&1`.
+
+Qué observar:
+- El bot puede pasar **días sin operar**. Es NORMAL (pocas operaciones por diseño).
+- El estado vive en `data_storage/bot_state.json` (posiciones + efectivo simulados).
+- Kill Switch (`KILL_SWITCH=true` en `.env`) detiene toda operación nueva.
+
+Criterio de éxito: el bot se comporta como el backtest (entra/sale con la lógica
+esperada, sin errores), y el drawdown vivido está dentro de lo que toleras.
+
 ## 🔐 Seguridad
 
 - API keys de exchange **sin permiso de retiro**.
