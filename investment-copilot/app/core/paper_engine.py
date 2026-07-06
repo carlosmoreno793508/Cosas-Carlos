@@ -8,7 +8,7 @@ este motor, solo se avisa.
 """
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field
 
 SLIPPAGE = 0.001    # 0.1% peor precio al entrar/salir
 COMMISSION = 0.001  # 0.1% de comision por lado
@@ -22,6 +22,11 @@ class Position:
     stop: float
     target: float
     opened_at: str
+    peak: float = 0.0    # maximo precio visto desde la entrada (para el stop de proteccion)
+
+    def __post_init__(self):
+        if not self.peak:
+            self.peak = self.entry_price
 
     def unrealized_pnl(self, price: float) -> float:
         return (price - self.entry_price) * self.size
@@ -91,3 +96,19 @@ class PaperBroker:
             "trades_closed": len(self.closed),
             "win_rate_pct": round(len(wins) / len(self.closed) * 100, 1) if self.closed else 0.0,
         }
+
+    # --- persistencia (para que el bot recuerde entre corridas) ---
+    def to_dict(self) -> dict:
+        return {
+            "cash": self.cash,
+            "equity_start": self.equity_start,
+            "positions": {s: asdict(p) for s, p in self.positions.items()},
+            "closed": self.closed,
+        }
+
+    @classmethod
+    def from_dict(cls, d: dict) -> "PaperBroker":
+        b = cls(cash=d["cash"], equity_start=d.get("equity_start", d["cash"]))
+        b.positions = {s: Position(**p) for s, p in d.get("positions", {}).items()}
+        b.closed = d.get("closed", [])
+        return b

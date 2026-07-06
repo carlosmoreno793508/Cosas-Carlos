@@ -22,6 +22,16 @@ UNIVERSE: dict[str, list[str]] = {
 # en IBKR). Ver execution_mode() abajo.
 EQUITIES: list[str] = ["SPY", "QQQ"]
 
+# ACTIVOS ACTIVOS: los que el bot realmente opera. El backtest mostro que la
+# estrategia funciona en los grandes y falla en los alt chicos (ilic­uidos),
+# asi que el bot se enfoca aqui. El resto del UNIVERSE queda solo en observacion.
+ACTIVE_BASES: list[str] = ["BTC", "ETH", "XRP"]
+
+
+def active_symbols(quote: str = "USDT") -> list[str]:
+    """Pares que el bot opera de verdad, ej. ['BTC/USDT', 'ETH/USDT', 'XRP/USDT']."""
+    return [f"{b}/{quote}" for b in ACTIVE_BASES]
+
 # Multiplicador de ATR para el stop, por grupo (runbook: core holgado, utility
 # estricto). Las acciones usan un stop holgado por defecto.
 STOP_MULT: dict[str, float] = {
@@ -85,6 +95,7 @@ class Settings(BaseSettings):
 
     # Control
     kill_switch: bool = False
+    paper_capital: float = 10_000.0  # capital simulado inicial del bot
 
     @property
     def exchange_list(self) -> list[str]:

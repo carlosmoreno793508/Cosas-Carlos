@@ -10,6 +10,8 @@ __pycache__/
 
 # Datos descargados (no se versionan, se regeneran con backfill)
 data_storage/*.csv
+# Estado del bot (posiciones/cash simulados) - local, no se versiona
+data_storage/bot_state.json
 !data_storage/.gitkeep
 
 # Sistema
