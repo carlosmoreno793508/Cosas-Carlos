@@ -50,10 +50,14 @@ pytest -q
 python -m app.services.market_data     # ingesta histórica
 python -m app.core.risk_engine         # reporte en terminal
 
-# 5. Ciclo completo con alerta a Telegram
-python run_cycle.py
+# 5. El bot en paper (compra/vende solo con la estrategia)
+python -m app.services.bot             # un ciclo
+python -m app.services.scheduler       # diario automatico
 
-# 6. Levantar la API
+# 6. Dashboard visual
+streamlit run dashboard.py             # http://localhost:8501
+
+# 7. Levantar la API
 uvicorn app.main:app --reload          # http://localhost:8000/docs
 ```
 
