@@ -85,7 +85,11 @@ if active:
     sym = st.selectbox("Activo", active)
     hist = dd.price_history(sym)
     if hist is not None and not hist.empty:
-        st.line_chart(hist)
+        chart_df = hist.reset_index()
+        chart_df = chart_df.rename(columns={chart_df.columns[0]: "fecha"})
+        # Quita la zona horaria (Altair no la traga en el eje x).
+        chart_df["fecha"] = pd.to_datetime(chart_df["fecha"], utc=True).dt.tz_localize(None)
+        st.line_chart(chart_df, x="fecha", y=["close", "ma200"])
     else:
         st.info("Sin histórico para graficar.")
 
