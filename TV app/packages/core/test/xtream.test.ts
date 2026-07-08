@@ -104,6 +104,34 @@ test("getMovies normaliza rating 5-based a escala 0-10", async () => {
   assert.equal(items[0].streamUrl, "https://portal.example.com:8080/movie/user1/pass1/5.mkv");
 });
 
+test("getSeriesInfo arma temporadas y URLs de episodios", async () => {
+  const c = new XtreamClient(
+    config,
+    fakeFetch([
+      [
+        "get_series_info",
+        {
+          info: { name: "Mi Serie", cover: "http://x/c.jpg" },
+          episodes: {
+            "1": [
+              { id: 900, title: "Piloto", episode_num: 1, container_extension: "mkv" },
+              { id: 901, title: "Cap 2", episode_num: 2, container_extension: "mp4" },
+            ],
+          },
+        },
+      ],
+    ]),
+  );
+  const detail = await c.getSeriesInfo(7);
+  assert.equal(detail.name, "Mi Serie");
+  assert.equal(detail.seasons.length, 1);
+  assert.equal(detail.seasons[0].episodes[0].title, "Piloto");
+  assert.equal(
+    detail.seasons[0].episodes[0].streamUrl,
+    "https://portal.example.com:8080/series/user1/pass1/900.mkv",
+  );
+});
+
 test("withCounts cuenta items por categoría", () => {
   const cats = withCounts(
     [

@@ -4,6 +4,8 @@ import type {
   MediaItem,
   Playlist,
   PlaylistContent,
+  SeriesDetail,
+  SeriesSeason,
   StreamType,
 } from "./types.js";
 
@@ -190,6 +192,44 @@ export class XtreamClient {
       year: s.releaseDate ? s.releaseDate.slice(0, 4) : undefined,
       extra: { seriesId: String(s.series_id) },
     }));
+  }
+
+  /**
+   * Detalle de una serie: temporadas con sus episodios ya reproducibles.
+   * Llama a `get_series_info` y arma la URL de cada episodio.
+   */
+  async getSeriesInfo(seriesId: string | number, signal?: AbortSignal): Promise<SeriesDetail> {
+    const raw = await this.getJson<{
+      info?: { name?: string; cover?: string; plot?: string };
+      episodes?: Record<
+        string,
+        Array<{
+          id: string | number;
+          title?: string;
+          episode_num?: number | string;
+          container_extension?: string;
+        }>
+      >;
+    }>(this.api("get_series_info", { series_id: String(seriesId) }), signal);
+
+    const seasons: SeriesSeason[] = Object.entries(raw.episodes ?? {})
+      .map(([season, eps]) => ({
+        season: Number(season),
+        episodes: eps.map((e) => ({
+          id: String(e.id),
+          title: e.title || `Episodio ${e.episode_num ?? ""}`.trim(),
+          episodeNum: Number(e.episode_num) || undefined,
+          streamUrl: this.buildStreamUrl("series", e.id, e.container_extension || "mp4"),
+        })),
+      }))
+      .sort((a, b) => a.season - b.season);
+
+    return {
+      name: raw.info?.name,
+      cover: raw.info?.cover,
+      plot: raw.info?.plot,
+      seasons,
+    };
   }
 
   /** Guía electrónica (EPG) corta para un canal. */

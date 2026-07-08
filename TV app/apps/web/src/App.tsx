@@ -1,10 +1,11 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { MediaItem, Playlist } from "@tvapp/core";
 import { addPlaylist, loadPlaylists } from "./storage.js";
 import { moveFocus, useRemote, type RemoteKey } from "./remote.js";
 import { PlaylistForm } from "./components/PlaylistForm.js";
 import { Dashboard, type Section } from "./components/Dashboard.js";
 import { Browse } from "./components/Browse.js";
+import { SeriesDetail } from "./components/SeriesDetail.js";
 import { VideoPlayer } from "./components/VideoPlayer.js";
 
 type View =
@@ -13,12 +14,12 @@ type View =
   | { screen: "dashboard"; playlist: Playlist }
   | { screen: "account"; playlist: Playlist }
   | { screen: "browse"; playlist: Playlist; section: Section }
-  | { screen: "play"; item: MediaItem; playlist: Playlist; section: Section };
+  | { screen: "series"; playlist: Playlist; series: MediaItem }
+  | { screen: "play"; src: string; title: string; playlist: Playlist; back: View };
 
 export function App() {
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
   const [view, setView] = useState<View>({ screen: "home" });
-  const last = useRef<{ playlist?: Playlist; section?: Section }>({});
 
   useEffect(() => setPlaylists(loadPlaylists()), []);
 
@@ -31,9 +32,9 @@ export function App() {
       setView((v) => {
         switch (v.screen) {
           case "play":
-            return last.current.playlist && last.current.section
-              ? { screen: "browse", playlist: last.current.playlist, section: last.current.section }
-              : { screen: "home" };
+            return v.back;
+          case "series":
+            return { screen: "browse", playlist: v.playlist, section: "series" };
           case "browse":
           case "account":
             return { screen: "dashboard", playlist: v.playlist };
@@ -63,10 +64,7 @@ export function App() {
       return (
         <Dashboard
           playlist={view.playlist}
-          onOpenSection={(section) => {
-            last.current = { playlist: view.playlist, section };
-            setView({ screen: "browse", playlist: view.playlist, section });
-          }}
+          onOpenSection={(section) => setView({ screen: "browse", playlist: view.playlist, section })}
           onAccount={() => setView({ screen: "account", playlist: view.playlist })}
           onBack={() => setView({ screen: "home" })}
         />
@@ -90,23 +88,46 @@ export function App() {
         </div>
       );
 
-    case "browse":
+    case "browse": {
+      const browseView = view;
       return (
         <Browse
-          playlist={view.playlist}
-          section={view.section}
-          onPlay={(item) => setView({ screen: "play", item, playlist: view.playlist, section: view.section })}
-          onBack={() => setView({ screen: "dashboard", playlist: view.playlist })}
+          playlist={browseView.playlist}
+          section={browseView.section}
+          onPlay={(item) => {
+            if (item.type === "series") {
+              setView({ screen: "series", playlist: browseView.playlist, series: item });
+            } else {
+              setView({
+                screen: "play",
+                src: item.streamUrl,
+                title: item.title,
+                playlist: browseView.playlist,
+                back: browseView,
+              });
+            }
+          }}
+          onBack={() => setView({ screen: "dashboard", playlist: browseView.playlist })}
         />
       );
+    }
+
+    case "series": {
+      const seriesView = view;
+      return (
+        <SeriesDetail
+          playlist={seriesView.playlist}
+          series={seriesView.series}
+          onPlayEpisode={(src, title) =>
+            setView({ screen: "play", src, title, playlist: seriesView.playlist, back: seriesView })
+          }
+          onBack={() => setView({ screen: "browse", playlist: seriesView.playlist, section: "series" })}
+        />
+      );
+    }
 
     case "play":
-      return (
-        <VideoPlayer
-          src={view.item.streamUrl}
-          onBack={() => setView({ screen: "browse", playlist: view.playlist, section: view.section })}
-        />
-      );
+      return <VideoPlayer src={view.src} onBack={() => setView(view.back)} />;
 
     case "home":
     default:

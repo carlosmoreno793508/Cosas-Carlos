@@ -81,3 +81,25 @@ export interface PlaylistContent {
   categories: Category[];
   items: MediaItem[];
 }
+
+/** Un episodio reproducible dentro de una temporada. */
+export interface Episode {
+  id: string;
+  title: string;
+  episodeNum?: number;
+  streamUrl: string;
+}
+
+/** Una temporada con sus episodios. */
+export interface SeriesSeason {
+  season: number;
+  episodes: Episode[];
+}
+
+/** Detalle de una serie: metadatos + temporadas/episodios reproducibles. */
+export interface SeriesDetail {
+  name?: string;
+  cover?: string;
+  plot?: string;
+  seasons: SeriesSeason[];
+}

@@ -599,6 +599,93 @@ body {
   background: var(--surface-2);
 }
 
+/* --- Detalle de serie --- */
+.series {
+  padding: 40px 64px;
+}
+.series__head {
+  display: flex;
+  gap: 28px;
+  align-items: flex-start;
+  margin-bottom: 28px;
+}
+.series__cover {
+  width: 220px;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: 16px;
+  background: var(--surface-2);
+  flex-shrink: 0;
+}
+.series__meta {
+  flex: 1;
+}
+.series__title {
+  font-size: 34px;
+  font-weight: 800;
+  margin: 8px 0 12px;
+}
+.series__rating {
+  color: #ffd24c;
+  font-weight: 800;
+  font-size: 22px;
+}
+.series__plot {
+  color: var(--muted);
+  font-size: 20px;
+  margin-top: 12px;
+  max-width: 900px;
+}
+.series__seasons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.chip {
+  background: var(--surface-2);
+  border: none;
+  color: var(--text);
+  border-radius: 999px;
+  padding: 12px 22px;
+  font-size: 19px;
+  cursor: pointer;
+}
+.chip--active {
+  background: var(--accent);
+}
+.episodes {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 12px;
+}
+.episode {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: var(--surface);
+  border: none;
+  color: var(--text);
+  border-radius: 14px;
+  padding: 20px 24px;
+  font-size: 22px;
+  cursor: pointer;
+  text-align: left;
+}
+.episode__num {
+  min-width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: var(--surface-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+}
+
 .account {
   display: flex;
   flex-direction: column;
