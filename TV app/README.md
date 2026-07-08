@@ -53,10 +53,11 @@ TV app/
 - ✅ **Núcleo compartido** con parser M3U y cliente Xtream Codes + pruebas en verde.
 - ✅ **Fase 1 — App web para TV** (React): pantalla "Nueva lista de reproducción"
   (M3U/Xtream), navegador de canales con categorías, reproductor HLS y navegación
-  por control remoto. Cubre navegador, Samsung (Tizen) y LG (webOS).
+  por control remoto. Cubre navegador, **Samsung Crystal UHD (Tizen)** y LG (webOS).
+  Empaquetado Tizen incluido (`apps/web/tizen/` + `apps/web/TIZEN.md`).
 - ✅ **Fase 2 — App React Native para TV** (`apps/tv`): mismas pantallas con UI
   nativa, reproductor nativo (react-native-video) y foco por D-pad. Cubre
-  **Fire TV, Android TV/Google TV y Apple TV**, reutilizando `@tvapp/core`.
+  **Fire TV, Android TV / Google TV y Apple TV**, reutilizando `@tvapp/core`.
 - ⏳ Fase 3 — Roku (BrightScript): documentada en `docs/PLATFORMS.md`.
 
 ## Cómo correrlo
@@ -79,13 +80,14 @@ Para probar la navegación de TV en el navegador usa las **flechas** del teclado
 
 ## Estrategia por plataforma (resumen)
 
-| Plataforma          | Tecnología             | Reutiliza el núcleo |
-| ------------------- | ---------------------- | ------------------- |
-| Navegador / Web     | React + hls.js         | ✅ directo          |
-| Samsung (Tizen)     | Empaqueta la app web   | ✅ directo          |
-| LG (webOS)          | Empaqueta la app web   | ✅ directo          |
-| Fire TV / Android TV| React Native (TV) o TWA| ✅ vía @tvapp/core  |
-| Apple TV (tvOS)     | React Native tvOS      | ✅ vía @tvapp/core  |
-| Roku                | BrightScript/SceneGraph| ↻ reimplementa lógica|
+| Plataforma                     | Tecnología              | App        | Reutiliza el núcleo   |
+| ------------------------------ | ----------------------- | ---------- | --------------------- |
+| Navegador / Web                | React + hls.js          | `apps/web` | ✅ directo            |
+| **Samsung Crystal UHD (Tizen)**| Empaqueta la app web    | `apps/web` | ✅ directo            |
+| LG (webOS)                     | Empaqueta la app web    | `apps/web` | ✅ directo            |
+| Amazon Fire TV                 | react-native-tvos       | `apps/tv`  | ✅ vía @tvapp/core    |
+| **Android TV / Google TV**     | react-native-tvos       | `apps/tv`  | ✅ vía @tvapp/core    |
+| Apple TV (tvOS)                | react-native-tvos       | `apps/tv`  | ✅ vía @tvapp/core    |
+| Roku                           | BrightScript/SceneGraph | (fase 3)   | ↻ reimplementa lógica |
 
 Detalle completo en [`docs/PLATFORMS.md`](docs/PLATFORMS.md).
