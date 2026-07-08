@@ -105,6 +105,14 @@ export const server = createServer((req, res) => {
   const url = new URL(req.url, `http://${req.headers.host || "localhost"}`);
   const path = url.pathname;
 
+  // CORS: permite que la app web (otro origen) consuma la API del servidor.
+  res.setHeader("access-control-allow-origin", "*");
+  res.setHeader("access-control-allow-headers", "*");
+  if (req.method === "OPTIONS") {
+    res.writeHead(204);
+    return res.end();
+  }
+
   // Salud / diagnóstico
   if (path === "/" || path === "/health") {
     return json(res, {

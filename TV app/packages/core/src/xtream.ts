@@ -61,8 +61,13 @@ export class XtreamClient {
     this.user = config.username;
     this.pass = config.password;
     // globalThis.fetch existe en navegadores, Node 18+, Tizen y webOS modernos.
-    this.fetchFn = fetchFn ?? (globalThis.fetch as unknown as FetchLike);
-    if (!this.fetchFn) {
+    // Debe llamarse con `this === globalThis`, si no el navegador lanza
+    // "Illegal invocation"; por eso lo enlazamos (bind) al guardarlo.
+    if (fetchFn) {
+      this.fetchFn = fetchFn;
+    } else if (typeof globalThis.fetch === "function") {
+      this.fetchFn = globalThis.fetch.bind(globalThis) as unknown as FetchLike;
+    } else {
       throw new Error("No hay implementación de fetch disponible en esta plataforma");
     }
   }
