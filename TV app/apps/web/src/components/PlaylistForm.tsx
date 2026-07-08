@@ -18,6 +18,7 @@ export function PlaylistForm({
   const [url, setUrl] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [pin, setPin] = useState("");
   const [error, setError] = useState<string | null>(null);
 
   function submit() {
@@ -29,6 +30,10 @@ export function PlaylistForm({
       setError("Xtream requiere usuario y contraseña");
       return;
     }
+    if (pin && !/^\d{4}$/.test(pin.trim())) {
+      setError("El PIN debe ser de 4 dígitos");
+      return;
+    }
     onCreate({
       id: newId(),
       kind,
@@ -36,6 +41,7 @@ export function PlaylistForm({
       url: url.trim(),
       username: kind === "xtream" ? username.trim() : undefined,
       password: kind === "xtream" ? password.trim() : undefined,
+      pin: pin.trim() || undefined,
       createdAt: Date.now(),
     });
   }
@@ -115,6 +121,18 @@ export function PlaylistForm({
           </label>
         </>
       )}
+
+      <label className="field">
+        <span>PIN de control parental (opcional, 4 dígitos)</span>
+        <input
+          data-focusable
+          inputMode="numeric"
+          maxLength={4}
+          value={pin}
+          onChange={(e) => setPin(e.target.value.replace(/\D/g, ""))}
+          placeholder="Ej. 1234 — deja vacío para no proteger"
+        />
+      </label>
 
       {error && <p className="error">{error}</p>}
 

@@ -314,6 +314,68 @@ body {
   margin-bottom: 6px;
 }
 
+/* --- PIN (control parental) --- */
+.pin {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 40px;
+}
+.pin__title {
+  font-size: 32px;
+  font-weight: 800;
+}
+.pin__dots {
+  display: flex;
+  gap: 20px;
+}
+.pin__dots--err {
+  animation: shake 0.3s;
+}
+.pin__dot {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 3px solid var(--muted);
+}
+.pin__dot.is-on {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.pin__pad {
+  display: grid;
+  grid-template-columns: repeat(3, 120px);
+  gap: 16px;
+  margin-top: 12px;
+}
+.pin__key {
+  height: 90px;
+  border: none;
+  border-radius: 16px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 34px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.pin__key--wide {
+  font-size: 22px;
+}
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-8px); }
+  75% { transform: translateX(8px); }
+}
+.profile__lock {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-size: 28px;
+}
+
 /* --- Dashboard (LIVE / MOVIES / SERIES) --- */
 .dash {
   min-height: 100%;

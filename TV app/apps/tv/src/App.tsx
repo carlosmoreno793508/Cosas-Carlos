@@ -9,11 +9,13 @@ import { BrowseScreen } from "./screens/BrowseScreen";
 import { SeriesScreen } from "./screens/SeriesScreen";
 import { AccountScreen } from "./screens/AccountScreen";
 import { SearchScreen } from "./screens/SearchScreen";
+import { PinScreen } from "./screens/PinScreen";
 import { PlayerScreen } from "./screens/PlayerScreen";
 
 type View_ =
   | { screen: "home" }
   | { screen: "form" }
+  | { screen: "pin"; playlist: Playlist }
   | { screen: "dashboard"; playlist: Playlist }
   | { screen: "account"; playlist: Playlist }
   | { screen: "search"; playlist: Playlist }
@@ -42,6 +44,7 @@ export function App() {
           return { screen: "dashboard", playlist: v.playlist };
         case "dashboard":
         case "form":
+        case "pin":
           return { screen: "home" };
         default:
           return v;
@@ -59,7 +62,16 @@ export function App() {
       {view.screen === "home" && (
         <ChooserScreen
           onAdd={() => setView({ screen: "form" })}
-          onOpen={(playlist) => setView({ screen: "dashboard", playlist })}
+          onOpen={(playlist) =>
+            setView(playlist.pin ? { screen: "pin", playlist } : { screen: "dashboard", playlist })
+          }
+        />
+      )}
+      {view.screen === "pin" && (
+        <PinScreen
+          expected={view.playlist.pin ?? ""}
+          onOk={() => setView({ screen: "dashboard", playlist: view.playlist })}
+          onCancel={() => setView({ screen: "home" })}
         />
       )}
       {view.screen === "form" && (

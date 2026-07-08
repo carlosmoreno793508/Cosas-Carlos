@@ -7,11 +7,13 @@ import { Dashboard, type Section } from "./components/Dashboard.js";
 import { Browse } from "./components/Browse.js";
 import { SeriesDetail } from "./components/SeriesDetail.js";
 import { SearchScreen } from "./components/SearchScreen.js";
+import { PinScreen } from "./components/PinScreen.js";
 import { VideoPlayer } from "./components/VideoPlayer.js";
 
 type View =
   | { screen: "home" }
   | { screen: "form" }
+  | { screen: "pin"; playlist: Playlist }
   | { screen: "dashboard"; playlist: Playlist }
   | { screen: "account"; playlist: Playlist }
   | { screen: "search"; playlist: Playlist }
@@ -43,6 +45,7 @@ export function App() {
             return { screen: "dashboard", playlist: v.playlist };
           case "dashboard":
           case "form":
+          case "pin":
             return { screen: "home" };
           default:
             return v;
@@ -59,9 +62,23 @@ export function App() {
     setView({ screen: "dashboard", playlist: p });
   }
 
+  /** Entra a un perfil, pidiendo PIN antes si está protegido. */
+  function openProfile(p: Playlist) {
+    setView(p.pin ? { screen: "pin", playlist: p } : { screen: "dashboard", playlist: p });
+  }
+
   switch (view.screen) {
     case "form":
       return <PlaylistForm onCreate={handleCreate} onCancel={() => setView({ screen: "home" })} />;
+
+    case "pin":
+      return (
+        <PinScreen
+          expected={view.playlist.pin ?? ""}
+          onOk={() => setView({ screen: "dashboard", playlist: view.playlist })}
+          onCancel={() => setView({ screen: "home" })}
+        />
+      );
 
     case "dashboard":
       return (
@@ -192,7 +209,7 @@ export function App() {
                 data-focusable
                 className="profile"
                 autoFocus={i === 0}
-                onClick={() => setView({ screen: "dashboard", playlist: p })}
+                onClick={() => openProfile(p)}
               >
                 <span className="profile__avatar" aria-hidden>
                   <svg viewBox="0 0 100 100" width="120" height="120">
@@ -200,6 +217,7 @@ export function App() {
                     <path d="M18 92c0-20 14-30 32-30s32 10 32 30z" fill="#6b8bff" />
                   </svg>
                 </span>
+                {p.pin ? <span className="profile__lock" aria-label="Protegido">🔒</span> : null}
                 <span className="profile__name">{p.name || p.url}</span>
               </button>
             ))}

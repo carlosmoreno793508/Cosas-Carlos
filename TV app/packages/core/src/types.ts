@@ -28,6 +28,8 @@ export interface Playlist {
   username?: string;
   /** Solo Xtream Codes. */
   password?: string;
+  /** PIN de control parental (4 dígitos) para entrar a este perfil. Opcional. */
+  pin?: string;
   /** Marca de tiempo (epoch ms) de creación. */
   createdAt: number;
 }

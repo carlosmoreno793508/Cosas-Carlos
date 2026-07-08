@@ -37,6 +37,7 @@ export function ChooserScreen({
             style={({ focused }) => [styles.profile, focused && styles.focused]}
             onPress={() => onOpen(p)}
           >
+            {p.pin ? <Text style={styles.lock}>🔒</Text> : null}
             <Avatar color={i % 2 === 0 ? theme.accent2 : "#8b3bff"} />
             <Text style={styles.name}>{p.name || p.url}</Text>
           </Pressable>
@@ -83,6 +84,7 @@ const styles = StyleSheet.create({
   },
   add: { backgroundColor: "#23304d", justifyContent: "center" },
   plus: { color: "#aebbe0", fontSize: 96, fontWeight: "300" },
+  lock: { position: "absolute", top: 14, right: 16, fontSize: 26 },
   name: { color: "#fff", fontSize: 24, fontWeight: "700" },
   focused: { borderWidth: 4, borderColor: "#fff", transform: [{ scale: 1.04 }] },
 });

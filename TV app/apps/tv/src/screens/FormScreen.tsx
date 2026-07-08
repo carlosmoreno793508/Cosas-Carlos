@@ -17,6 +17,7 @@ export function FormScreen({
   const [url, setUrl] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [pin, setPin] = useState("");
   const [error, setError] = useState<string | null>(null);
 
   async function submit() {
@@ -24,6 +25,7 @@ export function FormScreen({
     if (kind === "xtream" && (!username.trim() || !password.trim())) {
       return setError("Xtream requiere usuario y contraseña");
     }
+    if (pin && !/^\d{4}$/.test(pin.trim())) return setError("El PIN debe ser de 4 dígitos");
     const playlist: Playlist = {
       id: newId(),
       kind,
@@ -31,6 +33,7 @@ export function FormScreen({
       url: url.trim(),
       username: kind === "xtream" ? username.trim() : undefined,
       password: kind === "xtream" ? password.trim() : undefined,
+      pin: pin.trim() || undefined,
       createdAt: Date.now(),
     };
     await addPlaylist(playlist);
@@ -90,6 +93,11 @@ export function FormScreen({
           <Field label="Contraseña" value={password} onChange={setPassword} secure />
         </>
       )}
+      <Field
+        label="PIN control parental (opcional, 4 dígitos)"
+        value={pin}
+        onChange={(v) => setPin(v.replace(/\D/g, "").slice(0, 4))}
+      />
 
       {error && <Text style={styles.error}>{error}</Text>}
       <Text style={styles.note}>
