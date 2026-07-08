@@ -607,6 +607,36 @@ body {
   background: var(--surface-2);
 }
 
+/* --- Buscador global --- */
+.search-screen {
+  padding: 40px 64px;
+}
+.search-bar {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 28px;
+}
+.search-bar__input {
+  flex: 1;
+  background: var(--surface);
+  border: none;
+  border-radius: 16px;
+  padding: 20px 24px;
+  color: var(--text);
+  font-size: 26px;
+}
+.search-bar__input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--accent);
+}
+.poster__kind {
+  font-size: 13px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
 /* --- Detalle de serie --- */
 .series {
   padding: 40px 64px;

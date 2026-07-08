@@ -24,11 +24,13 @@ export function Dashboard({
   playlist,
   onOpenSection,
   onAccount,
+  onSearch,
   onBack,
 }: {
   playlist: Playlist;
   onOpenSection: (s: Section) => void;
   onAccount: () => void;
+  onSearch: () => void;
   onBack: () => void;
 }) {
   const clock = useClock();
@@ -41,7 +43,7 @@ export function Dashboard({
         </h1>
         <span className="dash__clock">{clock}</span>
         <div className="dash__tools">
-          <button data-focusable className="tool" title="Buscar">⌕</button>
+          <button data-focusable className="tool" title="Buscar" onClick={onSearch}>⌕</button>
           <button data-focusable className="tool" title="Ajustes" onClick={onBack}>⚙</button>
         </div>
       </header>

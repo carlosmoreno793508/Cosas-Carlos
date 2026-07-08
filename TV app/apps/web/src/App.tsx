@@ -6,6 +6,7 @@ import { PlaylistForm } from "./components/PlaylistForm.js";
 import { Dashboard, type Section } from "./components/Dashboard.js";
 import { Browse } from "./components/Browse.js";
 import { SeriesDetail } from "./components/SeriesDetail.js";
+import { SearchScreen } from "./components/SearchScreen.js";
 import { VideoPlayer } from "./components/VideoPlayer.js";
 
 type View =
@@ -13,6 +14,7 @@ type View =
   | { screen: "form" }
   | { screen: "dashboard"; playlist: Playlist }
   | { screen: "account"; playlist: Playlist }
+  | { screen: "search"; playlist: Playlist }
   | { screen: "browse"; playlist: Playlist; section: Section }
   | { screen: "series"; playlist: Playlist; series: MediaItem }
   | { screen: "play"; src: string; title: string; playlist: Playlist; item?: MediaItem; back: View };
@@ -37,6 +39,7 @@ export function App() {
             return { screen: "browse", playlist: v.playlist, section: "series" };
           case "browse":
           case "account":
+          case "search":
             return { screen: "dashboard", playlist: v.playlist };
           case "dashboard":
           case "form":
@@ -66,6 +69,7 @@ export function App() {
           playlist={view.playlist}
           onOpenSection={(section) => setView({ screen: "browse", playlist: view.playlist, section })}
           onAccount={() => setView({ screen: "account", playlist: view.playlist })}
+          onSearch={() => setView({ screen: "search", playlist: view.playlist })}
           onBack={() => setView({ screen: "home" })}
         />
       );
@@ -87,6 +91,30 @@ export function App() {
           </button>
         </div>
       );
+
+    case "search": {
+      const searchView = view;
+      return (
+        <SearchScreen
+          playlist={searchView.playlist}
+          onSelect={(item) => {
+            if (item.type === "series") {
+              setView({ screen: "series", playlist: searchView.playlist, series: item });
+            } else {
+              setView({
+                screen: "play",
+                src: item.streamUrl,
+                title: item.title,
+                playlist: searchView.playlist,
+                item,
+                back: searchView,
+              });
+            }
+          }}
+          onBack={() => setView({ screen: "dashboard", playlist: searchView.playlist })}
+        />
+      );
+    }
 
     case "browse": {
       const browseView = view;

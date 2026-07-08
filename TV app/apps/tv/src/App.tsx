@@ -8,6 +8,7 @@ import { DashboardScreen, type Section } from "./screens/DashboardScreen";
 import { BrowseScreen } from "./screens/BrowseScreen";
 import { SeriesScreen } from "./screens/SeriesScreen";
 import { AccountScreen } from "./screens/AccountScreen";
+import { SearchScreen } from "./screens/SearchScreen";
 import { PlayerScreen } from "./screens/PlayerScreen";
 
 type View_ =
@@ -15,6 +16,7 @@ type View_ =
   | { screen: "form" }
   | { screen: "dashboard"; playlist: Playlist }
   | { screen: "account"; playlist: Playlist }
+  | { screen: "search"; playlist: Playlist }
   | { screen: "browse"; playlist: Playlist; section: Section }
   | { screen: "series"; playlist: Playlist; series: MediaItem }
   | { screen: "play"; src: string; title: string; playlist: Playlist; item?: MediaItem; back: View_ };
@@ -36,6 +38,7 @@ export function App() {
           return { screen: "browse", playlist: v.playlist, section: "series" };
         case "browse":
         case "account":
+        case "search":
           return { screen: "dashboard", playlist: v.playlist };
         case "dashboard":
         case "form":
@@ -70,6 +73,20 @@ export function App() {
           playlist={view.playlist}
           onOpenSection={(section) => setView({ screen: "browse", playlist: view.playlist, section })}
           onAccount={() => setView({ screen: "account", playlist: view.playlist })}
+          onSearch={() => setView({ screen: "search", playlist: view.playlist })}
+        />
+      )}
+      {view.screen === "search" && (
+        <SearchScreen
+          playlist={view.playlist}
+          onBack={goBack}
+          onSelect={(item) => {
+            if (item.type === "series") {
+              setView({ screen: "series", playlist: view.playlist, series: item });
+            } else {
+              setView({ screen: "play", src: item.streamUrl, title: item.title, playlist: view.playlist, item, back: view });
+            }
+          }}
         />
       )}
       {view.screen === "account" && (

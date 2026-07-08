@@ -21,10 +21,12 @@ export function DashboardScreen({
   playlist,
   onOpenSection,
   onAccount,
+  onSearch,
 }: {
   playlist: Playlist;
   onOpenSection: (s: Section) => void;
   onAccount: () => void;
+  onSearch: () => void;
 }) {
   const clock = useClock();
 
@@ -35,6 +37,9 @@ export function DashboardScreen({
           More<Text style={styles.accent}>TV</Text>
         </Text>
         <Text style={styles.clock}>{clock}</Text>
+        <Pressable style={({ focused }) => [styles.tool, focused && styles.focused]} onPress={onSearch}>
+          <Text style={styles.toolText}>⌕</Text>
+        </Pressable>
       </View>
 
       <View style={styles.grid}>
@@ -94,6 +99,8 @@ const styles = StyleSheet.create({
   brand: { color: theme.text, fontSize: 34, fontWeight: "800" },
   accent: { color: theme.accent2 },
   clock: { color: theme.text, fontSize: 22, fontWeight: "600" },
+  tool: { marginLeft: "auto", width: 56, height: 56, borderRadius: 28, backgroundColor: theme.surface2, alignItems: "center", justifyContent: "center" },
+  toolText: { color: theme.text, fontSize: 26 },
   grid: { flex: 1, flexDirection: "row", gap: 28 },
   col: { flex: 1, gap: 24 },
   tile: { flex: 1, borderRadius: 24, alignItems: "center", justifyContent: "center", gap: 16 },
