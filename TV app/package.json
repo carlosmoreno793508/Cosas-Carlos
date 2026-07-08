@@ -1,0 +1,15 @@
+{
+  "name": "tv-app",
+  "version": "0.1.0",
+  "private": true,
+  "description": "App de TV multiplataforma (Fire TV, Apple TV, Samsung/Tizen, LG/webOS, Roku, web) para reproducir listas IPTV M3U/Xtream.",
+  "type": "module",
+  "workspaces": ["packages/*", "apps/*"],
+  "scripts": {
+    "test": "npm run test --workspace @tvapp/core",
+    "build:core": "npm run build --workspace @tvapp/core",
+    "dev:web": "npm run dev --workspace @tvapp/web",
+    "build:web": "npm run build --workspace @tvapp/web"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,28 @@
+{
+  "name": "@tvapp/tv",
+  "version": "0.1.0",
+  "private": true,
+  "description": "App React Native para TV: Fire TV, Android TV/Google TV y Apple TV. Reutiliza @tvapp/core.",
+  "scripts": {
+    "start": "react-native start",
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "tvos": "react-native run-ios --scheme TvApp-tvOS",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@tvapp/core": "*",
+    "@react-native-async-storage/async-storage": "^1.24.0",
+    "react": "18.3.1",
+    "react-native": "npm:react-native-tvos@~0.74.4",
+    "react-native-video": "^6.4.5"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.24.0",
+    "@babel/preset-env": "^7.24.0",
+    "@react-native/babel-preset": "0.74.83",
+    "@react-native/metro-config": "0.74.83",
+    "@types/react": "^18.3.3",
+    "typescript": "^5.6.0"
+  }
+}

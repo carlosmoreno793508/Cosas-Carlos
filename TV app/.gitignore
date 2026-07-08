@@ -1,0 +1,12 @@
+node_modules/
+dist/
+build/
+*.log
+.DS_Store
+.env
+.env.local
+# Artefactos de empaquetado de TV
+*.wgt
+*.ipk
+out/
+.tizen-cli-*
