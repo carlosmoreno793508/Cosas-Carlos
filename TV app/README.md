@@ -46,9 +46,10 @@ TV app/
 │   │   └── src/           # React + hls.js + navegación por control remoto (D-pad)
 │   ├── tv/              # Fase 2 — App React Native: Fire TV + Android TV + Apple TV
 │   │   └── src/           # react-native-tvos + react-native-video, reutiliza @tvapp/core
-│   └── server/          # Tu servidor M3U/Xtream (Node, sin dependencias)
-│       ├── src/           # API Xtream + exportación M3U + redirección de streams
-│       └── data/          # catalog.json / users.json (tu contenido y usuarios)
+│   ├── server/          # Tu servidor M3U/Xtream (Node, sin dependencias)
+│   │   ├── src/           # API Xtream + exportación M3U + redirección de streams
+│   │   └── data/          # catalog.json / users.json (tu contenido y usuarios)
+│   └── roku/            # Fase 3 — Canal Roku (BrightScript / SceneGraph)
 └── docs/
     ├── ARCHITECTURE.md  # Cómo encaja todo
     ├── PLATFORMS.md     # Guía por plataforma (Fire TV, Roku, Apple TV, Tizen, webOS)
@@ -70,7 +71,9 @@ TV app/
     (`apps/web/src/sources.ts`, basadas en iptv-org).
   - **Tu propio servidor** M3U/Xtream (`apps/server`): administras tu catálogo en
     un JSON y MoreTV lo refleja y actualiza. Ver `apps/server/README.md`.
-- ⏳ Fase 3 — Roku (BrightScript): documentada en `docs/PLATFORMS.md`.
+- ✅ **Fase 3 — Roku** (`apps/roku`): scaffold en BrightScript/SceneGraph con
+  cliente Xtream, parser M3U, rejilla de canales y reproductor HLS. Ver
+  `apps/roku/README.md`.
 
 ## Cómo correrlo
 
