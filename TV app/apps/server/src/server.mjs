@@ -14,6 +14,7 @@ import {
   resolveStream,
 } from "./xtreamApi.mjs";
 import { buildM3U } from "./m3u.mjs";
+import { buildXmltv } from "./epg.mjs";
 
 /**
  * Servidor propio compatible con Xtream Codes + exportación M3U. MoreTV (u otro
@@ -135,6 +136,14 @@ export const server = createServer((req, res) => {
     });
     res.writeHead(200, { "content-type": "application/vnd.apple.mpegurl; charset=utf-8" });
     return res.end(m3u);
+  }
+
+  // Guía de programación (XMLTV)
+  if (path === "/xmltv.php") {
+    const q = url.searchParams;
+    if (!authenticate(q.get("username"), q.get("password"))) return notFound(res);
+    res.writeHead(200, { "content-type": "application/xml; charset=utf-8" });
+    return res.end(buildXmltv(catalog, Date.now()));
   }
 
   // Reproducción

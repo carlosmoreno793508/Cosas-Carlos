@@ -545,6 +545,14 @@ body {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.logo-card__now {
+  font-size: 13px;
+  color: #4ce08a;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
 /* Rejilla de pósters (películas / series) */
 .poster-grid {

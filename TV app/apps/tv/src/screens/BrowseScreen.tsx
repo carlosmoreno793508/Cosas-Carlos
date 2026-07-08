@@ -4,6 +4,8 @@ import {
   XtreamClient,
   fromPlaylist,
   parseM3U,
+  nowNext,
+  type EpgEntry,
   type MediaItem,
   type Playlist,
   type PlaylistContent,
@@ -66,6 +68,27 @@ export function BrowseScreen({
     const t = setInterval(() => setNonce((n) => n + 1), 10 * 60 * 1000);
     return () => clearInterval(t);
   }, []);
+
+  // EPG (guía) para TV en vivo de fuentes Xtream: "ahora en pantalla".
+  const [epg, setEpg] = useState<Map<string, EpgEntry[]> | null>(null);
+  useEffect(() => {
+    setEpg(null);
+    if (section !== "live" || playlist.kind !== "xtream") return;
+    let alive = true;
+    new XtreamClient(fromPlaylist(playlist))
+      .getEpg()
+      .then((m) => alive && setEpg(m))
+      .catch(() => {});
+    return () => {
+      alive = false;
+    };
+  }, [playlist, section, nonce]);
+
+  function nowTitle(item: MediaItem): string | null {
+    if (!epg || !item.epgId) return null;
+    const list = epg.get(item.epgId);
+    return list ? nowNext(list, Date.now()).now?.title ?? null : null;
+  }
 
   const recent = useMemo(
     () =>
@@ -167,6 +190,9 @@ export function BrowseScreen({
               )}
               {isVod && item.rating ? <Text style={styles.badge}>{item.rating.toFixed(1)}</Text> : null}
               <Text style={styles.cardTitle} numberOfLines={1}>{item.title}</Text>
+              {!isVod && nowTitle(item) ? (
+                <Text style={styles.now} numberOfLines={1}>● {nowTitle(item)}</Text>
+              ) : null}
             </Pressable>
           )}
         />
@@ -211,5 +237,6 @@ const styles = StyleSheet.create({
   phText: { color: theme.muted, fontSize: 30, fontWeight: "800" },
   badge: { position: "absolute", top: 8, left: 8, backgroundColor: "rgba(0,0,0,0.75)", color: "#ffd24c", fontWeight: "800", fontSize: 14, paddingHorizontal: 8, paddingVertical: 4, borderRadius: 8 },
   cardTitle: { color: theme.text, fontSize: 16, textAlign: "center" },
+  now: { color: "#4ce08a", fontSize: 13, textAlign: "center" },
   focused: { borderWidth: 4, borderColor: "#fff", transform: [{ scale: 1.04 }] },
 });

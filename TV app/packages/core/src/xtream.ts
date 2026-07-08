@@ -252,6 +252,21 @@ export class XtreamClient {
     }));
   }
 
+  /**
+   * Descarga la guía completa (XMLTV) del portal y la agrupa por canal. Útil
+   * para mostrar "ahora / después" en todos los canales de una vez.
+   */
+  async getEpg(signal?: AbortSignal): Promise<Map<string, EpgEntry[]>> {
+    const res = await this.fetchFn(
+      `${this.base}/xmltv.php?username=${encodeURIComponent(this.user)}&password=${encodeURIComponent(this.pass)}`,
+      { signal },
+    );
+    if (!res.ok) throw new Error(`No se pudo descargar la EPG (${res.status})`);
+    // Carga diferida del parser EPG (solo se necesita al pedir la guía).
+    const { parseXmltv, groupEpgByChannel } = await import("./epg.js");
+    return groupEpgByChannel(parseXmltv(await res.text()));
+  }
+
   /** Carga en vivo (categorías + canales) como PlaylistContent unificado. */
   async loadLive(signal?: AbortSignal): Promise<PlaylistContent> {
     const [categories, items] = await Promise.all([

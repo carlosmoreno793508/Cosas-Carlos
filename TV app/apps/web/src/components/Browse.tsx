@@ -3,6 +3,8 @@ import {
   XtreamClient,
   fromPlaylist,
   parseM3U,
+  nowNext,
+  type EpgEntry,
   type MediaItem,
   type Playlist,
   type PlaylistContent,
@@ -75,6 +77,30 @@ export function Browse({
     const t = setInterval(() => setNonce((n) => n + 1), 10 * 60 * 1000);
     return () => clearInterval(t);
   }, []);
+
+  // EPG (guía) para TV en vivo de fuentes Xtream: "ahora en pantalla" por canal.
+  const [epg, setEpg] = useState<Map<string, EpgEntry[]> | null>(null);
+  useEffect(() => {
+    setEpg(null);
+    if (section !== "live" || playlist.kind !== "xtream") return;
+    let alive = true;
+    new XtreamClient(fromPlaylist(playlist))
+      .getEpg()
+      .then((m) => alive && setEpg(m))
+      .catch(() => {
+        /* la EPG es opcional; si falla, seguimos sin ella */
+      });
+    return () => {
+      alive = false;
+    };
+  }, [playlist, section, nonce]);
+
+  function nowTitle(item: MediaItem): string | null {
+    if (!epg || !item.epgId) return null;
+    const list = epg.get(item.epgId);
+    if (!list) return null;
+    return nowNext(list, Date.now()).now?.title ?? null;
+  }
 
   const cats = useMemo(() => {
     const list = content?.categories ?? [];
@@ -187,6 +213,9 @@ export function Browse({
                 <span className="poster__badge">{item.rating.toFixed(1)}</span>
               ) : null}
               <span className={isVod ? "poster__title" : "logo-card__title"}>{item.title}</span>
+              {!isVod && nowTitle(item) ? (
+                <span className="logo-card__now">● {nowTitle(item)}</span>
+              ) : null}
             </button>
           ))}
         </div>

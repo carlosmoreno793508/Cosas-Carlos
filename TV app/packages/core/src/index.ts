@@ -11,3 +11,4 @@ export { XtreamClient, fromPlaylist, withCounts } from "./xtream.js";
 export type { XtreamConfig, FetchLike } from "./xtream.js";
 export { FREE_SOURCES } from "./sources.js";
 export type { FreeSource } from "./sources.js";
+export { parseXmltv, parseXmltvTime, groupEpgByChannel, nowNext } from "./epg.js";
