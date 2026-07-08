@@ -16,6 +16,8 @@ Paleta azul de la app (`#4c6fff → #6b8bff`) sobre fondo oscuro `#0f1116`.
 | `moretv-512.png`      | Ícono 512×512.                                          |
 | `moretv-logo.svg/png` | Logo horizontal (ícono + wordmark "MoreTV").            |
 | `moretv-banner.png`   | Banner sobre fondo oscuro para README/splash.           |
+| `mockup-form.png`     | Maqueta: pantalla "Nueva lista de reproducción".        |
+| `mockup-browse.png`   | Maqueta: explorar canales con foco del control remoto.  |
 
 Derivados generados también en:
 - `../tizen/icon.png` (512) — empaquetado Samsung Crystal / Tizen.
