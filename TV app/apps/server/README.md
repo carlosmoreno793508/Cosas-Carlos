@@ -70,6 +70,31 @@ Tres secciones: `live` (canales), `movies` (películas) y `series`.
 > con que tu proceso reescriba `catalog.json` y llame a `/reload`. Se puede
 > conectar a cualquier fuente tuya: una carpeta de videos, tu CDN, una API, etc.
 
+### Importar automáticamente desde una M3U (`ingest.mjs`)
+
+Incluye una herramienta que importa una lista M3U (archivo o URL) a tu catálogo,
+**deduplica por URL** y marca la fecha de alta (para "Recién agregado"):
+
+```bash
+# Importar canales y recargar el servidor en caliente
+node src/ingest.mjs --m3u ./mis-canales.m3u --section live --reload
+
+# Importar películas forzando una categoría
+node src/ingest.mjs --m3u https://ejemplo/pelis.m3u --section movies --category "Estrenos" --reload
+```
+
+### Programarlo con cron (actualización automática)
+
+Para traer contenido nuevo cada noche a las 3:00 am:
+
+```cron
+0 3 * * *  cd /ruta/TV\ app/apps/server && node src/ingest.mjs --m3u https://tu-fuente/lista.m3u --section movies --reload >> ingest.log 2>&1
+```
+
+La app MoreTV también **se auto-refresca cada 10 minutos** y trae lo nuevo sola;
+además tiene un botón ⟳ para refrescar al instante y una categoría
+**🆕 Recién agregado**.
+
 ## Endpoints
 
 | Ruta | Qué hace |

@@ -116,6 +116,7 @@ export class XtreamClient {
         stream_icon?: string;
         epg_channel_id?: string;
         category_id?: string;
+        added?: string | number;
       }>
     >(this.api("get_live_streams"), signal);
 
@@ -127,6 +128,7 @@ export class XtreamClient {
       logo: s.stream_icon || undefined,
       group: s.category_id ? String(s.category_id) : undefined,
       epgId: s.epg_channel_id || undefined,
+      addedAt: s.added ? Number(s.added) || undefined : undefined,
     }));
   }
 
@@ -142,6 +144,7 @@ export class XtreamClient {
         rating_5based?: number | string;
         rating?: number | string;
         year?: string;
+        added?: string | number;
       }>
     >(this.api("get_vod_streams"), signal);
 
@@ -154,6 +157,7 @@ export class XtreamClient {
       group: s.category_id ? String(s.category_id) : undefined,
       rating: normalizeRating(s.rating_5based, s.rating),
       year: s.year || undefined,
+      addedAt: s.added ? Number(s.added) || undefined : undefined,
     }));
   }
 

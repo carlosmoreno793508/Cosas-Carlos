@@ -24,6 +24,7 @@ export function loadCatalog(dataDir) {
       logo: c.logo || "",
       category: c.category || "General",
       epgId: c.epgId || "",
+      addedAt: Number(c.addedAt) || 0,
       url: c.url,
     })),
     movies: (raw.movies ?? []).map((m, i) => ({
@@ -33,6 +34,7 @@ export function loadCatalog(dataDir) {
       category: m.category || "General",
       rating: m.rating,
       year: m.year || "",
+      addedAt: Number(m.addedAt) || 0,
       ext: extOf(m.url),
       url: m.url,
     })),
@@ -43,6 +45,7 @@ export function loadCatalog(dataDir) {
       category: s.category || "General",
       rating: s.rating,
       year: s.year || "",
+      addedAt: Number(s.addedAt) || 0,
       seasons: s.seasons ?? [],
     })),
   };

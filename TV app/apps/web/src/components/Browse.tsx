@@ -42,15 +42,17 @@ export function Browse({
   onPlay: (item: MediaItem) => void;
   onBack: () => void;
 }) {
+  const RECENT = "__recent__";
   const [content, setContent] = useState<PlaylistContent | null>(null);
   const [category, setCategory] = useState<string | null>(null);
   const [status, setStatus] = useState<string>("Cargando…");
   const [query, setQuery] = useState("");
+  const [nonce, setNonce] = useState(0);
 
   useEffect(() => {
     let alive = true;
-    setContent(null);
-    setStatus("Cargando…");
+    if (nonce === 0) setContent(null);
+    setStatus(content ? "" : "Cargando…");
     loadSection(playlist, section)
       .then((c) => {
         if (!alive) return;
@@ -64,7 +66,15 @@ export function Browse({
     return () => {
       alive = false;
     };
-  }, [playlist, section]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [playlist, section, nonce]);
+
+  // Auto-refresco: vuelve a consultar la fuente cada 10 minutos para traer lo
+  // nuevo que el servidor/proveedor haya agregado, sin intervención del usuario.
+  useEffect(() => {
+    const t = setInterval(() => setNonce((n) => n + 1), 10 * 60 * 1000);
+    return () => clearInterval(t);
+  }, []);
 
   const cats = useMemo(() => {
     const list = content?.categories ?? [];
@@ -73,10 +83,19 @@ export function Browse({
     return list.filter((c) => c.name.toLowerCase().includes(q));
   }, [content, query]);
 
+  const recent = content
+    ? [...content.items]
+        .filter((i) => i.addedAt)
+        .sort((a, b) => (b.addedAt ?? 0) - (a.addedAt ?? 0))
+        .slice(0, 60)
+    : [];
+
   const items = content
-    ? category
-      ? content.items.filter((i) => i.group === category)
-      : content.items
+    ? category === RECENT
+      ? recent
+      : category
+        ? content.items.filter((i) => i.group === category)
+        : content.items
     : [];
 
   const isVod = section !== "live";
@@ -107,6 +126,16 @@ export function Browse({
             <span>ALL</span>
             <span className="side__count">{total}</span>
           </button>
+          {recent.length > 0 && (
+            <button
+              data-focusable
+              className={`side__item ${category === RECENT ? "is-active" : ""}`}
+              onClick={() => setCategory(RECENT)}
+            >
+              <span className="side__name">🆕 Recién agregado</span>
+              <span className="side__count">{recent.length}</span>
+            </button>
+          )}
           {cats.map((c) => (
             <button
               key={c.id}
@@ -122,7 +151,17 @@ export function Browse({
       </aside>
 
       <section className="content">
-        <h2 className="content__title">{TITLES[section]}</h2>
+        <div className="content__head">
+          <h2 className="content__title">{TITLES[section]}</h2>
+          <button
+            data-focusable
+            className="content__refresh"
+            title="Refrescar"
+            onClick={() => setNonce((n) => n + 1)}
+          >
+            ⟳
+          </button>
+        </div>
         {status && <p className="status">{status}</p>}
         <div className={isVod ? "poster-grid" : "logo-grid"}>
           {items.slice(0, 120).map((item) => (

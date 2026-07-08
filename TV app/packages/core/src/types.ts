@@ -50,6 +50,8 @@ export interface MediaItem {
   rating?: number;
   /** Año de estreno (para VOD), si la fuente lo aporta. */
   year?: string;
+  /** Fecha de alta (epoch en segundos) para ordenar "Recién agregado". */
+  addedAt?: number;
   /** Metadatos libres extraídos de la fuente. */
   extra?: Record<string, string>;
 }
