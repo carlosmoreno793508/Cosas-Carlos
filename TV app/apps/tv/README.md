@@ -49,10 +49,14 @@ npx react-native@npm:react-native-tvos init MoreTV --template=react-native-tvos 
 
 ### Fire TV / Android TV
 
+Guía completa (APK debug/release, firma, publicación y CI) en
+[`BUILD_ANDROID.md`](BUILD_ANDROID.md). Resumen:
+
 ```bash
-# Con un Fire TV en modo desarrollador conectado por ADB:
-adb connect <IP-del-firetv>:5555
-npm run android          # compila e instala el APK
+bash scripts/init-native.sh        # genera android/ e ios/ (una vez)
+npm install --legacy-peer-deps
+adb connect <IP-del-firetv>:5555   # Fire TV en modo desarrollador
+npm run android                    # compila e instala el APK
 ```
 
 Para publicar: genera un APK/AAB de release y súbelo a la **Amazon Appstore**

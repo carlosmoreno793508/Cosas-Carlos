@@ -1,0 +1,63 @@
+# Compila el APK de MoreTV (Fire TV / Android TV) cuando el proyecto nativo
+# existe en "TV app/apps/tv/android". Genera ese proyecto una vez con
+# apps/tv/scripts/init-native.sh y commitéalo para activar este workflow.
+name: build-android
+
+on:
+  push:
+    branches: ["**"]
+    paths:
+      - "TV app/apps/tv/**"
+  workflow_dispatch:
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: "TV app/apps/tv"
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Comprobar si existe el proyecto nativo Android
+        id: check
+        run: |
+          if [ -d "android" ]; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Aún no hay android/. Genera con scripts/init-native.sh y commitéalo."
+          fi
+
+      - name: Configurar Node
+        if: steps.check.outputs.exists == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Configurar JDK 17
+        if: steps.check.outputs.exists == 'true'
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Configurar Android SDK
+        if: steps.check.outputs.exists == 'true'
+        uses: android-actions/setup-android@v3
+
+      - name: Instalar dependencias
+        if: steps.check.outputs.exists == 'true'
+        run: npm install --legacy-peer-deps
+
+      - name: Compilar APK (release sin firmar)
+        if: steps.check.outputs.exists == 'true'
+        run: ./gradlew assembleRelease
+        working-directory: "TV app/apps/tv/android"
+
+      - name: Subir el APK como artefacto
+        if: steps.check.outputs.exists == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: moretv-firetv-androidtv-apk
+          path: "TV app/apps/tv/android/app/build/outputs/apk/release/*.apk"
