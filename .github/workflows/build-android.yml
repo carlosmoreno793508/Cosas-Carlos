@@ -29,6 +29,13 @@ jobs:
 
       - uses: android-actions/setup-android@v3
 
+      - name: Construir el núcleo (@tvapp/core)
+        run: |
+          set -e
+          cd "$GITHUB_WORKSPACE/TV app/packages/core"
+          npm install --no-audit --no-fund
+          npm run build
+
       - name: Generar proyecto nativo e integrar el código de MoreTV
         run: |
           set -e
@@ -43,15 +50,15 @@ jobs:
           cd "$APPTV"
           npm install --legacy-peer-deps
 
-      - name: Compilar APK (debug, instalable por ADB)
+      - name: Compilar APK (release autónomo, JS incluido, instalable por ADB)
         run: |
           cd "$GITHUB_WORKSPACE/TV app/apps/tv/android"
           chmod +x ./gradlew
-          ./gradlew assembleDebug --no-daemon
+          ./gradlew assembleRelease --no-daemon
 
       - name: Subir el APK
         uses: actions/upload-artifact@v4
         with:
           name: MoreTV-FireTV-AndroidTV-apk
-          path: "TV app/apps/tv/android/app/build/outputs/apk/debug/*.apk"
+          path: "TV app/apps/tv/android/app/build/outputs/apk/release/*.apk"
           if-no-files-found: error
