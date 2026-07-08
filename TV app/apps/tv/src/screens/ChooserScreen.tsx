@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import Svg, { Circle, Path } from "react-native-svg";
 import type { Playlist } from "@tvapp/core";
 import { theme } from "../theme";
 import { loadPlaylists, removePlaylist } from "../storage";
@@ -65,11 +64,13 @@ export function ChooserScreen({
 }
 
 function Avatar({ color }: { color: string }) {
+  // Avatar con vistas nativas (sin react-native-svg): cabeza (círculo) + cuerpo
+  // (media luna con esquinas superiores redondeadas).
   return (
-    <Svg viewBox="0 0 100 100" width={120} height={120}>
-      <Circle cx={50} cy={38} r={22} fill="#f0b48f" />
-      <Path d="M18 92c0-20 14-30 32-30s32 10 32 30z" fill={color} />
-    </Svg>
+    <View style={styles.avatar}>
+      <View style={styles.avatarHead} />
+      <View style={[styles.avatarBody, { backgroundColor: color }]} />
+    </View>
   );
 }
 
@@ -95,6 +96,9 @@ const styles = StyleSheet.create({
     gap: 20,
   },
   add: { backgroundColor: "#23304d", justifyContent: "center" },
+  avatar: { width: 120, height: 120, alignItems: "center", justifyContent: "flex-end" },
+  avatarHead: { width: 52, height: 52, borderRadius: 26, backgroundColor: "#f0b48f", marginBottom: 4 },
+  avatarBody: { width: 84, height: 44, borderTopLeftRadius: 42, borderTopRightRadius: 42 },
   plus: { color: "#aebbe0", fontSize: 96, fontWeight: "300" },
   lock: { position: "absolute", top: 14, right: 16, fontSize: 26 },
   name: { color: "#fff", fontSize: 24, fontWeight: "700" },
