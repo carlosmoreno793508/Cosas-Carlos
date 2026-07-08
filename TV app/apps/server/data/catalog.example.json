@@ -1,10 +1,10 @@
 {
-  "_comment": "Catálogo de DEMOSTRACIÓN con contenido de dominio público / streams de prueba que SÍ reproducen. Reemplázalo por el tuyo (contenido propio, TV abierta/FAST o licenciado). Guía en README.md.",
+  "_comment": "Catálogo de DEMOSTRACIÓN con videos públicos que SÍ reproducen (W3C, samplelib) y streams HLS de prueba (Mux). Reemplázalo por el tuyo (contenido propio, TV abierta/FAST o licenciado). Guía en README.md.",
   "live": [
     {
       "id": "101",
       "name": "Mi Canal Abierto 1",
-      "logo": "",
+      "logo": "https://picsum.photos/seed/canal1/300/300",
       "category": "TV Abierta",
       "epgId": "canal1.mx",
       "addedAt": 1783900000,
@@ -13,40 +13,40 @@
     {
       "id": "102",
       "name": "Noticias 24/7",
-      "logo": "",
+      "logo": "https://picsum.photos/seed/noticias/300/300",
       "category": "Noticias",
       "epgId": "noticias.mx",
-      "url": "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_ts/master.m3u8"
+      "url": "https://test-streams.mux.dev/tos_ismc/main.m3u8"
     },
     {
       "id": "103",
       "name": "Cine en Vivo",
-      "logo": "",
+      "logo": "https://picsum.photos/seed/cine/300/300",
       "category": "Películas",
       "epgId": "cine.mx",
-      "url": "https://test-streams.mux.dev/tos_ismc/main.m3u8"
+      "url": "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8"
     },
     {
       "id": "104",
       "name": "Documental HD",
-      "logo": "",
+      "logo": "https://picsum.photos/seed/doc/300/300",
       "category": "Documentales",
       "epgId": "doc.mx",
-      "url": "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8"
+      "url": "https://test-streams.mux.dev/tos_ismc/main.m3u8"
     },
     {
       "id": "105",
       "name": "Deportes Live",
-      "logo": "",
+      "logo": "https://picsum.photos/seed/dep/300/300",
       "category": "Deportes",
       "epgId": "dep.mx",
       "addedAt": 1783950000,
-      "url": "https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_ts/master.m3u8"
+      "url": "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8"
     },
     {
       "id": "106",
       "name": "Música 24h",
-      "logo": "",
+      "logo": "https://picsum.photos/seed/musica/300/300",
       "category": "Música",
       "epgId": "mus.mx",
       "url": "https://test-streams.mux.dev/tos_ismc/main.m3u8"
@@ -56,119 +56,119 @@
     {
       "id": "201",
       "name": "Big Buck Bunny",
-      "logo": "https://storage.googleapis.com/gtv-videos-bucket/sample/images/BigBuckBunny.jpg",
+      "logo": "https://picsum.photos/seed/bunny/300/450",
       "category": "Animación",
       "rating": 8.1,
       "year": "2008",
       "addedAt": 1783960000,
-      "url": "https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+      "url": "https://media.w3.org/2010/05/bunny/movie.mp4"
     },
     {
       "id": "202",
-      "name": "Elephants Dream",
-      "logo": "https://storage.googleapis.com/gtv-videos-bucket/sample/images/ElephantsDream.jpg",
+      "name": "Bunny (trailer)",
+      "logo": "https://picsum.photos/seed/bunny2/300/450",
       "category": "Animación",
       "rating": 7.4,
-      "year": "2006",
-      "url": "https://storage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+      "year": "2008",
+      "url": "https://media.w3.org/2010/05/bunny/trailer.mp4"
     },
     {
       "id": "203",
-      "name": "Sintel",
-      "logo": "https://storage.googleapis.com/gtv-videos-bucket/sample/images/Sintel.jpg",
+      "name": "Sintel (trailer)",
+      "logo": "https://picsum.photos/seed/sintel/300/450",
       "category": "Animación",
       "rating": 8.0,
       "year": "2010",
       "addedAt": 1783955000,
-      "url": "https://storage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4"
+      "url": "https://media.w3.org/2010/05/sintel/trailer.mp4"
     },
     {
       "id": "204",
-      "name": "Tears of Steel",
-      "logo": "https://storage.googleapis.com/gtv-videos-bucket/sample/images/TearsOfSteel.jpg",
+      "name": "Video Demo 300",
+      "logo": "https://picsum.photos/seed/demo300/300/450",
       "category": "Ciencia Ficción",
       "rating": 7.8,
       "year": "2012",
-      "url": "https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4"
+      "url": "https://media.w3.org/2010/05/video/movie_300.mp4"
     },
     {
       "id": "205",
-      "name": "For Bigger Blazes",
-      "logo": "https://storage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerBlazes.jpg",
+      "name": "Clip de 5 segundos",
+      "logo": "https://picsum.photos/seed/s5/300/450",
       "category": "Cortometrajes",
       "rating": 6.9,
-      "year": "2013",
-      "url": "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+      "year": "2020",
+      "url": "https://download.samplelib.com/mp4/sample-5s.mp4"
     },
     {
       "id": "206",
-      "name": "For Bigger Escapes",
-      "logo": "https://storage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerEscapes.jpg",
+      "name": "Clip de 10 segundos",
+      "logo": "https://picsum.photos/seed/s10/300/450",
       "category": "Cortometrajes",
       "rating": 6.5,
-      "year": "2013",
-      "url": "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
+      "year": "2020",
+      "url": "https://download.samplelib.com/mp4/sample-10s.mp4"
     },
     {
       "id": "207",
-      "name": "For Bigger Fun",
-      "logo": "https://storage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerFun.jpg",
+      "name": "Clip de 15 segundos",
+      "logo": "https://picsum.photos/seed/s15/300/450",
       "category": "Cortometrajes",
       "rating": 6.7,
-      "year": "2013",
-      "url": "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
+      "year": "2020",
+      "url": "https://download.samplelib.com/mp4/sample-15s.mp4"
     },
     {
       "id": "208",
-      "name": "For Bigger Joyrides",
-      "logo": "https://storage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerJoyrides.jpg",
+      "name": "Clip de 20 segundos",
+      "logo": "https://picsum.photos/seed/s20/300/450",
       "category": "Cortometrajes",
       "rating": 7.0,
-      "year": "2013",
-      "url": "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4"
+      "year": "2020",
+      "url": "https://download.samplelib.com/mp4/sample-20s.mp4"
     },
     {
       "id": "209",
-      "name": "For Bigger Meltdowns",
-      "logo": "https://storage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerMeltdowns.jpg",
+      "name": "Clip de 30 segundos",
+      "logo": "https://picsum.photos/seed/s30/300/450",
       "category": "Cortometrajes",
       "rating": 6.8,
-      "year": "2013",
-      "url": "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"
+      "year": "2020",
+      "url": "https://download.samplelib.com/mp4/sample-30s.mp4"
     },
     {
       "id": "210",
-      "name": "Subaru Outback On Street And Dirt",
-      "logo": "https://storage.googleapis.com/gtv-videos-bucket/sample/images/SubaruOutbackOnStreetAndDirt.jpg",
-      "category": "Autos",
-      "rating": 6.0,
-      "year": "2013",
-      "url": "https://storage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4"
+      "name": "Big Buck Bunny (720p)",
+      "logo": "https://picsum.photos/seed/bunny720/300/450",
+      "category": "Animación",
+      "rating": 8.0,
+      "year": "2008",
+      "url": "https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_1MB.mp4"
     },
     {
       "id": "211",
-      "name": "Volkswagen GTI Review",
-      "logo": "https://storage.googleapis.com/gtv-videos-bucket/sample/images/VolkswagenGTIReview.jpg",
-      "category": "Autos",
-      "rating": 6.3,
-      "year": "2013",
-      "url": "https://storage.googleapis.com/gtv-videos-bucket/sample/VolkswagenGTIReview.mp4"
+      "name": "Big Buck Bunny (1080p)",
+      "logo": "https://picsum.photos/seed/bunny1080/300/450",
+      "category": "Animación",
+      "rating": 8.2,
+      "year": "2008",
+      "url": "https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/1080/Big_Buck_Bunny_1080_10s_5MB.mp4"
     },
     {
       "id": "212",
-      "name": "We Are Going On Bullrun",
-      "logo": "https://storage.googleapis.com/gtv-videos-bucket/sample/images/WeAreGoingOnBullrun.jpg",
-      "category": "Autos",
-      "rating": 6.1,
-      "year": "2013",
-      "url": "https://storage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4"
+      "name": "Jellyfish (1080p)",
+      "logo": "https://picsum.photos/seed/jelly/300/450",
+      "category": "Documentales",
+      "rating": 7.1,
+      "year": "2018",
+      "url": "https://test-videos.co.uk/vids/jellyfish/mp4/h264/1080/Jellyfish_1080_10s_5MB.mp4"
     }
   ],
   "series": [
     {
       "id": "301",
       "name": "Mi Serie Demo",
-      "cover": "https://storage.googleapis.com/gtv-videos-bucket/sample/images/BigBuckBunny.jpg",
+      "cover": "https://picsum.photos/seed/serie1/300/450",
       "category": "Demo",
       "rating": 7.5,
       "year": "2024",
@@ -180,12 +180,12 @@
             {
               "id": "3011",
               "title": "Episodio 1 — El comienzo",
-              "url": "https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+              "url": "https://media.w3.org/2010/05/bunny/movie.mp4"
             },
             {
               "id": "3012",
               "title": "Episodio 2 — El sueño",
-              "url": "https://storage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+              "url": "https://media.w3.org/2010/05/sintel/trailer.mp4"
             }
           ]
         },
@@ -195,7 +195,7 @@
             {
               "id": "3021",
               "title": "Episodio 1 — El regreso",
-              "url": "https://storage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4"
+              "url": "https://media.w3.org/2010/05/video/movie_300.mp4"
             }
           ]
         }
@@ -203,8 +203,8 @@
     },
     {
       "id": "302",
-      "name": "Aventuras Blender",
-      "cover": "https://storage.googleapis.com/gtv-videos-bucket/sample/images/TearsOfSteel.jpg",
+      "name": "Aventuras Demo",
+      "cover": "https://picsum.photos/seed/serie2/300/450",
       "category": "Animación",
       "rating": 8.2,
       "year": "2012",
@@ -214,13 +214,13 @@
           "episodes": [
             {
               "id": "30201",
-              "title": "Episodio 1 — Acero",
-              "url": "https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4"
+              "title": "Episodio 1 — Inicio",
+              "url": "https://download.samplelib.com/mp4/sample-10s.mp4"
             },
             {
               "id": "30202",
-              "title": "Episodio 2 — Fuego",
-              "url": "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+              "title": "Episodio 2 — Continuación",
+              "url": "https://download.samplelib.com/mp4/sample-20s.mp4"
             }
           ]
         }
