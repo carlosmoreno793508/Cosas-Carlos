@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import type { MediaItem, Playlist } from "@tvapp/core";
-import { addPlaylist, loadPlaylists } from "./storage.js";
+import { addPlaylist, loadPlaylists, removePlaylist } from "./storage.js";
 import { moveFocus, useRemote, type RemoteKey } from "./remote.js";
 import { PlaylistForm } from "./components/PlaylistForm.js";
 import { Dashboard, type Section } from "./components/Dashboard.js";
@@ -68,6 +68,13 @@ export function App() {
   /** Entra a un perfil, pidiendo PIN antes si está protegido. */
   function openProfile(p: Playlist) {
     setView(p.pin ? { screen: "pin", playlist: p } : { screen: "dashboard", playlist: p });
+  }
+
+  /** Borra una lista (con confirmación). */
+  function handleRemove(p: Playlist) {
+    if (window.confirm(`¿Borrar la lista "${p.name || p.url}"?`)) {
+      setPlaylists(removePlaylist(p.id));
+    }
   }
 
   switch (view.screen) {
@@ -210,38 +217,49 @@ export function App() {
 
           <div className="profiles">
             {playlists.map((p, i) => (
-              <button
-                key={p.id}
-                data-focusable
-                className="profile"
-                autoFocus={i === 0}
-                onClick={() => openProfile(p)}
-              >
-                <span className="profile__avatar" aria-hidden>
-                  <svg viewBox="0 0 100 100" width="120" height="120">
-                    <circle cx="50" cy="38" r="22" fill="#f0b48f" />
-                    <path d="M18 92c0-20 14-30 32-30s32 10 32 30z" fill="#6b8bff" />
-                  </svg>
-                </span>
-                {p.pin ? <span className="profile__lock" aria-label="Protegido">🔒</span> : null}
-                <span className="profile__name">{p.name || p.url}</span>
-              </button>
+              <div key={p.id} className="profile-wrap">
+                <button
+                  data-focusable
+                  className="profile"
+                  autoFocus={i === 0}
+                  onClick={() => openProfile(p)}
+                >
+                  <span className="profile__avatar" aria-hidden>
+                    <svg viewBox="0 0 100 100" width="120" height="120">
+                      <circle cx="50" cy="38" r="22" fill="#f0b48f" />
+                      <path d="M18 92c0-20 14-30 32-30s32 10 32 30z" fill="#6b8bff" />
+                    </svg>
+                  </span>
+                  {p.pin ? <span className="profile__lock" aria-label="Protegido">🔒</span> : null}
+                  <span className="profile__name">{p.name || p.url}</span>
+                </button>
+                <button
+                  data-focusable
+                  className="profile__del"
+                  title="Borrar lista"
+                  aria-label="Borrar lista"
+                  onClick={() => handleRemove(p)}
+                >
+                  🗑 Borrar
+                </button>
+              </div>
             ))}
 
-            <button
-              data-focusable
-              className="profile profile--add"
-              autoFocus={playlists.length === 0}
-              onClick={() => setView({ screen: "form" })}
-            >
-              <span className="profile__plus">+</span>
-              <span className="profile__name">Añadir lista</span>
-            </button>
+            <div className="profile-wrap">
+              <button
+                data-focusable
+                className="profile profile--add"
+                autoFocus={playlists.length === 0}
+                onClick={() => setView({ screen: "form" })}
+              >
+                <span className="profile__plus">+</span>
+                <span className="profile__name">Añadir lista</span>
+              </button>
+            </div>
           </div>
 
           <footer className="chooser__foot">
-            <p className="chooser__terms">Términos del servicio</p>
-            <p className="chooser__hint">Selecciona una lista para entrar.</p>
+            <p className="chooser__hint">Selecciona una lista para entrar · Añadir lista para crear una nueva.</p>
           </footer>
         </div>
       );

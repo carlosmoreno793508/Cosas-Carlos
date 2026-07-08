@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import Svg, { Circle, Path } from "react-native-svg";
 import type { Playlist } from "@tvapp/core";
 import { theme } from "../theme";
-import { loadPlaylists } from "../storage";
+import { loadPlaylists, removePlaylist } from "../storage";
 
 /** Selector de listas tipo perfil (equivalente a "CHOOSE YOUR PLAYLIST"). */
 export function ChooserScreen({
@@ -31,25 +31,34 @@ export function ChooserScreen({
 
       <View style={styles.profiles}>
         {playlists.map((p, i) => (
-          <Pressable
-            key={p.id}
-            hasTVPreferredFocus={i === 0}
-            style={({ focused }) => [styles.profile, focused && styles.focused]}
-            onPress={() => onOpen(p)}
-          >
-            {p.pin ? <Text style={styles.lock}>🔒</Text> : null}
-            <Avatar color={i % 2 === 0 ? theme.accent2 : "#8b3bff"} />
-            <Text style={styles.name}>{p.name || p.url}</Text>
-          </Pressable>
+          <View key={p.id} style={styles.wrap}>
+            <Pressable
+              hasTVPreferredFocus={i === 0}
+              style={({ focused }) => [styles.profile, focused && styles.focused]}
+              onPress={() => onOpen(p)}
+            >
+              {p.pin ? <Text style={styles.lock}>🔒</Text> : null}
+              <Avatar color={i % 2 === 0 ? theme.accent2 : "#8b3bff"} />
+              <Text style={styles.name}>{p.name || p.url}</Text>
+            </Pressable>
+            <Pressable
+              style={({ focused }) => [styles.del, focused && styles.focused]}
+              onPress={async () => setPlaylists(await removePlaylist(p.id))}
+            >
+              <Text style={styles.delText}>🗑 Borrar</Text>
+            </Pressable>
+          </View>
         ))}
-        <Pressable
-          hasTVPreferredFocus={playlists.length === 0}
-          style={({ focused }) => [styles.profile, styles.add, focused && styles.focused]}
-          onPress={onAdd}
-        >
-          <Text style={styles.plus}>+</Text>
-          <Text style={styles.name}>Añadir lista</Text>
-        </Pressable>
+        <View style={styles.wrap}>
+          <Pressable
+            hasTVPreferredFocus={playlists.length === 0}
+            style={({ focused }) => [styles.profile, styles.add, focused && styles.focused]}
+            onPress={onAdd}
+          >
+            <Text style={styles.plus}>+</Text>
+            <Text style={styles.name}>Añadir lista</Text>
+          </Pressable>
+        </View>
       </View>
     </View>
   );
@@ -71,7 +80,10 @@ const styles = StyleSheet.create({
   accent: { color: theme.accent2 },
   ver: { color: theme.muted, fontSize: 18 },
   title: { color: theme.text, fontSize: 34, fontWeight: "800", letterSpacing: 2, marginVertical: 44 },
-  profiles: { flexDirection: "row", gap: 40, flexWrap: "wrap", justifyContent: "center" },
+  profiles: { flexDirection: "row", gap: 40, flexWrap: "wrap", justifyContent: "center", alignItems: "flex-start" },
+  wrap: { alignItems: "center", gap: 12 },
+  del: { backgroundColor: theme.surface2, borderRadius: 999, paddingHorizontal: 22, paddingVertical: 10 },
+  delText: { color: theme.danger, fontSize: 18, fontWeight: "700" },
   profile: {
     width: 300,
     height: 320,
