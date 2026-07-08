@@ -46,6 +46,10 @@ export interface MediaItem {
   group?: string;
   /** Identificador EPG (tvg-id) para cruzar con la guía. */
   epgId?: string;
+  /** Calificación 0–10 (para VOD), si la fuente la aporta. */
+  rating?: number;
+  /** Año de estreno (para VOD), si la fuente lo aporta. */
+  year?: string;
   /** Metadatos libres extraídos de la fuente. */
   extra?: Record<string, string>;
 }
@@ -55,6 +59,8 @@ export interface Category {
   id: string;
   name: string;
   type: StreamType;
+  /** Cantidad de items en la categoría (como muestra la barra lateral). */
+  count?: number;
 }
 
 /** Programa de la guía electrónica (EPG). */

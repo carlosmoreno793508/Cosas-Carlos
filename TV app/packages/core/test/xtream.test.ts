@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { XtreamClient, fromPlaylist } from "../src/xtream.ts";
+import { XtreamClient, fromPlaylist, withCounts } from "../src/xtream.ts";
 import type { FetchLike } from "../src/xtream.ts";
 
 /** fetch falso que devuelve respuestas predefinidas por URL (subcadena). */
@@ -77,6 +77,47 @@ test("getCategories mapea id/nombre", async () => {
 test("lanza error en respuesta no OK", async () => {
   const c = new XtreamClient(config, fakeFetch([]));
   await assert.rejects(() => c.getLiveStreams(), /respondió 404/);
+});
+
+test("getMovies normaliza rating 5-based a escala 0-10", async () => {
+  const c = new XtreamClient(
+    config,
+    fakeFetch([
+      [
+        "get_vod_streams",
+        [
+          {
+            stream_id: 5,
+            name: "Peli",
+            category_id: "9",
+            container_extension: "mkv",
+            rating_5based: 4,
+            year: "2024",
+          },
+        ],
+      ],
+    ]),
+  );
+  const items = await c.getMovies();
+  assert.equal(items[0].rating, 8);
+  assert.equal(items[0].year, "2024");
+  assert.equal(items[0].streamUrl, "https://portal.example.com:8080/movie/user1/pass1/5.mkv");
+});
+
+test("withCounts cuenta items por categoría", () => {
+  const cats = withCounts(
+    [
+      { id: "a", name: "A", type: "live" },
+      { id: "b", name: "B", type: "live" },
+    ],
+    [
+      { id: "1", type: "live", title: "x", streamUrl: "u", group: "a" },
+      { id: "2", type: "live", title: "y", streamUrl: "u", group: "a" },
+      { id: "3", type: "live", title: "z", streamUrl: "u", group: "b" },
+    ],
+  );
+  assert.equal(cats.find((c) => c.id === "a")?.count, 2);
+  assert.equal(cats.find((c) => c.id === "b")?.count, 1);
 });
 
 test("fromPlaylist exige credenciales", () => {

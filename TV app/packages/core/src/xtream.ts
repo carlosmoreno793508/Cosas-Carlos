@@ -139,6 +139,9 @@ export class XtreamClient {
         stream_icon?: string;
         category_id?: string;
         container_extension?: string;
+        rating_5based?: number | string;
+        rating?: number | string;
+        year?: string;
       }>
     >(this.api("get_vod_streams"), signal);
 
@@ -149,6 +152,39 @@ export class XtreamClient {
       streamUrl: this.buildStreamUrl("movie", s.stream_id, s.container_extension || "mp4"),
       logo: s.stream_icon || undefined,
       group: s.category_id ? String(s.category_id) : undefined,
+      rating: normalizeRating(s.rating_5based, s.rating),
+      year: s.year || undefined,
+    }));
+  }
+
+  /**
+   * Descarga el catálogo de series. Ojo: en Xtream una serie no es reproducible
+   * directamente; hay que pedir `get_series_info` para obtener sus episodios
+   * (streamUrl queda vacío aquí y se resuelve al abrir la serie).
+   */
+  async getSeries(signal?: AbortSignal): Promise<MediaItem[]> {
+    const raw = await this.getJson<
+      Array<{
+        series_id: number;
+        name: string;
+        cover?: string;
+        category_id?: string;
+        rating_5based?: number | string;
+        rating?: number | string;
+        releaseDate?: string;
+      }>
+    >(this.api("get_series"), signal);
+
+    return raw.map((s) => ({
+      id: `series-${s.series_id}`,
+      type: "series" as const,
+      title: s.name,
+      streamUrl: "", // se resuelve con get_series_info al abrir la serie
+      logo: s.cover || undefined,
+      group: s.category_id ? String(s.category_id) : undefined,
+      rating: normalizeRating(s.rating_5based, s.rating),
+      year: s.releaseDate ? s.releaseDate.slice(0, 4) : undefined,
+      extra: { seriesId: String(s.series_id) },
     }));
   }
 
@@ -178,8 +214,55 @@ export class XtreamClient {
       this.getCategories("live", signal),
       this.getLiveStreams(signal),
     ]);
-    return { categories, items };
+    return { categories: withCounts(categories, items), items };
   }
+
+  /** Carga películas (categorías + items) como PlaylistContent. */
+  async loadMovies(signal?: AbortSignal): Promise<PlaylistContent> {
+    const [categories, items] = await Promise.all([
+      this.getCategories("movie", signal),
+      this.getMovies(signal),
+    ]);
+    return { categories: withCounts(categories, items), items };
+  }
+
+  /** Carga series (categorías + items) como PlaylistContent. */
+  async loadSeries(signal?: AbortSignal): Promise<PlaylistContent> {
+    const [categories, items] = await Promise.all([
+      this.getCategories("series", signal),
+      this.getSeries(signal),
+    ]);
+    return { categories: withCounts(categories, items), items };
+  }
+}
+
+/** Convierte el rating de Xtream (0–5 o 0–10) a una escala 0–10. */
+function normalizeRating(
+  fiveBased?: number | string,
+  raw?: number | string,
+): number | undefined {
+  if (fiveBased != null && fiveBased !== "") {
+    const v = Number(fiveBased);
+    if (!Number.isNaN(v)) return Math.round(v * 2 * 10) / 10;
+  }
+  if (raw != null && raw !== "") {
+    const v = Number(raw);
+    if (!Number.isNaN(v)) return v;
+  }
+  return undefined;
+}
+
+/**
+ * Rellena `count` en cada categoría contando los items que pertenecen a ella,
+ * como la barra lateral de las apps IPTV (p. ej. "TV | DEPORTES  510").
+ */
+export function withCounts(categories: Category[], items: MediaItem[]): Category[] {
+  const counts = new Map<string, number>();
+  for (const it of items) {
+    if (!it.group) continue;
+    counts.set(it.group, (counts.get(it.group) ?? 0) + 1);
+  }
+  return categories.map((c) => ({ ...c, count: counts.get(c.id) ?? 0 }));
 }
 
 /** Xtream a veces devuelve títulos EPG en base64; los decodificamos si aplica. */

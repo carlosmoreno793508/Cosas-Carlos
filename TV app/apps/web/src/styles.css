@@ -210,74 +210,365 @@ body {
   flex: 1;
 }
 
-/* --- Browse (rejilla) --- */
-.browse {
+/* --- Selector de listas (CHOOSE YOUR PLAYLIST) --- */
+.chooser {
+  min-height: 100%;
+  padding: 40px 64px;
   display: flex;
-  gap: 32px;
-  margin-top: 24px;
+  flex-direction: column;
+  align-items: center;
 }
-.browse__cats {
-  width: 260px;
+.chooser__top {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.chooser__ver {
+  color: var(--muted);
+  font-size: 18px;
+}
+.chooser__title {
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin: 40px 0 48px;
+}
+.profiles {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.profile {
+  width: 300px;
+  height: 320px;
+  border: none;
+  border-radius: 20px;
+  background: #6a6f7a;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding-bottom: 24px;
+  gap: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.profile__avatar {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
+}
+.profile__name {
+  font-size: 24px;
+  font-weight: 700;
+}
+.profile--add {
+  background: #23304d;
+}
+.profile__plus {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 96px;
+  font-weight: 300;
+  color: #aebbe0;
+}
+.chooser__foot {
+  margin-top: auto;
+  text-align: center;
+  color: var(--muted);
+}
+.chooser__terms {
+  color: var(--accent-2);
+  font-weight: 700;
+  text-decoration: underline;
+  margin-bottom: 6px;
+}
+
+/* --- Dashboard (LIVE / MOVIES / SERIES) --- */
+.dash {
+  min-height: 100%;
+  padding: 40px 64px;
+  display: flex;
+  flex-direction: column;
+}
+.dash__top {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  margin-bottom: 56px;
+}
+.dash__clock {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text);
+}
+.dash__tools {
+  margin-left: auto;
+  display: flex;
+  gap: 16px;
+}
+.tool {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  background: var(--surface-2);
+  color: var(--text);
+  font-size: 26px;
+  cursor: pointer;
+}
+.dash__grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1.15fr 1fr 1fr;
+  gap: 28px;
+  align-items: stretch;
+  max-height: 560px;
+}
+.dash__col {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.tile {
+  border: none;
+  border-radius: 24px;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  font-weight: 800;
+}
+.tile__icon {
+  font-size: 68px;
+  line-height: 1;
+}
+.tile__label {
+  font-size: 30px;
+  letter-spacing: 1px;
+}
+.tile--live {
+  background: linear-gradient(160deg, #22c993 0%, #2f7bff 55%, #4c3bff 100%);
+}
+.tile--movies {
+  flex: 1;
+  background: linear-gradient(120deg, #e0245e 0%, #ff8a3d 100%);
+}
+.tile--series {
+  flex: 1;
+  background: linear-gradient(150deg, #8b3bff 0%, #4c6fff 100%);
+}
+.pill {
+  border: none;
+  border-radius: 16px;
+  background: #6db39a;
+  color: #06251c;
+  font-size: 22px;
+  font-weight: 800;
+  padding: 20px;
+  cursor: pointer;
+}
+.dash__foot {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+  color: var(--muted);
+  font-size: 20px;
+}
+.dash__playlist {
+  color: var(--text);
+  font-weight: 700;
+}
+
+/* --- Browse: barra lateral + rejilla --- */
+.browse2 {
+  display: flex;
+  height: 100vh;
+}
+.side {
+  width: 420px;
   flex-shrink: 0;
+  background: #05070d;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.side__head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.side__back {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  border: none;
+  background: var(--surface-2);
+  color: var(--text);
+  font-size: 26px;
+  cursor: pointer;
+}
+.brand--sm {
+  font-size: 26px;
+}
+.side__search {
+  background: var(--surface-2);
+  border: none;
+  border-radius: 14px;
+  padding: 18px 20px;
+  color: var(--text);
+  font-size: 20px;
+}
+.side__list {
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+.side__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  color: var(--text);
+  font-size: 21px;
+  padding: 20px 14px;
+  cursor: pointer;
+  text-align: left;
+}
+.side__item.is-active {
+  background: #1f5b6b;
+}
+.side__name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.side__count {
+  color: var(--muted);
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.content {
+  flex: 1;
+  padding: 28px 40px;
+  overflow: auto;
+  background: radial-gradient(120% 80% at 50% 0%, #10203a 0%, var(--bg) 60%);
+}
+.content__title {
+  font-size: 30px;
+  font-weight: 800;
+  text-align: center;
+  margin: 0 0 24px;
+}
+
+/* Rejilla de logos (TV en vivo) */
+.logo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 18px;
+}
+.logo-card {
+  background: transparent;
+  border: none;
+  color: var(--text);
+  cursor: pointer;
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
-.cat {
-  background: var(--surface);
-  border: none;
-  color: var(--text);
-  text-align: left;
-  padding: 16px 20px;
-  border-radius: 12px;
-  font-size: 20px;
-  cursor: pointer;
-}
-.cat.is-active {
-  background: var(--accent);
-}
-.browse__grid {
-  flex: 1;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 20px;
-  align-content: start;
-}
-.card {
-  background: var(--surface);
-  border: none;
-  color: var(--text);
-  border-radius: var(--radius);
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  cursor: pointer;
-}
-.card__logo {
+.logo-card__img {
   width: 100%;
-  height: 120px;
+  aspect-ratio: 1 / 1;
   object-fit: contain;
-  border-radius: 8px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 10px;
 }
-.card__logo--placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--surface-2);
-  font-size: 40px;
-  font-weight: 800;
-  color: var(--muted);
-  text-transform: uppercase;
-}
-.card__title {
-  font-size: 18px;
+.logo-card__title {
+  font-size: 16px;
   text-align: center;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+/* Rejilla de pósters (películas / series) */
+.poster-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 20px;
+}
+.poster {
+  position: relative;
+  background: transparent;
+  border: none;
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.poster__img {
   width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: 12px;
+  background: var(--surface-2);
+}
+.poster__badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: rgba(0, 0, 0, 0.75);
+  color: #ffd24c;
+  font-weight: 800;
+  font-size: 15px;
+  padding: 4px 8px;
+  border-radius: 8px;
+}
+.poster__title {
+  font-size: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ph {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 34px;
+  font-weight: 800;
+  color: var(--muted);
+}
+.logo-card__img.ph,
+.poster__img.ph {
+  background: var(--surface-2);
+}
+
+.account {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 22px;
+}
+.account .btn {
+  align-self: flex-start;
+  margin-top: 16px;
 }
 
 /* --- Player --- */
