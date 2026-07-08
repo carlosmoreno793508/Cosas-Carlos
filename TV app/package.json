@@ -4,13 +4,15 @@
   "private": true,
   "description": "App de TV multiplataforma (Fire TV, Apple TV, Samsung/Tizen, LG/webOS, Roku, web) para reproducir listas IPTV M3U/Xtream.",
   "type": "module",
-  "workspaces": ["packages/*", "apps/*"],
+  "_comment": "apps/tv (React Native) se instala por separado (ver apps/tv/BUILD_ANDROID.md); no está en workspaces para que la instalación de web/servidor sea ligera y sin conflictos de peers de React Native.",
+  "workspaces": ["packages/*", "apps/web", "apps/server"],
   "scripts": {
     "test": "npm run test --workspace @tvapp/core && npm run test --workspace @tvapp/server",
     "build:core": "npm run build --workspace @tvapp/core",
     "dev:web": "npm run dev --workspace @tvapp/web",
     "build:web": "npm run build --workspace @tvapp/web",
-    "start:server": "npm start --workspace @tvapp/server"
+    "start:server": "npm start --workspace @tvapp/server",
+    "demo": "node scripts/demo.mjs"
   },
   "license": "MIT"
 }
