@@ -1,7 +1,6 @@
 import { useState } from "react";
-import type { Playlist, PlaylistKind } from "@tvapp/core";
+import { FREE_SOURCES, type Playlist, type PlaylistKind } from "@tvapp/core";
 import { newId } from "../storage.js";
-import { FREE_SOURCES } from "../sources.js";
 
 /**
  * Formulario "Nueva lista de reproducción" (equivalente a la pantalla de la

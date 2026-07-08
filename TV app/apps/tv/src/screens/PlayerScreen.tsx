@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native";
 import Video from "react-native-video";
-import type { MediaItem } from "@tvapp/core";
 import { theme } from "../theme";
 
 /**
@@ -9,7 +8,7 @@ import { theme } from "../theme";
  * nativo de cada plataforma: ExoPlayer/Media3 en Fire TV y Android TV, AVPlayer
  * en Apple TV. Soporta HLS (.m3u8), TS y MP4.
  */
-export function PlayerScreen({ item, onBack }: { item: MediaItem; onBack: () => void }) {
+export function PlayerScreen({ src, title, onBack }: { src: string; title: string; onBack: () => void }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -17,7 +16,7 @@ export function PlayerScreen({ item, onBack }: { item: MediaItem; onBack: () => 
     <View style={styles.container}>
       <Video
         style={styles.video}
-        source={{ uri: item.streamUrl }}
+        source={{ uri: src }}
         resizeMode="contain"
         controls
         paused={false}
@@ -31,7 +30,7 @@ export function PlayerScreen({ item, onBack }: { item: MediaItem; onBack: () => 
       {loading && !error && (
         <View style={styles.overlay}>
           <ActivityIndicator size="large" color={theme.text} />
-          <Text style={styles.overlayText}>{item.title}</Text>
+          <Text style={styles.overlayText}>{title}</Text>
         </View>
       )}
 

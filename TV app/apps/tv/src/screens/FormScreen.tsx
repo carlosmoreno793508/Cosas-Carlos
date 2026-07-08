@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
-import type { PlaylistKind } from "@tvapp/core";
+import { FREE_SOURCES, type Playlist, type PlaylistKind } from "@tvapp/core";
 import { theme } from "../theme";
 import { addPlaylist, newId } from "../storage";
 
@@ -10,7 +10,7 @@ export function FormScreen({
   onCreated,
 }: {
   onCancel: () => void;
-  onCreated: () => void;
+  onCreated: (p: Playlist) => void;
 }) {
   const [kind, setKind] = useState<PlaylistKind>("xtream");
   const [name, setName] = useState("");
@@ -24,7 +24,7 @@ export function FormScreen({
     if (kind === "xtream" && (!username.trim() || !password.trim())) {
       return setError("Xtream requiere usuario y contraseña");
     }
-    await addPlaylist({
+    const playlist: Playlist = {
       id: newId(),
       kind,
       name: name.trim() || undefined,
@@ -32,8 +32,9 @@ export function FormScreen({
       username: kind === "xtream" ? username.trim() : undefined,
       password: kind === "xtream" ? password.trim() : undefined,
       createdAt: Date.now(),
-    });
-    onCreated();
+    };
+    await addPlaylist(playlist);
+    onCreated(playlist);
   }
 
   return (
@@ -55,6 +56,26 @@ export function FormScreen({
           </Pressable>
         ))}
       </View>
+
+      {kind === "m3u" && (
+        <View style={styles.free}>
+          <Text style={styles.freeLabel}>Fuentes gratis legales (TV abierta / FAST):</Text>
+          <View style={styles.freeChips}>
+            {FREE_SOURCES.map((s) => (
+              <Pressable
+                key={s.id}
+                style={({ focused }) => [styles.freeChip, focused && styles.focused]}
+                onPress={() => {
+                  setUrl(s.url);
+                  if (!name.trim()) setName(s.name);
+                }}
+              >
+                <Text style={styles.freeChipText}>{s.name}</Text>
+              </Pressable>
+            ))}
+          </View>
+        </View>
+      )}
 
       <Field label="Nombre (opcional)" value={name} onChange={setName} />
       <Field
@@ -140,6 +161,11 @@ const styles = StyleSheet.create({
     borderBottomColor: theme.surface2,
     paddingVertical: 8,
   },
+  free: { marginBottom: 22 },
+  freeLabel: { color: theme.muted, fontSize: 16, marginBottom: 10 },
+  freeChips: { flexDirection: "row", flexWrap: "wrap", gap: 10 },
+  freeChip: { backgroundColor: theme.surface2, borderRadius: 999, paddingHorizontal: 18, paddingVertical: 12 },
+  freeChipText: { color: theme.text, fontSize: 17 },
   error: { color: theme.danger, fontSize: 20, fontWeight: "600", marginBottom: 8 },
   note: { color: theme.muted, fontSize: 15, marginBottom: 16 },
   actions: { flexDirection: "row", gap: 16 },

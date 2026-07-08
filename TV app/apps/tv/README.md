@@ -9,12 +9,18 @@ Está basada en [`react-native-tvos`](https://github.com/react-native-tvos/react
 el fork oficial de React Native con soporte de TV, que cubre **Apple TV** y
 **Android TV / Fire TV** desde un mismo código.
 
-## Pantallas
+## Pantallas (paridad con la app web)
 
-- **Home** — tus listas de reproducción guardadas (AsyncStorage, solo local).
-- **Form** — "Nueva lista de reproducción" (M3U o Xtream), igual que en la web.
-- **Browse** — categorías + rejilla de canales navegable con el D-pad.
-- **Player** — reproducción a pantalla completa.
+- **Chooser** — selector de listas tipo perfil ("Elige tu lista").
+- **Form** — "Nueva lista de reproducción" (M3U o Xtream) + fuentes gratis legales.
+- **Dashboard** — mosaicos LIVE / MOVIES / SERIES y accesos secundarios.
+- **Browse** — barra lateral de categorías con contadores + buscador, rejilla de
+  logos (en vivo) o pósters con rating (VOD), "Recién agregado" y auto-refresco.
+- **Series** — temporadas + episodios (get_series_info).
+- **Player** — reproducción a pantalla completa (react-native-video).
+
+Todas comparten el núcleo `@tvapp/core` (parser M3U, cliente Xtream, series,
+contadores y fuentes gratis), igual que la app web.
 
 ## Requisitos
 

@@ -9,3 +9,5 @@ export * from "./types.js";
 export { parseM3U } from "./m3u.js";
 export { XtreamClient, fromPlaylist, withCounts } from "./xtream.js";
 export type { XtreamConfig, FetchLike } from "./xtream.js";
+export { FREE_SOURCES } from "./sources.js";
+export type { FreeSource } from "./sources.js";

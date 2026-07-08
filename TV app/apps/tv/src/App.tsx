@@ -1,65 +1,104 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { StatusBar, StyleSheet, View, useTVEventHandler } from "react-native";
 import type { MediaItem, Playlist } from "@tvapp/core";
 import { theme } from "./theme";
-import { HomeScreen } from "./screens/HomeScreen";
+import { ChooserScreen } from "./screens/ChooserScreen";
 import { FormScreen } from "./screens/FormScreen";
+import { DashboardScreen, type Section } from "./screens/DashboardScreen";
 import { BrowseScreen } from "./screens/BrowseScreen";
+import { SeriesScreen } from "./screens/SeriesScreen";
+import { AccountScreen } from "./screens/AccountScreen";
 import { PlayerScreen } from "./screens/PlayerScreen";
 
 type View_ =
   | { screen: "home" }
   | { screen: "form" }
-  | { screen: "browse"; playlist: Playlist }
-  | { screen: "play"; item: MediaItem; playlist: Playlist };
+  | { screen: "dashboard"; playlist: Playlist }
+  | { screen: "account"; playlist: Playlist }
+  | { screen: "browse"; playlist: Playlist; section: Section }
+  | { screen: "series"; playlist: Playlist; series: MediaItem }
+  | { screen: "play"; src: string; title: string; back: View_ };
 
 /**
- * Raíz de la app de TV. Navegación por estado (sin librería de routing para
- * mantener el árbol simple) y manejo del botón "Atrás"/"Menu" del control con
- * useTVEventHandler, que funciona igual en Fire TV, Android TV y Apple TV.
+ * Raíz de la app de TV, con el mismo flujo que la web: selector de listas →
+ * dashboard (LIVE/MOVIES/SERIES) → navegador → detalle de serie → reproductor.
+ * El botón Atrás/Menu del control se maneja con useTVEventHandler.
  */
 export function App() {
   const [view, setView] = useState<View_>({ screen: "home" });
 
   const goBack = useCallback(() => {
     setView((v) => {
-      if (v.screen === "play") return { screen: "browse", playlist: v.playlist };
-      if (v.screen === "browse" || v.screen === "form") return { screen: "home" };
-      return v;
+      switch (v.screen) {
+        case "play":
+          return v.back;
+        case "series":
+          return { screen: "browse", playlist: v.playlist, section: "series" };
+        case "browse":
+        case "account":
+          return { screen: "dashboard", playlist: v.playlist };
+        case "dashboard":
+        case "form":
+          return { screen: "home" };
+        default:
+          return v;
+      }
     });
   }, []);
 
-  // El evento "menu" (Apple TV) y el "back" de Android/Fire llegan aquí.
   useTVEventHandler((evt) => {
-    if (evt && (evt.eventType === "menu" || evt.eventType === "back")) {
-      goBack();
-    }
+    if (evt && (evt.eventType === "menu" || evt.eventType === "back")) goBack();
   });
 
   return (
     <View style={styles.root}>
       <StatusBar hidden />
       {view.screen === "home" && (
-        <HomeScreen
+        <ChooserScreen
           onAdd={() => setView({ screen: "form" })}
-          onOpen={(playlist) => setView({ screen: "browse", playlist })}
+          onOpen={(playlist) => setView({ screen: "dashboard", playlist })}
         />
       )}
       {view.screen === "form" && (
         <FormScreen
           onCancel={() => setView({ screen: "home" })}
-          onCreated={() => setView({ screen: "home" })}
+          onCreated={(playlist) => setView({ screen: "dashboard", playlist })}
         />
+      )}
+      {view.screen === "dashboard" && (
+        <DashboardScreen
+          playlist={view.playlist}
+          onOpenSection={(section) => setView({ screen: "browse", playlist: view.playlist, section })}
+          onAccount={() => setView({ screen: "account", playlist: view.playlist })}
+        />
+      )}
+      {view.screen === "account" && (
+        <AccountScreen playlist={view.playlist} onBack={goBack} />
       )}
       {view.screen === "browse" && (
         <BrowseScreen
           playlist={view.playlist}
-          onBack={() => setView({ screen: "home" })}
-          onPlay={(item) => setView({ screen: "play", item, playlist: view.playlist })}
+          section={view.section}
+          onBack={goBack}
+          onSelect={(item) => {
+            if (item.type === "series") {
+              setView({ screen: "series", playlist: view.playlist, series: item });
+            } else {
+              setView({ screen: "play", src: item.streamUrl, title: item.title, back: view });
+            }
+          }}
+        />
+      )}
+      {view.screen === "series" && (
+        <SeriesScreen
+          playlist={view.playlist}
+          series={view.series}
+          onBack={goBack}
+          onPlayEpisode={(src, title) => setView({ screen: "play", src, title, back: view })}
         />
       )}
       {view.screen === "play" && (
-        <PlayerScreen item={view.item} onBack={goBack} />
+        <PlayerScreen src={view.src} title={view.title} onBack={goBack} />
       )}
     </View>
   );
