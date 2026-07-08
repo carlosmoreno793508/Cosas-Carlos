@@ -12,8 +12,11 @@ import {
 } from "@tvapp/core";
 import { theme } from "../theme";
 import type { Section } from "./DashboardScreen";
+import { listContinue, listFavorites } from "../library";
 
 const RECENT = "__recent__";
+const FAV = "__fav__";
+const CONT = "__cont__";
 const TITLES: Record<Section, string> = { live: "TV en vivo", movie: "Películas", series: "Series" };
 
 async function loadSection(p: Playlist, section: Section): Promise<PlaylistContent> {
@@ -90,6 +93,22 @@ export function BrowseScreen({
     return list ? nowNext(list, Date.now()).now?.title ?? null : null;
   }
 
+  // Biblioteca: favoritos y continuar viendo (async con AsyncStorage).
+  const [favs, setFavs] = useState<MediaItem[]>([]);
+  const [conts, setConts] = useState<MediaItem[]>([]);
+  useEffect(() => {
+    let alive = true;
+    listFavorites(playlist.id, section).then((f) => alive && setFavs(f as MediaItem[]));
+    if (section === "live") setConts([]);
+    else
+      listContinue(playlist.id).then(
+        (p) => alive && setConts(p.map((x) => x.item).filter((s) => s.type === section) as MediaItem[]),
+      );
+    return () => {
+      alive = false;
+    };
+  }, [playlist, section, nonce]);
+
   const recent = useMemo(
     () =>
       content
@@ -108,9 +127,13 @@ export function BrowseScreen({
   const items = content
     ? category === RECENT
       ? recent
-      : category
-        ? content.items.filter((i) => i.group === category)
-        : content.items
+      : category === FAV
+        ? favs
+        : category === CONT
+          ? conts
+          : category
+            ? content.items.filter((i) => i.group === category)
+            : content.items
     : [];
 
   const isVod = section !== "live";
@@ -135,6 +158,8 @@ export function BrowseScreen({
         />
         <FlatList
           data={[{ id: null, name: "ALL", count: content?.items.length ?? 0 } as never].concat(
+            conts.length ? [{ id: CONT, name: "▶ Continuar viendo", count: conts.length } as never] : [],
+            favs.length ? [{ id: FAV, name: "★ Favoritos", count: favs.length } as never] : [],
             recent.length ? [{ id: RECENT, name: "🆕 Recién agregado", count: recent.length } as never] : [],
             cats as never[],
           )}

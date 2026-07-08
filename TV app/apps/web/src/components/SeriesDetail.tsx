@@ -20,7 +20,7 @@ export function SeriesDetail({
 }: {
   playlist: Playlist;
   series: MediaItem;
-  onPlayEpisode: (streamUrl: string, title: string) => void;
+  onPlayEpisode: (streamUrl: string, title: string, episodeId: string) => void;
   onBack: () => void;
 }) {
   const [detail, setDetail] = useState<Detail | null>(null);
@@ -92,7 +92,7 @@ export function SeriesDetail({
                 <button
                   data-focusable
                   className="episode"
-                  onClick={() => onPlayEpisode(ep.streamUrl, ep.title)}
+                  onClick={() => onPlayEpisode(ep.streamUrl, ep.title, ep.id)}
                 >
                   <span className="episode__num">{ep.episodeNum ?? "▶"}</span>
                   <span className="episode__title">{ep.title}</span>

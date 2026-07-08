@@ -10,6 +10,7 @@ import {
   type PlaylistContent,
 } from "@tvapp/core";
 import type { Section } from "./Dashboard.js";
+import { listContinue, listFavorites } from "../library.js";
 
 const TITLES: Record<Section, string> = {
   live: "TV en vivo",
@@ -45,6 +46,8 @@ export function Browse({
   onBack: () => void;
 }) {
   const RECENT = "__recent__";
+  const FAV = "__fav__";
+  const CONT = "__cont__";
   const [content, setContent] = useState<PlaylistContent | null>(null);
   const [category, setCategory] = useState<string | null>(null);
   const [status, setStatus] = useState<string>("Cargando…");
@@ -116,12 +119,28 @@ export function Browse({
         .slice(0, 60)
     : [];
 
-  const items = content
+  // Biblioteca del usuario: favoritos y "continuar viendo" para esta sección.
+  const favs = useMemo(() => listFavorites(playlist.id, section) as MediaItem[], [playlist, section, nonce]);
+  const conts = useMemo(
+    () =>
+      section === "live"
+        ? []
+        : (listContinue(playlist.id)
+            .map((p) => p.item)
+            .filter((s) => s.type === section) as MediaItem[]),
+    [playlist, section, nonce],
+  );
+
+  const items: MediaItem[] = content
     ? category === RECENT
       ? recent
-      : category
-        ? content.items.filter((i) => i.group === category)
-        : content.items
+      : category === FAV
+        ? favs
+        : category === CONT
+          ? conts
+          : category
+            ? content.items.filter((i) => i.group === category)
+            : content.items
     : [];
 
   const isVod = section !== "live";
@@ -152,6 +171,26 @@ export function Browse({
             <span>ALL</span>
             <span className="side__count">{total}</span>
           </button>
+          {conts.length > 0 && (
+            <button
+              data-focusable
+              className={`side__item ${category === CONT ? "is-active" : ""}`}
+              onClick={() => setCategory(CONT)}
+            >
+              <span className="side__name">▶ Continuar viendo</span>
+              <span className="side__count">{conts.length}</span>
+            </button>
+          )}
+          {favs.length > 0 && (
+            <button
+              data-focusable
+              className={`side__item ${category === FAV ? "is-active" : ""}`}
+              onClick={() => setCategory(FAV)}
+            >
+              <span className="side__name">★ Favoritos</span>
+              <span className="side__count">{favs.length}</span>
+            </button>
+          )}
           {recent.length > 0 && (
             <button
               data-focusable

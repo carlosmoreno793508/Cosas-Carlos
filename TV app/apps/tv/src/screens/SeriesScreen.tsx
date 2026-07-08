@@ -18,7 +18,7 @@ export function SeriesScreen({
 }: {
   playlist: Playlist;
   series: MediaItem;
-  onPlayEpisode: (src: string, title: string) => void;
+  onPlayEpisode: (src: string, title: string, episodeId: string) => void;
   onBack: () => void;
 }) {
   const [detail, setDetail] = useState<SeriesDetail | null>(null);
@@ -92,7 +92,7 @@ export function SeriesScreen({
             renderItem={({ item: ep }) => (
               <Pressable
                 style={({ focused }) => [styles.episode, focused && styles.focused]}
-                onPress={() => onPlayEpisode(ep.streamUrl, ep.title)}
+                onPress={() => onPlayEpisode(ep.streamUrl, ep.title, ep.id)}
               >
                 <View style={styles.epNum}>
                   <Text style={styles.epNumText}>{ep.episodeNum ?? "▶"}</Text>

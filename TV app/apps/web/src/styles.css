@@ -720,3 +720,20 @@ body {
   top: 32px;
   left: 32px;
 }
+.player__fav {
+  position: absolute;
+  top: 32px;
+  right: 32px;
+  border: none;
+  border-radius: 999px;
+  padding: 14px 24px;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  background: var(--surface-2);
+  cursor: pointer;
+}
+.player__fav.is-fav {
+  background: #b8860b;
+  color: #fff;
+}

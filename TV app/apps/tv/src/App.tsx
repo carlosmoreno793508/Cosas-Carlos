@@ -17,7 +17,7 @@ type View_ =
   | { screen: "account"; playlist: Playlist }
   | { screen: "browse"; playlist: Playlist; section: Section }
   | { screen: "series"; playlist: Playlist; series: MediaItem }
-  | { screen: "play"; src: string; title: string; back: View_ };
+  | { screen: "play"; src: string; title: string; playlist: Playlist; item?: MediaItem; back: View_ };
 
 /**
  * Raíz de la app de TV, con el mismo flujo que la web: selector de listas →
@@ -84,7 +84,7 @@ export function App() {
             if (item.type === "series") {
               setView({ screen: "series", playlist: view.playlist, series: item });
             } else {
-              setView({ screen: "play", src: item.streamUrl, title: item.title, back: view });
+              setView({ screen: "play", src: item.streamUrl, title: item.title, playlist: view.playlist, item, back: view });
             }
           }}
         />
@@ -94,11 +94,20 @@ export function App() {
           playlist={view.playlist}
           series={view.series}
           onBack={goBack}
-          onPlayEpisode={(src, title) => setView({ screen: "play", src, title, back: view })}
+          onPlayEpisode={(src, title, episodeId) =>
+            setView({
+              screen: "play",
+              src,
+              title,
+              playlist: view.playlist,
+              item: { id: `ep-${episodeId}`, type: "movie", title, streamUrl: src },
+              back: view,
+            })
+          }
         />
       )}
       {view.screen === "play" && (
-        <PlayerScreen src={view.src} title={view.title} onBack={goBack} />
+        <PlayerScreen src={view.src} title={view.title} playlistId={view.playlist.id} item={view.item} onBack={goBack} />
       )}
     </View>
   );

@@ -15,7 +15,7 @@ type View =
   | { screen: "account"; playlist: Playlist }
   | { screen: "browse"; playlist: Playlist; section: Section }
   | { screen: "series"; playlist: Playlist; series: MediaItem }
-  | { screen: "play"; src: string; title: string; playlist: Playlist; back: View };
+  | { screen: "play"; src: string; title: string; playlist: Playlist; item?: MediaItem; back: View };
 
 export function App() {
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
@@ -103,6 +103,7 @@ export function App() {
                 src: item.streamUrl,
                 title: item.title,
                 playlist: browseView.playlist,
+                item,
                 back: browseView,
               });
             }
@@ -118,8 +119,15 @@ export function App() {
         <SeriesDetail
           playlist={seriesView.playlist}
           series={seriesView.series}
-          onPlayEpisode={(src, title) =>
-            setView({ screen: "play", src, title, playlist: seriesView.playlist, back: seriesView })
+          onPlayEpisode={(src, title, episodeId) =>
+            setView({
+              screen: "play",
+              src,
+              title,
+              playlist: seriesView.playlist,
+              item: { id: `ep-${episodeId}`, type: "movie", title, streamUrl: src },
+              back: seriesView,
+            })
           }
           onBack={() => setView({ screen: "browse", playlist: seriesView.playlist, section: "series" })}
         />
@@ -127,7 +135,14 @@ export function App() {
     }
 
     case "play":
-      return <VideoPlayer src={view.src} onBack={() => setView(view.back)} />;
+      return (
+        <VideoPlayer
+          src={view.src}
+          playlistId={view.playlist.id}
+          item={view.item}
+          onBack={() => setView(view.back)}
+        />
+      );
 
     case "home":
     default:
