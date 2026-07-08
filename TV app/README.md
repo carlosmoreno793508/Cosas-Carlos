@@ -1,4 +1,8 @@
-# TV App — Reproductor IPTV multiplataforma
+<p align="center">
+  <img src="apps/web/branding/moretv-banner.png" alt="MoreTV" width="440" />
+</p>
+
+# MoreTV — Reproductor IPTV multiplataforma
 
 Aplicación de TV para reproducir listas de reproducción **M3U** y portales
 **Xtream Codes** (el mismo modelo que ves en apps como TiviMate, IPTV Smarters,

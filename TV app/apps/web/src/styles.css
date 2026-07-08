@@ -51,6 +51,9 @@ body {
   letter-spacing: 0.5px;
   margin: 0;
 }
+.brand__accent {
+  color: var(--accent-2);
+}
 
 /* --- Foco global para D-pad --- */
 [data-focusable] {

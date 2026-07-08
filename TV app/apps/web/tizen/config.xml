@@ -17,7 +17,7 @@
         viewmodes="maximized">
   <tizen:application id="TVApp0001.TVApp" package="TVApp0001" required_version="6.0"/>
   <content src="index.html"/>
-  <name>TV App</name>
+  <name>MoreTV</name>
   <icon src="icon.png"/>
 
   <!-- Perfil de televisor y resolución 1080p (Full HD), base del diseño 10-foot. -->

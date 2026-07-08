@@ -92,7 +92,9 @@ export function App() {
   return (
     <div className="app">
       <header className="topbar">
-        <h1 className="brand">TV App</h1>
+        <h1 className="brand">
+          More<span className="brand__accent">TV</span>
+        </h1>
       </header>
 
       {view.screen === "home" && (

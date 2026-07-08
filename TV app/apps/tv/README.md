@@ -36,8 +36,9 @@ npm install
 # 2) Genera los proyectos nativos con la plantilla de react-native-tvos
 #    (solo la primera vez), dentro de apps/tv:
 cd apps/tv
-npx react-native@npm:react-native-tvos init TvApp --template=react-native-tvos --skip-install
+npx react-native@npm:react-native-tvos init MoreTV --template=react-native-tvos --skip-install
 #    …y mueve las carpetas android/ e ios/ generadas junto a este package.json.
+#    (El módulo registrado debe llamarse "MoreTV", igual que en app.json.)
 ```
 
 ### Fire TV / Android TV
