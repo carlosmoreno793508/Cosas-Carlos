@@ -1,63 +1,57 @@
-# Compila el APK de MoreTV (Fire TV / Android TV) cuando el proyecto nativo
-# existe en "TV app/apps/tv/android". Genera ese proyecto una vez con
-# apps/tv/scripts/init-native.sh y commitéalo para activar este workflow.
+# Compila el APK de MoreTV para Fire TV / Android TV EN LA NUBE.
+# Genera el proyecto nativo Android desde la plantilla react-native-tvos,
+# integra el código de apps/tv y produce un APK descargable como artefacto.
+# No necesitas Android Studio: ejecútalo desde la pestaña "Actions" y descarga.
 name: build-android
 
 on:
+  workflow_dispatch:
   push:
     branches: ["**"]
     paths:
       - "TV app/apps/tv/**"
-  workflow_dispatch:
+      - ".github/workflows/build-android.yml"
 
 jobs:
   apk:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: "TV app/apps/tv"
     steps:
       - uses: actions/checkout@v4
 
-      - name: Comprobar si existe el proyecto nativo Android
-        id: check
-        run: |
-          if [ -d "android" ]; then
-            echo "exists=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "exists=false" >> "$GITHUB_OUTPUT"
-            echo "::notice::Aún no hay android/. Genera con scripts/init-native.sh y commitéalo."
-          fi
-
-      - name: Configurar Node
-        if: steps.check.outputs.exists == 'true'
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: "22"
+          node-version: "20"
 
-      - name: Configurar JDK 17
-        if: steps.check.outputs.exists == 'true'
-        uses: actions/setup-java@v4
+      - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: "17"
 
-      - name: Configurar Android SDK
-        if: steps.check.outputs.exists == 'true'
-        uses: android-actions/setup-android@v3
+      - uses: android-actions/setup-android@v3
 
-      - name: Instalar dependencias
-        if: steps.check.outputs.exists == 'true'
-        run: npm install --legacy-peer-deps
+      - name: Generar proyecto nativo e integrar el código de MoreTV
+        run: |
+          set -e
+          APPTV="$GITHUB_WORKSPACE/TV app/apps/tv"
+          TMP="$RUNNER_TEMP/host"
+          # Plantilla oficial de react-native-tvos (crea android/ e ios/).
+          npx --yes react-native@npm:react-native-tvos@0.74.5-0 init MoreTV \
+            --template npm:react-native-tvos@0.74.5-0 --skip-install --directory "$TMP"
+          # Trae el proyecto Android generado a apps/tv.
+          cp -r "$TMP/android" "$APPTV/android"
+          # Instala dependencias reales de la app (con nuestro package.json).
+          cd "$APPTV"
+          npm install --legacy-peer-deps
 
-      - name: Compilar APK (release sin firmar)
-        if: steps.check.outputs.exists == 'true'
-        run: ./gradlew assembleRelease
-        working-directory: "TV app/apps/tv/android"
+      - name: Compilar APK (debug, instalable por ADB)
+        run: |
+          cd "$GITHUB_WORKSPACE/TV app/apps/tv/android"
+          chmod +x ./gradlew
+          ./gradlew assembleDebug --no-daemon
 
-      - name: Subir el APK como artefacto
-        if: steps.check.outputs.exists == 'true'
+      - name: Subir el APK
         uses: actions/upload-artifact@v4
         with:
-          name: moretv-firetv-androidtv-apk
-          path: "TV app/apps/tv/android/app/build/outputs/apk/release/*.apk"
+          name: MoreTV-FireTV-AndroidTV-apk
+          path: "TV app/apps/tv/android/app/build/outputs/apk/debug/*.apk"
+          if-no-files-found: error
