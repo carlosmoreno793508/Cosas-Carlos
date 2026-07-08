@@ -1,4 +1,5 @@
 import { createServer } from "node:http";
+import { Readable } from "node:stream";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 import { loadCatalog, loadUsers } from "./catalog.mjs";
@@ -15,6 +16,7 @@ import {
 } from "./xtreamApi.mjs";
 import { buildM3U } from "./m3u.mjs";
 import { buildXmltv } from "./epg.mjs";
+import { isM3u8, rewriteM3u8, isValidTarget } from "./proxy.mjs";
 
 /**
  * Servidor propio compatible con Xtream Codes + exportación M3U. MoreTV (u otro
@@ -101,6 +103,46 @@ function handlePlayback(pathname, res) {
   res.end();
 }
 
+/** Proxy: descarga la URL de terceros y la reenvía con CORS; reescribe HLS. */
+async function handleProxy(url, req, res) {
+  const target = url.searchParams.get("url");
+  if (!isValidTarget(target)) {
+    res.writeHead(400, { "content-type": "text/plain" });
+    return res.end("Parámetro 'url' inválido");
+  }
+  try {
+    const headers = {};
+    if (req.headers.range) headers.range = req.headers.range;
+    if (req.headers["user-agent"]) headers["user-agent"] = req.headers["user-agent"];
+    const upstream = await fetch(target, { headers, redirect: "follow" });
+    const ct = upstream.headers.get("content-type") || "";
+
+    if (isM3u8(target, ct)) {
+      const text = await upstream.text();
+      const base = process.env.PUBLIC_URL || `http://${req.headers.host}`;
+      const body = rewriteM3u8(text, upstream.url || target, `${base}/proxy?url=`);
+      res.writeHead(200, {
+        "content-type": "application/vnd.apple.mpegurl; charset=utf-8",
+        "access-control-allow-origin": "*",
+      });
+      return res.end(body);
+    }
+
+    // Otros recursos (segmentos .ts, .mp4, claves): reenvío por streaming.
+    const out = { "access-control-allow-origin": "*", "accept-ranges": "bytes" };
+    for (const h of ["content-type", "content-length", "content-range", "cache-control"]) {
+      const v = upstream.headers.get(h);
+      if (v) out[h] = v;
+    }
+    res.writeHead(upstream.status, out);
+    if (upstream.body) Readable.fromWeb(upstream.body).pipe(res);
+    else res.end();
+  } catch (err) {
+    res.writeHead(502, { "content-type": "text/plain", "access-control-allow-origin": "*" });
+    res.end("Proxy error: " + (err && err.message ? err.message : "desconocido"));
+  }
+}
+
 export const server = createServer((req, res) => {
   const url = new URL(req.url, `http://${req.headers.host || "localhost"}`);
   const path = url.pathname;
@@ -144,6 +186,12 @@ export const server = createServer((req, res) => {
     });
     res.writeHead(200, { "content-type": "application/vnd.apple.mpegurl; charset=utf-8" });
     return res.end(m3u);
+  }
+
+  // Proxy de streams (para el reproductor web: salta la restricción CORS).
+  if (path === "/proxy") {
+    handleProxy(url, req, res);
+    return;
   }
 
   // Guía de programación (XMLTV)

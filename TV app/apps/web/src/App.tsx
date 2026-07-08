@@ -7,6 +7,7 @@ import { Dashboard, type Section } from "./components/Dashboard.js";
 import { Browse } from "./components/Browse.js";
 import { SeriesDetail } from "./components/SeriesDetail.js";
 import { SearchScreen } from "./components/SearchScreen.js";
+import { SettingsScreen } from "./components/SettingsScreen.js";
 import { PinScreen } from "./components/PinScreen.js";
 import { VideoPlayer } from "./components/VideoPlayer.js";
 
@@ -16,6 +17,7 @@ type View =
   | { screen: "pin"; playlist: Playlist }
   | { screen: "dashboard"; playlist: Playlist }
   | { screen: "account"; playlist: Playlist }
+  | { screen: "settings"; playlist: Playlist }
   | { screen: "search"; playlist: Playlist }
   | { screen: "browse"; playlist: Playlist; section: Section }
   | { screen: "series"; playlist: Playlist; series: MediaItem }
@@ -42,6 +44,7 @@ export function App() {
           case "browse":
           case "account":
           case "search":
+          case "settings":
             return { screen: "dashboard", playlist: v.playlist };
           case "dashboard":
           case "form":
@@ -87,9 +90,12 @@ export function App() {
           onOpenSection={(section) => setView({ screen: "browse", playlist: view.playlist, section })}
           onAccount={() => setView({ screen: "account", playlist: view.playlist })}
           onSearch={() => setView({ screen: "search", playlist: view.playlist })}
-          onBack={() => setView({ screen: "home" })}
+          onSettings={() => setView({ screen: "settings", playlist: view.playlist })}
         />
       );
+
+    case "settings":
+      return <SettingsScreen onBack={() => setView({ screen: "dashboard", playlist: view.playlist })} />;
 
     case "account":
       return (

@@ -6,6 +6,7 @@ import {
   type Playlist,
   type SeriesDetail as Detail,
 } from "@tvapp/core";
+import { proxiedFetch } from "../settings.js";
 
 /**
  * Pantalla de detalle de una serie: carga temporadas y episodios (get_series_info)
@@ -34,7 +35,7 @@ export function SeriesDetail({
       setStatus("Las series solo están disponibles en fuentes Xtream.");
       return;
     }
-    new XtreamClient(fromPlaylist(playlist))
+    new XtreamClient(fromPlaylist(playlist), proxiedFetch())
       .getSeriesInfo(seriesId)
       .then((d) => {
         if (!alive) return;

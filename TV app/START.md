@@ -65,8 +65,19 @@ Aunque sea en el navegador, está pensada para control remoto:
 Edita `apps/server/data/catalog.example.json` (o copia a `catalog.json`) y agrega
 tus canales/películas con sus URLs. Guía completa en `apps/server/README.md`.
 
-## Alternativa: una lista M3U/Xtream que ya tengas
+## Usar TU propia lista IPTV (reproductor tipo TiviMate / Smarters)
 
-En vez del servidor local, en "Añadir lista" pon la URL M3U o las credenciales
-Xtream de tu proveedor. (Para listas M3U externas en el navegador puede aplicar
-CORS; en las apps de TV nativas no hay esa limitación.)
+MoreTV es un **reproductor**: puedes conectar la lista **M3U** o las credenciales
+**Xtream** de tu proveedor y reproducir tu contenido.
+
+1. En "Añadir lista", elige **M3U** o **Xtream** y pon tus datos.
+2. **Importante para el navegador:** Chrome bloquea (por CORS) las listas de otros
+   servidores. Para reproducirlas en la compu, activa el **proxy**:
+   - En el dashboard, pulsa el **engrane ⚙ → "Usar proxy local" → Guardar → ‹ Volver**.
+   - Esto hace que tu lista pase por el servidor incluido (`http://localhost:8080/proxy`)
+     y se reproduzca sin el bloqueo de Chrome.
+3. En **Fire TV, Android TV, Apple TV o Samsung** (apps nativas) **no** necesitas el
+   proxy: reproducen tu lista directamente.
+
+> El proxy solo reenvía la fuente que TÚ configuras (tu propia suscripción/lista).
+> Usa contenido para el que tengas derechos (ver `docs/LEGAL.md`).

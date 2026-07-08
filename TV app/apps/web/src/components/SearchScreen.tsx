@@ -6,6 +6,7 @@ import {
   type MediaItem,
   type Playlist,
 } from "@tvapp/core";
+import { proxied, proxiedFetch } from "../settings.js";
 
 /**
  * Buscador global: carga canales, películas y series de la lista y filtra por
@@ -14,11 +15,11 @@ import {
  */
 async function loadAll(p: Playlist): Promise<MediaItem[]> {
   if (p.kind === "m3u") {
-    const res = await fetch(p.url);
+    const res = await fetch(proxied(p.url));
     if (!res.ok) throw new Error(`No se pudo descargar la lista (${res.status})`);
     return parseM3U(await res.text()).items;
   }
-  const client = new XtreamClient(fromPlaylist(p));
+  const client = new XtreamClient(fromPlaylist(p), proxiedFetch());
   const [live, movies, series] = await Promise.all([
     client.getLiveStreams(),
     client.getMovies(),

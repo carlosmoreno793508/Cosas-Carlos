@@ -8,6 +8,7 @@ import {
   toggleFavorite,
   type Snapshot,
 } from "../library.js";
+import { proxied } from "../settings.js";
 
 /**
  * Reproductor de video. Usa HLS nativo cuando el TV lo soporta y cae a hls.js en
@@ -38,16 +39,18 @@ export function VideoPlayer({
     const video = videoRef.current;
     if (!video) return;
 
+    // Enruta el stream por el proxy (si está configurado) para saltar CORS.
+    const playSrc = proxied(src);
     const isHls = /\.m3u8($|\?)/i.test(src);
     let hls: Hls | null = null;
 
     if (isHls && !video.canPlayType("application/vnd.apple.mpegurl") && Hls.isSupported()) {
       hls = new Hls({ enableWorker: true });
-      hls.loadSource(src);
+      hls.loadSource(playSrc);
       hls.attachMedia(video);
       hls.on(Hls.Events.MANIFEST_PARSED, () => void video.play().catch(() => {}));
     } else {
-      video.src = src;
+      video.src = playSrc;
       void video.play().catch(() => {});
     }
 

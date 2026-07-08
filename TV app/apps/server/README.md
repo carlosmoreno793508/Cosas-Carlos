@@ -103,6 +103,7 @@ además tiene un botón ⟳ para refrescar al instante y una categoría
 | `/player_api.php?username=&password=&action=…` | API Xtream (categorías, streams, series) |
 | `/get.php?username=&password=&type=m3u_plus` | Exporta el catálogo como M3U |
 | `/{live\|movie\|series}/{u}/{p}/{id}.{ext}` | Redirige (302) al stream real |
+| `/proxy?url=<URL>` | Reenvía una lista/segmento de terceros con CORS (para el reproductor web); reescribe las playlists HLS |
 | `/reload` | Relee `catalog.json` y `users.json` en caliente |
 
 ## Variables de entorno

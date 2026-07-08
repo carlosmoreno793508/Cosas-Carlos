@@ -11,6 +11,7 @@ import {
 } from "@tvapp/core";
 import type { Section } from "./Dashboard.js";
 import { listContinue, listFavorites } from "../library.js";
+import { proxied, proxiedFetch } from "../settings.js";
 
 const TITLES: Record<Section, string> = {
   live: "TV en vivo",
@@ -20,11 +21,11 @@ const TITLES: Record<Section, string> = {
 
 async function loadSection(p: Playlist, section: Section): Promise<PlaylistContent> {
   if (p.kind === "m3u") {
-    const res = await fetch(p.url);
+    const res = await fetch(proxied(p.url));
     if (!res.ok) throw new Error(`No se pudo descargar la lista (${res.status})`);
     return parseM3U(await res.text());
   }
-  const client = new XtreamClient(fromPlaylist(p));
+  const client = new XtreamClient(fromPlaylist(p), proxiedFetch());
   if (section === "movie") return client.loadMovies();
   if (section === "series") return client.loadSeries();
   return client.loadLive();
@@ -87,7 +88,7 @@ export function Browse({
     setEpg(null);
     if (section !== "live" || playlist.kind !== "xtream") return;
     let alive = true;
-    new XtreamClient(fromPlaylist(playlist))
+    new XtreamClient(fromPlaylist(playlist), proxiedFetch())
       .getEpg()
       .then((m) => alive && setEpg(m))
       .catch(() => {
