@@ -46,6 +46,10 @@ jobs:
             --template npm:react-native-tvos@0.74.5-0 --skip-install --directory "$TMP"
           # Trae el proyecto Android generado a apps/tv.
           cp -r "$TMP/android" "$APPTV/android"
+          # react-native-video (media3 1.8) exige compilar contra Android API 35.
+          sed -i 's/compileSdkVersion = 34/compileSdkVersion = 35/' "$APPTV/android/build.gradle"
+          grep -q suppressUnsupportedCompileSdk "$APPTV/android/gradle.properties" \
+            || echo "android.suppressUnsupportedCompileSdk=35" >> "$APPTV/android/gradle.properties"
           # Instala dependencias reales de la app (con nuestro package.json).
           cd "$APPTV"
           npm install --legacy-peer-deps
