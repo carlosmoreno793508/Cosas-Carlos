@@ -10,3 +10,6 @@ build/
 *.ipk
 out/
 .tizen-cli-*
+# Catálogo y usuarios reales del servidor (usa los *.example.json versionados)
+apps/server/data/catalog.json
+apps/server/data/users.json

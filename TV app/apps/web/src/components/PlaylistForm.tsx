@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { Playlist, PlaylistKind } from "@tvapp/core";
 import { newId } from "../storage.js";
+import { FREE_SOURCES } from "../sources.js";
 
 /**
  * Formulario "Nueva lista de reproducción" (equivalente a la pantalla de la
@@ -60,6 +61,28 @@ export function PlaylistForm({
           Xtream
         </button>
       </div>
+
+      {kind === "m3u" && (
+        <div className="free">
+          <p className="free__label">Fuentes gratis legales (TV abierta / FAST):</p>
+          <div className="free__chips">
+            {FREE_SOURCES.map((s) => (
+              <button
+                key={s.id}
+                data-focusable
+                className="free__chip"
+                title={s.description}
+                onClick={() => {
+                  setUrl(s.url);
+                  if (!name.trim()) setName(s.name);
+                }}
+              >
+                {s.name}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       <label className="field">
         <span>Nombre (opcional)</span>

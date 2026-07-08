@@ -197,6 +197,28 @@ body {
   color: var(--muted);
   font-size: 15px;
 }
+.free {
+  margin-bottom: 22px;
+}
+.free__label {
+  color: var(--muted);
+  font-size: 16px;
+  margin: 0 0 10px;
+}
+.free__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.free__chip {
+  background: var(--surface-2);
+  border: none;
+  color: var(--text);
+  border-radius: 999px;
+  padding: 12px 18px;
+  font-size: 17px;
+  cursor: pointer;
+}
 .error {
   color: var(--danger);
   font-weight: 600;

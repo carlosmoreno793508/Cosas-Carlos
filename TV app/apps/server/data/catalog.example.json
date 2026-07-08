@@ -1,0 +1,54 @@
+{
+  "_comment": "Tu catálogo. Edita este archivo (o copia a catalog.json) para añadir canales, películas y series. Usa solo contenido para el que tengas derechos: contenido propio, TV abierta/FAST gratuita o material licenciado.",
+  "live": [
+    {
+      "id": "101",
+      "name": "Mi Canal Abierto 1",
+      "logo": "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg",
+      "category": "TV Abierta",
+      "epgId": "canal1.mx",
+      "url": "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8"
+    },
+    {
+      "id": "102",
+      "name": "Noticias 24/7",
+      "logo": "",
+      "category": "Noticias",
+      "epgId": "noticias.mx",
+      "url": "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8"
+    }
+  ],
+  "movies": [
+    {
+      "id": "201",
+      "name": "Big Buck Bunny (dominio público)",
+      "logo": "https://peach.blender.org/wp-content/uploads/title_anouncement.jpg",
+      "category": "Animación",
+      "rating": 8.1,
+      "year": "2008",
+      "url": "https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_1MB.mp4"
+    }
+  ],
+  "series": [
+    {
+      "id": "301",
+      "name": "Mi Serie Demo",
+      "cover": "",
+      "category": "Demo",
+      "rating": 7.5,
+      "year": "2024",
+      "seasons": [
+        {
+          "season": 1,
+          "episodes": [
+            {
+              "id": "3011",
+              "title": "Episodio 1",
+              "url": "https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_1MB.mp4"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
