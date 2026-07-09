@@ -15,6 +15,8 @@ on:
 jobs:
   apk:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
@@ -60,9 +62,21 @@ jobs:
           chmod +x ./gradlew
           ./gradlew assembleRelease --no-daemon
 
-      - name: Subir el APK
+      - name: Subir el APK (artefacto)
         uses: actions/upload-artifact@v4
         with:
           name: MoreTV-FireTV-AndroidTV-apk
           path: "TV app/apps/tv/android/app/build/outputs/apk/release/*.apk"
           if-no-files-found: error
+
+      - name: Publicar APK como Release (descarga directa para Downloader)
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: apk-firetv
+          name: MoreTV APK — Fire TV / Android TV
+          body: |
+            APK de MoreTV listo para instalar. En el Fire TV usa la app "Downloader"
+            con este enlace directo:
+            https://github.com/carlosmoreno793508/Cosas-Carlos/releases/download/apk-firetv/app-release.apk
+          files: "TV app/apps/tv/android/app/build/outputs/apk/release/*.apk"
+          fail_on_unmatched_files: true
