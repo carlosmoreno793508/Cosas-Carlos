@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View, useWindowDimensions } from "react-native";
 import type { Playlist } from "@tvapp/core";
 import { theme } from "../theme";
 
@@ -16,7 +16,10 @@ function useClock(): string {
   return `${time}  ·  ${date}`;
 }
 
-/** Dashboard con mosaicos LIVE / MOVIES / SERIES y accesos secundarios. */
+/**
+ * Dashboard con mosaicos LIVE / MOVIES / SERIES. Responsivo: en TV/horizontal
+ * usa 3 columnas; en teléfono/vertical apila los mosaicos a lo ancho.
+ */
 export function DashboardScreen({
   playlist,
   onOpenSection,
@@ -29,65 +32,66 @@ export function DashboardScreen({
   onSearch: () => void;
 }) {
   const clock = useClock();
+  const { width, height } = useWindowDimensions();
+  const portrait = height >= width;
+
+  const tile = (
+    section: Section,
+    label: string,
+    icon: string,
+    bg: object,
+    preferred = false,
+  ) => (
+    <Pressable
+      hasTVPreferredFocus={preferred}
+      style={({ focused }) => [
+        styles.tile,
+        bg,
+        portrait ? styles.tilePortrait : styles.tileLand,
+        focused && styles.focused,
+      ]}
+      onPress={() => onOpenSection(section)}
+    >
+      <Text style={[styles.icon, portrait && styles.iconPortrait]}>{icon}</Text>
+      <Text style={[styles.label, portrait && styles.labelPortrait]} numberOfLines={1}>
+        {label}
+      </Text>
+    </Pressable>
+  );
+
+  const pill = (text: string, onPress: () => void) => (
+    <Pressable style={({ focused }) => [styles.pill, focused && styles.focused]} onPress={onPress}>
+      <Text style={styles.pillText} numberOfLines={1}>{text}</Text>
+    </Pressable>
+  );
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, portrait && styles.containerPortrait]}>
       <View style={styles.top}>
         <Text style={styles.brand}>
           More<Text style={styles.accent}>TV</Text>
         </Text>
-        <Text style={styles.clock}>{clock}</Text>
+        {!portrait && <Text style={styles.clock}>{clock}</Text>}
         <Pressable style={({ focused }) => [styles.tool, focused && styles.focused]} onPress={onSearch}>
           <Text style={styles.toolText}>⌕</Text>
         </Pressable>
       </View>
 
-      <View style={styles.grid}>
-        <Pressable
-          hasTVPreferredFocus
-          style={({ focused }) => [styles.tile, styles.live, focused && styles.focused]}
-          onPress={() => onOpenSection("live")}
-        >
-          <Text style={styles.icon}>📺</Text>
-          <Text style={styles.label}>LIVE</Text>
-        </Pressable>
-
-        <View style={styles.col}>
-          <Pressable
-            style={({ focused }) => [styles.tile, styles.movies, focused && styles.focused]}
-            onPress={() => onOpenSection("movie")}
-          >
-            <Text style={styles.icon}>▶</Text>
-            <Text style={styles.label}>MOVIES</Text>
-          </Pressable>
-          <Pressable
-            style={({ focused }) => [styles.pill, focused && styles.focused]}
-            onPress={() => onOpenSection("live")}
-          >
-            <Text style={styles.pillText}>UPDATE EPG</Text>
-          </Pressable>
+      <View style={[styles.grid, portrait && styles.gridPortrait]}>
+        {tile("live", "LIVE", "📺", styles.live, true)}
+        <View style={[styles.col, portrait && styles.colPortrait]}>
+          {tile("movie", "MOVIES", "▶", styles.movies)}
+          {pill("📖 EPG", () => onOpenSection("live"))}
         </View>
-
-        <View style={styles.col}>
-          <Pressable
-            style={({ focused }) => [styles.tile, styles.series, focused && styles.focused]}
-            onPress={() => onOpenSection("series")}
-          >
-            <Text style={styles.icon}>🎬</Text>
-            <Text style={styles.label}>SERIES</Text>
-          </Pressable>
-          <Pressable
-            style={({ focused }) => [styles.pill, focused && styles.focused]}
-            onPress={onAccount}
-          >
-            <Text style={styles.pillText}>ACCOUNT</Text>
-          </Pressable>
+        <View style={[styles.col, portrait && styles.colPortrait]}>
+          {tile("series", "SERIES", "🎬", styles.series)}
+          {pill("ⓘ Cuenta", onAccount)}
         </View>
       </View>
 
       <View style={styles.foot}>
         <Text style={styles.footMuted}>Lista activa</Text>
-        <Text style={styles.footName}>{playlist.name || playlist.url}</Text>
+        <Text style={styles.footName} numberOfLines={1}>{playlist.name || playlist.url}</Text>
       </View>
     </View>
   );
@@ -95,25 +99,37 @@ export function DashboardScreen({
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 48 },
-  top: { flexDirection: "row", alignItems: "center", gap: 32, marginBottom: 40 },
-  brand: { color: theme.text, fontSize: 34, fontWeight: "800" },
+  containerPortrait: { padding: 20 },
+  top: { flexDirection: "row", alignItems: "center", gap: 20, marginBottom: 24 },
+  brand: { color: theme.text, fontSize: 30, fontWeight: "800" },
   accent: { color: theme.accent2 },
-  clock: { color: theme.text, fontSize: 22, fontWeight: "600" },
-  tool: { marginLeft: "auto", width: 56, height: 56, borderRadius: 28, backgroundColor: theme.surface2, alignItems: "center", justifyContent: "center" },
-  toolText: { color: theme.text, fontSize: 26 },
-  grid: { flex: 1, flexDirection: "row", gap: 28 },
-  col: { flex: 1, gap: 24 },
-  tile: { flex: 1, borderRadius: 24, alignItems: "center", justifyContent: "center", gap: 16 },
-  // Colores sólidos de los mosaicos (para degradados usar react-native-linear-gradient).
-  live: { flex: 1.15, backgroundColor: "#2f7bff" },
+  clock: { color: theme.text, fontSize: 20, fontWeight: "600" },
+  tool: { marginLeft: "auto", width: 52, height: 52, borderRadius: 26, backgroundColor: theme.surface2, alignItems: "center", justifyContent: "center" },
+  toolText: { color: theme.text, fontSize: 24 },
+
+  grid: { flex: 1, flexDirection: "row", gap: 24 },
+  gridPortrait: { flexDirection: "column", gap: 16 },
+  col: { flex: 1, gap: 20 },
+  colPortrait: { flex: 0, gap: 16 },
+
+  tile: { borderRadius: 22, alignItems: "center", justifyContent: "center", gap: 10 },
+  tileLand: { flex: 1 },
+  tilePortrait: { height: 130, width: "100%", flexDirection: "row", gap: 18 },
+  live: { flex: undefined, backgroundColor: "#2f7bff" },
   movies: { backgroundColor: "#e0245e" },
   series: { backgroundColor: "#7a3bff" },
-  icon: { fontSize: 64 },
-  label: { color: "#fff", fontSize: 30, fontWeight: "800", letterSpacing: 1 },
-  pill: { backgroundColor: "#6db39a", borderRadius: 16, padding: 20, alignItems: "center" },
-  pillText: { color: "#06251c", fontSize: 22, fontWeight: "800" },
-  foot: { flexDirection: "row", justifyContent: "space-between", marginTop: 32 },
-  footMuted: { color: theme.muted, fontSize: 20 },
-  footName: { color: theme.text, fontSize: 20, fontWeight: "700" },
+
+  icon: { fontSize: 56 },
+  iconPortrait: { fontSize: 40 },
+  label: { color: "#fff", fontSize: 28, fontWeight: "800", letterSpacing: 1 },
+  labelPortrait: { fontSize: 30 },
+
+  pill: { backgroundColor: "#6db39a", borderRadius: 16, paddingVertical: 16, paddingHorizontal: 20, alignItems: "center" },
+  pillText: { color: "#06251c", fontSize: 20, fontWeight: "800" },
+
+  foot: { flexDirection: "row", justifyContent: "space-between", marginTop: 20, gap: 12 },
+  footMuted: { color: theme.muted, fontSize: 18 },
+  footName: { color: theme.text, fontSize: 18, fontWeight: "700", flexShrink: 1 },
+
   focused: { borderWidth: 4, borderColor: "#fff", transform: [{ scale: 1.03 }] },
 });
