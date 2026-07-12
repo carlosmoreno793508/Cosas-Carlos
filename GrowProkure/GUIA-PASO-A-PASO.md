@@ -14,11 +14,15 @@
 
 ### Paso 1 — Compra los dominios (30 min) 💳
 Entra a **GoDaddy** y compra:
-- `growprokure.com` (tu marca)
-- 2 dominios para enviar correos, ej. `getgrowprokure.com`, `growprokure.co`
-- (Para TID, con permiso: `get-tid.com` o similar)
+- ✅ `growprokure.com` (tu marca) — **HECHO**
+- 2 dominios para **enviar** correos → **con el nombre de la empresa que envía**.
 
-👉 *Por qué:* los de "enviar correos" son aparte para no quemar tu marca.
+**Regla de oro:** el dominio de envío debe parecerse a la empresa cuyo nombre va EN el correo. Tus primeros correos salen como **TID** y **Astute** (no como GrowProkure), porque el comprador los reconoce.
+- **Primer piloto = TID** (tu empresa): compra `get-tid.com`, `trytid.com` o `tid-mexico.co`.
+- **Electrónica = Astute** (con su visto bueno): `astute-supply.com`, `getastute.com`.
+- Los de GrowProkure (`getgrowprokure.com`, `growprokure.co`) → solo si envías como tu agencia. **No urgen para los pilotos.**
+
+👉 *Por qué:* los de "enviar" son aparte para no quemar tu marca `growprokure.com`.
 
 ### Paso 2 — Crea los correos (30 min) 📧
 Entra a **Google Workspace** (workspace.google.com), plan Business Starter (~$7 por correo).
