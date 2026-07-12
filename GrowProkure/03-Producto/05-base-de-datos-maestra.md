@@ -2,14 +2,34 @@
 
 > **Propósito (Carlos):** todos los estudios de mercado que subimos son la materia prima para construir NUESTRA base de datos — el activo defensible de GrowProkure. Este documento registra cada fuente y cómo se consolida en una sola base de dos lados (oferta + demanda), por vertical.
 
-## Qué alimenta la base de datos
+## Qué alimenta la base de datos (CIFRAS REALES — archivos verificados 2026-07-12)
 
-| Fuente (estudio) | Vertical | Empresas | Contactos | Con email | Notas |
+> Archivos ya versionados en `02-Investigacion/`. Conteos verificados leyendo los Excel.
+
+| Fuente (estudio) | Vertical | Empresas | Contactos | Con email | Archivo |
 |---|---|---|---|---|---|
-| Estudio Electrónica **México** | Electrónica | **211** | **333** | sí | `Estudio_Electronica_Mexico.xlsx` (repo Astute) |
-| Estudio Electrónica **USA (SMT)** | Electrónica | **148** | **63** | sí (ZoomInfo) | `US_Electronics_SMT_Study.xlsx` |
-| Estudio **Foil / Tintas (TID)** | Plásticos-decoración | 120 (prospección) + 378 (KURZ) | **120** | **63** | Repo `tid`, 10 docs + PDF |
-| **TOTALES (aprox.)** | 2 verticales | **~850+** | **~500+** | ~130+ | Crece con cada campaña |
+| Estudio Electrónica **México** | Electrónica | **244** | **738** | **666** | `electronica/Estudio_Electronica_Mexico.xlsx` |
+| Estudio Electrónica **USA (SMT)** | Electrónica | **207** | **408** | **401** | `electronica/US_Electronics_SMT_Study.xlsx` |
+| **Foil / Tintas (TID)** | Plásticos-decoración | **46** | **191** | **93** | `plasticos/Contactos_Foil_TID_Global.xlsx` |
+| **TOTALES** | 2 verticales | **~497** | **1,337** | **1,160** | (crece con cada campaña) |
+
+> 📈 **La base ya es grande:** ~1,337 contactos, de los cuales **1,160 tienen email** — lista para operar campañas de inmediato.
+
+### Detalle por estudio
+
+**Electrónica México (244 empresas / 738 contactos / 666 emails):**
+- Top estados: Baja California 37, Chihuahua 33, Querétaro 27, Nuevo León 24, Tamaulipas 24, Coahuila 21, Guanajuato 14, SLP 13.
+- Hojas: Directorio, Contactos, Compras y Sourcing (567), Evidencia Importación (218), Notas.
+
+**Electrónica USA-SMT (207 empresas / 408 contactos / 401 emails):**
+- Top estados: CA 52, MI 19, TX 14, AZ 12, MA 12, IL 11, FL 8, WI 8.
+- Hojas: Directory, Contacts, Purchasing & Sourcing (255), Import Evidence (196), Notes.
+- Incluye columna "SMT Lines (Qty)" y evidencia de importación por empresa.
+
+**Foil/Tintas TID (46 empresas / 191 contactos / 93 emails):**
+- Base de prospección (Wiza+Apollo+ZoomInfo): 35 empresas, 120 contactos, 63 email, **20 en Bajío**.
+- **5 segmentos confirmados:** Plásticos 74 · Gráficos 17 · Cosméticos 16 · Seguridad 4 · Decorado 9.
+- Agenda propia (iPhone, validada): 71 contactos, 30 email, 61 teléfono, **19 vigentes**.
 
 > ⚠️ **Importante:** el estudio de Foil **aplica igual a tintas** (tampografía / serigrafía) — es el mismo mercado de decoración sobre plástico, mismos compradores. La base trata "foil + tintas" como un solo vertical.
 
