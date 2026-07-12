@@ -15,13 +15,21 @@ El objetivo de esta carpeta es tomar los conceptos de negocio propuestos por **C
 | `04-GoToMarket/` | Estrategia comercial, precios, canales, adquisición. |
 | `05-Recursos/` | Material de apoyo, referencias, notas sueltas. |
 
+## Documentos clave
+
+- 📄 **[Propuesta unificada v1](01-Concepto-Negocio/01-propuesta-unificada.md)** ← el documento maestro
+- 📊 [Análisis comparativo ChatGPT vs. Gemini](01-Concepto-Negocio/00-analisis-comparativo.md)
+- 🗂️ Fuentes originales: [ChatGPT](01-Concepto-Negocio/fuentes/concepto-chatgpt.md) · [Gemini](01-Concepto-Negocio/fuentes/concepto-gemini.md)
+
 ## Estado actual
 
 - [x] Estructura de carpetas creada
-- [ ] Cargar concepto de ChatGPT en `fuentes/`
-- [ ] Cargar concepto de Gemini en `fuentes/`
-- [ ] Análisis comparativo de ambos
-- [ ] Propuesta unificada v1
+- [x] Cargar concepto de ChatGPT en `fuentes/`
+- [x] Cargar concepto de Gemini en `fuentes/`
+- [x] Análisis comparativo de ambos
+- [x] Propuesta unificada v1
+- [ ] Confirmar nombre, nicho de arranque y oferta beta del cliente cero
+- [ ] Investigación de mercado y competencia (`02-Investigacion/`)
 
 ## Autor
 
