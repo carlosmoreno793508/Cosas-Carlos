@@ -1,6 +1,8 @@
 # Resumen — Estudio de mercado Foil (vertical Plásticos / TID)
 
 > Inteligencia de mercado real del vertical plásticos-decoración, extraída del estudio de Foil (repo `tid`). Cliente cero #2 = **TID**. Estudio completo: 10 docs + PDF, versionado en `tid` (rama `claude/foil-study-github-sync-4chin8`, PR #3).
+>
+> ⭐ **Aplica también a TINTAS** (tampografía / serigrafía): es el mismo mercado de decoración sobre plástico, mismos compradores. El estudio de Foil sirve de base para ambos procesos.
 
 ## Cliente cero #2 — TID (confirmado)
 
