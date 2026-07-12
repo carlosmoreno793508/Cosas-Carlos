@@ -33,12 +33,16 @@
 
 - **R16 — Vigilar fuentes y jalar nuevos contactos sin duplicar.** Cada vez que exista un Excel con contactos nuevos en las **fuentes designadas**, Prokure lo lee, normaliza al esquema, **deduplica contra la Base Maestra** (por email y contacto+empresa), integra solo los nuevos, y reporta cuántos entraron / cuántos eran duplicados. Nunca sobrescribe ni borra; solo agrega lo nuevo y conserva procedencia.
 
-### Fuentes designadas (privadas) — ⏳ PENDIENTE que Carlos las liste
-> Estas ubicaciones NO son públicas. Prokure necesita acceso autorizado a cada una.
-- [ ] (pendiente — Carlos va a pegar las direcciones)
-- [ ] …
+### Fuente principal: la bandeja `_INBOX`
+- **`GrowProkure/02-Investigacion/_INBOX/`** — Prokure vigila esta carpeta. Cualquier Excel de contactos que caiga aquí (subido a GitHub o adjunto en el chat) se procesa y deduplica.
 
-> Nota de acceso: si una fuente es un repo privado (`Astute`, `tid`), debe estar en el alcance de la sesión; si es Google Drive u otra nube, requiere el conector correspondiente autorizado. Prokure solo puede jalar de fuentes a las que la sesión tenga acceso.
+### Sesiones que GENERAN datos (privadas, NO accesibles por enlace)
+> No se puede jalar de ellas por URL (403 + no son archivos). Sirven de referencia de procedencia. Para ingresar sus datos: exportar el Excel de la sesión → soltarlo en `_INBOX`.
+- Electronics Market Study USA — `session_01Wky57mGqmGTn1ePKbirQGc`
+- Estudio de Mercado Ind Electronica Mx — `session_01Jt3zc4PjFjrNF4kCWEcfjR`
+- Foil market study repository sync — `session_01Tk81EzGn8v9qPK2bZcTCus`
+
+> Nota de acceso: si en el futuro una fuente es un repo privado (`Astute`, `tid`) en alcance de la sesión, o una carpeta de Google Drive con conector autorizado, Prokure también puede jalar de ahí directamente.
 
 ---
 
