@@ -1,13 +1,20 @@
-# Decisiones pendientes y preguntas abiertas
+# Decisiones — tomadas y pendientes
 
-Estas son las decisiones que hay que cerrar contigo (Carlos) para pasar de la propuesta v1 a la ejecución. Conforme las respondamos, se convierten en documentos de `02-Investigacion/` y `03-Producto/`.
+## ✅ Decisiones ya tomadas (2026-07-12)
 
-## Decisiones de negocio
+1. **Verticales:** Electrónica + Plásticos (foil/tintas). Ver `01-Concepto-Negocio/02-enfoque-verticales.md`.
+2. **Nicho de arranque:** distribuidores de componentes electrónicos.
+3. **Cliente cero:** **Astute Electronics** (Carlos trabaja ahí → acceso directo). Ver `04-GoToMarket/00-cliente-cero-astute.md`.
+4. **Enfoque:** 100% lado proveedor primero; lado comprador entra en el mes 3.
+5. **Laboratorio:** sí arrancamos. Ver `04-GoToMarket/01-laboratorio-kickoff.md`.
 
-1. **Nombre definitivo.** ¿"ProcureAI Growth" u otro? Esto define los dominios a comprar.
-2. **Nicho de arranque.** Confirmar: distribuidores de componentes electrónicos en México como primer segmento del lado oferta. ¿Alguna cuenta/relación que ya tengas para el cliente cero?
-3. **Oferta beta (cliente cero).** ¿Vamos con el esquema Gemini (solo software + $150/cita a cambio de testimonio) para los primeros 1–2?
-4. **Enfoque inicial.** ¿Arrancamos 100% lado proveedor y el lado comprador entra en el mes 3, o quieres tantear ambos desde el inicio?
+## ⏳ Decisiones aún pendientes
+
+1. **Nombre comercial definitivo.** "ProcureAI" está tomado (procure.ai) → riesgo de marca. Ver análisis y shortlist en `01-Concepto-Negocio/03-nombre-y-marca.md`. Falta que Carlos elija 2–3 favoritos para verificación profunda.
+2. **Presupuesto de arranque** (~$150–300 USD/mes). Pendiente de aprobar.
+3. **Visto bueno de Astute** para el piloto.
+4. **Aprobar repos** `Astute` y `tid` en la sesión para integrar los estudios.
+5. **Stack final:** ¿Instantly o Smartlead? ¿CRM al inicio o después?
 
 ## Decisiones operativas / técnicas
 
