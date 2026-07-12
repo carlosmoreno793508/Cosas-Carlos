@@ -72,6 +72,33 @@ Ninguno está legalmente confirmado todavía; son candidatos para el siguiente p
 
 ---
 
+## Ronda 3 — evaluación de los nombres de Carlos (2026-07-12)
+
+| Nombre | Colisión exacta | Riesgo | Notas |
+|---|---|---|---|
+| **GrowProkure (GP)** | ✅ No encontrada | 🟢 Bajo-medio | Nadie usa "GrowProkure" exacto. La raíz "Prokure/Prokura" sí existe pero en otros sectores: **ProKure Solutions** (marca USPTO en limpieza/biocidas, clase distinta) y **Prokura/Kearney** (consultoría). La "k" lo hace distintivo y ayuda a conseguir dominio. Requiere chequeo formal de marca, pero baja confusión real en B2B electrónica/plásticos. |
+| **Industrial Growth Intelligence (IGI)** | ✅ No exacta | 🔴 Alto (como marca) | Descriptivo y **rodeado de casi-idénticos**: *Industry Intelligence Inc.* (industryintel.com, inteligencia de mercado industrial), *GROW Industrial Intelligence* (Gardner), *Industrial Intelligence*, *Industrial Info Resources*. Además **"IGI" ya está muy usado** (International Gemological Institute, IGI Global). Difícil de registrar (genérico) y fácil de confundir. |
+| **Industrial Growth IA (IGI)** | — | 🔴 Alto | Igual que arriba; "IA" = "AI" en español, débil fuera de MX. Mismo problema de genérico + acrónimo saturado. |
+| **GrowProkure IA (GPI)** | ✅ No encontrada | 🟢 Bajo-medio | Igual que GrowProkure; el sufijo "IA" añade el ángulo de inteligencia. GPI como iniciales está más libre que IGI. |
+
+### 🏆 Recomendación final
+
+**Marca = GrowProkure** · **Tagline/posicionamiento = "Industrial Growth Intelligence"**
+
+> **GrowProkure — Industrial Growth Intelligence**
+
+Por qué esta combinación gana:
+1. **GrowProkure** es distintivo y ownable (nadie lo usa exacto), conserva tu gusto "Grow + Procure", y la "k" ayuda con dominio y marca.
+2. **"Industrial Growth Intelligence"** es un descriptor buenísimo de *lo que haces* — pero como nombre legal es genérico y saturado. Usado como **tagline** aprovecha su claridad (y recicla el concepto IGI de ChatGPT) sin los problemas de marca.
+3. Te quedas con **ambos**: marca fuerte y registrable + descripción clara. Iniciales **GP** o **GPI**.
+
+**Siguiente paso (verificación profunda antes de comprar/registrar):**
+- [ ] Dominio: `growprokure.com`, `.mx`, `.ai`, `.io`
+- [ ] Redes: handle @growprokure en LinkedIn/X/IG
+- [ ] Marca: búsqueda en IMPI (México) y USPTO (EUA) clase de servicios de marketing/inteligencia comercial (clase 35)
+
+---
+
 ## Nota
 
 Búsquedas web hechas el 2026-07-12. Una búsqueda web NO sustituye una búsqueda oficial de marca registrada; para el nombre final se recomienda consulta en IMPI (mx) y USPTO (us) antes de registrar o invertir en branding.
