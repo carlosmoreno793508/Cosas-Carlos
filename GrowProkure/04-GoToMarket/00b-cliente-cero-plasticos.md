@@ -4,8 +4,12 @@
 
 ## Nombre del cliente cero
 
-- **Cliente cero #2:** **[POR CONFIRMAR]** — candidato probable: **TID** (dueño del estudio "Foil Market Study" en el repo `tid`; email de Carlos es `@tidmexico.com.mx`).
-- Carlos: confírmame el nombre y tu relación con ellos (¿trabajas ahí / los representas, como con Astute?).
+- **Cliente cero #2:** ✅ **TID** (confirmado). Empresa de Carlos (`@tidmexico.com.mx`), foil / hot stamping / tampografía / serigrafía, Bajío.
+- Estudio de mercado completo ya hecho (repo `tid`) — ver `../02-Investigacion/plasticos/resumen-foil.md`.
+- **Pitch TID:** abasto local vs. importación · cercanía Bajío · solución integral · muestras gratis.
+- **Competidor a desplazar:** KURZ (378 compradores mapeados → cuentas para segunda fuente local).
+- **Activos listos:** 120 contactos / 63 emails / 5 segmentos + agenda propia (20 vigentes) + plan de contacto y 4 plantillas.
+- **Contactos calientes:** Bob Lenoir, Miguel Villafuerte, Jessica McConnell, Diego Alemán.
 
 ## Por qué un cliente cero de plásticos
 
