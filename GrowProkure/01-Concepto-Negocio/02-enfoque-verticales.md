@@ -1,6 +1,6 @@
 # Enfoque de mercado — Dos verticales
 
-> Decisión de Carlos (2026-07-12): ProcureAI Growth arranca enfocado en dos verticales concretas donde TID ya tiene estudios de mercado hechos. No perseguimos "toda la manufactura": empezamos donde ya hay conocimiento y datos.
+> Decisión de Carlos (2026-07-12): GrowProkure arranca enfocado en dos verticales concretas donde TID ya tiene estudios de mercado hechos. No perseguimos "toda la manufactura": empezamos donde ya hay conocimiento y datos.
 
 ---
 
@@ -40,7 +40,7 @@ Este vertical no estaba en los conceptos originales; lo aporta Carlos desde el c
 
 ## Cómo se integran los estudios existentes al proyecto
 
-| Estudio | Repo origen | Uso en ProcureAI Growth |
+| Estudio | Repo origen | Uso en GrowProkure |
 |---|---|---|
 | Astute / Electronic Market Study USA | `Astute` | Semilla de la base de datos + inteligencia del vertical Electrónica. Se copiará/resumirá en `02-Investigacion/electronica/`. |
 | Foil Market Study | `tid` | Semilla de la base de datos + inteligencia del vertical Plásticos-decoración. Se copiará/resumirá en `02-Investigacion/plasticos/`. |

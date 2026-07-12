@@ -1,4 +1,4 @@
-# ProcureAI Growth — Propuesta unificada
+# GrowProkure — Propuesta unificada
 
 > Versión: v1 · Fecha: 2026-07-12 · Autor: Carlos Moreno
 > Este es el documento maestro. Fusiona lo mejor de ChatGPT (el QUÉ) y Gemini (el CÓMO) y añade el diferenciador que ninguno de los dos tenía: **servir a los dos lados del mercado**.
@@ -7,7 +7,7 @@
 
 ## 1. La idea en una frase
 
-> **ProcureAI Growth es el motor de inteligencia y oportunidades para la cadena de suministro industrial de Norteamérica: ayudamos a los proveedores a encontrar y ganar proyectos reales, y a los compradores (Procurement / Supply Chain) a encontrar proveedores confiables y reducir el riesgo de suministro — usando la misma base de datos e inteligencia propia.**
+> **GrowProkure es el motor de inteligencia y oportunidades para la cadena de suministro industrial de Norteamérica: ayudamos a los proveedores a encontrar y ganar proyectos reales, y a los compradores (Procurement / Supply Chain) a encontrar proveedores confiables y reducir el riesgo de suministro — usando la misma base de datos e inteligencia propia.**
 
 No vendemos leads. No rentamos prospectos. Entregamos **oportunidades calificadas y conexiones de valor**, y construimos un activo de datos que nadie más tiene.
 
@@ -26,7 +26,7 @@ Los dos conceptos originales solo miraban un lado: ayudar al **proveedor** a ven
 
 ```
         ┌─────────────────────────────────────────┐
-        │         ProcureAI Growth (motor)         │
+        │         GrowProkure (motor)         │
         │   Base de datos + IA de señales propia   │
         └───────────────┬─────────────┬────────────┘
                         │             │
@@ -129,7 +129,7 @@ Resolvemos el conflicto "rápido vs. lento" haciendo las dos cosas en paralelo:
 
 ## 9. Próximos pasos (para decidir contigo)
 
-1. Confirmar el **nombre** (¿"ProcureAI Growth"? ¿otro?) y registrar dominios.
+1. Confirmar el **nombre** (¿"GrowProkure"? ¿otro?) y registrar dominios.
 2. Validar el nicho de arranque (distribuidores electrónicos MX) vs. una alternativa.
 3. Definir la **oferta beta del cliente cero** exacta.
 4. Decidir si arrancamos ya el laboratorio (dominios + warm-up de 14 días).

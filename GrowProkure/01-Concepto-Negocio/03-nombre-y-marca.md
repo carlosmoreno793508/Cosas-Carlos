@@ -12,7 +12,7 @@
 - Existe además un "ProcureAI" en desarrollo (pcexol.projectcode.dev) como "AI-Native Procurement Platform".
 - El espacio "Procure*" está saturado: **Procurify, Procol.ai, Precoro, Prokura (Kearney), Coupa, GEP**.
 
-**Implicación:** "ProcureAI Growth" viviría a la sombra de procure.ai. Riesgo **medio-alto** de:
+**Implicación:** "GrowProkure" viviría a la sombra de procure.ai. Riesgo **medio-alto** de:
 1. Confusión de marca (mismo sector: compras + IA).
 2. Conflicto de marca registrada (misma clase). 
 3. No poder conseguir el dominio bueno (procureai.com casi seguro tomado).
@@ -66,8 +66,8 @@ Ninguno está legalmente confirmado todavía; son candidatos para el siguiente p
 
 ## Recomendación
 
-1. **Mi consejo honesto:** no uses "ProcureAI Growth" como nombre legal/comercial principal por el choque con procure.ai. Puedes conservar el *espíritu* (compras + IA + crecimiento) con un nombre propio.
-2. **Como nombre interno de proyecto** (esta carpeta/repo) "ProcureAI Growth" está perfecto — es solo trabajo interno, sin exposición pública ni marca.
+1. **Mi consejo honesto:** no uses "GrowProkure" como nombre legal/comercial principal por el choque con procure.ai. Puedes conservar el *espíritu* (compras + IA + crecimiento) con un nombre propio.
+2. **Como nombre interno de proyecto** (esta carpeta/repo) "GrowProkure" está perfecto — es solo trabajo interno, sin exposición pública ni marca.
 3. **Siguiente paso:** dime tus 2–3 favoritos de la shortlist (o nuevos) y hago la **verificación profunda**: dominio (.com, .mx, .ai), redes sociales y búsqueda de marca en IMPI (México) y USPTO (EUA).
 
 ---

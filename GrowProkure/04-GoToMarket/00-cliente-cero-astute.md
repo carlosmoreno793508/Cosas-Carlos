@@ -17,7 +17,7 @@ Alineado con el enfoque de Gemini (proteger reputación) y con buena higiene de 
 
 1. **Dominios secundarios, nunca el principal.** No tocamos el dominio corporativo de Astute. Usamos dominios de prospección aparte (p.ej. `try-astute…`, `astute-supply…` — a confirmar con ellos).
 2. **Autorización clara.** Aunque Carlos trabaja ahí, el piloto debe correrse con visto bueno de quien corresponda en Astute (evita problemas y permite usar la marca en el outreach).
-3. **Separación de activos.** La base de datos, el motor de señales y los aprendizajes (SOPs) son **de ProcureAI Growth (el proyecto)**, no de Astute. Astute es el caso de uso; el activo defensible se queda en el proyecto.
+3. **Separación de activos.** La base de datos, el motor de señales y los aprendizajes (SOPs) son **de GrowProkure (el proyecto)**, no de Astute. Astute es el caso de uso; el activo defensible se queda en el proyecto.
 4. **Métrica de éxito del piloto:** nº de reuniones calificadas agendadas con compradores reales (buyers / commodity managers) en 6–8 semanas.
 
 ## Qué probamos con Astute (hipótesis)

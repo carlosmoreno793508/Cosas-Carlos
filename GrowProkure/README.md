@@ -1,4 +1,4 @@
-# ProcureAI Growth
+# GrowProkure
 
 Proyecto para diseñar una solución **única** que ayude a **clientes (compradores)** y **proveedores** a conectarse y operar mejor, apoyada en IA.
 
