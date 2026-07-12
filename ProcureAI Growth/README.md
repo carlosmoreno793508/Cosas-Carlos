@@ -18,6 +18,7 @@ El objetivo de esta carpeta es tomar los conceptos de negocio propuestos por **C
 ## Documentos clave
 
 - 📄 **[Propuesta unificada v1](01-Concepto-Negocio/01-propuesta-unificada.md)** ← el documento maestro
+- 🎯 **[Enfoque de verticales](01-Concepto-Negocio/02-enfoque-verticales.md)** — Electrónica + Plásticos (foil/tintas)
 - 📊 [Análisis comparativo ChatGPT vs. Gemini](01-Concepto-Negocio/00-analisis-comparativo.md)
 - 🗂️ Fuentes originales: [ChatGPT](01-Concepto-Negocio/fuentes/concepto-chatgpt.md) · [Gemini](01-Concepto-Negocio/fuentes/concepto-gemini.md)
 
