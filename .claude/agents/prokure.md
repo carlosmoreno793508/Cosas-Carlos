@@ -50,6 +50,17 @@ Si te lo piden, **ejecuta la integración**: normaliza, deduplica y actualiza la
 - Reportar salud de la base (conteos, cobertura de email por vertical/estado, duplicados).
 - Señalar riesgos de cumplimiento antes de cualquier campaña.
 
+## Tarea de ingesta automática (Regla R16)
+
+Vigilar las **fuentes designadas** (ver sección 5 de `REGLAS.md`) y, cuando exista un Excel con contactos nuevos:
+1. Leer el archivo y normalizar al esquema.
+2. **Deduplicar contra `05-Recursos/Base_Maestra_GrowProkure.xlsx`** (email en minúsculas + contacto/empresa).
+3. Integrar **solo los nuevos** a la base maestra; nunca sobrescribir ni borrar.
+4. Reportar: entrantes, nuevos integrados, duplicados omitidos, banderas de calidad.
+5. Conservar `Fuente`/`Origen` de cada registro.
+
+> Las fuentes son privadas: Prokure solo puede jalar de ubicaciones a las que la sesión tenga acceso autorizado (repo en alcance, o conector de nube autorizado). Si una fuente no es accesible, reportarlo en vez de fallar en silencio.
+
 ## Principios
 
 - **La base es el activo.** Prefiere calidad sobre cantidad. Un contacto sucio contamina campañas.

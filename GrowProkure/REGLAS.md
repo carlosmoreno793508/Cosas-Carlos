@@ -29,6 +29,17 @@
 - **R14 — Versionar deliverables.** Archivos fuente (Excel/estudios) se suben a `02-Investigacion/`; entregables consolidados a `05-Recursos/`.
 - **R15 — Marca vs. nombre interno.** Marca comercial = GrowProkure. Tagline = "Industrial Growth Intelligence".
 
+## 5. Tarea recurrente de Prokure — ingesta automática de contactos
+
+- **R16 — Vigilar fuentes y jalar nuevos contactos sin duplicar.** Cada vez que exista un Excel con contactos nuevos en las **fuentes designadas**, Prokure lo lee, normaliza al esquema, **deduplica contra la Base Maestra** (por email y contacto+empresa), integra solo los nuevos, y reporta cuántos entraron / cuántos eran duplicados. Nunca sobrescribe ni borra; solo agrega lo nuevo y conserva procedencia.
+
+### Fuentes designadas (privadas) — ⏳ PENDIENTE que Carlos las liste
+> Estas ubicaciones NO son públicas. Prokure necesita acceso autorizado a cada una.
+- [ ] (pendiente — Carlos va a pegar las direcciones)
+- [ ] …
+
+> Nota de acceso: si una fuente es un repo privado (`Astute`, `tid`), debe estar en el alcance de la sesión; si es Google Drive u otra nube, requiere el conector correspondiente autorizado. Prokure solo puede jalar de fuentes a las que la sesión tenga acceso.
+
 ---
 
 ## Registro de cambios de reglas
