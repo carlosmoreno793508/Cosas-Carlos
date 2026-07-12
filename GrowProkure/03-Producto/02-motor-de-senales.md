@@ -13,7 +13,12 @@
 | **Nearshoring a México** | Rebalanceo de base de proveedores | Anuncios de inversión, notas sectoriales |
 | **RFQ activo** | Compra inminente | LinkedIn, contactos, señales de intención |
 | **Nuevas vacantes de compras** | Crece el equipo → nuevos decisores | Job postings (Apollo/ZoomInfo) |
+| **Vacantes SMT** (purchasing/production/técnico/sourcing/operadores) | Línea SMT activa o creciendo → comprador de componentes | SMTA Career Center, IPC, LinkedIn, ATS (Ashby/Greenhouse/Lever) |
+| ⭐ **Importación de consumibles SMT** (HS 3810/3506, pasta/flux) | **Línea SMT ACTIVA** — produce AHORA = comprador vivo | Trade-data (ImportYeti gratis, Panjiva, ImportGenius) |
+| **Importación de equipo SMT** (HS 8486, 8479.89) | Nueva capacidad instalándose | Trade-data por HS code |
 | **Arancel / cambio comercial** | Presión de costo → re-sourcing | Noticias de política comercial |
+
+> ⭐ **Señal estrella (del estudio USA-SMT):** buscar por HS code en aduana (bill-of-lading público) da la lista de importadores US = employers/compradores reales. Los **consumibles (3810/3506)** son el mejor indicador de "línea activa comprando ahora". Ver `02-Investigacion/electronica/estudio-usa-smt.md`.
 
 ### Plásticos (foil / tintas) — proceso secundario
 | Señal | Qué indica | Dónde detectarla |
