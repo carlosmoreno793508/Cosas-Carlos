@@ -15,6 +15,8 @@ El objetivo de esta carpeta es tomar los conceptos de negocio propuestos por **C
 | `04-GoToMarket/` | Estrategia comercial, precios, canales, adquisición. |
 | `05-Recursos/` | Material de apoyo, referencias, notas sueltas. |
 
+## 👉 [EMPIEZA AQUÍ — lista de pendientes](00-EMPIEZA-AQUI.md)
+
 ## Documentos clave
 
 - 📄 **[Propuesta unificada v1](01-Concepto-Negocio/01-propuesta-unificada.md)** ← el documento maestro
