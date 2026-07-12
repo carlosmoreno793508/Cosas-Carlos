@@ -1,0 +1,7 @@
+tipo,dominio,buzon,estado_warmup,fecha_inicio_warmup,fecha_lista_envio,campana,commodity,enviados,opens,replies,reuniones,notas
+dominio,growprokure.co,carlos@growprokure.co,pendiente,,,,,,,,,
+dominio,growprokure.co,c.moreno@growprokure.co,pendiente,,,,,,,,,
+dominio,getgrowprokure.com,carlos@getgrowprokure.com,pendiente,,,,,,,,,
+dominio,getgrowprokure.com,ventas@getgrowprokure.com,pendiente,,,,,,,,,
+campana,,,,,,electronica-linea-blanca-A,pasivos,0,0,0,0,piloto Astute - Mabe/Whirlpool
+campana,,,,,,electronica-linea-blanca-B,semiconductores,0,0,0,0,piloto Astute - GE Appliances

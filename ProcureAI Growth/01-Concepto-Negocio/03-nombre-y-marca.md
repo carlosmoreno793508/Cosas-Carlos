@@ -99,6 +99,30 @@ Por qué esta combinación gana:
 
 ---
 
+## ✅ DECISIÓN TOMADA (2026-07-12): GrowProkure
+
+**Nombre comercial: GrowProkure** · Tagline: *Industrial Growth Intelligence* · Iniciales: GP / GPI
+
+### Verificación profunda — GrowProkure
+
+- **Colisión exacta:** ✅ Ninguna. La búsqueda de "growprokure" / "grow prokure" NO devuelve ninguna empresa con ese nombre.
+- **Proximidad a vigilar:** existe **ProKure** (sanitización ClO₂ para grow rooms / cultivo) y **Prokura** (Kearney, consultoría). Ambas en sectores distintos (biocidas / consultoría), clase de marca diferente a la nuestra (servicios de inteligencia comercial, clase 35). Confusión real baja en nuestro mercado (electrónica / plásticos B2B).
+- **Veredicto:** nombre **ownable y registrable**. Adelante.
+
+### Checklist de verificación pendiente (hazlo antes de registrar marca)
+
+| Ítem | Cómo verificar | Estado |
+|---|---|---|
+| Dominio `growprokure.com` | GoDaddy / Namecheap (buscar disponibilidad) | ⏳ Carlos |
+| Dominio `.mx`, `.ai`, `.io` | Registrar | ⏳ |
+| Handle `@growprokure` | LinkedIn, X, Instagram | ⏳ |
+| Marca IMPI (México) | https://acervomarcas.impi.gob.mx | ⏳ |
+| Marca USPTO (EUA) | https://tmsearch.uspto.gov (clase 35) | ⏳ |
+
+> Nota: los **dominios de prospección** (para cold email) son distintos y secundarios; ver `04-GoToMarket/05-guia-dominios-dns-godaddy.md`. El `growprokure.com` principal se usa para la marca/sitio, NO para enviar frío.
+
+---
+
 ## Nota
 
 Búsquedas web hechas el 2026-07-12. Una búsqueda web NO sustituye una búsqueda oficial de marca registrada; para el nombre final se recomienda consulta en IMPI (mx) y USPTO (us) antes de registrar o invertir en branding.
