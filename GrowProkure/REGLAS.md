@@ -18,6 +18,7 @@
 
 ## 3. Reglas de cumplimiento (outreach)
 
+- **R0 — Autorización de marca.** Carlos autoriza expresamente representar a **TID** y a **Astute** en el outreach y usar sus marcas en los dominios de envío y correos (confirmado 2026-07-12). El outreach de electrónica sale como Astute; el de plásticos como TID.
 - **R9 — Base legal B2B.** Solo outreach con interés legítimo B2B. Cumplir CAN-SPAM (identificación, opt-out, sin engaño) y privacidad.
 - **R10 — Sin scraping masivo.** ZoomInfo/Apollo/Wiza solo para investigación legítima, dentro de sus términos. Nada de extracción masiva o reventa.
 - **R11 — Dominios de prospección, nunca el principal.** Cold email solo desde dominios secundarios; jamás desde `growprokure.com` ni el corporativo de Astute/TID.
