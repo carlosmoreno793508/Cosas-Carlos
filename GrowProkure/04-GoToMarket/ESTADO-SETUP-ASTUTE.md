@@ -23,9 +23,21 @@
 | 1 | astute-supply.com | carlos.moreno@ (admin), carlos@, c.moreno@, carlosmoreno@ (4) |
 | 2 | get-astute.com | carlos.moreno@ (admin), carlos@, c.moreno@ (3) |
 
-## ⏳ Pendiente (próxima sesión)
+## ✅ COMPLETADO (2026-07-13): Instantly + Warmup
 
-1. **DNS de astute-supply.com**: agregar SPF y DMARC en Namecheap (MX/DKIM ya por la activación).
+- App "Instantly oAuth Email v1" autorizada como **Confiable** en Google Admin de AMBAS cuentas (astute-supply.com + get-astute.com).
+- **Los 7 buzones conectados a Instantly** (vía Google OAuth).
+- **Warmup ACTIVADO en los 7** (flama verde). Calentamiento gradual de 14 días en curso.
+- 🎉 **Infraestructura de cold email COMPLETA.**
+
+### Warmup iniciado: 2026-07-13 → listo aprox. 2026-07-27 (14 días)
+
+## ⏳ Pendiente
+
+1. **DNS de astute-supply.com**: agregar SPF y DMARC en Namecheap (MX/DKIM ya por la activación). Mejora entregabilidad de esos 4 buzones. Menor, no bloquea el warmup.
+   - SPF: `v=spf1 include:_spf.google.com ~all`
+   - DMARC: `v=DMARC1; p=none; rua=mailto:carlos.moreno@astute-supply.com`
+2. **~14 días:** revisar Health Score (debe subir a 90-100%) → cargar Tanda 1 + copy → lanzar primera campaña.
    - SPF: `v=spf1 include:_spf.google.com ~all`
    - DMARC: `v=DMARC1; p=none; rua=mailto:carlos.moreno@astute-supply.com`
 3. **Crear 2-3 buzones en astute-supply.com** (carlos.moreno@, carlos@, c.moreno@).
