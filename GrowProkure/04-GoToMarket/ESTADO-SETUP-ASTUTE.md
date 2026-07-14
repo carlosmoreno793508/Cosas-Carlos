@@ -32,12 +32,19 @@
 
 ### Warmup iniciado: 2026-07-13 → listo aprox. 2026-07-27 (14 días)
 
-## ⏳ Pendiente
+## ✅ DNS COMPLETO EN AMBOS DOMINIOS (2026-07-13)
 
-1. **DNS de astute-supply.com**: agregar SPF y DMARC en Namecheap (MX/DKIM ya por la activación). Mejora entregabilidad de esos 4 buzones. Menor, no bloquea el warmup.
-   - SPF: `v=spf1 include:_spf.google.com ~all`
-   - DMARC: `v=DMARC1; p=none; rua=mailto:carlos.moreno@astute-supply.com`
-2. **~14 días:** revisar Health Score (debe subir a 90-100%) → cargar Tanda 1 + copy → lanzar primera campaña.
+| Dominio | MX | DKIM | SPF | DMARC |
+|---|---|---|---|---|
+| get-astute.com | ✅ | ✅ | ✅ | ✅ |
+| astute-supply.com | ✅ | ✅ | ✅ | ✅ |
+
+**🎊 Infraestructura de cold email COMPLETA al 100%.**
+
+## ⏳ Único pendiente (en ~14 días, warmup listo ~2026-07-27)
+- Revisar Health Score (debe subir a 90-100%).
+- Cargar Tanda 1 (`Astute_Tanda1_contactos.xlsx`) + copy (`04-copy-cold-email-electronica.md`).
+- Lanzar primera campaña de Astute a volumen bajo.
    - SPF: `v=spf1 include:_spf.google.com ~all`
    - DMARC: `v=DMARC1; p=none; rua=mailto:carlos.moreno@astute-supply.com`
 3. **Crear 2-3 buzones en astute-supply.com** (carlos.moreno@, carlos@, c.moreno@).
