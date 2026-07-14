@@ -14,13 +14,18 @@
 | **Gmail activado** | get-astute.com ✅ · astute-supply.com ✅ |
 | **Buzones creados (get-astute.com)** | carlos.moreno@ (admin) · carlos@ · c.moreno@ |
 
+## Estructura de cuentas (CONFIRMADO 2026-07-12)
+
+**Son 2 cuentas de Workspace separadas** (ambas llamadas "Astute Supply"), 7 buzones en total. Decisión: **dejar así** (funciona para Instantly; consolidar no vale la pena). Implica 2 suscripciones (~$59/mes total por 7 buzones).
+
+| Cuenta | Dominio | Buzones |
+|---|---|---|
+| 1 | astute-supply.com | carlos.moreno@ (admin), carlos@, c.moreno@, carlosmoreno@ (4) |
+| 2 | get-astute.com | carlos.moreno@ (admin), carlos@, c.moreno@ (3) |
+
 ## ⏳ Pendiente (próxima sesión)
 
-1. **⚠️ CONFIRMAR 1 vs 2 cuentas de Workspace** (evitar doble cobro):
-   - admin.google.com → Facturación → Suscripciones (¿1 o 2?)
-   - admin.google.com → Cuenta → Dominios (¿los 2 dominios juntos?)
-   - Si son 2 cuentas separadas: decidir si consolidar o dejar así.
-2. **DNS de astute-supply.com**: verificar/agregar SPF y DMARC (MX/DKIM ya por la activación).
+1. **DNS de astute-supply.com**: agregar SPF y DMARC en Namecheap (MX/DKIM ya por la activación).
    - SPF: `v=spf1 include:_spf.google.com ~all`
    - DMARC: `v=DMARC1; p=none; rua=mailto:carlos.moreno@astute-supply.com`
 3. **Crear 2-3 buzones en astute-supply.com** (carlos.moreno@, carlos@, c.moreno@).
