@@ -112,20 +112,21 @@ Carlos
 
 > Basada en los borradores reales de Carlos (2026-07-15). Usa los datos duros de Astute: +150 líneas franquiciadas, ahorro 10-15% BOM, inventario 6-12 meses, almacenes HK + Texas (FTZ/3PL Brownsville), base Querétaro. Regla de oro: **sin adjuntos ni links en el correo 1** (la presentación se envía DESPUÉS de que responden).
 
+> **Tono:** natural / cercano (tú, mexicano de planta). Para contactos muy corporativos o en inglés, usar una variante neutra.
+
 ### Correo 1 — Día 0
 **Asunto:** `{{company}} — cortos y segundas fuentes`
 ```
 Hola {{first_name}},
 
-Soy Carlos, de Astute Electronics — distribuidor independiente de
-componentes, con base en Querétaro.
+Soy Carlos, de Astute Electronics. Manejamos componentes electrónicos y
+ando aquí en Querétaro.
 
-Pregunta rápida: ¿cómo andan de cortos (shortages) o allocation en su
-BOM ahorita? Es lo que más nos piden resolver: segundas fuentes
-franquiciadas y cobertura de componentes críticos antes de que pare
-una línea.
+Te tiro la pregunta directa: ¿cómo andan de cortos o allocation ahorita?
+Es justo en lo que ayudamos — conseguir segundas fuentes franquiciadas y
+cubrir los componentes críticos antes de que se te pare una línea.
 
-¿Le hace sentido una llamada de 15 min para ver si aplica a {{company}}?
+¿Te late una llamada de 15 min a ver si te sirve?
 
 Carlos
 ```
@@ -135,16 +136,16 @@ Carlos
 ```
 Hola {{first_name}},
 
-Le doy más contexto de dónde solemos agregar valor rápido:
+Te doy un poco más de contexto de dónde solemos ayudar rápido:
 
 - +150 líneas franquiciadas (Infineon, ST, Onsemi, Molex, Yageo, Broadcom)
-- Inventario de 6-12 meses en componentes críticos
-- Ahorro típico de 10-15% en el BOM
-- Almacenes en Hong Kong y Texas (FTZ/3PL en Brownsville) para
-  flexibilidad de importación
+- Inventario de 6 a 12 meses en componentes críticos
+- Normalmente bajamos el BOM entre 10 y 15%
+- Almacenes en Hong Kong y Texas (con FTZ en Brownsville), para moverte
+  la importación más fácil
 
-Si trae algún corto urgente, con gusto lo reviso sin compromiso.
-¿15 min esta semana?
+Si traes algún corto urgente, pásamelo y lo checo, sin compromiso.
+¿Cómo ves, nos tomamos 15 min esta semana?
 
 Carlos
 ```
@@ -154,10 +155,11 @@ Carlos
 ```
 Hola {{first_name}},
 
-Directo: si trae algún corto urgente o una parte difícil de conseguir,
-mándemela y le digo si la tengo y a qué precio. Sin compromiso.
+Directo al grano: si traes algún corto urgente o una parte que no
+encuentras, pásamela y te digo si la tengo y en cuánto. Sin compromiso.
 
-Estoy en Querétaro — puedo hacer una llamada rápida o pasar a visitarlos.
+Ando aquí en Querétaro, así que igual te marco o me doy una vuelta a
+saludarte.
 
 Carlos
 ```
@@ -167,13 +169,13 @@ Carlos
 ```
 Hola {{first_name}},
 
-No he tenido respuesta, así que asumo que el abasto no es prioridad
-ahorita — sin problema.
+No me has contestado, así que le bajo — seguro el abasto no es prioridad
+ahorita y está bien.
 
-Si más adelante sale un corto, un EOL o quieren una segunda fuente,
-respóndame "Carlos" y me pongo a la orden.
+Si más adelante te cae un corto, un EOL o quieres una segunda fuente,
+contéstame "Carlos" y me pongo a la orden al toque.
 
-Saludos,
+Un saludo,
 Carlos
 ```
 
