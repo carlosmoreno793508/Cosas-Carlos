@@ -139,7 +139,7 @@ Hola {{first_name}},
 
 Te comparto rápidamente cómo apoyamos a la manufactura electrónica:
 
-- Ahorros: normalmente bajamos el BOM entre 10 y 15%
+- Costos: normalmente reducimos el BOM entre 10 y 15%
 - Inventario: respaldado por tu liability en componentes críticos
 - +150 líneas franquiciadas (Infineon, ST, Molex) y soporte inmediato en cortos
 - Almacenes en Hong Kong y Texas (FTZ en Brownsville) para importación ágil
@@ -147,7 +147,7 @@ Te comparto rápidamente cómo apoyamos a la manufactura electrónica:
 Si tienes algún corto crítico, pásame el número de parte y te lo cotizo
 de inmediato, sin compromiso.
 
-¿Te late una llamada de 15 min esta semana?
+¿Tienes tiempo para una llamada de 15 min esta semana?
 
 Carlos
 ```
