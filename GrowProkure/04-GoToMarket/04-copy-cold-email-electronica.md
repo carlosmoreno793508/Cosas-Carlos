@@ -157,7 +157,7 @@ Carlos
 ```
 Hola {{first_name}},
 
-Si traes algún corto urgente o un componente crítico que no encuentres,
+Si tienes algún corto urgente o un componente crítico que no encuentres,
 pásamelo. Te digo de volada si lo tenemos en nuestras líneas franquiciadas
 y en cuánto te lo ponemos en planta. Sin compromiso.
 
