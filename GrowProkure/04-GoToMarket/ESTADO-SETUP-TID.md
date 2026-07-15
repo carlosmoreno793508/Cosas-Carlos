@@ -32,8 +32,17 @@
 - [~] Buzones try-tid.com (creando: carlos@, carlosmoreno@, c.moreno@)
 - [x] **DKIM + DMARC en AMBOS dominios TID** ✅ (2026-07-15) — DKIM auto-verificando en Google
 - [x] **App Instantly "Trusted" autorizada en AMBAS cuentas** ✅ (get-tid.com + try-tid.com, 2026-07-15)
-- [ ] Conectar buzones a Instantly + warmup ← **SIGUIENTE (lo más importante)**
+- [x] **5 buzones TID conectados a Instantly** ✅ (2026-07-15): get-tid.com ×4 (carlos.moreno@, carlos@, carlosmoreno@, c.moreno@) + try-tid.com ×1 (carlos.moreno@)
+- [~] Warmup prendido en los 5 (confirmar flama verde) → listo aprox. 2026-07-29
 - [ ] (14 días) lanzar
+
+## ⚠️ Nota importante — límite de Google en try-tid.com (2026-07-15)
+Google **bloqueó** la creación de los 3 buzones extra de try-tid.com (carlos@, carlosmoreno@, c.moreno@) por reuso del mismo teléfono de verificación en muchas cuentas nuevas. **Decisión: no forzarlo** (riesgo de suspensión). Con 5 buzones (~150 correos/día) sobra para el piloto.
+
+### Estrategia de escalamiento a futuro (multi-cliente)
+Para crecer sin el dolor de crear buzones a mano / verificación por teléfono:
+- **Corto plazo:** seguir en **Instantly** (Astute + get-tid.com ya warmeando).
+- **Mediano plazo (más clientes):** migrar a **Smartlead** (whitelabel multi-cliente, buzones ilimitados, API) + **Maildoso/Mailreef** como "fábrica" de buzones (dominio+DNS+buzón automático, sin teléfono). Combinación estándar de agencias de cold email.
 
 > Estructura: 2 cuentas Workspace TID (get-tid.com + try-tid.com), ~6-8 buzones.
 > Client-ID Instantly: `536726988839-pt93oro4685dtb1emb0pp2vjgjol5mls.apps.googleusercontent.com`
