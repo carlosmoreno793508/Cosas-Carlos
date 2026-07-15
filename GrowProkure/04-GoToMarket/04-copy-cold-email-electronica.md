@@ -138,7 +138,7 @@ Carlos
 ```
 Hola {{first_name}},
 
-Te comparto rápido dónde solemos ayudar:
+Te comparto rápidamente dónde solemos ayudar:
 
 - +150 líneas franquiciadas como Infineon, ST, Onsemi, Molex y Yageo
 - Inventario de 6 a 12 meses en componentes críticos
@@ -146,7 +146,7 @@ Te comparto rápido dónde solemos ayudar:
 - Almacenes en Hong Kong y Texas (FTZ en Brownsville) para una
   importación más ágil
 
-Si traes algún corto crítico, pásamelo y te lo cotizo de inmediato.
+Si tienes algún corto crítico, pásamelo y te lo cotizo de inmediato.
 ¿Cómo ves, nos tomamos 15 min esta semana?
 
 Carlos
