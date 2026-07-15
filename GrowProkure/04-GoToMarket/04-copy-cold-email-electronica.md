@@ -137,16 +137,17 @@ Carlos
 ```
 Hola {{first_name}},
 
-Te comparto rápidamente dónde solemos ayudar:
+Te comparto rápidamente cómo apoyamos a la manufactura electrónica:
 
-- +150 líneas franquiciadas como Infineon, ST, Onsemi, Molex y Yageo
-- Inventario de 6 a 12 meses en componentes críticos
-- Normalmente bajamos el BOM entre 10 y 15%
-- Almacenes en Hong Kong y Texas (FTZ en Brownsville) para una
-  importación más ágil
+- Ahorros: normalmente bajamos el BOM entre 10 y 15%
+- Inventario: respaldado por tu liability en componentes críticos
+- +150 líneas franquiciadas (Infineon, ST, Molex) y soporte inmediato en cortos
+- Almacenes en Hong Kong y Texas (FTZ en Brownsville) para importación ágil
 
-Si tienes algún corto crítico, pásamelo y te lo cotizo de inmediato.
-¿Cómo ves, nos tomamos 15 min esta semana?
+Si tienes algún corto crítico, pásame el número de parte y te lo cotizo
+de inmediato, sin compromiso.
+
+¿Te late una llamada de 15 min esta semana?
 
 Carlos
 ```
