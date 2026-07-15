@@ -122,9 +122,9 @@ Hola {{first_name}},
 Soy Carlos, de Astute Electronics. Manejamos componentes electrónicos y
 ando aquí en Querétaro.
 
-Te tiro la pregunta directa: ¿tienen ahorita algún problema con cortos o
-allocation? Es justo en lo que ayudamos — segundas fuentes franquiciadas
-y cubrir los componentes críticos antes de que afecten la producción.
+¿Tienen ahorita algún problema con cortos o allocation? Es justo en lo
+que ayudamos — segundas fuentes franquiciadas y cubrir los componentes
+críticos antes de que afecten la producción.
 
 Y si traes algún corto crítico hoy, pásamelo y te lo cotizo de volada.
 
