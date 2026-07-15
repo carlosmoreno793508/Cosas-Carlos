@@ -26,14 +26,13 @@
 ## Estado (avance 2026-07-15)
 - [x] Google Workspace get-tid.com — verificado + Gmail activo
 - [x] Google Workspace try-tid.com — verificado + Gmail activo (2 cuentas, como Astute)
-- [x] DNS get-tid.com: verificación + SPF + MX (falta DKIM + DMARC)
+- [x] **DNS get-tid.com: COMPLETO** — verificación + SPF + MX + DKIM + DMARC ✅ (2026-07-15)
 - [x] **DNS try-tid.com: COMPLETO** — verificación + SPF + MX + DKIM + DMARC ✅ (2026-07-15)
 - [x] Buzones get-tid.com (carlos.moreno@ admin + carlos@ + carlosmoreno@ + c.moreno@)
 - [~] Buzones try-tid.com (creando: carlos@, carlosmoreno@, c.moreno@)
-- [~] DKIM: try-tid.com ✅ (auto-verificando en Google) · get-tid.com pendiente
-- [~] DMARC: try-tid.com ✅ · get-tid.com pendiente
+- [x] **DKIM + DMARC en AMBOS dominios TID** ✅ (2026-07-15) — DKIM auto-verificando en Google
 - [ ] Autorizar app Instantly "Confiable" en ambas cuentas (Client-ID 536726988839-...)
-- [ ] Conectar buzones a Instantly + warmup
+- [ ] Conectar buzones a Instantly + warmup ← **SIGUIENTE (lo más importante)**
 - [ ] (14 días) lanzar
 
 > Estructura: 2 cuentas Workspace TID (get-tid.com + try-tid.com), ~6-8 buzones.
