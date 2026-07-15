@@ -23,12 +23,19 @@
 - Pitch: abasto local vs. importación · Bajío · solución integral · muestras gratis.
 - Ver `02-Investigacion/plasticos/resumen-foil.md`.
 
-## Estado
-- [ ] Paso 1: Google Workspace (get-tid.com)
-- [ ] Paso 2: buzones
-- [ ] Paso 3: DNS
-- [ ] Paso 4: autorizar Instantly
-- [ ] Paso 5: conectar + warmup
-- [ ] Paso 6: (14 días) lanzar
+## Estado (avance 2026-07-15)
+- [x] Google Workspace get-tid.com — verificado + Gmail activo
+- [x] Google Workspace try-tid.com — verificado + Gmail activo (2 cuentas, como Astute)
+- [x] DNS get-tid.com: verificación + SPF + MX (falta DKIM + DMARC)
+- [x] DNS try-tid.com: verificación + SPF + MX (falta DKIM + DMARC)
+- [x] Buzones get-tid.com (carlos.moreno@ admin + carlos@ + carlosmoreno@ + c.moreno@)
+- [~] Buzones try-tid.com (creando: carlos@, carlosmoreno@, c.moreno@)
+- [ ] DKIM + DMARC en ambos dominios
+- [ ] Autorizar app Instantly "Confiable" en ambas cuentas (Client-ID 536726988839-...)
+- [ ] Conectar buzones a Instantly + warmup
+- [ ] (14 días) lanzar
+
+> Estructura: 2 cuentas Workspace TID (get-tid.com + try-tid.com), ~6-8 buzones.
+> Client-ID Instantly: `536726988839-pt93oro4685dtb1emb0pp2vjgjol5mls.apps.googleusercontent.com`
 
 > ⚠️ Costo: cada buzón ~$8.40/mes. 6 buzones TID ≈ $50/mes más (sumado a los 7 de Astute).
