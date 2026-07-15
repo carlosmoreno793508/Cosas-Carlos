@@ -114,7 +114,7 @@ Carlos
 
 > **Tono:** natural / cercano (tú, mexicano de planta). Para contactos muy corporativos o en inglés, usar una variante neutra.
 
-### Correo 1 — Día 0
+### Correo 1 — Día 0 (preséntate + gancho ligero; SIN datos duros ni %)
 **Asunto:** `{{company}} — cortos y segundas fuentes`
 ```
 Hola {{first_name}},
@@ -122,29 +122,31 @@ Hola {{first_name}},
 Soy Carlos, de Astute Electronics. Manejamos componentes electrónicos y
 ando aquí en Querétaro.
 
-Te tiro la pregunta directa: ¿cómo andan de cortos o allocation ahorita?
-Es justo en lo que ayudamos — conseguir segundas fuentes franquiciadas y
-cubrir los componentes críticos antes de que se te pare una línea.
+Te tiro la pregunta directa: ¿tienen ahorita algún problema con cortos o
+allocation? Es justo en lo que ayudamos — segundas fuentes franquiciadas
+y cubrir los componentes críticos antes de que afecten la producción.
 
-¿Te late una llamada de 15 min a ver si te sirve?
+Y si traes algún corto crítico hoy, pásamelo y te lo cotizo de volada.
+
+¿Te late una llamada de 15 min esta semana?
 
 Carlos
 ```
 
-### Correo 2 — Día 3 (datos duros)
+### Correo 2 — Día 3 (datos duros; los % van AQUÍ, no en el correo 1)
 **Asunto:** `re: {{company}} — cortos y segundas fuentes`
 ```
 Hola {{first_name}},
 
-Te doy un poco más de contexto de dónde solemos ayudar rápido:
+Te comparto rápido dónde solemos ayudar:
 
-- +150 líneas franquiciadas (Infineon, ST, Onsemi, Molex, Yageo, Broadcom)
+- +150 líneas franquiciadas como Infineon, ST, Onsemi, Molex y Yageo
 - Inventario de 6 a 12 meses en componentes críticos
 - Normalmente bajamos el BOM entre 10 y 15%
-- Almacenes en Hong Kong y Texas (con FTZ en Brownsville), para moverte
-  la importación más fácil
+- Almacenes en Hong Kong y Texas (FTZ en Brownsville) para una
+  importación más ágil
 
-Si traes algún corto urgente, pásamelo y lo checo, sin compromiso.
+Si traes algún corto crítico, pásamelo y te lo cotizo de inmediato.
 ¿Cómo ves, nos tomamos 15 min esta semana?
 
 Carlos
@@ -155,11 +157,14 @@ Carlos
 ```
 Hola {{first_name}},
 
-Directo al grano: si traes algún corto urgente o una parte que no
-encuentras, pásamela y te digo si la tengo y en cuánto. Sin compromiso.
+Si traes algún corto urgente o un componente crítico que no encuentres,
+pásamelo. Te digo de volada si lo tenemos en nuestras líneas franquiciadas
+y en cuánto te lo ponemos en planta. Sin compromiso.
 
-Ando aquí en Querétaro, así que igual te marco o me doy una vuelta a
-saludarte.
+Ando aquí en Querétaro, así que si tu agenda lo permite, con gusto me doy
+una vuelta a presentarme y saludarte.
+
+Quedo a la orden con tus números de parte.
 
 Carlos
 ```
@@ -169,15 +174,17 @@ Carlos
 ```
 Hola {{first_name}},
 
-No me has contestado, así que le bajo — seguro el abasto no es prioridad
-ahorita y está bien.
+Imagino que andas a las carreras y que el suministro no es tema urgente
+hoy en planta. No te quito más tiempo.
 
-Si más adelante te cae un corto, un EOL o quieres una segunda fuente,
-contéstame "Carlos" y me pongo a la orden al toque.
+Si más adelante te cae un corto crítico, una alerta de EOL o quieres
+cotizar segundas fuentes, contéstame "Carlos" y te apoyo al toque.
 
-Un saludo,
+¡Éxito con la semana!
 Carlos
 ```
+
+> **Palabras a evitar (aprendido aquí):** "garantizado/garantía", "proyectados", "optimizar la cadena de suministro", "logística global" → o son spam-trigger o suenan a folleto. Los porcentajes de ahorro nunca en el correo 1.
 
 > **Nota de entregabilidad:** la presentación / catálogo se manda solo como respuesta a un interesado (nunca en frío). Los porcentajes de ahorro van hasta el correo 2, no en el primer toque.
 
