@@ -33,8 +33,11 @@
 - [x] **DKIM + DMARC en AMBOS dominios TID** ✅ (2026-07-15) — DKIM auto-verificando en Google
 - [x] **App Instantly "Trusted" autorizada en AMBAS cuentas** ✅ (get-tid.com + try-tid.com, 2026-07-15)
 - [x] **5 buzones TID conectados a Instantly** ✅ (2026-07-15): get-tid.com ×4 (carlos.moreno@, carlos@, carlosmoreno@, c.moreno@) + try-tid.com ×1 (carlos.moreno@)
-- [~] Warmup prendido en los 5 (confirmar flama verde) → listo aprox. 2026-07-29
-- [ ] (14 días) lanzar
+- [x] **Warmup ACTIVO en los 5 buzones** ✅ 🔥 (flama verde confirmada, 2026-07-15) → listo aprox. 2026-07-29
+- [ ] (14 días) lanzar campaña TID
+
+## 🎊 SETUP TID COMPLETO AL 100% (2026-07-15)
+Infraestructura de cold email de TID lista. Warmup de 14 días en curso. Único pendiente: en ~14 días (≈29 jul) cargar Tanda 1 (contactos del estudio Foil) + copy y lanzar a volumen bajo.
 
 ## ⚠️ Nota importante — límite de Google en try-tid.com (2026-07-15)
 Google **bloqueó** la creación de los 3 buzones extra de try-tid.com (carlos@, carlosmoreno@, c.moreno@) por reuso del mismo teléfono de verificación en muchas cuentas nuevas. **Decisión: no forzarlo** (riesgo de suspensión). Con 5 buzones (~150 correos/día) sobra para el piloto.
