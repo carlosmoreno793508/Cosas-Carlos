@@ -108,6 +108,79 @@ Carlos
 
 ---
 
+## Secuencia B2 — Español con propuestas de valor REALES de Astute (MX)
+
+> Basada en los borradores reales de Carlos (2026-07-15). Usa los datos duros de Astute: +150 líneas franquiciadas, ahorro 10-15% BOM, inventario 6-12 meses, almacenes HK + Texas (FTZ/3PL Brownsville), base Querétaro. Regla de oro: **sin adjuntos ni links en el correo 1** (la presentación se envía DESPUÉS de que responden).
+
+### Correo 1 — Día 0
+**Asunto:** `{{company}} — cortos y segundas fuentes`
+```
+Hola {{first_name}},
+
+Soy Carlos, de Astute Electronics — distribuidor independiente de
+componentes, con base en Querétaro.
+
+Pregunta rápida: ¿cómo andan de cortos (shortages) o allocation en su
+BOM ahorita? Es lo que más nos piden resolver: segundas fuentes
+franquiciadas y cobertura de componentes críticos antes de que pare
+una línea.
+
+¿Le hace sentido una llamada de 15 min para ver si aplica a {{company}}?
+
+Carlos
+```
+
+### Correo 2 — Día 3 (datos duros)
+**Asunto:** `re: {{company}} — cortos y segundas fuentes`
+```
+Hola {{first_name}},
+
+Le doy más contexto de dónde solemos agregar valor rápido:
+
+- +150 líneas franquiciadas (Infineon, ST, Onsemi, Molex, Yageo, Broadcom)
+- Inventario de 6-12 meses en componentes críticos
+- Ahorro típico de 10-15% en el BOM
+- Almacenes en Hong Kong y Texas (FTZ/3PL en Brownsville) para
+  flexibilidad de importación
+
+Si trae algún corto urgente, con gusto lo reviso sin compromiso.
+¿15 min esta semana?
+
+Carlos
+```
+
+### Correo 3 — Día 7 (ángulo cortos)
+**Asunto:** `¿algún corto urgente?`
+```
+Hola {{first_name}},
+
+Directo: si trae algún corto urgente o una parte difícil de conseguir,
+mándemela y le digo si la tengo y a qué precio. Sin compromiso.
+
+Estoy en Querétaro — puedo hacer una llamada rápida o pasar a visitarlos.
+
+Carlos
+```
+
+### Correo 4 — Día 12 (cierre)
+**Asunto:** `¿lo cierro?`
+```
+Hola {{first_name}},
+
+No he tenido respuesta, así que asumo que el abasto no es prioridad
+ahorita — sin problema.
+
+Si más adelante sale un corto, un EOL o quieren una segunda fuente,
+respóndame "Carlos" y me pongo a la orden.
+
+Saludos,
+Carlos
+```
+
+> **Nota de entregabilidad:** la presentación / catálogo se manda solo como respuesta a un interesado (nunca en frío). Los porcentajes de ahorro van hasta el correo 2, no en el primer toque.
+
+---
+
 ## Variables a llenar (desde ZoomInfo/Apollo/Wiza + estudio Astute)
 
 | Variable | Ejemplo | Fuente |
