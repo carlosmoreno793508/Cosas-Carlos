@@ -31,7 +31,7 @@
 - [x] Buzones get-tid.com (carlos.moreno@ admin + carlos@ + carlosmoreno@ + c.moreno@)
 - [~] Buzones try-tid.com (creando: carlos@, carlosmoreno@, c.moreno@)
 - [x] **DKIM + DMARC en AMBOS dominios TID** ✅ (2026-07-15) — DKIM auto-verificando en Google
-- [ ] Autorizar app Instantly "Confiable" en ambas cuentas (Client-ID 536726988839-...)
+- [x] **App Instantly "Trusted" autorizada en AMBAS cuentas** ✅ (get-tid.com + try-tid.com, 2026-07-15)
 - [ ] Conectar buzones a Instantly + warmup ← **SIGUIENTE (lo más importante)**
 - [ ] (14 días) lanzar
 
