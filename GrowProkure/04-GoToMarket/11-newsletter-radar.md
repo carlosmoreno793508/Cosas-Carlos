@@ -71,6 +71,23 @@ Newsletter GRATIS ─► audiencia ─► datos ─► inteligencia ─► newsl
 - **Cadencia:** mensual al inicio → quincenal cuando agarre ritmo.
 - **Nombre (ideas):** GrowProkure Radar · Señales LATAM · El Radar Industrial.
 
+## Referencia — "Astute Market Intelligence" (Issue 01, jul 2026)
+Astute (cliente piloto de electrónica) ya publica un newsletter propio muy profesional. Valida el concepto y marca la diferenciación.
+
+- **Qué es:** 5 historias de tendencias **globales de producto/tech** (escasez de memoria/AI, Axelera edge AI, Chips Act 2.0, capex de datacenter, power protection). Sourced (TrendForce, Gartner, IDC, EE Times, Reuters, eeNews). Quotes de expertos (incl. su Franchise Marketing Manager). Cierre de credibilidad (35+ años, 27 oficinas, 150+ franquicias, certificaciones AS6171/ISO). CTA: "read full story on astutegroup.com" + "talk to a supply chain specialist".
+
+- **Diferenciación GrowProkure Radar:**
+  | Eje | Astute Market Intelligence | GrowProkure Radar |
+  |---|---|---|
+  | Foco | Tendencias globales de producto/tech | Señales de **oportunidad en LATAM** |
+  | Pregunta | "¿Qué pasa con los componentes?" | "¿Dónde crece la demanda y a **quién** le vendo?" |
+  | Audiencia | Ingeniería + compras (global) | Ventas / BD + proveedores |
+  | Acción | Educa (planea tu BoM) | **Acciona** (llama a esta cuenta hoy) |
+
+- **A adoptar de Astute:** citar fuentes (✓ ya) · 1 quote de experto por edición · bloque de credibilidad al cierre · estructura consistente.
+- **Ventaja propia a mantener:** formato escaneable + "🎯 Señal para ti" (Astute no lo tiene) + foco LATAM/nearshoring (Astute es global y NO lo cubre = hueco defensible).
+- **Posicionamiento:** GrowProkure es venture propio de Carlos; Astute es cliente/vertical. El Radar LATAM es **complementario** a la intel global de Astute (no compite) — de hecho es intel que un proveedor como Astute compraría. Mantener marcas/voces separadas.
+
 ## Riesgo principal
 Consistencia. Un newsletter muere si se abandona. Diseñar **mensual y semi-automatizado** (agentes hacen ~80%) para que sea sostenible.
 
