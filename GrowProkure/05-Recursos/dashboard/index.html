@@ -1,0 +1,304 @@
+<title>GrowProkure — Panel Operativo</title>
+<style>
+  :root {
+    /* warm graphite neutrals + copper accent (marca GrowProkure) */
+    --bg: #f4f1ec;
+    --surface: #fbf9f5;
+    --surface-2: #efeae2;
+    --line: #ddd5c9;
+    --ink: #23211d;
+    --ink-2: #55504733;
+    --muted: #6f695e;
+    --faint: #98917f;
+    --copper: #b45f30;
+    --copper-soft: #c47a4d;
+    --good: #3f8f63;
+    --good-bg: #e2efe5;
+    --warm: #b9822a;
+    --warm-bg: #f3e9d4;
+    --idle: #8a8577;
+    --idle-bg: #e9e4da;
+    --crit: #b0503f;
+    --crit-bg: #f2e0da;
+    --shadow: 0 1px 2px rgba(40,34,24,.06), 0 6px 20px rgba(40,34,24,.05);
+    --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #15161a;
+      --surface: #1c1e23;
+      --surface-2: #232630;
+      --line: #313540;
+      --ink: #ece8e1;
+      --ink-2: #ffffff10;
+      --muted: #9a9488;
+      --faint: #6d6a63;
+      --copper: #d3844f;
+      --copper-soft: #b96c3c;
+      --good: #5cb181;
+      --good-bg: #1c2c24;
+      --warm: #d0a04a;
+      --warm-bg: #2d2717;
+      --idle: #7c776c;
+      --idle-bg: #262830;
+      --crit: #d1705f;
+      --crit-bg: #2e1e1b;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.28);
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: #f4f1ec; --surface: #fbf9f5; --surface-2: #efeae2; --line: #ddd5c9;
+    --ink: #23211d; --muted: #6f695e; --faint: #98917f; --copper: #b45f30; --copper-soft:#c47a4d;
+    --good:#3f8f63; --good-bg:#e2efe5; --warm:#b9822a; --warm-bg:#f3e9d4; --idle:#8a8577; --idle-bg:#e9e4da; --crit:#b0503f; --crit-bg:#f2e0da;
+    --shadow: 0 1px 2px rgba(40,34,24,.06), 0 6px 20px rgba(40,34,24,.05);
+  }
+  :root[data-theme="dark"] {
+    --bg: #15161a; --surface: #1c1e23; --surface-2: #232630; --line: #313540;
+    --ink: #ece8e1; --muted: #9a9488; --faint: #6d6a63; --copper: #d3844f; --copper-soft:#b96c3c;
+    --good:#5cb181; --good-bg:#1c2c24; --warm:#d0a04a; --warm-bg:#2d2717; --idle:#7c776c; --idle-bg:#262830; --crit:#d1705f; --crit-bg:#2e1e1b;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.28);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--ink);
+    font-family: var(--sans); line-height: 1.5;
+    margin: 0; padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 28px 20px 64px; }
+
+  /* header */
+  .top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; padding-bottom: 20px; border-bottom: 1px solid var(--line); }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .mark { width: 40px; height: 40px; border-radius: 9px; background: linear-gradient(150deg, var(--copper), var(--copper-soft)); display: grid; place-items: center; color: #fff; font-family: var(--mono); font-weight: 700; font-size: 20px; box-shadow: var(--shadow); }
+  .wordmark { font-family: var(--mono); font-size: 20px; font-weight: 600; letter-spacing: -.02em; }
+  .wordmark b { color: var(--copper); font-weight: 600; }
+  .tagline { font-size: 12.5px; color: var(--muted); letter-spacing: .02em; }
+  .stamp { text-align: right; font-family: var(--mono); font-size: 12px; color: var(--muted); }
+  .stamp .phase { display: inline-flex; align-items: center; gap: 7px; margin-top: 6px; padding: 5px 11px; border-radius: 999px; background: var(--warm-bg); color: var(--warm); font-weight: 600; font-size: 12px; }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 22%, transparent); }
+
+  h2.sec { font-family: var(--mono); font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); margin: 34px 0 14px; display: flex; align-items: center; gap: 10px; }
+  h2.sec::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+  .grid { display: grid; gap: 14px; }
+  .kpis { grid-template-columns: repeat(4, 1fr); }
+  .cols-2 { grid-template-columns: 1fr 1fr; }
+  .cols-3 { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 760px) { .kpis { grid-template-columns: 1fr 1fr; } .cols-2, .cols-3 { grid-template-columns: 1fr; } }
+
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 13px; padding: 18px; box-shadow: var(--shadow); }
+  .card h3 { margin: 0 0 4px; font-size: 15px; font-weight: 650; letter-spacing: -.01em; }
+  .card .sub { font-size: 12.5px; color: var(--muted); margin: 0 0 14px; }
+
+  /* kpi tile */
+  .kpi { display: flex; flex-direction: column; gap: 3px; position: relative; overflow: hidden; }
+  .kpi .lab { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--faint); }
+  .kpi .num { font-family: var(--mono); font-size: 30px; font-weight: 650; letter-spacing: -.02em; font-variant-numeric: tabular-nums; line-height: 1.1; }
+  .kpi .meta { font-size: 12px; color: var(--muted); }
+  .kpi .stripe { position: absolute; left: 0; top: 0; bottom: 0; width: 4px; border-radius: 4px 0 0 4px; }
+  .s-good { background: var(--good); } .s-warm { background: var(--warm); } .s-idle { background: var(--idle); } .s-copper { background: var(--copper); }
+
+  /* chips */
+  .chip { display: inline-flex; align-items: center; gap: 6px; padding: 3px 9px; border-radius: 999px; font-size: 11.5px; font-weight: 600; font-family: var(--mono); letter-spacing: .01em; }
+  .c-good { background: var(--good-bg); color: var(--good); }
+  .c-warm { background: var(--warm-bg); color: var(--warm); }
+  .c-idle { background: var(--idle-bg); color: var(--idle); }
+  .c-crit { background: var(--crit-bg); color: var(--crit); }
+
+  /* bars */
+  .bar-row { display: grid; grid-template-columns: 130px 1fr 62px; align-items: center; gap: 12px; padding: 7px 0; }
+  .bar-row .name { font-size: 13px; color: var(--ink); }
+  .bar-row .val { font-family: var(--mono); font-size: 13px; text-align: right; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .track { height: 9px; background: var(--surface-2); border-radius: 999px; overflow: hidden; }
+  .fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--copper), var(--copper-soft)); }
+  .fill.g { background: linear-gradient(90deg, var(--good), color-mix(in srgb, var(--good) 60%, #fff)); }
+  .fill.w { background: linear-gradient(90deg, var(--warm), color-mix(in srgb, var(--warm) 55%, #fff)); }
+  .fill.zero { background: repeating-linear-gradient(45deg, var(--line), var(--line) 4px, transparent 4px, transparent 8px); }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { font-family: var(--mono); font-size: 10.5px; letter-spacing: .07em; text-transform: uppercase; color: var(--faint); text-align: left; font-weight: 600; padding: 0 8px 9px 0; border-bottom: 1px solid var(--line); }
+  td { padding: 10px 8px 10px 0; border-bottom: 1px solid var(--ink-2); vertical-align: middle; }
+  td:last-child, th:last-child { text-align: right; padding-right: 0; }
+  .mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+
+  /* funnel */
+  .funnel { display: flex; flex-direction: column; gap: 7px; }
+  .fstep { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 10px; padding: 10px 13px; border-radius: 9px; background: var(--surface-2); }
+  .fstep .fl { font-size: 13px; } .fstep .fn { font-family: var(--mono); font-weight: 650; font-variant-numeric: tabular-nums; }
+  .fstep.dim { opacity: .62; }
+
+  /* phase list */
+  .plist { display: flex; flex-direction: column; gap: 11px; }
+  .prow { display: grid; grid-template-columns: 15px 118px 1fr auto; align-items: center; gap: 11px; }
+  .prow .pname { font-size: 13px; }
+  .num-i { font-family: var(--mono); font-size: 12px; color: var(--faint); font-variant-numeric: tabular-nums; }
+
+  .todo { display: flex; flex-direction: column; }
+  .titem { display: flex; align-items: center; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--ink-2); }
+  .titem:last-child { border-bottom: 0; }
+  .titem .tx { flex: 1; font-size: 13.5px; }
+  .titem .tx small { display: block; color: var(--muted); font-size: 12px; margin-top: 1px; }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 8px; font-size: 12px; color: var(--muted); }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .foot { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 12px; color: var(--faint); font-family: var(--mono); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; }
+</style>
+
+<div class="wrap">
+
+  <header class="top">
+    <div class="brand">
+      <div class="mark">G</div>
+      <div>
+        <div class="wordmark">Grow<b>Prokure</b></div>
+        <div class="tagline">Industrial Growth Intelligence · Panel Operativo</div>
+      </div>
+    </div>
+    <div class="stamp">
+      Datos al 16 jul 2026<br>
+      <span class="phase"><span class="dot"></span>FASE: Warm-up / Pre-lanzamiento</span>
+    </div>
+  </header>
+
+  <!-- KPIs -->
+  <div class="grid kpis" style="margin-top:22px">
+    <div class="card kpi"><span class="stripe s-copper"></span><span class="lab">Base de datos</span><span class="num">1,276</span><span class="meta">1,103 con email · 86%</span></div>
+    <div class="card kpi"><span class="stripe s-good"></span><span class="lab">Buzones activos</span><span class="num">12</span><span class="meta">Astute 7 · TID 5 · warm-up 🔥</span></div>
+    <div class="card kpi"><span class="stripe s-warm"></span><span class="lab">Empresas mapeadas</span><span class="num">457</span><span class="meta">Electrónica + Plásticos</span></div>
+    <div class="card kpi"><span class="stripe s-idle"></span><span class="lab">Reuniones cerradas</span><span class="num">0</span><span class="meta">arranca tras warm-up</span></div>
+  </div>
+
+  <!-- PROPOSITO / DOS LADOS -->
+  <h2 class="sec">Propósito · los dos lados del mercado</h2>
+  <div class="grid cols-3">
+    <div class="card">
+      <h3>1 · Leads compradores</h3>
+      <p class="sub">Compras · Ingeniería · Producción</p>
+      <div style="display:flex;align-items:baseline;gap:8px"><span class="num mono" style="font-size:26px;font-weight:650">1,276</span><span class="chip c-good"><span class="dot"></span>Fuerte</span></div>
+      <p class="sub" style="margin:10px 0 0">Base sólida. Profundizar Ingeniería y Producción.</p>
+    </div>
+    <div class="card">
+      <h3>2 · Leads proveedores</h3>
+      <p class="sub">Oferta para RFQs · los que pagan</p>
+      <div style="display:flex;align-items:baseline;gap:8px"><span class="num mono" style="font-size:26px;font-weight:650">0</span><span class="chip c-warm"><span class="dot"></span>Arrancando</span></div>
+      <p class="sub" style="margin:10px 0 0">ICP definido. Siguiente: jalar roster con Apollo/ZoomInfo.</p>
+    </div>
+    <div class="card">
+      <h3>3 · Cierre de negocios</h3>
+      <p class="sub">El match que factura</p>
+      <div style="display:flex;align-items:baseline;gap:8px"><span class="num mono" style="font-size:26px;font-weight:650">—</span><span class="chip c-idle"><span class="dot"></span>En redacción</span></div>
+      <p class="sub" style="margin:10px 0 0">Carlos define el proceso de cierre.</p>
+    </div>
+  </div>
+
+  <!-- BASE DE DATOS -->
+  <h2 class="sec">Base de datos · composición</h2>
+  <div class="grid cols-2">
+    <div class="card">
+      <h3>Por lado del mercado</h3>
+      <p class="sub">La cancha está media llena: falta el lado proveedor.</p>
+      <div class="bar-row"><span class="name">Demanda (compra)</span><div class="track"><div class="fill g" style="width:100%"></div></div><span class="val">1,276</span></div>
+      <div class="bar-row"><span class="name">Oferta (proveedor)</span><div class="track"><div class="fill zero" style="width:100%"></div></div><span class="val">0</span></div>
+      <div class="legend"><span><span class="chip c-warm">objetivo Fase 0</span> llenar el lado Oferta</span></div>
+    </div>
+    <div class="card">
+      <h3>Por vertical</h3>
+      <p class="sub">Electrónica manda hoy; plásticos por crecer.</p>
+      <div class="bar-row"><span class="name">Electrónica</span><div class="track"><div class="fill" style="width:87%"></div></div><span class="val">1,105</span></div>
+      <div class="bar-row"><span class="name">Plásticos</span><div class="track"><div class="fill" style="width:13%"></div></div><span class="val">171</span></div>
+      <div class="bar-row"><span class="name">Cobertura email</span><div class="track"><div class="fill g" style="width:86%"></div></div><span class="val">86%</span></div>
+    </div>
+  </div>
+
+  <!-- INFRAESTRUCTURA -->
+  <h2 class="sec">Infraestructura de envío</h2>
+  <div class="card">
+    <div style="overflow-x:auto">
+    <table>
+      <thead><tr><th>Piloto</th><th>Dominios</th><th>Buzones</th><th>DNS</th><th>Warm-up</th><th>Listo p/ lanzar</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><b>Astute</b><br><span class="sub" style="font-size:12px">Electrónica</span></td>
+          <td class="mono">get-astute.com<br>astute-supply.com</td>
+          <td class="mono">7</td>
+          <td><span class="chip c-good">SPF·DKIM·DMARC</span></td>
+          <td><span class="chip c-good"><span class="dot"></span>Activo</span></td>
+          <td class="mono">~27 jul</td>
+        </tr>
+        <tr>
+          <td><b>TID</b><br><span class="sub" style="font-size:12px">Plásticos / foil</span></td>
+          <td class="mono">get-tid.com<br>try-tid.com</td>
+          <td class="mono">5</td>
+          <td><span class="chip c-good">SPF·DKIM·DMARC</span></td>
+          <td><span class="chip c-good"><span class="dot"></span>Activo</span></td>
+          <td class="mono">~29 jul</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <!-- EMBUDO + CAPAS -->
+  <div class="grid cols-2">
+    <div>
+      <h2 class="sec">Embudo comercial</h2>
+      <div class="card">
+        <p class="sub" style="margin-top:0">Pre-lanzamiento: los números arrancan cuando termine el warm-up.</p>
+        <div class="funnel">
+          <div class="fstep"><span class="fl">Contactados</span><span class="fn">0</span></div>
+          <div class="fstep dim"><span class="fl">Abrieron</span><span class="fn">0</span></div>
+          <div class="fstep dim"><span class="fl">Respondieron</span><span class="fn">0</span></div>
+          <div class="fstep dim"><span class="fl">Reunión agendada</span><span class="fn">0</span></div>
+          <div class="fstep dim"><span class="fl">Negocio cerrado</span><span class="fn">0</span></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h2 class="sec">Ecosistema · 5 capas</h2>
+      <div class="card">
+        <div class="plist">
+          <div class="prow"><span class="num-i">1</span><span class="pname">Datos</span><div class="track"><div class="fill g" style="width:90%"></div></div><span class="chip c-good">90%</span></div>
+          <div class="prow"><span class="num-i">2</span><span class="pname">Inteligencia</span><div class="track"><div class="fill w" style="width:25%"></div></div><span class="chip c-warm">25%</span></div>
+          <div class="prow"><span class="num-i">3</span><span class="pname">Servicios</span><div class="track"><div class="fill g" style="width:80%"></div></div><span class="chip c-good">80%</span></div>
+          <div class="prow"><span class="num-i">4</span><span class="pname">Plataforma</span><div class="track"><div class="fill w" style="width:40%"></div></div><span class="chip c-warm">40%</span></div>
+          <div class="prow"><span class="num-i">5</span><span class="pname">Comunidad</span><div class="track"><div class="fill w" style="width:10%"></div></div><span class="chip c-idle">10%</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MARKETPLACE RFQ -->
+  <h2 class="sec">Marketplace de RFQs · ruta por fases</h2>
+  <div class="grid cols-2">
+    <div class="card" style="border-color:var(--copper)">
+      <div style="display:flex;justify-content:space-between;align-items:center"><h3 style="margin:0">Fase 0 · Concierge (manual)</h3><span class="chip c-warm"><span class="dot"></span>Actual</span></div>
+      <p class="sub" style="margin:8px 0 0">Carlos brokerea RFQs a mano con la base actual. Valida: ¿compradores comparten RFQs? ¿proveedores responden?</p>
+    </div>
+    <div class="card">
+      <h3 style="margin:0">Fase 1 · No-code</h3>
+      <p class="sub" style="margin:8px 0 0">Formulario + alertas por correo/WhatsApp. Sin app.</p>
+      <div style="height:10px"></div>
+      <h3 style="margin:0">Fase 2-3 · App</h3>
+      <p class="sub" style="margin:8px 0 0">Feed tipo LinkedIn → plataforma completa. Solo cuando los RFQs ya fluyan.</p>
+    </div>
+  </div>
+
+  <!-- PENDIENTES -->
+  <h2 class="sec">Próximas acciones</h2>
+  <div class="card todo">
+    <div class="titem"><span class="chip c-warm">🔥 En curso</span><span class="tx">Warm-up de los 12 buzones<small>Automático · Astute listo ~27 jul · TID ~29 jul</small></span></div>
+    <div class="titem"><span class="chip c-copper" style="background:var(--copper);color:#fff">▶ Ahora</span><span class="tx">Jalar roster de proveedores (Oferta)<small>ICP listo · electrónica + plásticos · con Apollo/ZoomInfo/Wiza</small></span></div>
+    <div class="titem"><span class="chip c-idle">Pendiente</span><span class="tx">Copy de cold email TID<small>foil / tintas · mismo estilo que Astute</small></span></div>
+    <div class="titem"><span class="chip c-idle">Pendiente</span><span class="tx">Preparar Tanda 1 de TID (estudio Foil)<small>filtrar mejores contactos con email verificado</small></span></div>
+    <div class="titem"><span class="chip c-crit">Seguimiento</span><span class="tx">Reemplazo de Homero Ruiz (Continental)<small>dio de baja · buscar nuevo Director de Compras NA</small></span></div>
+  </div>
+
+  <div class="foot">
+    <span>GrowProkure · Panel operativo interno</span>
+    <span>Repo: Cosas-Carlos / GrowProkure · v1 · 16-07-2026</span>
+  </div>
+
+</div>
