@@ -5,8 +5,15 @@
 ## Propósito del proyecto (aterrizado)
 GrowProkure conecta **dos lados** y cobra por el match:
 1. **Leads compradores** (Demanda): Compras / Ingeniería / Técnicos / Producción → tienen necesidades y RFQs.
-2. **Leads proveedores** (Oferta): distribuidores/fabricantes de electrónica y plásticos/foil/tintas → quieren esos RFQs y pagan.
+2. **Leads proveedores** (Oferta): distribuidores/fabricantes de electrónica y plásticos/foil/tintas.
 3. **Que cierren negocios** → el objetivo; GrowProkure factura por generar la oportunidad.
+
+### Doble valor (y doble monetización) para el proveedor
+El proveedor/distribuidor le paga a GrowProkure por DOS cosas — ambas son parte del negocio:
+- **(a) Leads de VENTA** — compradores calificados a quién venderles. *Es el modelo actual de cold email (Astute/TID).* Ingreso inmediato.
+- **(b) Acceso a RFQs abiertos** — demanda caliente que los compradores publican. *Es la visión del marketplace.* Ingreso de largo plazo.
+
+> Los distribuidores siempre buscan leads de venta → ese apetito es el que financia el arranque mientras se construye el marketplace de RFQs.
 
 **Estado base hoy:** 1,276 compradores (Demanda) · 0 proveedores (Oferta). Fase 0 = llenar Oferta + profundizar personas de Demanda.
 
