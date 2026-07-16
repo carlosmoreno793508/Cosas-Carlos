@@ -53,6 +53,12 @@ Newsletter GRATIS ─► audiencia ─► datos ─► inteligencia ─► newsl
 
 **💼 Vacantes (señal temprana de crecimiento):**
 - LinkedIn Jobs · Indeed México · Glassdoor · OCC Mundial. *(100–500 vacantes en ciudad nueva = expansión/planta nueva.)*
+- ⭐ **Consejo (Carlos):** para puestos **gerenciales/técnicos** (ingenieros de calidad, gerentes de planta, supply chain), **LinkedIn desplazó a las revistas**. Seguir en LinkedIn a **asociaciones de RH / industriales regionales**, que publican rotación y vacantes de primera mano.
+
+**🤝 Asociaciones regionales (fuente de vacantes/rotación + canal de distribución + comunidad):**
+- **ARHITAC** — RH de la Industria, Tijuana. · **ERIAC** — Ejecutivos en Relaciones Industriales, Monterrey.
+- Otras del mismo tipo por región (a seguir/validar): **CANIETI** (Cámara de Electrónica — clave para electrónica) · **INDEX** capítulos (Juárez, Reynosa, Tijuana, Occidente/GDL) · **CLAUGTO** (Clúster Automotriz Guanajuato) · clústeres industriales del Bajío/Norte · asociaciones de RH locales (Chihuahua, Coahuila, Querétaro).
+> Doble uso: (1) señal de rotación/vacantes de primera mano; (2) **canal para distribuir el newsletter** y sembrar la comunidad (Capa 5). Vale la pena seguirlas y construir relación.
 
 **🏛️ Gobierno / datos duros:**
 - Secretaría de Economía · Banxico · INEGI.
