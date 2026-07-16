@@ -2,6 +2,12 @@
 
 > Idea de Carlos (2026-07-16): newsletter de señales de la industria electrónica/plástica en LATAM. Hace 4 trabajos a la vez: imán de leads · autoridad de marca · comunidad (Capa 5) · productiza la IA (Capa 2). Es la forma más barata de empezar a vender inteligencia.
 
+## Estructura: DOS tracks separados (decisión 2026-07-16)
+Se divide en dos newsletters hermanos por vertical (audiencias distintas = más relevancia):
+- **GrowProkure Radar · Electrónica** — arranca primero (base 1,105 contactos). Cobertura **LATAM completa**: México, Centroamérica, Caribe, Sudamérica.
+- **GrowProkure Radar · Plásticos** — track propio (foil/tintas/decoración), se lanza en paralelo cuando haya masa de contenido/audiencia.
+> Cobertura geográfica = **todo LATAM**, no solo México (Costa Rica, Rep. Dominicana, Brasil, Colombia, Chile, etc.).
+
 ## Por qué (4 en 1)
 1. **Imán de leads** — suscriptores = compradores + proveedores que dan sus datos → crece la base solos.
 2. **Autoridad** — posiciona a GrowProkure como *la* fuente de inteligencia industrial LATAM.
