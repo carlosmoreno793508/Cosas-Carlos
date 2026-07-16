@@ -30,8 +30,36 @@ Newsletter GRATIS ─► audiencia ─► datos ─► inteligencia ─► newsl
       └─► Premium: alertas personalizadas/tiempo real (Radar de paga)
 ```
 
-## Producción (realista)
-- **Fuentes:** LinkedIn (movimientos + vacantes), noticias (búsqueda web), anuncios FDI/inversión, ZoomInfo scoops/news, Apollo, datos de importación (HS codes 8486 / solder paste 3810·3506).
+## Stack de fuentes (curado por Carlos, 2026-07-16)
+
+**🇲🇽 México (prioridad):**
+- **Mexico Industry** ⭐ — manufactura, nuevas inversiones, expansiones, nearshoring, vacantes. La #1 para maquila.
+- **INDEX Nacional** ⭐ — órgano oficial IMMEX: inversiones, T-MEC, empleo, indicadores, revista mensual.
+- **Cluster Industrial** ⭐ — nuevas plantas, proveedores asiáticos, automotriz/plástico, reubicaciones. Muy usada por compradores.
+- **Manufactura MX** — electrónica, automotriz, exportaciones.
+- **El Economista / El Financiero** — IED, fusiones, cierres, política industrial.
+- **Forbes México** — inversiones, expansiones, multinacionales.
+- **Mexico Business News** (inglés) — electrónica, energía, automotriz, manufactura.
+
+**🌎 LATAM:**
+- **BNamericas** ⭐ — inversiones, nuevas plantas, expansión industrial (movimientos de capital).
+- **AméricaEconomía** — inversiones, multinacionales, adquisiciones.
+- **Manufactura Latam / Reportero Industrial** — apertura de plantas, maquinaria, capitales.
+- **Estrategia & Negocios** — Centroamérica (textil/médica/tech). · **LatamList** (startups/VC) · **LexLatin** (M&A).
+
+**🌎 Internacionales:**
+- **Reuters Business** ⭐ · **Manufacturing.net** ⭐ · **IndustryWeek** ⭐ — plantas, expansiones, adquisiciones, supply chain.
+- **Supply Chain Dive** — relocalización, cambios de proveedor. · **The Manufacturer** (Europa) · **Bloomberg** · **FT Manufacturing**.
+
+**💼 Vacantes (señal temprana de crecimiento):**
+- LinkedIn Jobs · Indeed México · Glassdoor · OCC Mundial. *(100–500 vacantes en ciudad nueva = expansión/planta nueva.)*
+
+**🏛️ Gobierno / datos duros:**
+- Secretaría de Economía · Banxico · INEGI.
+
+**🔧 Complementarias (herramientas conectadas):** LinkedIn (movimientos de personas), ZoomInfo scoops/news, Apollo, datos de importación (HS codes 8486 / solder paste 3810·3506).
+
+> **Top 10 para prospección B2B (Astute):** Mexico Industry · INDEX · Cluster Industrial · Reuters · BNamericas · Manufacturing.net · IndustryWeek · Supply Chain Dive · Mexico Business News · El Economista.
 - **Agentes:** Scout (junta señales) + Scribe (redacta) — familia Prokure. Claude ayuda a producir cada edición.
 - **Plataforma:** Beehiiv o Substack (gratis, growth tools, cero riesgo a los dominios de cold email). NO enviar desde los dominios de prospección.
 - **Cadencia:** mensual al inicio → quincenal cuando agarre ritmo.

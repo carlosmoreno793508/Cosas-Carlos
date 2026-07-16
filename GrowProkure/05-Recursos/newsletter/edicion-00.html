@@ -1,0 +1,200 @@
+<title>GrowProkure Radar — Edición #00 (Muestra)</title>
+<style>
+  :root {
+    --bg: #f3efe8; --paper: #fbf9f5; --line: #e0d8cb; --hair: #23211d14;
+    --ink: #26231e; --muted: #6c6659; --faint: #948c7c;
+    --copper: #af5a2c; --copper-2: #c17b4e; --copper-wash: #f5e7dd;
+    --good: #3f8f63; --plastic: #7a6cae; --plastic-wash:#ece8f5;
+    --shadow: 0 1px 2px rgba(40,34,24,.05), 0 10px 30px rgba(40,34,24,.06);
+    --serif: Georgia, "Times New Roman", serif;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:#131418; --paper:#1b1d22; --line:#2f333d; --hair:#ffffff12;
+      --ink:#ece7df; --muted:#9c9589; --faint:#6c6961;
+      --copper:#d5854f; --copper-2:#bf6f3d; --copper-wash:#2a1d14;
+      --good:#5cb181; --plastic:#a99bd8; --plastic-wash:#211d2e;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 34px rgba(0,0,0,.3);
+    }
+  }
+  :root[data-theme="light"]{--bg:#f3efe8;--paper:#fbf9f5;--line:#e0d8cb;--hair:#23211d14;--ink:#26231e;--muted:#6c6659;--faint:#948c7c;--copper:#af5a2c;--copper-2:#c17b4e;--copper-wash:#f5e7dd;--good:#3f8f63;--plastic:#7a6cae;--plastic-wash:#ece8f5;--shadow:0 1px 2px rgba(40,34,24,.05),0 10px 30px rgba(40,34,24,.06);}
+  :root[data-theme="dark"]{--bg:#131418;--paper:#1b1d22;--line:#2f333d;--hair:#ffffff12;--ink:#ece7df;--muted:#9c9589;--faint:#6c6961;--copper:#d5854f;--copper-2:#bf6f3d;--copper-wash:#2a1d14;--good:#5cb181;--plastic:#a99bd8;--plastic-wash:#211d2e;--shadow:0 1px 2px rgba(0,0,0,.3),0 12px 34px rgba(0,0,0,.3);}
+
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family:var(--sans); line-height:1.6; -webkit-font-smoothing:antialiased; }
+  .paper { max-width: 680px; margin: 24px auto; background:var(--paper); border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow); overflow:hidden; }
+  .pad { padding: 30px 34px; }
+  @media (max-width:560px){ .pad{ padding:22px 20px; } }
+
+  /* masthead */
+  .mast { border-bottom:2px solid var(--ink); padding-bottom:16px; }
+  .mast .brandrow { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+  .lockup { display:flex; align-items:center; gap:11px; }
+  .glyph { width:34px;height:34px;border-radius:8px;background:linear-gradient(150deg,var(--copper),var(--copper-2)); color:#fff; display:grid; place-items:center; font-family:var(--mono); font-weight:700; }
+  .name { font-family:var(--mono); font-weight:600; letter-spacing:-.01em; font-size:15px; }
+  .name b{ color:var(--copper); }
+  .radar { font-family:var(--mono); font-size:11px; letter-spacing:.34em; color:var(--faint); text-transform:uppercase; }
+  .issue { text-align:right; font-family:var(--mono); font-size:11px; color:var(--muted); line-height:1.5; }
+  .kicker { margin-top:14px; font-family:var(--serif); font-style:italic; font-size:15px; color:var(--muted); }
+
+  .demo { margin:0; background:var(--copper-wash); color:var(--copper); font-family:var(--mono); font-size:11.5px; letter-spacing:.02em; text-align:center; padding:9px 16px; border-bottom:1px solid var(--line); }
+
+  h2.sec { font-family:var(--mono); font-size:12px; font-weight:600; letter-spacing:.13em; text-transform:uppercase; color:var(--copper); margin:34px 0 4px; display:flex; align-items:center; gap:9px; }
+  h2.sec .ln{ flex:1; height:2px; background:var(--copper-wash); }
+  .seclead { font-size:13px; color:var(--muted); margin:0 0 16px; }
+
+  .lead { margin: 8px 0 4px; }
+  .lead h1 { font-family:var(--serif); font-weight:700; font-size:27px; line-height:1.22; letter-spacing:-.01em; text-wrap:balance; margin:0 0 8px; }
+  .lead p { font-size:15px; margin:0; }
+
+  .item { padding:16px 0; border-bottom:1px solid var(--hair); }
+  .item:last-child{ border-bottom:0; }
+  .tags { display:flex; gap:7px; margin-bottom:7px; flex-wrap:wrap; }
+  .tag { font-family:var(--mono); font-size:10px; letter-spacing:.05em; text-transform:uppercase; padding:2px 8px; border-radius:999px; font-weight:600; }
+  .t-el{ background:var(--copper-wash); color:var(--copper); }
+  .t-pl{ background:var(--plastic-wash); color:var(--plastic); }
+  .t-geo{ background:var(--hair); color:var(--muted); }
+  .item h3 { font-family:var(--serif); font-size:18px; font-weight:700; line-height:1.3; margin:0 0 5px; letter-spacing:-.01em; text-wrap:balance; }
+  .item p { font-size:14.5px; margin:0; color:var(--ink); }
+  .signal { margin-top:10px; padding:10px 13px; background:var(--copper-wash); border-left:3px solid var(--copper); border-radius:0 8px 8px 0; font-size:13.5px; }
+  .signal b { font-family:var(--mono); font-size:11px; letter-spacing:.05em; text-transform:uppercase; color:var(--copper); display:block; margin-bottom:2px; }
+
+  /* people moves */
+  .move { display:flex; align-items:center; gap:12px; padding:11px 0; border-bottom:1px solid var(--hair); }
+  .move:last-child{ border-bottom:0; }
+  .ava { width:34px;height:34px;border-radius:50%; background:var(--copper-wash); color:var(--copper); display:grid; place-items:center; font-family:var(--mono); font-weight:700; font-size:13px; flex:none; }
+  .move .who { font-size:14px; }
+  .move .who b{ font-weight:650; }
+  .move .who small{ display:block; color:var(--muted); font-size:12.5px; }
+  .arrow { color:var(--copper); font-weight:700; }
+
+  /* jobs */
+  .jobs { display:grid; grid-template-columns:1fr 1fr; gap:9px; }
+  @media (max-width:560px){ .jobs{ grid-template-columns:1fr; } }
+  .job { background:var(--bg); border:1px solid var(--line); border-radius:9px; padding:11px 13px; }
+  .job .co { font-weight:650; font-size:14px; }
+  .job .ro { font-size:12.5px; color:var(--muted); }
+  .job .n { font-family:var(--mono); font-size:12px; color:var(--copper); font-weight:600; margin-top:5px; }
+
+  .cta { margin-top:30px; background:linear-gradient(150deg,var(--copper),var(--copper-2)); color:#fff; border-radius:12px; padding:22px 24px; text-align:center; }
+  .cta h3 { font-family:var(--serif); font-size:20px; margin:0 0 6px; }
+  .cta p { margin:0 0 14px; font-size:14px; opacity:.95; }
+  .btn { display:inline-block; background:#fff; color:var(--copper); font-weight:650; font-size:14px; padding:10px 20px; border-radius:8px; font-family:var(--sans); }
+
+  .foot { background:var(--bg); border-top:1px solid var(--line); }
+  .foot .pad { padding:20px 34px 26px; }
+  .foot h4 { font-family:var(--mono); font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--faint); margin:0 0 8px; }
+  .foot p { font-size:12px; color:var(--muted); margin:0 0 6px; line-height:1.6; }
+  .foot .sig { font-family:var(--mono); font-size:11px; color:var(--faint); margin-top:12px; }
+</style>
+
+<div class="paper">
+  <p class="demo">◆ EDICIÓN DE MUESTRA · contenido ilustrativo para ver el formato — la versión real se llena con datos verificados de las fuentes monitoreadas</p>
+
+  <div class="pad">
+    <div class="mast">
+      <div class="brandrow">
+        <div class="lockup">
+          <div class="glyph">G</div>
+          <div>
+            <div class="name">Grow<b>Prokure</b></div>
+            <div class="radar">Radar</div>
+          </div>
+        </div>
+        <div class="issue">Edición #00<br>Julio 2026<br>Muestra</div>
+      </div>
+      <p class="kicker">Señales de la industria electrónica y plástica en LATAM — quién llega, quién se mueve, y qué significa para ti.</p>
+    </div>
+
+    <!-- LEAD -->
+    <div class="lead" style="margin-top:22px">
+      <div class="tags"><span class="tag t-el">Electrónica</span><span class="tag t-geo">Bajío</span></div>
+      <h1>El nearshoring de electrónica no se frena: el Bajío y el Norte suman líneas SMT</h1>
+      <p>Este mes el Radar detectó más señales de expansión de manufactura electrónica en México. Para un distribuidor, cada línea SMT nueva es un BOM nuevo por abastecer. Aquí las oportunidades que vale la pena mirar.</p>
+    </div>
+
+    <!-- NUEVAS PLANTAS -->
+    <h2 class="sec">🏭 Nuevas plantas & expansiones <span class="ln"></span></h2>
+    <p class="seclead">Empresas que abren o amplían capacidad en LATAM.</p>
+
+    <div class="item">
+      <div class="tags"><span class="tag t-el">Electrónica</span><span class="tag t-geo">Chihuahua</span></div>
+      <h3>Un EMS asiático anuncia una segunda nave en Ciudad Juárez</h3>
+      <p>Expansión de líneas de ensamble para servidores y networking; contratación prevista de ~400 personas en 12 meses.</p>
+      <div class="signal"><b>🎯 Señal para ti</b>Nueva capacidad SMT = demanda de componentes pasivos, conectores y semiconductores. Cuenta caliente para acercarse antes de que cierren proveedores.</div>
+    </div>
+
+    <div class="item">
+      <div class="tags"><span class="tag t-el">Electrónica</span><span class="tag t-geo">Guanajuato</span></div>
+      <h3>Proveedor Tier-1 automotriz mueve producción electrónica de Asia al Bajío</h3>
+      <p>Relocalización de módulos electrónicos para reducir lead-times hacia armadoras en México.</p>
+      <div class="signal"><b>🎯 Señal para ti</b>Relocalización = re-diseño de cadena de suministro local. Momento ideal para ofrecer segundas fuentes franquiciadas y abasto regional.</div>
+    </div>
+
+    <div class="item">
+      <div class="tags"><span class="tag t-pl">Plásticos</span><span class="tag t-geo">Querétaro</span></div>
+      <h3>Fabricante de interiores automotrices amplía línea de decoración de plásticos</h3>
+      <p>Nueva capacidad de hot stamping y tampografía para acabados de tablero y molduras.</p>
+      <div class="signal"><b>🎯 Señal para ti</b>Decoración de plásticos = demanda de foil y tintas. Cuenta directa para TID: muestras + abasto local vs. importación.</div>
+    </div>
+
+    <!-- MOVIMIENTOS DE PERSONAS -->
+    <h2 class="sec">👤 Movimientos de personas <span class="ln"></span></h2>
+    <p class="seclead">Cambios de puesto relevantes — nuevas relaciones que construir (y contactos que actualizar en tu base).</p>
+
+    <div class="move">
+      <div class="ava">JS</div>
+      <div class="who"><b>J. Sánchez</b> — Commodity Manager <small>Jabil (Guadalajara) &nbsp;<span class="arrow">→</span>&nbsp; Sanmina (Guadalajara)</small></div>
+    </div>
+    <div class="move">
+      <div class="ava">MR</div>
+      <div class="who"><b>M. Ramírez</b> — Purchasing Lead <small>Foxconn (Cd. Juárez) &nbsp;<span class="arrow">→</span>&nbsp; Flex (Guadalajara)</small></div>
+    </div>
+    <div class="move">
+      <div class="ava">LT</div>
+      <div class="who"><b>L. Torres</b> — Materials Manager <small>Ascendido a Director de Compras — Continental (Bajío)</small></div>
+    </div>
+    <div class="signal" style="margin-top:14px"><b>🎯 Por qué importa</b>Cada movimiento = una relación nueva por abrir y un contacto por actualizar. GrowProkure lo capta, refresca la base y te dice a quién saludar primero.</div>
+
+    <!-- VACANTES -->
+    <h2 class="sec">💼 Radar de vacantes SMT <span class="ln"></span></h2>
+    <p class="seclead">Contratar producción/procesos = línea que crece. Señal temprana de compra.</p>
+    <div class="jobs">
+      <div class="job"><div class="co">EMS · Cd. Juárez</div><div class="ro">SMT Process / Manufacturing Eng.</div><div class="n">+18 vacantes</div></div>
+      <div class="job"><div class="co">OEM · Guadalajara</div><div class="ro">Buyer / Sourcing Specialist</div><div class="n">+9 vacantes</div></div>
+      <div class="job"><div class="co">Automotriz · Bajío</div><div class="ro">Production / Quality Eng.</div><div class="n">+24 vacantes</div></div>
+      <div class="job"><div class="co">Plásticos · Querétaro</div><div class="ro">Process Eng. (decoración)</div><div class="n">+6 vacantes</div></div>
+    </div>
+
+    <!-- NOTICIAS -->
+    <h2 class="sec">📊 Noticias con lectura <span class="ln"></span></h2>
+    <p class="seclead">Lo relevante del mes y qué significa para tu operación.</p>
+    <div class="item">
+      <h3>Presión de aranceles reordena la cadena de componentes hacia Norteamérica</h3>
+      <p>Más compradores buscan abasto regional y segundas fuentes para reducir exposición a importación.</p>
+      <div class="signal"><b>🎯 Lectura</b>Ventana para proveedores con presencia/almacén en MX y frontera US (FTZ). El argumento de "abasto local" nunca fue tan vendible.</div>
+    </div>
+    <div class="item">
+      <h3>Obsolescencia (EOL) al alza en familias de semiconductores maduros</h3>
+      <p>Equipos de compras enfrentan avisos de fin de vida y buscan last-time-buys y alternos.</p>
+      <div class="signal"><b>🎯 Lectura</b>Oportunidad para cobertura de obsolescencia y segundas fuentes trazables. Tema perfecto para un primer correo.</div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta">
+      <h3>¿Buscas proveedor o tienes un corto?</h3>
+      <p>Responde este correo con tu número de parte o tu necesidad. El Radar te conecta.</p>
+      <span class="btn">Suscríbete al GrowProkure Radar</span>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div class="pad">
+      <h4>Fuentes que monitoreamos</h4>
+      <p>Mexico Industry · INDEX Nacional · Cluster Industrial · Manufactura MX · Mexico Business News · BNamericas · AméricaEconomía · Reuters · Manufacturing.net · IndustryWeek · Supply Chain Dive · El Economista · LinkedIn/Indeed/OCC (vacantes) · Secretaría de Economía · INEGI · Banxico.</p>
+      <p class="sig">GrowProkure · Industrial Growth Intelligence · Edición de muestra #00 · Julio 2026</p>
+    </div>
+  </div>
+</div>
