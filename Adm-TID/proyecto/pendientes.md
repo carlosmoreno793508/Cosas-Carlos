@@ -17,6 +17,14 @@
 | P11 | Evaluar si el MVP debe soportar lectura de imágenes/documentos técnicos (planos, specs, PDFs) en el agente de IA, ya que LeadSales confirmó que su Lead Agent NO lo soporta (solo texto) | Carlos | 2026-07-18 | — | ☐ Abierto |
 | P12 | Aclarar relación entre los dominios `zolutium.com` y `zolutium-es.com` (mismo competidor, dos dominios distintos vistos en capturas separadas) | Carlos | 2026-07-18 | — | ☐ Abierto |
 
+## Decisiones raíz (bloquean el diseño — ver `docs/plan-de-trabajo.md`)
+
+| # | Decisión | Responsable | Alta | Estado |
+|---|----------|-------------|------|--------|
+| D1 | Modelo de negocio: SaaS por suscripción / Servicio de leads-citas / Híbrido | Carlos | 2026-07-18 | ☐ Abierto |
+| D2 | Cómo se construye: plataforma existente (GoHighLevel) / a medida / híbrido | Carlos | 2026-07-18 | ☐ Abierto |
+| D3 | Cliente objetivo del MVP: fabricantes-maquilas / distribuidores de componentes / uso interno para prospección de TID | Carlos | 2026-07-18 | ☐ Abierto |
+
 ## Cómo agregar un pendiente
 
 Nueva fila con número consecutivo, acción, responsable, fecha de alta, fecha objetivo (o `—`) y estado inicial `☐ Abierto`.
