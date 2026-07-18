@@ -5,6 +5,16 @@
 
 ---
 
+### [2026-07-18] Auditoría de transcripción del VSL de Zolutium
+- **Veredicto**: ✅ Aprobado
+- **Revisado**: IMG_0100–0104 (transcripción del video de Zolutium, 3:17 min). Integrada a `docs/expediente-competitivo.md` (sección 6d).
+- **Hallazgos**:
+  - Guion reconstruido: fórmula VSL "gancho de miedo (97% pierde clientes) → demo con marca famosa → pruébalo gratis".
+  - **El video usa marcas de terceros (Chevrolet, Maserati, McDonald's, Fridays, PraxMED) como "ejemplos"** — muy probablemente demos genéricas, no clientes reales. Posible uso no autorizado de marcas + prueba social de baja fiabilidad. Se marca como no verificado.
+  - La estadística "97%" es claim de marketing sin fuente (R2).
+  - Nota de contexto: las capturas incluyen notificaciones personales de otra app (MeetMobile, resultados de natación) ajenas al análisis; se ignoran, no son dato del proyecto.
+- **Acciones generadas**: Ninguna nueva.
+
 ### [2026-07-18] Auditoría de demo/reel de Zolutium (vertical salud)
 - **Veredicto**: ⚠️ Aprobado con observaciones
 - **Revisado**: IMG_0095 (captura de video/reel de Zolutium, demo para "PraxMED Centros Médicos", asistente IA "Tatiana"). Integrada a `docs/expediente-competitivo.md` (sección 6c).

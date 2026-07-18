@@ -206,6 +206,33 @@ Preguntas del formulario, en orden: nombre → correo de empresa → WhatsApp �
 - "Controlar +600 leads/mes, escalar de 3 a 8 vendedores" → *gestionar cotizaciones/cuentas sin perder trazabilidad al crecer*.
 - "Comprarle celular a todo el mundo" → *varios vendedores compartiendo un WhatsApp sin control ni historial*.
 
+## 6d. Zolutium — transcripción de su video VSL (IMG_0100–0104)
+
+**Fuente:** transcripción del propio video de Zolutium (duración 3:17), leída de la función "Transcripción" en las capturas aportadas por Carlos.
+
+### Guion reconstruido por tiempos
+- **0:05** — "La manera en la que vendemos y atendemos a clientes ha evolucionado totalmente."
+- **0:10** — "Ahora tendrás, como en este ejemplo de **Chevrolet**, una IA que atienda y venda a tus clientes 24/7 por WhatsApp, redes sociales y llamadas."
+- **0:21** — "Solutium es la app número uno de IA conversacional que está ayudando a miles de negocios como el tuyo. Pruébalo gratis."
+- **0:33** — "¿Sabías que el **97% de clínicas o negocios pierden pacientes por no responder a tiempo**?" (ejemplo **PraxMED**)
+- **1:16** — "…como en este ejemplo de **Maserati** por WhatsApp, redes sociales y llamadas."
+- **2:01** — "La atención al cliente ha cambiado para siempre. Ahora, como en este ejemplo de **McDonald's**, puedes tener una IA que venda, atienda y agende 24/7…"
+- **2:37** — "Como puedes ver en este ejemplo de **Fridays**, Solutium es la app número uno de IA conversacional…"
+
+### Hallazgos
+- **Fórmula de copy (VSL):** gancho de miedo con estadística ("97% pierde clientes/pacientes por no responder a tiempo") → demo con marca famosa → "pruébalo gratis". Estructura repetitiva y horizontal.
+- **⚠️ Uso de marcas de terceros como "ejemplos":** el video muestra a **Chevrolet, Maserati, McDonald's, Fridays** (además de PraxMED) como demos. Con alta probabilidad **NO son clientes reales**, sino demostraciones genéricas usando logos de marcas conocidas para aparentar autoridad. Esto implica:
+  1. Posible **uso no autorizado de marcas** (riesgo legal para Zolutium).
+  2. Otra señal de **prueba social de baja fiabilidad**, coherente con los testimonios duplicados (sección 3) y las cifras inconsistentes (sección 6c).
+- La estadística "97%" es un **[claim de marketing sin fuente]**.
+- Confirma canales: WhatsApp, redes sociales y llamadas (agente de voz).
+
+### Implicación para el proyecto
+- El copy de Zolutium es **genérico e intercambiable** (misma frase para autos de lujo, comida rápida y clínicas). Un mensaje **específico del comprador industrial** (RFQs, cotizaciones, lead time, certificaciones) sonaría inmediatamente más creíble y relevante para ese nicho.
+- **Antipatrón a NO copiar:** usar marcas famosas como falsos "ejemplos/clientes". La ventaja de Carlos debe ser prueba social real y verificable (R2).
+
+---
+
 ## 6c. Zolutium — ejemplo de contenido/demo por vertical (IMG_0095)
 
 **Fuente:** captura de un video/reel de Zolutium aportada por Carlos (fecha del post: 24 mar; música "Hope - nuer self"; link `zolutium.com/e...`).
