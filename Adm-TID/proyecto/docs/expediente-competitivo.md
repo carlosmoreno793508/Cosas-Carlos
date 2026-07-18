@@ -206,6 +206,20 @@ Preguntas del formulario, en orden: nombre → correo de empresa → WhatsApp �
 - "Controlar +600 leads/mes, escalar de 3 a 8 vendedores" → *gestionar cotizaciones/cuentas sin perder trazabilidad al crecer*.
 - "Comprarle celular a todo el mundo" → *varios vendedores compartiendo un WhatsApp sin control ni historial*.
 
+## 6c. Zolutium — ejemplo de contenido/demo por vertical (IMG_0095)
+
+**Fuente:** captura de un video/reel de Zolutium aportada por Carlos (fecha del post: 24 mar; música "Hope - nuer self"; link `zolutium.com/e...`).
+
+- **Vertical mostrado:** salud / centros médicos — demo para **"PraxMED Centros Médicos"**, con asistente IA llamada **"Tatiana"** atendiendo por WhatsApp (flujo de saludo y agendamiento de cita médica).
+- Confirma que **Zolutium también hace demos verticalizadas** (aquí, médico) — igual que LeadSales con belleza/inmobiliaria/educación. **Ninguno de los dos toca el vertical industrial/manufactura.**
+- Reafirma su mensaje omnicanal: WhatsApp, Facebook, Instagram, TikTok, Página Web y llamadas.
+
+**⚠️ Inconsistencia de cifras (refuerza P9):** este material dice **"+11.000 negocios nos eligen"**, mientras que:
+- el sitio `zolutium.com` mostraba **"+30.000 negocios"** y un contador de **"103,021 usuarios"** (sección 3),
+- el anuncio de Facebook inicial (`analisis-anuncio-zolutium.md`) decía **"+11,000 negocios"**.
+
+→ **Tres cifras distintas (11,000 / 30,000 / 103,021)** para aparentemente la misma métrica. Se consolida como **claim de marketing no confiable**; no usar como benchmark.
+
 ---
 
 ## 6. Sensibilidad de datos (regla R3)

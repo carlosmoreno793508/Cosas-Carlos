@@ -5,6 +5,14 @@
 
 ---
 
+### [2026-07-18] Auditoría de demo/reel de Zolutium (vertical salud)
+- **Veredicto**: ⚠️ Aprobado con observaciones
+- **Revisado**: IMG_0095 (captura de video/reel de Zolutium, demo para "PraxMED Centros Médicos", asistente IA "Tatiana"). Integrada a `docs/expediente-competitivo.md` (sección 6c).
+- **Hallazgos**:
+  - Zolutium hace **demos verticalizadas** (aquí, salud/médico) igual que LeadSales — pero ninguno cubre el vertical industrial/manufactura.
+  - **Inconsistencia de cifras confirmada**: este material dice "+11.000 negocios", el sitio decía "+30.000 negocios" y "103,021 usuarios", y el anuncio de FB decía "+11,000". Tres cifras distintas → claim de marketing no confiable. Refuerza P9.
+- **Acciones generadas**: Ninguna nueva (refuerza P9, ya abierto).
+
 ### [2026-07-18] Auditoría de 3 capturas de casos de éxito de LeadSales (YouTube)
 - **Veredicto**: ✅ Aprobado
 - **Revisado**: IMG_0092–0094 (capturas de videos del canal oficial "Leadsales - CRM para WhatsApp", 29 jul 2025). Integradas a `docs/expediente-competitivo.md` (sección 6b). Además, Carlos aportó un 4º enlace de YouTube (`youtu.be/7UJyJ4SEGks`) que no pudo abrirse (red restringida).
