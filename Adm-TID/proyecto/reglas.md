@@ -1,6 +1,6 @@
-# Reglas del proyecto Adm TID
+# Reglas — Ámbito Proyecto (sistema de ventas)
 
-> Reglas y acuerdos vigentes. El agente `adm-tid` las mantiene y verifica.
+> Reglas y acuerdos del proyecto nuevo. El agente `adm-tid` las mantiene y verifica.
 > No se elimina una regla: se marca como derogada con fecha.
 
 | # | Regla | Fecha alta | Estado |

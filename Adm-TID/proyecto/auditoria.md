@@ -1,6 +1,6 @@
-# Bitácora de auditoría — Adm TID
+# Bitácora de auditoría — Ámbito Proyecto
 
-> El agente `adm-tid` registra aquí cada auditoría de información subida al proyecto.
+> El agente `adm-tid` registra aquí cada auditoría de información del proyecto nuevo (sistema de ventas).
 > No se borran entradas: solo se agregan. Orden cronológico (más reciente arriba).
 
 ---

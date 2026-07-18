@@ -1,4 +1,4 @@
-# Acciones pendientes — Adm TID
+# Acciones pendientes — Ámbito Proyecto
 
 > El agente `adm-tid` mantiene esta lista. Estados: ☐ Abierto · ⏳ En progreso · ☑ Hecho · ✖ Cancelado.
 
