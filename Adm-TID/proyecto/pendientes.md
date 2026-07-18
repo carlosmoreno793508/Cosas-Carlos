@@ -21,9 +21,10 @@
 
 | # | Decisión | Responsable | Alta | Estado |
 |---|----------|-------------|------|--------|
-| D1 | Modelo de negocio: SaaS por suscripción / Servicio de leads-citas / Híbrido | Carlos | 2026-07-18 | ☐ Abierto |
-| D2 | Cómo se construye: plataforma existente (GoHighLevel) / a medida / híbrido | Carlos | 2026-07-18 | ☐ Abierto |
-| D3 | Cliente objetivo del MVP: fabricantes-maquilas / distribuidores de componentes / uso interno para prospección de TID | Carlos | 2026-07-18 | ☐ Abierto |
+| D1 | Modelo de negocio: SaaS por suscripción / Servicio de leads-citas / Híbrido | Carlos | 2026-07-18 | ☑ Decidido: **Híbrido** (software + servicio) |
+| D2 | Cómo se construye: plataforma existente (GoHighLevel) / a medida / híbrido | Carlos | 2026-07-18 | ☑ Decidido: **Híbrido** (plataforma + capa propia industrial) |
+| D3 | Cliente objetivo del MVP: fabricantes-maquilas / distribuidores de componentes / uso interno | Carlos | 2026-07-18 | ☑ Decidido: **Opción A — fabricantes/maquilas**. Piloto con **TID o Astute** |
+| D4 | Elegir la empresa piloto para el MVP: TID o Astute (falta confirmar giro exacto de cada una) | Carlos | 2026-07-18 | ☐ Abierto |
 
 ## Cómo agregar un pendiente
 

@@ -5,6 +5,15 @@
 
 ---
 
+### [2026-07-18] Registro de decisiones raíz D1–D3
+- **Veredicto**: ✅ Aprobado
+- **Revisado**: decisiones de Carlos sobre el modelo del proyecto.
+- **Hallazgos**:
+  - D1 = Híbrido (software + servicio). D2 = Híbrido (plataforma + capa propia). D3 = Opción A (fabricantes/maquilas).
+  - Piloto candidato: TID o Astute → se abre **D4** (elegir empresa piloto). Falta confirmar el giro exacto de TID y de Astute para poder redactar propuesta de valor y VSL con datos reales.
+  - Decisiones consistentes entre sí y con la tesis vertical del proyecto (no violan reglas).
+- **Acciones generadas**: D4 (elegir piloto). Habilita P3 (propuesta de valor) y P10 (formulario de calificación).
+
 ### [2026-07-18] Auditoría de transcripción del VSL de Zolutium
 - **Veredicto**: ✅ Aprobado
 - **Revisado**: IMG_0100–0104 (transcripción del video de Zolutium, 3:17 min). Integrada a `docs/expediente-competitivo.md` (sección 6d).

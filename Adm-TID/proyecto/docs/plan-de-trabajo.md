@@ -16,17 +16,16 @@
 
 ---
 
-## 1. Decisiones que dependen de ti (bloquean el diseño)
+## 1. Decisiones raíz — ✅ TOMADAS (2026-07-18)
 
-Antes de construir, hay que cerrar 3 definiciones. Todo lo demás se deriva de aquí:
+| # | Decisión | Elegido |
+|---|----------|---------|
+| **D1** | Modelo de negocio | ✅ **Híbrido** — vendemos software (suscripción) **+** servicio de leads/citas cualificadas |
+| **D2** | Cómo lo construimos | ✅ **Híbrido** — plataforma existente para lo básico (CRM, WhatsApp, embudos) **+** capa propia de inteligencia industrial |
+| **D3** | Cliente objetivo del MVP | ✅ **Opción A — fabricantes / maquilas** que quieren vender más |
+| **D4** | Empresa piloto para probar | ⏳ **TID o Astute** (por confirmar giro exacto de cada una) |
 
-| # | Decisión | Opciones | Por qué importa |
-|---|----------|----------|-----------------|
-| **D1** | **Modelo de negocio** | (a) SaaS: vendemos el software por suscripción · (b) Servicio: entregamos leads/citas cualificadas · (c) Híbrido | Cambia el precio, el pitch y qué construimos primero |
-| **D2** | **Cómo lo construimos** | (a) Sobre plataforma existente (GoHighLevel u similar, rápido y barato) · (b) A medida (más control, más caro/lento) · (c) Híbrido: plataforma + capa propia de inteligencia industrial | Define tiempo y costo del MVP |
-| **D3** | **Cliente objetivo del MVP** | ¿Le vendemos a fabricantes/maquilas que quieren vender más? ¿O a distribuidores de componentes? ¿O usamos el sistema para TU propia prospección primero? | Enfoca el primer caso de uso |
-
-👉 **Recomendación inicial:** D1→(c) híbrido, D2→(c) plataforma + capa propia, D3→empezar usándolo para prospección propia de TID (validas antes de vender). Pero es tu decisión.
+**Qué significa esto en corto:** construimos un producto **para venderle a fabricantes/maquilas**, montado rápido sobre plataforma + nuestra capa industrial única, cobrando software + servicio. Lo probamos primero en una empresa propia (TID o Astute) para tener un caso de éxito real antes de salir a vender.
 
 ---
 
