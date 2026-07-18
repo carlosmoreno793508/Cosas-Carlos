@@ -9,8 +9,13 @@
 | P3 | Definir posicionamiento vertical propio (manufactura/maquila/nearshoring) frente al horizontal de Zolutium | Carlos | 2026-07-18 | — | ☐ Abierto |
 | P4 | Decidir alcance del MVP: qué canales y si incluir agente de voz (Zolutium sí lo tiene) | Carlos | 2026-07-18 | — | ☐ Abierto |
 | P5 | Validar de forma independiente los claims del competidor antes de usarlos como referencia | Carlos | 2026-07-18 | — | ☐ Abierto |
-| P6 | Verificar la landing de LeadSales (funciones, precios, canales) — perfil actual sin verificar | Carlos | 2026-07-18 | — | ☐ Abierto |
-| P7 | Aportar título/contenido de los 3 videos de YouTube para poder analizarlos | Carlos | 2026-07-18 | — | ☐ Abierto |
+| P6 | Verificar la landing de LeadSales (funciones, precios, canales) — perfil actual sin verificar | Carlos | 2026-07-18 | — | ☑ Hecho (2026-07-18) |
+| P7 | Aportar título/contenido de los 3 videos de YouTube para poder analizarlos | Carlos | 2026-07-18 | — | ☑ Hecho (2026-07-18) — casos de éxito LeadSales por vertical (belleza, inmobiliaria, educación) |
+| P8 | Conseguir precios/planes exactos de Zolutium (no aparecieron en las 8 capturas de `zolutium.com`; solo CTAs de demo) | Carlos | 2026-07-18 | — | ☐ Abierto |
+| P9 | Verificar de forma independiente los testimonios de Zolutium — se detectó el mismo texto atribuido a dos personas distintas (Hermes C. y Fernando P.), señal de baja fiabilidad | Carlos | 2026-07-18 | — | ☐ Abierto |
+| P10 | Diseñar el formulario de calificación de leads propio inspirado en el filtro de LeadSales (empresa formalizada + control de canal propio), adaptado a variables B2B industriales (tipo de comprador OEM/EMS/Tier 1, volumen de compra, certificaciones) | Carlos | 2026-07-18 | — | ☐ Abierto |
+| P11 | Evaluar si el MVP debe soportar lectura de imágenes/documentos técnicos (planos, specs, PDFs) en el agente de IA, ya que LeadSales confirmó que su Lead Agent NO lo soporta (solo texto) | Carlos | 2026-07-18 | — | ☐ Abierto |
+| P12 | Aclarar relación entre los dominios `zolutium.com` y `zolutium-es.com` (mismo competidor, dos dominios distintos vistos en capturas separadas) | Carlos | 2026-07-18 | — | ☐ Abierto |
 
 ## Cómo agregar un pendiente
 

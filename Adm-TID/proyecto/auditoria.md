@@ -5,6 +5,31 @@
 
 ---
 
+### [2026-07-18] Auditoría de 3 capturas de casos de éxito de LeadSales (YouTube)
+- **Veredicto**: ✅ Aprobado
+- **Revisado**: IMG_0092–0094 (capturas de videos del canal oficial "Leadsales - CRM para WhatsApp", 29 jul 2025). Integradas a `docs/expediente-competitivo.md` (sección 6b). Además, Carlos aportó un 4º enlace de YouTube (`youtu.be/7UJyJ4SEGks`) que no pudo abrirse (red restringida).
+- **Hallazgos**:
+  - Los videos son **testimonios/casos de éxito por vertical**: salón de belleza, inmobiliaria, educación. Ninguno industrial → refuerza el vacío de manufactura también en marketing de contenidos.
+  - Cifras de los casos ("300%", "10x", "+60%") son claims de marketing del competidor, registradas como tales (R2).
+  - LeadSales usa dominio de tracking propio `leadsal.es` para YouTube.
+  - Esto **resuelve P7** (contenido de videos aportado por Carlos vía capturas). El 4º video queda documentado pero sin analizar por falta de acceso.
+- **Acciones generadas**: P7 marcado como Hecho. Sin pendientes nuevos.
+
+### [2026-07-18] Auditoría de 40 capturas de competencia (LeadSales en vivo + Zolutium en vivo)
+- **Veredicto**: ⚠️ Aprobado con observaciones
+- **Revisado**: 40 imágenes (IMG_0047 a IMG_0088, con salto en 0076 y 0080) aportadas por Carlos, correspondientes a navegación real en vivo de `lp.leadsales.io`, `es.typeform.com` (formulario de calificación de LeadSales) y `zolutium.com`. Todo consolidado en `docs/expediente-competitivo.md`.
+- **Hallazgos**:
+  - **32 imágenes de LeadSales** y **8 imágenes de Zolutium**, todas con fuente verificable (navegación en vivo por Carlos), a diferencia del perfil preliminar anterior de LeadSales que se basaba en conocimiento general del modelo. Esto **resuelve P6**.
+  - Precios exactos de LeadSales confirmados con fuente: Plan Básico $2,362.92 MXN/mes (sin IA), Plan Profesional desde $3,239.88 MXN/mes (4 usuarios, 20,000 conversaciones), Plan Avanzado desde $6,016.92 MXN/mes (5 usuarios, 50,000 conversaciones). Ambos planes superiores incluyen "Lead Agent" (IA).
+  - LeadSales confirma explícitamente que su Lead Agent **no lee imágenes, audio ni documentos** del prospecto (solo texto) — dato funcional relevante para diferenciación.
+  - El formulario de calificación de leads de LeadSales trata "Manufactura" como una sola categoría junto con "Moda y Textil", sin distinguir comprador industrial (OEM/EMS/Tier 1) — confirma con evidencia directa el vacío vertical ya sospechado.
+  - Zolutium (sitio `zolutium.com`, distinto del dominio `zolutium-es.com` visto en el anuncio auditado antes) **no muestra precios ni planes** en ninguna de las 8 capturas; solo CTAs de demo y countdowns de urgencia.
+  - **Hallazgo de integridad relevante en Zolutium**: el mismo testimonio, palabra por palabra, aparece atribuido a dos personas y países distintos (Hermes C. de Panamá y Fernando P. de Ecuador), con titulares que citan cifras distintas (85% vs. "duplicamos" ventas). Se marca explícitamente como prueba social de baja fiabilidad, no usable como benchmark.
+  - Cifras de Zolutium ("Total 103,021 usuarios" vs. "+30,000 negocios nos eligen", "-85% curiosos", "+50% ventas", "edificio propio... única compañía global de IA") son **claims de marketing no verificados de forma independiente**, registrados como tales (cumple R2).
+  - **Dato sensible detectado**: las capturas IMG_0066 e IMG_0067 (formulario de LeadSales) contienen el correo y el número de WhatsApp personal de Carlos, introducidos al probar el flujo del competidor. Es dato propio (no de terceros) de sensibilidad baja; no se reprodujo en el expediente, solo se señala su presencia en las capturas fuente (cumple R3).
+  - LeadSales compra la keyword "zolutium" en Google Ads — se posiciona activamente en SEM contra su competidor directo.
+- **Acciones generadas**: P6 marcado como Hecho (verificación completada). Se agregan P8, P9, P10, P11, P12 (ver pendientes.md).
+
 ### [2026-07-18] Auditoría de perfil competitivo LeadSales
 - **Veredicto**: ⚠️ Aprobado con observaciones
 - **Revisado**: `docs/competidor-leadsales.md` (competidor Lead Agent v3) y los 3 enlaces de YouTube aportados.
