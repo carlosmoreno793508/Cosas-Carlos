@@ -41,10 +41,28 @@
 
 **🎊 Infraestructura de cold email COMPLETA al 100%.**
 
-## ⏳ Único pendiente (en ~14 días, warmup listo ~2026-07-27)
-- Revisar Health Score (debe subir a 90-100%).
-- Cargar Tanda 1 (`Astute_Tanda1_contactos.xlsx`) + copy (`04-copy-cold-email-electronica.md`).
-- Lanzar primera campaña de Astute a volumen bajo.
+## 🚀 CAMPAÑA LANZADA (2026-07-28)
+
+**Campaña "Astute - Tanda 1" — ACTIVA en Instantly.**
+
+| Config | Valor |
+|---|---|
+| Leads | 63 Tier-1 (clave electrónicos), `Astute_Tier1_Clave_Instantly.csv` |
+| Secuencia | 4 correos (día 0 / 3 / 7 / 12), español natural |
+| Buzones | 7 (rotación) |
+| Stop-on-reply | ON |
+| Open/Link tracking | OFF |
+| Delivery | Text-only (no HTML) ✅ |
+| Daily Limit | 90/día (arranque conservador) |
+| Schedule | L–V, 9:00–17:00, America/Mexico_City (Guadalajara) |
+| Estado inicial | Active, 0% progress (arranca en ventana 9–5) |
+
+### Pendientes de monitoreo (primeros días)
+- Revisar **Unibox** 2x/día: clasificar auto-reply / respuesta real (→ pitch) / opt-out (→ quitar).
+- Vigilar **bounces** (>5% = limpiar lista).
+- NO subir volumen ~1 semana; luego subir gradual si entregabilidad sana.
+- Auto-replies de "cambio de empresa" → avisar para actualizar Base Maestra.
+- Siguiente tanda: sumar Tier 2 (decisor) → Tier 3 (comprador) → Tier 4 (directorio) desde `Astute_Instantly_LISTO.csv`.
    - SPF: `v=spf1 include:_spf.google.com ~all`
    - DMARC: `v=DMARC1; p=none; rua=mailto:carlos.moreno@astute-supply.com`
 3. **Crear 2-3 buzones en astute-supply.com** (carlos.moreno@, carlos@, c.moreno@).
