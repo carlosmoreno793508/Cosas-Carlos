@@ -59,6 +59,62 @@ Eso alimenta el ítem H1 (banco de pruebas) y valida la viabilidad del modo nata
 
 ---
 
+## OPP-02 · Auto-detección y clasificación de entrenamientos
+
+**Estado:** 🔵 capacidad de producto documentada (algoritmo/firmware a desarrollar)
+
+### El hallazgo
+WHOOP **detecta solo** el inicio/fin y la duración de cada sesión (los nados de Gael de ~2h26m,
+las pesas de ~1h16m) sin que el atleta apunte nada. Lo hace combinando **FC sostenida (PPG)** +
+**movimiento (acelerómetro)**. Pero **falla al nombrar el deporte** (a veces lo marca genérico:
+"activity", "walking") y **no mide distancia de nado** (ver OPP-01).
+
+### Cómo lo hace (para replicarlo)
+- **FC sube y se mantiene** → marca inicio; **baja y se estabiliza** → marca fin (de ahí duración
+  y strain, que **sí son confiables**).
+- **Patrón de acelerómetro** → intenta clasificar el tipo de actividad.
+
+### Oportunidad de producto — banda TID-MAX
+Es una **funcionalidad central**, no un extra. Con los sensores que ya trae el spec (**PPG + IMU**)
+TID-MAX puede:
+- **Auto-detectar** inicio/fin/duración (paridad con WHOOP).
+- **Clasificar mejor el deporte** por patrón de movimiento (brazada, cadencia, reps) — superando el
+  "activity" genérico de WHOOP.
+- **Contar vueltas → distancia de nado** (el diferenciador de OPP-01, que WHOOP no tiene).
+
+### Puente de desarrollo
+El **Polar Verity Sense** (PPG+ACC crudo por BLE SDK) es el banco para **entrenar y validar** estos
+algoritmos con sesiones reales de Gael, antes del hardware propio. Ver OPP-01.
+
+### (a) Quick Win — software (YA hecho)
+El dashboard ahora muestra **hora local de inicio/fin y duración** de cada sesión (hoja Workouts),
+igualando el resumen que ya se comparte.
+
+---
+
+## Nota de arquitectura · Conectividad de la banda
+
+**Cómo se comunica la banda TID-MAX con el ecosistema:**
+
+```
+Banda TID-MAX  --(Bluetooth LE)-->  App del celular  --(WiFi/celular / internet)-->  Nube TID-MAX  -->  Dashboard + Coach
+```
+
+- **Banda ↔ Celular: Bluetooth Low Energy (BLE).** Enlace principal. Es de **bajísimo consumo**
+  (clave para la autonomía de 7–14 días), universal y lo que usan WHOOP/Garmin/Polar. El chip del
+  plan (nRF52840/nRF5340) ya trae BLE integrado.
+- **Celular ↔ Nube:** el teléfono actúa de **puente** y sube los datos por internet a la tubería
+  de datos que estamos construyendo.
+- **Por qué NO WiFi/celular en la banda:** matarían la batería, suben costo/tamaño y disparan el
+  peso regulatorio (IFT). Se descartan para el beta.
+
+**Clave para natación:** el BLE (2.4 GHz) **no atraviesa el agua**. Por eso la banda **debe grabar
+en memoria interna (store-and-forward)** durante el nado y **sincronizar por BLE al salir** — igual
+que el Verity Sense. Esto ya está como decisión de firmware en el spec, y es **imprescindible** para
+el caso de uso de nadador de Gael.
+
+---
+
 ## Plantilla para nuevas oportunidades
 
 ```

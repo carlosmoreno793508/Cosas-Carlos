@@ -20,7 +20,7 @@ import sys
 import glob
 import json
 import csv
-from datetime import datetime
+from datetime import datetime, timedelta
 
 try:
     from openpyxl import Workbook
@@ -99,6 +99,29 @@ def parse_dt(s):
         return datetime.fromisoformat(s.replace("Z", "+00:00"))
     except (ValueError, AttributeError):
         return None
+
+
+def to_local(dt_utc, tz_offset):
+    """Aplica el offset de zona (p.ej. '-06:00') a un datetime UTC -> hora local."""
+    if dt_utc is None:
+        return None
+    if tz_offset and len(tz_offset) >= 3:
+        try:
+            sign = -1 if tz_offset[0] == "-" else 1
+            hh = int(tz_offset[1:3])
+            mm = int(tz_offset[4:6]) if len(tz_offset) >= 6 else 0
+            return dt_utc + sign * timedelta(hours=hh, minutes=mm)
+        except (ValueError, IndexError):
+            return dt_utc
+    return dt_utc
+
+
+def fmt_dur(minutes):
+    if not minutes:
+        return ""
+    h = int(minutes // 60)
+    m = int(round(minutes % 60))
+    return f"{h}h{m:02d}m" if h else f"{m}m"
 
 
 def load_records(prefix):
@@ -219,8 +242,15 @@ def extract_workouts():
     for r in load_records("workouts"):
         sc = r.get("score") or {}
         dist = sc.get("distance_meter")
+        tz = r.get("timezone_offset")
+        start = to_local(parse_dt(r.get("start")), tz)
+        end = to_local(parse_dt(r.get("end")), tz)
+        dur = (end - start).total_seconds() / 60 if (start and end) else None
         rows.append({
-            "fecha": parse_dt(r.get("start")),
+            "fecha": start,
+            "inicio": start,
+            "fin": end,
+            "dur_min": dur,
             "deporte": r.get("sport_name") or (f"sport {r.get('sport_id')}" if r.get("sport_id") is not None else "—"),
             "strain": sc.get("strain"),
             "fc_prom": sc.get("average_heart_rate"),
@@ -449,13 +479,17 @@ def build():
     ws_wko = wb.create_sheet("Workouts")
     style_table(
         ws_wko,
-        ["Fecha", "Deporte", "Strain", "FC prom", "FC max", "Kcal", "Km (WHOOP)*"],
+        ["Fecha", "Deporte", "Inicio", "Fin", "Duración", "Strain", "FC prom", "FC max", "Kcal", "Km (WHOOP)*"],
         [[x["fecha"].strftime("%d/%b/%Y") if x["fecha"] else "",
-          x["deporte"], x["strain"], x["fc_prom"], x["fc_max"], x["kcal"], x["km"]] for x in wko],
-        num_formats={3: "0.0", 4: "0", 5: "0", 6: "0", 7: "0.00"},
+          x["deporte"],
+          x["inicio"].strftime("%H:%M") if x["inicio"] else "",
+          x["fin"].strftime("%H:%M") if x["fin"] else "",
+          fmt_dur(x["dur_min"]),
+          x["strain"], x["fc_prom"], x["fc_max"], x["kcal"], x["km"]] for x in wko],
+        num_formats={6: "0.0", 7: "0", 8: "0", 9: "0", 10: "0.00"},
     )
     note_row = ws_wko.max_row + 2
-    ws_wko.merge_cells(start_row=note_row, start_column=1, end_row=note_row, end_column=7)
+    ws_wko.merge_cells(start_row=note_row, start_column=1, end_row=note_row, end_column=10)
     nc = ws_wko.cell(row=note_row, column=1)
     nc.value = ("*  En natación el Km de WHOOP NO es confiable (sin GPS en alberca / no cuenta vueltas). "
                 "El volumen real está en la hoja 'Natación'.")
