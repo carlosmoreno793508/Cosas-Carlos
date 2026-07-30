@@ -100,9 +100,9 @@ Presupuesto INDICATIVO en USD (a validar con cotizaciones reales: RFQ H0.4, lab 
 | # | Ítem | Estado | Acción correctiva / notas |
 |---|---|---|---|
 | H1.1 | Ordenar 3–5 EVK (nRF52840/nRF5340 + MAX86141) | ⬜ | |
-| H1.2 | Banco de pruebas: PPG en bíceps y muñeca | ⬜ | |
-| H1.3 | Comparar calidad de dato vs. WHOOP | ⬜ | |
-| H1.4 | Correr pipeline Fase 1 sobre datos del EVK (validar DFA-α1) | ⬜ | |
+| H1.2 | Banco de pruebas óptico (puede arrancar YA, antes del EVK) | 🟡 | Ya se cuenta con un **Polar óptico (Verity Sense/OH1)**. Comprar **Polar H10 (~$105, referencia ECG)** + Scosche Rhythm24. Ver `analisis/bandas-dato-crudo.md`. |
+| H1.3 | Comparar calidad de dato vs. **Polar H10 (referencia ECG)** | ⬜ | WHOOP no sirve de referencia (dato cocinado) |
+| H1.4 | Validar pipeline DFA-α1 sobre el óptico Polar (adelanta sin EVK) | ⬜ | Protocolo: reposo, esfuerzo, sudor/movimiento; RR del H10 como verdad |
 | H1.5 | Decisión go/no-go de molde | ⬜ | No fundir molde sin esto |
 
 ## FASE H2 — ODM + molde existente + IP (Hardware)
