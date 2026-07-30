@@ -43,7 +43,7 @@ Presupuesto INDICATIVO en USD (a validar con cotizaciones reales: RFQ H0.4, lab 
 | # | Ítem | Estado | Acción correctiva / notas |
 |---|---|---|---|
 | 0.1 | Decidir Terra vs. Vital (criterio: acceso a IBI/RR crudo) | 🟡 | Recomendación NORTE: **Vital** para beta (cobro por-usuario, barato); **Terra** en banca por su Streaming API BLE (Polar H10). Abrir AMBAS cuentas gratis y comparar el JSON real. |
-| 0.2 | Abrir sandbox del agregador + conectar primer atleta (WHOOP + Samsung) | ⬜ | ⚠️ Hallazgo: WHOOP y Samsung **NO exponen PPG/IBI crudo** por API/nube → el dato crudo para DFA-α1 vendrá del **EVK (H1)** o de correa BLE (Polar H10). Ajustar expectativa. |
+| 0.2 | Abrir sandbox del agregador + conectar primer atleta (WHOOP + Samsung) | 🟡 | Ruta alterna en marcha: **API directa de WHOOP** (app "GAEL SYNC" creada; código en `software/`, guía `guias/02`). Prueba para ver datos reales de Gael sin agregador. ⚠️ Hallazgo vigente: WHOOP y Samsung **NO exponen PPG/IBI crudo** por API/nube → el dato crudo para DFA-α1 vendrá del **EVK (H1)** o de correa BLE (Polar H10). |
 | 0.3 | Definir esquema de datos canónico (PPG/IBI/RR, HRV, sueño, SpO2, temp, carga) | ⬜ | Pendiente #1 — es el contrato software↔hardware |
 | 0.4 | Infra mínima: repo, auth, base de datos de series de tiempo | ⬜ | |
 | 0.5 | Pipeline de ingesta y normalización | ⬜ | |

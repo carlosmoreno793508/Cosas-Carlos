@@ -1,0 +1,11 @@
+# Secretos: nunca subir credenciales
+**/.env
+
+# Datos descargados de WHOOP (privados de Gael)
+tid-max/software/datos/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
