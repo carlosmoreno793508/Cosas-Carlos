@@ -74,7 +74,7 @@ async def find_polar(name):
     )
 
 
-async def capture(address, seconds, name):
+async def capture(address, seconds, name, subject="prueba"):
     if not address:
         dev = await find_polar(name)
         if not dev:
@@ -84,7 +84,9 @@ async def capture(address, seconds, name):
 
     os.makedirs(DATA_DIR, exist_ok=True)
     stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
-    path = os.path.join(DATA_DIR, f"polar_{stamp}.csv")
+    safe = "".join(c if (c.isalnum() or c in "-_") else "-" for c in subject).strip("-") or "prueba"
+    path = os.path.join(DATA_DIR, f"polar_{safe}_{stamp}.csv")
+    print(f"Sujeto: {safe}")
     f = open(path, "w", newline="", encoding="utf-8")
     writer = csv.writer(f)
     writer.writerow(["t_iso", "hr_bpm", "rr_ms"])
@@ -129,12 +131,13 @@ def main():
     ap.add_argument("--address", help="ID/UUID del dispositivo (de --scan)")
     ap.add_argument("--name", default="Polar", help="nombre a buscar (default: Polar)")
     ap.add_argument("--seconds", type=int, default=120, help="duracion de captura (default 120)")
+    ap.add_argument("--subject", default="prueba", help="de quien es la captura; va en el nombre del archivo")
     args = ap.parse_args()
     try:
         if args.scan:
             asyncio.run(scan())
         else:
-            asyncio.run(capture(args.address, args.seconds, args.name))
+            asyncio.run(capture(args.address, args.seconds, args.name, args.subject))
     except KeyboardInterrupt:
         print("\nInterrumpido por el usuario.")
 
