@@ -57,14 +57,14 @@ Presupuesto INDICATIVO en USD (a validar con cotizaciones reales: RFQ H0.4, lab 
 | 1.2 | HRV (rMSSD/SDNN) + DFA-α1 | ⬜ | |
 | 1.3 | Zonas y umbrales personalizados | ⬜ | |
 | 1.4 | Sueño + VO2max estimado | ⬜ | |
-| 1.5 | Semáforo Preventivo v0 (vigilar→descarga→fisio) | ⬜ | |
+| 1.5 | Semáforo Preventivo v0 (vigilar→descarga→fisio) | 🟡 | v0 por reglas en `software/tid_coach.py`: semáforo verde/amarillo/rojo combinando Recovery, HRV vs base, FC reposo vs base, sueño y ACWR (agudo:crónico). Corre sobre datos reales de WHOOP. |
 
 ## FASE 2 — Coach conversacional (Software)
 
 | # | Ítem | Estado | Acción correctiva / notas |
 |---|---|---|---|
 | 2.1 | Integración LLM (Claude API) sobre las métricas | ⬜ | |
-| 2.2 | Plan diario 5 pilares (entreno, sueño, hidratación, nutrición, recuperación) | ⬜ | |
+| 2.2 | Plan diario 5 pilares (entreno, sueño, hidratación, nutrición, recuperación) | 🟡 | v0 por reglas en `software/tid_coach.py` (genera `reporte-diario.html`). Fase 2: potenciar el texto con la Claude API (ítem 2.1). |
 | 2.3 | Modo adaptable Rendimiento ↔ Bienestar | ⬜ | |
 | 2.4 | Guardrails COFEPRIS (rendimiento/bienestar, no diagnóstico) | ⬜ | |
 | 2.5 | Nombrar y definir el asistente de usuario (persona) | ⬜ | |

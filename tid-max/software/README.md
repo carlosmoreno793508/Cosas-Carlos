@@ -66,6 +66,22 @@ Al correr `whoop_dashboard.py`, el panel muestra la banda **NATACIÓN** (km real
 una hoja **Natación** con gráfica de km/día, y marca el Km de WHOOP como *no confiable*.
 Ver la oportunidad de producto en `../analisis/oportunidades-producto.md` (OPP-01).
 
+## Ecosistema: motor + coach (demo end-to-end)
+`whoop_dashboard.py` visualiza; `tid_coach.py` **razona**. Demuestra el bucle del producto
+(**Datos → Motor → Coach → Recomendación**) con la fuente que hoy tenemos (WHOOP):
+```bash
+python tid_coach.py
+open reporte-diario.html        # en Mac
+```
+Genera un **reporte diario** con:
+- **Semáforo del día** (verde/amarillo/rojo) combinando Recovery, HRV vs base, FC reposo vs base,
+  sueño y carga **ACWR** (agudo 7d : crónico 28d).
+- **Plan de 5 pilares** (entrenamiento, sueño, hidratación, nutrición, recuperación) adaptado a Gael.
+- **Alertas preventivas** (caída de HRV, FC reposo elevada, spike de carga).
+
+Es orientación de rendimiento/bienestar (no médica). En Fase 2, el texto del coach se potencia con la
+**Claude API** para volverlo conversacional.
+
 ## Seguridad
 - El `.env` y la carpeta `datos/` están en `.gitignore` — **no se suben** al repo.
 - El **Client Secret** y el **Refresh Token** son como contraseñas: no los pegues en chats ni capturas.
