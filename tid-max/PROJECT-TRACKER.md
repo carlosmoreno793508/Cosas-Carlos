@@ -8,22 +8,33 @@ Seguimiento vivo del proyecto por fases e ítems. Se actualiza conforme avanzamo
 - Si un ítem se traba o sale mal, ponlo en ⚠️ y describe la **acción correctiva** en su columna.
 - Una fase se marca **completa** cuando todos sus ítems están en ✅.
 
-## Resumen de avance
+## Resumen de avance y presupuesto
 
-| Fase | Track | Ítems | Completos |
-|---|---|---|---|
-| 0 · Fundación y datos | Software | 6 | 1 |
-| 1 · Motor determinista | Software | 5 | 0 |
-| 2 · Coach conversacional | Software | 5 | 0 |
-| 3 · Beta software + B2B | Software | 4 | 0 |
-| 4 · IA predictiva | Software | 3 | 0 |
-| H0 · Spec + RFQ | Hardware | 4 | 1 |
-| H1 · EVK primero | Hardware | 5 | 0 |
-| H2 · ODM + molde + IP | Hardware | 4 | 0 |
-| H3 · Beta de hardware (DVT) | Hardware | 5 | 0 |
-| R0 · Regulatorio | Regulatorio | 6 | 0 |
-| L · Lanzamiento comercial | GTM | 5 | 0 |
-| **Total** | | **52** | **2** |
+Presupuesto INDICATIVO en USD (a validar con cotizaciones reales: RFQ H0.4, lab IFT R0.1, abogado IP H2.3).
+
+| Fase | Track | Ítems | ✅ | Presupuesto (USD, indic.) |
+|---|---|---|---|---|
+| 0 · Fundación y datos | Software | 6 | 1 | $8k – $25k |
+| 1 · Motor determinista | Software | 5 | 0 | $15k – $40k |
+| 2 · Coach conversacional | Software | 5 | 0 | $12k – $35k |
+| 3 · Beta software + B2B | Software | 4 | 0 | $20k – $50k |
+| 4 · IA predictiva | Software | 3 | 0 | $25k – $60k |
+| H0 · Spec + RFQ | Hardware | 4 | 1 | $2k – $8k |
+| H1 · EVK primero | Hardware | 5 | 0 | $8k – $25k |
+| H2 · ODM + molde + IP | Hardware | 4 | 0 | $20k – $70k |
+| H3 · Beta de hardware (DVT) | Hardware | 5 | 0 | $30k – $80k |
+| R0 · Regulatorio | Regulatorio | 6 | 0 | $10k – $35k |
+| L · Lanzamiento comercial | GTM | 5 | 0 | $60k – $150k |
+| **Total** | | **52** | **2** | **~$210k – $580k** |
+
+### Presupuesto por bloque
+- **Software (Fases 0–4):** ~$80k – $210k — *llega a beta cobrando; capital ligero*
+- **Hardware (H0–H3):** ~$60k – $183k — *capital pesado, etapa 2*
+- **Regulatorio (R0):** ~$10k – $35k — *barato pero bloqueante para vender*
+- **Lanzamiento (L):** ~$60k – $150k — *inventario de arranque = el cheque más grande*
+- **Punto medio de planeación:** ~$350k – $400k hasta lanzamiento.
+
+**Regla de gasto:** no comprometer el capital pesado de hardware+lanzamiento (H2/H3/L, ~$110k–300k) hasta pasar el **go/no-go de H1.5** (EVK valida "mejor dato crudo"). El software valida y, idealmente, ya factura antes de ese cheque.
 
 ---
 
@@ -31,8 +42,8 @@ Seguimiento vivo del proyecto por fases e ítems. Se actualiza conforme avanzamo
 
 | # | Ítem | Estado | Acción correctiva / notas |
 |---|---|---|---|
-| 0.1 | Decidir Terra vs. Vital (criterio: acceso a IBI/RR crudo) | ⬜ | |
-| 0.2 | Abrir sandbox del agregador + conectar primer atleta (WHOOP + Samsung) | ⬜ | |
+| 0.1 | Decidir Terra vs. Vital (criterio: acceso a IBI/RR crudo) | 🟡 | Recomendación NORTE: **Vital** para beta (cobro por-usuario, barato); **Terra** en banca por su Streaming API BLE (Polar H10). Abrir AMBAS cuentas gratis y comparar el JSON real. |
+| 0.2 | Abrir sandbox del agregador + conectar primer atleta (WHOOP + Samsung) | ⬜ | ⚠️ Hallazgo: WHOOP y Samsung **NO exponen PPG/IBI crudo** por API/nube → el dato crudo para DFA-α1 vendrá del **EVK (H1)** o de correa BLE (Polar H10). Ajustar expectativa. |
 | 0.3 | Definir esquema de datos canónico (PPG/IBI/RR, HRV, sueño, SpO2, temp, carga) | ⬜ | Pendiente #1 — es el contrato software↔hardware |
 | 0.4 | Infra mínima: repo, auth, base de datos de series de tiempo | ⬜ | |
 | 0.5 | Pipeline de ingesta y normalización | ⬜ | |
