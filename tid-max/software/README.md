@@ -44,6 +44,16 @@ Strain del dia:    12.4
 Workouts jalados:  8
 ```
 
+## Paso 3 — Dashboard en Excel (opcional, estético)
+```bash
+python whoop_dashboard.py
+open TID-MAX-WHOOP.xlsx        # en Mac
+```
+Toma el JSON de `datos/` y genera `TID-MAX-WHOOP.xlsx` con:
+- **Dashboard**: tarjetas KPI (recovery, HRV, FC reposo, sueño, strain) con color por zona
+  (verde/amarillo/rojo) y gráficas de tendencia de recovery y HRV.
+- Hojas de detalle: **Recovery, Sueño, Strain, Workouts** con formato y escala de color.
+
 ## Seguridad
 - El `.env` y la carpeta `datos/` están en `.gitignore` — **no se suben** al repo.
 - El **Client Secret** y el **Refresh Token** son como contraseñas: no los pegues en chats ni capturas.

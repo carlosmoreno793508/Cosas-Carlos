@@ -1,0 +1,389 @@
+#!/usr/bin/env python3
+"""
+whoop_dashboard.py — Genera un dashboard estetico en Excel con los datos de WHOOP.
+
+Lee el JSON crudo que dejo whoop_sync.py en ./datos/ y arma un archivo Excel con:
+  - Portada "Dashboard": tarjetas KPI (recovery, HRV, FC reposo, sueno, strain) con
+    colores por zona, y graficas de tendencia (recovery y HRV).
+  - Hojas de detalle: Recovery, Sueno, Strain (cycles) y Workouts, con formato.
+
+Uso:
+    python whoop_sync.py        # (1) baja/actualiza los datos
+    python whoop_dashboard.py   # (2) genera el Excel
+Luego abrelo con:  open TID-MAX-WHOOP.xlsx   (en Mac)
+
+Opcional:
+    python whoop_dashboard.py [carpeta_datos] [archivo_salida.xlsx]
+"""
+import os
+import sys
+import glob
+import json
+from datetime import datetime
+
+try:
+    from openpyxl import Workbook
+    from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
+    from openpyxl.chart import LineChart, Reference
+    from openpyxl.chart.axis import ChartLines
+    from openpyxl.formatting.rule import ColorScaleRule
+    from openpyxl.utils import get_column_letter
+except ImportError:
+    sys.exit("Falta 'openpyxl'. Instala con:  pip install -r requirements.txt")
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = sys.argv[1] if len(sys.argv) > 1 else os.path.join(SCRIPT_DIR, "datos")
+OUT_PATH = sys.argv[2] if len(sys.argv) > 2 else os.path.join(SCRIPT_DIR, "TID-MAX-WHOOP.xlsx")
+
+# --- Paleta (oscura con acento teal, estilo TID-MAX) ---
+INK = "0B1220"       # header casi negro
+PANEL = "16233A"     # paneles
+ACCENT = "16E0B5"    # teal
+BLUE = "3DA5FF"
+INDIGO = "7C6CF6"
+ORANGE = "FF8A3D"
+GOOD = "1DB954"      # verde
+WARN = "F5B301"      # ambar
+BAD = "E5484D"       # rojo
+WHITE = "FFFFFF"
+MUTED = "9FB3C8"
+ROW_ALT = "F3F6FA"
+GRID = "D6DEE8"
+
+
+def _fill(hex_color):
+    return PatternFill(start_color=hex_color, end_color=hex_color, fill_type="solid")
+
+
+def parse_dt(s):
+    if not s:
+        return None
+    try:
+        return datetime.fromisoformat(s.replace("Z", "+00:00"))
+    except (ValueError, AttributeError):
+        return None
+
+
+def load_records(prefix):
+    files = sorted(glob.glob(os.path.join(DATA_DIR, f"{prefix}_*.json")))
+    if not files:
+        return []
+    with open(files[-1], encoding="utf-8") as f:
+        data = json.load(f)
+    if isinstance(data, dict) and isinstance(data.get("records"), list):
+        return data["records"]
+    if isinstance(data, list):
+        return data
+    return [data] if isinstance(data, dict) else []
+
+
+def load_single(prefix):
+    files = sorted(glob.glob(os.path.join(DATA_DIR, f"{prefix}_*.json")))
+    if not files:
+        return {}
+    with open(files[-1], encoding="utf-8") as f:
+        data = json.load(f)
+    return data if isinstance(data, dict) else {}
+
+
+def kcal(kilojoule):
+    return round(kilojoule * 0.239006, 0) if isinstance(kilojoule, (int, float)) else None
+
+
+# ---------- Extraccion ----------
+def extract_recovery():
+    rows = []
+    for r in load_records("recovery"):
+        sc = r.get("score") or {}
+        rows.append({
+            "fecha": parse_dt(r.get("created_at")),
+            "recovery": sc.get("recovery_score"),
+            "hrv": sc.get("hrv_rmssd_milli"),
+            "rhr": sc.get("resting_heart_rate"),
+            "spo2": sc.get("spo2_percentage"),
+            "temp": sc.get("skin_temp_celsius"),
+        })
+    return sorted([x for x in rows if x["fecha"]], key=lambda x: x["fecha"])
+
+
+def extract_sleep():
+    rows = []
+    for r in load_records("sueno"):
+        sc = r.get("score") or {}
+        stage = sc.get("stage_summary") or {}
+        in_bed = stage.get("total_in_bed_time_milli")
+        rows.append({
+            "fecha": parse_dt(r.get("start")),
+            "rendimiento": sc.get("sleep_performance_percentage"),
+            "eficiencia": sc.get("sleep_efficiency_percentage"),
+            "consistencia": sc.get("sleep_consistency_percentage"),
+            "resp": sc.get("respiratory_rate"),
+            "horas": round(in_bed / 3_600_000, 2) if isinstance(in_bed, (int, float)) else None,
+        })
+    return sorted([x for x in rows if x["fecha"]], key=lambda x: x["fecha"])
+
+
+def extract_cycles():
+    rows = []
+    for r in load_records("cycles"):
+        sc = r.get("score") or {}
+        rows.append({
+            "fecha": parse_dt(r.get("start")),
+            "strain": sc.get("strain"),
+            "fc_prom": sc.get("average_heart_rate"),
+            "fc_max": sc.get("max_heart_rate"),
+            "kcal": kcal(sc.get("kilojoule")),
+        })
+    return sorted([x for x in rows if x["fecha"]], key=lambda x: x["fecha"])
+
+
+def extract_workouts():
+    rows = []
+    for r in load_records("workouts"):
+        sc = r.get("score") or {}
+        dist = sc.get("distance_meter")
+        rows.append({
+            "fecha": parse_dt(r.get("start")),
+            "deporte": r.get("sport_name") or (f"sport {r.get('sport_id')}" if r.get("sport_id") is not None else "—"),
+            "strain": sc.get("strain"),
+            "fc_prom": sc.get("average_heart_rate"),
+            "fc_max": sc.get("max_heart_rate"),
+            "kcal": kcal(sc.get("kilojoule")),
+            "km": round(dist / 1000, 2) if isinstance(dist, (int, float)) else None,
+        })
+    return sorted([x for x in rows if x["fecha"]], key=lambda x: x["fecha"], reverse=True)
+
+
+# ---------- Estilos de tabla ----------
+def style_table(ws, headers, rows, start_row=1, num_formats=None):
+    """Escribe una tabla con encabezado oscuro y filas alternadas. rows = lista de listas."""
+    num_formats = num_formats or {}
+    thin = Side(style="thin", color=GRID)
+    border = Border(left=thin, right=thin, top=thin, bottom=thin)
+
+    for j, h in enumerate(headers, start=1):
+        c = ws.cell(row=start_row, column=j, value=h)
+        c.fill = _fill(INK)
+        c.font = Font(bold=True, color=WHITE, size=11)
+        c.alignment = Alignment(horizontal="center", vertical="center")
+        c.border = border
+    ws.row_dimensions[start_row].height = 24
+
+    for i, row in enumerate(rows):
+        r = start_row + 1 + i
+        for j, val in enumerate(row, start=1):
+            c = ws.cell(row=r, column=j, value=val)
+            c.border = border
+            c.alignment = Alignment(horizontal="center", vertical="center")
+            if i % 2 == 1:
+                c.fill = _fill(ROW_ALT)
+            if j in num_formats:
+                c.number_format = num_formats[j]
+    ws.freeze_panes = ws.cell(row=start_row + 1, column=1)
+    for j, h in enumerate(headers, start=1):
+        width = 22 if j == 1 else max(12, len(str(h)) + 4)
+        ws.column_dimensions[get_column_letter(j)].width = width
+
+
+def recovery_zone_color(v):
+    if not isinstance(v, (int, float)):
+        return PANEL
+    if v >= 67:
+        return GOOD
+    if v >= 34:
+        return WARN
+    return BAD
+
+
+# ---------- Construccion del dashboard ----------
+def build():
+    perfil = load_single("perfil")
+    rec = extract_recovery()
+    slp = extract_sleep()
+    cyc = extract_cycles()
+    wko = extract_workouts()
+
+    if not any([rec, slp, cyc, wko]):
+        sys.exit(
+            f"\nNo encontre datos en {DATA_DIR}.\n"
+            "Corre primero:  python whoop_sync.py"
+        )
+
+    wb = Workbook()
+
+    # ===== Hoja Dashboard =====
+    ws = wb.active
+    ws.title = "Dashboard"
+    ws.sheet_view.showGridLines = False
+
+    # Anchos: A margen; B..K contenido
+    ws.column_dimensions["A"].width = 2
+    for col in "BCDEFGHIJK":
+        ws.column_dimensions[col].width = 11.5
+
+    # Barra de acento
+    for col in range(2, 12):
+        ws.cell(row=1, column=col).fill = _fill(ACCENT)
+    ws.row_dimensions[1].height = 6
+
+    # Titulo
+    ws.merge_cells("B2:K3")
+    t = ws["B2"]
+    t.value = "TID-MAX  ·  Panel WHOOP"
+    t.fill = _fill(INK)
+    t.font = Font(bold=True, color=WHITE, size=24)
+    t.alignment = Alignment(horizontal="left", vertical="center", indent=1)
+    for col in range(2, 12):
+        ws.cell(row=2, column=col).fill = _fill(INK)
+        ws.cell(row=3, column=col).fill = _fill(INK)
+    ws.row_dimensions[2].height = 22
+    ws.row_dimensions[3].height = 22
+
+    # Subtitulo
+    ws.merge_cells("B4:K4")
+    nombre = f"{perfil.get('first_name', '')} {perfil.get('last_name', '')}".strip() or "Atleta"
+    st = ws["B4"]
+    st.value = f"Atleta: {nombre}    ·    Generado: {datetime.now():%d/%b/%Y %H:%M}    ·    Fuente: WHOOP API v2"
+    st.font = Font(color="5A6B7B", size=10, italic=True)
+    st.alignment = Alignment(horizontal="left", vertical="center", indent=1)
+    ws.row_dimensions[4].height = 20
+
+    # Ultimos valores
+    last_rec = rec[-1] if rec else {}
+    last_slp = slp[-1] if slp else {}
+    last_cyc = cyc[-1] if cyc else {}
+
+    cards = [
+        ("RECOVERY", last_rec.get("recovery"), '0"%"', recovery_zone_color(last_rec.get("recovery"))),
+        ("HRV (rMSSD)", last_rec.get("hrv"), '0.0" ms"', ACCENT),
+        ("FC EN REPOSO", last_rec.get("rhr"), '0" lpm"', BLUE),
+        ("SUENO", last_slp.get("rendimiento"), '0"%"', INDIGO),
+        ("STRAIN HOY", last_cyc.get("strain"), '0.0', ORANGE),
+    ]
+
+    # Tarjetas KPI: cada una ocupa 2 columnas (B:C, D:E, F:G, H:I, J:K)
+    start_cols = [2, 4, 6, 8, 10]
+    label_row, value_row = 6, 7
+    ws.row_dimensions[label_row].height = 18
+    ws.row_dimensions[value_row].height = 40
+    ws.row_dimensions[8].height = 8
+    for (label, value, fmt, color), col in zip(cards, start_cols):
+        c1, c2 = get_column_letter(col), get_column_letter(col + 1)
+        ws.merge_cells(f"{c1}{label_row}:{c2}{label_row}")
+        lc = ws[f"{c1}{label_row}"]
+        lc.value = label
+        lc.fill = _fill(color)
+        lc.font = Font(bold=True, color=WHITE, size=9)
+        lc.alignment = Alignment(horizontal="center", vertical="center")
+
+        ws.merge_cells(f"{c1}{value_row}:{c2}{value_row}")
+        vc = ws[f"{c1}{value_row}"]
+        vc.value = value if value is not None else "—"
+        vc.fill = _fill(color)
+        vc.font = Font(bold=True, color=WHITE, size=26)
+        vc.alignment = Alignment(horizontal="center", vertical="center")
+        if isinstance(value, (int, float)):
+            vc.number_format = fmt
+        # borde inferior de acento visual
+        for cc in (c1, c2):
+            ws[f"{cc}{label_row}"].border = Border(top=Side(style="thin", color=color))
+
+    # ===== Hojas de detalle (datos para tablas y graficas) =====
+    ws_rec = wb.create_sheet("Recovery")
+    style_table(
+        ws_rec,
+        ["Fecha", "Recovery %", "HRV (ms)", "FC reposo", "SpO2 %", "Temp piel °C"],
+        [[x["fecha"].strftime("%d/%b") if x["fecha"] else "",
+          x["recovery"], x["hrv"], x["rhr"], x["spo2"], x["temp"]] for x in rec],
+        num_formats={2: '0"%"', 3: "0.0", 4: "0", 5: '0"%"', 6: "0.0"},
+    )
+    # Escala de color en Recovery %
+    if rec:
+        last = len(rec) + 1
+        ws_rec.conditional_formatting.add(
+            f"B2:B{last}",
+            ColorScaleRule(start_type="num", start_value=0, start_color=BAD,
+                           mid_type="num", mid_value=50, mid_color=WARN,
+                           end_type="num", end_value=100, end_color=GOOD),
+        )
+
+    ws_slp = wb.create_sheet("Sueno")
+    style_table(
+        ws_slp,
+        ["Fecha", "Rendimiento %", "Eficiencia %", "Consistencia %", "Resp (rpm)", "Horas en cama"],
+        [[x["fecha"].strftime("%d/%b") if x["fecha"] else "",
+          x["rendimiento"], x["eficiencia"], x["consistencia"], x["resp"], x["horas"]] for x in slp],
+        num_formats={2: '0"%"', 3: '0"%"', 4: '0"%"', 5: "0.0", 6: "0.0"},
+    )
+
+    ws_cyc = wb.create_sheet("Strain")
+    style_table(
+        ws_cyc,
+        ["Fecha", "Strain", "FC prom", "FC max", "Kcal"],
+        [[x["fecha"].strftime("%d/%b") if x["fecha"] else "",
+          x["strain"], x["fc_prom"], x["fc_max"], x["kcal"]] for x in cyc],
+        num_formats={2: "0.0", 3: "0", 4: "0", 5: "0"},
+    )
+
+    ws_wko = wb.create_sheet("Workouts")
+    style_table(
+        ws_wko,
+        ["Fecha", "Deporte", "Strain", "FC prom", "FC max", "Kcal", "Km"],
+        [[x["fecha"].strftime("%d/%b/%Y") if x["fecha"] else "",
+          x["deporte"], x["strain"], x["fc_prom"], x["fc_max"], x["kcal"], x["km"]] for x in wko],
+        num_formats={3: "0.0", 4: "0", 5: "0", 6: "0", 7: "0.00"},
+    )
+
+    # ===== Graficas de tendencia en el Dashboard =====
+    n = len(rec)
+    if n >= 2:
+        first_data = max(2, n - 29)  # ultimos ~30 puntos
+        cats = Reference(ws_rec, min_col=1, min_row=first_data, max_row=n + 1)
+
+        chart_rec = LineChart()
+        chart_rec.title = "Recovery % (tendencia)"
+        chart_rec.height = 7.5
+        chart_rec.width = 15
+        chart_rec.style = 2
+        data = Reference(ws_rec, min_col=2, min_row=1, max_row=n + 1)
+        chart_rec.add_data(data, titles_from_data=True)
+        chart_rec.set_categories(cats)
+        chart_rec.y_axis.scaling.min = 0
+        chart_rec.y_axis.scaling.max = 100
+        chart_rec.y_axis.majorGridlines = ChartLines()
+        chart_rec.legend = None
+        if chart_rec.series:
+            s = chart_rec.series[0]
+            s.graphicalProperties.line.solidFill = GOOD
+            s.graphicalProperties.line.width = 22000
+            s.smooth = True
+        ws.add_chart(chart_rec, "B10")
+
+        chart_hrv = LineChart()
+        chart_hrv.title = "HRV rMSSD (ms)"
+        chart_hrv.height = 7.5
+        chart_hrv.width = 15
+        chart_hrv.style = 2
+        data_h = Reference(ws_rec, min_col=3, min_row=1, max_row=n + 1)
+        chart_hrv.add_data(data_h, titles_from_data=True)
+        chart_hrv.set_categories(cats)
+        chart_hrv.y_axis.majorGridlines = ChartLines()
+        chart_hrv.legend = None
+        if chart_hrv.series:
+            s = chart_hrv.series[0]
+            s.graphicalProperties.line.solidFill = ACCENT
+            s.graphicalProperties.line.width = 22000
+            s.smooth = True
+        ws.add_chart(chart_hrv, "G10")
+
+    wb.save(OUT_PATH)
+    print("\n===================== LISTO =====================")
+    print(f"Dashboard generado: {OUT_PATH}")
+    print(f"Recovery: {len(rec)} dias  |  Sueno: {len(slp)}  |  Strain: {len(cyc)}  |  Workouts: {len(wko)}")
+    print("\nAbrelo con:")
+    print(f'    open "{OUT_PATH}"')
+    print("=================================================\n")
+
+
+if __name__ == "__main__":
+    build()
