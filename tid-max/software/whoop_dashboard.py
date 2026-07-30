@@ -154,6 +154,39 @@ def kcal(kilojoule):
     return round(kilojoule * 0.239006, 0) if isinstance(kilojoule, (int, float)) else None
 
 
+def _avg(xs):
+    xs = [x for x in xs if isinstance(x, (int, float))]
+    return sum(xs) / len(xs) if xs else None
+
+
+def acwr_color(a):
+    """Zonas Garmin: 0.8-1.3 optimo (verde), 1.3-1.5 o <0.8 (amarillo), >1.5 riesgo (rojo)."""
+    if not isinstance(a, (int, float)):
+        return SLATE
+    if 0.8 <= a <= 1.3:
+        return GOOD
+    if a > 1.5:
+        return BAD
+    return WARN
+
+
+def pmc_series(cyc):
+    """Curva de forma: Fitness (CTL, 42d), Fatiga (ATL, 7d), Forma (TSB=CTL_ayer-ATL_ayer).
+    Usa el strain diario como carga. Devuelve lista de (fecha, carga, ctl, atl, tsb)."""
+    loads = [(x["fecha"], x["strain"]) for x in cyc if isinstance(x.get("strain"), (int, float))]
+    if not loads:
+        return []
+    init = sum(v for _, v in loads[:7]) / min(7, len(loads))  # semilla para no arrancar en 0
+    c = a = prev_c = prev_a = init
+    out = []
+    for d, l in loads:
+        c = c + (l - c) / 42
+        a = a + (l - a) / 7
+        out.append((d, l, round(c, 1), round(a, 1), round(prev_c - prev_a, 1)))
+        prev_c, prev_a = c, a
+    return out
+
+
 def _num(v):
     try:
         return float(str(v).replace(",", ".")) if v not in (None, "") else None
