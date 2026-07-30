@@ -43,7 +43,7 @@ Presupuesto INDICATIVO en USD (a validar con cotizaciones reales: RFQ H0.4, lab 
 | # | Ítem | Estado | Acción correctiva / notas |
 |---|---|---|---|
 | 0.1 | Decidir Terra vs. Vital (criterio: acceso a IBI/RR crudo) | 🟡 | Recomendación NORTE: **Vital** para beta (cobro por-usuario, barato); **Terra** en banca por su Streaming API BLE (Polar H10). Abrir AMBAS cuentas gratis y comparar el JSON real. |
-| 0.2 | Abrir sandbox del agregador + conectar primer atleta (WHOOP + Samsung) | 🟡 | Ruta alterna en marcha: **API directa de WHOOP** (app "GAEL SYNC" creada; código en `software/`, guía `guias/02`). Prueba para ver datos reales de Gael sin agregador. ⚠️ Hallazgo vigente: WHOOP y Samsung **NO exponen PPG/IBI crudo** por API/nube → el dato crudo para DFA-α1 vendrá del **EVK (H1)** o de correa BLE (Polar H10). |
+| 0.2 | Abrir sandbox del agregador + conectar primer atleta (WHOOP + Samsung) | 🟡 | Ruta alterna en marcha: **API directa de WHOOP** (app "GAEL SYNC" creada; código en `software/`, guía `guias/02`). Prueba para ver datos reales de Gael sin agregador. Incluye **dashboard en Excel** (`whoop_dashboard.py`). ⚠️ Hallazgo vigente: WHOOP y Samsung **NO exponen PPG/IBI crudo** por API/nube → el dato crudo para DFA-α1 vendrá del **EVK (H1)** o de correa BLE (Polar H10). 🆕 Hallazgo: WHOOP **no mide distancia de natación** (sin GPS en alberca) → registro manual en el dashboard + **oportunidad OPP-01** (ver `analisis/oportunidades-producto.md`). |
 | 0.3 | Definir esquema de datos canónico (PPG/IBI/RR, HRV, sueño, SpO2, temp, carga) | ⬜ | Pendiente #1 — es el contrato software↔hardware |
 | 0.4 | Infra mínima: repo, auth, base de datos de series de tiempo | ⬜ | |
 | 0.5 | Pipeline de ingesta y normalización | ⬜ | |
@@ -100,7 +100,7 @@ Presupuesto INDICATIVO en USD (a validar con cotizaciones reales: RFQ H0.4, lab 
 | # | Ítem | Estado | Acción correctiva / notas |
 |---|---|---|---|
 | H1.1 | Ordenar 3–5 EVK (nRF52840/nRF5340 + MAX86141) | ⬜ | |
-| H1.2 | Banco de pruebas óptico (puede arrancar YA, antes del EVK) | 🟡 | Ya se cuenta con un **Polar óptico (Verity Sense/OH1)**. Comprar **Polar H10 (~$105, referencia ECG)** + Scosche Rhythm24. Ver `analisis/bandas-dato-crudo.md`. |
+| H1.2 | Banco de pruebas óptico (puede arrancar YA, antes del EVK) | 🟡 | ✅ Confirmado en inventario: **Polar Verity Sense (Model 4J, WR50)** — óptico de brazo con PPG+ACC crudo por BLE SDK y FC bajo agua. Falta comprar **Polar H10 (~$105, referencia ECG)** + Scosche Rhythm24. Ver `analisis/bandas-dato-crudo.md` y `analisis/oportunidades-producto.md` (OPP-01). |
 | H1.3 | Comparar calidad de dato vs. **Polar H10 (referencia ECG)** | ⬜ | WHOOP no sirve de referencia (dato cocinado) |
 | H1.4 | Validar pipeline DFA-α1 sobre el óptico Polar (adelanta sin EVK) | ⬜ | Protocolo: reposo, esfuerzo, sudor/movimiento; RR del H10 como verdad |
 | H1.5 | Decisión go/no-go de molde | ⬜ | No fundir molde sin esto |

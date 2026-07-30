@@ -54,6 +54,18 @@ Toma el JSON de `datos/` y genera `TID-MAX-WHOOP.xlsx` con:
   (verde/amarillo/rojo) y gráficas de tendencia de recovery y HRV.
 - Hojas de detalle: **Recovery, Sueño, Strain, Workouts** con formato y escala de color.
 
+### Natación (volumen real) — porque WHOOP no lo mide
+WHOOP **no mide la distancia de nado** (sin GPS en alberca / no cuenta vueltas). Para ver el
+volumen real, crea un registro manual:
+```bash
+cp registro-natacion.ejemplo.csv datos/registro-natacion.csv
+```
+Edita `datos/registro-natacion.csv` (ábrelo en Excel) con una fila por día:
+`fecha, km_natacion, sesiones_nado, min_pesas, notas`.
+Al correr `whoop_dashboard.py`, el panel muestra la banda **NATACIÓN** (km real, sesiones, pesas),
+una hoja **Natación** con gráfica de km/día, y marca el Km de WHOOP como *no confiable*.
+Ver la oportunidad de producto en `../analisis/oportunidades-producto.md` (OPP-01).
+
 ## Seguridad
 - El `.env` y la carpeta `datos/` están en `.gitignore` — **no se suben** al repo.
 - El **Client Secret** y el **Refresh Token** son como contraseñas: no los pegues en chats ni capturas.

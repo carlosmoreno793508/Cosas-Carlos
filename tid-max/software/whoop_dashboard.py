@@ -19,12 +19,13 @@ import os
 import sys
 import glob
 import json
+import csv
 from datetime import datetime
 
 try:
     from openpyxl import Workbook
     from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
-    from openpyxl.chart import LineChart, Reference
+    from openpyxl.chart import LineChart, BarChart, Reference
     from openpyxl.chart.axis import ChartLines
     from openpyxl.chart.shapes import GraphicalProperties
     from openpyxl.drawing.line import LineProperties
@@ -51,6 +52,10 @@ WHITE = "FFFFFF"
 MUTED = "9FB3C8"
 ROW_ALT = "F3F6FA"
 GRID = "D6DEE8"
+CYAN = "0EA5E9"      # natacion (agua)
+AQUA = "0284C7"
+TEAL = "06B6D4"
+SLATE = "64748B"
 
 
 def _fill(hex_color):
@@ -120,6 +125,46 @@ def load_single(prefix):
 
 def kcal(kilojoule):
     return round(kilojoule * 0.239006, 0) if isinstance(kilojoule, (int, float)) else None
+
+
+def _num(v):
+    try:
+        return float(str(v).replace(",", ".")) if v not in (None, "") else None
+    except (ValueError, TypeError):
+        return None
+
+
+def _manual_date(s):
+    s = (s or "").strip()
+    for fmt in ("%Y-%m-%d", "%d/%m/%Y", "%d/%m/%y", "%d-%m-%Y"):
+        try:
+            return datetime.strptime(s, fmt)
+        except ValueError:
+            pass
+    return parse_dt(s)
+
+
+def load_manual():
+    """Registro manual de natacion: datos/registro-natacion.csv
+    Columnas: fecha, km_natacion, sesiones_nado, min_pesas, notas
+    (WHOOP no mide distancia en alberca; este es el volumen REAL de nado.)"""
+    path = os.path.join(DATA_DIR, "registro-natacion.csv")
+    if not os.path.exists(path):
+        return []
+    rows = []
+    with open(path, encoding="utf-8-sig", newline="") as f:
+        for r in csv.DictReader(f):
+            fecha = _manual_date(r.get("fecha") or r.get("Fecha"))
+            if not fecha:
+                continue
+            rows.append({
+                "fecha": fecha,
+                "km": _num(r.get("km_natacion")),
+                "sesiones": _num(r.get("sesiones_nado")),
+                "min_pesas": _num(r.get("min_pesas")),
+                "notas": (r.get("notas") or "").strip(),
+            })
+    return sorted(rows, key=lambda x: x["fecha"])
 
 
 # ---------- Extraccion ----------
@@ -285,6 +330,14 @@ def build():
     last_slp = slp[-1] if slp else {}
     last_cyc = cyc[-1] if cyc else {}
 
+    man = load_manual()
+    last_man = man[-1] if man else {}
+    if man:
+        ref_date = man[-1]["fecha"]
+        km_week = round(sum(m["km"] for m in man if m.get("km") and (ref_date - m["fecha"]).days < 7), 1)
+    else:
+        km_week = None
+
     cards = [
         ("RECOVERY", last_rec.get("recovery"), '0"%"', recovery_zone_color(last_rec.get("recovery"))),
         ("HRV (rMSSD)", last_rec.get("hrv"), '0.0" ms"', ACCENT),
@@ -319,6 +372,42 @@ def build():
         # borde inferior de acento visual
         for cc in (c1, c2):
             ws[f"{cc}{label_row}"].border = Border(top=Side(style="thin", color=color))
+
+    # ===== Banda NATACION (volumen real, registro manual) =====
+    ws.merge_cells("B9:K9")
+    nh = ws["B9"]
+    nh.value = "NATACIÓN · volumen real (registro manual)    —    WHOOP no mide distancia en alberca (sin GPS)"
+    if not man:
+        nh.value += "    ·    crea datos/registro-natacion.csv"
+    nh.font = Font(bold=True, color=CYAN, size=10)
+    nh.alignment = Alignment(horizontal="left", vertical="center", indent=1)
+    ws.row_dimensions[9].height = 18
+
+    swim_cards = [
+        ("KM NADO (ÚLT.)", last_man.get("km"), '0.0" km"', CYAN),
+        ("KM 7 DÍAS", km_week, '0.0" km"', AQUA),
+        ("SESIONES (ÚLT.)", last_man.get("sesiones"), "0", TEAL),
+        ("MIN PESAS (ÚLT.)", last_man.get("min_pesas"), '0" min"', SLATE),
+    ]
+    ws.row_dimensions[10].height = 16
+    ws.row_dimensions[11].height = 34
+    ws.row_dimensions[12].height = 10
+    for (label, value, fmt, color), col in zip(swim_cards, [2, 4, 6, 8]):
+        c1, c2 = get_column_letter(col), get_column_letter(col + 1)
+        ws.merge_cells(f"{c1}10:{c2}10")
+        lc = ws[f"{c1}10"]
+        lc.value = label
+        lc.fill = _fill(color)
+        lc.font = Font(bold=True, color=WHITE, size=8.5)
+        lc.alignment = Alignment(horizontal="center", vertical="center")
+        ws.merge_cells(f"{c1}11:{c2}11")
+        vc = ws[f"{c1}11"]
+        vc.value = value if value is not None else "—"
+        vc.fill = _fill(color)
+        vc.font = Font(bold=True, color=WHITE, size=20)
+        vc.alignment = Alignment(horizontal="center", vertical="center")
+        if isinstance(value, (int, float)):
+            vc.number_format = fmt
 
     # ===== Hojas de detalle (datos para tablas y graficas) =====
     ws_rec = wb.create_sheet("Recovery")
@@ -360,11 +449,63 @@ def build():
     ws_wko = wb.create_sheet("Workouts")
     style_table(
         ws_wko,
-        ["Fecha", "Deporte", "Strain", "FC prom", "FC max", "Kcal", "Km"],
+        ["Fecha", "Deporte", "Strain", "FC prom", "FC max", "Kcal", "Km (WHOOP)*"],
         [[x["fecha"].strftime("%d/%b/%Y") if x["fecha"] else "",
           x["deporte"], x["strain"], x["fc_prom"], x["fc_max"], x["kcal"], x["km"]] for x in wko],
         num_formats={3: "0.0", 4: "0", 5: "0", 6: "0", 7: "0.00"},
     )
+    note_row = ws_wko.max_row + 2
+    ws_wko.merge_cells(start_row=note_row, start_column=1, end_row=note_row, end_column=7)
+    nc = ws_wko.cell(row=note_row, column=1)
+    nc.value = ("*  En natación el Km de WHOOP NO es confiable (sin GPS en alberca / no cuenta vueltas). "
+                "El volumen real está en la hoja 'Natación'.")
+    nc.font = Font(italic=True, color=BAD, size=10)
+    nc.alignment = Alignment(horizontal="left", vertical="center")
+
+    # ===== Hoja Natacion (volumen real) =====
+    ws_nat = wb.create_sheet("Natación")
+    if man:
+        style_table(
+            ws_nat,
+            ["Fecha", "Km nado", "Sesiones", "Min pesas", "Notas"],
+            [[m["fecha"].strftime("%d/%b/%Y"), m.get("km"), m.get("sesiones"),
+              m.get("min_pesas"), m.get("notas")] for m in reversed(man)],
+            num_formats={2: '0.0', 3: "0", 4: "0"},
+        )
+        ws_nat.column_dimensions[get_column_letter(5)].width = 34
+        # Grafica de barras: km de nado por dia (cronologico)
+        nrows = len(man)
+        # datos cronologicos en columnas auxiliares (H=fecha, I=km) para la grafica
+        ws_nat.cell(row=1, column=8, value="Fecha")
+        ws_nat.cell(row=1, column=9, value="Km")
+        for i, m in enumerate(man, start=2):
+            ws_nat.cell(row=i, column=8, value=m["fecha"].strftime("%d/%b"))
+            ws_nat.cell(row=i, column=9, value=m.get("km"))
+        ws_nat.column_dimensions[get_column_letter(8)].hidden = True
+        ws_nat.column_dimensions[get_column_letter(9)].hidden = True
+        bc = BarChart()
+        bc.type = "col"
+        bc.title = "Km de nado por día (real)"
+        bc.height = 8
+        bc.width = 22
+        bc.legend = None
+        d = Reference(ws_nat, min_col=9, min_row=1, max_row=nrows + 1)
+        cx = Reference(ws_nat, min_col=8, min_row=2, max_row=nrows + 1)
+        bc.add_data(d, titles_from_data=True)
+        bc.set_categories(cx)
+        bc.y_axis.delete = False
+        bc.x_axis.delete = False
+        bc.y_axis.majorGridlines = _light_gridlines()
+        if bc.series:
+            bc.series[0].graphicalProperties.solidFill = CYAN
+        ws_nat.add_chart(bc, "G2")
+    else:
+        ws_nat["A1"] = "Sin registro de natación todavía."
+        ws_nat["A1"].font = Font(bold=True, size=13, color=INK)
+        ws_nat["A3"] = ("Cómo activarlo:  copia el archivo  registro-natacion.ejemplo.csv  a  "
+                        "datos/registro-natacion.csv  y anota por día: km_natacion, sesiones_nado, min_pesas.")
+        ws_nat["A3"].font = Font(size=11, color="5A6B7B")
+        ws_nat.column_dimensions["A"].width = 110
 
     # ===== Graficas de tendencia en el Dashboard =====
     n = len(rec)
@@ -385,7 +526,7 @@ def build():
         chart_rec.y_axis.scaling.min = 0
         chart_rec.y_axis.scaling.max = 100
         style_chart(chart_rec, npts, GOOD)
-        ws.add_chart(chart_rec, "B10")
+        ws.add_chart(chart_rec, "B13")
 
         chart_hrv = LineChart()
         chart_hrv.title = "HRV rMSSD (ms)"
@@ -396,12 +537,12 @@ def build():
         chart_hrv.add_data(data_h, titles_from_data=True)
         chart_hrv.set_categories(cats)
         style_chart(chart_hrv, npts, ACCENT)
-        ws.add_chart(chart_hrv, "G10")
+        ws.add_chart(chart_hrv, "G13")
 
     wb.save(OUT_PATH)
     print("\n===================== LISTO =====================")
     print(f"Dashboard generado: {OUT_PATH}")
-    print(f"Recovery: {len(rec)} dias  |  Sueno: {len(slp)}  |  Strain: {len(cyc)}  |  Workouts: {len(wko)}")
+    print(f"Recovery: {len(rec)} dias  |  Sueno: {len(slp)}  |  Strain: {len(cyc)}  |  Workouts: {len(wko)}  |  Natacion (manual): {len(man)}")
     print("\nAbrelo con:")
     print(f'    open "{OUT_PATH}"')
     print("=================================================\n")
