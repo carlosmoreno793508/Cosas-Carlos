@@ -26,6 +26,8 @@ try:
     from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
     from openpyxl.chart import LineChart, Reference
     from openpyxl.chart.axis import ChartLines
+    from openpyxl.chart.shapes import GraphicalProperties
+    from openpyxl.drawing.line import LineProperties
     from openpyxl.formatting.rule import ColorScaleRule
     from openpyxl.utils import get_column_letter
 except ImportError:
@@ -53,6 +55,36 @@ GRID = "D6DEE8"
 
 def _fill(hex_color):
     return PatternFill(start_color=hex_color, end_color=hex_color, fill_type="solid")
+
+
+def _light_gridlines():
+    gl = ChartLines()
+    gl.spPr = GraphicalProperties()
+    gl.spPr.line = LineProperties(solidFill="E1E8F0", w=6350)  # gris claro, delgado
+    return gl
+
+
+def style_chart(chart, n, series_color):
+    """Ejes visibles con numeros, rejilla clarita, sin borde negro, linea de color."""
+    chart.y_axis.delete = False
+    chart.x_axis.delete = False
+    chart.x_axis.majorTickMark = "out"
+    chart.y_axis.majorTickMark = "out"
+    chart.x_axis.tickLblPos = "low"
+    chart.y_axis.majorGridlines = _light_gridlines()
+    chart.x_axis.majorGridlines = None
+    if n:
+        chart.x_axis.tickLblSkip = max(1, n // 7)
+        chart.x_axis.tickMarkSkip = max(1, n // 7)
+    # quitar el borde grueso del area de la grafica
+    chart.graphical_properties = GraphicalProperties()
+    chart.graphical_properties.line = LineProperties(noFill=True)
+    chart.legend = None
+    if chart.series:
+        s = chart.series[0]
+        s.graphicalProperties.line.solidFill = series_color
+        s.graphicalProperties.line.width = 22000
+        s.smooth = True
 
 
 def parse_dt(s):
@@ -257,7 +289,7 @@ def build():
         ("RECOVERY", last_rec.get("recovery"), '0"%"', recovery_zone_color(last_rec.get("recovery"))),
         ("HRV (rMSSD)", last_rec.get("hrv"), '0.0" ms"', ACCENT),
         ("FC EN REPOSO", last_rec.get("rhr"), '0" lpm"', BLUE),
-        ("SUENO", last_slp.get("rendimiento"), '0"%"', INDIGO),
+        ("SUEÑO", last_slp.get("rendimiento"), '0"%"', INDIGO),
         ("STRAIN HOY", last_cyc.get("strain"), '0.0', ORANGE),
     ]
 
@@ -340,6 +372,8 @@ def build():
         first_data = max(2, n - 29)  # ultimos ~30 puntos
         cats = Reference(ws_rec, min_col=1, min_row=first_data, max_row=n + 1)
 
+        npts = n + 1 - first_data + 1  # puntos mostrados en el eje X
+
         chart_rec = LineChart()
         chart_rec.title = "Recovery % (tendencia)"
         chart_rec.height = 7.5
@@ -350,13 +384,7 @@ def build():
         chart_rec.set_categories(cats)
         chart_rec.y_axis.scaling.min = 0
         chart_rec.y_axis.scaling.max = 100
-        chart_rec.y_axis.majorGridlines = ChartLines()
-        chart_rec.legend = None
-        if chart_rec.series:
-            s = chart_rec.series[0]
-            s.graphicalProperties.line.solidFill = GOOD
-            s.graphicalProperties.line.width = 22000
-            s.smooth = True
+        style_chart(chart_rec, npts, GOOD)
         ws.add_chart(chart_rec, "B10")
 
         chart_hrv = LineChart()
@@ -367,13 +395,7 @@ def build():
         data_h = Reference(ws_rec, min_col=3, min_row=1, max_row=n + 1)
         chart_hrv.add_data(data_h, titles_from_data=True)
         chart_hrv.set_categories(cats)
-        chart_hrv.y_axis.majorGridlines = ChartLines()
-        chart_hrv.legend = None
-        if chart_hrv.series:
-            s = chart_hrv.series[0]
-            s.graphicalProperties.line.solidFill = ACCENT
-            s.graphicalProperties.line.width = 22000
-            s.smooth = True
+        style_chart(chart_hrv, npts, ACCENT)
         ws.add_chart(chart_hrv, "G10")
 
     wb.save(OUT_PATH)
