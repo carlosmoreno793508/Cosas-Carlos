@@ -29,7 +29,7 @@ try:
     from openpyxl.chart.axis import ChartLines
     from openpyxl.chart.shapes import GraphicalProperties
     from openpyxl.drawing.line import LineProperties
-    from openpyxl.formatting.rule import ColorScaleRule
+    from openpyxl.formatting.rule import ColorScaleRule, CellIsRule
     from openpyxl.utils import get_column_letter
 except ImportError:
     sys.exit("Falta 'openpyxl'. Instala con:  pip install -r requirements.txt")
@@ -56,6 +56,10 @@ CYAN = "0EA5E9"      # natacion (agua)
 AQUA = "0284C7"
 TEAL = "06B6D4"
 SLATE = "64748B"
+# Semaforo pastel (tonos tenues)
+GREEN_SOFT = "D6EFD5"
+YELLOW_SOFT = "FCF2C9"
+RED_SOFT = "F9D6D2"
 
 
 def _fill(hex_color):
@@ -302,6 +306,25 @@ def recovery_zone_color(v):
     return BAD
 
 
+def traffic_light(ws, col, n, g, r, higher_better=True):
+    """Semaforo pastel por celda en la columna `col`, filas 2..n+1.
+    higher_better: verde >= g, rojo < r, amarillo entre.  (g > r)
+    lower_better:  verde <= g, rojo > r, amarillo entre.  (g < r)"""
+    if n < 1 or g is None or r is None:
+        return
+    rng = f"{col}2:{col}{n + 1}"
+    eps = 0.001
+    green, yellow, red = _fill(GREEN_SOFT), _fill(YELLOW_SOFT), _fill(RED_SOFT)
+    if higher_better:
+        ws.conditional_formatting.add(rng, CellIsRule(operator="greaterThanOrEqual", formula=[str(g)], fill=green))
+        ws.conditional_formatting.add(rng, CellIsRule(operator="lessThan", formula=[str(r)], fill=red))
+        ws.conditional_formatting.add(rng, CellIsRule(operator="between", formula=[str(r), str(g - eps)], fill=yellow))
+    else:
+        ws.conditional_formatting.add(rng, CellIsRule(operator="lessThanOrEqual", formula=[str(g)], fill=green))
+        ws.conditional_formatting.add(rng, CellIsRule(operator="greaterThan", formula=[str(r)], fill=red))
+        ws.conditional_formatting.add(rng, CellIsRule(operator="between", formula=[str(g + eps), str(r)], fill=yellow))
+
+
 # ---------- Construccion del dashboard ----------
 def build():
     perfil = load_single("perfil")
@@ -448,15 +471,21 @@ def build():
           x["recovery"], x["hrv"], x["rhr"], x["spo2"], x["temp"]] for x in rec],
         num_formats={2: '0"%"', 3: "0.0", 4: "0", 5: '0"%"', 6: "0.0"},
     )
-    # Escala de color en Recovery %
+    # Semaforo pastel por dia, ajustado a la linea base de Gael
     if rec:
-        last = len(rec) + 1
-        ws_rec.conditional_formatting.add(
-            f"B2:B{last}",
-            ColorScaleRule(start_type="num", start_value=0, start_color=BAD,
-                           mid_type="num", mid_value=50, mid_color=WARN,
-                           end_type="num", end_value=100, end_color=GOOD),
-        )
+        n_rec = len(rec)
+        hrv_vals = [x["hrv"] for x in rec if isinstance(x["hrv"], (int, float))]
+        rhr_vals = [x["rhr"] for x in rec if isinstance(x["rhr"], (int, float))]
+        hrv_base = sum(hrv_vals) / len(hrv_vals) if hrv_vals else None
+        rhr_base = sum(rhr_vals) / len(rhr_vals) if rhr_vals else None
+        # Recovery %: zonas WHOOP (verde >=67, amarillo 34-66, rojo <34)
+        traffic_light(ws_rec, "B", n_rec, 67, 34, higher_better=True)
+        # HRV: mas alta = mejor. Bajones >~20% de su base = bandera roja.
+        if hrv_base:
+            traffic_light(ws_rec, "C", n_rec, round(hrv_base * 0.90, 1), round(hrv_base * 0.78, 1), higher_better=True)
+        # FC en reposo: mas baja = mejor. Elevada sobre su base = riesgo.
+        if rhr_base:
+            traffic_light(ws_rec, "D", n_rec, round(rhr_base * 1.05, 1), round(rhr_base * 1.12, 1), higher_better=False)
 
     ws_slp = wb.create_sheet("Sueno")
     style_table(
@@ -466,6 +495,10 @@ def build():
           x["rendimiento"], x["eficiencia"], x["consistencia"], x["resp"], x["horas"]] for x in slp],
         num_formats={2: '0"%"', 3: '0"%"', 4: '0"%"', 5: "0.0", 6: "0.0"},
     )
+    if slp:
+        n_slp = len(slp)
+        traffic_light(ws_slp, "B", n_slp, 85, 70, higher_better=True)   # Rendimiento del sueno
+        traffic_light(ws_slp, "F", n_slp, 7, 6, higher_better=True)     # Horas en cama
 
     ws_cyc = wb.create_sheet("Strain")
     style_table(
@@ -572,6 +605,22 @@ def build():
         chart_hrv.set_categories(cats)
         style_chart(chart_hrv, npts, ACCENT)
         ws.add_chart(chart_hrv, "G13")
+
+    # ===== Leyenda del semaforo (aplica a las hojas de detalle) =====
+    ws["B30"] = "Semáforo:"
+    ws["B30"].font = Font(bold=True, size=9, color=INK)
+    ws["B30"].alignment = Alignment(horizontal="left", vertical="center")
+    for col, txt, color in [("C", "bien", GREEN_SOFT), ("D", "vigilar", YELLOW_SOFT), ("E", "riesgo", RED_SOFT)]:
+        c = ws[f"{col}30"]
+        c.value = txt
+        c.fill = _fill(color)
+        c.font = Font(size=9, color="333333")
+        c.alignment = Alignment(horizontal="center", vertical="center")
+    ws.merge_cells("F30:K30")
+    ws["F30"] = "en las hojas Recovery y Sueño, ajustado a la línea base de Gael (Recovery, HRV, FC reposo, sueño)"
+    ws["F30"].font = Font(size=9, italic=True, color="5A6B7B")
+    ws["F30"].alignment = Alignment(horizontal="left", vertical="center", indent=1)
+    ws.row_dimensions[30].height = 16
 
     wb.save(OUT_PATH)
     print("\n===================== LISTO =====================")
