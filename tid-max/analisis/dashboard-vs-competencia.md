@@ -53,6 +53,41 @@ datos de WHOOP (y mañana con dato crudo propio).
 **Cuando haya dato propio:**
 - **B7 · Eficiencia de nado** (SWOLF, ritmo/100 m) — requiere distancia por vueltas (banda TID-MAX).
 
+## Mood board — herramientas analizadas e ideas a robar
+
+Revisadas con capturas reales (jul 2026):
+
+| Herramienta | Qué robar |
+|---|---|
+| **intervals.icu / TrainingPeaks** | Fitness/Fatiga/**Forma** (CTL/ATL/TSB); **% polarizado** / distribución de zonas; carga semanal en calendario |
+| **Strava + Elevate** | **Relative Effort**, **HRSS**, **TRIMP** (carga por FC); **splits/parciales**; progreso del **mismo esfuerzo en el tiempo**; **log** con búsqueda/filtros/**etiquetas** (entreno/competencia/recuperación); estadísticas **4 sem/año/total**; **filtro por deporte**; **récords por distancia**; gear; compartir |
+| **GoldenCheetah** | **Tiempo en zonas** por sesión; TSS/IF/NP/VI; máximos/promedios/modelo (CP, W′) |
+| **Final Surge** | **Calendario del coach** con sesiones planeadas + planes de entrenamiento |
+| **SportTracks** | Tiles limpios por actividad + traza FC/ritmo/altitud |
+
+**Ángulo TID-MAX:** casi todas son ciclismo/carrera con **potencia**. Gael es **nadador** → nuestra carga
+viene de la **FC (TRIMP/HRSS)**, y ganamos con **distancia real de nado, récords por distancia y coach**.
+
+## Plan de construcción priorizado (v2)
+
+**Fase A — paridad de entrenamiento (YA, con datos WHOOP):**
+- **A1** Carga **ACWR** en el panel + colores (0.8–1.3 verde, >1.5 rojo). *(groundwork ya en el código)*
+- **A2** **Curva de Forma** (CTL/ATL/TSB). *(groundwork ya en el código)*
+- **A3** **Resumen semanal** + acumulados **4 sem / año / total**, con **filtro nado/pesas**.
+- **A4** **TRIMP/HRSS** (carga por FC) — aproximado con FC promedio de WHOOP; fino con Polar.
+
+**Fase B — diferenciadores para nadador:**
+- **B1** **Récords de nado por distancia** (50/100/200/400/800/1500) — registro manual ahora, auto con dato propio.
+- **B2** **Progreso del mismo set/distancia en el tiempo** (rumbo a Vancouver).
+- **B3** **Log de sesiones** con etiquetas (entreno / competencia / recuperación).
+
+**Fase C — desbloquea el Polar (dato crudo / Etapa 2 PMD):**
+- **C1** **Tiempo en zonas de FC** por sesión (traza latido a latido).
+- **C2** **TRIMP real por sesión** + **splits por 100 m**.
+- **C3** **DFA-α1** (validación del pipeline vs. Polar H10).
+
+**Extras:** reporte compartible (coach/mamá), gear de nado.
+
 ## Fuentes
 - Garmin Training Readiness / Load Ratio / Load Focus / SWOLF (the5krunner, shoulditrain, Garmin blog).
 - WHOOP vs Oura vs Garmin 2026 (athletedata.health, sensai.fit, baselineathlete).
