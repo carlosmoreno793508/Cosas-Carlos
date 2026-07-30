@@ -88,6 +88,27 @@ viene de la **FC (TRIMP/HRSS)**, y ganamos con **distancia real de nado, récord
 
 **Extras:** reporte compartible (coach/mamá), gear de nado.
 
+## Runna (by Strava) — benchmark del layer "Coach + Plan" (Fase 2/3)
+
+Runna **no es un dashboard**: es un **plan personalizado + coach**. Define el producto de
+**suscripción** al que apunta TID-MAX. Ideas a robar:
+- **Plan por evento con fecha** (Gael → Vancouver): progreso en semanas y distancia, periodización
+  (build → taper) visible.
+- **Tiempo estimado de meta** (predicción del tiempo de nado rumbo al evento).
+- **Constructor de sesiones estructuradas** (target distancia/tiempo; tipos: fácil, intervalos,
+  tempo, taper, competencia; + fuerza/movilidad).
+- **Sesión guiada en vivo**: set actual + siguiente + ritmo objetivo + coaching por audio.
+- **Calendario semanal** del plan con ✓ y totales.
+- **Coach** (Runna: humano) → **TID-MAX: coach IA** (Claude API + reglas). `tid_coach.py` es el v0.
+- **Plan adaptativo** que se ajusta al rendimiento; integración con dispositivos (banda propia + Polar + WHOOP).
+
+**Encaje:** dos capas de producto en TID-MAX:
+1. **Analítica** (dashboard) — Fase 0-1, ideas de intervals.icu / Strava / GoldenCheetah.
+2. **Coach + Plan** (suscripción) — Fase 2-3, benchmark **Runna**. Semilla: `tid_coach.py`.
+
+Camino del coach: reporte diario (hecho) → plan semanal adaptativo → sesiones de nado estructuradas
+→ coach conversacional (Claude API).
+
 ## Fuentes
 - Garmin Training Readiness / Load Ratio / Load Focus / SWOLF (the5krunner, shoulditrain, Garmin blog).
 - WHOOP vs Oura vs Garmin 2026 (athletedata.health, sensai.fit, baselineathlete).
