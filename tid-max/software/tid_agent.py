@@ -123,20 +123,22 @@ def build_facts(ds):
     acute, chronic = _mean(s_vals[-7:]), _mean(s_vals[-28:])
     acwr = acute / chronic if (acute and chronic) else None
 
-    # Volumen de nado. Todavía no hay registro medido, así que el PLAN del macrociclo
-    # se TOMA COMO REAL: el entrenador lo sigue rigurosamente. El km planeado de la semana
-    # (y de la semana previa) puebla el volumen de nado para ACWR, tendencias y pilares.
+    # Volumen de nado. El PLAN del macrociclo SE TOMA COMO REAL (el entrenador lo cumple
+    # rigurosamente) y es la fuente autoritativa del volumen: km de la semana y de la previa
+    # salen del plan, y alimentan ACWR/tendencias y los pilares de hidratación/nutrición.
+    # El registro manual (registro-natacion.csv) se conserva solo como dato informativo,
+    # hasta que sea una fuente completa y validada.
     swim = col("swim_km")
-    hay_registro = bool(swim) and sum(swim) > 0
+    km_real = round(sum(swim[-7:]), 1) if (swim and sum(swim) > 0) else None
     km_plan = plan_sem.get("km_plan")
     km_plan_prev = plan_sem.get("km_plan_prev")
-    if hay_registro:
-        km_week = round(sum(swim[-7:]), 1)
-        km_prev = round(sum(swim[-14:-7]), 1) if len(swim) > 7 else None
-        carga_fuente = "registro real de nado"
-    else:
+    if km_plan is not None:
         km_week, km_prev = km_plan, km_plan_prev
         carga_fuente = "plan del macrociclo tomado como real (el entrenador lo sigue riguroso)"
+    else:
+        km_week = km_real
+        km_prev = round(sum(swim[-14:-7]), 1) if (swim and len(swim) > 7) else None
+        carga_fuente = "registro real de nado"
     carga_km = km_week
 
     def pct(x):
@@ -168,7 +170,7 @@ def build_facts(ds):
         "km_plan_semana": plan_sem.get("km_plan"),
         "ses_plan_semana": plan_sem.get("ses_plan"),
         "fase_plan_semana": plan_sem.get("fase_plan"),
-        "hay_registro_nado": hay_registro,
+        "km_nado_real_registrado": km_real,
         "carga_referencia_km": carga_km,
         "carga_referencia_fuente": carga_fuente,
     }
