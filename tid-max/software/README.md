@@ -87,11 +87,14 @@ conversacional. Regla de oro: **el LLM no inventa números** — el código calc
 ```bash
 pip install anthropic
 export ANTHROPIC_API_KEY=...        # o: ant auth login
-python tid_agent.py                 # coach del día en lenguaje natural
+python tid_agent.py                 # coach del día (salida estructurada -> coach-hoy.json)
+python tid_agent.py --preventivo    # agente preventivo: vigilar -> descarga -> fisio
 python tid_agent.py --pregunta "¿por qué bajó mi HRV esta semana?"   # Q&A libre
 python tid_agent.py --sin-ia        # fuerza el modo por reglas (no llama a Claude)
 ```
-Sin `ANTHROPIC_API_KEY` (o sin el SDK), cae con gracia al coach por reglas — el producto sigue funcionando.
+El coach del día escribe `datos/procesado/coach-hoy.json` (veredicto + 5 pilares + alertas), listo para
+que lo consuma el dashboard. Sin `ANTHROPIC_API_KEY` (o sin el SDK), cae con gracia al coach por reglas —
+el producto sigue funcionando.
 Arquitectura de agentes en `../analisis/agentes-ai.md`.
 
 ## Ecosistema: motor + coach (demo end-to-end)

@@ -1,22 +1,29 @@
 #!/usr/bin/env python3
 """
-tid_agent.py — Agente coach de TID-MAX (Capa 2) sobre la Claude API.
+tid_agent.py — Agentes AI de TID-MAX (Capa 2) sobre la Claude API.
 
-Lee el esquema canónico (datos/procesado/dataset.json que produce tid_data.py), el MOTOR
-determinista calcula los hechos duros (recovery vs base, HRV/FC vs base, ACWR, volumen de nado,
-semáforo), y el AGENTE (Claude) los convierte en un coach conversacional en lenguaje natural.
+Lee el esquema canónico (datos/procesado/dataset.json que produce tid_data.py). El MOTOR
+determinista calcula los hechos duros (recovery vs base, HRV/FC vs base, tendencias, ACWR,
+volumen de nado, semáforo) y los AGENTES (Claude) los convierten en consejo en lenguaje natural.
 
 Regla de oro: el LLM NO inventa números. El código calcula; el modelo interpreta y explica.
 Sin ANTHROPIC_API_KEY (o sin el SDK), cae con gracia al texto por reglas — el producto sigue.
 
-Uso:
-    python whoop_sync.py          # baja WHOOP
-    python tid_data.py            # normaliza -> dataset.json
-    python tid_agent.py                          # coach del día (Claude o fallback)
-    python tid_agent.py --pregunta "¿por qué bajó mi HRV esta semana?"   # Q&A libre
-    python tid_agent.py --sin-ia                 # fuerza el modo por reglas (sin llamar a Claude)
+Agentes:
+  coach       (por defecto)  Reporte del día: veredicto + plan de 5 pilares.
+  preventivo  (--preventivo) Vigila señales tempranas de fatiga y escala (vigilar→descarga→fisio).
+  q&a         (--pregunta)   Responde preguntas libres del entrenador sobre el dataset.
 
-Requiere (para el modo IA):
+Salida estructurada: el coach escribe datos/procesado/coach-hoy.json (lo consume el dashboard).
+
+Uso:
+    python whoop_sync.py && python tid_data.py     # baja WHOOP y normaliza
+    python tid_agent.py                            # coach del día
+    python tid_agent.py --preventivo               # informe preventivo
+    python tid_agent.py --pregunta "¿por qué bajó mi HRV esta semana?"
+    python tid_agent.py --sin-ia                   # fuerza modo por reglas (no llama a Claude)
+
+Requiere (modo IA):
     pip install anthropic
     export ANTHROPIC_API_KEY=...   # o  ant auth login
 """
@@ -24,9 +31,11 @@ import os
 import sys
 import json
 import glob
+from datetime import datetime, timezone
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 DEFAULT_DATASET = os.path.join(SCRIPT_DIR, "datos", "procesado", "dataset.json")
+COACH_OUT = os.path.join(SCRIPT_DIR, "datos", "procesado", "coach-hoy.json")
 
 MODEL = "claude-opus-5"  # el más capaz de uso general; claude-haiku-4-5 para abaratar a escala
 
@@ -51,7 +60,6 @@ GUARDRAILS = (
 # ---------- Carga del esquema canónico ----------
 def load_dataset(path):
     if not os.path.exists(path):
-        # tolerancia: intenta encontrarlo aunque cambie la carpeta
         found = glob.glob(os.path.join(SCRIPT_DIR, "**", "dataset.json"), recursive=True)
         if found:
             path = found[0]
@@ -74,40 +82,60 @@ def build_facts(ds):
     atleta = ds.get("atleta", {})
 
     def col(key):
-        return [(r["fecha"], r.get(key)) for r in daily if isinstance(r.get(key), (int, float))]
+        return [r.get(key) for r in daily if isinstance(r.get(key), (int, float))]
 
     def last(key):
         c = col(key)
-        return c[-1][1] if c else None
+        return c[-1] if c else None
 
-    hrv_vals = [v for _, v in col("hrv_ms")]
-    rhr_vals = [v for _, v in col("rhr_bpm")]
+    hrv_vals, rhr_vals = col("hrv_ms"), col("rhr_bpm")
     hrv_base = _mean(hrv_vals[-30:]) if hrv_vals else None
     rhr_base = _mean(rhr_vals[-30:]) if rhr_vals else None
     hrv_today, rhr_today = last("hrv_ms"), last("rhr_bpm")
     hrv_dev = (hrv_today - hrv_base) / hrv_base if (hrv_today and hrv_base) else None
     rhr_dev = (rhr_today - rhr_base) / rhr_base if (rhr_today and rhr_base) else None
 
+    # Tendencias 7d vs 7d previos (para el agente Preventivo)
+    hrv_7d, hrv_prev7 = _mean(hrv_vals[-7:]), _mean(hrv_vals[-14:-7]) if len(hrv_vals) >= 8 else None
+    rhr_7d, rhr_prev7 = _mean(rhr_vals[-7:]), _mean(rhr_vals[-14:-7]) if len(rhr_vals) >= 8 else None
+    hrv_trend = (hrv_7d - hrv_prev7) / hrv_prev7 if (hrv_7d and hrv_prev7) else None
+    rhr_trend = (rhr_7d - rhr_prev7) / rhr_prev7 if (rhr_7d and rhr_prev7) else None
+
+    # Días recientes con recovery baja (<50%), consecutivos desde hoy hacia atrás
+    rec_series = col("recovery_pct")
+    dias_rec_baja = 0
+    for v in reversed(rec_series):
+        if v < 50:
+            dias_rec_baja += 1
+        else:
+            break
+
     # Carga: ACWR (agudo 7d : crónico 28d) sobre el strain diario
-    s_vals = [v for _, v in col("strain")]
+    s_vals = col("strain")
     acute, chronic = _mean(s_vals[-7:]), _mean(s_vals[-28:])
     acwr = acute / chronic if (acute and chronic) else None
 
     # Volumen de nado real (registro manual)
-    swim = [(r["fecha"], r.get("swim_km")) for r in daily if isinstance(r.get("swim_km"), (int, float))]
-    km_week = round(sum(v for _, v in swim[-7:]), 1) if swim else None
-    km_prev = round(sum(v for _, v in swim[-14:-7]), 1) if len(swim) > 7 else None
+    swim = col("swim_km")
+    km_week = round(sum(swim[-7:]), 1) if swim else None
+    km_prev = round(sum(swim[-14:-7]), 1) if len(swim) > 7 else None
+
+    def pct(x):
+        return round(x * 100) if isinstance(x, (int, float)) else None
 
     facts = {
         "atleta": atleta.get("nombre") or "Gael",
         "recovery_pct": last("recovery_pct"),
         "hrv_ms": round(hrv_today, 1) if hrv_today else None,
         "hrv_base_ms": round(hrv_base, 1) if hrv_base else None,
-        "hrv_vs_base_pct": round(hrv_dev * 100) if hrv_dev is not None else None,
+        "hrv_vs_base_pct": pct(hrv_dev),
+        "hrv_tendencia_7d_pct": pct(hrv_trend),
         "fc_reposo_lpm": rhr_today,
         "fc_reposo_base_lpm": round(rhr_base, 1) if rhr_base else None,
-        "fc_reposo_vs_base_pct": round(rhr_dev * 100) if rhr_dev is not None else None,
+        "fc_reposo_vs_base_pct": pct(rhr_dev),
+        "fc_reposo_tendencia_7d_pct": pct(rhr_trend),
         "sueno_pct": last("sleep_perf_pct"),
+        "dias_recovery_baja_seguidos": dias_rec_baja,
         "strain_hoy": last("strain"),
         "acwr": round(acwr, 2) if acwr else None,
         "km_nado_semana": km_week,
@@ -155,7 +183,51 @@ def semaforo(f):
     return level, razones
 
 
-# ---------- Fallback por reglas (sin IA) ----------
+# ---------- Agente PREVENTIVO: nivel de vigilancia + escalón (por reglas) ----------
+def preventivo_flags(f):
+    """vigilar -> descarga -> fisio, según señales tempranas acumuladas."""
+    nivel, señales = "ok", []
+
+    def esc(to, why):
+        nonlocal nivel
+        señales.append(why)
+        order = {"ok": 0, "vigilar": 1, "descarga": 2, "fisio": 3}
+        if order[to] > order[nivel]:
+            nivel = to
+
+    ht = f.get("hrv_tendencia_7d_pct")
+    if isinstance(ht, (int, float)):
+        if ht <= -15:
+            esc("descarga", f"HRV promedio de la semana cayó {ht:+.0f}% vs la anterior")
+        elif ht <= -8:
+            esc("vigilar", f"HRV semanal a la baja ({ht:+.0f}%)")
+    rt = f.get("fc_reposo_tendencia_7d_pct")
+    if isinstance(rt, (int, float)):
+        if rt >= 8:
+            esc("descarga", f"FC en reposo subió {rt:+.0f}% en la semana")
+        elif rt >= 4:
+            esc("vigilar", f"FC en reposo con tendencia al alza ({rt:+.0f}%)")
+    dr = f.get("dias_recovery_baja_seguidos") or 0
+    if dr >= 3:
+        esc("fisio", f"{dr} días seguidos con Recovery baja")
+    elif dr == 2:
+        esc("descarga", "2 días seguidos con Recovery baja")
+    if f.get("acwr") and f["acwr"] > 1.5:
+        esc("descarga", f"ACWR {f['acwr']:.2f} (spike de carga, riesgo de lesión)")
+    elif f.get("acwr") and f["acwr"] > 1.3:
+        esc("vigilar", f"ACWR {f['acwr']:.2f} (carga aguda alta)")
+    if not señales:
+        señales.append("Sin señales tempranas de fatiga/sobrecarga")
+    accion = {
+        "ok": "Seguir el plan; nada que ajustar por prevención.",
+        "vigilar": "Mantener el plan pero observar de cerca 24–48 h; cuidar sueño e hidratación.",
+        "descarga": "Meter una descarga: bajar volumen/intensidad esta semana. Priorizar recuperación.",
+        "fisio": "Descarga + valoración con fisioterapeuta/entrenador. No forzar hasta revisar.",
+    }[nivel]
+    return {"nivel": nivel, "señales": señales, "accion": accion}
+
+
+# ---------- Fallback por reglas (coach del día, sin IA) ----------
 def rule_based_report(f):
     level = f["semaforo"]
     if level == "verde":
@@ -192,7 +264,7 @@ def rule_based_report(f):
     return {"veredicto": veredicto, "pilares": pilares, "alertas": alertas, "motor": "reglas (sin IA)"}
 
 
-# ---------- Agente IA (Claude) ----------
+# ---------- Agentes IA (Claude) ----------
 def have_api():
     return bool(os.environ.get("ANTHROPIC_API_KEY"))
 
@@ -209,31 +281,65 @@ def ai_client():
 
 
 def ai_daily_report(client, f):
-    """Coach del día en lenguaje natural. El semáforo ya está fijado por el motor."""
+    """Coach del día como SALIDA ESTRUCTURADA (Pydantic) para alimentar el dashboard."""
+    from pydantic import BaseModel
+
+    class CoachReport(BaseModel):
+        veredicto: str
+        entrenamiento: str
+        sueno: str
+        hidratacion: str
+        nutricion: str
+        recuperacion: str
+        alertas: list[str]
+
     system = f"{PERSONA}\n\n{GUARDRAILS}"
     prompt = (
-        "Estos son los HECHOS de hoy (calculados por el motor determinista; son la única verdad):\n\n"
+        "Estos son los HECHOS de hoy (calculados por el motor determinista; única verdad):\n\n"
         f"{json.dumps(f, ensure_ascii=False, indent=2)}\n\n"
-        f"El semáforo del día es: {f['semaforo'].upper()} (razones: {', '.join(f['razones'])}).\n\n"
-        "Escribe el coach del día para Gael con esta estructura:\n"
-        "1) Un veredicto de 1–2 frases coherente con el semáforo.\n"
-        "2) Plan de 5 pilares (Entrenamiento, Sueño, Hidratación, Nutrición, Recuperación), 1 frase cada uno, "
-        "cada consejo anclado en una señal concreta de los HECHOS.\n"
-        "3) Si hay riesgo (HRV baja, FC reposo alta, ACWR>1.4), una sección corta de Alertas preventivas.\n"
-        "Tono humano y motivador, sin tecnicismos innecesarios."
+        f"El semáforo del día es {f['semaforo'].upper()} (razones: {', '.join(f['razones'])}); respétalo.\n\n"
+        "Devuelve el coach del día: un veredicto coherente con el semáforo, una frase por pilar "
+        "(entrenamiento, sueño, hidratación, nutrición, recuperación) anclada en una señal de los HECHOS, "
+        "y una lista de alertas preventivas (vacía si no hay riesgo)."
     )
-    resp = client.messages.create(
+    resp = client.messages.parse(
         model=MODEL,
-        max_tokens=1200,
-        thinking={"type": "adaptive"},
+        max_tokens=1500,
         system=system,
         messages=[{"role": "user", "content": prompt}],
+        output_format=CoachReport,
+    )
+    r = resp.parsed_output
+    return {
+        "veredicto": r.veredicto,
+        "pilares": {
+            "Entrenamiento": r.entrenamiento, "Sueño": r.sueno, "Hidratación": r.hidratacion,
+            "Nutrición": r.nutricion, "Recuperación": r.recuperacion,
+        },
+        "alertas": r.alertas,
+        "motor": f"Claude API · {MODEL}",
+    }
+
+
+def ai_preventivo(client, f, flags):
+    system = f"{PERSONA}\n\n{GUARDRAILS}"
+    prompt = (
+        "Actúas como el agente PREVENTIVO de TID-MAX (vigila fatiga/sobrecarga, no diagnostica).\n\n"
+        "HECHOS y tendencias del motor (única verdad):\n"
+        f"{json.dumps(f, ensure_ascii=False, indent=2)}\n\n"
+        f"El motor fijó el nivel de vigilancia en '{flags['nivel'].upper()}' "
+        f"(señales: {', '.join(flags['señales'])}; acción base: {flags['accion']}).\n\n"
+        "Explica en 3–5 frases, para el entrenador, qué está pasando y qué hacer los próximos días. "
+        "Respeta el nivel del motor; sé concreto y prudente."
+    )
+    resp = client.messages.create(
+        model=MODEL, max_tokens=800, thinking={"type": "adaptive"},
+        system=system, messages=[{"role": "user", "content": prompt}],
     )
     return "".join(b.text for b in resp.content if getattr(b, "type", None) == "text").strip()
 
 
 def ai_answer(client, f, pregunta):
-    """Q&A libre del entrenador sobre los hechos del atleta (streaming)."""
     system = f"{PERSONA}\n\n{GUARDRAILS}"
     prompt = (
         "HECHOS del atleta (calculados por el motor; única verdad, no inventes otros):\n\n"
@@ -243,11 +349,8 @@ def ai_answer(client, f, pregunta):
     )
     out = []
     with client.messages.stream(
-        model=MODEL,
-        max_tokens=1000,
-        thinking={"type": "adaptive"},
-        system=system,
-        messages=[{"role": "user", "content": prompt}],
+        model=MODEL, max_tokens=1000, thinking={"type": "adaptive"},
+        system=system, messages=[{"role": "user", "content": prompt}],
     ) as stream:
         for text in stream.text_stream:
             sys.stdout.write(text)
@@ -257,7 +360,7 @@ def ai_answer(client, f, pregunta):
     return "".join(out)
 
 
-# ---------- Presentación ----------
+# ---------- Salida ----------
 def print_facts(f):
     def s(v, suf=""):
         return f"{v}{suf}" if isinstance(v, (int, float)) else "—"
@@ -271,7 +374,7 @@ def print_facts(f):
     print("--------------------------------------------------------")
 
 
-def print_rule_report(rep):
+def print_report(rep):
     print(f"Veredicto: {rep['veredicto']}")
     print("\nPlan (5 pilares):")
     for k, v in rep["pilares"].items():
@@ -282,9 +385,29 @@ def print_rule_report(rep):
     print("========================================================\n")
 
 
+def write_coach_json(f, rep):
+    """Salida estructurada que consume el dashboard."""
+    os.makedirs(os.path.dirname(COACH_OUT), exist_ok=True)
+    payload = {
+        "generado_utc": datetime.now(timezone.utc).isoformat(),
+        "atleta": f["atleta"],
+        "semaforo": f["semaforo"],
+        "razones": f["razones"],
+        "veredicto": rep["veredicto"],
+        "pilares": rep["pilares"],
+        "alertas": rep["alertas"],
+        "hechos": f,
+        "motor": rep["motor"],
+    }
+    with open(COACH_OUT, "w", encoding="utf-8") as fp:
+        json.dump(payload, fp, ensure_ascii=False, indent=2)
+    return COACH_OUT
+
+
 def main():
     args = sys.argv[1:]
     force_rules = "--sin-ia" in args
+    preventivo = "--preventivo" in args
     pregunta = None
     if "--pregunta" in args:
         i = args.index("--pregunta")
@@ -296,7 +419,7 @@ def main():
 
     client = None if force_rules else (ai_client() if have_api() else None)
 
-    # Modo Q&A libre
+    # Q&A libre
     if pregunta:
         if client:
             print(f"❓ {pregunta}\n")
@@ -307,20 +430,40 @@ def main():
             print("Configura:  pip install anthropic  &&  export ANTHROPIC_API_KEY=...\n")
         return
 
-    # Modo reporte del día
+    # Agente Preventivo
+    if preventivo:
+        flags = preventivo_flags(f)
+        icon = {"ok": "🟢", "vigilar": "🟡", "descarga": "🟠", "fisio": "🔴"}[flags["nivel"]]
+        print(f"PREVENTIVO: {icon} {flags['nivel'].upper()}")
+        for s in flags["señales"]:
+            print(f"  • {s}")
+        print(f"\nAcción: {flags['accion']}")
+        if client:
+            try:
+                print("\n— Lectura del agente —")
+                print(ai_preventivo(client, f, flags))
+                print(f"\n[modo: Claude API · {MODEL}]")
+            except Exception as e:
+                print(f"[aviso] falló Claude ({e}); me quedo con las reglas.]")
+        print("========================================================\n")
+        return
+
+    # Coach del día (estructurado -> alimenta el dashboard)
+    rep = None
     if client:
         try:
-            print(ai_daily_report(client, f))
-            print(f"\n[modo: Claude API · {MODEL}]")
-            print("========================================================\n")
-            return
+            rep = ai_daily_report(client, f)
         except Exception as e:
             print(f"[aviso] falló la llamada a Claude ({e}); uso el motor por reglas.\n")
+    if rep is None:
+        if not force_rules and not have_api():
+            print("[sin ANTHROPIC_API_KEY: coach por reglas. Para el modo IA: "
+                  "pip install anthropic && export ANTHROPIC_API_KEY=...]\n")
+        rep = rule_based_report(f)
 
-    if not force_rules and not have_api():
-        print("[sin ANTHROPIC_API_KEY: uso el coach por reglas. Para el modo conversacional: "
-              "pip install anthropic && export ANTHROPIC_API_KEY=...]\n")
-    print_rule_report(rule_based_report(f))
+    print_report(rep)
+    out = write_coach_json(f, rep)
+    print(f"Salida estructurada para el dashboard: {out}\n")
 
 
 if __name__ == "__main__":

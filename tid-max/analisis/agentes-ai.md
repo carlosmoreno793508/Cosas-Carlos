@@ -34,10 +34,10 @@ Arrancamos con **un** agente coach y separamos por rol conforme crezca. Todos le
 
 | Agente | Qué hace | Entradas (del motor) | Estado |
 |---|---|---|---|
-| **Coach** | Reporte diario en lenguaje natural: veredicto + plan de 5 pilares, tono humano y personalizado a Gael. | semáforo, recovery, HRV/FC vs base, sueño, ACWR, km nado | 🟡 v0 (`tid_agent.py`) |
-| **Preventivo** | Vigila señales tempranas de fatiga/sobreentrenamiento y escala (vigilar → descarga → fisio). | tendencia HRV, FC reposo, ACWR, sueño | ⬜ |
+| **Coach** | Reporte diario en lenguaje natural: veredicto + plan de 5 pilares, tono humano y personalizado a Gael. **Salida estructurada** (`coach-hoy.json`) que alimenta el dashboard. | semáforo, recovery, HRV/FC vs base, sueño, ACWR, km nado | 🟡 v0 (`tid_agent.py`) |
+| **Preventivo** | Vigila señales tempranas de fatiga/sobreentrenamiento y escala **vigilar → descarga → fisio**. | tendencia HRV 7d, FC reposo 7d, días de recovery baja seguidos, ACWR | 🟡 v0 (`tid_agent.py --preventivo`) |
+| **Q&A** | Responde preguntas libres del entrenador ("¿por qué bajó la HRV esta semana?") sobre el dataset. | hechos del atleta | 🟡 v0 (`tid_agent.py --pregunta`) |
 | **Rendimiento** | Lee la carga (ACWR / forma) y dice si el plan progresa y cuándo llega el pico rumbo al evento. | CTL/ATL/TSB, volumen, workouts | ⬜ |
-| **Q&A** | Responde preguntas libres del entrenador ("¿por qué bajó la HRV esta semana?") sobre el dataset. | dataset completo (resumido) | ⬜ |
 
 > No sobre-ingenierizamos: **un** agente coach bien hecho cubre el 80%. Los demás son especializaciones del
 > mismo patrón (mismo dataset, distinto system prompt + distinto recorte de contexto).
@@ -79,7 +79,9 @@ Van en el **system prompt** de cada agente y se prueban:
 
 ## Roadmap
 
-- **v0 (ahora):** `tid_agent.py` — coach del día vía Claude API, con fallback por reglas. Lee `dataset.json`.
-- **v1:** salida estructurada Pydantic + persona nombrada del asistente (ítem 2.5).
-- **v2:** separar agente Preventivo y Rendimiento; memoria de conversación (histórico) cuando exista la BD (0.4).
+- **v0 (hecho):** `tid_agent.py` — 3 agentes vía Claude API con fallback por reglas, leyendo `dataset.json`:
+  Coach del día (**salida estructurada Pydantic** → `coach-hoy.json` para el dashboard), Preventivo
+  (escalón vigilar→descarga→fisio) y Q&A conversacional (streaming).
+- **v1:** persona nombrada del asistente (ítem 2.5); que el dashboard lea `coach-hoy.json`.
+- **v2:** agente Rendimiento (forma/pico); memoria de conversación (histórico) cuando exista la BD (0.4).
 - **v3:** cuando llegue el dato crudo (Polar Etapa 2 / EVK), sumar zonas de FC, TRIMP y DFA-α1 al contexto.
