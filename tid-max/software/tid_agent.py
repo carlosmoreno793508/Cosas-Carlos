@@ -166,6 +166,17 @@ def build_facts(ds):
         "fc_reposo_vs_base_pct": pct(rhr_dev),
         "fc_reposo_tendencia_7d_pct": pct(rhr_trend),
         "sueno_pct": last("sleep_perf_pct"),
+        "sueno_detalle": {
+            "horas_anoche": last("sleep_asleep_h") or last("sleep_hours"),
+            "profundo_pct": last("deep_pct"), "rem_pct": last("rem_pct"),
+            "eficiencia_pct": last("sleep_efficiency_pct"),
+            "consistencia_pct": last("sleep_consistency_pct"),
+            "despertares": last("despertares"), "deuda_min": last("deuda_sueno_min"),
+            "horas_prom_7d": (round(_mean(col("sleep_asleep_h")[-7:]), 1)
+                              if col("sleep_asleep_h") else None),
+            "perf_prom_7d": (round(_mean(col("sleep_perf_pct")[-7:]))
+                             if col("sleep_perf_pct") else None),
+        },
         "dias_recovery_baja_seguidos": dias_rec_baja,
         "strain_hoy": last("strain"),
         "acwr": round(acwr, 2) if acwr else None,
@@ -455,6 +466,15 @@ def print_facts(f):
     if f.get("kcal_objetivo_hoy") and f.get("macros_hoy"):
         m = f["macros_hoy"]
         print(f"Nutrición HOY: ~{f['kcal_objetivo_hoy']} kcal · P {m['P']}g · C {m['C']}g · G {m['G']}g")
+    sd = f.get("sueno_detalle") or {}
+    if sd.get("horas_anoche") is not None:
+        print(f"Sueño anoche: {sd['horas_anoche']} h dormido · {s(sd.get('sueno_pct') or f.get('sueno_pct'))}% perf · "
+              f"prof {s(sd.get('profundo_pct'),'%')} · REM {s(sd.get('rem_pct'),'%')} · "
+              f"efic {s(sd.get('eficiencia_pct'),'%')} · consist {s(sd.get('consistencia_pct'),'%')} · "
+              f"{s(sd.get('despertares'))} despertares"
+              + (f" · deuda {sd['deuda_min']} min" if isinstance(sd.get('deuda_min'), (int, float)) else ""))
+        if sd.get("horas_prom_7d") is not None:
+            print(f"           7d: {sd['horas_prom_7d']} h/noche · {s(sd.get('perf_prom_7d'),'%')} perf media")
     print(f"Semáforo: {icon} {f['semaforo'].upper()}  —  {', '.join(f['razones'])}")
     print(f"Recovery {s(f['recovery_pct'],'%')} | HRV {s(f['hrv_ms'],' ms')} ({s(f['hrv_vs_base_pct'],'%')} vs base) | "
           f"FC rep {s(f['fc_reposo_lpm'],' lpm')} | Sueño {s(f['sueno_pct'],'%')} | "

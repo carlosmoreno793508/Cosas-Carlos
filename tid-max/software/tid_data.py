@@ -112,12 +112,38 @@ def build_daily():
         d = _parse_dt(rec.get("start"))
         sc = rec.get("score") or {}
         stage = sc.get("stage_summary") or {}
-        in_bed = stage.get("total_in_bed_time_milli")
         if not d:
             continue
         r = row(d.date().isoformat())
+
+        def h(ms):
+            return _round(ms / 3_600_000, 2) if isinstance(ms, (int, float)) else None
+
+        in_bed = stage.get("total_in_bed_time_milli")
+        awake = stage.get("total_awake_time_milli") or 0
+        light = stage.get("total_light_sleep_time_milli")
+        deep = stage.get("total_slow_wave_sleep_time_milli")   # sueño profundo (SWS)
+        rem = stage.get("total_rem_sleep_time_milli")
+        asleep = (in_bed - awake) if isinstance(in_bed, (int, float)) else None
+
         r["sleep_perf_pct"] = sc.get("sleep_performance_percentage")
-        r["sleep_hours"] = _round(in_bed / 3_600_000, 2) if isinstance(in_bed, (int, float)) else None
+        r["sleep_efficiency_pct"] = _round(sc.get("sleep_efficiency_percentage"))
+        r["sleep_consistency_pct"] = _round(sc.get("sleep_consistency_percentage"))
+        r["sleep_hours"] = h(in_bed)                 # tiempo en cama
+        r["sleep_asleep_h"] = h(asleep)              # tiempo dormido real
+        r["sleep_deep_h"] = h(deep)
+        r["sleep_rem_h"] = h(rem)
+        r["sleep_light_h"] = h(light)
+        if asleep and deep is not None:
+            r["deep_pct"] = _round(deep / asleep * 100)
+        if asleep and rem is not None:
+            r["rem_pct"] = _round(rem / asleep * 100)
+        r["despertares"] = stage.get("disturbance_count")
+        r["ciclos"] = stage.get("sleep_cycle_count")
+        need = sc.get("sleep_needed") or {}
+        need_ms = sum(v for k, v in need.items() if isinstance(v, (int, float)))
+        if need_ms and asleep is not None:
+            r["deuda_sueno_min"] = _round((need_ms - asleep) / 60_000)
         r["resp_rate"] = _round(sc.get("respiratory_rate"))
         mark(r, "whoop")
 
@@ -566,7 +592,9 @@ def main():
         json.dump(daily, f, ensure_ascii=False, indent=2)
 
     daily_cols = ["fecha", "recovery_pct", "hrv_ms", "rhr_bpm", "spo2_pct", "skin_temp_c",
-                  "sleep_perf_pct", "sleep_hours", "resp_rate", "strain", "kcal",
+                  "sleep_perf_pct", "sleep_hours", "sleep_asleep_h", "sleep_deep_h", "sleep_rem_h",
+                  "deep_pct", "rem_pct", "sleep_efficiency_pct", "sleep_consistency_pct",
+                  "despertares", "deuda_sueno_min", "resp_rate", "strain", "kcal",
                   "swim_km", "swim_sessions", "pesas_min", "fuentes"]
     write_csv(os.path.join(OUT_DIR, "daily.csv"),
               [{**r, "fuentes": "|".join(r.get("fuentes", []))} for r in daily], daily_cols)
