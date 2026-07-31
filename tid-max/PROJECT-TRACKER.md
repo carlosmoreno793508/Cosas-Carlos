@@ -63,10 +63,10 @@ Presupuesto INDICATIVO en USD (a validar con cotizaciones reales: RFQ H0.4, lab 
 
 | # | Ítem | Estado | Acción correctiva / notas |
 |---|---|---|---|
-| 2.1 | Integración LLM (Claude API) sobre las métricas | ⬜ | |
-| 2.2 | Plan diario 5 pilares (entreno, sueño, hidratación, nutrición, recuperación) | 🟡 | v0 por reglas en `software/tid_coach.py` (genera `reporte-diario.html`). Fase 2: potenciar el texto con la Claude API (ítem 2.1). |
+| 2.1 | Integración LLM (Claude API) sobre las métricas | 🟡 | v0 en `software/tid_agent.py`: lee el esquema canónico (`dataset.json`), el **motor** calcula los hechos duros y el **agente (Claude)** los convierte en coach conversacional. Regla de oro: el LLM no inventa números (código calcula, modelo interpreta). Modelo `claude-opus-5`, pensamiento adaptativo, fallback por reglas sin API key. Arquitectura en `analisis/agentes-ai.md`. Falta salida estructurada (Pydantic) y persona nombrada (2.5). |
+| 2.2 | Plan diario 5 pilares (entreno, sueño, hidratación, nutrición, recuperación) | 🟡 | v0 por reglas en `software/tid_coach.py` (genera `reporte-diario.html`) **y** vía Claude API en `tid_agent.py` (ítem 2.1). |
 | 2.3 | Modo adaptable Rendimiento ↔ Bienestar | 🟡 | v0: `software/tid_plan.py` genera el plan semanal (estilo Runna) con **adaptación diaria** — si el Recovery de WHOOP baja, cambia la sesión de hoy a recuperación/técnica. Falta el eje Rendimiento↔Bienestar explícito. |
-| 2.4 | Guardrails COFEPRIS (rendimiento/bienestar, no diagnóstico) | ⬜ | |
+| 2.4 | Guardrails COFEPRIS (rendimiento/bienestar, no diagnóstico) | 🟡 | v0: guardrails en el system prompt de `tid_agent.py` (no diagnóstico, no fármacos, no inventar datos, menor de edad, trazable). Documentados en `analisis/agentes-ai.md`. Falta suite de pruebas de los guardrails. |
 | 2.5 | Nombrar y definir el asistente de usuario (persona) | ⬜ | |
 
 ## FASE 3 — Beta software + piloto B2B (Software)

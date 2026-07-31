@@ -66,6 +66,34 @@ Al correr `whoop_dashboard.py`, el panel muestra la banda **NATACIÓN** (km real
 una hoja **Natación** con gráfica de km/día, y marca el Km de WHOOP como *no confiable*.
 Ver la oportunidad de producto en `../analisis/oportunidades-producto.md` (OPP-01).
 
+## Pipeline de datos: normalización al esquema canónico
+`tid_data.py` toma TODO lo crudo (WHOOP + Polar + registro de nado) y lo unifica en un **esquema
+canónico único** — el contrato que consumen el dashboard, el coach y los agentes AI:
+```bash
+python whoop_sync.py     # baja WHOOP
+python tid_data.py       # normaliza -> datos/procesado/
+```
+Salida en `datos/procesado/`:
+- `dataset.json` — todo junto (lo que leen los agentes AI): `atleta`, `daily[]`, `workouts[]`, `polar_capturas[]`.
+- `daily.csv` / `daily.json` / `workouts.csv` — vistas planas para Excel/análisis.
+
+Cambiar de fuente (Garmin, Apple, banda TID-MAX) = agregar solo su normalizador; el esquema no cambia.
+Ver el contrato en `../analisis/esquema-canonico.md`.
+
+## Agente coach (Claude API)
+`tid_agent.py` es la Capa 2: lee `dataset.json`, el **motor** calcula los hechos duros (recovery vs base,
+HRV/FC vs base, ACWR, volumen de nado, semáforo) y el **agente (Claude)** los convierte en coach
+conversacional. Regla de oro: **el LLM no inventa números** — el código calcula, el modelo interpreta.
+```bash
+pip install anthropic
+export ANTHROPIC_API_KEY=...        # o: ant auth login
+python tid_agent.py                 # coach del día en lenguaje natural
+python tid_agent.py --pregunta "¿por qué bajó mi HRV esta semana?"   # Q&A libre
+python tid_agent.py --sin-ia        # fuerza el modo por reglas (no llama a Claude)
+```
+Sin `ANTHROPIC_API_KEY` (o sin el SDK), cae con gracia al coach por reglas — el producto sigue funcionando.
+Arquitectura de agentes en `../analisis/agentes-ai.md`.
+
 ## Ecosistema: motor + coach (demo end-to-end)
 `whoop_dashboard.py` visualiza; `tid_coach.py` **razona**. Demuestra el bucle del producto
 (**Datos → Motor → Coach → Recomendación**) con la fuente que hoy tenemos (WHOOP):
