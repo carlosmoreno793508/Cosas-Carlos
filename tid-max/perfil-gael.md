@@ -9,7 +9,7 @@
 | Dato | Valor | Nota |
 |---|---|---|
 | Nombre | Moreno Sarmiento Carlos Gael | |
-| Fecha de nacimiento | **19/03/2008** | ⚠️ Según ambos estudios → **hoy tiene 18 años** (cumple 19 en marzo 2027). Tú dijiste 19; confírmame. |
+| Fecha de nacimiento | **19/03/2008** | **18 años** hoy (cumple 19 en marzo 2027). ✅ Confirmado. |
 | Sexo | Masculino | |
 | Tipo de sangre | **O Rh Positivo** | |
 
@@ -60,6 +60,6 @@
 3. **VO₂máx 67.75** como baseline de forma para el 4º agente (Rendimiento).
 4. **Hidratación**: el coach puede subir el peso de este pilar — hay evidencia de laboratorio de que Gael tiende a entrenar deshidratado.
 5. **Nutrición**: el metabolismo de grasa/CHO del test (FATmax a 143 lpm) ayuda a afinar la estrategia de carbohidratos por intensidad.
-6. **Confirmar edad**: documentos → 18 años hoy (no 19).
+6. **Edad**: 18 años (confirmado; cumple 19 en marzo 2027).
 
 _Pendiente de revisar juntos mañana._

@@ -20,7 +20,7 @@
     "kcal_por_min_seco": 6,
     "factor_actividad_no_entreno": 1.45,
     "margen_crecimiento_pct": 5,
-    "_nota": "Datos de estudios ene-2026 (ver perfil-gael.md). ESTATURA real 1.86 m (186); 2.08 m es su ENVERGADURA, no la altura. edad: documentos indican 18 (Carlos dijo 19, confirmar). peso 81 kg. Estos valores tienen prioridad sobre WHOOP por si WHOOP carga la envergadura como altura."
+    "_nota": "Datos de estudios ene-2026 (ver perfil-gael.md). ESTATURA real 1.86 m (186); 2.08 m es su ENVERGADURA, no la altura. Edad 18 (nacio 19/03/2008, cumple 19 en marzo 2027). peso 81 kg. Estos valores tienen prioridad sobre WHOOP por si WHOOP carga la envergadura como altura."
   },
   "alimentos_preferidos": {
     "desayuno": ["huevos con calabaza", "huevos con ejotes", "huevos con jamon", "huevos con champinones", "migas con frijoles", "totopos (a veces)"],
