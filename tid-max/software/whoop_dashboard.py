@@ -424,6 +424,26 @@ def build():
     else:
         km_week = None
 
+    # --- Carga y Forma (Fase A: ACWR + curva PMC + resumen semanal) ---
+    pmc = pmc_series(cyc)
+    s_loads = [x["strain"] for x in cyc if isinstance(x.get("strain"), (int, float))]
+    acute = _avg(s_loads[-7:])
+    chronic = _avg(s_loads[-28:])
+    acwr = round(acute / chronic, 2) if (acute and chronic) else None
+
+    fechas = [x["fecha"] for x in rec if x.get("fecha")] + [x["fecha"] for x in cyc if x.get("fecha")]
+    ref = max(fechas) if fechas else None
+
+    def _w7(items, key):
+        if not ref:
+            return []
+        return [it[key] for it in items
+                if it.get("fecha") and 0 <= (ref - it["fecha"]).days < 7 and isinstance(it.get(key), (int, float))]
+
+    strain_7d = round(sum(_w7(cyc, "strain")), 1) if _w7(cyc, "strain") else None
+    recov_avg = round(_avg(_w7(rec, "recovery"))) if _w7(rec, "recovery") else None
+    sleep_avg = round(_avg(_w7(slp, "rendimiento"))) if _w7(slp, "rendimiento") else None
+
     cards = [
         ("RECOVERY", last_rec.get("recovery"), '0"%"', recovery_zone_color(last_rec.get("recovery"))),
         ("HRV (rMSSD)", last_rec.get("hrv"), '0.0" ms"', ACCENT),
@@ -488,6 +508,41 @@ def build():
         lc.alignment = Alignment(horizontal="center", vertical="center")
         ws.merge_cells(f"{c1}11:{c2}11")
         vc = ws[f"{c1}11"]
+        vc.value = value if value is not None else "—"
+        vc.fill = _fill(color)
+        vc.font = Font(bold=True, color=WHITE, size=20)
+        vc.alignment = Alignment(horizontal="center", vertical="center")
+        if isinstance(value, (int, float)):
+            vc.number_format = fmt
+
+    # ===== Banda RESUMEN DE LA SEMANA (Fase A) =====
+    ws.merge_cells("B13:K13")
+    wh = ws["B13"]
+    wh.value = "RESUMEN DE LA SEMANA · últimos 7 días"
+    wh.font = Font(bold=True, color=ORANGE, size=10)
+    wh.alignment = Alignment(horizontal="left", vertical="center", indent=1)
+    ws.row_dimensions[13].height = 18
+
+    week_cards = [
+        ("RECOVERY PROM", recov_avg, '0"%"', recovery_zone_color(recov_avg)),
+        ("SUEÑO PROM", sleep_avg, '0"%"', INDIGO),
+        ("STRAIN 7D", strain_7d, "0.0", ORANGE),
+        ("KM NADO 7D", km_week, '0.0" km"', CYAN),
+        ("CARGA ACWR", acwr, "0.00", acwr_color(acwr)),
+    ]
+    ws.row_dimensions[14].height = 16
+    ws.row_dimensions[15].height = 34
+    ws.row_dimensions[16].height = 10
+    for (label, value, fmt, color), col in zip(week_cards, [2, 4, 6, 8, 10]):
+        c1, c2 = get_column_letter(col), get_column_letter(col + 1)
+        ws.merge_cells(f"{c1}14:{c2}14")
+        lc = ws[f"{c1}14"]
+        lc.value = label
+        lc.fill = _fill(color)
+        lc.font = Font(bold=True, color=WHITE, size=8.5)
+        lc.alignment = Alignment(horizontal="center", vertical="center")
+        ws.merge_cells(f"{c1}15:{c2}15")
+        vc = ws[f"{c1}15"]
         vc.value = value if value is not None else "—"
         vc.fill = _fill(color)
         vc.font = Font(bold=True, color=WHITE, size=20)
@@ -607,6 +662,20 @@ def build():
         ws_nat["A3"].font = Font(size=11, color="5A6B7B")
         ws_nat.column_dimensions["A"].width = 110
 
+    # ===== Hoja Carga (Fitness/Fatiga/Forma para la curva PMC) =====
+    ws_carga = wb.create_sheet("Carga")
+    if pmc:
+        style_table(
+            ws_carga,
+            ["Fecha", "Carga (strain)", "Fitness (CTL)", "Fatiga (ATL)", "Forma (TSB)"],
+            [[d.strftime("%d/%b"), l, ctl, atl, tsb] for (d, l, ctl, atl, tsb) in pmc],
+            num_formats={2: "0.0", 3: "0.0", 4: "0.0", 5: "0.0"},
+        )
+    else:
+        ws_carga["A1"] = "Sin datos de carga (se necesita strain de los ciclos de WHOOP)."
+        ws_carga["A1"].font = Font(bold=True, size=12, color=INK)
+        ws_carga.column_dimensions["A"].width = 80
+
     # ===== Graficas de tendencia en el Dashboard =====
     n = len(rec)
     if n >= 2:
@@ -626,7 +695,7 @@ def build():
         chart_rec.y_axis.scaling.min = 0
         chart_rec.y_axis.scaling.max = 100
         style_chart(chart_rec, npts, GOOD)
-        ws.add_chart(chart_rec, "B13")
+        ws.add_chart(chart_rec, "B18")
 
         chart_hrv = LineChart()
         chart_hrv.title = "HRV rMSSD (ms)"
@@ -637,23 +706,50 @@ def build():
         chart_hrv.add_data(data_h, titles_from_data=True)
         chart_hrv.set_categories(cats)
         style_chart(chart_hrv, npts, ACCENT)
-        ws.add_chart(chart_hrv, "G13")
+        ws.add_chart(chart_hrv, "G18")
+
+    # ===== Curva de Forma (PMC: Fitness/Fatiga/Forma) en el Dashboard =====
+    if pmc and len(pmc) >= 2:
+        m = len(pmc)
+        cats_pmc = Reference(ws_carga, min_col=1, min_row=2, max_row=m + 1)
+        pmc_chart = LineChart()
+        pmc_chart.title = "Curva de Forma — Fitness (CTL) / Fatiga (ATL) / Forma (TSB)"
+        pmc_chart.height = 8
+        pmc_chart.width = 24
+        pmc_chart.style = 2
+        data_pmc = Reference(ws_carga, min_col=3, max_col=5, min_row=1, max_row=m + 1)
+        pmc_chart.add_data(data_pmc, titles_from_data=True)
+        pmc_chart.set_categories(cats_pmc)
+        pmc_chart.x_axis.delete = False
+        pmc_chart.y_axis.delete = False
+        pmc_chart.x_axis.majorTickMark = "out"
+        pmc_chart.y_axis.majorTickMark = "out"
+        pmc_chart.y_axis.majorGridlines = _light_gridlines()
+        pmc_chart.x_axis.majorGridlines = None
+        pmc_chart.x_axis.tickLblSkip = max(1, m // 10)
+        pmc_chart.graphical_properties = GraphicalProperties()
+        pmc_chart.graphical_properties.line = LineProperties(noFill=True)
+        for i, s in enumerate(pmc_chart.series):
+            s.graphicalProperties.line.solidFill = [GOOD, ORANGE, BLUE][i % 3]
+            s.graphicalProperties.line.width = 20000
+            s.smooth = True
+        ws.add_chart(pmc_chart, "B34")
 
     # ===== Leyenda del semaforo (aplica a las hojas de detalle) =====
-    ws["B30"] = "Semáforo:"
-    ws["B30"].font = Font(bold=True, size=9, color=INK)
-    ws["B30"].alignment = Alignment(horizontal="left", vertical="center")
+    ws["B52"] = "Semáforo:"
+    ws["B52"].font = Font(bold=True, size=9, color=INK)
+    ws["B52"].alignment = Alignment(horizontal="left", vertical="center")
     for col, txt, color in [("C", "bien", GREEN_SOFT), ("D", "vigilar", YELLOW_SOFT), ("E", "riesgo", RED_SOFT)]:
-        c = ws[f"{col}30"]
+        c = ws[f"{col}52"]
         c.value = txt
         c.fill = _fill(color)
         c.font = Font(size=9, color="333333")
         c.alignment = Alignment(horizontal="center", vertical="center")
-    ws.merge_cells("F30:K30")
-    ws["F30"] = "en las hojas Recovery y Sueño, ajustado a la línea base de Gael (Recovery, HRV, FC reposo, sueño)"
-    ws["F30"].font = Font(size=9, italic=True, color="5A6B7B")
-    ws["F30"].alignment = Alignment(horizontal="left", vertical="center", indent=1)
-    ws.row_dimensions[30].height = 16
+    ws.merge_cells("F52:K52")
+    ws["F52"] = "en las hojas Recovery y Sueño, ajustado a la línea base de Gael (Recovery, HRV, FC reposo, sueño)"
+    ws["F52"].font = Font(size=9, italic=True, color="5A6B7B")
+    ws["F52"].alignment = Alignment(horizontal="left", vertical="center", indent=1)
+    ws.row_dimensions[52].height = 16
 
     wb.save(OUT_PATH)
     print("\n===================== LISTO =====================")
