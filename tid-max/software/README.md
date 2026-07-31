@@ -82,6 +82,17 @@ Genera un **reporte diario** con:
 Es orientación de rendimiento/bienestar (no médica). En Fase 2, el texto del coach se potencia con la
 **Claude API** para volverlo conversacional.
 
+### Capa 2 — Coach + Plan (estilo Runna)
+`tid_plan.py` bosqueja el **plan de entrenamiento** del atleta rumbo a su evento:
+```bash
+cp plan-vancouver.ejemplo.json datos/plan.json   # ajusta evento, fecha, meta y plantilla
+python tid_plan.py
+open plan-semanal.html
+```
+Genera la vista **"Tu Plan"**: tarjeta del evento (fecha, fase carga→taper, progreso de km), y la
+**semana con sesiones de nado estructuradas** (+ pesas), con **adaptación diaria**: si el Recovery de
+WHOOP está bajo, el coach cambia la sesión de hoy a recuperación/técnica. Benchmark: Runna.
+
 ## Seguridad
 - El `.env` y la carpeta `datos/` están en `.gitignore` — **no se suben** al repo.
 - El **Client Secret** y el **Refresh Token** son como contraseñas: no los pegues en chats ni capturas.

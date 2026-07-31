@@ -65,7 +65,7 @@ Presupuesto INDICATIVO en USD (a validar con cotizaciones reales: RFQ H0.4, lab 
 |---|---|---|---|
 | 2.1 | Integración LLM (Claude API) sobre las métricas | ⬜ | |
 | 2.2 | Plan diario 5 pilares (entreno, sueño, hidratación, nutrición, recuperación) | 🟡 | v0 por reglas en `software/tid_coach.py` (genera `reporte-diario.html`). Fase 2: potenciar el texto con la Claude API (ítem 2.1). |
-| 2.3 | Modo adaptable Rendimiento ↔ Bienestar | ⬜ | |
+| 2.3 | Modo adaptable Rendimiento ↔ Bienestar | 🟡 | v0: `software/tid_plan.py` genera el plan semanal (estilo Runna) con **adaptación diaria** — si el Recovery de WHOOP baja, cambia la sesión de hoy a recuperación/técnica. Falta el eje Rendimiento↔Bienestar explícito. |
 | 2.4 | Guardrails COFEPRIS (rendimiento/bienestar, no diagnóstico) | ⬜ | |
 | 2.5 | Nombrar y definir el asistente de usuario (persona) | ⬜ | |
 
