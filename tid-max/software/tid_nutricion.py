@@ -134,21 +134,6 @@ def cargar_nutricion_hoy():
 
 
 def ai_plan_comidas(client, nutri, plan_hoy, base):
-    from pydantic import BaseModel
-
-    class Comida(BaseModel):
-        nombre: str          # Desayuno / Comida / Cena
-        kcal_aprox: str
-        sugerencia: str      # platillo armado con SUS alimentos
-        porciones: str       # cantidades caseras aproximadas
-
-    class PlanDia(BaseModel):
-        resumen: str
-        desayuno: Comida
-        comida: Comida
-        cena: Comida
-        snack_entreno: str
-
     kpc = nutri.get("kcal_por_comida", {})
     prompt = (
         "Arma el PLAN DE COMIDAS de HOY para Gael usando SOLO (o casi solo) sus alimentos "
@@ -156,29 +141,27 @@ def ai_plan_comidas(client, nutri, plan_hoy, base):
         f"- {nutri['kcal_objetivo']} kcal · Proteína {nutri['proteina_g']} g · "
         f"Carbohidratos {nutri['carbohidratos_g']} g · Grasa {nutri['grasa_g']} g\n"
         f"- Nado de hoy: {plan_hoy.get('km_dia') if plan_hoy else '—'} km\n"
-        f"- Reparto sugerido por comida (kcal): {json.dumps(kpc, ensure_ascii=False)}\n\n"
+        f"- Reparto por comida (kcal): {json.dumps(kpc, ensure_ascii=False)}\n\n"
         f"Sus alimentos preferidos:\n{json.dumps(base.get('alimentos_preferidos', {}), ensure_ascii=False)}\n\n"
-        "Para cada comida da un platillo concreto con porciones caseras aproximadas que sumen "
-        "cerca de sus kcal objetivo. Atleta joven de 19 con gasto muy alto: cubrir energía, sin restringir."
+        "Devuelve el plan en TEXTO claro para leer (NADA de JSON): una línea de resumen y luego "
+        "DESAYUNO, COMIDA y CENA (cada uno con su kcal objetivo, el platillo armado con sus "
+        "alimentos y porciones caseras aproximadas), más un SNACK de entreno. Concreto y breve; "
+        "las porciones deben acercarse a las kcal de cada comida. Atleta de 19 con gasto muy alto: "
+        "cubrir energía, sin restringir."
     )
-    resp = client.messages.parse(
-        model=MODEL, max_tokens=4000, system=f"{PERSONA}\n\n{GUARDRAILS}",
-        messages=[{"role": "user", "content": prompt}], output_format=PlanDia,
+    resp = client.messages.create(
+        model=MODEL, max_tokens=1600, system=f"{PERSONA}\n\n{GUARDRAILS}",
+        messages=[{"role": "user", "content": prompt}],
     )
-    return resp.parsed_output
+    return "".join(b.text for b in resp.content if getattr(b, "type", None) == "text").strip()
 
 
-def print_plan(nutri, plan_hoy, plan):
+def print_plan(nutri, texto):
     print("\n============== TID-MAX · PLAN DE COMIDAS DEL DÍA ==============")
     print(f"Objetivo: ~{nutri['kcal_objetivo']} kcal · P {nutri['proteina_g']}g · "
           f"C {nutri['carbohidratos_g']}g · G {nutri['grasa_g']}g  (nado {nutri.get('km_dia')} km)")
-    if plan:
-        print(f"\n{plan.resumen}\n")
-        for c in (plan.desayuno, plan.comida, plan.cena):
-            print(f"● {c.nombre} (~{c.kcal_aprox} kcal)")
-            print(f"   {c.sugerencia}")
-            print(f"   Porciones: {c.porciones}")
-        print(f"\n🍌 Snack alrededor del entreno: {plan.snack_entreno}")
+    if texto:
+        print("\n" + texto)
     print("\n(Estimaciones para orientar; ajústalas con un nutriólogo del deporte.)")
 
 
@@ -234,7 +217,7 @@ def main():
                 plan = ai_plan_comidas(client, nutri, plan_hoy, base)
             except Exception as e:
                 print(f"(Aviso: falló la IA: {e}. Muestro solo los objetivos.)")
-        print_plan(nutri, plan_hoy, plan)
+        print_plan(nutri, plan)
         return
 
     fotos = [a for a in args if not a.startswith("--")]
