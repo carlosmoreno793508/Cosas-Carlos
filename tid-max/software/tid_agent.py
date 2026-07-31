@@ -83,6 +83,7 @@ def build_facts(ds):
     daily = ds.get("daily", [])
     atleta = ds.get("atleta", {})
     evento = ds.get("evento") or {}
+    plan_sem = ds.get("plan_semana") or {}
 
     def col(key):
         return [r.get(key) for r in daily if isinstance(r.get(key), (int, float))]
@@ -149,6 +150,9 @@ def build_facts(ds):
         "dias_al_evento": evento.get("dias_al_evento"),
         "dias_al_viaje": evento.get("dias_al_viaje"),
         "fase": evento.get("fase"),
+        "km_plan_semana": plan_sem.get("km_plan"),
+        "ses_plan_semana": plan_sem.get("ses_plan"),
+        "fase_plan_semana": plan_sem.get("fase_plan"),
     }
     facts["semaforo"], facts["razones"] = semaforo(facts)
     return facts
@@ -378,6 +382,10 @@ def print_facts(f):
     if f.get("dias_al_evento") is not None:
         print(f"Evento: {f['evento']}  →  faltan {f['dias_al_evento']} días  "
               f"(fase: {f['fase']}; vuelo en {f['dias_al_viaje']} días)")
+    if f.get("km_plan_semana") is not None:
+        real = f.get("km_nado_semana")
+        print(f"Plan semana: {f['fase_plan_semana']} · {f['km_plan_semana']} km plan"
+              + (f"  |  real {real} km" if real is not None else ""))
     print(f"Semáforo: {icon} {f['semaforo'].upper()}  —  {', '.join(f['razones'])}")
     print(f"Recovery {s(f['recovery_pct'],'%')} | HRV {s(f['hrv_ms'],' ms')} ({s(f['hrv_vs_base_pct'],'%')} vs base) | "
           f"FC rep {s(f['fc_reposo_lpm'],' lpm')} | Sueño {s(f['sueno_pct'],'%')} | "

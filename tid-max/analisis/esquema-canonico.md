@@ -28,6 +28,15 @@ Lo produce `software/tid_data.py` en `datos/procesado/`.
 | fase | string | **calculado**: carga (>21 d) · taper (≤21 d) · pico (≤7 d) · post-evento (<0) |
 > Es lo que permite que el coach razone el **taper**: en fase de afinamiento la meta es llegar fresco, no acumular carga.
 
+### `plan_semana` — semana del macrociclo que cae hoy (plan vs real)
+| campo | tipo | fuente |
+|---|---|---|
+| semana | string | `plan-macro.json` (macrociclo 2025-26 del entrenador) |
+| fase_plan | string | capacidad dominante planeada |
+| km_plan / ses_plan | int | km y sesiones **planeados** esa semana |
+| comp | string | competencia de la semana |
+> El pipeline elige la semana cuya `inicio<=hoy<=fin`. Da al coach el **km objetivo** para contrastar contra el nado real (WHOOP/registro).
+
 ### `daily[]` — una fila por día (`fecha` = clave, `YYYY-MM-DD`)
 | campo | unidad | fuente |
 |---|---|---|

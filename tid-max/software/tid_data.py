@@ -272,6 +272,35 @@ def build_evento():
     }
 
 
+def build_plan_semana():
+    """Semana del macrociclo (plan-macro.json) que cae en la fecha de hoy: km/ses/fase planeados."""
+    plan = {}
+    for p in (os.path.join(DATA_DIR, "plan-macro.json"), os.path.join(SCRIPT_DIR, "plan-macro.json")):
+        if os.path.exists(p):
+            with open(p, encoding="utf-8") as f:
+                plan = json.load(f)
+            break
+    semanas = plan.get("semanas") or []
+    if not semanas:
+        return None
+    hoy = datetime.now().date()
+    for s in semanas:
+        try:
+            ini = datetime.strptime(s["inicio"], "%Y-%m-%d").date()
+            fin = datetime.strptime(s["fin"], "%Y-%m-%d").date()
+        except (KeyError, ValueError, TypeError):
+            continue
+        if ini <= hoy <= fin:
+            return {
+                "semana": f"{s['inicio']} → {s['fin']}",
+                "fase_plan": s.get("fase"),
+                "km_plan": s.get("km"),
+                "ses_plan": s.get("ses"),
+                "comp": s.get("comp"),
+            }
+    return None
+
+
 def write_csv(path, rows, cols):
     with open(path, "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=cols, extrasaction="ignore")
@@ -286,6 +315,7 @@ def main():
     polar = build_polar()
     athlete = build_athlete()
     evento = build_evento()
+    plan_semana = build_plan_semana()
 
     if not any([daily, workouts, polar]):
         sys.exit(f"\nNo encontré datos en {DATA_DIR}. Corre primero:  python whoop_sync.py")
@@ -298,6 +328,7 @@ def main():
         "generado_utc": stamp,
         "atleta": athlete,
         "evento": evento,
+        "plan_semana": plan_semana,
         "daily": daily,
         "workouts": workouts,
         "polar_capturas": polar,
@@ -323,6 +354,10 @@ def main():
     if evento and evento.get("dias_al_evento") is not None:
         print(f"Evento: {evento['nombre']}  →  faltan {evento['dias_al_evento']} días "
               f"(fase: {evento['fase']}; vuelo en {evento['dias_al_viaje']} días)")
+    if plan_semana:
+        print(f"Plan semana: {plan_semana['fase_plan']}  —  {plan_semana['km_plan']} km / "
+              f"{plan_semana['ses_plan']} ses planeados"
+              + (f"  ({plan_semana['comp']})" if plan_semana.get("comp") else ""))
     print(f"Esquema canónico v{SCHEMA_VERSION}. Salida en: {OUT_DIR}/")
     print("  - dataset.json  (lo que leen los agentes AI)")
     print("  - daily.csv / daily.json / workouts.csv")

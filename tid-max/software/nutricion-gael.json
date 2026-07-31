@@ -1,0 +1,48 @@
+{
+  "_fuente": "Plantilla real de alimentacion y suplementos de Gael (capturada con Carlos). Referencia para el agente de nutricion y para estimar la ingesta de un dia tipo. Menor de edad: enfoque en cubrir demanda energetica, NUNCA restriccion.",
+  "estructura_semana": {
+    "dobles": ["Lun", "Mie", "Vie"],
+    "sencillas": ["Mar", "Jue", "Sab"],
+    "descanso_total": ["Dom"]
+  },
+  "dia_tipo_doble": {
+    "07:30_despertar_desayuno": {
+      "descripcion": "Licuado pre-1a sesion",
+      "ingredientes": [
+        "1 platano",
+        "2 cucharadas de avena con proteina",
+        "2 cucharadas de yogurt griego Chobani (+20 g proteina)",
+        "2 datiles",
+        "creatina",
+        "1 scoop de proteina",
+        "200 ml de leche entera",
+        "pizca de sal",
+        "1 cucharada de crema de cacahuate"
+      ]
+    },
+    "post_1a_sesion": {
+      "descripcion": "Recarga post-entreno matutino",
+      "ingredientes": ["5-6 huevos con jamon o chorizo", "shake de proteina"]
+    },
+    "siesta_1": "12:00 a 14:20",
+    "comida_fuerte": {
+      "descripcion": "Comida principal (ejemplo del dia)",
+      "ingredientes": ["2 porciones de salmon", "esparragos", "pure de papa"]
+    },
+    "siesta_2": "30 min antes de la 2a sesion",
+    "2a_sesion": "15:30 a 20:00",
+    "cena_post_2a_sesion": {
+      "descripcion": "Cena de recuperacion antes de dormir",
+      "ingredientes": ["5-6 huevos"]
+    }
+  },
+  "suplementos": [
+    {"nombre": "ALLMAX Essentials Beta-Alanina", "tipo": "rendimiento"},
+    {"nombre": "Thorne Carnityl (Acetil-L-Carnitina) capsulas", "tipo": "rendimiento"},
+    {"nombre": "ALLMAX Essentials Cafeina 200 mg", "tipo": "estimulante", "nota": "menor de edad: vigilar dosis y horario (no cerca de dormir)"},
+    {"nombre": "Vitamina C (Redoxon)", "tipo": "micronutriente"},
+    {"nombre": "Total Beet (remolacha / nitratos)", "tipo": "rendimiento"},
+    {"nombre": "Creatina", "tipo": "rendimiento"}
+  ],
+  "_nota_guardrails": "Adolescente atleta con altisimo gasto (dobles + 50-56 km/sem). El objetivo nutricional es cubrir energia, proteina y recuperacion. El agente NO recomienda restringir calorias ni cambiar suplementos; ante dudas de dosis/seguridad de suplementos, derivar a nutriologo/medico deportivo."
+}
