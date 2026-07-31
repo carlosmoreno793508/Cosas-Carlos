@@ -62,7 +62,10 @@ GUARDRAILS = (
     "No plantees un 'plan vs real' como déficit ni regañes por km faltantes.\n"
     "7) VACACIONES/DESCANSO: si 'fase_plan_semana' dice 'Vacaciones' o el km planeado es 0, es "
     "descanso PLANEADO (p. ej. post-competencia). NO empujes entrenamiento ni km; enfoca en "
-    "recuperación, sueño, disfrutar el descanso y actividad ligera opcional. Es parte del plan."
+    "recuperación, sueño, disfrutar el descanso y actividad ligera opcional. Es parte del plan.\n"
+    "8) INTENSIDAD POR FC: si vienen 'zonas_fc', prescribe la intensidad con esas zonas REALES "
+    "(medidas en su prueba de esfuerzo: VT1/VT2), no con porcentajes genéricos. Recuerda que esa "
+    "FC máx es de carrera; en nado va ~5-10 lpm menor. La 'zona sensible' (VT1-VT2) es su motor."
 )
 
 
@@ -94,6 +97,7 @@ def build_facts(ds):
     plan_dias = ds.get("plan_dias") or {}
     ses_hoy = ds.get("sesiones_hoy") or {}
     nutri = ds.get("nutricion_hoy") or {}
+    zonas = ds.get("zonas_fc") or {}
 
     def col(key):
         return [r.get(key) for r in daily if isinstance(r.get(key), (int, float))]
@@ -185,6 +189,10 @@ def build_facts(ds):
         "macros_hoy": ({"P": nutri.get("proteina_g"), "C": nutri.get("carbohidratos_g"),
                         "G": nutri.get("grasa_g")} if nutri else None),
         "kcal_por_comida": nutri.get("kcal_por_comida"),
+        "vo2max": (ds.get("zonas_fc") or {}).get("vo2max"),
+        "zonas_fc": ({"vt1": zonas.get("vt1"), "vt2": zonas.get("vt2"),
+                      "fc_max": zonas.get("fc_max"), "fc_reposo": zonas.get("fc_reposo"),
+                      "zonas": zonas.get("zonas")} if zonas else None),
         "sesiones_reales_hoy": ses_hoy or None,
         "horas_agua_hoy": ses_hoy.get("horas_agua"),
         "horas_seco_hoy": ses_hoy.get("horas_seco"),

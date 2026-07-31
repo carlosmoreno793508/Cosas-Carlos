@@ -14,6 +14,7 @@
     "vo2max": 67.75,
     "fc_reposo": 67,
     "fc_max_carrera": 181,
+    "fatmax_fc": 143,
     "vt1_fc": 167,
     "vt2_fc": 173,
     "kcal_por_km_nado": 230,

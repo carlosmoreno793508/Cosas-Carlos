@@ -366,6 +366,47 @@ def _clasifica_deporte(w):
     return "otro"
 
 
+def build_zonas_fc():
+    """Zonas de FC ancladas en datos reales del PE (perfil de nutricion-gael.json):
+    FATmax, VT1 (umbral aeróbico) y VT2 (umbral anaeróbico) medidos, más FC máx y reposo.
+    Si faltan umbrales, cae a %FCmáx. Nota: FC máx del PE es de CARRERA; en nado suele ser
+    ~5-10 lpm menor."""
+    cfg = {}
+    for p in (os.path.join(DATA_DIR, "nutricion-gael.json"), os.path.join(SCRIPT_DIR, "nutricion-gael.json")):
+        if os.path.exists(p):
+            with open(p, encoding="utf-8") as f:
+                cfg = json.load(f)
+            break
+    perfil = cfg.get("perfil") or {}
+    fc_max = perfil.get("fc_max_carrera")
+    fc_rep = perfil.get("fc_reposo")
+    fatmax = perfil.get("fatmax_fc")
+    vt1 = perfil.get("vt1_fc")
+    vt2 = perfil.get("vt2_fc")
+    if not fc_max:
+        return None
+
+    if vt1 and vt2 and fatmax:
+        zonas = [
+            {"zona": "Z1 · Recuperación", "min": fc_rep or 0, "max": fatmax - 1, "uso": "regenerativo, técnica suave"},
+            {"zona": "Z2 · Aeróbico (quema grasa)", "min": fatmax, "max": vt1 - 1, "uso": "resistencia base; FATmax en el piso"},
+            {"zona": "Z3 · Zona sensible (VT1–VT2)", "min": vt1, "max": vt2, "uso": "el motor del rendimiento (a priorizar)"},
+            {"zona": "Z4 · VO₂ / anaeróbico", "min": vt2 + 1, "max": fc_max, "uso": "velocidad crítica, ritmo de competencia"},
+        ]
+        base = "umbrales medidos (FATmax/VT1/VT2) del PE"
+    else:
+        def pct(a, b):
+            return round(fc_max * a), round(fc_max * b)
+        z = [pct(.60, .70), pct(.70, .80), pct(.80, .90), pct(.90, 1.0)]
+        nom = ["Z1 · Recuperación", "Z2 · Aeróbico", "Z3 · Umbral", "Z4 · VO₂/máx"]
+        zonas = [{"zona": n, "min": a, "max": b, "uso": ""} for n, (a, b) in zip(nom, z)]
+        base = "%FC máx (sin umbrales medidos)"
+
+    return {"fc_max": fc_max, "fc_reposo": fc_rep, "vt1": vt1, "vt2": vt2,
+            "vo2max": perfil.get("vo2max"),
+            "base": base, "nota": "FC máx de CARRERA; en nado ~5-10 lpm menor.", "zonas": zonas}
+
+
 def build_nutricion(km_dia, seco_min, atleta):
     """Estima el gasto calórico del día y la ingesta objetivo (kcal + macros) por comida.
     BMR (Mifflin-St Jeor) + actividad no-entreno + gasto de nado/seco, con un pequeño
@@ -497,6 +538,7 @@ def main():
     km_hoy = (plan_dias or {}).get("hoy", {}).get("km_dia") if plan_dias else None
     seco_min_hoy = round((sesiones_hoy or {}).get("horas_seco", 0) * 60) if sesiones_hoy else 0
     nutricion_hoy = build_nutricion(km_hoy, seco_min_hoy, athlete)
+    zonas_fc = build_zonas_fc()
 
     if not any([daily, workouts, polar]):
         sys.exit(f"\nNo encontré datos en {DATA_DIR}. Corre primero:  python whoop_sync.py")
@@ -513,6 +555,7 @@ def main():
         "plan_dias": plan_dias,
         "sesiones_hoy": sesiones_hoy,
         "nutricion_hoy": nutricion_hoy,
+        "zonas_fc": zonas_fc,
         "daily": daily,
         "workouts": workouts,
         "polar_capturas": polar,
@@ -561,6 +604,11 @@ def main():
         n = nutricion_hoy
         print(f"Nutrición hoy: ~{n['kcal_objetivo']} kcal  (P {n['proteina_g']}g · "
               f"C {n['carbohidratos_g']}g · G {n['grasa_g']}g)  para {n['km_dia']} km de nado")
+    if zonas_fc:
+        z = zonas_fc
+        print(f"Zonas FC (reposo {z['fc_reposo']} · máx {z['fc_max']} · VT1 {z['vt1']} · VT2 {z['vt2']}):")
+        for zz in z["zonas"]:
+            print(f"   {zz['zona']:28} {zz['min']}–{zz['max']} lpm" + (f"  · {zz['uso']}" if zz['uso'] else ""))
     print(f"Esquema canónico v{SCHEMA_VERSION}. Salida en: {OUT_DIR}/")
     print("  - dataset.json  (lo que leen los agentes AI)")
     print("  - daily.csv / daily.json / workouts.csv")
