@@ -20,6 +20,12 @@ Variables de entorno (pon las que uses):
     # Telegram (lo más fácil, gratis):
     export TID_TELEGRAM_TOKEN=123456:ABC...      # token del bot (de @BotFather)
     export TID_TELEGRAM_CHAT=987654321           # chat_id de Gael (o del grupo)
+    # WhatsApp (API oficial de Meta - lo que más usan):
+    export TID_WA_TOKEN=EAAG...                  # access token de la app de WhatsApp
+    export TID_WA_PHONE_ID=1234567890            # Phone Number ID del número de negocio
+    export TID_WA_TO=5215512345678               # celular destino (código país, sin +)
+    export TID_WA_TEMPLATE=reporte_diario        # plantilla aprobada (para envío proactivo)
+    export TID_WA_LANG=es_MX
     # Email (opcional):
     export TID_MAIL_TO=gael@ejemplo.com
     export TID_MAIL_FROM=coach@ejemplo.com
@@ -104,6 +110,38 @@ def enviar_telegram(texto):
         return False, f"Telegram error: {e}"
 
 
+def enviar_whatsapp(texto):
+    """WhatsApp vía la API oficial de Meta (WhatsApp Cloud API).
+    Mensaje libre solo funciona dentro de la ventana de 24 h tras un mensaje del usuario;
+    para el reporte diario proactivo se usa una PLANTILLA aprobada (TID_WA_TEMPLATE) con un
+    parámetro de cuerpo que recibe el texto."""
+    token = os.environ.get("TID_WA_TOKEN")
+    phone_id = os.environ.get("TID_WA_PHONE_ID")
+    to = os.environ.get("TID_WA_TO")
+    if not (token and phone_id and to):
+        return False, "WhatsApp no configurado"
+    template = os.environ.get("TID_WA_TEMPLATE")
+    lang = os.environ.get("TID_WA_LANG", "es_MX")
+    url = f"https://graph.facebook.com/v21.0/{phone_id}/messages"
+    if template:
+        payload = {"messaging_product": "whatsapp", "to": to, "type": "template",
+                   "template": {"name": template, "language": {"code": lang},
+                                "components": [{"type": "body",
+                                                "parameters": [{"type": "text", "text": texto}]}]}}
+    else:
+        payload = {"messaging_product": "whatsapp", "to": to, "type": "text",
+                   "text": {"body": texto}}
+    req = urllib.request.Request(url, data=json.dumps(payload).encode(),
+                                 headers={"Authorization": f"Bearer {token}",
+                                          "Content-Type": "application/json"})
+    try:
+        with urllib.request.urlopen(req, timeout=20) as r:
+            ok = r.status in (200, 201)
+        return ok, "WhatsApp enviado" if ok else "WhatsApp falló"
+    except Exception as e:
+        return False, f"WhatsApp error: {e}"
+
+
 def enviar_email(texto):
     to = os.environ.get("TID_MAIL_TO")
     frm = os.environ.get("TID_MAIL_FROM")
@@ -137,7 +175,7 @@ def main():
         print("\n(--dry: no se envió nada.)")
         return
 
-    canales = [enviar_telegram, enviar_email]
+    canales = [enviar_telegram, enviar_whatsapp, enviar_email]
     algun_intento = False
     for fn in canales:
         ok, detalle = fn(texto)
