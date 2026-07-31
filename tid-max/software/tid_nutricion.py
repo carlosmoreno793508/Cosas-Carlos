@@ -5,7 +5,7 @@ tid_nutricion.py — Agente de Nutrición de TID-MAX (Capa 2, visión).
 Gael (o Carlos) le toma una FOTO a la comida y el agente estima el platillo y sus macros
 (calorías, proteína, carbohidratos, grasa) usando la visión de Claude. El resultado se apoya
 en la plantilla real de Gael (nutricion-gael.json): dobles Lun/Mie/Vie, altísimo gasto, por lo
-que el enfoque SIEMPRE es cubrir la demanda energética, nunca restringir (es menor de edad).
+que el enfoque SIEMPRE es cubrir la demanda energética, nunca restringir (atleta joven de 19).
 
 Regla de oro (igual que el resto de agentes): el modelo ESTIMA a partir de la imagen; los rangos
 son aproximados y se marcan como tales. Sin ANTHROPIC_API_KEY (o sin SDK) cae con gracia a un
@@ -31,15 +31,15 @@ BASE_NUTRI = os.path.join(SCRIPT_DIR, "nutricion-gael.json")
 MODEL = "claude-opus-5"
 
 PERSONA = (
-    "Eres el agente de nutrición de TID-MAX para Gael, nadador competitivo de alto nivel y menor "
-    "de edad, que entrena en dobles sesiones (Lun/Mie/Vie) con un gasto energético altísimo. "
+    "Eres el agente de nutrición de TID-MAX para Gael, nadador competitivo de alto nivel de 19 "
+    "años, que entrena en dobles sesiones (Lun/Mie/Vie) con un gasto energético altísimo. "
     "Tu trabajo es ESTIMAR, a partir de una foto, qué comió y sus macros aproximados, y decir si "
     "cubre bien la demanda del entrenamiento. Hablas en español, claro y cercano."
 )
 
 GUARDRAILS = (
     "REGLAS ESTRICTAS:\n"
-    "1) Es MENOR de edad con gasto muy alto: NUNCA sugieras restringir calorías, saltarte comidas "
+    "1) Atleta joven de 19 con gasto muy alto: NUNCA sugieras restringir calorías, saltarte comidas "
     "ni bajar de peso. El objetivo es cubrir energía, proteína y recuperación.\n"
     "2) Las cantidades de una foto son ESTIMADAS: da rangos y acláralo, no cifras falsamente exactas.\n"
     "3) Nutrición deportiva y bienestar, NO medicina. No diagnostiques ni prescribas. Ante dudas de "
@@ -159,7 +159,7 @@ def ai_plan_comidas(client, nutri, plan_hoy, base):
         f"- Reparto sugerido por comida (kcal): {json.dumps(kpc, ensure_ascii=False)}\n\n"
         f"Sus alimentos preferidos:\n{json.dumps(base.get('alimentos_preferidos', {}), ensure_ascii=False)}\n\n"
         "Para cada comida da un platillo concreto con porciones caseras aproximadas que sumen "
-        "cerca de sus kcal objetivo. Es adolescente en crecimiento: cubrir energía, sin restringir."
+        "cerca de sus kcal objetivo. Atleta joven de 19 con gasto muy alto: cubrir energía, sin restringir."
     )
     resp = client.messages.parse(
         model=MODEL, max_tokens=1400, system=f"{PERSONA}\n\n{GUARDRAILS}",

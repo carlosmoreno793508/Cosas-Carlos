@@ -368,8 +368,8 @@ def _clasifica_deporte(w):
 
 def build_nutricion(km_dia, seco_min, atleta):
     """Estima el gasto calórico del día y la ingesta objetivo (kcal + macros) por comida.
-    BMR (Mifflin-St Jeor) + actividad no-entreno + gasto de nado/seco, con margen de
-    crecimiento (adolescente). Es una ESTIMACIÓN para orientar, no una prescripción."""
+    BMR (Mifflin-St Jeor) + actividad no-entreno + gasto de nado/seco, con un pequeño
+    margen de seguridad para no subalimentar. Es una ESTIMACIÓN para orientar, no una prescripción."""
     cfg = {}
     for p in (os.path.join(DATA_DIR, "nutricion-gael.json"), os.path.join(SCRIPT_DIR, "nutricion-gael.json")):
         if os.path.exists(p):

@@ -1,12 +1,12 @@
 {
-  "_fuente": "Plantilla real de alimentacion y suplementos de Gael (capturada con Carlos). Referencia para el agente de nutricion y para estimar la ingesta de un dia tipo. Menor de edad: enfoque en cubrir demanda energetica, NUNCA restriccion.",
+  "_fuente": "Plantilla real de alimentacion y suplementos de Gael (capturada con Carlos). Referencia para el agente de nutricion y para estimar la ingesta de un dia tipo. Atleta joven (19 anos): enfoque en cubrir demanda energetica, NUNCA restriccion.",
   "estructura_semana": {
     "dobles": ["Lun", "Mie", "Vie"],
     "sencillas": ["Mar", "Jue", "Sab"],
     "descanso_total": ["Dom"]
   },
   "perfil": {
-    "edad": 16,
+    "edad": 19,
     "sexo": "M",
     "peso_kg": null,
     "altura_cm": null,
@@ -14,7 +14,7 @@
     "kcal_por_min_seco": 6,
     "factor_actividad_no_entreno": 1.45,
     "margen_crecimiento_pct": 5,
-    "_nota": "edad/sexo son ESTIMADOS: confirma con Carlos. peso_kg/altura_cm se toman de WHOOP si existen; si no, pon aqui los reales. Los kcal/km y factores son estimaciones ajustables por un nutriologo."
+    "_nota": "edad 19 (confirmada por Carlos), sexo M. peso_kg/altura_cm se toman de WHOOP si existen; si no, pon aqui los reales. Los kcal/km y factores son estimaciones ajustables por un nutriologo."
   },
   "alimentos_preferidos": {
     "desayuno": ["huevos con calabaza", "huevos con ejotes", "huevos con jamon", "huevos con champinones", "migas con frijoles", "totopos (a veces)"],
@@ -59,10 +59,10 @@
   "suplementos": [
     {"nombre": "ALLMAX Essentials Beta-Alanina", "tipo": "rendimiento"},
     {"nombre": "Thorne Carnityl (Acetil-L-Carnitina) capsulas", "tipo": "rendimiento"},
-    {"nombre": "ALLMAX Essentials Cafeina 200 mg", "tipo": "estimulante", "nota": "menor de edad: vigilar dosis y horario (no cerca de dormir)"},
+    {"nombre": "ALLMAX Essentials Cafeina 200 mg", "tipo": "estimulante", "nota": "vigilar dosis y horario: no cerca de dormir (afecta el sueno)"},
     {"nombre": "Vitamina C (Redoxon)", "tipo": "micronutriente"},
     {"nombre": "Total Beet (remolacha / nitratos)", "tipo": "rendimiento"},
     {"nombre": "Creatina", "tipo": "rendimiento"}
   ],
-  "_nota_guardrails": "Adolescente atleta con altisimo gasto (dobles + 50-56 km/sem). El objetivo nutricional es cubrir energia, proteina y recuperacion. El agente NO recomienda restringir calorias ni cambiar suplementos; ante dudas de dosis/seguridad de suplementos, derivar a nutriologo/medico deportivo."
+  "_nota_guardrails": "Atleta joven (19 anos) con altisimo gasto (dobles + alto km/sem). El objetivo nutricional es cubrir energia, proteina y recuperacion. El agente NO recomienda restringir calorias ni cambiar suplementos; ante dudas de dosis/seguridad de suplementos, derivar a nutriologo/medico deportivo."
 }
