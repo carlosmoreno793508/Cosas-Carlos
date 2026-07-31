@@ -88,6 +88,7 @@ def build_facts(ds):
     atleta = ds.get("atleta", {})
     evento = ds.get("evento") or {}
     plan_sem = ds.get("plan_semana") or {}
+    plan_dias = ds.get("plan_dias") or {}
 
     def col(key):
         return [r.get(key) for r in daily if isinstance(r.get(key), (int, float))]
@@ -173,6 +174,8 @@ def build_facts(ds):
         "km_nado_real_registrado": km_real,
         "carga_referencia_km": carga_km,
         "carga_referencia_fuente": carga_fuente,
+        "plan_nado_hoy": plan_dias.get("hoy"),
+        "plan_nado_manana": plan_dias.get("manana"),
     }
     facts["semaforo"], facts["razones"] = semaforo(facts)
     return facts
@@ -409,6 +412,18 @@ def print_facts(f):
         print(f"Carga de nado (semana): {f['carga_referencia_km']} km"
               + (f" · previa {f['km_nado_semana_previa']} km" if f.get("km_nado_semana_previa") is not None else "")
               + f"  —  {f['carga_referencia_fuente']}")
+
+    def fmt_dia(d):
+        if not d:
+            return "—"
+        ses = " + ".join(
+            f"{s['hora'] or '—'} {s['km']}km" + (f" ({s['enfoque']})" if s.get("enfoque") else "")
+            for s in d.get("sesiones", []))
+        return f"{d['tipo']} · {d['km_dia']} km" + (f"  [{ses}]" if ses else "")
+    if f.get("plan_nado_hoy"):
+        print(f"Nado HOY ({f['plan_nado_hoy']['dia']}): {fmt_dia(f['plan_nado_hoy'])}")
+    if f.get("plan_nado_manana"):
+        print(f"Nado MAÑANA ({f['plan_nado_manana']['dia']}): {fmt_dia(f['plan_nado_manana'])}")
     print(f"Semáforo: {icon} {f['semaforo'].upper()}  —  {', '.join(f['razones'])}")
     print(f"Recovery {s(f['recovery_pct'],'%')} | HRV {s(f['hrv_ms'],' ms')} ({s(f['hrv_vs_base_pct'],'%')} vs base) | "
           f"FC rep {s(f['fc_reposo_lpm'],' lpm')} | Sueño {s(f['sueno_pct'],'%')} | "

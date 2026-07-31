@@ -1,0 +1,16 @@
+{
+  "_fuente": "Patrón semanal de nado de Gael (con Carlos). Dobles Lun/Mie/Vie (AM 08:00 + PM 15:30), sencillas Mar/Jue/Sab (AM 08:00), Domingo descanso. Los km NO son fijos: el pipeline reparte el total de la semana del macrociclo (plan-macro.json) según el 'peso' de cada día, así el reparto se ajusta solo a cada fase.",
+  "horarios": {
+    "doble": ["08:00", "15:30"],
+    "sencilla": ["08:00"]
+  },
+  "dias": {
+    "Lun": {"tipo": "doble",    "peso": 11, "split": [0.55, 0.45], "enfoque": ["Aeróbico base", "Calidad AEM"]},
+    "Mar": {"tipo": "sencilla", "peso": 6,  "split": [1.0],        "enfoque": ["Técnica + velocidad corta"]},
+    "Mie": {"tipo": "doble",    "peso": 11, "split": [0.55, 0.45], "enfoque": ["Aeróbico base", "PAE"]},
+    "Jue": {"tipo": "sencilla", "peso": 6,  "split": [1.0],        "enfoque": ["Aeróbico moderado / técnica"]},
+    "Vie": {"tipo": "doble",    "peso": 12, "split": [0.58, 0.42], "enfoque": ["Calidad fuerte Vo2/AEM", "Aeróbico"]},
+    "Sab": {"tipo": "sencilla", "peso": 7,  "split": [1.0],        "enfoque": ["Aeróbico + técnica"]},
+    "Dom": {"tipo": "descanso", "peso": 0,  "split": [],           "enfoque": []}
+  }
+}

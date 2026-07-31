@@ -303,6 +303,47 @@ def build_plan_semana():
     return None
 
 
+DIAS_KEY = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"]
+
+
+def build_plan_dias(km_semana):
+    """Reparte km_semana por día según plan-semana.json (patrón + horarios). Devuelve hoy y mañana."""
+    cfg = {}
+    for p in (os.path.join(DATA_DIR, "plan-semana.json"), os.path.join(SCRIPT_DIR, "plan-semana.json")):
+        if os.path.exists(p):
+            with open(p, encoding="utf-8") as f:
+                cfg = json.load(f)
+            break
+    dias = cfg.get("dias") or {}
+    if not dias or not isinstance(km_semana, (int, float)):
+        return None
+    horarios = cfg.get("horarios") or {}
+    total_peso = sum(d.get("peso", 0) for d in dias.values()) or 1
+
+    def dia_plan(key):
+        d = dias.get(key)
+        if not d:
+            return None
+        km_dia = round(km_semana * d.get("peso", 0) / total_peso, 1)
+        horas = horarios.get(d.get("tipo"), [])
+        split = d.get("split") or ([1.0] if km_dia else [])
+        enfoque = d.get("enfoque") or []
+        sesiones = []
+        for i, frac in enumerate(split):
+            sesiones.append({
+                "hora": horas[i] if i < len(horas) else None,
+                "km": round(km_dia * frac, 1),
+                "enfoque": enfoque[i] if i < len(enfoque) else None,
+            })
+        return {"dia": key, "tipo": d.get("tipo"), "km_dia": km_dia, "sesiones": sesiones}
+
+    hoy_idx = datetime.now().weekday()
+    return {
+        "hoy": dia_plan(DIAS_KEY[hoy_idx]),
+        "manana": dia_plan(DIAS_KEY[(hoy_idx + 1) % 7]),
+    }
+
+
 def write_csv(path, rows, cols):
     with open(path, "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=cols, extrasaction="ignore")
@@ -318,6 +359,7 @@ def main():
     athlete = build_athlete()
     evento = build_evento()
     plan_semana = build_plan_semana()
+    plan_dias = build_plan_dias(plan_semana.get("km_plan")) if plan_semana else None
 
     if not any([daily, workouts, polar]):
         sys.exit(f"\nNo encontré datos en {DATA_DIR}. Corre primero:  python whoop_sync.py")
@@ -331,6 +373,7 @@ def main():
         "atleta": athlete,
         "evento": evento,
         "plan_semana": plan_semana,
+        "plan_dias": plan_dias,
         "daily": daily,
         "workouts": workouts,
         "polar_capturas": polar,
@@ -360,6 +403,10 @@ def main():
         print(f"Plan semana: {plan_semana['fase_plan']}  —  {plan_semana['km_plan']} km / "
               f"{plan_semana['ses_plan']} ses planeados"
               + (f"  ({plan_semana['comp']})" if plan_semana.get("comp") else ""))
+    if plan_dias and plan_dias.get("hoy"):
+        h = plan_dias["hoy"]
+        horas = " + ".join(s["hora"] for s in h["sesiones"] if s.get("hora"))
+        print(f"Nado hoy ({h['dia']}): {h['tipo']} · {h['km_dia']} km" + (f" · {horas}" if horas else ""))
     print(f"Esquema canónico v{SCHEMA_VERSION}. Salida en: {OUT_DIR}/")
     print("  - dataset.json  (lo que leen los agentes AI)")
     print("  - daily.csv / daily.json / workouts.csv")

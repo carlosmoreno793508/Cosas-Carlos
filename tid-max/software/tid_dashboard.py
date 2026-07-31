@@ -114,6 +114,19 @@ header.top{display:flex;align-items:baseline;justify-content:space-between;gap:1
 .planrow .val{font-weight:700;text-align:right;}
 .note{margin-top:12px;font-size:.8rem;color:var(--muted);border-left:3px solid var(--accent);padding-left:10px;}
 
+.nado{margin:14px 0;}
+.nadogrid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+@media(max-width:680px){.nadogrid{grid-template-columns:1fr;}}
+.daycol{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:12px 14px;}
+.daylab{display:flex;justify-content:space-between;align-items:baseline;gap:8px;
+  text-transform:uppercase;letter-spacing:.08em;font-size:.72rem;font-weight:800;color:var(--muted);margin-bottom:8px;}
+.daysum{color:var(--accent);letter-spacing:0;font-size:.82rem;text-transform:none;}
+.ses{display:flex;align-items:baseline;gap:10px;padding:6px 0;border-top:1px solid var(--line);}
+.ses:first-of-type{border-top:0;}
+.hora{flex:0 0 52px;font-weight:800;color:var(--ink);}
+.sesk{flex:0 0 56px;font-weight:700;color:var(--accent);}
+.senf{color:var(--muted);font-size:.86rem;}
+
 .verdict{font-size:1.12rem;font-weight:700;margin:0 0 14px;text-wrap:balance;}
 .pillar{display:flex;gap:12px;padding:11px 0;border-top:1px solid var(--line);}
 .pillar:first-of-type{border-top:0;}
@@ -208,6 +221,32 @@ def build_html(p):
     ])
     fuente = f.get("carga_referencia_fuente") or ""
 
+    # --- nado hoy / mañana (con horarios) ---
+    def sesiones_html(d):
+        if not d:
+            return '<div class="evsub">—</div>'
+        if d.get("tipo") == "descanso" or not d.get("sesiones"):
+            return '<div class="ses"><span class="hora">—</span><span class="sesk">Descanso</span></div>'
+        rows = ""
+        for s in d["sesiones"]:
+            enf = f'<span class="senf">{s["enfoque"]}</span>' if s.get("enfoque") else ""
+            rows += (f'<div class="ses"><span class="hora num">{s.get("hora") or "—"}</span>'
+                     f'<span class="sesk num">{fnum(s.get("km"),1)} km</span>{enf}</div>')
+        return rows
+
+    hoy_p = f.get("plan_nado_hoy")
+    man_p = f.get("plan_nado_manana")
+    nado_html = ""
+    if hoy_p or man_p:
+        def daycard(titulo, d):
+            head = f'{d["tipo"]} · {fnum(d.get("km_dia"),1)} km' if d else "—"
+            return (f'<div class="daycol"><div class="daylab">{titulo}'
+                    f'<span class="daysum">{head}</span></div>{sesiones_html(d)}</div>')
+        nado_html = (f'<div class="panel nado"><h2 class="h">Nado</h2><div class="nadogrid">'
+                     f'{daycard("HOY · " + (hoy_p["dia"] if hoy_p else ""), hoy_p)}'
+                     f'{daycard("MAÑANA · " + (man_p["dia"] if man_p else ""), man_p)}'
+                     f'</div></div>')
+
     # --- pilares + alertas ---
     pilares = "".join(
         f'<div class="pillar"><div class="pk">{k}</div><div class="pv">{v}</div></div>'
@@ -249,6 +288,7 @@ def build_html(p):
 
   <section class="grid">{tiles}</section>
   {trend_html}
+  {nado_html}
 
   <section class="cols">
     <div class="panel">
