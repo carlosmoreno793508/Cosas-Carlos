@@ -17,6 +17,17 @@ Lo produce `software/tid_data.py` en `datos/procesado/`.
 | peso_kg | float | WHOOP body |
 | fc_max | int | WHOOP body |
 
+### `evento` — competencia objetivo (da contexto temporal a los agentes)
+| campo | tipo | fuente |
+|---|---|---|
+| nombre | string | `software/evento.json` (o `datos/evento.json`) |
+| sede | string | config |
+| fecha_inicio / fecha_fin | YYYY-MM-DD | config |
+| fecha_viaje | YYYY-MM-DD | config |
+| dias_al_evento / dias_al_viaje | int | **calculado** por el pipeline |
+| fase | string | **calculado**: carga (>21 d) · taper (≤21 d) · pico (≤7 d) · post-evento (<0) |
+> Es lo que permite que el coach razone el **taper**: en fase de afinamiento la meta es llegar fresco, no acumular carga.
+
 ### `daily[]` — una fila por día (`fecha` = clave, `YYYY-MM-DD`)
 | campo | unidad | fuente |
 |---|---|---|

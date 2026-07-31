@@ -41,7 +41,9 @@ MODEL = "claude-opus-5"  # el más capaz de uso general; claude-haiku-4-5 para a
 
 PERSONA = (
     "Eres el coach de TID-MAX, un asistente de rendimiento y bienestar para Gael, un nadador "
-    "competitivo de alto nivel (menor de edad) que se prepara para un evento en Vancouver. "
+    "competitivo de alto nivel (menor de edad) que se prepara para su próxima competencia "
+    "internacional. Los HECHOS te dicen el nombre del evento, los días que faltan y la fase "
+    "(carga/taper/pico): úsalos. En taper la prioridad es LLEGAR FRESCO, no acumular carga. "
     "Hablas en español, claro y cercano, dirigiéndote a Gael y a su entrenador."
 )
 
@@ -80,6 +82,7 @@ def _mean(xs):
 def build_facts(ds):
     daily = ds.get("daily", [])
     atleta = ds.get("atleta", {})
+    evento = ds.get("evento") or {}
 
     def col(key):
         return [r.get(key) for r in daily if isinstance(r.get(key), (int, float))]
@@ -141,6 +144,11 @@ def build_facts(ds):
         "km_nado_semana": km_week,
         "km_nado_semana_previa": km_prev,
         "dias_de_datos": len(daily),
+        "evento": evento.get("nombre"),
+        "evento_sede": evento.get("sede"),
+        "dias_al_evento": evento.get("dias_al_evento"),
+        "dias_al_viaje": evento.get("dias_al_viaje"),
+        "fase": evento.get("fase"),
     }
     facts["semaforo"], facts["razones"] = semaforo(facts)
     return facts
@@ -367,6 +375,9 @@ def print_facts(f):
     icon = {"verde": "🟢", "amarillo": "🟡", "rojo": "🔴"}[f["semaforo"]]
     print("\n================ TID-MAX · AGENTE COACH ================")
     print(f"Atleta: {f['atleta']}   ({f['dias_de_datos']} días de datos)")
+    if f.get("dias_al_evento") is not None:
+        print(f"Evento: {f['evento']}  →  faltan {f['dias_al_evento']} días  "
+              f"(fase: {f['fase']}; vuelo en {f['dias_al_viaje']} días)")
     print(f"Semáforo: {icon} {f['semaforo'].upper()}  —  {', '.join(f['razones'])}")
     print(f"Recovery {s(f['recovery_pct'],'%')} | HRV {s(f['hrv_ms'],' ms')} ({s(f['hrv_vs_base_pct'],'%')} vs base) | "
           f"FC rep {s(f['fc_reposo_lpm'],' lpm')} | Sueño {s(f['sueno_pct'],'%')} | "

@@ -228,6 +228,50 @@ def build_athlete():
     }
 
 
+def build_evento():
+    """Evento objetivo + fase calculada (carga/taper/pico) según los días que faltan."""
+    ev = {}
+    for p in (os.path.join(DATA_DIR, "evento.json"), os.path.join(SCRIPT_DIR, "evento.json")):
+        if os.path.exists(p):
+            with open(p, encoding="utf-8") as f:
+                ev = json.load(f)
+            break
+    if not ev:
+        return None
+
+    hoy = datetime.now().date()
+
+    def dias_hasta(key):
+        try:
+            return (datetime.strptime(ev[key], "%Y-%m-%d").date() - hoy).days
+        except (KeyError, ValueError, TypeError):
+            return None
+
+    d = dias_hasta("fecha_inicio")
+    if d is None:
+        fase = None
+    elif d < 0:
+        fase = "post-evento"
+    elif d <= 7:
+        fase = "competencia / pico"
+    elif d <= 21:
+        fase = "taper (afinamiento)"
+    else:
+        fase = "carga"
+
+    return {
+        "nombre": ev.get("nombre"),
+        "sede": ev.get("sede"),
+        "fecha_inicio": ev.get("fecha_inicio"),
+        "fecha_fin": ev.get("fecha_fin"),
+        "fecha_viaje": ev.get("fecha_viaje"),
+        "meta": ev.get("meta"),
+        "dias_al_evento": d,
+        "dias_al_viaje": dias_hasta("fecha_viaje"),
+        "fase": fase,
+    }
+
+
 def write_csv(path, rows, cols):
     with open(path, "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=cols, extrasaction="ignore")
@@ -241,6 +285,7 @@ def main():
     workouts = build_workouts()
     polar = build_polar()
     athlete = build_athlete()
+    evento = build_evento()
 
     if not any([daily, workouts, polar]):
         sys.exit(f"\nNo encontré datos en {DATA_DIR}. Corre primero:  python whoop_sync.py")
@@ -252,6 +297,7 @@ def main():
         "schema_version": SCHEMA_VERSION,
         "generado_utc": stamp,
         "atleta": athlete,
+        "evento": evento,
         "daily": daily,
         "workouts": workouts,
         "polar_capturas": polar,
@@ -274,6 +320,9 @@ def main():
     print(f"Atleta: {athlete.get('nombre') or '(sin nombre)'}")
     print(f"Días normalizados: {len(daily)}   ({fechas[0]} → {fechas[-1]})" if fechas else "Días: 0")
     print(f"Workouts: {len(workouts)}   |   Capturas Polar: {len(polar)}")
+    if evento and evento.get("dias_al_evento") is not None:
+        print(f"Evento: {evento['nombre']}  →  faltan {evento['dias_al_evento']} días "
+              f"(fase: {evento['fase']}; vuelo en {evento['dias_al_viaje']} días)")
     print(f"Esquema canónico v{SCHEMA_VERSION}. Salida en: {OUT_DIR}/")
     print("  - dataset.json  (lo que leen los agentes AI)")
     print("  - daily.csv / daily.json / workouts.csv")
