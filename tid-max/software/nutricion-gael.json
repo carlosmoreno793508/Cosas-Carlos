@@ -69,7 +69,11 @@
     {"nombre": "ALLMAX Essentials Cafeina 200 mg", "tipo": "estimulante", "uso": "ocasional (solo cuando se siente muy cansado en el entreno)", "nota": "uso raro, no rutinario; si llega a tomarla, que sea temprano (no despues de las 2-3 pm) para no afectar el sueno de la noche."},
     {"nombre": "Vitamina C (Redoxon)", "tipo": "micronutriente"},
     {"nombre": "Total Beet (remolacha / nitratos)", "tipo": "rendimiento"},
-    {"nombre": "Creatina", "tipo": "rendimiento"}
+    {"nombre": "Creatina", "tipo": "rendimiento"},
+    {"nombre": "Melatonina o GABA", "tipo": "sueno", "uso": "actual", "nota": "ayuda a conciliar; tomar poco antes de dormir."},
+    {"nombre": "Magnesio para atletas", "tipo": "sueno_recuperacion", "uso": "por_llegar", "nota": "apoya relajacion y sueno; tomar en la noche."},
+    {"nombre": "L-teanina", "tipo": "sueno", "uso": "por_llegar", "nota": "favorece el sueno profundo y baja la activacion; combina bien con la rutina de enfriamiento post-2a sesion."},
+    {"nombre": "MSM", "tipo": "recuperacion_muscular", "uso": "por_llegar", "nota": "apoyo a recuperacion muscular (encaja con CPK/enzimas altas por carga)."}
   ],
   "_nota_guardrails": "Atleta joven (19 anos) con altisimo gasto (dobles + alto km/sem). El objetivo nutricional es cubrir energia, proteina y recuperacion. El agente NO recomienda restringir calorias ni cambiar suplementos; ante dudas de dosis/seguridad de suplementos, derivar a nutriologo/medico deportivo."
 }
