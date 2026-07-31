@@ -59,8 +59,8 @@
     {"inicio": "2026-08-03", "fin": "2026-08-09", "fase": "Taper", "km": 35, "ses": 13, "comp": "Summer Jr 2026 3-7"},
     {"inicio": "2026-08-10", "fin": "2026-08-16", "fase": "Taper (viaje)", "km": 30, "ses": 13, "comp": "Junior National / vuelo a la sede vie 14", "_nota_gael": "Repartido: Lun-Jue en casa (~18 km), vuela vie 14; en Vancouver sab 1 sesion y dom 2 sesiones de 3-4 km (activacion). ~30 km en total."},
     {"inicio": "2026-08-17", "fin": "2026-08-23", "fase": "Competencia (pico)", "km": 25, "ses": 13, "comp": "Pan Pacific Jr 17-20", "_nota_gael": "En Vancouver ya compitiendo: Gael nada ~la mitad (~12 km)."},
-    {"inicio": "2026-08-24", "fin": "2026-08-30", "fase": "Punto a Punto", "km": 57, "ses": 13, "comp": null},
-    {"inicio": "2026-08-31", "fin": "2026-09-06", "fase": "Competencia", "km": 58, "ses": 13, "comp": "Campeonato Mundial Jr Aguas Abiertas 3-6"},
+    {"inicio": "2026-08-24", "fin": "2026-08-30", "fase": "Vacaciones (sin alberca)", "km": 0, "ses": 0, "comp": null, "_nota_gael": "Vacaciones post Pan Pacific: semana 1 de 2 sin alberca (descanso total del agua)."},
+    {"inicio": "2026-08-31", "fin": "2026-09-06", "fase": "Vacaciones (sin alberca)", "km": 0, "ses": 0, "comp": "Mundial Jr AA (grupo E) 3-6", "_nota_gael": "Vacaciones post Pan Pacific: semana 2 de 2 sin alberca. El Mundial de aguas abiertas es del grupo E (fondistas); Gael sigue descansando."},
     {"inicio": "2026-09-07", "fin": "2026-09-13", "fase": "Competencia", "km": null, "ses": 13, "comp": "Baradero 13 sept"}
   ]
 }

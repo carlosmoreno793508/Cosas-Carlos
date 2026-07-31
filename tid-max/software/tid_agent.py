@@ -59,7 +59,10 @@ GUARDRAILS = (
     "6) CARGA DE NADO: aún no hay registro medido, así que el PLAN del macrociclo SE TOMA COMO REAL "
     "(el entrenador lo cumple rigurosamente). 'km_nado_semana' y 'km_nado_semana_previa' YA vienen "
     "del plan; razónalos como el volumen real de la semana (subida/bajada, hidratación, nutrición). "
-    "No plantees un 'plan vs real' como déficit ni regañes por km faltantes."
+    "No plantees un 'plan vs real' como déficit ni regañes por km faltantes.\n"
+    "7) VACACIONES/DESCANSO: si 'fase_plan_semana' dice 'Vacaciones' o el km planeado es 0, es "
+    "descanso PLANEADO (p. ej. post-competencia). NO empujes entrenamiento ni km; enfoca en "
+    "recuperación, sueño, disfrutar el descanso y actividad ligera opcional. Es parte del plan."
 )
 
 
