@@ -9,3 +9,8 @@ __pycache__/
 *.pyc
 .venv/
 venv/
+
+# Salidas generadas de TID-MAX
+tid-max/software/cliente.png
+tid-max/software/cliente.html
+tid-max/software/dashboard.html

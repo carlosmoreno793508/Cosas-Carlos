@@ -95,19 +95,58 @@ def construir_mensaje(p):
     return "\n".join(L)
 
 
+def _telegram_chats():
+    # TID_TELEGRAM_CHAT admite varios destinatarios separados por coma (mamá, Gael, o un grupo)
+    return [c.strip() for c in (os.environ.get("TID_TELEGRAM_CHAT") or "").split(",") if c.strip()]
+
+
 def enviar_telegram(texto):
     token = os.environ.get("TID_TELEGRAM_TOKEN")
-    chat = os.environ.get("TID_TELEGRAM_CHAT")
-    if not (token and chat):
+    chats = _telegram_chats()
+    if not (token and chats):
         return False, "Telegram no configurado"
     url = f"https://api.telegram.org/bot{token}/sendMessage"
-    data = urllib.parse.urlencode({"chat_id": chat, "text": texto}).encode()
-    try:
-        with urllib.request.urlopen(url, data=data, timeout=20) as r:
-            ok = r.status == 200
-        return ok, "Telegram enviado" if ok else "Telegram falló"
-    except Exception as e:
-        return False, f"Telegram error: {e}"
+    oks = 0
+    for chat in chats:
+        data = urllib.parse.urlencode({"chat_id": chat, "text": texto}).encode()
+        try:
+            with urllib.request.urlopen(url, data=data, timeout=20) as r:
+                oks += 1 if r.status == 200 else 0
+        except Exception as e:
+            return False, f"Telegram error: {e}"
+    return oks == len(chats), f"Telegram enviado a {oks}/{len(chats)}"
+
+
+def enviar_foto_telegram(png_path, caption=""):
+    """Envía una IMAGEN (sendPhoto) a cada chat configurado."""
+    token = os.environ.get("TID_TELEGRAM_TOKEN")
+    chats = _telegram_chats()
+    if not (token and chats):
+        return False, "Telegram no configurado"
+    if not os.path.exists(png_path):
+        return False, f"No existe la imagen: {png_path}"
+    with open(png_path, "rb") as fh:
+        img = fh.read()
+    url = f"https://api.telegram.org/bot{token}/sendPhoto"
+    boundary = "----tidmaxboundary7d3f"
+    oks = 0
+    for chat in chats:
+        parts = []
+        for k, v in (("chat_id", chat), ("caption", caption[:1000])):
+            parts.append(f"--{boundary}\r\nContent-Disposition: form-data; name=\"{k}\"\r\n\r\n{v}\r\n".encode())
+        parts.append(
+            f"--{boundary}\r\nContent-Disposition: form-data; name=\"photo\"; filename=\"tidmax.png\"\r\n"
+            f"Content-Type: image/png\r\n\r\n".encode() + img + b"\r\n")
+        parts.append(f"--{boundary}--\r\n".encode())
+        body = b"".join(parts)
+        req = urllib.request.Request(url, data=body,
+                                     headers={"Content-Type": f"multipart/form-data; boundary={boundary}"})
+        try:
+            with urllib.request.urlopen(req, timeout=30) as r:
+                oks += 1 if r.status == 200 else 0
+        except Exception as e:
+            return False, f"Telegram foto error: {e}"
+    return oks == len(chats), f"Foto enviada a {oks}/{len(chats)} por Telegram"
 
 
 def enviar_whatsapp(texto):
@@ -175,6 +214,19 @@ def main():
         print("\n(--dry: no se envió nada.)")
         return
 
+    # --foto: manda la IMAGEN del día (cliente.png) por Telegram, con el texto como pie
+    if "--foto" in sys.argv:
+        i = sys.argv.index("--foto")
+        png = sys.argv[i + 1] if i + 1 < len(sys.argv) and not sys.argv[i + 1].startswith("-") \
+            else os.path.join(SCRIPT_DIR, "cliente.png")
+        cap = f"🏊 TID-MAX · {p.get('atleta', 'Gael')} — {(p.get('generado_utc') or '')[:10]}\n" \
+              f"{SEM_EMOJI.get(p.get('semaforo'), '🟡')} {p.get('veredicto', '')}"
+        ok, detalle = enviar_foto_telegram(png, cap)
+        print(("✅ " if ok else "❌ ") + detalle)
+        if "no configurado" in detalle:
+            print("Configura TID_TELEGRAM_TOKEN y TID_TELEGRAM_CHAT (varios chats separados por coma).")
+        return
+
     canales = [enviar_telegram, enviar_whatsapp, enviar_email]
     algun_intento = False
     for fn in canales:
@@ -192,9 +244,14 @@ if __name__ == "__main__":
     main()
 
 # ---------------------------------------------------------------------------
-# Reporte automático cada mañana (macOS/Linux) con cron. Ejemplo a las 7:00 am:
-#   crontab -e   y agrega (ajusta la ruta):
-#   0 7 * * *  cd ~/Cosas-Carlos/tid-max/software && /usr/bin/python3 whoop_sync.py && \
-#              python3 tid_data.py && python3 tid_agent.py && python3 tid_notify.py
-# (En macOS puede requerir dar permiso de "Acceso total al disco" a cron/Terminal.)
+# Reporte diario a la mamá de Gael y a Gael (imagen por Telegram) — cron 7:00 am.
+# 1) Crea un bot con @BotFather -> TID_TELEGRAM_TOKEN.
+# 2) Crea un grupo de Telegram con la mamá + Gael (+ el bot), o usa sus chat_id
+#    separados por coma en TID_TELEGRAM_CHAT.
+# 3) crontab -e  y agrega (ajusta la ruta y exporta las variables en el script/env):
+#   0 7 * * *  cd ~/Cosas-Carlos/tid-max/software && python3 whoop_sync.py && \
+#              python3 tid_data.py && python3 tid_agent.py && \
+#              python3 tid_cliente.py && python3 tid_notify.py --foto
+# (macOS: da permiso de "Acceso total al disco" a cron/Terminal.)
+# Sin --foto manda solo texto. Con --foto manda la tarjeta cliente.png a todos los chats.
 # ---------------------------------------------------------------------------
