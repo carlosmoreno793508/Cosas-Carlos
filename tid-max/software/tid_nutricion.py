@@ -162,7 +162,7 @@ def ai_plan_comidas(client, nutri, plan_hoy, base):
         "cerca de sus kcal objetivo. Atleta joven de 19 con gasto muy alto: cubrir energía, sin restringir."
     )
     resp = client.messages.parse(
-        model=MODEL, max_tokens=1400, system=f"{PERSONA}\n\n{GUARDRAILS}",
+        model=MODEL, max_tokens=4000, system=f"{PERSONA}\n\n{GUARDRAILS}",
         messages=[{"role": "user", "content": prompt}], output_format=PlanDia,
     )
     return resp.parsed_output
