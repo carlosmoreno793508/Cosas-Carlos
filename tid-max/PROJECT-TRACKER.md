@@ -44,9 +44,9 @@ Presupuesto INDICATIVO en USD (a validar con cotizaciones reales: RFQ H0.4, lab 
 |---|---|---|---|
 | 0.1 | Decidir Terra vs. Vital (criterio: acceso a IBI/RR crudo) | 🟡 | Recomendación NORTE: **Vital** para beta (cobro por-usuario, barato); **Terra** en banca por su Streaming API BLE (Polar H10). Abrir AMBAS cuentas gratis y comparar el JSON real. |
 | 0.2 | Abrir sandbox del agregador + conectar primer atleta (WHOOP + Samsung) | 🟡 | Ruta alterna en marcha: **API directa de WHOOP** (app "GAEL SYNC" creada; código en `software/`, guía `guias/02`). Prueba para ver datos reales de Gael sin agregador. Incluye **dashboard en Excel** (`whoop_dashboard.py`). ⚠️ Hallazgo vigente: WHOOP y Samsung **NO exponen PPG/IBI crudo** por API/nube → el dato crudo para DFA-α1 vendrá del **EVK (H1)** o de correa BLE (Polar H10). 🆕 Hallazgo: WHOOP **no mide distancia de natación** (sin GPS en alberca) → registro manual en el dashboard + **oportunidad OPP-01** (ver `analisis/oportunidades-producto.md`). |
-| 0.3 | Definir esquema de datos canónico (PPG/IBI/RR, HRV, sueño, SpO2, temp, carga) | ⬜ | Pendiente #1 — es el contrato software↔hardware |
+| 0.3 | Definir esquema de datos canónico (PPG/IBI/RR, HRV, sueño, SpO2, temp, carga) | 🟡 | v1.0 definido en `analisis/esquema-canonico.md` — el **contrato** entre ingesta y todo lo demás (dashboard, coach, agentes AI). Objetos `atleta`, `daily[]`, `workouts[]`, `polar_capturas[]`. Falta agregar `hr_stream[]` crudo (Polar Etapa 2 / EVK) y `records[]` de nado. |
 | 0.4 | Infra mínima: repo, auth, base de datos de series de tiempo | ⬜ | |
-| 0.5 | Pipeline de ingesta y normalización | ⬜ | |
+| 0.5 | Pipeline de ingesta y normalización | 🟡 | v0 en `software/tid_data.py`: normaliza TODO lo crudo (WHOOP + Polar + registro de nado) al esquema canónico → `datos/procesado/dataset.json` (+ daily.csv/json, workouts.csv). Es lo que consumen los agentes AI. Probado: 29 días, 25 workouts. Falta base de datos de series de tiempo (0.4) para históricos. |
 | 0.6 | NORTE — copiloto del proyecto | ✅ | PR #6 |
 
 ## FASE 1 — Motor determinista (Software)
