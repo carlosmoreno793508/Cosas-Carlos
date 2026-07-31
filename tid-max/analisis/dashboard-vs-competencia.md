@@ -102,7 +102,12 @@ Runna **no es un dashboard**: es un **plan personalizado + coach**. Define el pr
 - **Coach** (Runna: humano) → **TID-MAX: coach IA** (Claude API + reglas). `tid_coach.py` es el v0.
 - **Plan adaptativo** que se ajusta al rendimiento; integración con dispositivos (banda propia + Polar + WHOOP).
 
-**Encaje:** dos capas de producto en TID-MAX:
+**Encaje:** tres capas de producto en TID-MAX:
+0. **Ingesta multi-fuente (BYOD)** — como Strava, que conecta ~15 marcas (Garmin/Apple/Samsung/
+   Fitbit/Polar/…): el atleta entra con SU dispositivo y luego migra a la banda TID-MAX. Baja la
+   barrera de entrada y valida la plataforma antes del hardware propio. **Hoy: WHOOP (API) ✅ +
+   Polar (BLE) ✅**; más marcas vía agregador (Vital/Terra, tracker 0.1-0.2) o API directa. Requiere
+   el **esquema de datos canónico** (tracker 0.3).
 1. **Analítica** (dashboard) — Fase 0-1, ideas de intervals.icu / Strava / GoldenCheetah.
 2. **Coach + Plan** (suscripción) — Fase 2-3, benchmark **Runna**. Semilla: `tid_coach.py`.
 
