@@ -377,8 +377,9 @@ def build_nutricion(km_dia, seco_min, atleta):
                 cfg = json.load(f)
             break
     perfil = cfg.get("perfil") or {}
-    peso = atleta.get("peso_kg") or perfil.get("peso_kg")
-    altura_cm = (atleta.get("altura_m") * 100 if atleta.get("altura_m") else perfil.get("altura_cm"))
+    # El perfil manda sobre WHOOP: WHOOP puede traer la envergadura (2.08 m) como "altura".
+    peso = perfil.get("peso_kg") or atleta.get("peso_kg")
+    altura_cm = perfil.get("altura_cm") or (atleta.get("altura_m") * 100 if atleta.get("altura_m") else None)
     edad = perfil.get("edad")
     sexo = perfil.get("sexo", "M")
     if not (peso and altura_cm and edad):
