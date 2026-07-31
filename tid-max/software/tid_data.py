@@ -188,31 +188,72 @@ def build_workouts():
     return sorted([r for r in rows if r["fecha"]], key=lambda x: x["fecha"], reverse=True)
 
 
+def _percentil(vals, p):
+    if not vals:
+        return None
+    s = sorted(vals)
+    k = max(0, min(len(s) - 1, int(round((p / 100) * (len(s) - 1)))))
+    return s[k]
+
+
+def detecta_esfuerzo(serie, delta=18, sustain_s=25):
+    """Detecta el arranque del esfuerzo en una serie [(datetime, hr), ...].
+    Reposo = percentil 15 del pulso; el esfuerzo inicia cuando el HR se sostiene
+    >= reposo+delta durante al menos sustain_s segundos (no un pico suelto)."""
+    serie = [(t, hr) for t, hr in serie if t and isinstance(hr, (int, float)) and hr > 0]
+    if len(serie) < 5:
+        return None
+    reposo = _percentil([hr for _, hr in serie], 15)
+    umbral = reposo + delta
+    n = len(serie)
+    for i in range(n):
+        if serie[i][1] < umbral:
+            continue
+        # ¿se sostiene 'sustain_s' segundos por encima del umbral desde aquí?
+        j, ok = i, True
+        while j < n and (serie[j][0] - serie[i][0]).total_seconds() < sustain_s:
+            if serie[j][1] < umbral:
+                ok = False
+                break
+            j += 1
+        if ok and j > i:
+            return {"hr_reposo": reposo, "umbral": umbral,
+                    "inicio_iso": serie[i][0].isoformat(),
+                    "inicio_hr": serie[i][1],
+                    "seg_desde_captura": round((serie[i][0] - serie[0][0]).total_seconds())}
+    return None
+
+
 def build_polar():
-    """Resumen de cada captura BLE del Polar (FC latido a latido)."""
+    """Resumen de cada captura BLE del Polar (FC latido a latido) + arranque de esfuerzo."""
     out = []
     for path in sorted(glob.glob(os.path.join(DATA_DIR, "polar_*.csv"))):
         name = os.path.basename(path)
         subject = name.replace("polar_", "").rsplit("_", 1)[0] if "_" in name else "?"
-        hrs, rrs = [], []
+        hrs, rrs, serie = [], [], []
         with open(path, encoding="utf-8", newline="") as f:
             for rec in csv.DictReader(f):
                 try:
                     hr = int(rec.get("hr_bpm") or 0)
-                    if hr > 0:
-                        hrs.append(hr)
                 except ValueError:
-                    pass
+                    hr = 0
+                if hr > 0:
+                    hrs.append(hr)
+                    t = _parse_dt(rec.get("t_iso"))
+                    if t:
+                        serie.append((t, hr))
                 if rec.get("rr_ms"):
                     try:
                         rrs.append(float(rec["rr_ms"]))
                     except ValueError:
                         pass
+        esfuerzo = detecta_esfuerzo(serie)
         out.append({
             "archivo": name, "sujeto": subject, "muestras": len(hrs),
             "hr_prom": round(sum(hrs) / len(hrs)) if hrs else None,
             "hr_max": max(hrs) if hrs else None,
             "rr_muestras": len(rrs),
+            "esfuerzo": esfuerzo,
         })
     return out
 
@@ -447,6 +488,13 @@ def main():
     print(f"Atleta: {athlete.get('nombre') or '(sin nombre)'}")
     print(f"Días normalizados: {len(daily)}   ({fechas[0]} → {fechas[-1]})" if fechas else "Días: 0")
     print(f"Workouts: {len(workouts)}   |   Capturas Polar: {len(polar)}")
+    for cap in polar:
+        e = cap.get("esfuerzo")
+        if e:
+            hora = e["inicio_iso"][11:19]
+            print(f"  Polar {cap['archivo']}: esfuerzo arranca {hora} "
+                  f"(HR {round(e['inicio_hr'])} vs reposo {e['hr_reposo']}, "
+                  f"{e['seg_desde_captura']}s tras iniciar)")
     if evento and evento.get("dias_al_evento") is not None:
         print(f"Evento: {evento['nombre']}  →  faltan {evento['dias_al_evento']} días "
               f"(fase: {evento['fase']}; vuelo en {evento['dias_al_viaje']} días)")
