@@ -284,19 +284,21 @@ def build_plan_semana():
     if not semanas:
         return None
     hoy = datetime.now().date()
-    for s in semanas:
+    for idx, s in enumerate(semanas):
         try:
             ini = datetime.strptime(s["inicio"], "%Y-%m-%d").date()
             fin = datetime.strptime(s["fin"], "%Y-%m-%d").date()
         except (KeyError, ValueError, TypeError):
             continue
         if ini <= hoy <= fin:
+            prev = semanas[idx - 1] if idx > 0 else {}
             return {
                 "semana": f"{s['inicio']} → {s['fin']}",
                 "fase_plan": s.get("fase"),
                 "km_plan": s.get("km"),
                 "ses_plan": s.get("ses"),
                 "comp": s.get("comp"),
+                "km_plan_prev": prev.get("km"),
             }
     return None
 

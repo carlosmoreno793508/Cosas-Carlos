@@ -203,7 +203,8 @@ def build_html(p):
         f'<div class="planrow"><span class="lab">Fase</span><span class="val">{f.get("fase_plan_semana") or "—"}</span></div>',
         f'<div class="planrow"><span class="lab">Km planeados</span><span class="val num">{fnum(f.get("km_plan_semana"))} km</span></div>',
         f'<div class="planrow"><span class="lab">Sesiones</span><span class="val num">{fnum(f.get("ses_plan_semana"))}</span></div>',
-        f'<div class="planrow"><span class="lab">Carga de referencia</span><span class="val num">{fnum(f.get("carga_referencia_km"))} km</span></div>',
+        f'<div class="planrow"><span class="lab">Carga de nado (semana)</span><span class="val num">{fnum(f.get("carga_referencia_km"))} km</span></div>',
+        f'<div class="planrow"><span class="lab">Semana previa</span><span class="val num">{fnum(f.get("km_nado_semana_previa"))} km</span></div>',
     ])
     fuente = f.get("carga_referencia_fuente") or ""
 
