@@ -305,18 +305,23 @@ def build_plan_semana():
 
 DIAS_KEY = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"]
 
-# Clasifica el deporte de un workout de WHOOP en agua / seco / otro
+# Clasifica un workout de WHOOP en agua / seco / otro, SOLO por el nombre del deporte.
+# (Nada de heurísticas por duración: una caminata a la basura NO es entrenamiento.)
 AGUA_KW = ("swim", "natac", "pool", "water")
 SECO_KW = ("weight", "strength", "functional", "yoga", "pilates", "stretch",
-           "mobility", "gym", "pesas", "fuerza", "estiram", "movil")
+           "mobility", "gym", "pesas", "fuerza", "estiram", "movil", "pilate")
+# Actividad incidental que WHOOP autodetecta y NO es entrenamiento (no suma carga).
+OTRO_KW = ("walk", "camin", "hik")
 
 
-def _clasifica_deporte(nombre):
-    n = (nombre or "").lower()
+def _clasifica_deporte(w):
+    n = (w.get("deporte") or "").lower()
     if any(k in n for k in AGUA_KW):
         return "agua"
     if any(k in n for k in SECO_KW):
         return "seco"
+    if any(k in n for k in OTRO_KW):
+        return "otro"
     return "otro"
 
 
@@ -329,7 +334,7 @@ def build_sesiones_reales(workouts, dia_iso):
     for w in sorted(del_dia, key=lambda x: x.get("inicio") or ""):
         ses.append({
             "inicio": w.get("inicio"), "fin": w.get("fin"), "dur_min": w.get("dur_min"),
-            "deporte": w.get("deporte"), "tipo": _clasifica_deporte(w.get("deporte")),
+            "deporte": w.get("deporte"), "tipo": _clasifica_deporte(w),
             "fc_prom": w.get("fc_prom"), "strain": w.get("strain"), "km_whoop": w.get("km_whoop"),
         })
 
@@ -337,12 +342,15 @@ def build_sesiones_reales(workouts, dia_iso):
         m = sum(s["dur_min"] for s in ses if s["tipo"] == tipo and isinstance(s["dur_min"], (int, float)))
         return round(m / 60, 1)
 
+    h_agua, h_seco = horas("agua"), horas("seco")
+    entreno = [s for s in ses if s["tipo"] in ("agua", "seco")]
     return {
         "fecha": dia_iso,
-        "n_sesiones": len(ses),
-        "horas_agua": horas("agua"),
-        "horas_seco": horas("seco"),
-        "horas_total": round(sum(s["dur_min"] for s in ses if isinstance(s["dur_min"], (int, float))) / 60, 1),
+        "n_sesiones": len(entreno),          # solo entrenamiento (agua/seco); la caminata no cuenta
+        "n_incidental": len(ses) - len(entreno),
+        "horas_agua": h_agua,
+        "horas_seco": h_seco,
+        "horas_total": round(h_agua + h_seco, 1),  # carga real = agua + seco, sin incidentales
         "sesiones": ses,
     }
 
