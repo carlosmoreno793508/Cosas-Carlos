@@ -223,9 +223,22 @@ def main():
     fotos = [a for a in args if not a.startswith("--")]
     if not fotos:
         sys.exit("Uso: python tid_nutricion.py <foto.jpg> [--tipo doble|sencilla] | --plantilla")
-    img_path = fotos[0]
+    img_path = os.path.expanduser(fotos[0])
     if not os.path.exists(img_path):
-        sys.exit(f"No encuentro la foto: {img_path}")
+        # Si diste solo el nombre, búscalo en las carpetas típicas del Mac
+        base_name = os.path.basename(img_path)
+        for cand in (os.path.expanduser(f"~/Downloads/{base_name}"),
+                     os.path.expanduser(f"~/Descargas/{base_name}"),
+                     os.path.expanduser(f"~/Desktop/{base_name}"),
+                     os.path.expanduser(f"~/Escritorio/{base_name}")):
+            if os.path.exists(cand):
+                img_path = cand
+                print(f"(Foto encontrada en: {img_path})")
+                break
+        else:
+            sys.exit(f"No encuentro la foto: {fotos[0]}\n"
+                     "Tip: arrastra la imagen desde Finder a la terminal para pegar su ruta, "
+                     "o guárdala en ~/Downloads y usa solo el nombre.")
 
     client = ai_client() if have_api() else None
     if client:
