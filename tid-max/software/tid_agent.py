@@ -55,7 +55,11 @@ GUARDRAILS = (
     "2) NO inventes datos. Habla SOLO de los números que te doy en los HECHOS. Si algo falta, dilo.\n"
     "3) Es menor de edad: nada de restricción calórica agresiva ni sobrecarga; tono responsable.\n"
     "4) El semáforo (verde/amarillo/rojo) YA lo decidió el motor; respétalo, no lo cambies.\n"
-    "5) Sé concreto y breve. Cada consejo se apoya en una señal concreta de los HECHOS."
+    "5) Sé concreto y breve. Cada consejo se apoya en una señal concreta de los HECHOS.\n"
+    "6) CARGA DE NADO: hoy no hay un registro real validado de km. Usa 'carga_referencia_km' como "
+    "volumen de trabajo (su fuente viene en 'carga_referencia_fuente'; normalmente es el PLAN del "
+    "macrociclo, que el entrenador sigue rigurosamente). NO plantees un 'plan vs real' como déficit "
+    "ni regañes por km faltantes: aún no medimos el nado real."
 )
 
 
@@ -119,10 +123,18 @@ def build_facts(ds):
     acute, chronic = _mean(s_vals[-7:]), _mean(s_vals[-28:])
     acwr = acute / chronic if (acute and chronic) else None
 
-    # Volumen de nado real (registro manual)
+    # Volumen de nado real (registro manual). Hoy NO hay registro de nado todavía:
+    # si no llega ningún km real, la carga de referencia es el PLAN del macrociclo,
+    # porque el entrenador lo sigue rigurosamente (supuesto explícito, no dato medido).
     swim = col("swim_km")
-    km_week = round(sum(swim[-7:]), 1) if swim else None
-    km_prev = round(sum(swim[-14:-7]), 1) if len(swim) > 7 else None
+    hay_registro = bool(swim) and sum(swim) > 0
+    km_week = round(sum(swim[-7:]), 1) if hay_registro else None
+    km_prev = round(sum(swim[-14:-7]), 1) if (hay_registro and len(swim) > 7) else None
+    km_plan = plan_sem.get("km_plan")
+    if hay_registro:
+        carga_km, carga_fuente = km_week, "registro real de nado"
+    else:
+        carga_km, carga_fuente = km_plan, "plan del macrociclo (asumido: el entrenador lo sigue riguroso)"
 
     def pct(x):
         return round(x * 100) if isinstance(x, (int, float)) else None
@@ -153,6 +165,9 @@ def build_facts(ds):
         "km_plan_semana": plan_sem.get("km_plan"),
         "ses_plan_semana": plan_sem.get("ses_plan"),
         "fase_plan_semana": plan_sem.get("fase_plan"),
+        "hay_registro_nado": hay_registro,
+        "carga_referencia_km": carga_km,
+        "carga_referencia_fuente": carga_fuente,
     }
     facts["semaforo"], facts["razones"] = semaforo(facts)
     return facts
@@ -251,7 +266,7 @@ def rule_based_report(f):
     else:
         veredicto = "Bandera roja: hoy toca recuperar, no forzar."
         entreno = "Sesión suave o de descarga (técnica, aeróbico ligero). Nada de series duras."
-    km = f["km_nado_semana"] or 0
+    km = f.get("carga_referencia_km") or 0
     pilares = {
         "Entrenamiento": entreno,
         "Sueño": ("Dormir es tu mayor palanca: apunta a 8–9 h."
@@ -383,9 +398,10 @@ def print_facts(f):
         print(f"Evento: {f['evento']}  →  faltan {f['dias_al_evento']} días  "
               f"(fase: {f['fase']}; vuelo en {f['dias_al_viaje']} días)")
     if f.get("km_plan_semana") is not None:
-        real = f.get("km_nado_semana")
-        print(f"Plan semana: {f['fase_plan_semana']} · {f['km_plan_semana']} km plan"
-              + (f"  |  real {real} km" if real is not None else ""))
+        print(f"Plan semana: {f['fase_plan_semana']} · {f['km_plan_semana']} km / "
+              f"{s(f.get('ses_plan_semana'))} ses (macrociclo del entrenador)")
+    if f.get("carga_referencia_km") is not None:
+        print(f"Carga de referencia: {f['carga_referencia_km']} km  —  {f['carga_referencia_fuente']}")
     print(f"Semáforo: {icon} {f['semaforo'].upper()}  —  {', '.join(f['razones'])}")
     print(f"Recovery {s(f['recovery_pct'],'%')} | HRV {s(f['hrv_ms'],' ms')} ({s(f['hrv_vs_base_pct'],'%')} vs base) | "
           f"FC rep {s(f['fc_reposo_lpm'],' lpm')} | Sueño {s(f['sueno_pct'],'%')} | "
