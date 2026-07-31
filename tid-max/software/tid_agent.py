@@ -93,6 +93,7 @@ def build_facts(ds):
     plan_sem = ds.get("plan_semana") or {}
     plan_dias = ds.get("plan_dias") or {}
     ses_hoy = ds.get("sesiones_hoy") or {}
+    nutri = ds.get("nutricion_hoy") or {}
 
     def col(key):
         return [r.get(key) for r in daily if isinstance(r.get(key), (int, float))]
@@ -180,6 +181,10 @@ def build_facts(ds):
         "carga_referencia_fuente": carga_fuente,
         "plan_nado_hoy": plan_dias.get("hoy"),
         "plan_nado_manana": plan_dias.get("manana"),
+        "kcal_objetivo_hoy": nutri.get("kcal_objetivo"),
+        "macros_hoy": ({"P": nutri.get("proteina_g"), "C": nutri.get("carbohidratos_g"),
+                        "G": nutri.get("grasa_g")} if nutri else None),
+        "kcal_por_comida": nutri.get("kcal_por_comida"),
         "sesiones_reales_hoy": ses_hoy or None,
         "horas_agua_hoy": ses_hoy.get("horas_agua"),
         "horas_seco_hoy": ses_hoy.get("horas_seco"),
@@ -439,6 +444,9 @@ def print_facts(f):
         print(f"Sesiones reales HOY (WHOOP): {sr['n_sesiones']} · {sr['horas_total']} h "
               f"(agua {sr['horas_agua']} h · seco {sr['horas_seco']} h)"
               + (f"  [{detalle}]" if detalle else ""))
+    if f.get("kcal_objetivo_hoy") and f.get("macros_hoy"):
+        m = f["macros_hoy"]
+        print(f"Nutrición HOY: ~{f['kcal_objetivo_hoy']} kcal · P {m['P']}g · C {m['C']}g · G {m['G']}g")
     print(f"Semáforo: {icon} {f['semaforo'].upper()}  —  {', '.join(f['razones'])}")
     print(f"Recovery {s(f['recovery_pct'],'%')} | HRV {s(f['hrv_ms'],' ms')} ({s(f['hrv_vs_base_pct'],'%')} vs base) | "
           f"FC rep {s(f['fc_reposo_lpm'],' lpm')} | Sueño {s(f['sueno_pct'],'%')} | "

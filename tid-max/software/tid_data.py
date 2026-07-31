@@ -366,6 +366,48 @@ def _clasifica_deporte(w):
     return "otro"
 
 
+def build_nutricion(km_dia, seco_min, atleta):
+    """Estima el gasto calórico del día y la ingesta objetivo (kcal + macros) por comida.
+    BMR (Mifflin-St Jeor) + actividad no-entreno + gasto de nado/seco, con margen de
+    crecimiento (adolescente). Es una ESTIMACIÓN para orientar, no una prescripción."""
+    cfg = {}
+    for p in (os.path.join(DATA_DIR, "nutricion-gael.json"), os.path.join(SCRIPT_DIR, "nutricion-gael.json")):
+        if os.path.exists(p):
+            with open(p, encoding="utf-8") as f:
+                cfg = json.load(f)
+            break
+    perfil = cfg.get("perfil") or {}
+    peso = atleta.get("peso_kg") or perfil.get("peso_kg")
+    altura_cm = (atleta.get("altura_m") * 100 if atleta.get("altura_m") else perfil.get("altura_cm"))
+    edad = perfil.get("edad")
+    sexo = perfil.get("sexo", "M")
+    if not (peso and altura_cm and edad):
+        return None
+
+    bmr = 10 * peso + 6.25 * altura_cm - 5 * edad + (5 if sexo == "M" else -161)
+    tdee_base = bmr * perfil.get("factor_actividad_no_entreno", 1.45)
+    kcal_entreno = (km_dia or 0) * perfil.get("kcal_por_km_nado", 230) \
+        + (seco_min or 0) * perfil.get("kcal_por_min_seco", 6)
+    kcal = (tdee_base + kcal_entreno) * (1 + perfil.get("margen_crecimiento_pct", 5) / 100)
+
+    # Proteína fija por peso; grasa ~27% de las kcal; los carbohidratos son el resto
+    # (así el combustible escala con el volumen de entrenamiento, como debe ser).
+    prot_g = round(peso * 1.8)
+    grasa_g = round(kcal * 0.27 / 9)
+    carbs_g = max(round((kcal - prot_g * 4 - grasa_g * 9) / 4), round(peso * 3))
+    split = {"desayuno": 0.30, "comida": 0.38, "cena": 0.27, "snacks_entreno": 0.05}
+    return {
+        "km_dia": km_dia,
+        "kcal_objetivo": round(kcal / 10) * 10,
+        "bmr": round(bmr),
+        "kcal_entreno": round(kcal_entreno),
+        "proteina_g": prot_g,
+        "carbohidratos_g": carbs_g,
+        "grasa_g": grasa_g,
+        "kcal_por_comida": {k: round(kcal * v / 10) * 10 for k, v in split.items()},
+    }
+
+
 def build_sesiones_reales(workouts, dia_iso):
     """Sesiones reales de WHOOP para una fecha: horas de inicio/fin, duración, agua vs seco."""
     del_dia = [w for w in workouts if w.get("fecha") == dia_iso]
@@ -451,6 +493,9 @@ def main():
     plan_semana = build_plan_semana()
     plan_dias = build_plan_dias(plan_semana.get("km_plan")) if plan_semana else None
     sesiones_hoy = build_sesiones_reales(workouts, datetime.now().date().isoformat())
+    km_hoy = (plan_dias or {}).get("hoy", {}).get("km_dia") if plan_dias else None
+    seco_min_hoy = round((sesiones_hoy or {}).get("horas_seco", 0) * 60) if sesiones_hoy else 0
+    nutricion_hoy = build_nutricion(km_hoy, seco_min_hoy, athlete)
 
     if not any([daily, workouts, polar]):
         sys.exit(f"\nNo encontré datos en {DATA_DIR}. Corre primero:  python whoop_sync.py")
@@ -466,6 +511,7 @@ def main():
         "plan_semana": plan_semana,
         "plan_dias": plan_dias,
         "sesiones_hoy": sesiones_hoy,
+        "nutricion_hoy": nutricion_hoy,
         "daily": daily,
         "workouts": workouts,
         "polar_capturas": polar,
@@ -510,6 +556,10 @@ def main():
         sh = sesiones_hoy
         print(f"Sesiones reales hoy (WHOOP): {sh['n_sesiones']} · {sh['horas_total']} h "
               f"(agua {sh['horas_agua']} h · seco {sh['horas_seco']} h)")
+    if nutricion_hoy:
+        n = nutricion_hoy
+        print(f"Nutrición hoy: ~{n['kcal_objetivo']} kcal  (P {n['proteina_g']}g · "
+              f"C {n['carbohidratos_g']}g · G {n['grasa_g']}g)  para {n['km_dia']} km de nado")
     print(f"Esquema canónico v{SCHEMA_VERSION}. Salida en: {OUT_DIR}/")
     print("  - dataset.json  (lo que leen los agentes AI)")
     print("  - daily.csv / daily.json / workouts.csv")

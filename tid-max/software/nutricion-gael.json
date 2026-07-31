@@ -5,6 +5,26 @@
     "sencillas": ["Mar", "Jue", "Sab"],
     "descanso_total": ["Dom"]
   },
+  "perfil": {
+    "edad": 16,
+    "sexo": "M",
+    "peso_kg": null,
+    "altura_cm": null,
+    "kcal_por_km_nado": 230,
+    "kcal_por_min_seco": 6,
+    "factor_actividad_no_entreno": 1.45,
+    "margen_crecimiento_pct": 5,
+    "_nota": "edad/sexo son ESTIMADOS: confirma con Carlos. peso_kg/altura_cm se toman de WHOOP si existen; si no, pon aqui los reales. Los kcal/km y factores son estimaciones ajustables por un nutriologo."
+  },
+  "alimentos_preferidos": {
+    "desayuno": ["huevos con calabaza", "huevos con ejotes", "huevos con jamon", "huevos con champinones", "migas con frijoles", "totopos (a veces)"],
+    "comida": {
+      "proteinas": ["pollo", "salmon", "carne de res", "pescado"],
+      "carbohidratos": ["arroz", "pasta"],
+      "ensaladas": ["tomate", "fresas", "uvas", "con semillas"]
+    },
+    "cena": ["igual que el desayuno (huevos con verdura/jamon/champinones)", "a veces omelet"]
+  },
   "dia_tipo_doble": {
     "07:30_despertar_desayuno": {
       "descripcion": "Licuado pre-1a sesion",

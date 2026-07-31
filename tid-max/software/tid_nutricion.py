@@ -14,6 +14,7 @@ mensaje por reglas usando la plantilla base — el producto sigue.
 Uso:
     python tid_nutricion.py foto_comida.jpg
     python tid_nutricion.py foto_comida.jpg --tipo doble    # contexto: día de doble sesión
+    python tid_nutricion.py --plan                          # plan de comidas del día (kcal + sus alimentos)
     python tid_nutricion.py --plantilla                     # imprime la plantilla base de Gael
 
 Requiere (modo IA):
@@ -123,6 +124,64 @@ def ai_estimate(client, img_path, tipo_dia, base):
     return resp.parsed_output
 
 
+def cargar_nutricion_hoy():
+    path = os.path.join(SCRIPT_DIR, "datos", "procesado", "dataset.json")
+    if not os.path.exists(path):
+        return None
+    with open(path, encoding="utf-8") as f:
+        ds = json.load(f)
+    return ds.get("nutricion_hoy"), ds.get("plan_dias", {}).get("hoy")
+
+
+def ai_plan_comidas(client, nutri, plan_hoy, base):
+    from pydantic import BaseModel
+
+    class Comida(BaseModel):
+        nombre: str          # Desayuno / Comida / Cena
+        kcal_aprox: str
+        sugerencia: str      # platillo armado con SUS alimentos
+        porciones: str       # cantidades caseras aproximadas
+
+    class PlanDia(BaseModel):
+        resumen: str
+        desayuno: Comida
+        comida: Comida
+        cena: Comida
+        snack_entreno: str
+
+    kpc = nutri.get("kcal_por_comida", {})
+    prompt = (
+        "Arma el PLAN DE COMIDAS de HOY para Gael usando SOLO (o casi solo) sus alimentos "
+        "preferidos. Objetivo del día:\n"
+        f"- {nutri['kcal_objetivo']} kcal · Proteína {nutri['proteina_g']} g · "
+        f"Carbohidratos {nutri['carbohidratos_g']} g · Grasa {nutri['grasa_g']} g\n"
+        f"- Nado de hoy: {plan_hoy.get('km_dia') if plan_hoy else '—'} km\n"
+        f"- Reparto sugerido por comida (kcal): {json.dumps(kpc, ensure_ascii=False)}\n\n"
+        f"Sus alimentos preferidos:\n{json.dumps(base.get('alimentos_preferidos', {}), ensure_ascii=False)}\n\n"
+        "Para cada comida da un platillo concreto con porciones caseras aproximadas que sumen "
+        "cerca de sus kcal objetivo. Es adolescente en crecimiento: cubrir energía, sin restringir."
+    )
+    resp = client.messages.parse(
+        model=MODEL, max_tokens=1400, system=f"{PERSONA}\n\n{GUARDRAILS}",
+        messages=[{"role": "user", "content": prompt}], output_format=PlanDia,
+    )
+    return resp.parsed_output
+
+
+def print_plan(nutri, plan_hoy, plan):
+    print("\n============== TID-MAX · PLAN DE COMIDAS DEL DÍA ==============")
+    print(f"Objetivo: ~{nutri['kcal_objetivo']} kcal · P {nutri['proteina_g']}g · "
+          f"C {nutri['carbohidratos_g']}g · G {nutri['grasa_g']}g  (nado {nutri.get('km_dia')} km)")
+    if plan:
+        print(f"\n{plan.resumen}\n")
+        for c in (plan.desayuno, plan.comida, plan.cena):
+            print(f"● {c.nombre} (~{c.kcal_aprox} kcal)")
+            print(f"   {c.sugerencia}")
+            print(f"   Porciones: {c.porciones}")
+        print(f"\n🍌 Snack alrededor del entreno: {plan.snack_entreno}")
+    print("\n(Estimaciones para orientar; ajústalas con un nutriólogo del deporte.)")
+
+
 def print_estimacion(e):
     print("\n============== TID-MAX · AGENTE DE NUTRICIÓN ==============")
     print(f"Platillo: {e.platillo}   (confianza: {e.confianza})")
@@ -161,6 +220,21 @@ def main():
 
     if "--plantilla" in args:
         print(json.dumps(base, ensure_ascii=False, indent=2))
+        return
+
+    if "--plan" in args:
+        datos = cargar_nutricion_hoy()
+        if not datos or not datos[0]:
+            sys.exit("No hay nutricion_hoy en el dataset. Corre primero:  python tid_data.py")
+        nutri, plan_hoy = datos
+        client = ai_client() if have_api() else None
+        plan = None
+        if client:
+            try:
+                plan = ai_plan_comidas(client, nutri, plan_hoy, base)
+            except Exception as e:
+                print(f"(Aviso: falló la IA: {e}. Muestro solo los objetivos.)")
+        print_plan(nutri, plan_hoy, plan)
         return
 
     fotos = [a for a in args if not a.startswith("--")]
