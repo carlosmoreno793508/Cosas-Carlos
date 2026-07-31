@@ -30,7 +30,8 @@
       "carbohidratos": ["arroz", "pasta"],
       "ensaladas": ["tomate", "fresas", "uvas", "con semillas"]
     },
-    "cena": ["igual que el desayuno (huevos con verdura/jamon/champinones)", "a veces omelet"]
+    "cena": ["igual que el desayuno (huevos con verdura/jamon/champinones)", "a veces omelet"],
+    "grasa_para_cocinar": "aceite de aguacate (monoinsaturada, buena calidad, alto punto de humo)"
   },
   "dia_tipo_doble": {
     "07:30_despertar_desayuno": {
