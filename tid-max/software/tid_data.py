@@ -305,6 +305,47 @@ def build_plan_semana():
 
 DIAS_KEY = ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"]
 
+# Clasifica el deporte de un workout de WHOOP en agua / seco / otro
+AGUA_KW = ("swim", "natac", "pool", "water")
+SECO_KW = ("weight", "strength", "functional", "yoga", "pilates", "stretch",
+           "mobility", "gym", "pesas", "fuerza", "estiram", "movil")
+
+
+def _clasifica_deporte(nombre):
+    n = (nombre or "").lower()
+    if any(k in n for k in AGUA_KW):
+        return "agua"
+    if any(k in n for k in SECO_KW):
+        return "seco"
+    return "otro"
+
+
+def build_sesiones_reales(workouts, dia_iso):
+    """Sesiones reales de WHOOP para una fecha: horas de inicio/fin, duración, agua vs seco."""
+    del_dia = [w for w in workouts if w.get("fecha") == dia_iso]
+    if not del_dia:
+        return None
+    ses = []
+    for w in sorted(del_dia, key=lambda x: x.get("inicio") or ""):
+        ses.append({
+            "inicio": w.get("inicio"), "fin": w.get("fin"), "dur_min": w.get("dur_min"),
+            "deporte": w.get("deporte"), "tipo": _clasifica_deporte(w.get("deporte")),
+            "fc_prom": w.get("fc_prom"), "strain": w.get("strain"), "km_whoop": w.get("km_whoop"),
+        })
+
+    def horas(tipo):
+        m = sum(s["dur_min"] for s in ses if s["tipo"] == tipo and isinstance(s["dur_min"], (int, float)))
+        return round(m / 60, 1)
+
+    return {
+        "fecha": dia_iso,
+        "n_sesiones": len(ses),
+        "horas_agua": horas("agua"),
+        "horas_seco": horas("seco"),
+        "horas_total": round(sum(s["dur_min"] for s in ses if isinstance(s["dur_min"], (int, float))) / 60, 1),
+        "sesiones": ses,
+    }
+
 
 def build_plan_dias(km_semana):
     """Reparte km_semana por día según plan-semana.json (patrón + horarios). Devuelve hoy y mañana."""
@@ -360,6 +401,7 @@ def main():
     evento = build_evento()
     plan_semana = build_plan_semana()
     plan_dias = build_plan_dias(plan_semana.get("km_plan")) if plan_semana else None
+    sesiones_hoy = build_sesiones_reales(workouts, datetime.now().date().isoformat())
 
     if not any([daily, workouts, polar]):
         sys.exit(f"\nNo encontré datos en {DATA_DIR}. Corre primero:  python whoop_sync.py")
@@ -374,6 +416,7 @@ def main():
         "evento": evento,
         "plan_semana": plan_semana,
         "plan_dias": plan_dias,
+        "sesiones_hoy": sesiones_hoy,
         "daily": daily,
         "workouts": workouts,
         "polar_capturas": polar,
@@ -407,6 +450,10 @@ def main():
         h = plan_dias["hoy"]
         horas = " + ".join(s["hora"] for s in h["sesiones"] if s.get("hora"))
         print(f"Nado hoy ({h['dia']}): {h['tipo']} · {h['km_dia']} km" + (f" · {horas}" if horas else ""))
+    if sesiones_hoy:
+        sh = sesiones_hoy
+        print(f"Sesiones reales hoy (WHOOP): {sh['n_sesiones']} · {sh['horas_total']} h "
+              f"(agua {sh['horas_agua']} h · seco {sh['horas_seco']} h)")
     print(f"Esquema canónico v{SCHEMA_VERSION}. Salida en: {OUT_DIR}/")
     print("  - dataset.json  (lo que leen los agentes AI)")
     print("  - daily.csv / daily.json / workouts.csv")

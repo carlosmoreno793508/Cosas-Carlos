@@ -89,6 +89,7 @@ def build_facts(ds):
     evento = ds.get("evento") or {}
     plan_sem = ds.get("plan_semana") or {}
     plan_dias = ds.get("plan_dias") or {}
+    ses_hoy = ds.get("sesiones_hoy") or {}
 
     def col(key):
         return [r.get(key) for r in daily if isinstance(r.get(key), (int, float))]
@@ -176,6 +177,9 @@ def build_facts(ds):
         "carga_referencia_fuente": carga_fuente,
         "plan_nado_hoy": plan_dias.get("hoy"),
         "plan_nado_manana": plan_dias.get("manana"),
+        "sesiones_reales_hoy": ses_hoy or None,
+        "horas_agua_hoy": ses_hoy.get("horas_agua"),
+        "horas_seco_hoy": ses_hoy.get("horas_seco"),
     }
     facts["semaforo"], facts["razones"] = semaforo(facts)
     return facts
@@ -424,6 +428,14 @@ def print_facts(f):
         print(f"Nado HOY ({f['plan_nado_hoy']['dia']}): {fmt_dia(f['plan_nado_hoy'])}")
     if f.get("plan_nado_manana"):
         print(f"Nado MAÑANA ({f['plan_nado_manana']['dia']}): {fmt_dia(f['plan_nado_manana'])}")
+    sr = f.get("sesiones_reales_hoy")
+    if sr:
+        detalle = " · ".join(
+            f"{s.get('inicio') or '—'}-{s.get('fin') or '—'} {s.get('tipo')}"
+            for s in sr.get("sesiones", []))
+        print(f"Sesiones reales HOY (WHOOP): {sr['n_sesiones']} · {sr['horas_total']} h "
+              f"(agua {sr['horas_agua']} h · seco {sr['horas_seco']} h)"
+              + (f"  [{detalle}]" if detalle else ""))
     print(f"Semáforo: {icon} {f['semaforo'].upper()}  —  {', '.join(f['razones'])}")
     print(f"Recovery {s(f['recovery_pct'],'%')} | HRV {s(f['hrv_ms'],' ms')} ({s(f['hrv_vs_base_pct'],'%')} vs base) | "
           f"FC rep {s(f['fc_reposo_lpm'],' lpm')} | Sueño {s(f['sueno_pct'],'%')} | "

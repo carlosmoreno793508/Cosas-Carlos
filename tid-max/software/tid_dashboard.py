@@ -126,6 +126,8 @@ header.top{display:flex;align-items:baseline;justify-content:space-between;gap:1
 .hora{flex:0 0 52px;font-weight:800;color:var(--ink);}
 .sesk{flex:0 0 56px;font-weight:700;color:var(--accent);}
 .senf{color:var(--muted);font-size:.86rem;}
+.realwrap{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);}
+.realwrap .chip{margin-top:0;}
 
 .verdict{font-size:1.12rem;font-weight:700;margin:0 0 14px;text-wrap:balance;}
 .pillar{display:flex;gap:12px;padding:11px 0;border-top:1px solid var(--line);}
@@ -234,18 +236,33 @@ def build_html(p):
                      f'<span class="sesk num">{fnum(s.get("km"),1)} km</span>{enf}</div>')
         return rows
 
+    # sesiones reales detectadas por WHOOP (agua vs seco) — se construye primero
+    sr = f.get("sesiones_reales_hoy")
+    real_html = ""
+    if sr and sr.get("sesiones"):
+        rows = ""
+        for s in sr["sesiones"]:
+            tcls = {"agua": "good", "seco": "warn", "otro": "flat"}.get(s.get("tipo"), "flat")
+            fc = f' · {fnum(s.get("fc_prom"))} lpm' if s.get("fc_prom") else ""
+            rows += (f'<div class="ses"><span class="hora num">{(s.get("inicio") or "—")}–{(s.get("fin") or "—")}</span>'
+                     f'<span class="chip {tcls}">{s.get("tipo")}</span>'
+                     f'<span class="senf">{s.get("deporte") or "—"} · {fnum(s.get("dur_min"))} min{fc}</span></div>')
+        real_html = (f'<div class="realwrap"><div class="daylab">Detectado por WHOOP hoy'
+                     f'<span class="daysum">agua {fnum(sr.get("horas_agua"),1)} h · seco {fnum(sr.get("horas_seco"),1)} h</span></div>'
+                     f'{rows}</div>')
+
     hoy_p = f.get("plan_nado_hoy")
     man_p = f.get("plan_nado_manana")
     nado_html = ""
-    if hoy_p or man_p:
+    if hoy_p or man_p or real_html:
         def daycard(titulo, d):
             head = f'{d["tipo"]} · {fnum(d.get("km_dia"),1)} km' if d else "—"
             return (f'<div class="daycol"><div class="daylab">{titulo}'
                     f'<span class="daysum">{head}</span></div>{sesiones_html(d)}</div>')
         nado_html = (f'<div class="panel nado"><h2 class="h">Nado</h2><div class="nadogrid">'
-                     f'{daycard("HOY · " + (hoy_p["dia"] if hoy_p else ""), hoy_p)}'
+                     f'{daycard("PLAN HOY · " + (hoy_p["dia"] if hoy_p else ""), hoy_p)}'
                      f'{daycard("MAÑANA · " + (man_p["dia"] if man_p else ""), man_p)}'
-                     f'</div></div>')
+                     f'</div>{real_html}</div>')
 
     # --- pilares + alertas ---
     pilares = "".join(
