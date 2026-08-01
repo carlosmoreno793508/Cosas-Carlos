@@ -99,7 +99,63 @@ Este criterio pesa más que las diferencias nutricionales entre estos dos produc
 
 ---
 
-## 6. Datos crudos de las etiquetas (referencia)
+## 6. Veredicto: si hay que elegir UNO solo (caso Gael, sin calambres)
+
+**Ganador: Propel.** 🏆
+
+Cuando el criterio es "un solo electrolito para un nadador de élite que **no sufre
+calambres**", la evidencia inclina la balanza claramente hacia Propel.
+
+### 6.1 Por qué Propel
+
+1. **El sodio es el electrolito que decide la hidratación de un nadador.** El sudor se
+   compone sobre todo de **sodio y cloruro**; potasio y magnesio se pierden en cantidades
+   pequeñas. Propel aporta **más sodio por porción (260 vs 210 mg)** y un perfil que
+   *imita al sudor* (alto sodio, bajo potasio) — que es exactamente lo que se busca para
+   reponer pérdidas.
+2. **Cero azúcar / cero calorías = control total del combustible.** El nadador dosifica
+   los carbohidratos aparte (gel/bebida) con precisión, sin calorías "escondidas" en la
+   bebida de hidratación. Los 3.3 g de dextrosa de Seltz son irrelevantes como energía y
+   solo añaden ruido a un plan nutricional controlado.
+3. **La ventaja principal de Seltz se cae al quitar los calambres.** Su magnesio + calcio
+   y el perfil "anticalambres/reposición amplia" eran su gran argumento. Pero:
+   - La evidencia de que el **magnesio previene calambres por ejercicio es débil/nula**
+     (revisión Cochrane: sin ensayos clínicos que lo respalden en deportistas).
+   - **Gael no tiene calambres**, así que ese beneficio no aplica.
+   - El **potasio alto** de Seltz no corresponde a las pérdidas reales por sudor (el
+     potasio se pierde poco), así que no aporta ventaja de reposición.
+   - El **calcio** se cubre mejor con la dieta.
+4. **Extras útiles:** Propel añade vitaminas del grupo B (metabolismo energético) más C y
+   E, un plus menor pero bienvenido en carga de entrenamiento.
+5. **Practicidad:** el stick de polvo se echa en cualquier botella y se disuelve al
+   instante, sin esperar la efervescencia.
+
+### 6.2 Lo que se pierde al no elegir Seltz
+- Aporte de **magnesio (12.3 mg)** y **calcio (27 mg)** → cubribles con la dieta; poco
+  relevantes para hidratación.
+- **Cloruro declarado** explícito → Propel igual aporta cloruro vía sal y citrato de
+  sodio.
+
+### 6.3 Empate real: antidopaje
+**Ninguno de los dos muestra certificación antidopaje de terceros** (NSF Certified for
+Sport / Informed Sport). Esto NO desempata entre ellos, pero es la **mayor limitación de
+ambos** para un atleta bajo control WADA/AMA. Si Gael compite bajo control antidopaje, lo
+ideal sería migrar a un electrolito equivalente **con lote certificado** — un Propel o
+similar certificado sería la elección óptima.
+
+### 6.4 Ajuste de dosis (importante)
+Propel gana, pero recuerda que a **1 stick por botella el sodio sigue siendo modesto**
+para sesiones largas o de sudoración alta. Para esos días: **2 sticks por botella** (o
+sumar sodio aparte) y **carbohidrato por separado** en sesiones > 60–90 min.
+
+> **En una frase:** Para Gael, que no sufre calambres, **Propel** es la mejor opción única
+> — su perfil alto en sodio y cero azúcar es justo lo que necesita un nadador de élite
+> para hidratarse; las ventajas de Seltz (magnesio/calcio) pierden relevancia sin
+> calambres de por medio.
+
+---
+
+## 7. Datos crudos de las etiquetas (referencia)
 
 ### Propel (por stick de 3 g)
 ```
