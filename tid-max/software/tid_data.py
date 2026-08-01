@@ -525,7 +525,7 @@ def build_plan_dias(km_semana):
         if not d:
             return None
         km_dia = round(km_semana * d.get("peso", 0) / total_peso, 1)
-        horas = horarios.get(d.get("tipo"), [])
+        horas = d.get("horas") or horarios.get(d.get("tipo"), [])   # 'horas' por día sobrescribe
         split = d.get("split") or ([1.0] if km_dia else [])
         enfoque = d.get("enfoque") or []
         sesiones = []
