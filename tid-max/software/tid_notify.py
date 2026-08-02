@@ -206,16 +206,22 @@ def enviar_imessage(png_path, caption=""):
     png_abs = os.path.abspath(png_path)
     oks = 0
     for to in dests:
+        # Mandamos la IMAGEN primero y le damos tiempo a subir ANTES del texto.
+        # Si se manda el adjunto pegado al texto, iMessage a veces lo marca
+        # "No entregado" porque el script suelta el mensaje antes de que el
+        # archivo termine de subir. Con la imagen sola + delay entrega parejo.
         script = (
             'tell application "Messages"\n'
             '  set svc to 1st service whose service type = iMessage\n'
             f'  set toBuddy to buddy "{to}" of svc\n'
-            f'  send "{cap}" to toBuddy\n'
             f'  send (POSIX file "{png_abs}") to toBuddy\n'
+            '  delay 4\n'
+            f'  send "{cap}" to toBuddy\n'
+            '  delay 1\n'
             'end tell'
         )
         try:
-            r = subprocess.run(["osascript", "-e", script], capture_output=True, text=True, timeout=30)
+            r = subprocess.run(["osascript", "-e", script], capture_output=True, text=True, timeout=45)
             if r.returncode == 0:
                 oks += 1
             else:
