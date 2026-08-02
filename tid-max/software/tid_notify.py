@@ -116,6 +116,27 @@ def construir_mensaje(p):
     return "\n".join(L)
 
 
+def construir_mensaje_corto(p):
+    """Versión CORTA para el envío diario: encabezado + semáforo + link al tablero.
+    El detalle completo vive en la página (el link), así el texto no satura el chat."""
+    f = p.get("hechos", {})
+    sem = p.get("semaforo", "amarillo")
+    emoji = SEM_EMOJI.get(sem, "🟡")
+    fecha = (p.get("generado_utc") or "")[:10]
+    L = [f"🏊 TID-MAX · {p.get('atleta', 'Gael')} — {fecha}",
+         f"{emoji} {sem.upper()} · Recovery {f.get('recovery_pct', '—')}%"]
+    url = _url_tunel() or os.environ.get("TID_DASHBOARD_URL")
+    if url:
+        L.append(f"📊 Ver el día completo: {url}")
+    return "\n".join(L)
+
+
+def mensaje(p):
+    """Elige corto (por defecto) o largo. Largo con --largo o TID_MENSAJE=largo."""
+    largo = ("--largo" in sys.argv) or (os.environ.get("TID_MENSAJE", "").lower() == "largo")
+    return construir_mensaje(p) if largo else construir_mensaje_corto(p)
+
+
 def _telegram_chats():
     # TID_TELEGRAM_CHAT admite varios destinatarios separados por coma (mamá, Gael, o un grupo)
     return [c.strip() for c in (os.environ.get("TID_TELEGRAM_CHAT") or "").split(",") if c.strip()]
@@ -359,7 +380,7 @@ def enviar_email(texto):
 
 def main():
     p = cargar()
-    texto = construir_mensaje(p)
+    texto = mensaje(p)
     print("\n----- MENSAJE -----\n" + texto + "\n-------------------")
 
     if "--dry" in sys.argv:
