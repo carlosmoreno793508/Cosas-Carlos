@@ -140,6 +140,143 @@ def _combustible_html(f, m, consumo):
         f'{comidas}')
 
 
+def _hm(h):
+    """Horas decimales -> 'H:MM'."""
+    if not isinstance(h, (int, float)):
+        return "—"
+    t = round(h * 60)
+    return f"{t // 60}:{t % 60:02d}"
+
+
+def _mchip(txt, c):
+    return f'<span class="chip {c}"><span class="dot"></span>{txt}</span>'
+
+
+def _mrow(name, valnum, unit, chip_html, width, grad, rng=""):
+    u = f'<small>{unit}</small>' if unit else ''
+    r = f'<div class="mrng">{rng}</div>' if rng else ''
+    w = max(3.0, min(100.0, float(width))) if isinstance(width, (int, float)) else 3.0
+    return (f'<div class="mrow"><div class="mtop"><span class="mname">{name}</span>'
+            f'<span class="mval"><span class="num">{valnum}{u}</span>{chip_html}</span></div>'
+            f'<div class="track"><i style="width:{w:.0f}%;background:{grad}"></i></div>{r}</div>')
+
+
+def _srow(name, val_html, chip_html=""):
+    return (f'<div class="srow"><span class="lab">{name}</span>'
+            f'<span class="rval">{val_html}{chip_html}</span></div>')
+
+
+def _vitales_html(f):
+    out = []
+    rec = f.get("recovery_pct")
+    if isinstance(rec, (int, float)):
+        c = "good" if rec >= 67 else ("warn" if rec >= 34 else "crit")
+        t = "óptimo" if rec >= 67 else ("moderar" if rec >= 34 else "rojo")
+        grad = "linear-gradient(90deg,var(--good),var(--aqua))" if c == "good" else "linear-gradient(90deg,var(--crit),var(--warn))"
+        out.append(_mrow("Recovery", rec, "%", _mchip(t, c), rec, grad, "≥ 67% verde · 34–66% ámbar · &lt; 33% rojo"))
+    hrv = f.get("hrv_ms")
+    if isinstance(hrv, (int, float)):
+        base = f.get("hrv_base_ms")
+        baja = base and hrv < base
+        out.append(_mrow("HRV", round(hrv, 1), "ms", _mchip("baja" if baja else "estable", "warn" if baja else "good"),
+                         hrv / 120 * 100, "linear-gradient(90deg,var(--fit),var(--form))", "por debajo de su base habitual" if baja else "en su base"))
+    fcr = f.get("fc_reposo_lpm")
+    if isinstance(fcr, (int, float)):
+        elev = fcr > 58
+        out.append(_mrow("FC en reposo", fcr, "lpm", _mchip("elevada" if elev else "estable", "warn" if elev else "good"),
+                         (fcr - 40) / 30 * 100, "linear-gradient(90deg,var(--fit),var(--good))", "42–58 lpm en nadadores élite"))
+    spo2 = f.get("spo2_pct")
+    if isinstance(spo2, (int, float)):
+        c = "good" if spo2 >= 95 else ("warn" if spo2 >= 93 else "crit")
+        t = "óptimo" if spo2 >= 95 else ("aceptable" if spo2 >= 93 else "bajo")
+        out.append(_mrow("Oxigenación · SpO₂", spo2, "%", _mchip(t, c), (spo2 - 90) / 10 * 100,
+                         "linear-gradient(90deg,var(--fat),var(--warn))", "≥ 95% óptimo · 93–94% aceptable"))
+    temp = f.get("skin_temp_c")
+    if isinstance(temp, (int, float)):
+        out.append(_mrow("Temperatura de piel", temp, "°C", _mchip("normal", "good"), 52,
+                         "linear-gradient(90deg,var(--muted),var(--fit))", "dentro de ±0.5 °C de su base"))
+    vo2 = f.get("vo2max")
+    if vo2 is not None:
+        out.append(_srow("Capacidad aeróbica", f'<span class="num">{vo2}</span>', _mchip("élite (VO₂máx)", "aqua")))
+    return ('<section class="card pad"><h2 class="h">Recovery y señales vitales</h2>'
+            '<p class="psub">con rango óptimo</p>' + "".join(out) + '</section>')
+
+
+def _sueno_html(f):
+    sd = f.get("sueno_detalle") or {}
+    out = []
+    encama = sd.get("en_cama_h"); real = sd.get("horas_anoche")
+    despierto = (encama - real) if isinstance(encama, (int, float)) and isinstance(real, (int, float)) else None
+    if isinstance(encama, (int, float)):
+        good = 8 <= encama <= 9.6
+        out.append(_mrow("Tiempo en cama", _hm(encama), "", _mchip("óptimo" if good else "revisar", "good" if good else "warn"),
+                         encama / 9.5 * 100, "linear-gradient(90deg,var(--aqua),var(--good))", "8–9.5 h en cama"))
+    if isinstance(real, (int, float)):
+        nm = "Sueño real" + (f" · {_hm(despierto)} despierto" if isinstance(despierto, (int, float)) and despierto > 0 else "")
+        out.append(_mrow(nm, _hm(real), "", _mchip("corto", "warn") if real < 8 else _mchip("bien", "good"),
+                         real / 9 * 100, "linear-gradient(90deg,var(--aqua),var(--fit))", "de 8–10 h objetivo"))
+    rem = sd.get("rem_h")
+    if isinstance(rem, (int, float)):
+        lab = "alto" if rem > 2.5 else ("óptimo" if rem >= 1.75 else "bajo")
+        out.append(_mrow("REM · técnica y memoria", _hm(rem), "", _mchip(lab, "warn" if lab == "bajo" else "good"),
+                         rem / 2.8 * 100, "linear-gradient(90deg,var(--form),#a07cf0)", "1:45–2:30 objetivo"))
+    prof = sd.get("profundo_h")
+    if isinstance(prof, (int, float)):
+        ok = prof >= 1.5
+        out.append(_mrow("Profundo · reparación", _hm(prof), "", _mchip("óptimo" if ok else "bajo", "good" if ok else "warn"),
+                         prof / 2.3 * 100, "linear-gradient(90deg,var(--fit),#7c8ef0)", "≥ 1:30 objetivo"))
+    lig = sd.get("ligero_h")
+    if isinstance(lig, (int, float)):
+        out.append(_mrow("Ligero", _hm(lig), "", _mchip("bajo", "warn"), lig / 3 * 100,
+                         "linear-gradient(90deg,var(--muted),#9fb2be)",
+                         "lectura orientativa — el sensor puede confundir fases si duerme boca abajo"))
+    deuda = sd.get("deuda_min")
+    if isinstance(deuda, (int, float)):
+        c = "crit" if deuda > 120 else ("warn" if deuda > 30 else "good")
+        t = "alta" if deuda > 120 else ("moderada" if deuda > 30 else "baja")
+        out.append(_srow("Deuda de sueño", f'<span class="num">{_hm(deuda / 60)} h</span>', _mchip(t, c)))
+    cons = sd.get("consistencia_pct")
+    if isinstance(cons, (int, float)):
+        c = "good" if cons >= 75 else ("warn" if cons >= 50 else "crit")
+        t = "buena" if cons >= 75 else ("baja" if cons >= 50 else "muy baja")
+        out.append(_srow("Constancia de horarios", f'<span class="num">{cons}%</span>', _mchip(t, c)))
+    return ('<section class="card pad"><h2 class="h">😴 Sueño completo</h2>'
+            '<p class="psub">con rango óptimo</p>' + "".join(out) + '</section>')
+
+
+def _zonas_html(f):
+    z = f.get("zonas_fc") or {}
+    vt1, vt2, fm, fx = z.get("vt1"), z.get("vt2"), z.get("fatmax"), z.get("fc_max")
+    rest = z.get("fc_reposo") or 60
+    if not (vt1 and vt2 and fm and fx and fx > rest):
+        return ""
+    span = fx - rest
+    w1, w2, w3, w4 = (vt1 - rest) / span * 100, (vt2 - vt1) / span * 100, (fm - vt2) / span * 100, (fx - fm) / span * 100
+    p1, p2, p3 = w1, w1 + w2, w1 + w2 + w3
+    bar = (f'<div class="zbar"><span style="width:{w1:.1f}%;background:#1f9d6b"></span>'
+           f'<span style="width:{w2:.1f}%;background:#159fb4"></span>'
+           f'<span style="width:{w3:.1f}%;background:#d99a1a"></span>'
+           f'<span style="width:{w4:.1f}%;background:#df6a3a"></span></div>')
+    marks = (f'<div class="zmarks"><b style="left:{p1:.1f}%"><i>VT1 {vt1}</i>aeróbico</b>'
+             f'<b style="left:{p2:.1f}%"><i>VT2 {vt2}</i>anaeróbico</b>'
+             f'<b style="left:{p3:.1f}%;top:20px"><i>FATmax {fm}</i>grasa máx.</b>'
+             f'<b style="left:100%"><i>FCmáx {fx}</i>máxima</b></div>')
+    prio = (f'<div class="zprio">Zona a priorizar en calidad: <b>{vt1}–{vt2} lpm</b> (entre VT1 y VT2). '
+            f'El FATmax de Gael está <b>por encima del VT2</b> — hallazgo notable de alta flexibilidad '
+            f'metabólica que marca el propio laboratorio.</div>')
+    return ('<section class="card pad zonewrap"><h2 class="h">Zonas de frecuencia cardíaca</h2>'
+            '<p class="psub">de su prueba de esfuerzo · PE Somnia</p>' + bar + marks + prio + '</section>')
+
+
+def _plan_hoy_html(p, cls):
+    pil = p.get("pilares") or {}
+    if not pil:
+        return ""
+    li = "".join(f'<li><span class="b">{i}</span><span><b>{k}.</b> {v}</span></li>'
+                 for i, (k, v) in enumerate(pil.items(), 1))
+    return f'<section class="card pad planhoy {cls}"><h2 class="h">🎯 Plan de hoy</h2><ul>{li}</ul></section>'
+
+
 def build_html(p):
     f = p.get("hechos", {})
     consumo = load_consumo()
@@ -184,13 +321,11 @@ def build_html(p):
       <div class="say">{veredicto}</div>
     </div>
   </section>
-  <section class="tiles">
-    <div class="tile"><div class="k">Descanso (recovery)</div><div class="v num">{rec}<small>%</small></div>{rec_chip}</div>
-    <div class="tile"><div class="k">Variabilidad (HRV)</div><div class="v num">{round(f.get('hrv_ms') or 0)}<small>ms</small></div>{hrv_chip}</div>
-    <div class="tile"><div class="k">Pulso en reposo</div><div class="v num">{f.get('fc_reposo_lpm','—')}<small>lpm</small></div>{chip('estable','good')}</div>
-    <div class="tile"><div class="k">Sueño anoche</div><div class="v num">{sd.get('horas_anoche','—')}<small>h</small></div>{chip('corto','warn') if isinstance(sd.get('horas_anoche'),(int,float)) and sd['horas_anoche']<8 else chip('bien','good')}</div>
-    <div class="tile"><div class="k">Capacidad aeróbica</div><div class="v num">{f.get('vo2max','—')}</div>{chip('élite (VO₂máx)','aqua')}</div>
-  </section>
+  <div class="grid2">
+    {_vitales_html(f)}
+    {_sueno_html(f)}
+  </div>
+  {_zonas_html(f)}
   <section class="card pad formwrap">
     <h2 class="h">Camino al evento — ¿va a llegar fresco?</h2>
     <p class="hsub">Su preparación se mantiene alta mientras el cansancio baja en el taper. Esa brecha = <b>qué tan fresco llega</b>.</p>
@@ -203,23 +338,17 @@ def build_html(p):
   </section>
   <section class="cols">
     <div class="card pad">
-      <h2 class="h">Descanso 🌙</h2>
-      <div class="row"><span class="lab">Horas dormidas (anoche)</span><span class="val num">{sd.get('horas_anoche','—')} h</span></div>
-      <div class="row"><span class="lab">Promedio de la semana</span><span class="val num">{sd.get('horas_prom_7d','—')} h/noche</span></div>
-      <div class="row"><span class="lab">Constancia de horarios</span><span class="val">{sd.get('consistencia_pct','—')}%</span></div>
-      <div class="row"><span class="lab">Despertares / deuda</span><span class="val num">{sd.get('despertares','—')} · {sd.get('deuda_min','—')} min</span></div>
-    </div>
-    <div class="card pad">
       {_combustible_html(f, m, consumo)}
     </div>
-  </section>
-  <section class="card pad">
-    <h2 class="h">Entrenamiento 🏊</h2>
-    <div class="plan2">
-      <div class="p"><div class="pl">Hoy</div><div class="pv">{hoy_txt}</div><div class="pd">{hoy_ses}</div></div>
-      <div class="p"><div class="pl">Mañana</div><div class="pv">{man_txt}</div><div class="pd">{man_ses}</div></div>
+    <div class="card pad">
+      <h2 class="h">Entrenamiento 🏊</h2>
+      <div class="plan2">
+        <div class="p"><div class="pl">Hoy</div><div class="pv">{hoy_txt}</div><div class="pd">{hoy_ses}</div></div>
+        <div class="p"><div class="pl">Mañana</div><div class="pv">{man_txt}</div><div class="pd">{man_ses}</div></div>
+      </div>
     </div>
   </section>
+  {_plan_hoy_html(p, cls)}
   <footer>TID-MAX · lo que mide el reloj, convertido en decisiones · orientación de bienestar (no médica)</footer>
 </div>
 <script>const D={json.dumps(form)};{CHART_JS}</script>"""

@@ -413,13 +413,15 @@ def build_zonas_fc():
         return None
 
     if vt1 and vt2 and fatmax:
+        # Orden real del PE: VT1(143) < VT2(167) < FATmax(173) < FCmax(181).
+        # El FATmax esta POR ENCIMA del VT2 (alta flexibilidad metabolica): no es el piso.
         zonas = [
-            {"zona": "Z1 · Recuperación", "min": fc_rep or 0, "max": fatmax - 1, "uso": "regenerativo, técnica suave"},
-            {"zona": "Z2 · Aeróbico (quema grasa)", "min": fatmax, "max": vt1 - 1, "uso": "resistencia base; FATmax en el piso"},
-            {"zona": "Z3 · Zona sensible (VT1–VT2)", "min": vt1, "max": vt2, "uso": "el motor del rendimiento (a priorizar)"},
-            {"zona": "Z4 · VO₂ / anaeróbico", "min": vt2 + 1, "max": fc_max, "uso": "velocidad crítica, ritmo de competencia"},
+            {"zona": "Z1 · Base aeróbica", "min": fc_rep or 0, "max": vt1 - 1, "uso": "recuperación, técnica, aeróbico ligero"},
+            {"zona": "Z2 · Zona sensible (VT1–VT2)", "min": vt1, "max": vt2 - 1, "uso": "construcción de rendimiento aeróbico (a priorizar)"},
+            {"zona": "Z3 · Umbral (≥VT2)", "min": vt2, "max": fatmax - 1, "uso": "trabajo de umbral; el lactato empieza a acumularse"},
+            {"zona": "Z4 · Alta intensidad", "min": fatmax, "max": fc_max, "uso": "intervalos duros; FATmax aquí (quema grasa aun a alta intensidad)"},
         ]
-        base = "umbrales medidos (FATmax/VT1/VT2) del PE"
+        base = "umbrales medidos del PE (VT1<VT2<FATmax)"
     else:
         def pct(a, b):
             return round(fc_max * a), round(fc_max * b)
@@ -428,7 +430,7 @@ def build_zonas_fc():
         zonas = [{"zona": n, "min": a, "max": b, "uso": ""} for n, (a, b) in zip(nom, z)]
         base = "%FC máx (sin umbrales medidos)"
 
-    return {"fc_max": fc_max, "fc_reposo": fc_rep, "vt1": vt1, "vt2": vt2,
+    return {"fc_max": fc_max, "fc_reposo": fc_rep, "vt1": vt1, "vt2": vt2, "fatmax": fatmax,
             "vo2max": perfil.get("vo2max"),
             "base": base, "nota": "FC máx de CARRERA; en nado ~5-10 lpm menor.", "zonas": zonas}
 

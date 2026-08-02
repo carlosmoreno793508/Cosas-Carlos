@@ -14,7 +14,7 @@ Cambios que afectan datos del cliente y **no se aplican** hasta que Carlos aprue
 
 | Tema | Qué falta aprobar | Estado | Doc |
 |---|---|---|---|
-| Corrección umbrales VT1/VT2/FATmax | Confirmar con el PDF del PE que **143=VT1, 167=VT2, 173=FATmax**; luego aplicar la rotación en los 5 puntos (perfil, config, motor, coach) | ⏳ Carlos valida PDF | `perfil-gael.md`, `software/nutricion-gael.json`, `software/tid_data.py`, `software/tid_agent.py` |
+| ~~Corrección umbrales VT1/VT2/FATmax~~ | **✅ APLICADO** (confirmado del PDF): 143=VT1, 167=VT2, 173=FATmax. Config, perfil, motor de zonas (reordenado VT1<VT2<FATmax) y tarjeta actualizados. | ✅ Hecho | `perfil-gael.md`, `nutricion-gael.json`, `tid_data.py`, `tid_cliente.py` |
 | Estudio de sueño → integración | Aprobar rangos (Tabla A) y 2 lógicas: **%+minutos absolutos** y **"despertares" informativos**; luego cablear a motor/tarjeta/coach | ⏳ Carlos revisando | `analisis/estudio-sueno-gael.md` |
 
 ## Resumen de avance y presupuesto

@@ -32,12 +32,14 @@
 ### Umbrales fisiológicos (del test de carrera)
 | Punto | FC (lpm) | VO₂ (mL/kg/min) | % VO₂pico | Ritmo (min/km) |
 |---|---|---|---|---|
-| FATmax (máx. quema de grasa) | 143 | 43.9 | 65 % | 5:27 |
-| VT1 (umbral aeróbico) | 167 | 56.4 | 83 % | 4:17 |
-| VT2 (umbral anaeróbico) | 173 | 61.4 | 91 % | 4:00 |
+| VT1 (umbral aeróbico) | 143 | 43.9 | 65 % | 5:27 |
+| VT2 (umbral anaeróbico) | 167 | 56.4 | 83 % | 4:17 |
+| FATmax (máx. quema de grasa) | 173 | 61.4 | 91 % | 4:00 |
 | VO₂pico (máx) | 181 | 67.75 | 100 % | 3:31 |
 
-**Recomendación del reporte**: priorizar la **zona sensible entre VT1 y VT2** (FC ~167–173), con trabajo estratégico de umbral y alta intensidad; sumar aeróbico controlado y recuperación activa para mejorar la reactivación vagal.
+> **Corrección (ago-2026):** los rótulos VT1/VT2/FATmax estaban cruzados en una versión previa. Lo correcto (del PDF Somnia): **VT1 143 · VT2 167 · FATmax 173**. El FATmax está **por encima del VT2** (91 % VO₂) — hallazgo notable de alta flexibilidad metabólica que marca el propio laboratorio, no un error.
+
+**Recomendación del reporte**: priorizar la **zona sensible entre VT1 y VT2** (FC ~143–167), con trabajo estratégico de umbral y alta intensidad; sumar aeróbico controlado y recuperación activa para mejorar la reactivación vagal.
 
 ## Exámenes de laboratorio (30/01/2026) — lectura para deporte
 > Todo consistente con un **atleta joven sano de alta carga**. Los "fuera de rango" son en su
@@ -56,10 +58,10 @@
 
 ## Implicaciones para TID-MAX (propuestas para mañana)
 1. **Antropometría**: estatura 1.86 m (hecho) · envergadura 2.08 m (dato de nadador) · revisar WHOOP.
-2. **FC reales al motor**: reposo 67, máx ~181 (carrera). Definir **zonas por VT1 (167) / VT2 (173)** en vez de solo la teórica.
+2. **FC reales al motor**: reposo 67, máx ~181 (carrera). Definir **zonas por VT1 (143) / VT2 (167)** en vez de solo la teórica.
 3. **VO₂máx 67.75** como baseline de forma para el 4º agente (Rendimiento).
 4. **Hidratación**: el coach puede subir el peso de este pilar — hay evidencia de laboratorio de que Gael tiende a entrenar deshidratado.
-5. **Nutrición**: el metabolismo de grasa/CHO del test (FATmax a 143 lpm) ayuda a afinar la estrategia de carbohidratos por intensidad.
+5. **Nutrición**: el metabolismo de grasa/CHO del test (FATmax a 173 lpm, por encima del VT2 = quema grasa aun a alta intensidad) ayuda a afinar la estrategia de carbohidratos por intensidad.
 6. **Edad**: 18 años (confirmado; cumple 19 en marzo 2027).
 
 _Pendiente de revisar juntos mañana._
