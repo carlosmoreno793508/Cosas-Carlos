@@ -20,6 +20,8 @@ Variables de entorno (pon las que uses):
     # Telegram (lo más fácil, gratis):
     export TID_TELEGRAM_TOKEN=123456:ABC...      # token del bot (de @BotFather)
     export TID_TELEGRAM_CHAT=987654321           # chat_id de Gael (o del grupo)
+    # iMessage (macOS, gratis, sin API): manda la imagen desde la app Mensajes
+    export TID_IMESSAGE_TO="+525512345678"       # número(s) o Apple ID, separados por coma
     # WhatsApp (API oficial de Meta - lo que más usan):
     export TID_WA_TOKEN=EAAG...                  # access token de la app de WhatsApp
     export TID_WA_PHONE_ID=1234567890            # Phone Number ID del número de negocio
@@ -149,6 +151,41 @@ def enviar_foto_telegram(png_path, caption=""):
     return oks == len(chats), f"Foto enviada a {oks}/{len(chats)} por Telegram"
 
 
+def enviar_imessage(png_path, caption=""):
+    """iMessage vía la app Mensajes de macOS (AppleScript). GRATIS. SOLO corre EN TU MAC,
+    con Mensajes con sesión de iMessage. Destinatarios (número con lada o Apple ID) en
+    TID_IMESSAGE_TO, separados por coma (mamá, Gael)."""
+    import subprocess
+    dests = [d.strip() for d in (os.environ.get("TID_IMESSAGE_TO") or "").split(",") if d.strip()]
+    if not dests:
+        return False, "iMessage no configurado"
+    if sys.platform != "darwin":
+        return False, "iMessage solo corre en macOS (tu Mac)"
+    if not os.path.exists(png_path):
+        return False, f"No existe la imagen: {png_path}"
+    cap = (caption or "").replace("\\", " ").replace('"', "'").replace("\n", " · ")
+    png_abs = os.path.abspath(png_path)
+    oks = 0
+    for to in dests:
+        script = (
+            'tell application "Messages"\n'
+            '  set svc to 1st service whose service type = iMessage\n'
+            f'  set toBuddy to buddy "{to}" of svc\n'
+            f'  send "{cap}" to toBuddy\n'
+            f'  send (POSIX file "{png_abs}") to toBuddy\n'
+            'end tell'
+        )
+        try:
+            r = subprocess.run(["osascript", "-e", script], capture_output=True, text=True, timeout=30)
+            if r.returncode == 0:
+                oks += 1
+            else:
+                return False, f"iMessage falló para {to}: {r.stderr.strip()[:120]}"
+        except Exception as e:
+            return False, f"iMessage error: {e}"
+    return oks == len(dests), f"iMessage enviado a {oks}/{len(dests)}"
+
+
 def enviar_whatsapp(texto):
     """WhatsApp vía la API oficial de Meta (WhatsApp Cloud API).
     Mensaje libre solo funciona dentro de la ventana de 24 h tras un mensaje del usuario;
@@ -221,10 +258,17 @@ def main():
             else os.path.join(SCRIPT_DIR, "cliente.png")
         cap = f"🏊 TID-MAX · {p.get('atleta', 'Gael')} — {(p.get('generado_utc') or '')[:10]}\n" \
               f"{SEM_EMOJI.get(p.get('semaforo'), '🟡')} {p.get('veredicto', '')}"
-        ok, detalle = enviar_foto_telegram(png, cap)
-        print(("✅ " if ok else "❌ ") + detalle)
-        if "no configurado" in detalle:
-            print("Configura TID_TELEGRAM_TOKEN y TID_TELEGRAM_CHAT (varios chats separados por coma).")
+        algun = False
+        for fn in (enviar_foto_telegram, enviar_imessage):
+            ok, detalle = fn(png, cap)
+            if "no configurado" in detalle:
+                continue
+            algun = True
+            print(("✅ " if ok else "❌ ") + detalle)
+        if not algun:
+            print("Ningún canal de imagen configurado. Opciones:\n"
+                  "  • Telegram: TID_TELEGRAM_TOKEN + TID_TELEGRAM_CHAT (varios chats con coma)\n"
+                  "  • iMessage (macOS, gratis): TID_IMESSAGE_TO=\"+52155...,mamá@icloud.com\"")
         return
 
     canales = [enviar_telegram, enviar_whatsapp, enviar_email]
