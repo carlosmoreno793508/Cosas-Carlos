@@ -11,6 +11,9 @@
 #
 # Requisitos: cloudflared instalado (brew install cloudflared) y python3.
 set -euo pipefail
+# launchd corre con un PATH mínimo: agregamos las rutas de Homebrew para que
+# encuentre cloudflared (y python3) igual que en tu terminal.
+export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
 DIR="$(cd "$(dirname "$0")" && pwd)"
 PUB="$DIR/publico"
 PORT="${TID_PORT:-8787}"

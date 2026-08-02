@@ -6,6 +6,8 @@
 # Config de variables: crea ~/.tid_env con tus exports (ver .tid_env.example).
 # Log de cada corrida: publico/tid_diario.log
 set -uo pipefail
+# launchd usa un PATH mínimo: agregamos Homebrew para hallar cloudflared/python3.
+export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
 DIR="$(cd "$(dirname "$0")" && pwd)"
 cd "$DIR"
 
