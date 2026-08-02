@@ -90,7 +90,7 @@ Presupuesto INDICATIVO en USD (a validar con cotizaciones reales: RFQ H0.4, lab 
 
 | # | Ítem | Estado | Acción correctiva / notas |
 |---|---|---|---|
-| H0.1 | Congelar spec técnico (RFQ v2) | ✅ | Documento entregado |
+| H0.1 | Congelar spec técnico (RFQ v2) | ✅ | Documento en `analisis/especificacion-pulsera-rfq.md` (RFQ v2, listo para cotizar). Specs verificadas 2026-08-02: nRF52840/nRF5340 y MAX86141 disponibles; ISO 22810:2010 y UN 38.3 vigentes. |
 | H0.2 | Enviar RFQ a JointCorp, Vositone, Bingo, Star King | ⬜ | Ruta crítica — disparar ya |
 | H0.3 | (Opcional) cotización India (Dixon/Optiemus) | ⬜ | |
 | H0.4 | Recibir y comparar cotizaciones | ⬜ | |
