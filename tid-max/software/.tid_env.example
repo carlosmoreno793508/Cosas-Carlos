@@ -1,0 +1,27 @@
+# ~/.tid_env — variables para las corridas automáticas de TID-MAX.
+# Copia este archivo a tu HOME como  ~/.tid_env  y ajusta los valores.
+#   cp .tid_env.example ~/.tid_env      # y edítalo con tus datos
+# (Las credenciales de WHOOP siguen en tid-max/software/.env, no aquí.)
+
+# --- Destino del mensaje ---
+# iMessage (gratis, desde tu Mac): número, Apple ID o NOMBRE de contacto (con coma varios)
+export TID_IMESSAGE_TO="Karla Sarmiento Sarmiento"
+
+# El link del tablero se toma solo de publico/url.txt (lo escribe el túnel).
+# Si quieres forzar uno fijo, descomenta:
+# export TID_DASHBOARD_URL="https://xxxx.trycloudflare.com"
+
+# --- Opcional: Telegram (push gratis, no depende de tu Mac) ---
+# export TID_TELEGRAM_TOKEN="123456:ABC..."
+# export TID_TELEGRAM_CHAT="987654321,111222333"
+
+# --- Opcional: correo (SMTP) ---
+# export TID_MAIL_TO="karla@ejemplo.com"
+# export TID_MAIL_FROM="tidmax@ejemplo.com"
+# export TID_SMTP_HOST="smtp.gmail.com"
+# export TID_SMTP_PORT="465"
+# export TID_SMTP_USER="tidmax@ejemplo.com"
+# export TID_SMTP_PASS="xxxxxxxxxxxx"   # contraseña de app (no la normal)
+
+# --- Opcional: forzar un intérprete de Python concreto ---
+# export TID_PYTHON="/Users/carlosmorenoaguilar/Cosas-Carlos/tid-max/software/.venv/bin/python3"
