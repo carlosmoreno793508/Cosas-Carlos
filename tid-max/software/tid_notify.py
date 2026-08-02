@@ -106,7 +106,8 @@ def construir_mensaje(p):
     alertas = p.get("alertas") or []
     for a in alertas[:2]:
         L.append(f"⚠️ {a}")
-    url = os.environ.get("TID_DASHBOARD_URL") or _url_tunel()
+    # El túnel vivo (publico/url.txt) manda; TID_DASHBOARD_URL solo si no hay túnel.
+    url = _url_tunel() or os.environ.get("TID_DASHBOARD_URL")
     if url:
         L.append("")
         L.append(f"📊 Tablero del día: {url}")
