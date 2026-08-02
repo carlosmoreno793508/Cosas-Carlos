@@ -20,8 +20,10 @@ Variables de entorno (pon las que uses):
     # Telegram (lo más fácil, gratis):
     export TID_TELEGRAM_TOKEN=123456:ABC...      # token del bot (de @BotFather)
     export TID_TELEGRAM_CHAT=987654321           # chat_id de Gael (o del grupo)
-    # iMessage (macOS, gratis, sin API): manda la imagen desde la app Mensajes
-    export TID_IMESSAGE_TO="+525512345678"       # número(s) o Apple ID, separados por coma
+    # iMessage (macOS, gratis, sin API): manda el reporte de texto desde la app Mensajes.
+    export TID_IMESSAGE_TO="+525512345678"       # número(s), Apple ID o NOMBRE de contacto, con coma
+    # Link del tablero (se agrega al final del mensaje de texto en todos los canales):
+    export TID_DASHBOARD_URL="https://claude.ai/code/artifact/XXXX"
     # WhatsApp (API oficial de Meta - lo que más usan):
     export TID_WA_TOKEN=EAAG...                  # access token de la app de WhatsApp
     export TID_WA_PHONE_ID=1234567890            # Phone Number ID del número de negocio
@@ -92,6 +94,10 @@ def construir_mensaje(p):
     alertas = p.get("alertas") or []
     for a in alertas[:2]:
         L.append(f"⚠️ {a}")
+    url = os.environ.get("TID_DASHBOARD_URL")
+    if url:
+        L.append("")
+        L.append(f"📊 Tablero del día: {url}")
     L.append("")
     L.append("— TID-MAX (orientación de bienestar, no médica)")
     return "\n".join(L)
@@ -179,19 +185,14 @@ def _resolver_contacto(nombre):
         return ""
 
 
-def enviar_imessage(png_path, caption=""):
-    """iMessage vía la app Mensajes de macOS (AppleScript). GRATIS. SOLO corre EN TU MAC,
-    con Mensajes con sesión de iMessage. TID_IMESSAGE_TO admite números/Apple ID O nombres
-    de contacto (los resuelve de tus Contactos de Apple), separados por coma."""
-    import subprocess
+def _imessage_dests():
+    """Resuelve TID_IMESSAGE_TO a una lista de handles (número/Apple ID), traduciendo
+    nombres de contacto vía Contactos de macOS. Devuelve (lista, 'ok') o (None, motivo)."""
     entradas = [d.strip() for d in (os.environ.get("TID_IMESSAGE_TO") or "").split(",") if d.strip()]
     if not entradas:
-        return False, "iMessage no configurado"
+        return None, "iMessage no configurado"
     if sys.platform != "darwin":
-        return False, "iMessage solo corre en macOS (tu Mac)"
-    if not os.path.exists(png_path):
-        return False, f"No existe la imagen: {png_path}"
-    # Resuelve nombres de contacto a su número/handle
+        return None, "iMessage solo corre en macOS (tu Mac)"
     dests = []
     for e in entradas:
         if _es_handle(e):
@@ -199,9 +200,53 @@ def enviar_imessage(png_path, caption=""):
         else:
             h = _resolver_contacto(e)
             if not h:
-                return False, f"No encontré el contacto '{e}' en Contactos"
+                return None, f"No encontré el contacto '{e}' en Contactos"
             print(f"(Contacto '{e}' → {h})")
             dests.append(h)
+    return dests, "ok"
+
+
+def enviar_imessage_texto(texto):
+    """Envía el reporte como TEXTO por iMessage (SIN adjunto). El texto siempre entrega
+    —a diferencia del adjunto, que la caja de arena de Mensajes suele marcar 'No entregado'—
+    así que este es el canal recomendado para el envío diario con el link del tablero."""
+    import subprocess
+    dests, motivo = _imessage_dests()
+    if dests is None:
+        return False, motivo
+    # AppleScript: cada línea como literal unido con `linefeed` para conservar el formato.
+    lineas = [ln.replace("\\", " ").replace('"', "'") for ln in (texto or "").split("\n")]
+    msg_expr = " & linefeed & ".join(f'"{ln}"' for ln in lineas) or '""'
+    oks = 0
+    for to in dests:
+        script = (
+            'tell application "Messages"\n'
+            '  set svc to 1st service whose service type = iMessage\n'
+            f'  set toBuddy to buddy "{to}" of svc\n'
+            f'  send {msg_expr} to toBuddy\n'
+            'end tell'
+        )
+        try:
+            r = subprocess.run(["osascript", "-e", script], capture_output=True, text=True, timeout=30)
+            if r.returncode == 0:
+                oks += 1
+            else:
+                return False, f"iMessage texto falló para {to}: {r.stderr.strip()[:120]}"
+        except Exception as e:
+            return False, f"iMessage texto error: {e}"
+    return oks == len(dests), f"iMessage (texto) enviado a {oks}/{len(dests)}"
+
+
+def enviar_imessage(png_path, caption=""):
+    """iMessage vía la app Mensajes de macOS (AppleScript). GRATIS. SOLO corre EN TU MAC,
+    con Mensajes con sesión de iMessage. TID_IMESSAGE_TO admite números/Apple ID O nombres
+    de contacto (los resuelve de tus Contactos de Apple), separados por coma."""
+    import subprocess
+    if not os.path.exists(png_path):
+        return False, f"No existe la imagen: {png_path}"
+    dests, motivo = _imessage_dests()
+    if dests is None:
+        return False, motivo
     cap = (caption or "").replace("\\", " ").replace('"', "'").replace("\n", " · ")
     png_abs = os.path.abspath(png_path)
     # Mensajes.app corre en sandbox: si no puede LEER el archivo de origen, el
@@ -328,7 +373,7 @@ def main():
                   "  • iMessage (macOS, gratis): TID_IMESSAGE_TO=\"+52155...,mamá@icloud.com\"")
         return
 
-    canales = [enviar_telegram, enviar_whatsapp, enviar_email]
+    canales = [enviar_telegram, enviar_imessage_texto, enviar_whatsapp, enviar_email]
     algun_intento = False
     for fn in canales:
         ok, detalle = fn(texto)
@@ -352,7 +397,10 @@ if __name__ == "__main__":
 # 3) crontab -e  y agrega (ajusta la ruta y exporta las variables en el script/env):
 #   0 7 * * *  cd ~/Cosas-Carlos/tid-max/software && python3 whoop_sync.py && \
 #              python3 tid_data.py && python3 tid_agent.py && \
-#              python3 tid_cliente.py && python3 tid_notify.py --foto
+#              python3 tid_cliente.py && python3 tid_notify.py
+# RECOMENDADO: envío de TEXTO + LINK del tablero (TID_DASHBOARD_URL). El texto siempre
+# entrega por iMessage; el link abre la tarjeta completa. Es el canal más confiable.
+# Sin flags manda texto por los canales configurados (Telegram, iMessage, WhatsApp, correo).
+# Con --foto intenta la IMAGEN cliente.png (adjunto: frágil en iMessage; ok en Telegram).
 # (macOS: da permiso de "Acceso total al disco" a cron/Terminal.)
-# Sin --foto manda solo texto. Con --foto manda la tarjeta cliente.png a todos los chats.
 # ---------------------------------------------------------------------------
