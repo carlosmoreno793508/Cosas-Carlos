@@ -151,6 +151,34 @@ Con esto, el motor puede **evaluar** el sueño, no solo mostrarlo:
 
 ---
 
+## 10. Refinamientos pendientes de integrar (de revisión cruzada) — ⏳ NO cableados
+
+Salen de una revisión cruzada externa (2 agentes) + auditoría propia. **Aún no aplicados** al
+motor/tarjeta/coach; entran cuando Carlos apruebe la integración (ver PROJECT-TRACKER, pendientes).
+
+1. **Sueño de 24 h, no solo nocturno.** El diagnóstico "crónicamente corto" se basó en el dato
+   **nocturno**; falta **sumar la siesta** habitual de Gael (documentada: *siesta 12:00–14:20*). Con
+   el sueño de 24 h, su total real está **más cerca de la meta**. → El motor debe calcular "sueño
+   total" = nocturno + siestas.
+   - *Matiz (auditoría):* la siesta **acerca** el total pero **no lo iguala** — el pulso grande de GH
+     ocurre al inicio del sueño **nocturno** y la arquitectura de una siesta es distinta. Duración
+     nocturna + regularidad siguen siendo la palanca.
+2. **Cafeína por horario de COMPETENCIA, no genérica.** "Nada después del mediodía" protege el sueño
+   en entrenamiento, pero en **finales vespertinas** la cafeína es ergogénica (WADA-legal). Su ALLMAX
+   200 mg (vida media 5–7 h) sigue activo a medianoche → el ajuste es **dosis/timing** (100–150 mg más
+   temprano, o solo prelims), **no eliminarla**. Regla ligada al horario real de cada sesión.
+3. **Cena con CHO + timing como palanca de duración de sueño.** Ángulo nutrición↔sueño no cubierto;
+   encaja doble porque Gael viene **bajo en carbohidratos**. El CHO en la cena favorece conciliar.
+4. **Deuda de sueño MULTI-DÍA (acumulador rodante).** Hoy mostramos la deuda de una noche (WHOOP,
+   ~247 min); un acumulador de varios días **sí es nuevo** y vale la pena trackearlo.
+5. **Distinguir artefacto de sensor vs conducta.** Dormir prono + comprimir la muñeca puede inflar
+   **interrupciones** y ensuciar la **clasificación de fases** (corrobora el reparto raro visto en el
+   dashboard: Ligero 31% es implausible). **Pero la consistencia baja NO es artefacto** — dormirse a
+   las 2:53 AM e irregular es conducta real. No dejar que "es el WHOOP" tape el problema #2.
+
+> Nota de auditoría: la revisión externa afirmó que "no trackeamos deuda de sueño" — **falso**, sí la
+> mostramos (247 min). Solo el acumulador multi-día sería nuevo. (Se audita también lo que entra.)
+
 ## 9. Fuentes
 
 - Mah CD et al. *The effects of sleep extension on the athletic performance of collegiate basketball
