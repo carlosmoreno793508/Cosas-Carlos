@@ -151,18 +151,57 @@ def enviar_foto_telegram(png_path, caption=""):
     return oks == len(chats), f"Foto enviada a {oks}/{len(chats)} por Telegram"
 
 
+def _es_handle(d):
+    import re
+    return bool(re.match(r'^[+\d][\d\s\-()]{6,}$', d)) or "@" in d
+
+
+def _resolver_contacto(nombre):
+    """Busca un contacto por nombre en Contactos de macOS y devuelve su teléfono/Apple ID."""
+    if sys.platform != "darwin":
+        return ""
+    import subprocess
+    n = nombre.replace('"', "'")
+    script = (
+        'tell application "Contacts"\n'
+        f'  set matches to (people whose name contains "{n}")\n'
+        '  if (count of matches) is 0 then return ""\n'
+        '  set p to item 1 of matches\n'
+        '  try\n    return value of item 1 of (phones of p)\n  end try\n'
+        '  try\n    return value of item 1 of (emails of p)\n  end try\n'
+        '  return ""\n'
+        'end tell'
+    )
+    try:
+        r = subprocess.run(["osascript", "-e", script], capture_output=True, text=True, timeout=20)
+        return r.stdout.strip()
+    except Exception:
+        return ""
+
+
 def enviar_imessage(png_path, caption=""):
     """iMessage vía la app Mensajes de macOS (AppleScript). GRATIS. SOLO corre EN TU MAC,
-    con Mensajes con sesión de iMessage. Destinatarios (número con lada o Apple ID) en
-    TID_IMESSAGE_TO, separados por coma (mamá, Gael)."""
+    con Mensajes con sesión de iMessage. TID_IMESSAGE_TO admite números/Apple ID O nombres
+    de contacto (los resuelve de tus Contactos de Apple), separados por coma."""
     import subprocess
-    dests = [d.strip() for d in (os.environ.get("TID_IMESSAGE_TO") or "").split(",") if d.strip()]
-    if not dests:
+    entradas = [d.strip() for d in (os.environ.get("TID_IMESSAGE_TO") or "").split(",") if d.strip()]
+    if not entradas:
         return False, "iMessage no configurado"
     if sys.platform != "darwin":
         return False, "iMessage solo corre en macOS (tu Mac)"
     if not os.path.exists(png_path):
         return False, f"No existe la imagen: {png_path}"
+    # Resuelve nombres de contacto a su número/handle
+    dests = []
+    for e in entradas:
+        if _es_handle(e):
+            dests.append(e)
+        else:
+            h = _resolver_contacto(e)
+            if not h:
+                return False, f"No encontré el contacto '{e}' en Contactos"
+            print(f"(Contacto '{e}' → {h})")
+            dests.append(h)
     cap = (caption or "").replace("\\", " ").replace('"', "'").replace("\n", " · ")
     png_abs = os.path.abspath(png_path)
     oks = 0
