@@ -204,6 +204,18 @@ def enviar_imessage(png_path, caption=""):
             dests.append(h)
     cap = (caption or "").replace("\\", " ").replace('"', "'").replace("\n", " · ")
     png_abs = os.path.abspath(png_path)
+    # Mensajes.app corre en sandbox: si no puede LEER el archivo de origen, el
+    # adjunto se manda vacio y llega como "No entregado" (el texto si entra
+    # porque no lee ningun archivo). Copiamos la imagen a una ruta limpia
+    # (/tmp, legible) para bajar la probabilidad de ese fallo. El fix definitivo
+    # es dar "Acceso total al disco" a Mensajes en Ajustes del Sistema.
+    try:
+        import shutil
+        safe_png = "/tmp/tid-status.png"
+        shutil.copy(png_abs, safe_png)
+        png_abs = safe_png
+    except Exception:
+        pass
     oks = 0
     for to in dests:
         # Mandamos la IMAGEN primero y le damos tiempo a subir ANTES del texto.
