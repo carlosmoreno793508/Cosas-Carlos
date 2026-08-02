@@ -27,6 +27,9 @@ PROC = os.path.join(SCRIPT_DIR, "datos", "procesado")
 COACH_JSON = os.path.join(PROC, "coach-hoy.json")
 OUT_HTML = os.path.join(SCRIPT_DIR, "cliente.html")
 OUT_PNG = os.path.join(SCRIPT_DIR, "cliente.png")
+# Carpeta que sirve el tunel de Cloudflare (index.html = tarjeta del dia).
+PUBLICO_DIR = os.path.join(SCRIPT_DIR, "publico")
+PUBLICO_HTML = os.path.join(PUBLICO_DIR, "index.html")
 
 SEM = {"verde": ("good", "Listo", "#0f9d6b"), "amarillo": ("warn", "Moderado", "#d98a1a"),
        "rojo": ("crit", "Cuidado", "#d4504f")}
@@ -230,6 +233,11 @@ def main():
     with open(OUT_HTML, "w", encoding="utf-8") as f:
         f.write(html)
     print(f"HTML: {OUT_HTML}")
+    # Copia servible para el tunel de Cloudflare (link publico para la mama de Gael).
+    os.makedirs(PUBLICO_DIR, exist_ok=True)
+    with open(PUBLICO_HTML, "w", encoding="utf-8") as f:
+        f.write(html)
+    print(f"Público (para el túnel): {PUBLICO_HTML}")
     if "--solo-html" in sys.argv:
         return
     ok, detalle = render_png(OUT_HTML, OUT_PNG)

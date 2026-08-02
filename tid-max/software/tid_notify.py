@@ -67,6 +67,18 @@ def fmt_nado(d):
     return f"{d.get('tipo')} · {d.get('km_dia')} km" + (f" ({ses})" if ses else "")
 
 
+def _url_tunel():
+    """Lee la URL pública del túnel de Cloudflare (publico/url.txt), que deja escrita
+    tid_publicar.sh. Así el mensaje diario lleva el link sin configurar nada a mano."""
+    f = os.path.join(SCRIPT_DIR, "publico", "url.txt")
+    try:
+        if os.path.exists(f):
+            return open(f, encoding="utf-8").read().strip()
+    except Exception:
+        pass
+    return ""
+
+
 def construir_mensaje(p):
     f = p.get("hechos", {})
     pil = p.get("pilares", {})
@@ -94,7 +106,7 @@ def construir_mensaje(p):
     alertas = p.get("alertas") or []
     for a in alertas[:2]:
         L.append(f"⚠️ {a}")
-    url = os.environ.get("TID_DASHBOARD_URL")
+    url = os.environ.get("TID_DASHBOARD_URL") or _url_tunel()
     if url:
         L.append("")
         L.append(f"📊 Tablero del día: {url}")
