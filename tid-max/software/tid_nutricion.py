@@ -15,6 +15,7 @@ Uso:
     python tid_nutricion.py foto_comida.jpg                 # analiza foto Y la registra como consumo de hoy
     python tid_nutricion.py foto_comida.jpg --tipo doble    # contexto: día de doble sesión
     python tid_nutricion.py --texto "6 huevos, licuado, 50 g totopos"   # registra por texto (sin foto)
+    python tid_nutricion.py IMG.jpeg --avisar               # registra Y avisa a la familia (link actualizado)
     python tid_nutricion.py --consumo                       # muestra el consumo acumulado de hoy vs meta
     python tid_nutricion.py --reset-consumo                 # borra el consumo de hoy (empezar de cero)
     python tid_nutricion.py --plan                          # plan de comidas del día (kcal + sus alimentos)
@@ -202,6 +203,19 @@ def registrar_consumo(est, origen="foto"):
     return data
 
 
+def avisar_familia():
+    """Refresca la tarjeta (con el consumo nuevo) y manda el mensaje corto con el link.
+    Se usa con --avisar tras registrar una comida, para no esperar a las horas fijas."""
+    import subprocess
+    py = sys.executable or "python3"
+    print("\n----- Avisar: refresco tarjeta + mensaje con link -----")
+    subprocess.run([py, os.path.join(SCRIPT_DIR, "tid_cliente.py"), "--solo-html"],
+                   capture_output=True, text=True, timeout=120)
+    r = subprocess.run([py, os.path.join(SCRIPT_DIR, "tid_notify.py")],
+                       capture_output=True, text=True, timeout=120)
+    print((r.stdout or r.stderr or "").strip())
+
+
 def print_consumo(data):
     t = data.get("totales", {})
     meta = data.get("meta", {})
@@ -346,6 +360,8 @@ def main():
         est = ai_estimate_texto(client, desc, tipo_dia, base)
         print_estimacion(est)
         print_consumo(registrar_consumo(est, "texto"))
+        if "--avisar" in args:
+            avisar_familia()
         return
 
     fotos = [a for a in args if not a.startswith("--")]
@@ -374,6 +390,8 @@ def main():
             est = ai_estimate(client, img_path, tipo_dia, base)
             print_estimacion(est)
             print_consumo(registrar_consumo(est, "foto"))
+            if "--avisar" in args:
+                avisar_familia()
             return
         except Exception as e:
             print(f"(Aviso: falló la llamada IA: {e}. Caigo a modo base.)")
