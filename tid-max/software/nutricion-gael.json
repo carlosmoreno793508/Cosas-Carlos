@@ -1,9 +1,10 @@
 {
   "_fuente": "Plantilla real de alimentacion y suplementos de Gael (capturada con Carlos). Referencia para el agente de nutricion y para estimar la ingesta de un dia tipo. Atleta joven (19 anos): enfoque en cubrir demanda energetica, NUNCA restriccion.",
   "estructura_semana": {
-    "dobles": ["Lun", "Mie", "Vie"],
-    "sencillas": ["Mar", "Jue", "Sab"],
-    "descanso_total": ["Dom"]
+    "dobles": [],
+    "sencillas": ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
+    "descanso_total": ["Dom"],
+    "_nota": "Taper profundo desde el 4-ago: se acabaron las dobles (ultima el viernes). Todo sencillas: Lun-Vie por la tarde, Sab por la manana."
   },
   "perfil": {
     "edad": 18,
