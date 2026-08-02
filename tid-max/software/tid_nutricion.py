@@ -121,7 +121,8 @@ def _modelo_estimacion():
 
 _INSTR = ("Estima el platillo, los alimentos y los macros: da un RANGO (…_aprox) y ADEMÁS un "
           "NÚMERO puntual entero (…_num, tu mejor estimación) para poder sumar el día. Di si "
-          "cubre la demanda del entrenamiento y qué sugerirías agregar. Marca tu confianza.")
+          "cubre la demanda del entrenamiento y qué sugerirías agregar. Marca tu confianza. "
+          "Sé BREVE: 'cubre_demanda' y 'sugerencia' en 1–2 frases cada uno.")
 
 
 def _contexto(tipo_dia, base):
@@ -134,7 +135,7 @@ def ai_estimate(client, img_path, tipo_dia, base):
     Estimacion = _modelo_estimacion()
     media, data = encode_image(img_path)
     resp = client.messages.parse(
-        model=MODEL, max_tokens=1200, system=f"{PERSONA}\n\n{GUARDRAILS}",
+        model=MODEL, max_tokens=2500, system=f"{PERSONA}\n\n{GUARDRAILS}",
         messages=[{"role": "user", "content": [
             {"type": "image", "source": {"type": "base64", "media_type": media, "data": data}},
             {"type": "text", "text": _contexto(tipo_dia, base) + "\n\n" + _INSTR},
@@ -148,7 +149,7 @@ def ai_estimate_texto(client, descripcion, tipo_dia, base):
     """Estima macros a partir de una DESCRIPCIÓN de texto (lo que Carlos escribe)."""
     Estimacion = _modelo_estimacion()
     resp = client.messages.parse(
-        model=MODEL, max_tokens=1200, system=f"{PERSONA}\n\n{GUARDRAILS}",
+        model=MODEL, max_tokens=2500, system=f"{PERSONA}\n\n{GUARDRAILS}",
         messages=[{"role": "user", "content":
                    _contexto(tipo_dia, base) + "\n\nGael comió (descrito por Carlos): "
                    f"\"{descripcion}\".\n\n" + _INSTR}],
