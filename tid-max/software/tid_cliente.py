@@ -156,7 +156,7 @@ def build_html(p):
     veredicto = p.get("veredicto", "")
 
     def chip(txt, c):
-        return f'<span class="chip {c}">{txt}</span>'
+        return f'<span class="chip {c}"><span class="dot"></span>{txt}</span>'
 
     hrv_chip = chip(f"{hrv_t:+d}% en 7 días", "crit" if isinstance(hrv_t, (int, float)) and hrv_t <= -8 else "good") if isinstance(hrv_t, (int, float)) else ""
     rec_chip = chip("moderar", "warn") if isinstance(rec, (int, float)) and rec < 67 else chip("listo", "good")
@@ -164,7 +164,10 @@ def build_html(p):
     return f"""<div class="wrap">
   <header class="top">
     <div class="brand"><span class="dot"></span>TID-MAX <small>· Rendimiento</small></div>
-    <div class="athlete">Atleta<b>{p.get('atleta','Gael')}</b></div>
+    <div style="display:flex;align-items:center;gap:14px">
+      <button class="theme-toggle" onclick="tglTheme()" aria-label="Cambiar modo día/noche">🌙 Noche</button>
+      <div class="athlete">Atleta<b>{p.get('atleta','Gael')}</b></div>
+    </div>
   </header>
   <section class="hero">
     <div class="card pad">
@@ -223,8 +226,18 @@ def build_html(p):
 
 
 CHART_JS = r"""
+// --- Modo dia/noche: sigue el telefono por defecto; el boton lo cambia a mano ---
+function _esNoche(){var r=document.documentElement,t=r.getAttribute('data-theme');
+  return t?t==='dark':window.matchMedia('(prefers-color-scheme:dark)').matches;}
+function _pintaBoton(){var b=document.querySelector('.theme-toggle');if(b)b.textContent=_esNoche()?'☀️ Día':'🌙 Noche';}
+function tglTheme(){document.documentElement.setAttribute('data-theme',_esNoche()?'light':'dark');_pintaBoton();
+  if(window._redibuja)window._redibuja();}
+_pintaBoton();
+try{window.matchMedia('(prefers-color-scheme:dark)').addEventListener('change',function(){
+  if(!document.documentElement.getAttribute('data-theme')){_pintaBoton();if(window._redibuja)window._redibuja();}});}catch(e){}
 const W=1000,H=280,pl=44,pr=16,pt=18,pb=34;
-if(D&&D.length){
+window._redibuja=function(){
+if(!(D&&D.length))return;
 const xs=i=>pl+(W-pl-pr)*i/(D.length-1);
 const vals=D.flatMap(d=>[d[1],d[2]]);const ymin=Math.floor(Math.min(...vals))-0.3,ymax=Math.ceil(Math.max(...vals))+0.3;
 const ys=v=>pt+(H-pt-pb)*(1-(v-ymin)/(ymax-ymin));
@@ -238,7 +251,8 @@ g+=`<polygon points="${area}" fill="${form}" opacity="0.14"/>`;
 g+=`<polyline points="${poly(2)}" fill="none" stroke="${fat}" stroke-width="2.5"/>`;
 g+=`<polyline points="${poly(1)}" fill="none" stroke="${fit}" stroke-width="2.5"/>`;
 D.forEach((d,i)=>{if(i%6===0||i===D.length-1)g+=`<text x="${xs(i).toFixed(1)}" y="${H-pb+18}" fill="${muted}" font-size="10.5" text-anchor="middle">${d[0]}</text>`;});
-g+='</svg>';document.getElementById('chart').innerHTML=g;}
+g+='</svg>';document.getElementById('chart').innerHTML=g;};
+_redibuja();
 """
 
 
@@ -279,7 +293,7 @@ def main():
     with open(COACH_JSON, encoding="utf-8") as f:
         payload = json.load(f)
     body = build_html(payload)
-    html = (f'<!doctype html><html lang="es" data-theme="light"><head><meta charset="utf-8">'
+    html = (f'<!doctype html><html lang="es"><head><meta charset="utf-8">'
             f'<meta name="viewport" content="width=device-width, initial-scale=1">'
             f'<style>{CSS}</style></head><body>{body}</body></html>')
     with open(OUT_HTML, "w", encoding="utf-8") as f:
