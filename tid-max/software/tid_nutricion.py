@@ -12,10 +12,16 @@ son aproximados y se marcan como tales. Sin ANTHROPIC_API_KEY (o sin SDK) cae co
 mensaje por reglas usando la plantilla base — el producto sigue.
 
 Uso:
-    python tid_nutricion.py foto_comida.jpg
+    python tid_nutricion.py foto_comida.jpg                 # analiza foto Y la registra como consumo de hoy
     python tid_nutricion.py foto_comida.jpg --tipo doble    # contexto: día de doble sesión
+    python tid_nutricion.py --texto "6 huevos, licuado, 50 g totopos"   # registra por texto (sin foto)
+    python tid_nutricion.py --consumo                       # muestra el consumo acumulado de hoy vs meta
+    python tid_nutricion.py --reset-consumo                 # borra el consumo de hoy (empezar de cero)
     python tid_nutricion.py --plan                          # plan de comidas del día (kcal + sus alimentos)
     python tid_nutricion.py --plantilla                     # imprime la plantilla base de Gael
+
+Cada foto/--texto SUMA una comida al consumo del día (datos/procesado/consumo-hoy.json);
+la tarjeta del cliente muestra "consumido vs meta" cuando hay algo registrado hoy.
 
 Requiere (modo IA):
     pip install anthropic
@@ -25,9 +31,12 @@ import os
 import sys
 import json
 import base64
+import datetime
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 BASE_NUTRI = os.path.join(SCRIPT_DIR, "nutricion-gael.json")
+# Registro del consumo del día (lo que Carlos manda: foto/texto). La tarjeta lo lee.
+CONSUMO_JSON = os.path.join(SCRIPT_DIR, "datos", "procesado", "consumo-hoy.json")
 MODEL = "claude-opus-5"
 
 PERSONA = (
@@ -83,14 +92,20 @@ def ai_client():
         return None
 
 
-def ai_estimate(client, img_path, tipo_dia, base):
+def _modelo_estimacion():
+    """Esquema Pydantic. Los macros llevan un RANGO (…_aprox, para leer) y un NÚMERO
+    puntual (…_num, para poder sumar el consumo del día)."""
     from pydantic import BaseModel
 
     class Macros(BaseModel):
         kcal_aprox: str
+        kcal_num: int
         proteina_g_aprox: str
+        proteina_g_num: int
         carbohidratos_g_aprox: str
+        carbohidratos_g_num: int
         grasa_g_aprox: str
+        grasa_g_num: int
 
     class Estimacion(BaseModel):
         platillo: str
@@ -100,28 +115,110 @@ def ai_estimate(client, img_path, tipo_dia, base):
         sugerencia: str         # qué agregar/ajustar (sin restringir)
         confianza: str          # alta / media / baja
 
+    return Estimacion
+
+
+_INSTR = ("Estima el platillo, los alimentos y los macros: da un RANGO (…_aprox) y ADEMÁS un "
+          "NÚMERO puntual entero (…_num, tu mejor estimación) para poder sumar el día. Di si "
+          "cubre la demanda del entrenamiento y qué sugerirías agregar. Marca tu confianza.")
+
+
+def _contexto(tipo_dia, base):
+    return (f"Contexto: es un día de tipo '{tipo_dia}'. "
+            "Plantilla base de Gael (lo que suele comer y sus suplementos):\n"
+            f"{json.dumps(base, ensure_ascii=False)}")
+
+
+def ai_estimate(client, img_path, tipo_dia, base):
+    Estimacion = _modelo_estimacion()
     media, data = encode_image(img_path)
-    contexto = (
-        f"Contexto: es un día de tipo '{tipo_dia}'. "
-        "Plantilla base de Gael (referencia de lo que suele comer y sus suplementos):\n"
-        f"{json.dumps(base, ensure_ascii=False)}"
-    )
     resp = client.messages.parse(
-        model=MODEL,
-        max_tokens=1200,
-        system=f"{PERSONA}\n\n{GUARDRAILS}",
-        messages=[{
-            "role": "user",
-            "content": [
-                {"type": "image", "source": {"type": "base64", "media_type": media, "data": data}},
-                {"type": "text", "text": contexto + "\n\nEstima el platillo, los alimentos, los "
-                 "macros aproximados (en rangos), si cubre la demanda del entrenamiento y qué "
-                 "sugerirías agregar. Marca tu nivel de confianza."},
-            ],
-        }],
+        model=MODEL, max_tokens=1200, system=f"{PERSONA}\n\n{GUARDRAILS}",
+        messages=[{"role": "user", "content": [
+            {"type": "image", "source": {"type": "base64", "media_type": media, "data": data}},
+            {"type": "text", "text": _contexto(tipo_dia, base) + "\n\n" + _INSTR},
+        ]}],
         output_format=Estimacion,
     )
     return resp.parsed_output
+
+
+def ai_estimate_texto(client, descripcion, tipo_dia, base):
+    """Estima macros a partir de una DESCRIPCIÓN de texto (lo que Carlos escribe)."""
+    Estimacion = _modelo_estimacion()
+    resp = client.messages.parse(
+        model=MODEL, max_tokens=1200, system=f"{PERSONA}\n\n{GUARDRAILS}",
+        messages=[{"role": "user", "content":
+                   _contexto(tipo_dia, base) + "\n\nGael comió (descrito por Carlos): "
+                   f"\"{descripcion}\".\n\n" + _INSTR}],
+        output_format=Estimacion,
+    )
+    return resp.parsed_output
+
+
+def _hoy():
+    return datetime.date.today().isoformat()
+
+
+def _meta_hoy():
+    """Meta nutricional de hoy (del dataset): kcal y macros objetivo."""
+    datos = cargar_nutricion_hoy()
+    if not datos or not datos[0]:
+        return {}
+    n = datos[0]
+    return {"kcal": n.get("kcal_objetivo"), "prot_g": n.get("proteina_g"),
+            "carb_g": n.get("carbohidratos_g"), "grasa_g": n.get("grasa_g")}
+
+
+def registrar_consumo(est, origen="foto"):
+    """Suma una comida al consumo de HOY (se reinicia solo al cambiar de día)."""
+    os.makedirs(os.path.dirname(CONSUMO_JSON), exist_ok=True)
+    hoy = _hoy()
+    data = {}
+    if os.path.exists(CONSUMO_JSON):
+        try:
+            with open(CONSUMO_JSON, encoding="utf-8") as fh:
+                data = json.load(fh)
+        except Exception:
+            data = {}
+    if data.get("fecha") != hoy:
+        data = {"fecha": hoy, "comidas": []}
+    m = est.macros
+    data["comidas"].append({
+        "hora": datetime.datetime.now().strftime("%H:%M"),
+        "platillo": est.platillo,
+        "kcal": int(m.kcal_num), "prot_g": int(m.proteina_g_num),
+        "carb_g": int(m.carbohidratos_g_num), "grasa_g": int(m.grasa_g_num),
+        "origen": origen,
+    })
+    tot = {"kcal": 0, "prot_g": 0, "carb_g": 0, "grasa_g": 0}
+    for c in data["comidas"]:
+        for k in tot:
+            tot[k] += c.get(k, 0)
+    data["totales"] = tot
+    data["meta"] = _meta_hoy()
+    with open(CONSUMO_JSON, "w", encoding="utf-8") as fh:
+        json.dump(data, fh, ensure_ascii=False, indent=2)
+    return data
+
+
+def print_consumo(data):
+    t = data.get("totales", {})
+    meta = data.get("meta", {})
+    mk = meta.get("kcal") or 0
+    print("\n----- Consumo de hoy (acumulado, con la info que mandaste) -----")
+    for c in data.get("comidas", []):
+        print(f"  • {c['hora']} {c['platillo']}: {c['kcal']} kcal "
+              f"(C {c['carb_g']} / P {c['prot_g']} / G {c['grasa_g']})")
+    linea = f"TOTAL: {t.get('kcal', 0)} kcal"
+    if mk:
+        linea += f" de {mk} meta ({round(100 * t.get('kcal', 0) / mk)}%)"
+    linea += (f" · C {t.get('carb_g', 0)} · P {t.get('prot_g', 0)} · G {t.get('grasa_g', 0)}")
+    print(linea)
+    if mk:
+        falta = max(mk - t.get('kcal', 0), 0)
+        fc = max((meta.get('carb_g') or 0) - t.get('carb_g', 0), 0)
+        print(f"Faltan ~{falta} kcal y ~{fc} g de carbohidrato para la meta.")
 
 
 def cargar_nutricion_hoy():
@@ -220,6 +317,37 @@ def main():
         print_plan(nutri, plan)
         return
 
+    if "--consumo" in args:
+        if os.path.exists(CONSUMO_JSON):
+            with open(CONSUMO_JSON, encoding="utf-8") as fh:
+                d = json.load(fh)
+            if d.get("fecha") == _hoy():
+                print_consumo(d)
+            else:
+                print("Aún no hay consumo registrado HOY. Manda una comida con foto o --texto.")
+        else:
+            print("Aún no hay consumo registrado. Manda una comida con foto o --texto.")
+        return
+
+    if "--reset-consumo" in args:
+        if os.path.exists(CONSUMO_JSON):
+            os.remove(CONSUMO_JSON)
+        print("Consumo de hoy reiniciado.")
+        return
+
+    if "--texto" in args:
+        i = args.index("--texto")
+        desc = args[i + 1] if i + 1 < len(args) else ""
+        if not desc:
+            sys.exit('Uso: python tid_nutricion.py --texto "6 huevos con frijoles, licuado, 50 g totopos"')
+        client = ai_client() if have_api() else None
+        if not client:
+            sys.exit("Necesito ANTHROPIC_API_KEY (y el SDK) para estimar por texto.")
+        est = ai_estimate_texto(client, desc, tipo_dia, base)
+        print_estimacion(est)
+        print_consumo(registrar_consumo(est, "texto"))
+        return
+
     fotos = [a for a in args if not a.startswith("--")]
     if not fotos:
         sys.exit("Uso: python tid_nutricion.py <foto.jpg> [--tipo doble|sencilla] | --plantilla")
@@ -243,7 +371,9 @@ def main():
     client = ai_client() if have_api() else None
     if client:
         try:
-            print_estimacion(ai_estimate(client, img_path, tipo_dia, base))
+            est = ai_estimate(client, img_path, tipo_dia, base)
+            print_estimacion(est)
+            print_consumo(registrar_consumo(est, "foto"))
             return
         except Exception as e:
             print(f"(Aviso: falló la llamada IA: {e}. Caigo a modo base.)")

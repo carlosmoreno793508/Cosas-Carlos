@@ -25,6 +25,7 @@ from datetime import datetime, timedelta
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROC = os.path.join(SCRIPT_DIR, "datos", "procesado")
 COACH_JSON = os.path.join(PROC, "coach-hoy.json")
+CONSUMO_JSON = os.path.join(PROC, "consumo-hoy.json")
 OUT_HTML = os.path.join(SCRIPT_DIR, "cliente.html")
 OUT_PNG = os.path.join(SCRIPT_DIR, "cliente.png")
 # Carpeta que sirve el tunel de Cloudflare (index.html = tarjeta del dia).
@@ -85,8 +86,63 @@ def _fmt_nado(d):
     return (f"{d.get('tipo','').capitalize()} · {d.get('km_dia')} km", ses)
 
 
+def load_consumo():
+    """Consumo registrado HOY (lo que Carlos mandó por foto/texto). None si no hay o es de otro día."""
+    if not os.path.exists(CONSUMO_JSON):
+        return None
+    try:
+        with open(CONSUMO_JSON, encoding="utf-8") as fh:
+            d = json.load(fh)
+    except Exception:
+        return None
+    return d if d.get("fecha") == datetime.now().date().isoformat() else None
+
+
+def _combustible_html(f, m, consumo):
+    """Tarjeta de combustible: solo meta si no hay consumo; consumido vs meta si sí."""
+    meta_k = f.get("kcal_objetivo_hoy", "—")
+    filas = [
+        ("Energía objetivo", f'<span style="color:var(--aqua)">~{meta_k} kcal</span>'),
+        ("Carbohidratos", f"{m.get('C','—')} g"),
+        ("Proteína", f"{m.get('P','—')} g"),
+        ("Grasa", f"{m.get('G','—')} g"),
+    ]
+    if not consumo:
+        rows = "".join(
+            f'<div class="row"><span class="lab">{a}</span><span class="val num">{b}</span></div>'
+            for a, b in filas)
+        return f'<h2 class="h">Combustible del día 🍽️</h2>{rows}'
+    t = consumo.get("totales", {})
+    meta = consumo.get("meta", {})
+    mk = meta.get("kcal") or (meta_k if isinstance(meta_k, (int, float)) else 0) or 0
+    ck = t.get("kcal", 0)
+    pct = round(100 * ck / mk) if mk else 0
+    falta_k = max(mk - ck, 0) if mk else 0
+    chip_c = "good" if 90 <= pct <= 115 else ("warn" if pct < 90 else "crit")
+    ncom = len(consumo.get("comidas", []))
+    comidas = "".join(
+        f'<div class="row"><span class="lab" style="font-size:.86rem">{c.get("hora","")} · {c.get("platillo","")}</span>'
+        f'<span class="val num" style="font-weight:600">{c.get("kcal",0)} kcal</span></div>'
+        for c in consumo.get("comidas", []))
+
+    def cm(cons, met, u="g"):
+        return f'{cons} / {met if met is not None else "—"} {u}'
+    return (
+        f'<h2 class="h">Combustible del día 🍽️ <span class="chip {chip_c}" '
+        f'style="text-transform:none;letter-spacing:0">{pct}% de la meta</span></h2>'
+        f'<div class="row"><span class="lab">Consumido ({ncom} comida{"s" if ncom!=1 else ""})</span>'
+        f'<span class="val num">{cm(ck, mk, "kcal")}</span></div>'
+        f'<div class="row"><span class="lab">Carbohidratos</span><span class="val num">{cm(t.get("carb_g",0), meta.get("carb_g"))}</span></div>'
+        f'<div class="row"><span class="lab">Proteína</span><span class="val num">{cm(t.get("prot_g",0), meta.get("prot_g"))}</span></div>'
+        f'<div class="row"><span class="lab">Grasa</span><span class="val num">{cm(t.get("grasa_g",0), meta.get("grasa_g"))}</span></div>'
+        f'<div class="row"><span class="lab">Falta por cubrir</span>'
+        f'<span class="val num" style="color:var(--aqua)">~{falta_k} kcal</span></div>'
+        f'{comidas}')
+
+
 def build_html(p):
     f = p.get("hechos", {})
+    consumo = load_consumo()
     cls, lbl, color = SEM.get(p.get("semaforo", "amarillo"), SEM["amarillo"])
     rec = f.get("recovery_pct")
     hrv_t = f.get("hrv_tendencia_7d_pct")
@@ -151,11 +207,7 @@ def build_html(p):
       <div class="row"><span class="lab">Despertares / deuda</span><span class="val num">{sd.get('despertares','—')} · {sd.get('deuda_min','—')} min</span></div>
     </div>
     <div class="card pad">
-      <h2 class="h">Combustible del día 🍽️</h2>
-      <div class="row"><span class="lab">Energía objetivo</span><span class="val num" style="color:var(--aqua)">~{f.get('kcal_objetivo_hoy','—')} kcal</span></div>
-      <div class="row"><span class="lab">Carbohidratos</span><span class="val num">{m.get('C','—')} g</span></div>
-      <div class="row"><span class="lab">Proteína</span><span class="val num">{m.get('P','—')} g</span></div>
-      <div class="row"><span class="lab">Grasa</span><span class="val num">{m.get('G','—')} g</span></div>
+      {_combustible_html(f, m, consumo)}
     </div>
   </section>
   <section class="card pad">
