@@ -8,6 +8,15 @@ Seguimiento vivo del proyecto por fases e ítems. Se actualiza conforme avanzamo
 - Si un ítem se traba o sale mal, ponlo en ⚠️ y describe la **acción correctiva** en su columna.
 - Una fase se marca **completa** cuando todos sus ítems están en ✅.
 
+## ⏳ Pendientes de aprobación (Carlos revisando)
+
+Cambios que afectan datos del cliente y **no se aplican** hasta que Carlos apruebe.
+
+| Tema | Qué falta aprobar | Estado | Doc |
+|---|---|---|---|
+| Corrección umbrales VT1/VT2/FATmax | Confirmar con el PDF del PE que **143=VT1, 167=VT2, 173=FATmax**; luego aplicar la rotación en los 5 puntos (perfil, config, motor, coach) | ⏳ Carlos valida PDF | `perfil-gael.md`, `software/nutricion-gael.json`, `software/tid_data.py`, `software/tid_agent.py` |
+| Estudio de sueño → integración | Aprobar rangos (Tabla A) y 2 lógicas: **%+minutos absolutos** y **"despertares" informativos**; luego cablear a motor/tarjeta/coach | ⏳ Carlos revisando | `analisis/estudio-sueno-gael.md` |
+
 ## Resumen de avance y presupuesto
 
 Presupuesto INDICATIVO en USD (a validar con cotizaciones reales: RFQ H0.4, lab IFT R0.1, abogado IP H2.3).
