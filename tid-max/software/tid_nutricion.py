@@ -20,9 +20,15 @@ Uso:
     python tid_nutricion.py --reset-consumo                 # borra el consumo de hoy (empezar de cero)
     python tid_nutricion.py --plan                          # plan de comidas del día (kcal + sus alimentos)
     python tid_nutricion.py --plantilla                     # imprime la plantilla base de Gael
+    python tid_nutricion.py --memoria                       # muestra lo que el agente ha APRENDIDO
 
 Cada foto/--texto SUMA una comida al consumo del día (datos/procesado/consumo-hoy.json);
 la tarjeta del cliente muestra "consumido vs meta" cuando hay algo registrado hoy.
+
+MEMORIA (aprendizaje): cada comida también se guarda en datos/procesado/historial-alimentos.json.
+Con eso el agente aprende los platillos recurrentes de Gael y sus macros típicos, y cuando subes
+una FOTO SIN escribir los detalles, reconoce "el desayuno de siempre" y autocompleta las porciones
+(bajando la confianza a 'media'). No reentrena el modelo: es memoria + reconocimiento.
 
 Requiere (modo IA):
     pip install anthropic
@@ -38,6 +44,12 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 BASE_NUTRI = os.path.join(SCRIPT_DIR, "nutricion-gael.json")
 # Registro del consumo del día (lo que Carlos manda: foto/texto). La tarjeta lo lee.
 CONSUMO_JSON = os.path.join(SCRIPT_DIR, "datos", "procesado", "consumo-hoy.json")
+# MEMORIA de alimentos: bitácora acumulada de TODAS las comidas estimadas (todos los días).
+# De aquí el agente "aprende" los platillos recurrentes de Gael y sus macros típicos, para
+# autocompletar cuando el usuario sube una foto SIN escribir los detalles.
+HISTORIAL_JSON = os.path.join(SCRIPT_DIR, "datos", "procesado", "historial-alimentos.json")
+HISTORIAL_MAX = 800          # tope de entradas guardadas (memoria acotada)
+MEMORIA_TOP = 8              # cuántos platillos frecuentes se le pasan como contexto
 MODEL = "claude-opus-5"
 
 PERSONA = (
@@ -122,13 +134,28 @@ def _modelo_estimacion():
 _INSTR = ("Estima el platillo, los alimentos y los macros: da un RANGO (…_aprox) y ADEMÁS un "
           "NÚMERO puntual entero (…_num, tu mejor estimación) para poder sumar el día. Di si "
           "cubre la demanda del entrenamiento y qué sugerirías agregar. Marca tu confianza. "
-          "Sé BREVE: 'cubre_demanda' y 'sugerencia' en 1–2 frases cada uno.")
+          "Sé BREVE: 'cubre_demanda' y 'sugerencia' en 1–2 frases cada uno.\n"
+          "IMPORTANTE — usa la MEMORIA: si la foto/descripción viene SIN detalles (no dice "
+          "porciones ni todos los ingredientes), y coincide con un platillo recurrente de la "
+          "memoria de Gael, AUTOCOMPLETA con lo que sueles ver en ese platillo (alimentos y "
+          "porciones típicas), pero baja la 'confianza' a 'media' y acláralo en la sugerencia. "
+          "Si no se parece a nada de la memoria, estima normal. NO inventes precisión que no tienes.")
+
+
+def _memoria_txt():
+    mem = construir_memoria()
+    if not mem:
+        return ""
+    return ("\n\nMEMORIA — platillos que Gael ya ha comido antes (aprendidos de fotos previas; "
+            "úsalos para reconocer y autocompletar cuando falten detalles):\n"
+            f"{json.dumps(mem, ensure_ascii=False)}")
 
 
 def _contexto(tipo_dia, base):
     return (f"Contexto: es un día de tipo '{tipo_dia}'. "
             "Plantilla base de Gael (lo que suele comer y sus suplementos):\n"
-            f"{json.dumps(base, ensure_ascii=False)}")
+            f"{json.dumps(base, ensure_ascii=False)}"
+            + _memoria_txt())
 
 
 def ai_estimate(client, img_path, tipo_dia, base):
@@ -160,6 +187,86 @@ def ai_estimate_texto(client, descripcion, tipo_dia, base):
 
 def _hoy():
     return datetime.date.today().isoformat()
+
+
+# ------------------------- MEMORIA / APRENDIZAJE -------------------------
+# El agente no "reentrena": APRENDE guardando cada comida en una bitácora y construyendo,
+# a partir de ella, los platillos recurrentes de Gael con sus macros típicos. Eso se le pasa
+# como contexto para que autocomplete cuando la foto/el texto vengan sin detalles.
+
+def _norm(txt):
+    return " ".join((txt or "").lower().strip().split())
+
+
+def guardar_historial(est, origen="foto"):
+    """Agrega la estimación a la bitácora acumulada (memoria de alimentos)."""
+    os.makedirs(os.path.dirname(HISTORIAL_JSON), exist_ok=True)
+    hist = []
+    if os.path.exists(HISTORIAL_JSON):
+        try:
+            with open(HISTORIAL_JSON, encoding="utf-8") as fh:
+                hist = json.load(fh)
+        except Exception:
+            hist = []
+    m = est.macros
+    hist.append({
+        "fecha": _hoy(),
+        "hora": datetime.datetime.now().strftime("%H:%M"),
+        "platillo": est.platillo,
+        "alimentos": list(est.alimentos or []),
+        "kcal": int(m.kcal_num), "prot_g": int(m.proteina_g_num),
+        "carb_g": int(m.carbohidratos_g_num), "grasa_g": int(m.grasa_g_num),
+        "confianza": getattr(est, "confianza", ""),
+        "origen": origen,
+    })
+    hist = hist[-HISTORIAL_MAX:]          # memoria acotada
+    with open(HISTORIAL_JSON, "w", encoding="utf-8") as fh:
+        json.dump(hist, fh, ensure_ascii=False, indent=2)
+    return hist
+
+
+def construir_memoria(top=MEMORIA_TOP):
+    """Resume la bitácora en los platillos recurrentes de Gael con sus macros típicos.
+    Devuelve una lista compacta (la 'memoria' que se le da al modelo como contexto)."""
+    if not os.path.exists(HISTORIAL_JSON):
+        return []
+    try:
+        with open(HISTORIAL_JSON, encoding="utf-8") as fh:
+            hist = json.load(fh)
+    except Exception:
+        return []
+    grupos = {}
+    for e in hist:
+        k = _norm(e.get("platillo"))
+        if not k:
+            continue
+        g = grupos.setdefault(k, {"platillo": e.get("platillo"), "veces": 0,
+                                  "kcal": [], "prot_g": [], "carb_g": [], "grasa_g": [],
+                                  "alimentos": {}, "ultima_vez": e.get("fecha", "")})
+        g["veces"] += 1
+        for kk in ("kcal", "prot_g", "carb_g", "grasa_g"):
+            if e.get(kk):
+                g[kk].append(e[kk])
+        for a in e.get("alimentos", []):
+            g["alimentos"][_norm(a)] = g["alimentos"].get(_norm(a), 0) + 1
+        if e.get("fecha", "") >= g["ultima_vez"]:
+            g["ultima_vez"] = e.get("fecha", "")
+
+    def _med(xs):
+        return int(sum(xs) / len(xs)) if xs else 0
+
+    memoria = []
+    for g in grupos.values():
+        alimentos = sorted(g["alimentos"], key=g["alimentos"].get, reverse=True)[:6]
+        memoria.append({
+            "platillo": g["platillo"], "veces": g["veces"],
+            "kcal_tipico": _med(g["kcal"]), "prot_g": _med(g["prot_g"]),
+            "carb_g": _med(g["carb_g"]), "grasa_g": _med(g["grasa_g"]),
+            "alimentos_frecuentes": alimentos, "ultima_vez": g["ultima_vez"],
+        })
+    # los más frecuentes primero (los que más vale la pena reconocer)
+    memoria.sort(key=lambda x: x["veces"], reverse=True)
+    return memoria[:top]
 
 
 def _meta_hoy():
@@ -201,6 +308,8 @@ def registrar_consumo(est, origen="foto"):
     data["meta"] = _meta_hoy()
     with open(CONSUMO_JSON, "w", encoding="utf-8") as fh:
         json.dump(data, fh, ensure_ascii=False, indent=2)
+    # Aprende: guarda esta comida en la memoria acumulada de alimentos.
+    guardar_historial(est, origen)
     return data
 
 
@@ -277,6 +386,23 @@ def print_plan(nutri, texto):
     print("\n(Estimaciones para orientar; ajústalas con un nutriólogo del deporte.)")
 
 
+def print_memoria():
+    mem = construir_memoria(top=99)
+    if not mem:
+        print("\nAún no hay memoria de alimentos. Sube algunas comidas (foto o --texto) y el "
+              "agente irá aprendiendo los platillos recurrentes de Gael.")
+        return
+    print("\n============== TID-MAX · MEMORIA DE ALIMENTOS (lo aprendido) ==============")
+    print("Platillos que el agente ya reconoce y autocompleta cuando faltan detalles:\n")
+    for m in mem:
+        al = ", ".join(m["alimentos_frecuentes"][:4])
+        print(f"  • {m['platillo']}  —  {m['veces']}× · ~{m['kcal_tipico']} kcal "
+              f"(C {m['carb_g']} / P {m['prot_g']} / G {m['grasa_g']}) · últ. {m['ultima_vez']}")
+        if al:
+            print(f"      alimentos: {al}")
+    print("\n(El agente usa esto para reconocer una foto sin detalles y estimar como 'de siempre'.)")
+
+
 def print_estimacion(e):
     print("\n============== TID-MAX · AGENTE DE NUTRICIÓN ==============")
     print(f"Platillo: {e.platillo}   (confianza: {e.confianza})")
@@ -315,6 +441,10 @@ def main():
 
     if "--plantilla" in args:
         print(json.dumps(base, ensure_ascii=False, indent=2))
+        return
+
+    if "--memoria" in args:
+        print_memoria()
         return
 
     if "--plan" in args:

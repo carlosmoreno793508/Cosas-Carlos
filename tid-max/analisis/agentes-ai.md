@@ -37,10 +37,38 @@ Arrancamos con **un** agente coach y separamos por rol conforme crezca. Todos le
 | **Coach** | Reporte diario en lenguaje natural: veredicto + plan de 5 pilares, tono humano y personalizado a Gael. **Salida estructurada** (`coach-hoy.json`) que alimenta el dashboard. | semáforo, recovery, HRV/FC vs base, sueño, ACWR, km nado | 🟡 v0 (`tid_agent.py`) |
 | **Preventivo** | Vigila señales tempranas de fatiga/sobreentrenamiento y escala **vigilar → descarga → fisio**. | tendencia HRV 7d, FC reposo 7d, días de recovery baja seguidos, ACWR | 🟡 v0 (`tid_agent.py --preventivo`) |
 | **Q&A** | Responde preguntas libres del entrenador ("¿por qué bajó la HRV esta semana?") sobre el dataset. | hechos del atleta | 🟡 v0 (`tid_agent.py --pregunta`) |
+| **Nutriólogo** | Estima el consumo desde **foto o texto** (kcal + macros), lo suma a "consumido vs meta" del día y arma el plan de comidas. **Con MEMORIA**: aprende los platillos recurrentes de Gael para autocompletar cuando falten detalles. | plantilla nutricional, meta del día, plan de nado, **memoria de alimentos** | 🟡 v0 (`tid_nutricion.py`) |
 | **Rendimiento** | Lee la carga (ACWR / forma) y dice si el plan progresa y cuándo llega el pico rumbo al evento. | CTL/ATL/TSB, volumen, workouts | ⬜ |
 
 > No sobre-ingenierizamos: **un** agente coach bien hecho cubre el 80%. Los demás son especializaciones del
 > mismo patrón (mismo dataset, distinto system prompt + distinto recorte de contexto).
+
+> ⚠️ **El Nutriólogo es el único que ESTIMA números nuevos** (kcal/macros de una foto), no solo interpreta
+> lo ya calculado por el motor. Por eso es donde el **AUDITOR** más aplica: una mala estimación se va directo
+> a la tarjeta de la familia. Mitigaciones: rango + confianza explícitos, y la memoria (abajo) que ancla la
+> estimación a lo que Gael realmente suele comer.
+
+### El Nutriólogo y su MEMORIA (aprendizaje sin reentrenar)
+
+Carlos pidió que "la IA vaya aprendiendo de las fotos por si el usuario no tiene tiempo de subir todos los
+detalles". La forma correcta **no es reentrenar el modelo** (caro, arriesga guardrails), sino **memoria +
+reconocimiento** — el mismo principio de "el LLM no inventa, se le da contexto":
+
+```
+  cada comida  ──►  historial-alimentos.json  ──►  construir_memoria()  ──►  contexto del agente
+   (foto/texto)      bitácora acumulada          platillos recurrentes      "esto es el desayuno
+                     (tope 800, acotada)          + macros típicos           de siempre" → autocompleta
+```
+
+- **Guarda** cada estimación en `datos/procesado/historial-alimentos.json` (`guardar_historial`).
+- **Aprende**: `construir_memoria()` agrupa por platillo, saca **macros típicos** (mediana), frecuencia y
+  alimentos más vistos → los N más recurrentes.
+- **Usa lo aprendido**: esa memoria entra en el contexto. Si la foto/el texto vienen **sin detalles** y
+  coinciden con un platillo conocido, el agente **autocompleta porciones** y **baja la confianza a 'media'**
+  (honestidad: no finge precisión que no tiene). Si no se parece a nada, estima normal.
+- Ver lo aprendido: `python tid_nutricion.py --memoria`.
+- **Privacidad:** la memoria es **por atleta** y local (vive en `datos/`, ya protegido por `.gitignore`).
+  No se comparte entre clientes.
 
 ---
 
@@ -81,7 +109,11 @@ Van en el **system prompt** de cada agente y se prueban:
 
 - **v0 (hecho):** `tid_agent.py` — 3 agentes vía Claude API con fallback por reglas, leyendo `dataset.json`:
   Coach del día (**salida estructurada Pydantic** → `coach-hoy.json` para el dashboard), Preventivo
-  (escalón vigilar→descarga→fisio) y Q&A conversacional (streaming).
+  (escalón vigilar→descarga→fisio) y Q&A conversacional (streaming). **+ Nutriólogo** (`tid_nutricion.py`):
+  estimación por visión/texto, consumo vs meta, plan de comidas y **memoria de alimentos** (aprende los
+  platillos recurrentes para autocompletar sin detalles).
 - **v1:** persona nombrada del asistente (ítem 2.5); que el dashboard lea `coach-hoy.json`.
 - **v2:** agente Rendimiento (forma/pico); memoria de conversación (histórico) cuando exista la BD (0.4).
+- **v2-nutri:** verificación de rango en el Nutriólogo (auditar plausibilidad kcal/macros antes de mostrar);
+  captura de correcciones del usuario como aprendizaje ("los frijoles llevan 1 cda de aceite").
 - **v3:** cuando llegue el dato crudo (Polar Etapa 2 / EVK), sumar zonas de FC, TRIMP y DFA-α1 al contexto.
