@@ -25,7 +25,7 @@ Dirección de fondo tras 3 revisiones externas (ver `analisis/plataforma-multide
 |---|---|---|
 | E1 | **TID-MAX = plataforma de rendimiento humano**, no "pulsera para nadadores". El activo es el motor de IA; la banda es el nodo de captura. | Reencuadre de GTM (Fase L) y de la narrativa de producto. |
 | E2 | **Core universal + ediciones.** `TID-MAX Core` (PPG+IMU, todos los deportes de tierra) y `TID-MAX Aqua` (Core + sensor de profundidad, natación). Mismo PCB/carcasa. **Gael = design partner de Aqua.** | H0.1 (RFQ v2.1) · H1/H3 validan; el sensor de profundidad NO es requisito del core. |
-| E3 | **IAs por deporte = especializaciones del patrón actual** (`tid_agent.py`): mismo motor, distinto system prompt + contexto. Beachhead: **Natación → Running/Triatlón → equipo**. | Nuevo ítem **2.6**; NORTE arma el roadmap de módulos. |
+| E3 | **IAs por deporte = especializaciones del patrón actual** (`tid_agent.py`): mismo motor, distinto system prompt + contexto. **Orden ajustado (pressure-test NORTE):** natación = **I+D + moat desde el día 1** con Gael (subacuático×recovery + patente), pero el **rollout comercial del software lidera con Running → Triatlón → Ciclismo** (más dato de terceros hoy; natación completa exige Aqua). Fútbol/básquet al final (peor caso de PPG en contacto). | Ítem **2.6**; roadmap en `analisis/roadmap-modulos-deporte.md`. |
 | E4 | **Acelerar la IA de Rendimiento** (pico de forma/tapering) de "planeada" a **en desarrollo** — sirve ya al tapering de Gael y une natación/running/triatlón. | Ítem **4.2** elevado a prioridad. |
 | E5 | **Gate #1 del hardware: validar PPG en BÍCEPS** (auto-gain, off-body, piel oscura, sudor). Sin esto, la ventaja multideporte se cae. Se evalúa con los primeros prototipos. | Nuevo ítem **H1.6** (gate). |
 | E6 | **NO perseguir aún** mercado ocupacional/seguridad (bomberos, policía, militar, choferes): otra venta, otra regulación, roza "no medicina". | Fase 3+ (fuera de alcance del beta). |
@@ -90,7 +90,7 @@ Presupuesto INDICATIVO en USD (a validar con cotizaciones reales: RFQ H0.4, lab 
 | 2.3 | Modo adaptable Rendimiento ↔ Bienestar | 🟡 | v0: `software/tid_plan.py` genera el plan semanal (estilo Runna) con **adaptación diaria** — si el Recovery de WHOOP baja, cambia la sesión de hoy a recuperación/técnica. Falta el eje Rendimiento↔Bienestar explícito. |
 | 2.4 | Guardrails COFEPRIS (rendimiento/bienestar, no diagnóstico) | 🟡 | v0: guardrails en el system prompt de `tid_agent.py` (no diagnóstico, no fármacos, no inventar datos, menor de edad, trazable). Documentados en `analisis/agentes-ai.md`. Falta suite de pruebas de los guardrails. |
 | 2.5 | Nombrar y definir el asistente de usuario (persona) | ⬜ | |
-| 2.6 | **Módulos de IA por deporte** (especializaciones de `tid_agent.py`) | 🟡 | Decisión E3. Mismo motor fisiológico, distinto system prompt + contexto por deporte; el usuario elige deporte en su perfil. Beachhead: **Natación → Running/Triatlón → equipo**. **NORTE** arma el roadmap (orden + esfuerzo + moat por deporte). Ya hay 6 IAs base (`analisis/agentes-ai.md`). |
+| 2.6 | **Módulos de IA por deporte** (especializaciones de `tid_agent.py`) | 🟡 | Decisión E3. Mismo motor fisiológico, distinto system prompt + contexto por deporte; el usuario elige deporte en su perfil. **Orden (roadmap NORTE):** 1) Running/Maratón · 2) Triatlón · 3) Ciclismo · 4) Natación/Aqua (I+D con Gael desde día 1; producción al validar Aqua) · 5) Fuerza/CrossFit · 6) Fútbol/Básquet. Ya hay 6 IAs base (`analisis/agentes-ai.md`). Detalle: `analisis/roadmap-modulos-deporte.md`. |
 
 ## FASE 3 — Beta software + piloto B2B (Software)
 
@@ -137,7 +137,7 @@ Presupuesto INDICATIVO en USD (a validar con cotizaciones reales: RFQ H0.4, lab 
 | H2.2 | Seleccionar ODM | ⬜ | |
 | H2.3 | Contrato de IP granular (abogado) | ⬜ | No firmar manufactura sin esto |
 | H2.4 | Confirmar uso de molde/plataforma existente | ⬜ | |
-| H2.5 | **Decidir "hardware-ready" para lo médico antes de congelar el layout** | ⬜ | Estrategia de 2 carriles (R0.7). ⚠️ El MAX86141 **no** hace ECG: si se contempla ECG a futuro (Carril 2), **prever footprint/electrodos en el layout ahora** o aceptar rediseño después. Preguntar a la fábrica en la fase de layout. Doc: `analisis/estrategia-regulatoria-cofepris.md`. |
+| H2.5 | **"Hardware-ready" para lo médico — ECG incluido en el layout** | 🟡 | Estrategia de 2 carriles (R0.7). **DECIDIDO (2026-08-03): incluir AFE de ECG dedicado (ref. MAX30001) + electrodos** como capacidad hardware-ready. Ya en RFQ v2.2 §4.3 (opcional, sin crecer case, sin comprometer 5 ATM+IP68). En v1 **no** se habilita/anuncia. Pedir a fábrica delta de poblar vs. solo footprint. Doc: `analisis/estrategia-regulatoria-cofepris.md`. |
 
 ## FASE H3 — Beta de hardware / DVT (Hardware)
 

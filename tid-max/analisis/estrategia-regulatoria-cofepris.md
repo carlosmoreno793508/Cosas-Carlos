@@ -48,9 +48,12 @@ Para que el salto al Carril 2 **no** obligue a rediseñar la banda:
 2. **Store-and-forward del dato crudo** (ya [DURO]). Sin dato crudo guardado no hay **evidencia clínica**
    futura. ✅ ya previsto.
 3. **SpO₂ y temperatura** como opcionales del AFE (§4.3). Capacidad presente, claim apagado.
-4. **ECG (si se contempla a futuro):** ⚠️ el MAX86141 **no** hace ECG — requiere **AFE de ECG aparte +
-   electrodos**. Decisión: o se **prevé el espacio/footprint en el layout ahora** (sin popular en v1), o
-   se acepta un rediseño en el Carril 2. *Pregunta abierta para la fábrica en la fase de layout.*
+4. **ECG — DECIDIDO incluirlo como hardware-ready (2026-08-03).** ⚠️ El MAX86141 **no** hace ECG →
+   se agrega un **AFE de ECG dedicado** (ref. **MAX30001**, ECG + bioimpedancia) + **electrodos**. Ya está
+   en el RFQ v2.2 (§4.3) como opcional hardware-ready, con las mismas condiciones [DURO] (sin crecer case,
+   sin comprometer 5 ATM+IP68). **En v1 NO se habilita ni se anuncia** (Carril 1 deportivo); queda listo
+   para activarse en el Carril 2. Se pide a la fábrica el delta de costo/NRE de **poblarlo** vs. solo
+   **dejar el footprint** previsto.
 
 ## Datos personales (aplica desde v1, aunque no sea COFEPRIS)
 
