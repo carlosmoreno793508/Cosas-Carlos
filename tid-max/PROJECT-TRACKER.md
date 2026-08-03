@@ -43,11 +43,11 @@ Presupuesto INDICATIVO en USD (a validar con cotizaciones reales: RFQ H0.4, lab 
 | 4 · IA predictiva | Software | 3 | 0 | $25k – $60k |
 | H0 · Spec + RFQ | Hardware | 4 | 1 | $2k – $8k |
 | H1 · EVK primero | Hardware | 6 | 0 | $8k – $25k |
-| H2 · ODM + molde + IP | Hardware | 4 | 0 | $20k – $70k |
+| H2 · ODM + molde + IP | Hardware | 5 | 0 | $20k – $70k |
 | H3 · Beta de hardware (DVT) | Hardware | 5 | 0 | $30k – $80k |
 | R0 · Regulatorio | Regulatorio | 7 | 0 | $10k – $35k |
 | L · Lanzamiento comercial | GTM | 5 | 0 | $60k – $150k |
-| **Total** | | **55** | **2** | **~$210k – $580k** |
+| **Total** | | **56** | **2** | **~$210k – $580k** |
 
 ### Presupuesto por bloque
 - **Software (Fases 0–4):** ~$80k – $210k — *llega a beta cobrando; capital ligero*
@@ -137,6 +137,7 @@ Presupuesto INDICATIVO en USD (a validar con cotizaciones reales: RFQ H0.4, lab 
 | H2.2 | Seleccionar ODM | ⬜ | |
 | H2.3 | Contrato de IP granular (abogado) | ⬜ | No firmar manufactura sin esto |
 | H2.4 | Confirmar uso de molde/plataforma existente | ⬜ | |
+| H2.5 | **Decidir "hardware-ready" para lo médico antes de congelar el layout** | ⬜ | Estrategia de 2 carriles (R0.7). ⚠️ El MAX86141 **no** hace ECG: si se contempla ECG a futuro (Carril 2), **prever footprint/electrodos en el layout ahora** o aceptar rediseño después. Preguntar a la fábrica en la fase de layout. Doc: `analisis/estrategia-regulatoria-cofepris.md`. |
 
 ## FASE H3 — Beta de hardware / DVT (Hardware)
 
@@ -158,7 +159,7 @@ Presupuesto INDICATIVO en USD (a validar con cotizaciones reales: RFQ H0.4, lab 
 | R0.4 | Definir etiqueta de origen ("Ensamblado en México") | ⬜ | |
 | R0.5 | Registrar marca TID-MAX (IMPI) | ⬜ | |
 | R0.6 | Recabar certificados del fabricante (CE/FCC/RoHS/UN38.3) | ⬜ | |
-| R0.7 | **Claims de producto y marketing** (revisión de cumplimiento) | 🟡 | Regla fijada (decisión 2026-08-03): **NO reclamar "grado médico"** ni funciones de diagnóstico (roza COFEPRIS); el producto es **rendimiento y bienestar**. **Temperatura de piel = sensor opcional**, no obligatorio (alinear spec/marketing/tarjeta). Todo claim se ancla en el guardrail de 2.4 y es trazable. Ver `analisis/plataforma-multideporte.md` §2. |
+| R0.7 | **Estrategia de dos carriles + claims de producto** | 🟡 | Decisión 2026-08-03: **Carril 1 = deportivo/bienestar** (sin registro médico COFEPRIS) para v1/beta; **lo médico = Carril 2, etapa posterior**, PERO el **hardware se diseña ya "listo para lo médico"** ("hardware-ready, claim-gated"). **NO reclamar "grado médico"** ni diagnóstico. **Temperatura = opcional.** Datos de salud → **LFPDPPP** (aviso de privacidad, aplica desde v1). Confirmar con especialista regulatorio antes de lanzar. Doc: `analisis/estrategia-regulatoria-cofepris.md`; ver también `plataforma-multideporte.md §2` y guardrails 2.4. |
 
 ## FASE L — Lanzamiento comercial (GTM)
 
