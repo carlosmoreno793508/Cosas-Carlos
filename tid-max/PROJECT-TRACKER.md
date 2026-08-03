@@ -110,7 +110,7 @@ Presupuesto INDICATIVO en USD (a validar con cotizaciones reales: RFQ H0.4, lab 
 |---|---|---|---|
 | H1.1 | Ordenar 3–5 EVK (nRF52840/nRF5340 + MAX86141) | ⬜ | |
 | H1.2 | Banco de pruebas óptico (puede arrancar YA, antes del EVK) | 🟡 | ✅ Confirmado en inventario: **Polar Verity Sense (Model 4J, WR50)** — óptico de brazo con PPG+ACC crudo por BLE SDK y FC bajo agua. Falta comprar **Polar H10 (~$105, referencia ECG)** + Scosche Rhythm24. Ver `analisis/bandas-dato-crudo.md` y `analisis/oportunidades-producto.md` (OPP-01). |
-| H1.3 | Comparar calidad de dato vs. **Polar H10 (referencia ECG)** | ⬜ | WHOOP no sirve de referencia (dato cocinado) |
+| H1.3 | Comparar calidad de dato vs. **Polar H10 (referencia ECG)** | ⬜ | WHOOP no sirve de referencia (dato cocinado). 🆕 Evaluar también **Garmin FR965 + HRM-Pro** como dispositivo de referencia (nado por IMU + RR crudo en FIT). Aprendizajes de ingeniería en `analisis/aprendizajes-fr965.md`; catálogo de métricas de nado en `analisis/metricas-nadadores-elite.md`. |
 | H1.4 | Validar pipeline DFA-α1 sobre el óptico Polar (adelanta sin EVK) | ⬜ | Protocolo: reposo, esfuerzo, sudor/movimiento; RR del H10 como verdad |
 | H1.5 | Decisión go/no-go de molde | ⬜ | No fundir molde sin esto |
 
