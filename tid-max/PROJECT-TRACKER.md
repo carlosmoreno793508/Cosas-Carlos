@@ -17,6 +17,19 @@ Cambios que afectan datos del cliente y **no se aplican** hasta que Carlos aprue
 | ~~Corrección umbrales VT1/VT2/FATmax~~ | **✅ APLICADO** (confirmado del PDF): 143=VT1, 167=VT2, 173=FATmax. Config, perfil, motor de zonas (reordenado VT1<VT2<FATmax) y tarjeta actualizados. | ✅ Hecho | `perfil-gael.md`, `nutricion-gael.json`, `tid_data.py`, `tid_cliente.py` |
 | Estudio de sueño → integración | Aprobar rangos (Tabla A) y 2 lógicas: **%+minutos absolutos** y **"despertares" informativos**; luego cablear a motor/tarjeta/coach | ⏳ Carlos revisando | `analisis/estudio-sueno-gael.md` |
 
+## 🧭 Decisiones estratégicas (aprobadas 2026-08-03)
+
+Dirección de fondo tras 3 revisiones externas (ver `analisis/plataforma-multideporte.md`). **Aprobadas por Carlos.**
+
+| # | Decisión | Implicación en el tracker |
+|---|---|---|
+| E1 | **TID-MAX = plataforma de rendimiento humano**, no "pulsera para nadadores". El activo es el motor de IA; la banda es el nodo de captura. | Reencuadre de GTM (Fase L) y de la narrativa de producto. |
+| E2 | **Core universal + ediciones.** `TID-MAX Core` (PPG+IMU, todos los deportes de tierra) y `TID-MAX Aqua` (Core + sensor de profundidad, natación). Mismo PCB/carcasa. **Gael = design partner de Aqua.** | H0.1 (RFQ v2.1) · H1/H3 validan; el sensor de profundidad NO es requisito del core. |
+| E3 | **IAs por deporte = especializaciones del patrón actual** (`tid_agent.py`): mismo motor, distinto system prompt + contexto. Beachhead: **Natación → Running/Triatlón → equipo**. | Nuevo ítem **2.6**; NORTE arma el roadmap de módulos. |
+| E4 | **Acelerar la IA de Rendimiento** (pico de forma/tapering) de "planeada" a **en desarrollo** — sirve ya al tapering de Gael y une natación/running/triatlón. | Ítem **4.2** elevado a prioridad. |
+| E5 | **Gate #1 del hardware: validar PPG en BÍCEPS** (auto-gain, off-body, piel oscura, sudor). Sin esto, la ventaja multideporte se cae. Se evalúa con los primeros prototipos. | Nuevo ítem **H1.6** (gate). |
+| E6 | **NO perseguir aún** mercado ocupacional/seguridad (bomberos, policía, militar, choferes): otra venta, otra regulación, roza "no medicina". | Fase 3+ (fuera de alcance del beta). |
+
 ## Resumen de avance y presupuesto
 
 Presupuesto INDICATIVO en USD (a validar con cotizaciones reales: RFQ H0.4, lab IFT R0.1, abogado IP H2.3).
@@ -25,16 +38,16 @@ Presupuesto INDICATIVO en USD (a validar con cotizaciones reales: RFQ H0.4, lab 
 |---|---|---|---|---|
 | 0 · Fundación y datos | Software | 6 | 1 | $8k – $25k |
 | 1 · Motor determinista | Software | 5 | 0 | $15k – $40k |
-| 2 · Coach conversacional | Software | 5 | 0 | $12k – $35k |
+| 2 · Coach conversacional | Software | 6 | 0 | $12k – $35k |
 | 3 · Beta software + B2B | Software | 4 | 0 | $20k – $50k |
 | 4 · IA predictiva | Software | 3 | 0 | $25k – $60k |
 | H0 · Spec + RFQ | Hardware | 4 | 1 | $2k – $8k |
-| H1 · EVK primero | Hardware | 5 | 0 | $8k – $25k |
+| H1 · EVK primero | Hardware | 6 | 0 | $8k – $25k |
 | H2 · ODM + molde + IP | Hardware | 4 | 0 | $20k – $70k |
 | H3 · Beta de hardware (DVT) | Hardware | 5 | 0 | $30k – $80k |
-| R0 · Regulatorio | Regulatorio | 6 | 0 | $10k – $35k |
+| R0 · Regulatorio | Regulatorio | 7 | 0 | $10k – $35k |
 | L · Lanzamiento comercial | GTM | 5 | 0 | $60k – $150k |
-| **Total** | | **52** | **2** | **~$210k – $580k** |
+| **Total** | | **55** | **2** | **~$210k – $580k** |
 
 ### Presupuesto por bloque
 - **Software (Fases 0–4):** ~$80k – $210k — *llega a beta cobrando; capital ligero*
@@ -77,6 +90,7 @@ Presupuesto INDICATIVO en USD (a validar con cotizaciones reales: RFQ H0.4, lab 
 | 2.3 | Modo adaptable Rendimiento ↔ Bienestar | 🟡 | v0: `software/tid_plan.py` genera el plan semanal (estilo Runna) con **adaptación diaria** — si el Recovery de WHOOP baja, cambia la sesión de hoy a recuperación/técnica. Falta el eje Rendimiento↔Bienestar explícito. |
 | 2.4 | Guardrails COFEPRIS (rendimiento/bienestar, no diagnóstico) | 🟡 | v0: guardrails en el system prompt de `tid_agent.py` (no diagnóstico, no fármacos, no inventar datos, menor de edad, trazable). Documentados en `analisis/agentes-ai.md`. Falta suite de pruebas de los guardrails. |
 | 2.5 | Nombrar y definir el asistente de usuario (persona) | ⬜ | |
+| 2.6 | **Módulos de IA por deporte** (especializaciones de `tid_agent.py`) | 🟡 | Decisión E3. Mismo motor fisiológico, distinto system prompt + contexto por deporte; el usuario elige deporte en su perfil. Beachhead: **Natación → Running/Triatlón → equipo**. **NORTE** arma el roadmap (orden + esfuerzo + moat por deporte). Ya hay 6 IAs base (`analisis/agentes-ai.md`). |
 
 ## FASE 3 — Beta software + piloto B2B (Software)
 
@@ -92,14 +106,14 @@ Presupuesto INDICATIVO en USD (a validar con cotizaciones reales: RFQ H0.4, lab 
 | # | Ítem | Estado | Acción correctiva / notas |
 |---|---|---|---|
 | 4.1 | Modelos de riesgo de lesión / sobreentrenamiento | ⬜ | Requiere dataset acumulado de Fase 3 |
-| 4.2 | Momento de pico / pronóstico de rendimiento | ⬜ | |
+| 4.2 | Momento de pico / pronóstico de rendimiento (**IA de Rendimiento**) | 🟡 | **Decisión E4: acelerado a en desarrollo.** Eslabón que une natación/running/triatlón; se nutre de la HRV que ya capturamos. Sirve **ya** al *tapering* de Gael rumbo a Vancouver. Es la 5ª IA del producto (`analisis/agentes-ai.md`). |
 | 4.3 | Backtesting honesto (validado vs. hipótesis) | ⬜ | |
 
 ## FASE H0 — Spec + RFQ (Hardware)
 
 | # | Ítem | Estado | Acción correctiva / notas |
 |---|---|---|---|
-| H0.1 | Congelar spec técnico (RFQ v2) | ✅ | Documento en `analisis/especificacion-pulsera-rfq.md` (RFQ v2, listo para cotizar). Specs verificadas 2026-08-02: nRF52840/nRF5340 y MAX86141 disponibles; ISO 22810:2010 y UN 38.3 vigentes. |
+| H0.1 | Congelar spec técnico (RFQ v2.1) | ✅ | Documento en `analisis/especificacion-pulsera-rfq.md` (**RFQ v2.1**, listo para cotizar; PDF generado). Specs verificadas 2026-08-02: nRF52840/nRF5340 y MAX86141 disponibles; ISO 22810:2010 y UN 38.3 vigentes. 🆕 v2.1: **sensor de profundidad opcional** (TE MS5837-30BA) con condición [DURO] de **no crecer el case ni comprometer 5 ATM+IP68** (habilita edición Aqua, decisión E2). **Temperatura de piel = opcional** (§4.3), no obligatoria. |
 | H0.2 | Enviar RFQ a JointCorp, Vositone, Bingo, Star King | ⬜ | Ruta crítica — disparar ya |
 | H0.3 | (Opcional) cotización India (Dixon/Optiemus) | ⬜ | |
 | H0.4 | Recibir y comparar cotizaciones | ⬜ | |
@@ -113,6 +127,7 @@ Presupuesto INDICATIVO en USD (a validar con cotizaciones reales: RFQ H0.4, lab 
 | H1.3 | Comparar calidad de dato vs. **Polar H10 (referencia ECG)** | ⬜ | WHOOP no sirve de referencia (dato cocinado). 🆕 Evaluar también **Garmin FR965 + HRM-Pro** como dispositivo de referencia (nado por IMU + RR crudo en FIT). Aprendizajes de ingeniería en `analisis/aprendizajes-fr965.md`; catálogo de métricas de nado en `analisis/metricas-nadadores-elite.md`. |
 | H1.4 | Validar pipeline DFA-α1 sobre el óptico Polar (adelanta sin EVK) | ⬜ | Protocolo: reposo, esfuerzo, sudor/movimiento; RR del H10 como verdad |
 | H1.5 | Decisión go/no-go de molde | ⬜ | No fundir molde sin esto |
+| H1.6 | **GATE #1 — Validar señal PPG en BÍCEPS** (auto-gain / corriente LED dinámica / off-body / **piel oscura** / sudor) | ⬜ | **Decisión E5. Prioridad #1: condiciona toda la tesis multideporte** (§9.2 del RFQ). Sin buena PPG en bíceps bajo movimiento, se cae la ventaja en deportes de tierra. Se evalúa con los **primeros prototipos/EVK**. |
 
 ## FASE H2 — ODM + molde existente + IP (Hardware)
 
@@ -143,6 +158,7 @@ Presupuesto INDICATIVO en USD (a validar con cotizaciones reales: RFQ H0.4, lab 
 | R0.4 | Definir etiqueta de origen ("Ensamblado en México") | ⬜ | |
 | R0.5 | Registrar marca TID-MAX (IMPI) | ⬜ | |
 | R0.6 | Recabar certificados del fabricante (CE/FCC/RoHS/UN38.3) | ⬜ | |
+| R0.7 | **Claims de producto y marketing** (revisión de cumplimiento) | 🟡 | Regla fijada (decisión 2026-08-03): **NO reclamar "grado médico"** ni funciones de diagnóstico (roza COFEPRIS); el producto es **rendimiento y bienestar**. **Temperatura de piel = sensor opcional**, no obligatorio (alinear spec/marketing/tarjeta). Todo claim se ancla en el guardrail de 2.4 y es trazable. Ver `analisis/plataforma-multideporte.md` §2. |
 
 ## FASE L — Lanzamiento comercial (GTM)
 
