@@ -1,7 +1,7 @@
 # TID-MAX — Especificación técnica para cotización (RFQ) · Banda de rendimiento
 
-**Documento:** RFQ v2 — Especificación de hardware para ODM/EMS
-**Fecha:** 2026-08-02 · **Responsable:** Carlos Moreno (TID México) · carlos.moreno@tidmexico.com.mx
+**Documento:** RFQ v2.1 — Especificación de hardware para ODM/EMS
+**Fecha:** 2026-08-03 · **Responsable:** Carlos Moreno (TID México) · carlos.moreno@tidmexico.com.mx
 **Destinatarios objetivo:** JointCorp, Vositone, Bingo, Star King (China Tier-1) · alternativa India: Dixon/Dixtel, Optiemus
 **Estado del proyecto:** Fase H0 (Spec + RFQ). El EVK (Fase H1) es previo al molde; ver §12.
 
@@ -83,6 +83,15 @@ cercano a este form factor que podamos usar para el beta y así minimizar NRE? (
 ### 4.3 Sensores opcionales (optional — cotizar por separado, marcar delta de costo)
 - **SpO2** (pulse oximetry) — el MAX86141 lo soporta; confirmar viabilidad. *[Opcional]*
 - **Temperatura de piel** (skin temperature sensor). *[Opcional]*
+- **Sensor de profundidad / presión** (depth/pressure sensor, p. ej. TE **MS5837-30BA** ~3.3×3.3×2.75 mm,
+  I²C, resolución ~2 mm de agua — *o equivalente*). Para análisis del **subacuático en natación**
+  (profundidad de streamline/breakout y trayectoria del viraje) — diferenciador documentado, ver
+  `analisis/subacuatico-diferenciador.md`. *[Opcional]* con **DOS condiciones [DURO]:**
+  1. **SIN cambio de dimensiones del pod:** debe integrarse **dentro del envelope actual
+     (~32×28×11 mm, §3) sin aumentar ninguna dimensión**. Si la plataforma del fabricante no lo permite
+     sin crecer el case, **se descarta para el beta.**
+  2. **SIN comprometer el sellado:** el puerto de presión (pressure port) debe mantener **5 ATM
+     (ISO 22810) + IP68** (§9.1). Si compromete el sellado, se descarta.
 - Los opcionales **no deben** bloquear el beta ni disparar NRE. Cotizarlos como add-on.
 
 > **Sin GPS en la banda** [DURO]: mata batería, sube costo/tamaño y peso regulatorio. La distancia de
@@ -286,7 +295,8 @@ Pedir a la fábrica cotización escalonada:
 - Dimensiones ~32×28×11 mm y peso ≤~25 g.
 - Capacidad de batería ~80–110 mAh.
 - Capacidad de flash / horas de buffer.
-- SpO2 y temperatura de piel (opcionales).
+- SpO2, temperatura de piel y **sensor de profundidad/presión** (opcionales). El de profundidad, solo
+  si respeta el envelope actual **sin crecer el case** y **sin comprometer el sellado** (§4.3).
 
 **Preguntas abiertas para la fábrica (consolidadas):**
 1. ¿Molde/plataforma existente cercana al form factor? ¿Cuál y qué NRE ahorra en el beta?
@@ -296,6 +306,9 @@ Pedir a la fábrica cotización escalonada:
 5. Carga: ¿pogo (oro duro ≥20 µin/Pd-Ni) o inductiva en su plataforma? Costo/confiabilidad.
 6. Postura de **propiedad y licencia** por cada elemento de IP (§11), en especial **SDK + firmware**.
 7. Price breaks @500/1k/5k, NRE (existente vs custom), lead times y costo/tiempo de muestras.
+8. **Sensor de profundidad opcional (§4.3):** ¿Integran un **sensor de presión/profundidad** con
+   **puerto de presión sellado** manteniendo **5 ATM + IP68 Y el envelope actual sin crecer ninguna
+   dimensión**? ¿Delta de costo, delta de NRE y rango/resolución (buscamos ~0–10 m, resolución cm)?
 
 ---
 
@@ -304,6 +317,8 @@ Pedir a la fábrica cotización escalonada:
 - Nordic nRF52840 (1 MB flash / 256 KB RAM, CryptoCell/TrustZone, BLE 5.x) — nordicsemi.com/Products/nRF52840
 - Nordic nRF5340 (1 MB flash / 512 KB RAM, dual Cortex-M33, CryptoCell-312) — nordicsemi.com/Products/nRF5340
 - Analog Devices MAX86141 (AFE óptico dual-channel, ADC 19-bit, WLP 20-pin) — analog.com/en/products/max86141.html
+- TE MS5837-30BA (sensor de profundidad/presión, paquete **3.3×3.3×2.75 mm**, I²C, res. ~2 mm de agua,
+  0–30 bar) — te.com / mouser.com/new/te-connectivity/te-ms5837-30ba
 - ISO 22810:2010 (resistencia al agua de relojes, versión vigente) — iso.org
 - IP68 — IEC 60529
 - UN 38.3 (UN Manual of Tests and Criteria, sec. 38.3; test summary obligatorio desde 2020) — intertek.com/batteries/un-38-3-testing
