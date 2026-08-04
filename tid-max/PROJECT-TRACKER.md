@@ -113,10 +113,10 @@ Presupuesto INDICATIVO en USD (a validar con cotizaciones reales: RFQ H0.4, lab 
 
 | # | Ítem | Estado | Acción correctiva / notas |
 |---|---|---|---|
-| H0.1 | Congelar spec técnico (RFQ v2.1) | ✅ | Documento en `analisis/especificacion-pulsera-rfq.md` (**RFQ v2.1**, listo para cotizar; PDF generado). Specs verificadas 2026-08-02: nRF52840/nRF5340 y MAX86141 disponibles; ISO 22810:2010 y UN 38.3 vigentes. 🆕 v2.1: **sensor de profundidad opcional** (TE MS5837-30BA) con condición [DURO] de **no crecer el case ni comprometer 5 ATM+IP68** (habilita edición Aqua, decisión E2). **Temperatura de piel = opcional** (§4.3), no obligatoria. |
-| H0.2 | Enviar RFQ a JointCorp, Vositone, Bingo, Star King | 🟡 | **Paquete de envío LISTO:** RFQ v2.2 (ES+EN PDF), correo de presentación EN (`correo-rfq-fabricas-EN.md`), checklist de contacto con fit verificado (`checklist-fabricas-rfq.md`) y NDA a la mano. Orden: **JointCorp** (mejor match: screenless bands + ISO 13485) + **Vositone** en paralelo, **Bingo** 3ª. ⚠️ "Star King" a verificar (posible Kingwear; "Starking Clocks" es de relojes tradicionales). Falta: disparar correos (Carlos) y registrar respuestas. |
-| H0.3 | (Opcional) cotización India (Dixon/Optiemus) | ⬜ | |
-| H0.4 | Recibir y comparar cotizaciones | ⬜ | |
+| H0.1 | Congelar spec técnico (RFQ v2.3) | ✅ | **RFQ v2.3** (ES+EN, PDF) en `analisis/especificacion-pulsera-rfq.md`. Incorpora todo el diseño del pod/banda (`analisis/diseno-pod-banda.md`): carcasa **funcional (polímero + bisel)**, **unión sin pernos + retención mecánica**, desgaste en **banda reemplazable (SKU)**, **carga magnética al pod sin quitarlo**, **feedback en vivo** (luz por zona + **vibración N×zona accesible** + broadcast BLE HR/ANT+, on/off por doble-toque), sensor de profundidad + ECG **hardware-ready** (Carriles Aqua/médico), y **Compliance Matrix** (§13). |
+| H0.2 | Enviar RFQ (correo NDA-first) a ODMs | 🟡 | **CORREOS ENVIADOS por Carlos (2026-08).** Flujo NDA-first (`correo-rfq-fabricas-EN.md`, Rev. B): Correo 1 = scope + NDA (sin adjunto) → NDA → RFQ. **Shortlist por fit** (`checklist-fabricas-rfq.md`): **J-Style/Jointcorp** (info@jointcorp.com), **Vositone** (sales@vositone.com), **MOKOSmart** (BLE/firmware custom). Filtro clave = **raw PPG/IBI + SDK**. **En espera de respuestas.** |
+| H0.3 | (Opcional) cotización India (VVDN / Dixon / Optiemus) | ⬜ | **VVDN** = el indio con ingeniería ODM real (no solo ensamble); diversificación de cadena. |
+| H0.4 | Recibir y comparar cotizaciones + **Compliance Matrix** | ⬜ | Al llegar respuestas: firmar NDA → enviar RFQ v2.3 → reunión técnica → pedir **Compliance Matrix** (Compliant/Partial/Not/Alternative) para comparar ODMs objetivo. |
 
 ## FASE H1 — EVK primero (Hardware)
 
