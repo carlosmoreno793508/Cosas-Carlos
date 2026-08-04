@@ -268,6 +268,35 @@ def _zonas_html(f):
             '<p class="psub">de su prueba de esfuerzo · PE Somnia</p>' + bar + marks + prio + '</section>')
 
 
+def _forma_html(p, f):
+    """Snapshot REAL de la forma de hoy (CTL/ATL/TSB del dato de WHOOP) + estado de pico."""
+    forma = f.get("forma") or {}
+    if not forma:
+        return ""
+    rend = p.get("rendimiento") or {}
+    est = rend.get("estado", "")
+    MAP = {"en_pico": ("En pico", "good"), "afinando": ("Afinando", "aqua"),
+           "atrasado": ("Atrasado", "warn"), "construyendo": ("Construyendo", "fit"),
+           "cargado": ("Cargado", "warn"), "estable": ("Estable", "good")}
+    lbl, c = MAP.get(est, ("", ""))
+    badge = f'<span class="chip {c}"><span class="dot"></span>{lbl}</span>' if lbl else ""
+    tsb = forma.get("forma_tsb")
+    tsb_txt = f"{tsb:+g}" if isinstance(tsb, (int, float)) else "—"
+
+    def stat(k, v, color):
+        return (f'<div style="flex:1;text-align:center">'
+                f'<div style="font-size:.7rem;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)">{k}</div>'
+                f'<div class="num" style="font-size:1.5rem;color:{color}">{v}</div></div>')
+    stats = (stat("Preparación", forma.get("fitness_ctl", "—"), "var(--fit)")
+             + stat("Cansancio", forma.get("fatiga_atl", "—"), "var(--fat)")
+             + stat("Frescura", tsb_txt, "var(--form)"))
+    lect = rend.get("lectura", "")
+    lect_html = f'<p class="hsub" style="margin-top:10px">{lect}</p>' if lect else ""
+    return (f'<div style="display:flex;align-items:center;gap:10px;margin:4px 0 8px">'
+            f'<b>Estado de forma hoy</b> <small style="color:var(--muted)">(de su carga real)</small>{badge}</div>'
+            f'<div style="display:flex;gap:8px;margin-bottom:4px">{stats}</div>{lect_html}')
+
+
 def _plan_hoy_html(p, cls):
     pil = p.get("pilares") or {}
     if not pil:
@@ -329,6 +358,8 @@ def build_html(p):
   <section class="card pad formwrap">
     <h2 class="h">Camino al evento — ¿va a llegar fresco?</h2>
     <p class="hsub">Su preparación se mantiene alta mientras el cansancio baja en el taper. Esa brecha = <b>qué tan fresco llega</b>.</p>
+    {_forma_html(p, f)}
+    <p class="hsub" style="margin-top:6px">Proyección según el plan del entrenador:</p>
     <div class="legend">
       <span><i style="background:var(--fit)"></i><b>Preparación</b></span>
       <span><i style="background:var(--fat)"></i><b>Cansancio</b></span>

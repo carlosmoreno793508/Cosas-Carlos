@@ -679,6 +679,7 @@ def write_coach_json(f, rep):
         "veredicto": rep["veredicto"],
         "pilares": rep["pilares"],
         "alertas": rep["alertas"],
+        "rendimiento": rendimiento_flags(f),  # estado de forma/pico para el dashboard
         "hechos": f,
         "motor": rep["motor"],
     }
