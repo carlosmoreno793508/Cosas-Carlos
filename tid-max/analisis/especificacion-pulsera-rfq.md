@@ -304,6 +304,9 @@ Pedir a la fábrica cotización escalonada:
   carga, sellado).
 - **Confirmación explícita**: ¿pueden usar **molde/plataforma existente** para el beta y minimizar NRE?
   ¿Cuál plataforma y qué tan cerca queda del §3?
+- **Compliance Matrix**: por cada requisito de esta spec, responder **Compliant / Partially compliant /
+  Not compliant / Alternative proposal** (con nota). Permite comparar propuestas de varios ODM de forma
+  objetiva.
 
 ---
 

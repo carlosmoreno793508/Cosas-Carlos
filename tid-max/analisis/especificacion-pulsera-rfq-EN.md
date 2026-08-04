@@ -298,6 +298,9 @@ Please provide a tiered quotation:
   charging, sealing).
 - **Explicit confirmation**: can you use an **existing mold/platform** for the beta to minimize NRE? Which
   platform, and how close is it to §3?
+- **Compliance Matrix**: for each requirement in this spec, please respond **Compliant / Partially
+  compliant / Not compliant / Alternative proposal** (with a note). This lets us compare multiple ODM
+  proposals objectively.
 
 ---
 
