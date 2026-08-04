@@ -108,42 +108,71 @@ def build_daily():
         r["skin_temp_c"] = sc.get("skin_temp_celsius")
         mark(r, "whoop")
 
+    # Sueño: WHOOP puede registrar VARIOS sueños por día (el nocturno + siestas).
+    # Antes cada registro sobrescribía al anterior y solo quedaba UNO (se perdían las
+    # siestas). Ahora AGREGAMOS por día: la arquitectura (profundo/REM/eficiencia) sale
+    # del sueño PRINCIPAL, pero el TIEMPO DORMIDO total suma las siestas, y la deuda se
+    # calcula contra ese total. Gael duerme siesta casi a diario para recuperar sueño
+    # perdido, así que ignorarlas subestimaba sus horas e inflaba la deuda.
+    def _asleep_ms(rec):
+        st = (rec.get("score") or {}).get("stage_summary") or {}
+        in_bed = st.get("total_in_bed_time_milli")
+        awake = st.get("total_awake_time_milli") or 0
+        return (in_bed - awake) if isinstance(in_bed, (int, float)) else None
+
+    sueno_por_dia = {}
     for rec in _records("sueno"):
         d = _parse_dt(rec.get("start"))
-        sc = rec.get("score") or {}
-        stage = sc.get("stage_summary") or {}
         if not d:
             continue
-        r = row(d.date().isoformat())
+        sueno_por_dia.setdefault(d.date().isoformat(), []).append(rec)
 
-        def h(ms):
-            return _round(ms / 3_600_000, 2) if isinstance(ms, (int, float)) else None
+    def h(ms):
+        return _round(ms / 3_600_000, 2) if isinstance(ms, (int, float)) else None
 
+    for date_str, recs in sueno_por_dia.items():
+        r = row(date_str)
+        # Sueño PRINCIPAL = el no-siesta más largo (o el más largo si falta el flag 'nap').
+        no_naps = [x for x in recs if not x.get("nap")]
+        principal = max(no_naps or recs, key=lambda x: _asleep_ms(x) or 0)
+        siestas = [x for x in recs if x is not principal]
+
+        sc = principal.get("score") or {}
+        stage = sc.get("stage_summary") or {}
         in_bed = stage.get("total_in_bed_time_milli")
-        awake = stage.get("total_awake_time_milli") or 0
         light = stage.get("total_light_sleep_time_milli")
         deep = stage.get("total_slow_wave_sleep_time_milli")   # sueño profundo (SWS)
         rem = stage.get("total_rem_sleep_time_milli")
-        asleep = (in_bed - awake) if isinstance(in_bed, (int, float)) else None
+        asleep_noche = _asleep_ms(principal)                   # dormido del sueño principal
+        nap_ms = sum((_asleep_ms(x) or 0) for x in siestas)    # dormido de las siestas
+        asleep_total = ((asleep_noche or 0) + nap_ms) or None  # dormido real del día
 
         r["sleep_perf_pct"] = sc.get("sleep_performance_percentage")
         r["sleep_efficiency_pct"] = _round(sc.get("sleep_efficiency_percentage"))
         r["sleep_consistency_pct"] = _round(sc.get("sleep_consistency_percentage"))
-        r["sleep_hours"] = h(in_bed)                 # tiempo en cama
-        r["sleep_asleep_h"] = h(asleep)              # tiempo dormido real
+        r["sleep_hours"] = h(in_bed)                 # tiempo en cama (principal)
+        r["sleep_asleep_h"] = h(asleep_total)        # dormido real TOTAL (noche + siestas)
+        r["sleep_asleep_noche_h"] = h(asleep_noche)  # solo el sueño principal
+        r["sleep_nap_h"] = h(nap_ms) if nap_ms else None
+        r["n_siestas"] = len(siestas) or None
         r["sleep_deep_h"] = h(deep)
         r["sleep_rem_h"] = h(rem)
         r["sleep_light_h"] = h(light)
-        if asleep and deep is not None:
-            r["deep_pct"] = _round(deep / asleep * 100)
-        if asleep and rem is not None:
-            r["rem_pct"] = _round(rem / asleep * 100)
+        # % de arquitectura sobre el sueño PRINCIPAL (las siestas no siempre traen fases).
+        if asleep_noche and deep is not None:
+            r["deep_pct"] = _round(deep / asleep_noche * 100)
+        if asleep_noche and rem is not None:
+            r["rem_pct"] = _round(rem / asleep_noche * 100)
         r["despertares"] = stage.get("disturbance_count")
         r["ciclos"] = stage.get("sleep_cycle_count")
+        # Deuda contra el sueño TOTAL. Excluimos el término 'need_from_recent_nap' de WHOOP:
+        # ese campo ya descuenta la siesta de la necesidad; si además sumamos la siesta al
+        # tiempo dormido, la contaríamos dos veces. Así el crédito por siesta aparece UNA vez.
         need = sc.get("sleep_needed") or {}
-        need_ms = sum(v for k, v in need.items() if isinstance(v, (int, float)))
-        if need_ms and asleep is not None:
-            r["deuda_sueno_min"] = _round((need_ms - asleep) / 60_000)
+        need_ms = sum(v for k, v in need.items()
+                      if isinstance(v, (int, float)) and "nap" not in k)
+        if need_ms and asleep_total is not None:
+            r["deuda_sueno_min"] = _round((need_ms - asleep_total) / 60_000)
         r["resp_rate"] = _round(sc.get("respiratory_rate"))
         mark(r, "whoop")
 
@@ -594,7 +623,8 @@ def main():
         json.dump(daily, f, ensure_ascii=False, indent=2)
 
     daily_cols = ["fecha", "recovery_pct", "hrv_ms", "rhr_bpm", "spo2_pct", "skin_temp_c",
-                  "sleep_perf_pct", "sleep_hours", "sleep_asleep_h", "sleep_deep_h", "sleep_rem_h",
+                  "sleep_perf_pct", "sleep_hours", "sleep_asleep_h", "sleep_asleep_noche_h",
+                  "sleep_nap_h", "n_siestas", "sleep_deep_h", "sleep_rem_h",
                   "deep_pct", "rem_pct", "sleep_efficiency_pct", "sleep_consistency_pct",
                   "despertares", "deuda_sueno_min", "resp_rate", "strain", "kcal",
                   "swim_km", "swim_sessions", "pesas_min", "fuentes"]

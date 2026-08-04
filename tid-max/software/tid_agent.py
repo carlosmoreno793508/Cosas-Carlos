@@ -270,6 +270,9 @@ def build_facts(ds):
         "resp_rate": last("resp_rate"),
         "sueno_detalle": {
             "horas_anoche": last("sleep_asleep_h") or last("sleep_hours"),
+            "horas_noche": last("sleep_asleep_noche_h"),
+            "siesta_h": last("sleep_nap_h"),
+            "n_siestas": last("n_siestas"),
             "en_cama_h": last("sleep_hours"),
             "profundo_h": last("sleep_deep_h"), "rem_h": last("sleep_rem_h"), "ligero_h": last("sleep_light_h"),
             "profundo_pct": last("deep_pct"), "rem_pct": last("rem_pct"),
@@ -643,7 +646,12 @@ def print_facts(f):
         print(f"Nutrición HOY: ~{f['kcal_objetivo_hoy']} kcal · P {m['P']}g · C {m['C']}g · G {m['G']}g")
     sd = f.get("sueno_detalle") or {}
     if sd.get("horas_anoche") is not None:
-        print(f"Sueño anoche: {sd['horas_anoche']} h dormido · {s(sd.get('sueno_pct') or f.get('sueno_pct'))}% perf · "
+        desglose = ""
+        if isinstance(sd.get("siesta_h"), (int, float)) and sd["siesta_h"]:
+            ns = sd.get("n_siestas") or 1
+            desglose = (f" ({s(sd.get('horas_noche'))} h noche + {sd['siesta_h']} h "
+                        f"siesta×{ns})")
+        print(f"Sueño anoche: {sd['horas_anoche']} h dormido{desglose} · {s(sd.get('sueno_pct') or f.get('sueno_pct'))}% perf · "
               f"prof {s(sd.get('profundo_pct'),'%')} · REM {s(sd.get('rem_pct'),'%')} · "
               f"efic {s(sd.get('eficiencia_pct'),'%')} · consist {s(sd.get('consistencia_pct'),'%')} · "
               f"{s(sd.get('despertares'))} despertares"

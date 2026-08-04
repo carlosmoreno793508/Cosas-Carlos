@@ -13,7 +13,8 @@ mensaje por reglas usando la plantilla base — el producto sigue.
 
 Uso:
     python tid_nutricion.py foto_comida.jpg                 # analiza foto Y la registra como consumo de hoy
-    python tid_nutricion.py foto_comida.jpg --tipo doble    # contexto: día de doble sesión
+                                                            #   (detecta solo si hoy es doble/sencilla/descanso/taper)
+    python tid_nutricion.py foto_comida.jpg --tipo doble    # fuerza el tipo de día (si quieres sobreescribir)
     python tid_nutricion.py --texto "6 huevos, licuado, 50 g totopos"   # registra por texto (sin foto)
     python tid_nutricion.py IMG.jpeg --avisar               # registra Y avisa a la familia (link actualizado)
     python tid_nutricion.py --consumo                       # muestra el consumo acumulado de hoy vs meta
@@ -53,16 +54,19 @@ MEMORIA_TOP = 8              # cuántos platillos frecuentes se le pasan como co
 MODEL = "claude-opus-5"
 
 PERSONA = (
-    "Eres el agente de nutrición de TID-MAX para Gael, nadador competitivo de alto nivel de 19 "
-    "años, que entrena en dobles sesiones (Lun/Mie/Vie) con un gasto energético altísimo. "
-    "Tu trabajo es ESTIMAR, a partir de una foto, qué comió y sus macros aproximados, y decir si "
-    "cubre bien la demanda del entrenamiento. Hablas en español, claro y cercano."
+    "Eres el agente de nutrición de TID-MAX para atletas de rendimiento. Tu trabajo es ESTIMAR, a "
+    "partir de una foto o una descripción, qué comió el atleta y sus macros aproximados, y decir si "
+    "cubre la demanda DEL DÍA. Punto clave: la demanda NO es fija — depende del entrenamiento de HOY. "
+    "Un día de DOBLE sesión pide mucha más energía y carbohidrato que un día SENCILLO, de DESCANSO o "
+    "de TAPER. Calibra siempre tu consejo al tipo de día y a la meta calórica que te doy en el "
+    "contexto; no asumas 'día pesado' por defecto. En taper/afinamiento el objetivo es llegar fresco, "
+    "no cargar de más. Hablas en español, claro y cercano."
 )
 
 GUARDRAILS = (
     "REGLAS ESTRICTAS:\n"
-    "1) Atleta joven de 19 con gasto muy alto: NUNCA sugieras restringir calorías, saltarte comidas "
-    "ni bajar de peso. El objetivo es cubrir energía, proteína y recuperación.\n"
+    "1) Atleta de rendimiento con gasto alto: NUNCA sugieras restringir calorías, saltarte comidas "
+    "ni bajar de peso. El objetivo es cubrir la energía DEL DÍA, proteína y recuperación.\n"
     "2) Las cantidades de una foto son ESTIMADAS: da rangos y acláralo, no cifras falsamente exactas.\n"
     "3) Nutrición deportiva y bienestar, NO medicina. No diagnostiques ni prescribas. Ante dudas de "
     "dosis o seguridad de suplementos, deriva a un nutriólogo o médico del deporte.\n"
@@ -151,34 +155,52 @@ def _memoria_txt():
             f"{json.dumps(mem, ensure_ascii=False)}")
 
 
-def _contexto(tipo_dia, base):
-    return (f"Contexto: es un día de tipo '{tipo_dia}'. "
-            "Plantilla base de Gael (lo que suele comer y sus suplementos):\n"
+def _contexto(tipo_dia, base, dia_ctx=None):
+    dia_ctx = dia_ctx or {}
+    linea = f"Contexto: hoy es un día de entrenamiento '{tipo_dia}'."
+    if dia_ctx:
+        partes = []
+        if dia_ctx.get("km_hoy") is not None:
+            partes.append(f"{dia_ctx['km_hoy']} km planeados en {dia_ctx.get('n_sesiones', 0)} sesión(es)")
+        if dia_ctx.get("taper"):
+            de = dia_ctx.get("dias_al_evento")
+            partes.append(f"FASE TAPER/AFINAMIENTO{f' (faltan {de} días al evento)' if de else ''} — prioridad LLEGAR FRESCO, no cargar de más")
+        elif dia_ctx.get("fase"):
+            partes.append(f"fase: {dia_ctx['fase']}")
+        if dia_ctx.get("kcal_objetivo"):
+            partes.append(f"META DEL DÍA (ya ajustada al volumen de hoy): "
+                          f"~{dia_ctx['kcal_objetivo']} kcal · C {dia_ctx.get('carbohidratos_g')} g · "
+                          f"P {dia_ctx.get('proteina_g')} g")
+        if partes:
+            linea += " " + ". ".join(partes) + "."
+        linea += (" Calibra el consejo a ESTE día: si es sencillo/descanso/taper, NO recomiendes "
+                  "cargar carbohidrato como si fuera un doble; compara lo del plato contra la META DEL DÍA, no contra un día pesado genérico.")
+    return (linea + "\n\nPlantilla base del atleta (lo que suele comer y sus suplementos):\n"
             f"{json.dumps(base, ensure_ascii=False)}"
             + _memoria_txt())
 
 
-def ai_estimate(client, img_path, tipo_dia, base):
+def ai_estimate(client, img_path, tipo_dia, base, dia_ctx=None):
     Estimacion = _modelo_estimacion()
     media, data = encode_image(img_path)
     resp = client.messages.parse(
         model=MODEL, max_tokens=2500, system=f"{PERSONA}\n\n{GUARDRAILS}",
         messages=[{"role": "user", "content": [
             {"type": "image", "source": {"type": "base64", "media_type": media, "data": data}},
-            {"type": "text", "text": _contexto(tipo_dia, base) + "\n\n" + _INSTR},
+            {"type": "text", "text": _contexto(tipo_dia, base, dia_ctx) + "\n\n" + _INSTR},
         ]}],
         output_format=Estimacion,
     )
     return resp.parsed_output
 
 
-def ai_estimate_texto(client, descripcion, tipo_dia, base):
-    """Estima macros a partir de una DESCRIPCIÓN de texto (lo que Carlos escribe)."""
+def ai_estimate_texto(client, descripcion, tipo_dia, base, dia_ctx=None):
+    """Estima macros a partir de una DESCRIPCIÓN de texto (lo que escribe el usuario)."""
     Estimacion = _modelo_estimacion()
     resp = client.messages.parse(
         model=MODEL, max_tokens=2500, system=f"{PERSONA}\n\n{GUARDRAILS}",
         messages=[{"role": "user", "content":
-                   _contexto(tipo_dia, base) + "\n\nGael comió (descrito por Carlos): "
+                   _contexto(tipo_dia, base, dia_ctx) + "\n\nEl atleta comió (descrito por el usuario): "
                    f"\"{descripcion}\".\n\n" + _INSTR}],
         output_format=Estimacion,
     )
@@ -354,6 +376,54 @@ def cargar_nutricion_hoy():
     return ds.get("nutricion_hoy"), ds.get("plan_dias", {}).get("hoy")
 
 
+def detectar_dia():
+    """Detecta AUTOMÁTICAMENTE cómo es el día de entrenamiento desde el dataset, para que
+    el agente calibre su consejo (un día sencillo NO necesita la carga de un doble) SIN
+    que nadie tenga que pasar --tipo a mano. Genérico: sirve para cualquier cliente, no solo
+    para el calendario de Gael. Devuelve (tipo_dia, contexto_dict).
+
+    tipo_dia ∈ {doble, sencilla, descanso}:
+      - nº de sesiones planeadas hoy (2+ = doble, 1 = sencilla, 0/sin km = descanso).
+    El contexto añade km del día, fase del evento (p. ej. taper) y la meta calórica ya
+    calculada (que YA escala con el volumen), para anclar el consejo al día real.
+    """
+    path = os.path.join(SCRIPT_DIR, "datos", "procesado", "dataset.json")
+    if not os.path.exists(path):
+        return None, {}
+    with open(path, encoding="utf-8") as f:
+        ds = json.load(f)
+    hoy = (ds.get("plan_dias") or {}).get("hoy") or {}
+    nutri = ds.get("nutricion_hoy") or {}
+    evento = ds.get("evento") or {}
+
+    km = hoy.get("km_dia")
+    ses = [x for x in (hoy.get("sesiones") or []) if (x.get("km") or 0) > 0]
+    n_ses = len(ses)
+    tipo_plan = (hoy.get("tipo") or "").lower()
+    if "descan" in tipo_plan or (not km and n_ses == 0):
+        tipo = "descanso"
+    elif "doble" in tipo_plan or n_ses >= 2:
+        tipo = "doble"
+    else:
+        tipo = "sencilla"
+
+    fase = (evento.get("fase") or "").lower()
+    taper = ("taper" in fase or "afina" in fase)
+    ctx = {
+        "tipo_dia": tipo,
+        "km_hoy": km,
+        "n_sesiones": n_ses,
+        "enfoques": [x.get("enfoque") for x in ses if x.get("enfoque")],
+        "fase": evento.get("fase"),
+        "taper": taper,
+        "dias_al_evento": evento.get("dias_al_evento") or evento.get("dias_restantes"),
+        "kcal_objetivo": nutri.get("kcal_objetivo"),
+        "carbohidratos_g": nutri.get("carbohidratos_g"),
+        "proteina_g": nutri.get("proteina_g"),
+    }
+    return tipo, ctx
+
+
 def ai_plan_comidas(client, nutri, plan_hoy, base):
     kpc = nutri.get("kcal_por_comida", {})
     prompt = (
@@ -421,7 +491,7 @@ def fallback(base, tipo_dia):
     print("\n============== TID-MAX · AGENTE DE NUTRICIÓN (modo base) ==============")
     print("Sin ANTHROPIC_API_KEY / SDK: no puedo analizar la foto, muestro la plantilla de referencia.")
     dt = base.get("dia_tipo_doble", {})
-    print(f"\nDía tipo '{tipo_dia}'. Comidas de referencia de Gael:")
+    print(f"\nDía tipo '{tipo_dia}'. Comidas de referencia del atleta:")
     for k, v in dt.items():
         if isinstance(v, dict) and v.get("ingredientes"):
             print(f"  • {v.get('descripcion', k)}: {', '.join(v['ingredientes'])}")
@@ -430,12 +500,19 @@ def fallback(base, tipo_dia):
 
 def main():
     args = [a for a in sys.argv[1:]]
-    tipo_dia = "doble"
+    # Auto-detecta el tipo de día desde el dataset (sencilla/doble/descanso + taper) para
+    # calibrar el consejo sin pasar nada a mano. --tipo sigue disponible para forzarlo.
+    tipo_auto, dia_ctx = detectar_dia()
+    tipo_dia = tipo_auto or "sencilla"
+    forzado = False
     if "--tipo" in args:
         i = args.index("--tipo")
         if i + 1 < len(args):
             tipo_dia = args[i + 1]
+            forzado = True
             del args[i:i + 2]
+    if forzado:
+        dia_ctx = dict(dia_ctx or {}, tipo_dia=tipo_dia)
 
     base = load_base()
 
@@ -488,7 +565,7 @@ def main():
         client = ai_client() if have_api() else None
         if not client:
             sys.exit("Necesito ANTHROPIC_API_KEY (y el SDK) para estimar por texto.")
-        est = ai_estimate_texto(client, desc, tipo_dia, base)
+        est = ai_estimate_texto(client, desc, tipo_dia, base, dia_ctx)
         print_estimacion(est)
         print_consumo(registrar_consumo(est, "texto"))
         if "--avisar" in args:
@@ -518,7 +595,7 @@ def main():
     client = ai_client() if have_api() else None
     if client:
         try:
-            est = ai_estimate(client, img_path, tipo_dia, base)
+            est = ai_estimate(client, img_path, tipo_dia, base, dia_ctx)
             print_estimacion(est)
             print_consumo(registrar_consumo(est, "foto"))
             if "--avisar" in args:
