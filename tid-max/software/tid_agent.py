@@ -202,6 +202,14 @@ def build_facts(ds):
         c = col(key)
         return c[-1] if c else None
 
+    def last_val(key):
+        """Último valor NO nulo de una columna, sin filtrar por tipo (para texto: horas, etc.)."""
+        for r in reversed(daily):
+            v = r.get(key)
+            if v is not None:
+                return v
+        return None
+
     hrv_vals, rhr_vals = col("hrv_ms"), col("rhr_bpm")
     hrv_base = _mean(hrv_vals[-30:]) if hrv_vals else None
     rhr_base = _mean(rhr_vals[-30:]) if rhr_vals else None
@@ -271,8 +279,8 @@ def build_facts(ds):
         "sueno_detalle": {
             "horas_anoche": last("sleep_asleep_h") or last("sleep_hours"),
             "horas_noche": last("sleep_asleep_noche_h"),
-            "acostado": last("sleep_inicio"),
-            "despertar": last("sleep_fin"),
+            "acostado": last_val("sleep_inicio"),
+            "despertar": last_val("sleep_fin"),
             "siesta_h": last("sleep_nap_h"),
             "n_siestas": last("n_siestas"),
             "en_cama_h": last("sleep_hours"),
