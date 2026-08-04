@@ -165,6 +165,12 @@ def build_daily():
             r["rem_pct"] = _round(rem / asleep_noche * 100)
         r["despertares"] = stage.get("disturbance_count")
         r["ciclos"] = stage.get("sleep_cycle_count")
+        # Hora de acostarse y de despertar (del sueño PRINCIPAL), en hora LOCAL del atleta.
+        tz = principal.get("timezone_offset")
+        ini = _to_local(_parse_dt(principal.get("start")), tz)
+        fin = _to_local(_parse_dt(principal.get("end")), tz)
+        r["sleep_inicio"] = ini.strftime("%H:%M") if ini else None
+        r["sleep_fin"] = fin.strftime("%H:%M") if fin else None
         # Deuda contra el sueño TOTAL. Excluimos el término 'need_from_recent_nap' de WHOOP:
         # ese campo ya descuenta la siesta de la necesidad; si además sumamos la siesta al
         # tiempo dormido, la contaríamos dos veces. Así el crédito por siesta aparece UNA vez.
@@ -623,7 +629,8 @@ def main():
         json.dump(daily, f, ensure_ascii=False, indent=2)
 
     daily_cols = ["fecha", "recovery_pct", "hrv_ms", "rhr_bpm", "spo2_pct", "skin_temp_c",
-                  "sleep_perf_pct", "sleep_hours", "sleep_asleep_h", "sleep_asleep_noche_h",
+                  "sleep_perf_pct", "sleep_inicio", "sleep_fin", "sleep_hours",
+                  "sleep_asleep_h", "sleep_asleep_noche_h",
                   "sleep_nap_h", "n_siestas", "sleep_deep_h", "sleep_rem_h",
                   "deep_pct", "rem_pct", "sleep_efficiency_pct", "sleep_consistency_pct",
                   "despertares", "deuda_sueno_min", "resp_rate", "strain", "kcal",

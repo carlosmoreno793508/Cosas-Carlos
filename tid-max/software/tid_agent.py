@@ -271,6 +271,8 @@ def build_facts(ds):
         "sueno_detalle": {
             "horas_anoche": last("sleep_asleep_h") or last("sleep_hours"),
             "horas_noche": last("sleep_asleep_noche_h"),
+            "acostado": last("sleep_inicio"),
+            "despertar": last("sleep_fin"),
             "siesta_h": last("sleep_nap_h"),
             "n_siestas": last("n_siestas"),
             "en_cama_h": last("sleep_hours"),
@@ -651,6 +653,8 @@ def print_facts(f):
             ns = sd.get("n_siestas") or 1
             desglose = (f" ({s(sd.get('horas_noche'))} h noche + {sd['siesta_h']} h "
                         f"siesta×{ns})")
+        if sd.get("acostado") and sd.get("despertar"):
+            print(f"Horario sueño: se acostó {sd['acostado']} → despertó {sd['despertar']}")
         print(f"Sueño anoche: {sd['horas_anoche']} h dormido{desglose} · {s(sd.get('sueno_pct') or f.get('sueno_pct'))}% perf · "
               f"prof {s(sd.get('profundo_pct'),'%')} · REM {s(sd.get('rem_pct'),'%')} · "
               f"efic {s(sd.get('eficiencia_pct'),'%')} · consist {s(sd.get('consistencia_pct'),'%')} · "
