@@ -154,9 +154,11 @@ help us with **any of the following, before payment** — whichever is workable 
 - A **written SDK specification sheet** (PPG sampling rate, whether the waveform is raw or filtered,
   IBI/RR format and latency, IMU raw output, supported interfaces).
 
-Additionally, would you consider structuring the **SDK authorization fee as creditable toward the
-project NRE, or held in escrow / refundable** if the data does not validate during our evaluation? That
-would let us proceed with confidence on both sides.
+Additionally, could you please share the **cost of the SDK authorization fee** and what exactly it
+includes (documentation, tools, interface access, updates, support, license duration and terminal
+scale)? And would you consider structuring that fee as **creditable toward the project NRE, or held in
+escrow / refundable** if the data does not validate during our evaluation? That would let us proceed
+with confidence on both sides.
 
 **4. Initial prototype / EVK costs**
 To plan our evaluation phase, please share the **cost and lead time for initial prototypes**, including:
