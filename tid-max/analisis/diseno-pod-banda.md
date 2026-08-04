@@ -73,6 +73,9 @@ reproduce. Se pide a la fábrica un **valor de fuerza de retención medible + m�
 - La **luz que respira cambia de color según la zona de FC en vivo** (idea de Gael): azul Z1 · verde Z2 ·
   ámbar Z3 · rojo Z4, anclado a sus umbrales (VT1 143 · VT2 167 · FATmax 173 · FCmáx 181). Sin pantalla,
   hasta bajo el agua.
+- **[decidido] La luz vive SOLO en el anillo perimetral (breathing light). La cara del pod NO lleva LED
+  central** — se mantiene limpia (look "Monolito Vivo"). Nota para fábrica y para renders/marketing: no
+  agregar ningún punto/LED en el centro de la cara.
 - Hardware casi sin costo (ya hay LED RGB + BLE); requiere **firmware**: FC básica en vivo → color, más
   **broadcast estándar de FC (BLE/ANT+)** y **aviso háptico por zona**. El dato crudo se sigue guardando.
 
