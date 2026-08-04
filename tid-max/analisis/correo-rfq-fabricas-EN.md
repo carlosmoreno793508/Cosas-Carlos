@@ -160,10 +160,19 @@ scale)? And would you consider structuring that fee as **creditable toward the p
 escrow / refundable** if the data does not validate during our evaluation? That would let us proceed
 with confidence on both sides.
 
-**4. Initial prototype / EVK costs**
+**4. Existing platform / reference product — to move fast and reduce cost**
+To keep this early stage fast and cost-efficient, we'd strongly prefer to **build on an existing
+product or platform of yours rather than start from zero.** Do you have a **similar existing product or
+reference design** (a smartwatch / band / sensor module already in production, ideally with the raw
+PPG + IBI/RR + IMU capability) that we could use as a **prototype / starting base** for evaluation and
+then adapt to our brand and enclosure? If so, could you share the reference and whether demo units of
+it are available now? If nothing close exists and it would need to start from scratch, please let us
+know that too, so we can plan accordingly.
+
+**5. Initial prototype / EVK costs**
 To plan our evaluation phase, please share the **cost and lead time for initial prototypes**, including:
 - **EVK / demo units** (unit price + quantity available for evaluation)
-- Estimated **NRE** for adapting your platform to our enclosure and configuration
+- Estimated **NRE** for adapting the platform to our enclosure and configuration
 - **MOQ** for a pilot batch and indicative unit cost at pilot vs. mass volumes
 
 Once the NDA is signed, we'll share our full technical RFQ (TID-MAX spec) so your engineering team can
