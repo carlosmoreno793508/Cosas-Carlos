@@ -21,7 +21,11 @@ Uso:
     python tid_agent.py                            # coach del día
     python tid_agent.py --preventivo               # informe preventivo
     python tid_agent.py --pregunta "¿por qué bajó mi HRV esta semana?"
+    python tid_agent.py --deporte running          # usa el módulo de Running (default: perfil/natación)
     python tid_agent.py --sin-ia                   # fuerza modo por reglas (no llama a Claude)
+
+Módulos por deporte: cada deporte es una "lente" (deportes/<deporte>.json) = persona + enfoque +
+qué hechos priorizar. NO tocan el motor; solo cambian el system prompt y el énfasis del contexto.
 
 Requiere (modo IA):
     pip install anthropic
@@ -39,34 +43,82 @@ COACH_OUT = os.path.join(SCRIPT_DIR, "datos", "procesado", "coach-hoy.json")
 
 MODEL = "claude-opus-5"  # el más capaz de uso general; claude-haiku-4-5 para abaratar a escala
 
-PERSONA = (
-    "Eres el coach de TID-MAX, un asistente de rendimiento y bienestar para Gael, un nadador "
-    "competitivo de alto nivel (19 años) que se prepara para su próxima competencia "
-    "internacional. Los HECHOS te dicen el nombre del evento, los días que faltan y la fase "
-    "(carga/taper/pico): úsalos. En taper la prioridad es LLEGAR FRESCO, no acumular carga. "
-    "Hablas en español, claro y cercano, dirigiéndote a Gael y a su entrenador."
-)
-
-GUARDRAILS = (
-    "REGLAS ESTRICTAS:\n"
+# Guardrails UNIVERSALES (aplican a todos los deportes). Lo específico de cada deporte vive en
+# su módulo (deportes/<deporte>.json): persona + enfoque + qué hechos priorizar.
+GUARDRAILS_BASE = (
+    "REGLAS ESTRICTAS (universales):\n"
     "1) Orientación de RENDIMIENTO y BIENESTAR, NO medicina. Nunca diagnostiques, nombres "
     "enfermedades ni sugieras fármacos. Ante una señal de alarma real, recomienda consultar a un "
     "profesional de la salud.\n"
     "2) NO inventes datos. Habla SOLO de los números que te doy en los HECHOS. Si algo falta, dilo.\n"
-    "3) Atleta joven (19): nada de restricción calórica agresiva ni sobrecarga; tono responsable.\n"
+    "3) Atleta joven: nada de restricción calórica agresiva ni sobrecarga; tono responsable.\n"
     "4) El semáforo (verde/amarillo/rojo) YA lo decidió el motor; respétalo, no lo cambies.\n"
-    "5) Sé concreto y breve. Cada consejo se apoya en una señal concreta de los HECHOS.\n"
-    "6) CARGA DE NADO: aún no hay registro medido, así que el PLAN del macrociclo SE TOMA COMO REAL "
-    "(el entrenador lo cumple rigurosamente). 'km_nado_semana' y 'km_nado_semana_previa' YA vienen "
-    "del plan; razónalos como el volumen real de la semana (subida/bajada, hidratación, nutrición). "
-    "No plantees un 'plan vs real' como déficit ni regañes por km faltantes.\n"
-    "7) VACACIONES/DESCANSO: si 'fase_plan_semana' dice 'Vacaciones' o el km planeado es 0, es "
-    "descanso PLANEADO (p. ej. post-competencia). NO empujes entrenamiento ni km; enfoca en "
-    "recuperación, sueño, disfrutar el descanso y actividad ligera opcional. Es parte del plan.\n"
-    "8) INTENSIDAD POR FC: si vienen 'zonas_fc', prescribe la intensidad con esas zonas REALES "
-    "(medidas en su prueba de esfuerzo: VT1/VT2), no con porcentajes genéricos. Recuerda que esa "
-    "FC máx es de carrera; en nado va ~5-10 lpm menor. La 'zona sensible' (VT1-VT2) es su motor."
+    "5) Sé concreto y breve. Cada consejo se apoya en una señal concreta de los HECHOS."
 )
+
+# ---------- Módulos por deporte (la "lente": persona + enfoque + prioridad de contexto) ----------
+# Un módulo NO toca el motor: solo cambia el system prompt y qué hechos resaltar. El usuario elige
+# su deporte en el perfil (o con --deporte). Cada deporte = un JSON en deportes/.
+DEPORTES_DIR = os.path.join(SCRIPT_DIR, "deportes")
+
+# Fallback embebido por si falta el JSON: preserva EXACTAMENTE el comportamiento de natación (Gael).
+_SPORT_BUILTIN = {
+    "natacion": {
+        "deporte": "natacion", "nombre": "Natación",
+        "persona": (
+            "Eres el coach de TID-MAX, un asistente de rendimiento y bienestar para Gael, un nadador "
+            "competitivo de alto nivel (19 años) que se prepara para su próxima competencia "
+            "internacional. Los HECHOS te dicen el nombre del evento, los días que faltan y la fase "
+            "(carga/taper/pico): úsalos. En taper la prioridad es LLEGAR FRESCO, no acumular carga. "
+            "Hablas en español, claro y cercano, dirigiéndote a Gael y a su entrenador."),
+        "enfoque": [
+            "CARGA DE NADO: aún no hay registro medido, así que el PLAN del macrociclo SE TOMA COMO "
+            "REAL (el entrenador lo cumple rigurosamente). 'km_nado_semana' y 'km_nado_semana_previa' "
+            "YA vienen del plan; razónalos como el volumen real de la semana. No plantees un 'plan vs "
+            "real' como déficit ni regañes por km faltantes.",
+            "VACACIONES/DESCANSO: si 'fase_plan_semana' dice 'Vacaciones' o el km planeado es 0, es "
+            "descanso PLANEADO. NO empujes entrenamiento ni km; enfoca en recuperación, sueño y "
+            "actividad ligera opcional. Es parte del plan.",
+            "INTENSIDAD POR FC: si vienen 'zonas_fc', prescribe con esas zonas REALES (VT1/VT2), no "
+            "con porcentajes genéricos. Esa FC máx es de carrera; en nado va ~5-10 lpm menor. La "
+            "'zona sensible' (VT1-VT2) es su motor.",
+        ],
+        "contexto_prioridad": ["zonas_fc", "acwr", "km_nado_semana", "recovery_pct",
+                               "hrv_vs_base_pct", "sueno_pct", "plan_nado_hoy", "fase_plan_semana"],
+    },
+}
+
+
+def load_sport(deporte):
+    """Carga el módulo del deporte desde deportes/<deporte>.json; si falta, usa el builtin."""
+    dep = (deporte or "natacion").lower()
+    path = os.path.join(DEPORTES_DIR, f"{dep}.json")
+    if os.path.exists(path):
+        try:
+            with open(path, encoding="utf-8") as fh:
+                return json.load(fh)
+        except Exception:
+            pass
+    return _SPORT_BUILTIN.get(dep, _SPORT_BUILTIN["natacion"])
+
+
+def build_system(sport):
+    """System prompt = persona del deporte + guardrails universales + enfoque del deporte."""
+    enf = sport.get("enfoque") or []
+    extra = ""
+    if enf:
+        extra = ("\n\nENFOQUE DEL DEPORTE (" + sport.get("nombre", "") + "):\n"
+                 + "\n".join(f"- {e}" for e in enf))
+    return f"{sport.get('persona', '')}\n\n{GUARDRAILS_BASE}{extra}"
+
+
+def sport_focus_note(sport):
+    """Nota para el prompt: qué hechos priorizar en este deporte (no filtra; solo resalta)."""
+    pr = sport.get("contexto_prioridad") or []
+    if not pr:
+        return ""
+    return ("\n\nPara este deporte (" + sport.get("nombre", "")
+            + "), da más peso a estos hechos al aconsejar: " + ", ".join(pr) + ".")
 
 
 # ---------- Carga del esquema canónico ----------
@@ -352,7 +404,7 @@ def ai_client():
         return None
 
 
-def ai_daily_report(client, f):
+def ai_daily_report(client, f, sport):
     """Coach del día como SALIDA ESTRUCTURADA (Pydantic) para alimentar el dashboard."""
     from pydantic import BaseModel
 
@@ -365,11 +417,12 @@ def ai_daily_report(client, f):
         recuperacion: str
         alertas: list[str]
 
-    system = f"{PERSONA}\n\n{GUARDRAILS}"
+    system = build_system(sport)
     prompt = (
         "Estos son los HECHOS de hoy (calculados por el motor determinista; única verdad):\n\n"
         f"{json.dumps(f, ensure_ascii=False, indent=2)}\n\n"
-        f"El semáforo del día es {f['semaforo'].upper()} (razones: {', '.join(f['razones'])}); respétalo.\n\n"
+        f"El semáforo del día es {f['semaforo'].upper()} (razones: {', '.join(f['razones'])}); respétalo."
+        f"{sport_focus_note(sport)}\n\n"
         "Devuelve el coach del día: un veredicto coherente con el semáforo, una frase por pilar "
         "(entrenamiento, sueño, hidratación, nutrición, recuperación) anclada en una señal de los HECHOS, "
         "y una lista de alertas preventivas (vacía si no hay riesgo)."
@@ -393,14 +446,14 @@ def ai_daily_report(client, f):
     }
 
 
-def ai_preventivo(client, f, flags):
-    system = f"{PERSONA}\n\n{GUARDRAILS}"
+def ai_preventivo(client, f, flags, sport):
+    system = build_system(sport)
     prompt = (
         "Actúas como el agente PREVENTIVO de TID-MAX (vigila fatiga/sobrecarga, no diagnostica).\n\n"
         "HECHOS y tendencias del motor (única verdad):\n"
         f"{json.dumps(f, ensure_ascii=False, indent=2)}\n\n"
         f"El motor fijó el nivel de vigilancia en '{flags['nivel'].upper()}' "
-        f"(señales: {', '.join(flags['señales'])}; acción base: {flags['accion']}).\n\n"
+        f"(señales: {', '.join(flags['señales'])}; acción base: {flags['accion']}).{sport_focus_note(sport)}\n\n"
         "Explica en 3–5 frases, para el entrenador, qué está pasando y qué hacer los próximos días. "
         "Respeta el nivel del motor; sé concreto y prudente."
     )
@@ -411,8 +464,8 @@ def ai_preventivo(client, f, flags):
     return "".join(b.text for b in resp.content if getattr(b, "type", None) == "text").strip()
 
 
-def ai_answer(client, f, pregunta):
-    system = f"{PERSONA}\n\n{GUARDRAILS}"
+def ai_answer(client, f, pregunta, sport):
+    system = build_system(sport)
     prompt = (
         "HECHOS del atleta (calculados por el motor; única verdad, no inventes otros):\n\n"
         f"{json.dumps(f, ensure_ascii=False, indent=2)}\n\n"
@@ -526,10 +579,17 @@ def main():
     if "--pregunta" in args:
         i = args.index("--pregunta")
         pregunta = args[i + 1] if i + 1 < len(args) else None
+    deporte = None
+    if "--deporte" in args:
+        i = args.index("--deporte")
+        deporte = args[i + 1] if i + 1 < len(args) else None
 
     ds = load_dataset(DEFAULT_DATASET)
     f = build_facts(ds)
+    # Módulo de deporte: --deporte gana; si no, el del perfil del atleta; si no, natación.
+    sport = load_sport(deporte or (ds.get("atleta") or {}).get("deporte") or "natacion")
     print_facts(f)
+    print(f"[módulo de deporte: {sport.get('nombre', '—')}]")
 
     client = None if force_rules else (ai_client() if have_api() else None)
 
@@ -537,7 +597,7 @@ def main():
     if pregunta:
         if client:
             print(f"❓ {pregunta}\n")
-            ai_answer(client, f, pregunta)
+            ai_answer(client, f, pregunta, sport)
             print("\n========================================================\n")
         else:
             print("El Q&A conversacional necesita la Claude API.")
@@ -555,7 +615,7 @@ def main():
         if client:
             try:
                 print("\n— Lectura del agente —")
-                print(ai_preventivo(client, f, flags))
+                print(ai_preventivo(client, f, flags, sport))
                 print(f"\n[modo: Claude API · {MODEL}]")
             except Exception as e:
                 print(f"[aviso] falló Claude ({e}); me quedo con las reglas.]")
@@ -566,7 +626,7 @@ def main():
     rep = None
     if client:
         try:
-            rep = ai_daily_report(client, f)
+            rep = ai_daily_report(client, f, sport)
         except Exception as e:
             print(f"[aviso] falló la llamada a Claude ({e}); uso el motor por reglas.\n")
     if rep is None:
