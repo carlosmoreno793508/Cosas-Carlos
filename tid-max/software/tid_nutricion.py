@@ -16,6 +16,7 @@ Uso:
                                                             #   (detecta solo si hoy es doble/sencilla/descanso/taper)
     python tid_nutricion.py foto_comida.jpg --tipo doble    # fuerza el tipo de día (si quieres sobreescribir)
     python tid_nutricion.py --texto "6 huevos, licuado, 50 g totopos"   # registra por texto (sin foto)
+    python tid_nutricion.py --texto "..." --hora 10:30                  # fija la hora real de la comida
     python tid_nutricion.py IMG.jpeg --avisar               # registra Y avisa a la familia (link actualizado)
     python tid_nutricion.py --consumo                       # muestra el consumo acumulado de hoy vs meta
     python tid_nutricion.py --reset-consumo                 # borra el consumo de hoy (empezar de cero)
@@ -301,8 +302,10 @@ def _meta_hoy():
             "carb_g": n.get("carbohidratos_g"), "grasa_g": n.get("grasa_g")}
 
 
-def registrar_consumo(est, origen="foto"):
-    """Suma una comida al consumo de HOY (se reinicia solo al cambiar de día)."""
+def registrar_consumo(est, origen="foto", hora=None):
+    """Suma una comida al consumo de HOY (se reinicia solo al cambiar de día).
+    'hora' (HH:MM) permite fijar la hora real de la comida; si no, usa la hora actual.
+    Las comidas se ordenan por hora para que la línea del día quede cronológica."""
     os.makedirs(os.path.dirname(CONSUMO_JSON), exist_ok=True)
     hoy = _hoy()
     data = {}
@@ -316,12 +319,13 @@ def registrar_consumo(est, origen="foto"):
         data = {"fecha": hoy, "comidas": []}
     m = est.macros
     data["comidas"].append({
-        "hora": datetime.datetime.now().strftime("%H:%M"),
+        "hora": hora or datetime.datetime.now().strftime("%H:%M"),
         "platillo": est.platillo,
         "kcal": int(m.kcal_num), "prot_g": int(m.proteina_g_num),
         "carb_g": int(m.carbohidratos_g_num), "grasa_g": int(m.grasa_g_num),
         "origen": origen,
     })
+    data["comidas"].sort(key=lambda c: c.get("hora") or "")
     tot = {"kcal": 0, "prot_g": 0, "carb_g": 0, "grasa_g": 0}
     for c in data["comidas"]:
         for k in tot:
@@ -513,6 +517,13 @@ def main():
             del args[i:i + 2]
     if forzado:
         dia_ctx = dict(dia_ctx or {}, tipo_dia=tipo_dia)
+    # --hora HH:MM: fija la hora real de la comida (si no, usa la hora actual).
+    hora = None
+    if "--hora" in args:
+        i = args.index("--hora")
+        if i + 1 < len(args):
+            hora = args[i + 1]
+            del args[i:i + 2]
 
     base = load_base()
 
@@ -567,7 +578,7 @@ def main():
             sys.exit("Necesito ANTHROPIC_API_KEY (y el SDK) para estimar por texto.")
         est = ai_estimate_texto(client, desc, tipo_dia, base, dia_ctx)
         print_estimacion(est)
-        print_consumo(registrar_consumo(est, "texto"))
+        print_consumo(registrar_consumo(est, "texto", hora))
         if "--avisar" in args:
             avisar_familia()
         return
@@ -597,7 +608,7 @@ def main():
         try:
             est = ai_estimate(client, img_path, tipo_dia, base, dia_ctx)
             print_estimacion(est)
-            print_consumo(registrar_consumo(est, "foto"))
+            print_consumo(registrar_consumo(est, "foto", hora))
             if "--avisar" in args:
                 avisar_familia()
             return
