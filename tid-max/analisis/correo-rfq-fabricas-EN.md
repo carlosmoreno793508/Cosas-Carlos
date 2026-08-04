@@ -104,6 +104,83 @@ Happy to jump on a call to walk through it. Looking forward to your feedback.
    compliant / Not compliant / Alternative proposal*. Proyecta empresa organizada y permite comparar ODMs
    objetivamente. (Ya está pedida en el RFQ §13.)
 
+---
+
+## Correo 3 — Respuesta a Vositone (Jack Ho) · post-primer contacto
+
+> Contexto: Vositone respondió positivo (SDK con raw PPG ≥100 Hz + IBI/RR + IMU; acepta Mutual NDA;
+> ODM full-link). PERO condicionan el acceso al SDK a **pagar la cuota completa ANTES** de validar el
+> dato ("no free trial / no partial test files / no temporary access before full payment"). Objetivo de
+> este correo: **mover el riesgo antes del pago** con 3 palancas — (1) muestra/validación del SDK antes
+> de pagar, (2) NDA primero, (3) fee reembolsable/acreditable — y pedir **costo de prototipos iniciales**.
+> Les damos el company profile que pidieron (info normal de cualificación).
+
+**Subject:** Re: SDK & ODM Partnership – TID-MAX · NDA, Data Validation & Prototype Costs
+
+Dear Jack,
+
+Thank you for the clear and detailed reply — it's helpful to understand your SDK licensing workflow up
+front, and we're glad to hear your platform already provides raw PPG waveform (≥100 Hz), beat-to-beat
+IBI/RR, and raw IMU data. That access to raw biometric signal is the single most important requirement
+for us, so your platform is a strong fit on paper.
+
+To move forward efficiently on our side, here is where we stand and what we'd like to align on.
+
+**1. Company profile (as requested)**
+- **Company:** TID (TID México) — a technology company based in Mexico.
+- **Business type:** Brand owner / product developer of a wearable **health & performance platform**
+  (own brand, sold direct and through partners).
+- **Sales countries:** Initial launch in **Mexico and Latin America**, with international expansion
+  planned thereafter.
+- **Demand type:** **ODM full-link** — we are looking to leverage your existing hardware platform and
+  tooling (to minimize NRE and time-to-market) plus your SDK, under our own brand and enclosure.
+- **Production outlook:** Phased — engineering evaluation and prototypes first, then a **pilot batch**,
+  scaling to mass production once the platform is validated. We can share detailed volumes and ramp
+  under NDA once we've confirmed the technical fit.
+
+**2. Mutual NDA — first**
+We'd like to **sign the Mutual NDA before any commercial or technical exchange**, ahead of the SDK fee.
+Please send us your standard Mutual NDA (or we can provide ours), so that everything below — specs,
+prototype quotes, volumes — happens under protection for both sides. We'd prefer to have the NDA in
+place first rather than after the licensing steps.
+
+**3. SDK — validating before committing**
+We fully respect that your SDK is valuable IP and understand the need to protect it. On our side, before
+committing to the full SDK authorization fee, **we need to confirm the SDK is what we need.** Could you
+help us with **any of the following, before payment** — whichever is workable for you under NDA:
+- A **sample / demonstration of the SDK** — a demo unit, a short evaluation, sample captured datasets
+  (raw PPG waveform + IBI/RR + IMU), or a technical walkthrough — enough to verify the signal quality
+  and data format meet our requirements; **and/or**
+- A **written SDK specification sheet** (PPG sampling rate, whether the waveform is raw or filtered,
+  IBI/RR format and latency, IMU raw output, supported interfaces).
+
+Additionally, would you consider structuring the **SDK authorization fee as creditable toward the
+project NRE, or held in escrow / refundable** if the data does not validate during our evaluation? That
+would let us proceed with confidence on both sides.
+
+**4. Initial prototype / EVK costs**
+To plan our evaluation phase, please share the **cost and lead time for initial prototypes**, including:
+- **EVK / demo units** (unit price + quantity available for evaluation)
+- Estimated **NRE** for adapting your platform to our enclosure and configuration
+- **MOQ** for a pilot batch and indicative unit cost at pilot vs. mass volumes
+
+Once the NDA is signed, we'll share our full technical RFQ (TID-MAX spec) so your engineering team can
+respond point by point.
+
+We appreciate your time, Jack, and look forward to building a long-term partnership.
+
+Best regards,
+Carlos Moreno
+TID México
+carlos.moreno@tidmexico.com.mx
+
+> **Notas (no enviar):**
+> - Orden intencional: **NDA → validación del dato → recién ahí la cuota del SDK**. Si Jack acepta muestra/spec
+>   antes del pago, es señal fuerte de buena fe; si se niega en seco a *todo* pre-pago, es bandera roja para escalar.
+> - "Creditable / escrow / refundable" es el punto que más nos protege — insistir sin sonar a desconfianza.
+> - El company profile es real y suficiente; no dar volúmenes exactos hasta NDA.
+> - No mencionar Gael, WHOOP ni la IA/algoritmos. El moat vive en la nube.
+
 ## Notas de uso (no enviar)
 - **Correo 1 NO lleva adjunto** — es el gancho + NDA. Adjunta la spec **solo** en el Correo 2 (post-NDA).
 - El **descalificador (raw PPG + SDK)** va desde el Correo 1 para que se autoseleccionen.
