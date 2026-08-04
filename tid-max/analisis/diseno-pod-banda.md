@@ -76,6 +76,14 @@ reproduce. Se pide a la fábrica un **valor de fuerza de retención medible + m�
 - **[decidido] La luz vive SOLO en el anillo perimetral (breathing light). La cara del pod NO lleva LED
   central** — se mantiene limpia (look "Monolito Vivo"). Nota para fábrica y para renders/marketing: no
   agregar ningún punto/LED en el centro de la cara.
+- **[decidido] Zona por VIBRACIÓN (háptico) — accesible.** El pod vibra **N veces según la zona** al
+  **cambiar de zona**: Z1 = 1 vibración · Z2 = 2 · Z3 = 3 · Z4 = 4 (o buzz largo de alerta). Usa el
+  **motor háptico (LRA)** que ya está en la spec → solo firmware. Sirve para **3 casos a la vez**: usuarios
+  **ciegos / baja visión**, cualquiera que no quiere voltear a ver, y **bajo el agua** (donde luz y sonido
+  fallan). El patrón exacto es afinable en pruebas.
+- **Nota de accesibilidad:** un **altavoz/bip en el pod se descarta** (comprometería el sellado 5 ATM y no
+  sirve bajo el agua). El canal accesible on-body es el **háptico**; opcional, **audio/voz a audífonos
+  Bluetooth** vía app ("Zona 3") para uso en seco. Nicho real: **para-atletas con discapacidad visual**.
 - Hardware casi sin costo (ya hay LED RGB + BLE); requiere **firmware**: FC básica en vivo → color, más
   **broadcast estándar de FC (BLE/ANT+)** y **aviso háptico por zona**. El dato crudo se sigue guardando.
 
