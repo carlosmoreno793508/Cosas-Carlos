@@ -38,7 +38,7 @@ Arrancamos con **un** agente coach y separamos por rol conforme crezca. Todos le
 | **Preventivo** | Vigila señales tempranas de fatiga/sobreentrenamiento y escala **vigilar → descarga → fisio**. | tendencia HRV 7d, FC reposo 7d, días de recovery baja seguidos, ACWR | 🟡 v0 (`tid_agent.py --preventivo`) |
 | **Q&A** | Responde preguntas libres del entrenador ("¿por qué bajó la HRV esta semana?") sobre el dataset. | hechos del atleta | 🟡 v0 (`tid_agent.py --pregunta`) |
 | **Nutriólogo** | Estima el consumo desde **foto o texto** (kcal + macros), lo suma a "consumido vs meta" del día y arma el plan de comidas. **Con MEMORIA**: aprende los platillos recurrentes de Gael para autocompletar cuando falten detalles. | plantilla nutricional, meta del día, plan de nado, **memoria de alimentos** | 🟡 v0 (`tid_nutricion.py`) |
-| **Rendimiento** | Lee la carga (ACWR / forma) y dice si el plan progresa y cuándo llega el pico rumbo al evento. | CTL/ATL/TSB, volumen, workouts | ⬜ |
+| **Rendimiento** | Lee la carga (ACWR / **Forma = CTL/ATL/TSB**) y dice si el plan progresa y cómo va el pico rumbo al evento (en_pico / afinando / atrasado / construyendo). | Forma (CTL/ATL/TSB), fase, días al evento | 🟡 v0 (`tid_agent.py --rendimiento`) |
 
 > No sobre-ingenierizamos: **un** agente coach bien hecho cubre el 80%. Los demás son especializaciones del
 > mismo patrón (mismo dataset, distinto system prompt + distinto recorte de contexto).

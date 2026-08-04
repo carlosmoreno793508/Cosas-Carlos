@@ -75,7 +75,7 @@ Presupuesto INDICATIVO en USD (a validar con cotizaciones reales: RFQ H0.4, lab 
 
 | # | Ítem | Estado | Acción correctiva / notas |
 |---|---|---|---|
-| 1.1 | Cálculo CTL/ATL/TSB (carga) | ⬜ | |
+| 1.1 | Cálculo CTL/ATL/TSB (carga) | 🟡 | v0 en `tid_agent.py` (`carga_forma`): Fitness(CTL EWMA-42d) / Fatiga(ATL EWMA-7d) / Forma(TSB) sobre el **strain de WHOOP**. ⚠️ Honesto: es **proxy** (no TSS de potencia) → tendencia, no valor absoluto. Alimenta la IA de Rendimiento (4.2). Falta TSS real cuando llegue potencia/ritmo. |
 | 1.2 | HRV (rMSSD/SDNN) + DFA-α1 | ⬜ | |
 | 1.3 | Zonas y umbrales personalizados | ⬜ | |
 | 1.4 | Sueño + VO2max estimado | ⬜ | |
@@ -106,7 +106,7 @@ Presupuesto INDICATIVO en USD (a validar con cotizaciones reales: RFQ H0.4, lab 
 | # | Ítem | Estado | Acción correctiva / notas |
 |---|---|---|---|
 | 4.1 | Modelos de riesgo de lesión / sobreentrenamiento | ⬜ | Requiere dataset acumulado de Fase 3 |
-| 4.2 | Momento de pico / pronóstico de rendimiento (**IA de Rendimiento**) | 🟡 | **Decisión E4: acelerado a en desarrollo.** Eslabón que une natación/running/triatlón; se nutre de la HRV que ya capturamos. Sirve **ya** al *tapering* de Gael rumbo a Vancouver. Es la 5ª IA del producto (`analisis/agentes-ai.md`). |
+| 4.2 | Momento de pico / pronóstico de rendimiento (**IA de Rendimiento**) | 🟡 | **v0 CONSTRUIDO** (`tid_agent.py --rendimiento`): lee la Forma (CTL/ATL/TSB, ítem 1.1) + fase/días al evento y da estado de pico (en_pico / afinando / atrasado / construyendo) con lógica de taper, IA (Claude) + fallback por reglas. Probado con escenario de taper (TSB subiendo → "llegando fresco"). Sirve **ya** al tapering de Gael rumbo a Vancouver. Falta: TSS real (potencia/ritmo) y validación con más histórico. 5ª IA del producto. |
 | 4.3 | Backtesting honesto (validado vs. hipótesis) | ⬜ | |
 
 ## FASE H0 — Spec + RFQ (Hardware)

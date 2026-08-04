@@ -20,6 +20,7 @@ Uso:
     python whoop_sync.py && python tid_data.py     # baja WHOOP y normaliza
     python tid_agent.py                            # coach del día
     python tid_agent.py --preventivo               # informe preventivo
+    python tid_agent.py --rendimiento              # forma/pico (Fitness/Fatiga/Forma) rumbo al evento
     python tid_agent.py --pregunta "¿por qué bajó mi HRV esta semana?"
     python tid_agent.py --deporte running          # usa el módulo de Running (default: perfil/natación)
     python tid_agent.py --sin-ia                   # fuerza modo por reglas (no llama a Claude)
@@ -35,6 +36,7 @@ import os
 import sys
 import json
 import glob
+import math
 from datetime import datetime, timezone
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -140,6 +142,48 @@ def _mean(xs):
     return sum(xs) / len(xs) if xs else None
 
 
+def _ewma(vals, tc):
+    """EWMA con constante de tiempo tc (impulso-respuesta exponencial). Devuelve la serie."""
+    k = 1 - math.exp(-1.0 / tc)
+    out, e = [], None
+    for v in vals:
+        e = v if e is None else e + k * (v - e)
+        out.append(e)
+    return out
+
+
+def carga_forma(strain_series):
+    """Fitness/Fatiga/Forma (modelo Banister) sobre el strain diario de WHOOP.
+    CTL (fitness) = EWMA 42 d · ATL (fatiga) = EWMA 7 d · TSB (forma) = CTL_ayer - ATL_ayer.
+    OJO: es un PROXY sobre el strain de WHOOP (no TSS de potencia); sirve para TENDENCIA/dirección,
+    no como número absoluto. El LLM lo interpreta; no lo recalcula."""
+    xs = [x for x in strain_series if isinstance(x, (int, float))]
+    if len(xs) < 7:
+        return None
+    ctl, atl = _ewma(xs, 42), _ewma(xs, 7)
+    tsb = ctl[-2] - atl[-2] if len(xs) >= 2 else ctl[-1] - atl[-1]
+    ctl_prev = ctl[-8] if len(ctl) >= 8 else ctl[0]
+    tsb_prev = (ctl[-9] - atl[-9]) if len(xs) >= 9 else None
+    # Estado de forma (para el semáforo de rendimiento): TSB alto = fresco; muy bajo = fatigado.
+    if tsb >= 5:
+        estado = "fresco"
+    elif tsb >= -10:
+        estado = "neutro"
+    elif tsb >= -20:
+        estado = "cargado"
+    else:
+        estado = "muy_fatigado"
+    return {
+        "fitness_ctl": round(ctl[-1], 1),
+        "fatiga_atl": round(atl[-1], 1),
+        "forma_tsb": round(tsb, 1),
+        "forma_tsb_previa": round(tsb_prev, 1) if tsb_prev is not None else None,
+        "fitness_tendencia": round(ctl[-1] - ctl_prev, 1),
+        "estado_forma": estado,
+        "_nota": "proxy sobre strain de WHOOP (no TSS); usar como tendencia, no valor absoluto",
+    }
+
+
 # ---------- MOTOR determinista (calcula los hechos; el LLM no toca esto) ----------
 def build_facts(ds):
     daily = ds.get("daily", [])
@@ -184,6 +228,9 @@ def build_facts(ds):
     s_vals = col("strain")
     acute, chronic = _mean(s_vals[-7:]), _mean(s_vals[-28:])
     acwr = acute / chronic if (acute and chronic) else None
+
+    # Forma (Fitness/Fatiga/Forma = CTL/ATL/TSB) — para la IA de Rendimiento (pico/taper)
+    forma = carga_forma(s_vals)
 
     # Volumen de nado. El PLAN del macrociclo SE TOMA COMO REAL (el entrenador lo cumple
     # rigurosamente) y es la fuente autoritativa del volumen: km de la semana y de la previa
@@ -238,6 +285,7 @@ def build_facts(ds):
         "dias_recovery_baja_seguidos": dias_rec_baja,
         "strain_hoy": last("strain"),
         "acwr": round(acwr, 2) if acwr else None,
+        "forma": forma,
         "km_nado_semana": km_week,
         "km_nado_semana_previa": km_prev,
         "dias_de_datos": len(daily),
@@ -349,6 +397,74 @@ def preventivo_flags(f):
         "fisio": "Descarga + valoración con fisioterapeuta/entrenador. No forzar hasta revisar.",
     }[nivel]
     return {"nivel": nivel, "señales": señales, "accion": accion}
+
+
+# ---------- Agente RENDIMIENTO: forma/pico rumbo al evento (por reglas) ----------
+def rendimiento_flags(f):
+    """Lee la Forma (CTL/ATL/TSB) + la fase/días al evento y da un estado de 'pico'."""
+    forma = f.get("forma")
+    if not forma:
+        return {"estado": "sin_datos",
+                "lectura": "Aún no hay suficientes días de carga para estimar la forma (necesito ≥7).",
+                "señales": []}
+    tsb, tsb_prev = forma.get("forma_tsb"), forma.get("forma_tsb_previa")
+    ctl_tend = forma.get("fitness_tendencia")
+    estado = forma.get("estado_forma")
+    fase = (f.get("fase") or f.get("fase_plan_semana") or "").lower()
+    dias = f.get("dias_al_evento")
+    señales = [f"Forma (TSB) {tsb:+.0f}" + (f", antes {tsb_prev:+.0f}" if isinstance(tsb_prev, (int, float)) else ""),
+               f"Fitness (CTL) {'sube' if (ctl_tend or 0) > 0.3 else 'baja' if (ctl_tend or 0) < -0.3 else 'estable'}"]
+    subiendo = isinstance(tsb_prev, (int, float)) and tsb > tsb_prev
+
+    en_taper = "taper" in fase or (isinstance(dias, (int, float)) and dias <= 14)
+    if en_taper:
+        if estado in ("fresco",) or (tsb >= 0):
+            lectura = ("Vas llegando FRESCO: la forma (TSB) ya está en positivo. El taper está haciendo "
+                       "su trabajo; mantén algo de intensidad corta para no 'apagarte', pero baja volumen.")
+            estado_pico = "en_pico"
+        elif subiendo:
+            lectura = ("La forma va SUBIENDO hacia el pico (aún algo cargado). Vas por buen camino; "
+                       "sigue soltando fatiga estos días — no metas volumen alto.")
+            estado_pico = "afinando"
+        else:
+            lectura = ("Todavía CARGADO para estar tan cerca del evento: la forma no sube. Prioriza "
+                       "descarga, sueño y bajar volumen para llegar fresco.")
+            estado_pico = "atrasado"
+    else:
+        if (ctl_tend or 0) > 0.3:
+            lectura = ("Construyendo fitness: la carga crónica sube de forma sostenida. Bien, siempre "
+                       "que la fatiga y el ACWR no se disparen.")
+            estado_pico = "construyendo"
+        elif estado == "muy_fatigado":
+            lectura = ("Fatiga acumulada alta (forma muy negativa). Bien si es un bloque de carga "
+                       "planeado; si no, considera una descarga.")
+            estado_pico = "cargado"
+        else:
+            lectura = "Carga y forma estables. Progresa según el plan."
+            estado_pico = "estable"
+    return {"estado": estado_pico, "lectura": lectura, "señales": señales}
+
+
+def ai_rendimiento(client, f, flags, sport):
+    system = build_system(sport)
+    prompt = (
+        "Actúas como el agente de RENDIMIENTO de TID-MAX: lees la FORMA (Fitness/Fatiga/Forma = "
+        "CTL/ATL/TSB, un PROXY sobre el strain de WHOOP — úsalo como tendencia, no valor absoluto) y "
+        "dices si el atleta progresa y cómo va rumbo a su pico/evento.\n\n"
+        "HECHOS del motor (única verdad):\n"
+        f"{json.dumps(f, ensure_ascii=False, indent=2)}\n\n"
+        f"El motor fijó el estado en '{flags['estado'].upper()}' "
+        f"(señales: {'; '.join(flags['señales'])}). Lectura base: {flags['lectura']}"
+        f"{sport_focus_note(sport)}\n\n"
+        "Explica en 3–5 frases, para el atleta y su entrenador: cómo va la forma, qué esperar rumbo al "
+        "evento, y 1–2 acciones concretas para estos días. Respeta el estado del motor; sé prudente y "
+        "no prometas resultados."
+    )
+    resp = client.messages.create(
+        model=MODEL, max_tokens=800, thinking={"type": "adaptive"},
+        system=system, messages=[{"role": "user", "content": prompt}],
+    )
+    return "".join(b.text for b in resp.content if getattr(b, "type", None) == "text").strip()
 
 
 # ---------- Fallback por reglas (coach del día, sin IA) ----------
@@ -575,6 +691,7 @@ def main():
     args = sys.argv[1:]
     force_rules = "--sin-ia" in args
     preventivo = "--preventivo" in args
+    rendimiento = "--rendimiento" in args
     pregunta = None
     if "--pregunta" in args:
         i = args.index("--pregunta")
@@ -619,6 +736,29 @@ def main():
                 print(f"\n[modo: Claude API · {MODEL}]")
             except Exception as e:
                 print(f"[aviso] falló Claude ({e}); me quedo con las reglas.]")
+        print("========================================================\n")
+        return
+
+    # Agente Rendimiento (forma/pico rumbo al evento)
+    if rendimiento:
+        flags = rendimiento_flags(f)
+        fm = f.get("forma") or {}
+        print("\n============== TID-MAX · AGENTE RENDIMIENTO ==============")
+        if fm:
+            print(f"Forma: Fitness(CTL) {fm['fitness_ctl']} · Fatiga(ATL) {fm['fatiga_atl']} · "
+                  f"FORMA(TSB) {fm['forma_tsb']:+} ({fm['estado_forma']})")
+        print(f"Estado de pico: {flags['estado'].upper()}")
+        for s in flags["señales"]:
+            print(f"  • {s}")
+        print(f"\nLectura: {flags['lectura']}")
+        if client:
+            try:
+                print("\n— Lectura del agente —")
+                print(ai_rendimiento(client, f, flags, sport))
+                print(f"\n[modo: Claude API · {MODEL}]")
+            except Exception as e:
+                print(f"[aviso] falló Claude ({e}); me quedo con las reglas.]")
+        print("(Forma = proxy sobre strain de WHOOP; tendencia, no valor absoluto.)")
         print("========================================================\n")
         return
 
