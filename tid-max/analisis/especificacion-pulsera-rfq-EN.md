@@ -1,7 +1,7 @@
 # TID-MAX — Technical Specification for Quotation (RFQ) · Performance Band
 
-**Document:** RFQ v2.2 — Hardware specification for ODM/EMS
-**Date:** 2026-08-03 · **Owner:** Carlos Moreno (TID México) · carlos.moreno@tidmexico.com.mx
+**Document:** RFQ v2.3 — Hardware specification for ODM/EMS
+**Date:** 2026-08-04 · **Owner:** Carlos Moreno (TID México) · carlos.moreno@tidmexico.com.mx
 **Target recipients:** JointCorp, Vositone, Bingo, Star King (China Tier-1) · India alternative: Dixon/Dixtel, Optiemus
 **Project stage:** Phase H0 (Spec + RFQ). The EVK (Phase H1) precedes tooling; see §12.
 
@@ -47,13 +47,14 @@ rest.
 |---|---|---|
 | Concept | Sensor pod + interchangeable woven band | [HARD] |
 | Target pod dimensions | ~**32 × 28 × 11 mm** (target envelope, to be optimized by DFM) | [EST] |
-| Pod housing | **Aluminum** (anodized; grade to be proposed) | [HARD] |
+| **Pod housing material** | **High-strength engineering polymer** (PC, PC+ABS or equivalent) suitable for skin contact, sweat, chlorine, sunscreen and UV. Must maintain IP68 + 5 ATM while **minimizing RF (BLE) attenuation** and **not degrading the optical sensor**. **Anodized aluminum allowed only as a bezel/accent** (localized metal) as long as it does NOT degrade RF or optics. *(Specified by performance; exact material to be proposed by DFM.)* | [HARD by performance] |
 | Surface | **Clean, no openings or buttons** (better sealing, fewer failure points) | [HARD] |
 | Skin contact | Biocompatible material (ISO 10993 / hypoallergenic) | [HARD] |
-| Loop / strap | **Woven, magnetic clasp, interchangeable** | [HARD] |
+| Loop / strap | **Woven, magnetic clasp, interchangeable.** Variants: **woven textile = sport band** (light, quick-dry, for swimming); **metal mesh (Milanese) = optional lifestyle band** | [HARD] |
+| **Pod↔band attachment** | **NO spring bars / pins.** The pod seats into a **cradle** on the band with **mechanical retention** (tabs capturing the pod's shoulder); the **magnet only aligns and provides the "click"**. See §9.4 | [HARD] |
 | Loop sizes | Wrist range + biceps range (at least 2 lengths) | [EST] |
 | Target weight | As low as possible; pod target ≤ ~25 g without loop | [EST] |
-| Color/finish | Neutral pod (TBD); "Living Monolith" aesthetic | [EST] |
+| Color/finish | Neutral pod (TBD); "Living Monolith" aesthetic. **Pod face has NO center LED** (only light = the perimeter ring, see §9.3) | [EST] |
 
 **Key question for the manufacturer:** do you have an **existing tooling/platform** close to this form
 factor that we could use for the beta to minimize NRE? (see §11–12).
@@ -101,6 +102,20 @@ factor that we could use for the beta to minimize NRE? (see §11–12).
 
 > **No GPS in the band** [HARD]: it kills battery, raises cost/size and adds regulatory weight. Swim
 > distance is solved by IMU (lap counting), not GPS.
+
+### 4.4 Live on-device feedback · [HARD]
+The band gives **real-time HR-zone feedback** without a screen, using the actuators it already carries:
+- **Light by zone:** the **RGB perimeter ring** changes color by HR zone (e.g. Z1 blue, Z2 green,
+  Z3 amber, Z4 red). **The face has NO center LED** (only light = the ring, §9.3).
+- **Vibration by zone (accessible):** the **haptic motor (LRA)** vibrates **N times by zone** (Z1=1 …
+  Z4=4, or a long alert buzz) **on zone change**. Serves **visually impaired users, no-look use and
+  underwater**.
+- **Independent on/off:** the user enables/disables light and vibration separately (light only / vibration
+  only / both / none) **via double-tap + app — NOT a physical button** (keeps the "no buttons" rule, §9.2).
+- **HR broadcast:** expose HR over a **standard BLE HR profile (and/or ANT+)** for external displays
+  (coach tablet, pool wall clock).
+- **Firmware requirement:** compute a **basic live HR** on-device **only to drive this feedback**. It does
+  NOT replace the cloud AI; the **raw data (§4.1) is still stored intact**.
 
 ---
 
@@ -162,6 +177,9 @@ RAM/flash floor + OTA + secure boot is acceptable.
   2. **Sealed inductive charging** (Qi-like).
 - **Included accessory:** only a **USB-C magnetic charging cable/dock**. **No wall adapter / no AC plug**
   — this avoids NOM-003-SCFI in Mexico.
+- **The charger couples magnetically to the POD** (where the battery is), **without removing it from the
+  band** — it can charge in place, even on the wrist (WHOOP pattern). The band carries no electronics or
+  contacts.
 - *Question for the manufacturer: pogo or inductive on your existing platform? Cost and reliability of
   each.*
 
@@ -176,13 +194,28 @@ RAM/flash floor + OTA + secure boot is acceptable.
 
 ### 9.2 Interaction · [HARD]
 - **App (BLE)** as the primary interface.
-- **Double-tap** on the pod as physical input (via IMU/tap-detect).
-- **Haptic feedback** — vibration motor (LRA preferred).
-- **No screen, no mechanical buttons.**
+- **Double-tap** on the pod as physical input (via IMU/tap-detect). **It is the "button" with no hole:**
+  double-tap **cycles the feedback modes** (light / vibration / both / none, §4.4).
+- **Haptic feedback** — **LRA vibration motor** (per-zone pattern, §4.4).
+- **No screen, no mechanical buttons.** (A physical push-button is ruled out: a hole = leak and failure point.)
 
 ### 9.3 "Living Monolith" aesthetic · [HARD as a hook, detail [EST]]
-- **Hidden breathing light** — RGB LED(s) under the surface that light up in a pattern/color. Hidden when
-  off (clean surface). Diffuser/optics to be defined with the manufacturer.
+- **Hidden breathing light** — a **perimeter ring** of RGB LED(s) under the surface that light up in a
+  pattern/color (HR zone, §4.4). Hidden when off (clean surface). **The pod face has NO center LED** — the
+  only light is the perimeter ring. Diffuser/optics to be defined with the manufacturer.
+
+### 9.4 Pod↔band retention and serviceability · [HARD]
+- **No spring bars / pins.** The pod seats into a **cradle** on the band with **mechanical retention**:
+  tabs (or a guide + latch) that **capture the pod's shoulder**. The **magnet only aligns and provides the
+  "click"** — retention does NOT depend on the magnet.
+- **The wear feature lives on the REPLACEABLE band** (the tabs/guide, in POM/nylon or a metal guide). The
+  **pod** only presents a **passive aluminum shoulder** (does not flex, does not wear).
+- **Band sold as a spare part** (separate SKU) — the user replaces a cheap band, never the pod.
+- **Must withstand** the forces of **swimming (push-off), running and contact (team sports)** without
+  detaching; removal requires a **deliberate action** (release tab / double-tap).
+- *Questions for the manufacturer: (a) measurable **retention force** + test method; (b) **insertion cycle
+  life** (target ≥ 5,000–10,000 cycles) validated by test; (c) **drop/impact** test; (d) your recommended
+  mechanism (metal guide vs POM snap-fit) with cost delta.*
 
 ---
 
@@ -289,8 +322,14 @@ quotation.*
 - Access to **raw PPG ≥100 Hz + IBI/RR** (not cooked metrics only).
 - **Store-and-forward** with on-board flash + 2 capture modes.
 - SoC **≥256 KB RAM / ≥512 KB flash + BLE 5.x + OTA + secure boot**.
-- **5 ATM (ISO 22810) + IP68**, **no open port**, **sealed magnetic charging**, **no wall adapter**.
-- No screen / no buttons; aluminum pod + interchangeable magnetic woven loop; wrist and biceps.
+- **5 ATM (ISO 22810) + IP68**, **no open port**, **sealed magnetic charging** (to the pod, without
+  removing it), **no wall adapter**.
+- No screen / no buttons; **polymer housing + aluminum bezel** (§3); interchangeable magnetic woven loop;
+  wrist and biceps.
+- **Pod↔band attachment with no pins, mechanical retention**; wear feature on the **replaceable band**
+  (separate SKU); resistance to swim/run/contact/drop + insertion cycle life (§9.4).
+- **Live feedback (§4.4):** HR zone by **light color** (perimeter ring, no center LED) + **vibration
+  N×zone** (accessible); on/off via **double-tap** (no button); BLE HR / ANT+ broadcast.
 - **7–14 day autonomy** target.
 - Granular IP negotiated (§11).
 
@@ -318,6 +357,12 @@ quotation.*
    **electrodes** (rear-housing electrode + accessible electrode) while maintaining **5 ATM + IP68 and the
    envelope without growing**? Cost/NRE delta with the AFE **populated** vs. only **laying out the
    footprint** (unpopulated)? Note: this is a future capability; it is not enabled in v1.
+10. **Pod↔band attachment (§9.4):** recommended **pin-less** mechanism (metal guide vs POM snap-fit)?
+    Measurable **retention force** + test method, **insertion cycle life** (≥5,000–10,000 cycles) and a
+    **drop** test? Can the **band** be sold as a spare part (separate SKU)?
+11. **Live feedback (§4.4):** does your platform support an **RGB perimeter ring** (no center LED), an
+    **LRA haptic** with patterns, **double-tap** to cycle modes, and **BLE HR / ANT+ broadcast**? Cost
+    delta if any?
 
 ---
 

@@ -84,6 +84,11 @@ reproduce. Se pide a la fábrica un **valor de fuerza de retención medible + m�
 - **Nota de accesibilidad:** un **altavoz/bip en el pod se descarta** (comprometería el sellado 5 ATM y no
   sirve bajo el agua). El canal accesible on-body es el **háptico**; opcional, **audio/voz a audífonos
   Bluetooth** vía app ("Zona 3") para uso en seco. Nicho real: **para-atletas con discapacidad visual**.
+- **[decidido] On/off independiente de luz y vibración.** El usuario elige: **luz sola / vibración sola /
+  ambas / ninguna**. ⚠️ El control es **por DOBLE-TOQUE + app, NO por botón físico** — un push-button
+  rompe el "sin botones / superficie sellada" [DURO] (hueco = fuga y falla). El doble-toque (tap-detect
+  por IMU) ya es la entrada del pod: **es el "botón" sin hueco.** Si algún día se quisiera botón físico,
+  se trataría como cambio a la decisión "sin botones".
 - Hardware casi sin costo (ya hay LED RGB + BLE); requiere **firmware**: FC básica en vivo → color, más
   **broadcast estándar de FC (BLE/ANT+)** y **aviso háptico por zona**. El dato crudo se sigue guardando.
 

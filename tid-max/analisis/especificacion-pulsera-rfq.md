@@ -1,7 +1,7 @@
 # TID-MAX — Especificación técnica para cotización (RFQ) · Banda de rendimiento
 
-**Documento:** RFQ v2.2 — Especificación de hardware para ODM/EMS
-**Fecha:** 2026-08-03 · **Responsable:** Carlos Moreno (TID México) · carlos.moreno@tidmexico.com.mx
+**Documento:** RFQ v2.3 — Especificación de hardware para ODM/EMS
+**Fecha:** 2026-08-04 · **Responsable:** Carlos Moreno (TID México) · carlos.moreno@tidmexico.com.mx
 **Destinatarios objetivo:** JointCorp, Vositone, Bingo, Star King (China Tier-1) · alternativa India: Dixon/Dixtel, Optiemus
 **Estado del proyecto:** Fase H0 (Spec + RFQ). El EVK (Fase H1) es previo al molde; ver §12.
 
@@ -49,13 +49,14 @@ reposo.
 |---|---|---|
 | Concepto | Pod sensor + loop tejido intercambiable (interchangeable band) | [DURO] |
 | Dimensiones objetivo del pod | ~**32 × 28 × 11 mm** (envelope objetivo, a optimizar por DFM) | [EST] |
-| Carcasa del pod | **Aluminio** (anodizado, grado a proponer) | [DURO] |
+| **Material de carcasa del pod** | **Polímero de ingeniería de alta resistencia** (PC, PC+ABS o equivalente) apto para contacto con piel, sudor, cloro, bloqueador y UV. Debe mantener IP68 + 5 ATM **minimizando la atenuación de RF (BLE)** y **sin degradar el sensor óptico**. **Aluminio anodizado permitido solo como bisel/acento** (metal localizado) mientras NO degrade RF ni óptico. *(Se especifica por desempeño; material exacto a proponer por DFM.)* | [DURO por desempeño] |
 | Superficie | **Limpia, sin aberturas ni botones** (surface = mejor sellado, menos fallas) | [DURO] |
 | Contacto con piel | Material biocompatible (skin-contact, ISO 10993 / hipoalergénico) | [DURO] |
-| Loop / correa | **Tejido (woven), cierre magnético (magnetic clasp), intercambiable** | [DURO] |
+| Loop / correa | **Tejido (woven), cierre magnético (magnetic clasp), intercambiable.** Variantes: **tejido textil = banda deportiva** (ligera, seca rápido, para nado); **malla metálica (Milanese) = banda lifestyle opcional** | [DURO] |
+| **Unión pod↔banda** | **SIN pernos / spring-bars.** El pod se aloja en un **cradle** de la banda con **retención mecánica** (pestañas que capturan el hombro del pod); el **imán solo alinea y da el "clic"**. Ver §9.4 | [DURO] |
 | Tallas de loop | Rango muñeca + rango bíceps (al menos 2 largos) | [EST] |
 | Peso objetivo | Lo más bajo posible; objetivo del pod ≤ ~25 g s/loop | [EST] |
-| Color/acabado | Pod neutro (a definir); estética "Monolito Vivo" | [EST] |
+| Color/acabado | Pod neutro (a definir); estética "Monolito Vivo". **Cara del pod SIN LED central** (única luz = anillo perimetral, ver §9.3) | [EST] |
 
 **Pregunta clave a la fábrica:** ¿tienen **molde/plataforma existente** (existing tooling/platform)
 cercano a este form factor que podamos usar para el beta y así minimizar NRE? (ver §11–12).
@@ -106,6 +107,20 @@ cercano a este form factor que podamos usar para el beta y así minimizar NRE? (
 
 > **Sin GPS en la banda** [DURO]: mata batería, sube costo/tamaño y peso regulatorio. La distancia de
 > nado se resuelve por IMU (lap counting), no por GPS.
+
+### 4.4 Retroalimentación en vivo (on-device) · [DURO]
+La banda da feedback de **zona de FC en tiempo real** sin pantalla, con los actuadores que ya lleva:
+- **Luz por zona:** el **anillo perimetral RGB** cambia de color según la zona de FC (p. ej. Z1 azul,
+  Z2 verde, Z3 ámbar, Z4 rojo). **La cara NO lleva LED central** (única luz = el anillo, §9.3).
+- **Vibración por zona (accesible):** el **motor háptico (LRA)** vibra **N veces según la zona** (Z1=1 …
+  Z4=4, o buzz largo de alerta) **al cambiar de zona**. Sirve para **discapacidad visual, uso sin mirar y
+  bajo el agua**.
+- **On/off independiente:** el usuario activa/desactiva luz y vibración por separado (luz sola / vibración
+  sola / ambas / ninguna) **por doble-toque + app — NO por botón físico** (respeta "sin botones", §9.2).
+- **Broadcast de FC:** exponer FC por **perfil estándar BLE HR (y/o ANT+)** para displays externos
+  (tablet del coach, reloj de pared).
+- **Requisito de firmware:** calcular una **FC básica en vivo** on-device **solo para manejar este
+  feedback**. NO reemplaza la IA de la nube; el **dato crudo (§4.1) se sigue guardando intacto**.
 
 ---
 
@@ -168,6 +183,8 @@ cualquier SoC BLE que cumpla el piso de RAM/flash + OTA + secure boot.
 - **Accesorio incluido:** solo **cable/base magnética con conector USB-C** (USB-C magnetic charging
   cable/dock). **SIN adaptador de pared (no wall adapter / no AC plug)** — evita la NOM-003-SCFI en
   México.
+- **El cargador se acopla magnéticamente al POD** (donde está la batería), **sin quitarlo de la banda** —
+  se puede cargar puesto, incluso en la muñeca (patrón WHOOP). La banda no lleva electrónica ni contactos.
 - *Pregunta a fábrica: ¿pogo o inductiva en su plataforma existente? Costo y confiabilidad de cada una.*
 
 ---
@@ -181,14 +198,29 @@ cualquier SoC BLE que cumpla el piso de RAM/flash + OTA + secure boot.
 
 ### 9.2 Interacción (interaction) · [DURO]
 - **App (BLE)** como interfaz principal.
-- **Doble toque (double-tap)** sobre el pod como entrada física (via IMU/tap-detect).
-- **Retroalimentación háptica (haptic feedback)** — motor vibrador (LRA preferido).
-- **Sin pantalla, sin botones mecánicos.**
+- **Doble toque (double-tap)** sobre el pod como entrada física (via IMU/tap-detect). **Es el "botón" sin
+  hueco:** por doble-toque se **ciclan los modos de feedback** (luz / vibración / ambas / ninguna, §4.4).
+- **Retroalimentación háptica (haptic feedback)** — **motor vibrador LRA** (patrón por zona, §4.4).
+- **Sin pantalla, sin botones mecánicos.** (Un push-button físico se descarta: hueco = fuga y falla.)
 
 ### 9.3 Estética "Monolito Vivo" · [DURO como gancho, detalle [EST]]
-- **Luz oculta que "respira" (hidden breathing light)** — LED(s) RGB bajo la superficie que se
-  encienden en patrón/color. Oculta cuando está apagada (superficie limpia). A definir difusor/óptica
-  con el fabricante.
+- **Luz oculta que "respira" (hidden breathing light)** — **anillo perimetral** de LED(s) RGB bajo la
+  superficie que se encienden en patrón/color (zona de FC, §4.4). Oculta cuando está apagada (superficie
+  limpia). **La cara del pod NO lleva LED central** — la única luz es el anillo perimetral. A definir
+  difusor/óptica con el fabricante.
+
+### 9.4 Retención pod↔banda y serviciabilidad · [DURO]
+- **Sin pernos / spring-bars.** El pod se aloja en un **cradle** de la banda con **retención mecánica**:
+  pestañas (o guía + traba) que **capturan el hombro del pod**. El **imán solo alinea y da el "clic"** —
+  la sujeción NO depende del imán.
+- **La pieza de desgaste vive en la BANDA reemplazable** (las pestañas/guía, en POM/nylon o guía
+  metálica). El **pod** solo presenta un **hombro de aluminio pasivo** (no flexiona, no se desgasta).
+- **Banda vendible como refacción** (SKU independiente) — el usuario cambia una banda barata, nunca el pod.
+- **Debe resistir** las fuerzas de **nado (push-off), carrera y contacto (deportes de equipo)** sin
+  soltarse; para quitarlo se requiere una **acción deliberada** (lengüeta/doble-toque de liberación).
+- *Preguntas a la fábrica: (a) **fuerza de retención** medible + método de prueba; (b) **vida de inserción**
+  (objetivo ≥ 5,000–10,000 ciclos) validada por prueba; (c) prueba de **caída/impacto**; (d) su mecanismo
+  recomendado (guía metálica vs snap-fit POM) con delta de costo.*
 
 ---
 
@@ -295,9 +327,14 @@ Pedir a la fábrica cotización escalonada:
 - Acceso a **PPG crudo ≥100 Hz + IBI/RR** (no solo métricas cocinadas).
 - **Store-and-forward** con flash a bordo + 2 modos de captura.
 - SoC **≥256 KB RAM / ≥512 KB flash + BLE 5.x + OTA + secure boot**.
-- **5 ATM (ISO 22810) + IP68**, **sin puerto abierto**, **carga magnética sellada**, **sin adaptador
-  de pared**.
-- Sin pantalla / sin botones; pod aluminio + loop tejido magnético intercambiable; muñeca y bíceps.
+- **5 ATM (ISO 22810) + IP68**, **sin puerto abierto**, **carga magnética sellada** (al pod, sin quitarlo),
+  **sin adaptador de pared**.
+- Sin pantalla / sin botones; **carcasa de polímero + bisel de aluminio** (§3); loop tejido magnético
+  intercambiable; muñeca y bíceps.
+- **Unión pod↔banda sin pernos, retención mecánica**; features de desgaste en la **banda reemplazable**
+  (SKU aparte); resistencia a nado/carrera/contacto/caída + vida de inserción (§9.4).
+- **Retroalimentación en vivo (§4.4):** zona de FC por **color de luz** (anillo perimetral, sin LED
+  central) + **vibración N×zona** (accesible); on/off por **doble-toque** (sin botón); broadcast BLE HR/ANT+.
 - Objetivo de **autonomía 7–14 días**.
 - IP granular negociada (§11).
 
@@ -325,6 +362,12 @@ Pedir a la fábrica cotización escalonada:
    **electrodos** (electrodo en carcasa trasera + electrodo accesible) manteniendo **5 ATM + IP68 y el
    envelope sin crecer**? ¿Delta de costo/NRE con el AFE **poblado** vs. solo **dejar el footprint/layout
    previsto** (sin poblar)? Nota: es capacidad a futuro; en v1 no se habilita.
+10. **Unión pod↔banda (§9.4):** ¿Mecanismo recomendado **sin pernos** (guía metálica vs snap-fit POM)?
+    ¿**Fuerza de retención** medible + método de prueba, **vida de inserción** (≥5,000–10,000 ciclos) y
+    prueba de **caída**? ¿La **banda** se puede vender como refacción (SKU aparte)?
+11. **Retroalimentación en vivo (§4.4):** ¿Su plataforma soporta **anillo perimetral RGB** (sin LED
+    central), **háptico LRA** con patrones, **doble-toque** para ciclar modos y **broadcast BLE HR/ANT+**?
+    ¿Delta de costo si aplica?
 
 ---
 

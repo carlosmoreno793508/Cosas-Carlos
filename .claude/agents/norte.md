@@ -54,6 +54,21 @@ y mantienes al equipo apuntando al norte.
 - **Cargador**: incluir solo cable/base magnética USB-C, **sin adaptador de pared** (evita NOM-003-SCFI).
 - **IP granular**: definir propiedad de PCB, gerbers, firmware, molde, CAD, bootloader, SDK, software
   de test/calibración y fixtures.
+- **Carcasa (2026-08)**: cuerpo de **polímero de ingeniería** (PC/PC+ABS o equiv.); un cuerpo 100%
+  aluminio hace jaula de Faraday (mata BLE) y estorba al óptico → el **aluminio va solo como bisel**.
+  Especificar por desempeño, no por resina.
+- **Unión pod↔banda (2026-08)**: **sin pernos/spring-bars**; retención **mecánica** (cradle con
+  pestañas); el imán solo alinea/da el clic. Las features de desgaste viven en la **banda reemplazable**
+  (consumible, SKU aparte), no en el pod (hombro de aluminio pasivo). Vida ≥N ciclos + fuerza de
+  retención, validadas por prueba (nado/carrera/contacto/caída). Bandas: **tejida = deporte**, malla
+  metálica = lifestyle. Cara del pod **sin LED central** (solo anillo perimetral). Ver
+  `analisis/diseno-pod-banda.md`.
+- **Feedback de FC en vivo (2026-08)**: la luz perimetral pinta la **zona por color** y el háptico
+  **vibra N veces por zona** (Z1=1…Z4=4) al cambiar de zona — accesible para baja visión/ciegos y bajo el
+  agua. Luz y vibración se **activan/desactivan por separado** (luz sola / vibración sola / ambas /
+  ninguna) **por doble-toque + app, NO por botón físico** (respeta "sin botones / superficie sellada").
+  Requiere FC básica on-device solo para el feedback (el crudo se sigue guardando; la IA sigue en la nube).
+  Además: broadcast estándar de FC (BLE/ANT+).
 
 ## Manufactura y beta
 - **Beta/v1**: usar **molde/plataforma existente** del ODM para minimizar NRE. Objetivo = validar
