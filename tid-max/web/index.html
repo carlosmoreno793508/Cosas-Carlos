@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TID-MAX · Readiness</title>
+<style>
+  :root{
+    --ground:#0d1420; --panel:#131d2c; --panel2:#182536; --raise:#1e2d42;
+    --ink:#eaf1f8; --dim:#93a6bd; --faint:#63768f; --line:#26364f;
+    --aqua:#22ccc0; --aqua-deep:#0f9c94;
+    --good:#37d29a; --warn:#f6b543; --crit:#ff5a60;
+    --crit-tint:rgba(255,90,96,.13); --warn-tint:rgba(246,181,67,.13); --good-tint:rgba(55,210,154,.13);
+    --shadow:0 1px 0 rgba(255,255,255,.03), 0 8px 30px rgba(0,0,0,.35);
+  }
+  @media (prefers-color-scheme: light){
+    :root{
+      --ground:#eef3f9; --panel:#ffffff; --panel2:#f4f8fc; --raise:#eaf1f8;
+      --ink:#0f1a2b; --dim:#516378; --faint:#8496ab; --line:#dce5ef;
+      --aqua:#0f9c94; --aqua-deep:#0b7d77;
+      --good:#12a06e; --warn:#c8871a; --crit:#e0353c;
+      --crit-tint:rgba(224,53,60,.09); --warn-tint:rgba(200,135,26,.10); --good-tint:rgba(18,160,110,.10);
+      --shadow:0 1px 2px rgba(16,26,43,.06), 0 8px 26px rgba(16,26,43,.08);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#0d1420; --panel:#131d2c; --panel2:#182536; --raise:#1e2d42;
+    --ink:#eaf1f8; --dim:#93a6bd; --faint:#63768f; --line:#26364f;
+    --aqua:#22ccc0; --aqua-deep:#0f9c94;
+    --good:#37d29a; --warn:#f6b543; --crit:#ff5a60;
+    --crit-tint:rgba(255,90,96,.13); --warn-tint:rgba(246,181,67,.13); --good-tint:rgba(55,210,154,.13);
+    --shadow:0 1px 0 rgba(255,255,255,.03), 0 8px 30px rgba(0,0,0,.35);
+  }
+  :root[data-theme="light"]{
+    --ground:#eef3f9; --panel:#ffffff; --panel2:#f4f8fc; --raise:#eaf1f8;
+    --ink:#0f1a2b; --dim:#516378; --faint:#8496ab; --line:#dce5ef;
+    --aqua:#0f9c94; --aqua-deep:#0b7d77;
+    --good:#12a06e; --warn:#c8871a; --crit:#e0353c;
+    --crit-tint:rgba(224,53,60,.09); --warn-tint:rgba(200,135,26,.10); --good-tint:rgba(18,160,110,.10);
+    --shadow:0 1px 2px rgba(16,26,43,.06), 0 8px 26px rgba(16,26,43,.08);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--ground);color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.5;font-size:16px;-webkit-font-smoothing:antialiased;}
+  .num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
+  .wrap{max-width:1080px;margin:0 auto;padding:28px 20px 56px}
+  header{display:flex;flex-wrap:wrap;gap:18px 24px;align-items:flex-end;justify-content:space-between;margin-bottom:22px}
+  .brand{display:flex;align-items:center;gap:12px}
+  .brand .logo{width:38px;height:38px;border-radius:10px;flex:none;
+    background:linear-gradient(135deg,var(--aqua),var(--aqua-deep));
+    display:grid;place-items:center;color:#04211f;font-weight:800;letter-spacing:.02em;font-size:13px;
+    box-shadow:0 0 0 1px rgba(255,255,255,.06) inset;}
+  .brand h1{margin:0;font-size:15px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+  .brand .sub{margin:1px 0 0;font-size:12px;color:var(--dim);letter-spacing:.04em}
+  .athlete{text-align:right}
+  .athlete .name{font-weight:700;font-size:15px}
+  .athlete .meta{font-size:12.5px;color:var(--dim)}
+  .status{position:relative;border-radius:16px;overflow:hidden;background:var(--panel);
+    border:1px solid var(--line);box-shadow:var(--shadow);padding:20px 22px;margin-bottom:16px;
+    display:grid;grid-template-columns:auto 1fr auto;gap:20px;align-items:center;}
+  .status::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--accent)}
+  .dot{width:60px;height:60px;border-radius:50%;flex:none;
+    background:radial-gradient(circle at 35% 30%, var(--accent-lite), var(--accent));
+    box-shadow:0 0 0 6px var(--accent-tint), 0 4px 14px rgba(0,0,0,.3);}
+  .status .lead .k{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+  .status .lead .v{font-size:30px;font-weight:800;letter-spacing:-.01em;line-height:1.1;margin-top:2px}
+  .status .lead .v b{color:var(--accent)}
+  .status .lead .desc{font-size:13.5px;color:var(--dim);margin-top:4px;max-width:52ch}
+  .count{text-align:right;border-left:1px solid var(--line);padding-left:20px}
+  .count .big{font-size:34px;font-weight:800;letter-spacing:-.02em;line-height:1}
+  .count .lbl{font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--dim);margin-top:4px}
+  .count .flight{font-size:12px;color:var(--warn);margin-top:6px;font-weight:600}
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:15px 16px 16px;box-shadow:var(--shadow);position:relative}
+  .card .top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+  .card .label{font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--dim);font-weight:600}
+  .chip{font-size:11.5px;font-weight:700;padding:2px 7px;border-radius:999px;white-space:nowrap}
+  .chip.up,.chip.down{color:var(--crit);background:var(--crit-tint)}
+  .chip.ok{color:var(--good);background:var(--good-tint)}
+  .chip.warn{color:var(--warn);background:var(--warn-tint)}
+  .card .value{font-size:32px;font-weight:800;letter-spacing:-.02em;margin:6px 0 2px;line-height:1}
+  .card .value .u{font-size:14px;font-weight:600;color:var(--dim);margin-left:3px}
+  .card .base{font-size:12px;color:var(--faint)}
+  .bar{height:7px;border-radius:6px;background:var(--raise);margin-top:12px;overflow:hidden;position:relative}
+  .bar>span{display:block;height:100%;border-radius:6px}
+  .bar.crit>span{background:linear-gradient(90deg,var(--crit),#ff8a8f)}
+  .bar.warn>span{background:linear-gradient(90deg,var(--warn),#ffd27a)}
+  .bar.good>span{background:linear-gradient(90deg,var(--good),#7ff0c4)}
+  .basemark{position:absolute;top:-3px;width:2px;height:13px;background:var(--ink);opacity:.55;border-radius:2px}
+  .scale{display:flex;justify-content:space-between;font-size:10.5px;color:var(--faint);margin-top:5px}
+  .cols{display:grid;grid-template-columns:1.05fr 1fr;gap:12px;margin-bottom:16px}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow)}
+  .panel h2{margin:0 0 2px;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}
+  .panel .hint{font-size:12px;color:var(--dim);margin:0 0 14px}
+  .forma{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
+  .forma .f{background:var(--panel2);border:1px solid var(--line);border-radius:11px;padding:11px 12px;text-align:center}
+  .forma .f .fl{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--dim)}
+  .forma .f .fv{font-size:23px;font-weight:800;margin-top:3px}
+  .forma .f .fd{font-size:11px;color:var(--faint);margin-top:1px}
+  .pico{display:flex;align-items:center;gap:10px;border-radius:11px;padding:11px 13px;
+    background:var(--accent2-tint);border:1px solid var(--accent2-bd)}
+  .pico .pill{font-size:11.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--accent2);
+    background:var(--panel);border:1px solid var(--accent2-bd);padding:3px 9px;border-radius:999px;white-space:nowrap}
+  .pico .ptxt{font-size:12.5px;color:var(--ink)}
+  .sleeprow{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+  .sleeprow:last-child{border-bottom:0}
+  .sleeprow .sk{color:var(--dim)}
+  .sleeprow .sv{font-weight:700}
+  .sleeprow .sv.bad{color:var(--crit)}
+  .alerts{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow);margin-bottom:16px}
+  .alerts h2{margin:0 0 12px;font-size:13px;letter-spacing:.1em;text-transform:uppercase}
+  .alert{display:flex;gap:12px;padding:11px 0;border-top:1px solid var(--line)}
+  .alert:first-of-type{border-top:0}
+  .alert .ic{flex:none;width:26px;height:26px;border-radius:8px;display:grid;place-items:center;font-size:14px;font-weight:800}
+  .alert.hi .ic{background:var(--crit-tint);color:var(--crit)}
+  .alert.med .ic{background:var(--warn-tint);color:var(--warn)}
+  .alert.good .ic{background:var(--good-tint);color:var(--good)}
+  .alert .body{font-size:13.5px}
+  .alert .tag{font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--faint);font-weight:700;margin-bottom:1px}
+  .nutwrap{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow);margin-bottom:16px}
+  .nutwrap h2{margin:0 0 2px;font-size:13px;letter-spacing:.1em;text-transform:uppercase}
+  .nuttop{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;margin:12px 0 14px}
+  .nuttop .nv{font-size:22px;font-weight:800}
+  .nuttop .nv .sm{color:var(--dim);font-weight:500;font-size:13px}
+  .nutbar{height:8px;background:var(--raise);border-radius:6px;overflow:hidden;margin-top:8px;max-width:420px}
+  .nutbar>span{display:block;height:100%;background:linear-gradient(90deg,var(--aqua-deep),var(--aqua));border-radius:6px}
+  .note{margin-top:18px;font-size:11.5px;color:var(--faint);line-height:1.6;text-align:center}
+  .note b{color:var(--dim);font-weight:600}
+  .loading{padding:80px 20px;text-align:center;color:var(--dim)}
+  @media (max-width:780px){
+    .status{grid-template-columns:auto 1fr;gap:14px}
+    .count{grid-column:1 / -1;text-align:left;border-left:0;border-top:1px solid var(--line);padding-left:0;padding-top:12px;display:flex;gap:14px;align-items:baseline}
+    .count .lbl{margin-top:0}
+    .grid{grid-template-columns:repeat(2,1fr)}
+    .cols{grid-template-columns:1fr}
+    .nuttop{grid-template-columns:1fr}
+  }
+  @media (max-width:440px){ .grid{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+  <div class="wrap" id="app"><div class="loading">Cargando el reporte del día…</div></div>
+
+<script>
+const SEM = {
+  verde:  {accent:"--good", lite:"#7ff0c4", tint:"--good-tint"},
+  amarillo:{accent:"--warn", lite:"#ffd88a", tint:"--warn-tint"},
+  rojo:   {accent:"--crit", lite:"#ff8a8f", tint:"--crit-tint"},
+};
+const PICO = {
+  en_pico:      {t:"En pico",     c:"--good"},
+  afinando:     {t:"Afinando",    c:"--aqua"},
+  atrasado:     {t:"Atrasado",    c:"--warn"},
+  construyendo: {t:"Construyendo",c:"--aqua"},
+  cargado:      {t:"Cargado",     c:"--warn"},
+  muy_fatigado: {t:"Muy cargado", c:"--crit"},
+  sin_datos:    {t:"Sin datos",   c:"--dim"},
+};
+const esc = s => String(s==null?"":s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const clamp = (n,a=3,b=100)=>Math.max(a,Math.min(b,n));
+const zone = (v,goodMin,warnMin)=> v>=goodMin?"good":(v>=warnMin?"warn":"crit");
+const signo = n => (n>0?"+":"")+n;
+
+function kpi({label,chip,chipCls,value,unit,base,barCls,barW,basemark,scale}){
+  return `<div class="card">
+    <div class="top"><span class="label">${label}</span>${chip?`<span class="chip ${chipCls}">${chip}</span>`:""}</div>
+    <div class="value num">${value}${unit?`<span class="u">${unit}</span>`:""}</div>
+    <div class="base num">${base||""}</div>
+    <div class="bar ${barCls}"><span style="width:${clamp(barW)}%"></span>${basemark!=null?`<i class="basemark" style="left:${clamp(basemark,0,100)}%"></i>`:""}</div>
+    <div class="scale">${scale||""}</div>
+  </div>`;
+}
+
+function render(d){
+  const sem = SEM[d.semaforo] || SEM.amarillo;
+  const pico = PICO[(d.forma&&d.forma.estado_pico)||"sin_datos"] || PICO.sin_datos;
+  const s = d.sueno||{}, h=d.hrv||{}, r=d.rhr||{}, fo=d.forma||{}, nu=d.nutricion||{};
+
+  // Recovery
+  const recCls = zone(d.recovery,67,34);
+  // HRV: ancho proporcional a la base; color por desviación
+  const hrvW = h.base? h.ms/h.base*100 : 60;
+  const hrvCls = zone(h.vs_base_pct==null?0:100+h.vs_base_pct, 92, 82); // -8→92 good, -18→82 warn
+  // FC reposo
+  const rhrW = r.lpm? (r.lpm-40)/30*100 : 60;
+  const rhrBase = r.base? (r.base-40)/30*100 : null;
+  const rhrCls = (r.vs_base_pct!=null && r.vs_base_pct<=5)?"good":(r.vs_base_pct<=12?"warn":"crit");
+  // Sueño
+  const slpCls = zone(s.deuda_min<=30?90:(s.deuda_min<=120?60:30),67,34);
+
+  const kpis = [
+    kpi({label:"Recovery", chip:d.recovery>=67?"óptimo":(d.recovery>=34?"media":"bajo"),
+         chipCls:d.recovery>=67?"ok":(d.recovery>=34?"warn":"down"),
+         value:d.recovery, unit:"%", base:d.recovery>=67?"Zona verde WHOOP (≥67%)":(d.recovery>=34?"Zona media WHOOP (34–67%)":"Zona roja WHOOP (&lt;34%)"),
+         barCls:recCls, barW:d.recovery, scale:"<span>0</span><span>34</span><span>67</span><span>100</span>"}),
+    kpi({label:"HRV", chip:`${signo(h.vs_base_pct)}% vs base`, chipCls:h.vs_base_pct>=-10?"ok":"down",
+         value:h.ms, unit:"ms", base:`Base ${h.base} ms`,
+         barCls:hrvCls, barW:hrvW, basemark:100, scale:"<span>hoy</span><span>tu base →</span>"}),
+    kpi({label:"FC reposo", chip:`${signo(r.vs_base_pct)}% vs base`, chipCls:r.vs_base_pct<=5?"ok":"warn",
+         value:r.lpm, unit:"lpm", base:`Base ${r.base} lpm`,
+         barCls:rhrCls, barW:rhrW, basemark:rhrBase, scale:"<span>hoy</span><span>← base</span>"}),
+    kpi({label:"Sueño", chip:`deuda ${(s.deuda_min/60).toFixed(1)} h`, chipCls:s.deuda_min<=30?"ok":(s.deuda_min<=120?"warn":"down"),
+         value:s.total_h, unit:"h", base:`${s.noche_h} h noche + ${s.siesta_h} h siesta×${s.n_siestas} · ${s.perf}% perf`,
+         barCls:slpCls, barW:s.perf, scale:`<span>noche + siesta</span><span>deuda ${s.deuda_min} min</span>`}),
+  ].join("");
+
+  const forma = `<div class="panel" style="--accent2:var(${pico.c});--accent2-tint:${pico.c==='--good'?'var(--good-tint)':pico.c==='--warn'?'var(--warn-tint)':'var(--panel2)'};--accent2-bd:${pico.c==='--good'?'rgba(55,210,154,.3)':pico.c==='--warn'?'rgba(246,181,67,.3)':'var(--line)'}">
+    <h2>Forma &amp; Pico</h2>
+    <p class="hint">Modelo de carga (proxy sobre strain de WHOOP) — tendencia, no valor absoluto.</p>
+    <div class="forma">
+      <div class="f"><div class="fl">Preparación (CTL)</div><div class="fv num">${fo.ctl}</div><div class="fd">estable</div></div>
+      <div class="f"><div class="fl">Cansancio (ATL)</div><div class="fv num">${fo.atl}</div><div class="fd">${fo.atl<fo.ctl?"bajando":"alto"}</div></div>
+      <div class="f"><div class="fl">Frescura (TSB)</div><div class="fv num" style="color:var(${fo.tsb>=0?'--good':'--warn'})">${signo(fo.tsb)}</div><div class="fd">antes ${signo(fo.tsb_previa)}</div></div>
+    </div>
+    <div class="pico"><span class="pill">Pico: ${esc(pico.t)}</span><span class="ptxt">${esc(fo.lectura)}</span></div>
+  </div>`;
+
+  const sueno = `<div class="panel">
+    <h2>Sueño total del día</h2>
+    <p class="hint">${s.total_h} h dormido · ${s.despertares} despertares · 7d: ${s.prom_7d} h/noche (${s.perf_prom_7d}% perf. media)</p>
+    <div class="sleeprow"><span class="sk">Horario</span><span class="sv num">${esc(s.acostado)} → ${esc(s.despertar)}</span></div>
+    <div class="sleeprow"><span class="sk">Noche + siesta</span><span class="sv num">${s.noche_h} h + ${s.siesta_h} h <span style="color:var(--dim);font-weight:500">(×${s.n_siestas})</span></span></div>
+    <div class="sleeprow"><span class="sk">Eficiencia</span><span class="sv">${s.efic}%</span></div>
+    <div class="sleeprow"><span class="sk">Profundo / REM</span><span class="sv num">${s.deep_pct}% · ${s.rem_pct}%</span></div>
+    <div class="sleeprow"><span class="sk">Consistencia</span><span class="sv ${s.consist<50?'bad':''}">${s.consist}%</span></div>
+  </div>`;
+
+  const ALIC = {good:"✓", med:"◐", hi:"!"};
+  const alerts = `<div class="alerts"><h2>Lectura del día · Preventivo</h2>${
+    (d.alertas||[]).map(a=>`<div class="alert ${a.nivel}"><div class="ic">${ALIC[a.nivel]||"◐"}</div>
+      <div class="body"><div class="tag">${esc(a.tag)}</div>${esc(a.texto)}</div></div>`).join("")
+  }</div>`;
+
+  const pct = nu.meta? Math.round(100*nu.consumido/nu.meta):0;
+  const nutricion = `<div class="nutwrap"><h2>Nutrición de hoy</h2>
+    <p class="hint" style="margin:2px 0 0">Consumido vs meta del día (calibrada al entrenamiento de hoy) · registro con hora real.</p>
+    <div class="nuttop">
+      <div><div class="nv num">${nu.consumido.toLocaleString('es')} <span class="sm">/ ${nu.meta.toLocaleString('es')} kcal · C ${nu.c} · P ${nu.p} · G ${nu.g}</span></div>
+        <div class="nutbar"><span style="width:${clamp(pct,0,100)}%"></span></div></div>
+      <div style="font-size:12px;color:var(--dim);max-width:26ch">${pct}% de la meta · faltan ~${(nu.meta-nu.consumido).toLocaleString('es')} kcal.</div>
+    </div>
+    ${(nu.comidas||[]).map(c=>`<div class="sleeprow"><span class="sk num">${esc(c.hora)} · ${esc(c.nombre)}</span><span class="sv num">${c.kcal.toLocaleString('es')} kcal</span></div>`).join("")}
+    ${nu.pendiente?`<div class="sleeprow"><span class="sk">Pendiente</span><span class="sv" style="color:var(--dim);font-weight:600">${esc(nu.pendiente)}</span></div>`:""}
+  </div>`;
+
+  document.getElementById("app").innerHTML = `
+    <header>
+      <div class="brand"><div class="logo">TID</div>
+        <div><h1>TID-MAX · Readiness</h1><p class="sub">Reporte de WHOOP · ${esc(d.fecha_texto)}</p></div></div>
+      <div class="athlete"><div class="name">${esc(d.atleta)}</div>
+        <div class="meta num">${d.dias_datos} días de datos · ${esc(d.deporte)} · ${esc(d.fase)}</div></div>
+    </header>
+    <section class="status" style="--accent:var(${sem.accent});--accent-lite:${sem.lite};--accent-tint:var(${sem.tint})">
+      <div class="dot"></div>
+      <div class="lead"><div class="k">Semáforo del día</div>
+        <div class="v"><b>${d.semaforo.toUpperCase()}</b> — ${esc(d.semaforo_titulo)}</div>
+        <div class="desc">${esc(d.semaforo_desc)}</div></div>
+      <div class="count"><div class="big num">${d.dias_al_evento}</div>
+        <div class="lbl">días al<br>${esc(d.evento)}</div>
+        <div class="flight num">✈ Vuelo en ${d.dias_al_viaje} días</div></div>
+    </section>
+    <section class="grid">${kpis}</section>
+    <section class="cols">${forma}${sueno}</section>
+    ${alerts}
+    ${nutricion}
+    <p class="note"><b>TID-MAX · orientación de rendimiento y bienestar, no diagnóstico médico.</b><br>${esc(d.nota_datos)}</p>`;
+}
+
+fetch("./data.json?v=" + Date.now())
+  .then(r => r.json())
+  .then(render)
+  .catch(e => { document.getElementById("app").innerHTML =
+    '<div class="loading">No pude cargar el reporte (data.json). '+esc(e.message)+'</div>'; });
+</script>
+</body>
+</html>

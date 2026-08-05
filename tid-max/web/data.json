@@ -1,0 +1,44 @@
+{
+  "fecha": "2026-08-04",
+  "fecha_texto": "martes 4 ago 2026",
+  "atleta": "Carlos Gael Moreno Sarmiento",
+  "dias_datos": 25,
+  "deporte": "Natación",
+  "fase": "Taper",
+  "evento": "Jr. Pan Pacific",
+  "dias_al_evento": 13,
+  "dias_al_viaje": 10,
+  "semaforo": "amarillo",
+  "semaforo_titulo": "Recovery media, recuperando",
+  "semaforo_desc": "Gael rebotó: recovery 51%, HRV casi de vuelta a su base y FC de reposo normalizada. El sueño largo con siesta hizo su trabajo. Ya se puede entrenar, con intensidad medida.",
+  "recovery": 51,
+  "hrv": { "ms": 105.1, "vs_base_pct": -8, "base": 114.6 },
+  "rhr": { "lpm": 52, "vs_base_pct": 2, "base": 50.8 },
+  "sueno": {
+    "total_h": 8.93, "noche_h": 7.38, "siesta_h": 1.55, "n_siestas": 1,
+    "perf": 74, "efic": 86.0, "deep_pct": 23.1, "rem_pct": 35.1,
+    "consist": 44.0, "despertares": 12, "deuda_min": 65,
+    "acostado": "23:34", "despertar": "08:31", "prom_7d": 7.9, "perf_prom_7d": 73
+  },
+  "forma": {
+    "ctl": 15.0, "atl": 14.1, "tsb": 0.8, "tsb_previa": 2,
+    "estado_pico": "en_pico",
+    "lectura": "Vas llegando FRESCO: la frescura (TSB) ya está en positivo. El taper está haciendo su trabajo; mantén algo de intensidad corta para no 'apagarte' y baja volumen."
+  },
+  "alertas": [
+    { "nivel": "good", "tag": "Recuperación", "texto": "Gael rebotó: recovery 18% → 51% y HRV de −42% a −8% vs base. El sueño largo con siesta funcionó. La frescura (TSB) ya es positiva: vas llegando a punto para Vancouver." },
+    { "nivel": "good", "tag": "Sueño", "texto": "Deuda de sueño casi cerrada: 65 min (venía de 272). Durmió 8.9 h con siesta y REM alto (35%). Buen día de recuperación." },
+    { "nivel": "med", "tag": "Por pulir", "texto": "Consistencia de horario aún baja (44%). El total de horas ya está; falta regularizar la hora de dormir — clave antes del cambio de zona horaria en Vancouver." },
+    { "nivel": "med", "tag": "Sesión", "texto": "Hoy sí se puede entrenar (6 km, calidad corta). Con recovery en media, mantén intensidad corta y de calidad para no 'apagarte', pero cuida el volumen: el taper ya va bien encaminado." },
+    { "nivel": "med", "tag": "Datos", "texto": "Falta registrar hidratación. Con eso el seguimiento del taper queda completo." }
+  ],
+  "nutricion": {
+    "consumido": 2660, "meta": 4780, "c": 207, "p": 203, "g": 114,
+    "comidas": [
+      { "hora": "10:30", "nombre": "Desayuno — tacos dorados de pollo", "kcal": 960 },
+      { "hora": "14:25", "nombre": "Comida — pollo, arroz, tortitas y wontons", "kcal": 1700 }
+    ],
+    "pendiente": "Cena — proteína magra (5–6 huevos / pollo plancha)"
+  },
+  "nota_datos": "Fuente: WHOOP (25 días, datos frescos al 4-ago) · motor determinista + agentes Claude. Sueño ya suma las siestas. “Forma” es un proxy sobre el strain de WHOOP: lee la tendencia."
+}
