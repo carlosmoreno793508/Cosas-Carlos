@@ -60,6 +60,22 @@ Presupuesto INDICATIVO en USD (a validar con cotizaciones reales: RFQ H0.4, lab 
 
 ---
 
+## 🚀 Ecosistema en la nube — LIVE (hito 2026-08-05)
+
+Migración de "script en la Mac de Carlos" a **producto autónomo en la nube.** Todo funcionando, probado end-to-end.
+
+| # | Pieza | Estado | Notas |
+|---|---|---|---|
+| EC.1 | **Dashboard web** (`tid-max/web/`) | ✅ LIVE | Sitio estático data-driven (`index.html` lee `data.json`), diseño HD. Desplegado en **Vercel** (equipo `natacion-mx` Pro, root `tid-max/web`). **Link fijo 24/7 para la familia (Karla), sin Claude, sin túnel, sin la Mac.** Proteger con Deployment Protection. |
+| EC.2 | **Puente pipeline→web** (`software/tid_web.py`) | ✅ | Convierte `coach-hoy.json` → `web/data.json`. Separa diseño de datos: actualizar el tablero = regenerar `data.json`. |
+| EC.3 | **Automatización diaria** (`.github/workflows/tid-max-daily.yml`) | ✅ VERDE | **GitHub Actions, cron 8:30 am CDMX** (14:30 UTC). Corre WHOOP→datos→coach→web en la nube y hace commit de `data.json` (Vercel redespliega solo). Secrets: WHOOP_CLIENT_ID/SECRET/REFRESH_TOKEN, ANTHROPIC_API_KEY, GH_PAT (fine-grained, Secrets:write, para reguardar el refresh token que WHOOP rota). Probado 2026-08-05: commit `9554e8f` con datos reales del día. |
+| EC.4 | **Regla de oro operativa** | ⚠️ | **La NUBE es el ÚNICO sincronizador de WHOOP.** Carlos NO debe correr `whoop_sync.py` en su Mac (pelea por el token rotativo). |
+| EC.5 | Fase 3 del ecosistema (pendiente) | ⬜ | Subir foto/texto de comida sin Python (bot WhatsApp/Telegram o endpoint web) → procesar con Claude → actualizar consumo. Luego: notificación diaria automática (imagen/link) a Carlos y Karla. |
+
+**Features de producto construidos hoy (2026-08-04/05):** sueño con **siestas** sumadas al total + deuda (tid_data.py), **horario de sueño** (acostarse→despertar), nutrición **día-consciente** (detecta sencilla/doble/descanso/taper, calibra el consejo) + genérica para futuros clientes, flag `--hora` para registrar comidas con su hora real.
+
+---
+
 ## FASE 0 — Fundación y datos (Software) · arranque
 
 | # | Ítem | Estado | Acción correctiva / notas |
