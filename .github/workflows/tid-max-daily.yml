@@ -11,7 +11,8 @@ name: TID-MAX · reporte diario
 
 on:
   schedule:
-    - cron: "30 14 * * *"   # 8:30 am CDMX (UTC-6)  ·  14:30 UTC
+    - cron: "30 14 * * *"   # 8:30 am CDMX (UTC-6)  ·  14:30 UTC  — reporte de la mañana
+    - cron: "0 21 * * *"    # 3:00 pm CDMX (UTC-6)  ·  21:00 UTC  — re-sync de la tarde (atrapa la siesta)
   workflow_dispatch: {}
 
 permissions:
