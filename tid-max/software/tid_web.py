@@ -84,6 +84,22 @@ def build_data():
                          "kcal": c.get("kcal", 0)} for c in consumo.get("comidas", [])],
         })
 
+    # Preserva las comidas YA publicadas en data.json (p. ej. subidas por API/foto, o por un
+    # sync previo del mismo día). Si este re-sync no trae consumo propio pero el data.json del
+    # MISMO día ya tenía comidas, no las borres: un re-sync de la tarde (para atrapar la siesta)
+    # no debe tirar lo que la familia ya cargó. En un día nuevo la fecha no coincide → limpio.
+    if not nutricion["comidas"]:
+        prev = _load(os.path.abspath(WEB_DATA))
+        prev_nu = (prev or {}).get("nutricion") or {}
+        if prev and prev.get("fecha") == fecha_iso and prev_nu.get("comidas"):
+            nutricion.update({
+                "consumido": prev_nu.get("consumido", 0),
+                "meta": nutricion["meta"] or prev_nu.get("meta") or 0,
+                "c": prev_nu.get("c"), "p": prev_nu.get("p"), "g": prev_nu.get("g"),
+                "comidas": prev_nu.get("comidas"),
+                "pendiente": prev_nu.get("pendiente"),
+            })
+
     razones = f.get("razones") or []
     data = {
         "fecha": fecha_iso,
