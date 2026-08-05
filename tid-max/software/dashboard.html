@@ -1,0 +1,151 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>TID-MAX · Coach del día</title><style>
+:root{
+  --ground:#0a1622; --ground2:#0d1c2b; --card:#122232; --card2:#16293b;
+  --ink:#eaf2f7; --muted:#89a3b6; --line:#1f3446; --accent:#22d3ee;
+  --good:#35d39a; --warn:#f5b64c; --crit:#f8737f;
+  --shadow:0 1px 0 rgba(255,255,255,.03),0 12px 32px rgba(0,0,0,.35);
+}
+@media (prefers-color-scheme: light){
+  :root{
+    --ground:#e9eff3; --ground2:#eef4f7; --card:#ffffff; --card2:#f4f8fa;
+    --ink:#0e2230; --muted:#577182; --line:#d8e4ec; --accent:#0a97b0;
+    --good:#0f9d6b; --warn:#c8811a; --crit:#d0505c;
+    --shadow:0 1px 0 rgba(0,0,0,.02),0 10px 26px rgba(20,50,70,.10);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0a1622; --ground2:#0d1c2b; --card:#122232; --card2:#16293b;
+  --ink:#eaf2f7; --muted:#89a3b6; --line:#1f3446; --accent:#22d3ee;
+  --good:#35d39a; --warn:#f5b64c; --crit:#f8737f;
+  --shadow:0 1px 0 rgba(255,255,255,.03),0 12px 32px rgba(0,0,0,.35);
+}
+:root[data-theme="light"]{
+  --ground:#e9eff3; --ground2:#eef4f7; --card:#ffffff; --card2:#f4f8fa;
+  --ink:#0e2230; --muted:#577182; --line:#d8e4ec; --accent:#0a97b0;
+  --good:#0f9d6b; --warn:#c8811a; --crit:#d0505c;
+  --shadow:0 1px 0 rgba(0,0,0,.02),0 10px 26px rgba(20,50,70,.10);
+}
+*{box-sizing:border-box}
+body{margin:0;background:
+  radial-gradient(1200px 600px at 80% -10%, var(--ground2), transparent 60%), var(--ground);
+  color:var(--ink);
+  font-family:"SF Pro Text",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  line-height:1.5;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:1020px;margin:0 auto;padding:28px 20px 56px;}
+.num{font-variant-numeric:tabular-nums lining-nums;}
+header.top{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:20px;}
+.brand{font-weight:800;letter-spacing:.14em;font-size:.82rem;color:var(--accent);text-transform:uppercase;}
+.brand small{color:var(--muted);font-weight:600;letter-spacing:.04em;margin-left:8px;}
+.who{color:var(--muted);font-size:.86rem;}
+.who b{color:var(--ink);}
+
+.hero{display:grid;grid-template-columns:1.3fr 1fr;gap:14px;margin-bottom:14px;}
+@media(max-width:680px){.hero{grid-template-columns:1fr;}}
+.panel{background:linear-gradient(180deg,var(--card),var(--card2));border:1px solid var(--line);
+  border-radius:16px;padding:20px 22px;box-shadow:var(--shadow);}
+.eyebrow{text-transform:uppercase;letter-spacing:.12em;font-size:.68rem;color:var(--muted);font-weight:700;}
+.countdown{display:flex;align-items:baseline;gap:12px;margin-top:6px;}
+.countdown .big{font-size:3.4rem;font-weight:800;line-height:1;letter-spacing:-.02em;}
+.countdown .unit{color:var(--muted);font-weight:600;}
+.evline{margin-top:10px;color:var(--ink);font-weight:600;}
+.evsub{color:var(--muted);font-size:.9rem;margin-top:2px;}
+.phase{display:inline-block;margin-top:12px;padding:5px 12px;border-radius:999px;
+  border:1px solid var(--line);background:rgba(34,211,238,.08);color:var(--accent);
+  font-weight:700;font-size:.8rem;letter-spacing:.02em;}
+
+.sem{display:flex;flex-direction:column;justify-content:center;}
+.sembadge{display:flex;align-items:center;gap:12px;}
+.dot{width:46px;height:46px;border-radius:50%;flex:0 0 auto;box-shadow:0 0 0 6px color-mix(in srgb,var(--sc) 18%,transparent);background:var(--sc);}
+.sem.good{--sc:var(--good)} .sem.warn{--sc:var(--warn)} .sem.crit{--sc:var(--crit)}
+.semlabel{font-size:1.7rem;font-weight:800;letter-spacing:.02em;color:var(--sc);}
+.semwhy{color:var(--muted);font-size:.9rem;margin-top:10px;}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:12px;margin:14px 0;}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;}
+.tile .k{font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700;}
+.tile .v{font-size:1.9rem;font-weight:800;letter-spacing:-.01em;margin-top:4px;}
+.tile .v small{font-size:.9rem;color:var(--muted);font-weight:600;}
+.chip{display:inline-block;margin-top:8px;font-size:.74rem;font-weight:700;padding:2px 8px;border-radius:999px;}
+.chip.good{color:var(--good);background:color-mix(in srgb,var(--good) 15%,transparent);}
+.chip.warn{color:var(--warn);background:color-mix(in srgb,var(--warn) 15%,transparent);}
+.chip.crit{color:var(--crit);background:color-mix(in srgb,var(--crit) 15%,transparent);}
+.chip.flat{color:var(--muted);background:color-mix(in srgb,var(--muted) 14%,transparent);}
+
+.cols{display:grid;grid-template-columns:1fr 1.3fr;gap:14px;}
+@media(max-width:680px){.cols{grid-template-columns:1fr;}}
+.h{font-size:1rem;font-weight:800;margin:0 0 12px;letter-spacing:.01em;}
+.planrow{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line);}
+.planrow:last-child{border-bottom:0;}
+.planrow .lab{color:var(--muted);}
+.planrow .val{font-weight:700;text-align:right;}
+.note{margin-top:12px;font-size:.8rem;color:var(--muted);border-left:3px solid var(--accent);padding-left:10px;}
+
+.verdict{font-size:1.12rem;font-weight:700;margin:0 0 14px;text-wrap:balance;}
+.pillar{display:flex;gap:12px;padding:11px 0;border-top:1px solid var(--line);}
+.pillar:first-of-type{border-top:0;}
+.pillar .pk{flex:0 0 116px;font-weight:800;color:var(--accent);font-size:.9rem;}
+.pillar .pv{color:var(--ink);font-size:.94rem;}
+.alerts{margin-top:14px;display:flex;flex-direction:column;gap:8px;}
+.alert{display:flex;gap:10px;align-items:flex-start;background:color-mix(in srgb,var(--warn) 12%,transparent);
+  border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);border-radius:10px;padding:9px 12px;font-size:.88rem;}
+.alert::before{content:"▲";color:var(--warn);font-size:.8rem;line-height:1.5;}
+footer{margin-top:26px;color:var(--muted);font-size:.76rem;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.toggle{cursor:pointer;background:var(--card);border:1px solid var(--line);color:var(--muted);
+  border-radius:999px;padding:5px 12px;font-size:.76rem;font-weight:600;}
+.toggle:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head><body><div class="wrap">
+  <header class="top">
+    <div><span class="brand">TID-MAX <small>· Coach del día</small></span></div>
+    <div class="who">Atleta: <b>Carlos Gael Moreno Sarmiento</b> · 2026-07-31
+      <button id="themebtn" class="toggle" type="button">tema</button></div>
+  </header>
+
+  <section class="hero">
+    <div class="panel">
+      <div class="eyebrow">Cuenta regresiva</div>
+      <div class="countdown"><span class="big num">17</span><span class="unit">días al evento</span></div>
+      <div class="evline">Junior Pan Pacific Championships 2026</div>
+      <div class="evsub">Vancouver, Canadá · vuelo en 14 días</div>
+      <span class="phase">Fase: taper (afinamiento)</span>
+    </div>
+    <div class="panel sem warn">
+      <div class="eyebrow">Semáforo del día</div>
+      <div class="sembadge"><div class="dot"></div><div class="semlabel">AMARILLO</div></div>
+      <div class="semwhy">Recovery media (54%)</div>
+    </div>
+  </section>
+
+  <section class="grid"><div class="tile"><div class="k">Recovery</div><div class="v num">54 <small>%</small></div><span class="chip warn">moderar</span></div><div class="tile"><div class="k">HRV</div><div class="v num">114 <small>ms</small></div><span class="chip crit">-4% vs base</span></div><div class="tile"><div class="k">FC reposo</div><div class="v num">52 <small>lpm</small></div><span class="chip flat">0% vs base</span></div><div class="tile"><div class="k">Sueño</div><div class="v num">81 <small>%</small></div><span class="chip warn">meta ≥85%</span></div><div class="tile"><div class="k">ACWR</div><div class="v num">1.00</div><span class="chip good">en rango</span></div><div class="tile"><div class="k">Strain hoy</div><div class="v num">14.7</div></div></section>
+  <div class="note">Tendencia HRV 7d: -2% vs 7d previos — a la baja, vigilar fatiga.</div>
+
+  <section class="cols">
+    <div class="panel">
+      <h2 class="h">Plan de la semana</h2>
+      <div class="planrow"><span class="lab">Fase</span><span class="val">Calidad</span></div><div class="planrow"><span class="lab">Km planeados</span><span class="val num">53 km</span></div><div class="planrow"><span class="lab">Sesiones</span><span class="val num">13</span></div><div class="planrow"><span class="lab">Carga de referencia</span><span class="val num">53 km</span></div>
+      <div class="note">plan del macrociclo (asumido: el entrenador lo sigue riguroso)</div>
+    </div>
+    <div class="panel">
+      <h2 class="h">Veredicto del coach</h2>
+      <p class="verdict">Precaución: modera hoy. Entrena, pero con cabeza.</p>
+      <div class="pillar"><div class="pk">Entrenamiento</div><div class="pv">Mantén la sesión pero baja volumen/intensidad ~10–20%. Técnica sobre esfuerzo máximo.</div></div><div class="pillar"><div class="pk">Sueño</div><div class="pv">Dormir es tu mayor palanca: apunta a 8–9 h.</div></div><div class="pillar"><div class="pk">Hidratación</div><div class="pv">Nadar deshidrata aunque no lo sientas: agua + electrolitos.</div></div><div class="pillar"><div class="pk">Nutrición</div><div class="pv">Alto volumen: sube carbohidratos alrededor de los entrenos y proteína (1.6–2 g/kg).</div></div><div class="pillar"><div class="pk">Recuperación</div><div class="pv">Suma 10–15 min de movilidad y respiración.</div></div>
+      
+    </div>
+  </section>
+
+  <footer>
+    <span>Motor: reglas (sin IA) · los números los calcula el motor determinista; Claude los explica.</span>
+    <span>TID-MAX · rendimiento y bienestar</span>
+  </footer>
+</div><script>
+(function(){
+  var b=document.getElementById('themebtn');
+  if(!b)return;
+  b.addEventListener('click',function(){
+    var r=document.documentElement;
+    var cur=r.getAttribute('data-theme');
+    var dark=cur? cur==='dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+    r.setAttribute('data-theme', dark?'light':'dark');
+  });
+})();
+</script></body></html>

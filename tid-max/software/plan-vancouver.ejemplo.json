@@ -1,0 +1,22 @@
+{
+  "atleta": "Gael Moreno",
+  "evento": "Junior Pan Pacific Championships 2026",
+  "fecha_evento": "2026-08-17",
+  "fecha_viaje": "2026-08-14",
+  "meta": "Llegar afinado al pico de competencia",
+  "semanas_plan": 12,
+  "semanas_taper": 2,
+  "km_objetivo_bloque": 260,
+  "plantilla": {
+    "Lun": ["aerobico", "umbral"],
+    "Mar": ["tecnica"],
+    "Mie": ["velocidad", "aerobico"],
+    "Jue": ["umbral"],
+    "Vie": ["aerobico", "velocidad"],
+    "Sab": ["aerobico_largo"],
+    "Dom": []
+  },
+  "pesas_dias": ["Lun", "Mie", "Vie"],
+  "pesas_min": 40,
+  "_nota": "Copia este archivo a datos/plan.json y ajusta evento, fecha, meta y plantilla a lo real de Gael."
+}

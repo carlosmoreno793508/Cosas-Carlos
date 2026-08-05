@@ -1,0 +1,16 @@
+{
+  "_fuente": "Patrón semanal de nado de Gael (con Carlos). TAPER PROFUNDO desde el lunes 4-ago: se acabaron las dobles (la ultima fue el viernes). Ahora TODO son sencillas: Lun-Vie por la tarde (15:30), Sab por la manana (07:00), Domingo descanso. Cada dia puede llevar su propio 'horas' que sobrescribe el horario por tipo. Los km NO son fijos: el pipeline reparte el total de la semana del macrociclo (plan-macro.json) segun el 'peso' de cada dia.",
+  "horarios": {
+    "doble": ["08:00", "15:30"],
+    "sencilla": ["15:30"]
+  },
+  "dias": {
+    "Lun": {"tipo": "sencilla", "peso": 6, "split": [1.0], "enfoque": ["Aeróbico + técnica"]},
+    "Mar": {"tipo": "sencilla", "peso": 6, "split": [1.0], "enfoque": ["Calidad corta / velocidad"]},
+    "Mie": {"tipo": "sencilla", "peso": 6, "split": [1.0], "enfoque": ["Aeróbico moderado"]},
+    "Jue": {"tipo": "sencilla", "peso": 6, "split": [1.0], "enfoque": ["Técnica + ritmo de competencia"]},
+    "Vie": {"tipo": "sencilla", "peso": 6, "split": [1.0], "enfoque": ["Calidad corta / afinamiento"]},
+    "Sab": {"tipo": "sencilla", "peso": 5, "split": [1.0], "horas": ["07:00"], "enfoque": ["Aeróbico + técnica"]},
+    "Dom": {"tipo": "descanso", "peso": 0, "split": [],   "enfoque": []}
+  }
+}

@@ -1,0 +1,135 @@
+# WHOOP — prueba de datos directos (API v2)
+
+Prueba mínima para **jalar los datos de WHOOP de Gael directo de la API oficial** (sin agregador),
+y confirmar que el flujo de datos funciona. Cubre el ítem **0.2** del tracker por la ruta de API directa.
+
+> **Qué SÍ trae:** recovery, HRV diaria, sueño, strain/cycles, workouts, perfil y medidas.
+> **Qué NO trae:** PPG/IBI **crudo** (WHOOP no lo expone). Para DFA-α1 cruda → Polar H10 / EVK.
+
+## Requisitos
+- Python 3.9+
+- La app **GAEL SYNC** ya creada en `developer-dashboard.whoop.com` con:
+  - Redirect URL = `http://localhost:8765/callback`
+  - Scopes de lectura marcados (recovery, cycles, sleep, workout, profile, body_measurement)
+  - Su **Client ID** y **Client Secret**
+
+## Instalación (una vez)
+```bash
+cd tid-max/software
+python -m venv .venv && source .venv/bin/activate   # opcional pero recomendado
+pip install -r requirements.txt
+cp .env.example .env
+```
+Abre `.env` y pega tu **Client ID** y **Client Secret** (el Refresh Token se llena solo en el paso 1).
+
+## Paso 1 — Autorizar (una sola vez)
+```bash
+python whoop_auth.py
+```
+Se abre el navegador → inicia sesión con la cuenta de WHOOP de **Gael** → **Autorizar**.
+Al terminar, el **Refresh Token** queda guardado en `.env`. No hay que repetirlo (salvo que se revoque).
+
+## Paso 2 — Descargar datos (cuantas veces quieras)
+```bash
+python whoop_sync.py
+```
+Renueva el acceso, descarga todo y deja el JSON crudo en `./datos/`, con un resumen en pantalla:
+```
+Atleta:            Gael ...
+Recovery reciente: 68 %
+HRV (rMSSD):       74 ms
+FC en reposo:      52 lpm
+Sueno (rendim.):   88 %
+Strain del dia:    12.4
+Workouts jalados:  8
+```
+
+## Paso 3 — Dashboard en Excel (opcional, estético)
+```bash
+python whoop_dashboard.py
+open TID-MAX-WHOOP.xlsx        # en Mac
+```
+Toma el JSON de `datos/` y genera `TID-MAX-WHOOP.xlsx` con:
+- **Dashboard**: tarjetas KPI (recovery, HRV, FC reposo, sueño, strain) con color por zona
+  (verde/amarillo/rojo) y gráficas de tendencia de recovery y HRV.
+- Hojas de detalle: **Recovery, Sueño, Strain, Workouts** con formato y escala de color.
+
+### Natación (volumen real) — porque WHOOP no lo mide
+WHOOP **no mide la distancia de nado** (sin GPS en alberca / no cuenta vueltas). Para ver el
+volumen real, crea un registro manual:
+```bash
+cp registro-natacion.ejemplo.csv datos/registro-natacion.csv
+```
+Edita `datos/registro-natacion.csv` (ábrelo en Excel) con una fila por día:
+`fecha, km_natacion, sesiones_nado, min_pesas, notas`.
+Al correr `whoop_dashboard.py`, el panel muestra la banda **NATACIÓN** (km real, sesiones, pesas),
+una hoja **Natación** con gráfica de km/día, y marca el Km de WHOOP como *no confiable*.
+Ver la oportunidad de producto en `../analisis/oportunidades-producto.md` (OPP-01).
+
+## Pipeline de datos: normalización al esquema canónico
+`tid_data.py` toma TODO lo crudo (WHOOP + Polar + registro de nado) y lo unifica en un **esquema
+canónico único** — el contrato que consumen el dashboard, el coach y los agentes AI:
+```bash
+python whoop_sync.py     # baja WHOOP
+python tid_data.py       # normaliza -> datos/procesado/
+```
+Salida en `datos/procesado/`:
+- `dataset.json` — todo junto (lo que leen los agentes AI): `atleta`, `daily[]`, `workouts[]`, `polar_capturas[]`.
+- `daily.csv` / `daily.json` / `workouts.csv` — vistas planas para Excel/análisis.
+
+Cambiar de fuente (Garmin, Apple, banda TID-MAX) = agregar solo su normalizador; el esquema no cambia.
+Ver el contrato en `../analisis/esquema-canonico.md`.
+
+## Agente coach (Claude API)
+`tid_agent.py` es la Capa 2: lee `dataset.json`, el **motor** calcula los hechos duros (recovery vs base,
+HRV/FC vs base, ACWR, volumen de nado, semáforo) y el **agente (Claude)** los convierte en coach
+conversacional. Regla de oro: **el LLM no inventa números** — el código calcula, el modelo interpreta.
+```bash
+pip install anthropic
+export ANTHROPIC_API_KEY=...        # o: ant auth login
+python tid_agent.py                 # coach del día (salida estructurada -> coach-hoy.json)
+python tid_agent.py --preventivo    # agente preventivo: vigilar -> descarga -> fisio
+python tid_agent.py --pregunta "¿por qué bajó mi HRV esta semana?"   # Q&A libre
+python tid_agent.py --sin-ia        # fuerza el modo por reglas (no llama a Claude)
+```
+El coach del día escribe `datos/procesado/coach-hoy.json` (veredicto + 5 pilares + alertas), listo para
+que lo consuma el dashboard. Sin `ANTHROPIC_API_KEY` (o sin el SDK), cae con gracia al coach por reglas —
+el producto sigue funcionando.
+Arquitectura de agentes en `../analisis/agentes-ai.md`.
+
+## Ecosistema: motor + coach (demo end-to-end)
+`whoop_dashboard.py` visualiza; `tid_coach.py` **razona**. Demuestra el bucle del producto
+(**Datos → Motor → Coach → Recomendación**) con la fuente que hoy tenemos (WHOOP):
+```bash
+python tid_coach.py
+open reporte-diario.html        # en Mac
+```
+Genera un **reporte diario** con:
+- **Semáforo del día** (verde/amarillo/rojo) combinando Recovery, HRV vs base, FC reposo vs base,
+  sueño y carga **ACWR** (agudo 7d : crónico 28d).
+- **Plan de 5 pilares** (entrenamiento, sueño, hidratación, nutrición, recuperación) adaptado a Gael.
+- **Alertas preventivas** (caída de HRV, FC reposo elevada, spike de carga).
+
+Es orientación de rendimiento/bienestar (no médica). En Fase 2, el texto del coach se potencia con la
+**Claude API** para volverlo conversacional.
+
+### Capa 2 — Coach + Plan (estilo Runna)
+`tid_plan.py` bosqueja el **plan de entrenamiento** del atleta rumbo a su evento:
+```bash
+cp plan-vancouver.ejemplo.json datos/plan.json   # ajusta evento, fecha, meta y plantilla
+python tid_plan.py
+open plan-semanal.html
+```
+Genera la vista **"Tu Plan"**: tarjeta del evento (fecha, fase carga→taper, progreso de km), y la
+**semana con sesiones de nado estructuradas** (+ pesas), con **adaptación diaria**: si el Recovery de
+WHOOP está bajo, el coach cambia la sesión de hoy a recuperación/técnica. Benchmark: Runna.
+
+## Seguridad
+- El `.env` y la carpeta `datos/` están en `.gitignore` — **no se suben** al repo.
+- El **Client Secret** y el **Refresh Token** son como contraseñas: no los pegues en chats ni capturas.
+
+## Notas técnicas
+- OAuth 2.0 (authorization code) contra `https://api.prod.whoop.com`.
+- WHOOP **rota el refresh token** en cada renovación; `whoop_sync.py` lo re-guarda solo.
+- Endpoints API **v2** (`/developer/v2/...`). La v1 fue deprecada en 2025.
+- Límite de la app en modo desarrollo: hasta 10 usuarios WHOOP (suficiente para la prueba).

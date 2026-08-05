@@ -1,0 +1,16 @@
+# Secretos: nunca subir credenciales
+**/.env
+
+# Datos descargados de WHOOP (privados de Gael)
+tid-max/software/datos/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Salidas generadas de TID-MAX
+tid-max/software/cliente.png
+tid-max/software/cliente.html
+tid-max/software/dashboard.html

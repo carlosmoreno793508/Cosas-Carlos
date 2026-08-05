@@ -1,0 +1,81 @@
+{
+  "_fuente": "Plantilla real de alimentacion y suplementos de Gael (capturada con Carlos). Referencia para el agente de nutricion y para estimar la ingesta de un dia tipo. Atleta joven (19 anos): enfoque en cubrir demanda energetica, NUNCA restriccion.",
+  "estructura_semana": {
+    "dobles": [],
+    "sencillas": ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
+    "descanso_total": ["Dom"],
+    "_nota": "Taper profundo desde el 3-ago (HOY): se acabaron las dobles. Todo sencillas: Lun-Vie por la tarde, Sab por la manana. Rumbo a Junior Pan Pacific (Vancouver, 17-20 ago; vuela 14 ago)."
+  },
+  "perfil": {
+    "edad": 18,
+    "sexo": "M",
+    "peso_kg": 81,
+    "altura_cm": 186,
+    "envergadura_cm": 208,
+    "vo2max": 67.75,
+    "fc_reposo": 67,
+    "fc_max_carrera": 181,
+    "vt1_fc": 143,
+    "vt2_fc": 167,
+    "fatmax_fc": 173,
+    "kcal_por_km_nado": 230,
+    "kcal_por_min_seco": 6,
+    "factor_actividad_no_entreno": 1.45,
+    "margen_crecimiento_pct": 5,
+    "_nota": "Datos de estudios ene-2026 (ver perfil-gael.md). ESTATURA real 1.86 m (186); 2.08 m es su ENVERGADURA, no la altura. Edad 18 (nacio 19/03/2008, cumple 19 en marzo 2027). peso 81 kg. Estos valores tienen prioridad sobre WHOOP por si WHOOP carga la envergadura como altura."
+  },
+  "alimentos_preferidos": {
+    "desayuno": ["huevos con calabaza", "huevos con ejotes", "huevos con jamon", "huevos con champinones", "migas con frijoles", "totopos (a veces)"],
+    "comida": {
+      "proteinas": ["pollo", "salmon", "carne de res", "pescado"],
+      "carbohidratos": ["arroz", "pasta"],
+      "ensaladas": ["tomate", "fresas", "uvas", "con semillas"]
+    },
+    "cena": ["igual que el desayuno (huevos con verdura/jamon/champinones)", "a veces omelet"],
+    "grasa_para_cocinar": "aceite de aguacate (monoinsaturada, buena calidad, alto punto de humo)"
+  },
+  "dia_tipo_doble": {
+    "07:30_despertar_desayuno": {
+      "descripcion": "Licuado pre-1a sesion",
+      "ingredientes": [
+        "1 platano",
+        "2 cucharadas de avena con proteina",
+        "2 cucharadas de yogurt griego Chobani (+20 g proteina)",
+        "2 datiles",
+        "creatina",
+        "1 scoop de proteina",
+        "200 ml de leche entera",
+        "pizca de sal",
+        "1 cucharada de crema de cacahuate"
+      ]
+    },
+    "post_1a_sesion": {
+      "descripcion": "Recarga post-entreno matutino",
+      "ingredientes": ["5-6 huevos con jamon o chorizo", "shake de proteina"]
+    },
+    "siesta_1": "12:00 a 14:20",
+    "comida_fuerte": {
+      "descripcion": "Comida principal (ejemplo del dia)",
+      "ingredientes": ["2 porciones de salmon", "esparragos", "pure de papa"]
+    },
+    "siesta_2": "30 min antes de la 2a sesion",
+    "2a_sesion": "15:30 a 20:00",
+    "cena_post_2a_sesion": {
+      "descripcion": "Cena de recuperacion antes de dormir",
+      "ingredientes": ["5-6 huevos"]
+    }
+  },
+  "suplementos": [
+    {"nombre": "ALLMAX Essentials Beta-Alanina", "tipo": "rendimiento"},
+    {"nombre": "Thorne Carnityl (Acetil-L-Carnitina) capsulas", "tipo": "rendimiento"},
+    {"nombre": "ALLMAX Essentials Cafeina 200 mg", "tipo": "estimulante", "uso": "ocasional (solo cuando se siente muy cansado en el entreno)", "nota": "uso raro, no rutinario; si llega a tomarla, que sea temprano (no despues de las 2-3 pm) para no afectar el sueno de la noche."},
+    {"nombre": "Vitamina C (Redoxon)", "tipo": "micronutriente"},
+    {"nombre": "Total Beet (remolacha / nitratos)", "tipo": "rendimiento"},
+    {"nombre": "Creatina", "tipo": "rendimiento"},
+    {"nombre": "Melatonina o GABA", "tipo": "sueno", "uso": "actual", "nota": "ayuda a conciliar; tomar poco antes de dormir."},
+    {"nombre": "Magnesio para atletas", "tipo": "sueno_recuperacion", "uso": "por_llegar", "nota": "apoya relajacion y sueno; tomar en la noche."},
+    {"nombre": "L-teanina", "tipo": "sueno", "uso": "por_llegar", "nota": "favorece el sueno profundo y baja la activacion; combina bien con la rutina de enfriamiento post-2a sesion."},
+    {"nombre": "MSM", "tipo": "recuperacion_muscular", "uso": "por_llegar", "nota": "apoyo a recuperacion muscular (encaja con CPK/enzimas altas por carga)."}
+  ],
+  "_nota_guardrails": "Atleta joven (19 anos) con altisimo gasto (dobles + alto km/sem). El objetivo nutricional es cubrir energia, proteina y recuperacion. El agente NO recomienda restringir calorias ni cambiar suplementos; ante dudas de dosis/seguridad de suplementos, derivar a nutriologo/medico deportivo."
+}
