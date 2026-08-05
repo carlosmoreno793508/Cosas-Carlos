@@ -9,43 +9,43 @@
   "dias_al_evento": 12,
   "dias_al_viaje": 9,
   "semaforo": "amarillo",
-  "semaforo_titulo": "Recovery media (51%)",
+  "semaforo_titulo": "Recovery media (60%)",
   "semaforo_desc": "Precaución: modera hoy. Entrena, pero con cabeza.",
-  "recovery": 51.0,
+  "recovery": 60.0,
   "hrv": {
-    "ms": 105.1,
-    "vs_base_pct": -8,
-    "base": 114.2
+    "ms": 112.8,
+    "vs_base_pct": -3,
+    "base": 116.1
   },
   "rhr": {
-    "lpm": 52.0,
-    "vs_base_pct": 2,
-    "base": 51.1
+    "lpm": 51.0,
+    "vs_base_pct": 0,
+    "base": 51.0
   },
   "sueno": {
-    "total_h": 8.93,
-    "noche_h": 7.38,
+    "total_h": 7.75,
+    "noche_h": 7.75,
     "siesta_h": 1.55,
     "n_siestas": 1,
-    "perf": 74.0,
-    "efic": 86.0,
-    "deep_pct": 23.1,
-    "rem_pct": 35.1,
-    "consist": 44.0,
-    "despertares": 12,
-    "deuda_min": 65.3,
-    "acostado": "23:34",
-    "despertar": "08:31",
+    "perf": 77.0,
+    "efic": 84.3,
+    "deep_pct": 20.3,
+    "rem_pct": 23.3,
+    "consist": 56.0,
+    "despertares": 16,
+    "deuda_min": 107.2,
+    "acostado": "23:25",
+    "despertar": "08:58",
     "prom_7d": 7.9,
     "perf_prom_7d": 73
   },
   "forma": {
-    "ctl": 15.2,
-    "atl": 14.8,
-    "tsb": 0.8,
-    "tsb_previa": 1.6,
-    "estado_pico": "en_pico",
-    "lectura": "Vas llegando FRESCO: la forma (TSB) ya está en positivo. El taper está haciendo su trabajo; mantén algo de intensidad corta para no 'apagarte', pero baja volumen."
+    "ctl": 8.8,
+    "atl": 12.5,
+    "tsb": -5.4,
+    "tsb_previa": -5.5,
+    "estado_pico": "afinando",
+    "lectura": "La forma va SUBIENDO hacia el pico (aún algo cargado). Vas por buen camino; sigue soltando fatiga estos días — no metas volumen alto."
   },
   "alertas": [],
   "nutricion": {
