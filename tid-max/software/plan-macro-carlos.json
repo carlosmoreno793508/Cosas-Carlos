@@ -1,0 +1,28 @@
+{
+  "_fuente": "Plan de carrera de Carlos (atleta #2) GENERADO POR EL COACH IA de TID-MAX. Periodización desde hoy (5-ago-2026, base baja) hacia dos objetivos: medio maratón 11-oct y maratón ~13-dic. Filosofía: reconstruir durabilidad primero, 80/20 (fácil/duro), subir volumen ~10%/sem con semanas de descarga, y vigilar ACWR para no lesionarse (el limitante #1 de un corredor que retoma).",
+  "_uso": "Mismo esquema que plan-macro.json (nado). El pipeline elige la semana cuya inicio<=hoy<=fin y expone km/ses/fase planeados al coach para comparar plan vs carga real del Polar. km = km de carrera planeados; ses = sesiones; fase = bloque dominante; comp = carrera objetivo.",
+  "atleta": "Carlos Moreno",
+  "deporte": "running",
+  "_leyenda_intensidad": "FÁCIL = poder conversar (Z1-Z2 Polar). TEMPO/UMBRAL = cómodo-duro, frases cortas. LARGO = fácil y continuo, construye el motor aeróbico. Nada de 'días duros' seguidos: siempre fácil después de duro o largo.",
+  "semanas": [
+    {"inicio": "2026-08-03", "fin": "2026-08-09", "fase": "Reintroducción (run-walk)", "km": 15, "ses": 3, "comp": null, "_nota": "Volver sin lesionarse. Correr 3-4 min / caminar 1 min. Todo FÁCIL. Largo suave de 5-6 km. Cero prisa."},
+    {"inicio": "2026-08-10", "fin": "2026-08-16", "fase": "Base aeróbica", "km": 18, "ses": 4, "comp": null, "_nota": "Correr continuo si el cuerpo aguanta; si no, sigue run-walk. Largo 7-8 km fácil. Añade 4-5 'strides' (rectas de 20 s) 1 día."},
+    {"inicio": "2026-08-17", "fin": "2026-08-23", "fase": "Base aeróbica", "km": 22, "ses": 4, "comp": null, "_nota": "Largo 9-10 km fácil. La consistencia (que no falte ningún día fácil) importa más que el ritmo."},
+    {"inicio": "2026-08-24", "fin": "2026-08-30", "fase": "Descarga (deload)", "km": 16, "ses": 3, "comp": null, "_nota": "Bajar carga para asimilar y proteger tendones/tibias. Largo 8 km. Escucha molestias."},
+    {"inicio": "2026-08-31", "fin": "2026-09-06", "fase": "Construcción", "km": 26, "ses": 4, "comp": null, "_nota": "Primer tempo suave: 2 x 8 min cómodo-duro dentro de un rodaje. Largo 12 km fácil."},
+    {"inicio": "2026-09-07", "fin": "2026-09-13", "fase": "Construcción", "km": 30, "ses": 4, "comp": null, "_nota": "Tempo 3 x 8 min. Largo 14 km fácil. Cuidar ACWR: si el salto de km se siente brusco, repite volumen en vez de subir."},
+    {"inicio": "2026-09-14", "fin": "2026-09-20", "fase": "Construcción (pico HM)", "km": 33, "ses": 4, "comp": null, "_nota": "Largo 16 km con últimos 3-4 km a ritmo de medio maratón (sensación cómodo-duro). Es el punto de forma más alto antes del medio."},
+    {"inicio": "2026-09-21", "fin": "2026-09-27", "fase": "Descarga (pre-medio)", "km": 24, "ses": 4, "comp": null, "_nota": "Bajar volumen, mantener algo de ritmo (2 x 6 min a ritmo HM). Largo 12 km. Llegar fresco."},
+    {"inicio": "2026-09-28", "fin": "2026-10-04", "fase": "Afinamiento (taper HM)", "km": 28, "ses": 4, "comp": null, "_nota": "Último largo moderado 14-15 km al inicio de semana; luego bajar. Nada nuevo, nada heroico."},
+    {"inicio": "2026-10-05", "fin": "2026-10-11", "fase": "Taper + MEDIO MARATÓN", "km": 22, "ses": 4, "comp": "Medio maratón 11-oct", "_nota": "Semana muy suave con 2-3 rectas de activación. Sábado trote flojo 20 min. DOM 11: medio maratón — salir CONSERVADOR, negativo si sobra. Es test, no PR."},
+    {"inicio": "2026-10-12", "fin": "2026-10-18", "fase": "Recuperación post-medio", "km": 18, "ses": 3, "comp": null, "_nota": "Todo fácil, sin ritmo. Que el cuerpo absorba el esfuerzo del medio antes de arrancar el bloque de maratón."},
+    {"inicio": "2026-10-19", "fin": "2026-10-25", "fase": "Bloque maratón (base)", "km": 34, "ses": 4, "comp": null, "_nota": "Empieza el específico de maratón. Largo 20 km fácil. Reintroduce tempo 3 x 8 min."},
+    {"inicio": "2026-10-26", "fin": "2026-11-01", "fase": "Bloque maratón (build)", "km": 40, "ses": 5, "comp": null, "_nota": "Largo 24 km con 6 km finales a ritmo de maratón (MP). Practica geles/agua en el largo (combustible = clave de la fatiga tardía)."},
+    {"inicio": "2026-11-02", "fin": "2026-11-08", "fase": "Bloque maratón (build)", "km": 44, "ses": 5, "comp": null, "_nota": "Largo 27 km fácil. Semana de más km: vigila sueño/HRV en el Polar; si la recuperación cae, no fuerces el tempo."},
+    {"inicio": "2026-11-09", "fin": "2026-11-15", "fase": "Descarga (deload)", "km": 32, "ses": 4, "comp": null, "_nota": "Bajar para asimilar antes del pico. Largo 18 km. Piernas frescas para los dos largos grandes que vienen."},
+    {"inicio": "2026-11-16", "fin": "2026-11-22", "fase": "Pico maratón", "km": 48, "ses": 5, "comp": null, "_nota": "Largo clave 30-32 km con 8-10 km finales a MP. El largo más importante del plan: ensaya desayuno, ropa, geles y ritmo del día de la carrera."},
+    {"inicio": "2026-11-23", "fin": "2026-11-29", "fase": "Pico (último largo)", "km": 44, "ses": 5, "comp": null, "_nota": "Último largo grande 28-30 km fácil-moderado. A partir de aquí, solo bajar."},
+    {"inicio": "2026-11-30", "fin": "2026-12-06", "fase": "Taper 1", "km": 34, "ses": 4, "comp": null, "_nota": "Baja volumen ~30%, mantén algo de MP (2 x 10 min). Largo 20 km. Empieza a dormir y comer para llegar cargado."},
+    {"inicio": "2026-12-07", "fin": "2026-12-13", "fase": "Taper 2 + MARATÓN", "km": 20, "ses": 4, "comp": "Maratón ~13-dic (fecha por confirmar)", "_nota": "Semana muy suave, carga de carbohidrato 2-3 días antes. Día de carrera: RITMO CONSERVADOR desde el km 1, come/toma temprano y seguido. Meta: TERMINAR con energía, no reventar. Fecha exacta por confirmar."}
+  ]
+}

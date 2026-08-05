@@ -1,0 +1,26 @@
+{
+  "_fuente": "Perfil del ATLETA #2 de TID-MAX: Carlos Moreno (corredor). Segundo atleta del ecosistema, separado de Gael (nadador). Fuente de datos: reloj POLAR (no WHOOP). Objetivo: medio maratón 11-oct-2026 y maratón en diciembre-2026. Nivel de partida: BAJO (retomando tras tiempo sin correr).",
+  "_uso": "El motor y el coach IA usan este perfil como 'perfil' del atleta corredor. Los campos con null son datos que AÚN faltan para afinar las zonas de FC y las metas de nutrición; el plan se construye igual (la periodización depende de semanas/volumen), y las zonas se cierran cuando lleguen esos datos.",
+  "atleta": "Carlos Moreno",
+  "deporte": "running",
+  "reloj": "Polar",
+  "perfil": {
+    "edad": null,
+    "sexo": "M",
+    "peso_kg": null,
+    "altura_cm": null,
+    "vo2max": null,
+    "fc_reposo": null,
+    "fc_max_carrera": null,
+    "vt1_fc": null,
+    "vt2_fc": null,
+    "fatmax_fc": null,
+    "nivel_inicial": "bajo",
+    "historial": "corredor que retoma tras tiempo sin correr; sin base aeróbica reciente construida",
+    "_nota_datos_faltantes": "Para cerrar las zonas de FC necesito, del Polar o de ti: (1) edad, (2) peso, (3) FC en reposo (el Polar la da al despertar), (4) idealmente FC máxima real de una salida dura o un test de campo. Mientras tanto la intensidad se prescribe por SENSACIÓN (poder-hablar) y por las zonas automáticas del Polar; cuando tengamos FCmáx real, se recalibran las zonas medidas (VT1/VT2), igual que hicimos con Gael."
+  },
+  "objetivos": [
+    {"carrera": "Medio maratón", "fecha": "2026-10-11", "distancia_km": 21.1, "rol": "A-race #1 / test de forma", "meta": "terminar fuerte y cómodo (sin buscar tiempo aún)"},
+    {"carrera": "Maratón", "fecha": "2026-12-13", "distancia_km": 42.2, "rol": "A-race #2 (objetivo principal)", "meta": "COMPLETAR el maratón con energía; ritmo conservador, sin sufrir. Fecha exacta POR CONFIRMAR (asumida 13-dic).", "_flag": "Un maratón a ~19 semanas partiendo de base baja es AGRESIVO. Ver la revisión del coach (analisis/plan-carlos-revision.md): si la consistencia o las molestias no acompañan, se corre 'para terminar' (run-walk) o se recorre a ene/feb. La salud manda sobre el calendario."}
+  ]
+}
