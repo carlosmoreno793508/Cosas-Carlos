@@ -49,12 +49,21 @@
   },
   "alertas": [],
   "nutricion": {
-    "consumido": 0,
+    "consumido": 1100,
     "meta": 4320,
-    "c": 642,
-    "p": 146,
-    "g": 130,
-    "comidas": [],
+    "c": 103,
+    "p": 58,
+    "g": 42,
+    "comidas": [
+      {
+        "hora": "14:30",
+        "nombre": "6 tacos de pescado (tira empanizada, comal, repollo, crema chipotle)",
+        "kcal": 1100,
+        "prot_g": 58,
+        "carb_g": 103,
+        "grasa_g": 42
+      }
+    ],
     "pendiente": null
   },
   "nota_datos": "Fuente: WHOOP + motor determinista + agentes Claude. El sueño suma las siestas. “Forma” es un proxy sobre el strain de WHOOP: lee la tendencia, no el número absoluto."
