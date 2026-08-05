@@ -1,0 +1,84 @@
+name: TID-MAX · reporte diario
+
+# Corre el pipeline en la NUBE (sin la Mac de Carlos): baja WHOOP, procesa, genera el reporte
+# y actualiza tid-max/web/data.json. Vercel redepliega solo la web al hacer push.
+#
+# Requiere estos SECRETS del repo (Settings → Secrets and variables → Actions):
+#   WHOOP_CLIENT_ID, WHOOP_CLIENT_SECRET, WHOOP_REFRESH_TOKEN, ANTHROPIC_API_KEY
+#   GH_PAT  (token fino con permiso 'Secrets: write' — para reguardar el token WHOOP rotado)
+#
+# Prueba manual: pestaña Actions → este workflow → "Run workflow".
+
+on:
+  schedule:
+    - cron: "30 14 * * *"   # 8:30 am CDMX (UTC-6)  ·  14:30 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tid-max-daily
+  cancel-in-progress: false
+
+jobs:
+  reporte:
+    runs-on: ubuntu-latest
+    env:
+      GH_PAT: ${{ secrets.GH_PAT }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Dependencias
+        run: pip install anthropic requests python-dotenv
+
+      - name: Sembrar token WHOOP actual
+        working-directory: tid-max/software
+        env:
+          WHOOP_REFRESH_TOKEN: ${{ secrets.WHOOP_REFRESH_TOKEN }}
+        run: printf 'WHOOP_REFRESH_TOKEN=%s\n' "$WHOOP_REFRESH_TOKEN" > .env
+
+      - name: Correr pipeline (WHOOP → datos → coach → web)
+        working-directory: tid-max/software
+        env:
+          WHOOP_CLIENT_ID: ${{ secrets.WHOOP_CLIENT_ID }}
+          WHOOP_CLIENT_SECRET: ${{ secrets.WHOOP_CLIENT_SECRET }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          python whoop_sync.py
+          python tid_data.py
+          python tid_agent.py
+          python tid_web.py
+
+      - name: Reguardar el refresh token rotado (WHOOP lo rota en cada sync)
+        if: ${{ env.GH_PAT != '' }}
+        working-directory: tid-max/software
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+          VIEJO: ${{ secrets.WHOOP_REFRESH_TOKEN }}
+        run: |
+          NUEVO=$(python -c "from dotenv import dotenv_values; print(dotenv_values('.env').get('WHOOP_REFRESH_TOKEN',''))")
+          if [ -n "$NUEVO" ] && [ "$NUEVO" != "$VIEJO" ]; then
+            echo "Token WHOOP rotó — actualizando el secret…"
+            gh secret set WHOOP_REFRESH_TOKEN --body "$NUEVO" --repo "${{ github.repository }}"
+          else
+            echo "El token no cambió; nada que actualizar."
+          fi
+
+      - name: Publicar el reporte (commit de data.json)
+        run: |
+          git config user.name  "tid-max-bot"
+          git config user.email "bot@tid-max.local"
+          git add tid-max/web/data.json
+          if git diff --staged --quiet; then
+            echo "Sin cambios en data.json (¿ya corrió hoy?)."
+          else
+            git commit -m "Reporte diario TID-MAX ($(date -u +%F))"
+            git push
+          fi
