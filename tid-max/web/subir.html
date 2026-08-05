@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TID-MAX · Subir comida</title>
+<style>
+  :root{
+    --ground:#0d1420; --panel:#131d2c; --panel2:#182536; --ink:#eaf1f8; --dim:#93a6bd; --faint:#63768f;
+    --line:#26364f; --aqua:#22ccc0; --aqua-deep:#0f9c94; --good:#37d29a; --warn:#f6b543; --crit:#ff5a60;
+  }
+  @media (prefers-color-scheme: light){
+    :root{ --ground:#eef3f9; --panel:#fff; --panel2:#f4f8fc; --ink:#0f1a2b; --dim:#516378; --faint:#8496ab;
+      --line:#dce5ef; --aqua:#0f9c94; --aqua-deep:#0b7d77; --good:#12a06e; --warn:#c8871a; --crit:#e0353c; }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.5}
+  .wrap{max-width:460px;margin:0 auto;padding:28px 18px 60px}
+  .head{display:flex;align-items:center;gap:11px;margin-bottom:18px}
+  .logo{width:38px;height:38px;border-radius:10px;flex:none;background:linear-gradient(135deg,var(--aqua),var(--aqua-deep));
+    display:grid;place-items:center;color:#04211f;font-weight:800;font-size:13px}
+  h1{font-size:18px;margin:0}
+  .sub{font-size:12.5px;color:var(--dim);margin:1px 0 0}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:18px;margin-top:14px}
+  label{display:block;font-size:12.5px;font-weight:600;letter-spacing:.03em;color:var(--dim);margin:0 0 6px;text-transform:uppercase}
+  input[type=text],input[type=password]{width:100%;padding:12px 13px;border-radius:10px;border:1px solid var(--line);
+    background:var(--panel2);color:var(--ink);font-size:16px}
+  .filebtn{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;padding:16px;border-radius:12px;
+    border:1.5px dashed var(--line);background:var(--panel2);color:var(--dim);font-size:15px;font-weight:600;cursor:pointer}
+  .filebtn.has{border-style:solid;border-color:var(--aqua);color:var(--aqua)}
+  input[type=file]{display:none}
+  #preview{display:none;width:100%;max-height:230px;object-fit:cover;border-radius:12px;margin-top:12px}
+  .field{margin-top:16px}
+  button.go{width:100%;margin-top:20px;padding:15px;border:0;border-radius:12px;background:var(--aqua);color:#04211f;
+    font-size:16px;font-weight:800;cursor:pointer}
+  button.go:disabled{opacity:.5;cursor:default}
+  .msg{margin-top:16px;font-size:14px;border-radius:12px;padding:14px;display:none}
+  .msg.ok{display:block;background:rgba(55,210,154,.12);border:1px solid rgba(55,210,154,.35);color:var(--ink)}
+  .msg.err{display:block;background:rgba(255,90,96,.12);border:1px solid rgba(255,90,96,.35);color:var(--ink)}
+  .macros{display:flex;gap:14px;margin-top:8px;font-variant-numeric:tabular-nums}
+  .macros b{color:var(--aqua)}
+  .foot{margin-top:20px;text-align:center;font-size:11.5px;color:var(--faint)}
+  a{color:var(--aqua)}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="head">
+      <div class="logo">TID</div>
+      <div><h1>Subir comida</h1><p class="sub">Toma la foto y se registra sola en el tablero de Gael</p></div>
+    </div>
+
+    <div class="card">
+      <label>Foto de la comida</label>
+      <label class="filebtn" id="filelbl" for="foto">📷 Tomar / elegir foto</label>
+      <input type="file" id="foto" accept="image/*" capture="environment">
+      <img id="preview" alt="">
+
+      <div class="field">
+        <label>Detalles (opcional)</label>
+        <input type="text" id="texto" placeholder="Ej: 2 huevos, avena, plátano, café">
+      </div>
+
+      <div class="field">
+        <label>Contraseña</label>
+        <input type="password" id="secret" placeholder="La contraseña de la familia" autocomplete="current-password">
+      </div>
+
+      <button class="go" id="go">Registrar comida</button>
+      <div class="msg" id="msg"></div>
+    </div>
+
+    <p class="foot">TID-MAX · orientación de bienestar, no médica.<br><a href="./">← Ver el tablero</a></p>
+  </div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+let imageBase64 = null, mediaType = "image/jpeg";
+
+// Recuerda la contraseña (comodidad para la familia)
+$("secret").value = localStorage.getItem("tid_secret") || "";
+
+$("foto").addEventListener("change", async (e) => {
+  const f = e.target.files[0];
+  if (!f) return;
+  const { b64, url } = await resizeImage(f, 1024, 0.72);
+  imageBase64 = b64; mediaType = "image/jpeg";
+  $("preview").src = url; $("preview").style.display = "block";
+  $("filelbl").textContent = "✅ Foto lista (toca para cambiar)";
+  $("filelbl").classList.add("has");
+});
+
+// Redimensiona/comprime en el navegador para no mandar fotos gigantes (rápido + barato)
+function resizeImage(file, maxSide, quality) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => {
+      let { width: w, height: h } = img;
+      if (Math.max(w, h) > maxSide) {
+        const s = maxSide / Math.max(w, h); w = Math.round(w * s); h = Math.round(h * s);
+      }
+      const c = document.createElement("canvas"); c.width = w; c.height = h;
+      c.getContext("2d").drawImage(img, 0, 0, w, h);
+      const url = c.toDataURL("image/jpeg", quality);
+      resolve({ b64: url.split(",")[1], url });
+    };
+    img.onerror = reject;
+    img.src = URL.createObjectURL(file);
+  });
+}
+
+$("go").addEventListener("click", async () => {
+  const secret = $("secret").value.trim();
+  const texto = $("texto").value.trim();
+  const msg = $("msg");
+  if (!secret) { show("err", "Escribe la contraseña."); return; }
+  if (!imageBase64 && !texto) { show("err", "Toma una foto o escribe qué comió."); return; }
+  localStorage.setItem("tid_secret", secret);
+
+  $("go").disabled = true; $("go").textContent = "Estimando con Claude…"; msg.style.display = "none";
+  try {
+    const r = await fetch("/api/comida", {
+      method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({ secret, texto, imageBase64, mediaType }),
+    });
+    const d = await r.json();
+    if (!r.ok || d.error) throw new Error(d.error || ("Error " + r.status));
+    const e = d.estimacion;
+    show("ok",
+      `✅ Registrado: <b>${escapeHtml(e.platillo)}</b> (confianza ${e.confianza})` +
+      `<div class="macros"><span><b>${e.kcal}</b> kcal</span><span>P ${e.prot_g}g</span>` +
+      `<span>C ${e.carb_g}g</span><span>G ${e.grasa_g}g</span></div>` +
+      `<div style="margin-top:8px;color:var(--dim);font-size:13px">Total del día: ${d.total}${d.meta ? " / " + d.meta : ""} kcal · ya aparece en el tablero en ~1 min.</div>`);
+    // limpia para la siguiente
+    imageBase64 = null; $("preview").style.display = "none"; $("texto").value = "";
+    $("filelbl").textContent = "📷 Tomar / elegir foto"; $("filelbl").classList.remove("has"); $("foto").value = "";
+  } catch (err) {
+    show("err", "❌ " + escapeHtml(err.message));
+  } finally {
+    $("go").disabled = false; $("go").textContent = "Registrar comida";
+  }
+});
+
+function show(cls, html) { const m = $("msg"); m.className = "msg " + cls; m.innerHTML = html; m.style.display = "block"; }
+function escapeHtml(s){ return String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+</script>
+</body>
+</html>
