@@ -49,12 +49,20 @@
   },
   "alertas": [],
   "nutricion": {
-    "consumido": 2180,
+    "consumido": 3440,
     "meta": 4320,
-    "c": 147,
-    "p": 139,
-    "g": 106,
+    "c": 255,
+    "p": 192,
+    "g": 171,
     "comidas": [
+      {
+        "hora": "11:00",
+        "nombre": "Desayuno: 5 huevos estrellados, frijoles con chorizo, 70 g tostadas, licuado de mango con leche entera",
+        "kcal": 1260,
+        "prot_g": 53,
+        "carb_g": 108,
+        "grasa_g": 65
+      },
       {
         "hora": "14:30",
         "nombre": "6 tacos de pescado (tira empanizada, comal, repollo, crema chipotle)",
