@@ -49,11 +49,11 @@
   },
   "alertas": [],
   "nutricion": {
-    "consumido": 1310,
+    "consumido": 2180,
     "meta": 4320,
-    "c": 129,
-    "p": 61,
-    "g": 53,
+    "c": 147,
+    "p": 139,
+    "g": 106,
     "comidas": [
       {
         "hora": "14:30",
@@ -70,6 +70,14 @@
         "prot_g": 3,
         "carb_g": 26,
         "grasa_g": 11
+      },
+      {
+        "hora": "20:00",
+        "nombre": "Cena: 6 huevos revueltos con queso panela + shake de proteína con leche entera",
+        "kcal": 870,
+        "prot_g": 78,
+        "carb_g": 18,
+        "grasa_g": 53
       }
     ],
     "pendiente": null
