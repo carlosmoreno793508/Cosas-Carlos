@@ -49,19 +49,19 @@
   },
   "alertas": [],
   "nutricion": {
-    "consumido": 890,
+    "consumido": 965,
     "meta": 4320,
-    "c": 125,
-    "p": 37,
-    "g": 31,
+    "c": 130,
+    "p": 47,
+    "g": 33,
     "comidas": [
       {
         "hora": "09:30",
-        "nombre": "Desayuno: 1 taza Bob's Protein Oats + 1½ tazas leche entera, plátano, 1/4 manzana granny, granola DASAVENA y nuez",
-        "kcal": 890,
-        "prot_g": 37,
-        "carb_g": 125,
-        "grasa_g": 31
+        "nombre": "Desayuno: 1 taza Bob's Protein Oats + 1½ tazas leche entera, plátano, 1/4 manzana granny, granola DASAVENA, nuez + ½ Chobani 20G Protein",
+        "kcal": 965,
+        "prot_g": 47,
+        "carb_g": 130,
+        "grasa_g": 33
       }
     ],
     "pendiente": null
