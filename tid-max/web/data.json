@@ -49,19 +49,19 @@
   },
   "alertas": [],
   "nutricion": {
-    "consumido": 590,
+    "consumido": 660,
     "meta": 4320,
-    "c": 82,
-    "p": 18,
-    "g": 23,
+    "c": 92,
+    "p": 22,
+    "g": 28,
     "comidas": [
       {
         "hora": "09:30",
-        "nombre": "Desayuno: bowl de avena con plátano, 1/4 manzana granny, granola, nuez y leche entera",
-        "kcal": 590,
-        "prot_g": 18,
-        "carb_g": 82,
-        "grasa_g": 23
+        "nombre": "Desayuno: bowl grande de avena con plátano, 1/4 manzana granny, granola, nuez y leche entera",
+        "kcal": 660,
+        "prot_g": 22,
+        "carb_g": 92,
+        "grasa_g": 28
       }
     ],
     "pendiente": null
