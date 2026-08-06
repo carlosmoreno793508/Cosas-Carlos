@@ -1,13 +1,13 @@
 {
-  "fecha": "2026-08-05",
-  "fecha_texto": "miércoles 5 ago 2026",
+  "fecha": "2026-08-06",
+  "fecha_texto": "jueves 6 ago 2026",
   "atleta": "Carlos Gael Moreno Sarmiento",
   "dias_datos": 25,
   "deporte": "Natación",
   "fase": "taper (afinamiento)",
   "evento": "Junior Pan Pacific Championships 2026",
-  "dias_al_evento": 12,
-  "dias_al_viaje": 9,
+  "dias_al_evento": 11,
+  "dias_al_viaje": 8,
   "semaforo": "amarillo",
   "semaforo_titulo": "Recovery media (60%)",
   "semaforo_desc": "Precaución: modera hoy. Entrena, pero con cabeza.",
@@ -40,8 +40,8 @@
     "perf_prom_7d": 73
   },
   "forma": {
-    "ctl": 8.9,
-    "atl": 13.1,
+    "ctl": 9.2,
+    "atl": 14.7,
     "tsb": -5.4,
     "tsb_previa": -5.5,
     "estado_pico": "afinando",
@@ -49,45 +49,12 @@
   },
   "alertas": [],
   "nutricion": {
-    "consumido": 3440,
+    "consumido": 0,
     "meta": 4320,
-    "c": 255,
-    "p": 192,
-    "g": 171,
-    "comidas": [
-      {
-        "hora": "11:00",
-        "nombre": "Desayuno: 5 huevos estrellados, frijoles con chorizo, 70 g tostadas, licuado de mango con leche entera",
-        "kcal": 1260,
-        "prot_g": 53,
-        "carb_g": 108,
-        "grasa_g": 65
-      },
-      {
-        "hora": "14:30",
-        "nombre": "6 tacos de pescado (tira empanizada, comal, repollo, crema chipotle)",
-        "kcal": 1100,
-        "prot_g": 58,
-        "carb_g": 103,
-        "grasa_g": 42
-      },
-      {
-        "hora": "15:00",
-        "nombre": "Postre: Kit Kat mediano (4 dedos)",
-        "kcal": 210,
-        "prot_g": 3,
-        "carb_g": 26,
-        "grasa_g": 11
-      },
-      {
-        "hora": "20:00",
-        "nombre": "Cena: 6 huevos revueltos con queso panela + shake de proteína con leche entera",
-        "kcal": 870,
-        "prot_g": 78,
-        "carb_g": 18,
-        "grasa_g": 53
-      }
-    ],
+    "c": 642,
+    "p": 146,
+    "g": 130,
+    "comidas": [],
     "pendiente": null
   },
   "nota_datos": "Fuente: WHOOP + motor determinista + agentes Claude. El sueño suma las siestas. “Forma” es un proxy sobre el strain de WHOOP: lee la tendencia, no el número absoluto."
