@@ -23,9 +23,9 @@
     "base": 50.6
   },
   "sueno": {
-    "total_h": 7.0,
+    "total_h": 8.57,
     "noche_h": 7.0,
-    "siesta_h": 1.6,
+    "siesta_h": 1.57,
     "n_siestas": 1,
     "perf": 83.0,
     "efic": 86.1,
@@ -33,15 +33,15 @@
     "rem_pct": 35.5,
     "consist": 75.0,
     "despertares": 15,
-    "deuda_min": 105.6,
+    "deuda_min": 11.4,
     "acostado": "23:54",
     "despertar": "08:25",
-    "prom_7d": 8.0,
+    "prom_7d": 8.2,
     "perf_prom_7d": 72
   },
   "forma": {
-    "ctl": 13.1,
-    "atl": 12.9,
+    "ctl": 13.2,
+    "atl": 13.4,
     "tsb": -1.4,
     "tsb_previa": -1.7,
     "estado_pico": "afinando",
