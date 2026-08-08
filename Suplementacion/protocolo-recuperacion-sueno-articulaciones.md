@@ -108,6 +108,55 @@
 
 ---
 
+## 5b. Stack de sueño avanzado: añadir GABA a L-Theanine + Magnesio
+
+Combinar **GABA + L-Theanine + Magnesio glicinato** es uno de los "stacks" de sueño más
+usados. Los tres relajan por **vías distintas**, así que se complementan (no duplican).
+
+| Componente | Mecanismo | Efecto principal |
+|---|---|---|
+| **GABA** | Neurotransmisor inhibidor; "baja el volumen" del sistema nervioso | Reduce el tiempo en **conciliar el sueño** (latencia) |
+| **L-Theanine** | Modula GABA/ondas alfa; calma la rumiación mental | Relajación sin sedar, mejor **calidad** de sueño |
+| **Magnesio glicinato** | Relajación muscular + tono parasimpático | Relajación **física** y recuperación nocturna |
+
+### Evidencia
+- **GABA + L-Theanine:** estudios muestran que juntos **acortan la latencia del sueño y
+  mejoran el sueño NREM (profundo)** más que por separado. Piloto de 4 semanas
+  (700 mg GABA + 200 mg L-teanina antes de dormir) mejoró la calidad subjetiva del sueño
+  y redujo levemente la frecuencia cardíaca nocturna.
+- **Magnesio + L-Theanine:** combinación segura para relajación; falta un ensayo grande
+  que valide específicamente ese dúo, pero los mecanismos son complementarios.
+
+### Dosis y timing (stack nocturno)
+| Momento | Suplemento | Dosis |
+|---|---|---|
+| Con la cena (2–3 h antes) | Klean Magnesium | 1–2 cáps (120–240 mg) |
+| 30–60 min antes de dormir | L-Theanine | 200 mg |
+| 30–60 min antes de dormir | GABA | 100–300 mg para empezar (estudios usan hasta 700 mg) |
+
+### Introducción escalonada (recomendado)
+1. **Semana 1:** magnesio de noche.
+2. **Semana 2:** + L-teanina 200 mg.
+3. **Semana 3:** + GABA 100–200 mg (solo si aún cuesta *conciliar*).
+
+> Muchas veces **magnesio + L-teanina ya bastan**; el GABA es el "refuerzo" para noches
+> difíciles (viajes, competencia, nervios).
+
+### ⚠️ Precauciones del stack
+1. **Efecto aditivo de somnolencia** → riesgo de amodorramiento o "resaca" matutina si se
+   excede. Empezar bajo, **solo de noche**, nunca antes de entrenar/competir ni al conducir.
+2. **No mezclar con alcohol ni sedantes/medicación** para dormir o ansiedad.
+3. **GABA:** posibles **hormigueo, cambios de ritmo cardíaco o cefalea** a dosis altas
+   (dosis-dependiente). Introducir **solo** unos días antes de sumarlo.
+4. **Magnesio:** techo ~350 mg suplementario/día; si hay heces blandas, bajar a 1 cápsula.
+5. **Antidopaje:** GABA, L-teanina y magnesio **NO** están en la lista prohibida WADA/AMA;
+   el riesgo es la **contaminación del producto**, no la molécula. Usar **solo versiones
+   certificadas** (NSF Certified for Sport / Informed Sport). El magnesio ya lo es;
+   **verificar el GABA y la L-teanina**: muchos GABA genéricos **no** están certificados.
+6. **Edad:** si Gael es menor, consultar con el médico del equipo antes de iniciar.
+
+---
+
 ## 6. Datos de las etiquetas (referencia)
 
 - **OptiMSM — California Gold Nutrition:** Metilsulfonilmetano (MSM) en hojuelas.
