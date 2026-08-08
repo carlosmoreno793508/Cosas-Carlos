@@ -134,6 +134,22 @@ usados. Los tres relajan por **vías distintas**, así que se complementan (no d
 | 30–60 min antes de dormir | L-Theanine | 200 mg |
 | 30–60 min antes de dormir | GABA | 100–300 mg para empezar (estudios usan hasta 700 mg) |
 
+### GABA disponible de Gael: Spring Valley GABA 750 mg
+- **Producto:** Spring Valley GABA, **750 mg por cápsula**, 100 cápsulas vegetarianas,
+  Non-GMO ("Mood Health").
+- ⚠️ **Dosis por cápsula alta:** 750 mg ya está en el **extremo alto** de lo estudiado
+  (los ensayos de sueño usan hasta ~700 mg). **No es una dosis de inicio.** A dosis altas
+  aumenta el riesgo de **hormigueo/rubor y somnolencia residual** (pesadez matutina) —
+  contraproducente para entrenos tempranos.
+- **Cómo dosificar:** al ser cápsula, se puede **abrir y dividir el polvo** para empezar
+  con **~250–375 mg** (⅓–½ cápsula). Alternativa mejor: un GABA de menor dosis por cápsula
+  para titular con precisión.
+- ❌ **Antidopaje:** Spring Valley (marca Walmart) **no** es NSF Certified for Sport ni
+  Informed Sport. Para Gael bajo control WADA/AMA es el **eslabón débil**: la molécula GABA
+  no está prohibida, pero el producto **no está certificado** contra contaminación cruzada.
+  → **No usar en temporada de competencia**; sustituir por un GABA certificado. Uso puntual
+  fuera de competencia solo si lo aprueba el equipo médico.
+
 ### Introducción escalonada (recomendado)
 1. **Semana 1:** magnesio de noche.
 2. **Semana 2:** + L-teanina 200 mg.
