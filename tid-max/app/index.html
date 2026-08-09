@@ -1,0 +1,603 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0A0E14" id="metaTheme">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TID-MAX">
+<link rel="manifest" href="./manifest.webmanifest">
+<title>TID-MAX</title>
+<style>
+  /* ===================== TEMA ===================== */
+  /* DÍA (claro) = default */
+  :root{
+    --ground:#F5F7F9; --panel:#FFFFFF; --panel2:#EDF1F5; --raise:#E7ECF1; --line:#E2E8EF;
+    --ink:#101722; --dim:#5A6B7D; --faint:#93A2B4;
+    --accent:#B4EF2E; --accent2:#8FD400; --on-accent:#16210A; --accent-ink:#4F7A00;
+    --good:#12936A; --warn:#C67E00; --crit:#DB3A44;
+    --tabbar:rgba(255,255,255,.9);
+  }
+  /* NOCHE automática: cuando el dispositivo está en oscuro y NO se forzó claro */
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ground:#0A0E14; --panel:#121822; --panel2:#18202c; --raise:#1e2a38; --line:#26303f;
+      --ink:#eef3f8; --dim:#93a2b5; --faint:#63728a;
+      --accent:#C6FF3D; --accent2:#8FD400; --on-accent:#0f1a00; --accent-ink:#C6FF3D;
+      --good:#37d29a; --warn:#f6b543; --crit:#ff5a60;
+      --tabbar:rgba(18,24,34,.92);
+    }
+  }
+  /* NOCHE forzada manual */
+  :root[data-theme="dark"]{
+    --ground:#0A0E14; --panel:#121822; --panel2:#18202c; --raise:#1e2a38; --line:#26303f;
+    --ink:#eef3f8; --dim:#93a2b5; --faint:#63728a;
+    --accent:#C6FF3D; --accent2:#8FD400; --on-accent:#0f1a00; --accent-ink:#C6FF3D;
+    --good:#37d29a; --warn:#f6b543; --crit:#ff5a60;
+    --tabbar:rgba(18,24,34,.92);
+  }
+  /* ================================================ */
+
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  html,body{height:100%}
+  body{background:var(--ground);color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;overflow:hidden;transition:background .2s,color .2s}
+  .app{max-width:480px;margin:0 auto;height:100dvh;display:flex;flex-direction:column;position:relative}
+  .view{flex:1;overflow-y:auto;padding:calc(env(safe-area-inset-top) + 14px) 16px 92px;-webkit-overflow-scrolling:touch}
+  .num{font-variant-numeric:tabular-nums}
+  /* header */
+  .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+  .top .h{font-size:21px;font-weight:800}
+  .top .s{font-size:12px;color:var(--dim);margin-top:1px}
+  .tid{width:40px;height:40px;border-radius:11px;flex:none;background:linear-gradient(135deg,var(--accent),var(--accent2));
+    display:grid;place-items:center;color:var(--on-accent);font-weight:800;font-size:13px}
+  .back{width:34px;height:34px;border-radius:10px;flex:none;background:var(--panel2);border:1px solid var(--line);
+    display:grid;place-items:center;color:var(--dim);font-size:18px;cursor:pointer}
+  /* cards */
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:15px 16px;margin-bottom:12px}
+  .tap{cursor:pointer;transition:border-color .15s}
+  .tap:active{border-color:var(--accent)}
+  .k{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);font-weight:700}
+  .dot{width:48px;height:48px;border-radius:50%;flex:none}
+  .mini{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:12px}
+  .m{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:12px 10px;text-align:center}
+  .mv{font-size:23px;font-weight:800}
+  .mv .u{font-size:12px;color:var(--dim);font-weight:600}
+  .ml{font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.05em;margin-top:3px}
+  .btn{display:block;width:100%;text-align:center;padding:14px;border-radius:14px;font-weight:800;font-size:15px;border:none;cursor:pointer;font-family:inherit}
+  .btn.pri{background:linear-gradient(135deg,var(--accent),var(--accent2));color:var(--on-accent)}
+  .btn.sec{background:var(--panel2);color:var(--ink);border:1px solid var(--line);margin-top:10px}
+  .pill{font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px}
+  .pill.ok{color:var(--on-accent);background:var(--good)}
+  .pill.go{color:var(--accent-ink);background:color-mix(in srgb,var(--accent) 16%,transparent);border:1px solid color-mix(in srgb,var(--accent) 34%,transparent)}
+  .src{display:flex;align-items:center;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:13px 14px;margin-bottom:10px}
+  .src .ic{width:38px;height:38px;border-radius:10px;flex:none;display:grid;place-items:center;font-weight:800;font-size:15px}
+  .src .nm{font-weight:700;font-size:14.5px}
+  .src .sub{font-size:11.5px;color:var(--dim);margin-top:1px}
+  .plan{display:flex;gap:12px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:13px 14px;margin-bottom:10px}
+  .plan .e{font-size:20px}
+  .plan .t{font-size:13.5px;font-weight:700}
+  .plan .d{font-size:12px;color:var(--dim);margin-top:1px}
+  .hint{font-size:12px;color:var(--dim);line-height:1.5}
+  .sub-note{text-align:center;font-size:10.5px;color:var(--faint);margin-top:9px}
+  /* segmented (tema/prioridad) */
+  .seg{display:inline-flex;background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:3px;gap:2px;width:100%}
+  .seg button{flex:1;background:none;border:none;font-family:inherit;font-size:13px;font-weight:800;color:var(--dim);
+    padding:9px 6px;border-radius:9px;cursor:pointer}
+  .seg button.on{background:var(--accent);color:var(--on-accent)}
+  /* formulario */
+  .field{margin-bottom:13px}
+  .field>label{display:block;font-size:11.5px;font-weight:700;color:var(--dim);margin-bottom:5px}
+  .field>label .opt{color:var(--faint);font-weight:500}
+  .inp,.selc{width:100%;background:var(--panel);border:1px solid var(--line);border-radius:11px;
+    color:var(--ink);font-family:inherit;font-size:15px;font-weight:600;padding:12px 13px}
+  .inp::placeholder{color:var(--faint);font-weight:500}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .quick{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:8px;scrollbar-width:none}
+  .quick::-webkit-scrollbar{display:none}
+  .qchip{flex:none;display:flex;align-items:center;gap:6px;background:var(--panel);border:1px solid var(--line);
+    color:var(--ink);font-family:inherit;font-size:12px;font-weight:700;padding:8px 12px;border-radius:11px;cursor:pointer;white-space:nowrap}
+  .prio{display:flex;gap:8px}
+  .prio button{flex:1;background:var(--panel);border:1px solid var(--line);color:var(--dim);font-family:inherit;
+    font-weight:800;font-size:13px;padding:10px 4px;border-radius:11px;cursor:pointer;text-align:center;line-height:1.25}
+  .prio button small{display:block;font-size:9px;font-weight:600;color:var(--faint);margin-top:2px}
+  .prio button.on{color:var(--on-accent)}
+  .prio button.on.A{background:var(--crit);border-color:var(--crit)}
+  .prio button.on.B{background:var(--warn);border-color:var(--warn)}
+  .prio button.on.C{background:var(--good);border-color:var(--good)}
+  .prio button.on small{color:var(--on-accent);opacity:.85}
+  /* tarjeta evento en lista */
+  .ev{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:13px 14px;margin-bottom:11px;position:relative;overflow:hidden}
+  .ev.act{border-color:color-mix(in srgb,var(--accent) 55%,var(--line))}
+  .ev .rib{position:absolute;top:0;left:0;bottom:0;width:4px;background:var(--dim)}
+  .ev .rib.A{background:var(--crit)} .ev .rib.B{background:var(--warn)} .ev .rib.C{background:var(--good)}
+  .ev .nm{font-size:15px;font-weight:800}
+  .ev .meta{font-size:12px;color:var(--dim);margin-top:4px;line-height:1.55}
+  .ev .cd{display:flex;align-items:baseline;gap:6px;margin-top:9px}
+  .ev .cd .n{font-size:22px;font-weight:800;color:var(--accent-ink)}
+  .ev .cd .l{font-size:11px;color:var(--dim)}
+  .ev .acts{display:flex;gap:8px;margin-top:11px;padding-top:11px;border-top:1px solid var(--line)}
+  .ev .acts button{flex:1;background:var(--panel2);border:1px solid var(--line);color:var(--ink);font-family:inherit;
+    font-size:12px;font-weight:700;padding:9px 4px;border-radius:9px;cursor:pointer}
+  .ev .acts button.del{color:var(--crit)}
+  .empty{text-align:center;color:var(--faint);font-size:12.5px;padding:26px 14px;border:1px dashed var(--line);border-radius:14px;margin-bottom:12px}
+  /* tab bar */
+  .tabs{position:absolute;bottom:0;left:0;right:0;display:flex;justify-content:space-around;
+    padding:9px 6px calc(env(safe-area-inset-bottom) + 10px);background:var(--tabbar);
+    backdrop-filter:blur(12px);border-top:1px solid var(--line)}
+  .tabs button{background:none;border:none;color:var(--faint);font-family:inherit;font-size:10px;font-weight:600;
+    display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;padding:2px 12px}
+  .tabs button .g{width:21px;height:21px;border-radius:7px;background:currentColor;opacity:.85}
+  .tabs button.on{color:var(--accent-ink)}
+  .loading{padding:70px 20px;text-align:center;color:var(--dim)}
+  .toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:var(--accent);color:var(--on-accent);
+    font-weight:800;font-size:13px;padding:11px 18px;border-radius:11px;opacity:0;transition:.25s;pointer-events:none;z-index:20}
+  .toast.show{opacity:1}
+  [hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="view" id="view"><div class="loading">Cargando…</div></div>
+  <nav class="tabs">
+    <button data-tab="hoy" class="on"><span class="g"></span>Hoy</button>
+    <button data-tab="entrenar"><span class="g"></span>Entrenar</button>
+    <button data-tab="datos"><span class="g"></span>Datos</button>
+    <button data-tab="perfil"><span class="g"></span>Perfil</button>
+  </nav>
+</div>
+<div class="toast" id="toast"></div>
+
+<script src="./health.js"></script>
+<script>
+const esc = s => String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const SEMC = {verde:"--good", amarillo:"--warn", rojo:"--crit"};
+let DATA = null, activeTab = "hoy", screen = null, editId = null;
+
+/* ---------------- Tema (auto + manual) ---------------- */
+const THEME_KEY = "tidmax_theme";  // 'auto' | 'light' | 'dark'
+function effectiveDark(t){
+  if(t==="dark") return true;
+  if(t==="light") return false;
+  return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+}
+function applyTheme(t){
+  if(t==="auto") document.documentElement.removeAttribute("data-theme");
+  else document.documentElement.setAttribute("data-theme", t);
+  localStorage.setItem(THEME_KEY, t);
+  document.getElementById("metaTheme").setAttribute("content", effectiveDark(t) ? "#0A0E14" : "#F5F7F9");
+  document.querySelectorAll("[data-theme-btn]").forEach(b=>b.classList.toggle("on", b.dataset.themeBtn===t));
+}
+function getTheme(){ return localStorage.getItem(THEME_KEY) || "auto"; }
+applyTheme(getTheme());
+if(window.matchMedia){
+  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ()=>{ if(getTheme()==="auto") applyTheme("auto"); });
+}
+
+/* ---------------- Eventos objetivo (localStorage) ---------------- */
+const EV_KEY = "tidmax_eventos";
+const SPORTS = [
+  ["", "Elige un deporte…"],
+  ["natacion","🏊 Natación"], ["atletismo","🏃 Atletismo / Carrera"],
+  ["ciclismo","🚴 Ciclismo"], ["triatlon","🔺 Triatlón"],
+  ["basquet","🏀 Básquetbol"], ["futbol","⚽ Fútbol"], ["fuerza","🏋️ Fuerza / CrossFit"],
+];
+const QUICK = [
+  {em:"🏃",nm:"Maratón de Boston 2027",dep:"atletismo",lugar:"Boston, EE.UU.",inicio:"2027-04-19"},
+  {em:"🏃",nm:"Maratón de Chicago 2027",dep:"atletismo",lugar:"Chicago, EE.UU.",inicio:"2027-10-10"},
+  {em:"🏊",nm:"Pan Pacific Jr 2026",dep:"natacion",lugar:"Vancouver, Canadá",inicio:"2026-08-17"},
+  {em:"🏊",nm:"Jr Nationals Natación",dep:"natacion",lugar:"",inicio:""},
+  {em:"🏃",nm:"Mundial de Atletismo",dep:"atletismo",lugar:"",inicio:""},
+  {em:"⚽",nm:"Copa América",dep:"futbol",lugar:"",inicio:""},
+];
+const loadEventos = () => { try{ return JSON.parse(localStorage.getItem(EV_KEY)||"[]"); }catch(e){ return []; } };
+const saveEventos = a => localStorage.setItem(EV_KEY, JSON.stringify(a));
+function labelDep(v){ return (SPORTS.find(s=>s[0]===v)||["","—"])[1]; }
+function diasHasta(v){ if(!v) return null; const h=new Date(); h.setHours(0,0,0,0); const t=new Date(v+"T00:00:00"); return Math.round((t-h)/86400000); }
+function fase(d){ if(d==null) return null; if(d<0) return "post-evento"; if(d<=7) return "competencia / pico"; if(d<=21) return "taper (afinamiento)"; return "carga"; }
+function fmtFecha(v){ if(!v) return null; const [y,m,d]=v.split("-"); const mes=["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"][+m-1]; return `${+d} ${mes} ${y}`; }
+function eventoActivo(){
+  const evs=loadEventos().filter(e=>e.fecha_inicio);
+  const fut=evs.filter(e=>diasHasta(e.fecha_inicio)>=0).sort((a,b)=>diasHasta(a.fecha_inicio)-diasHasta(b.fecha_inicio));
+  return fut[0] || null;
+}
+function evToJSON(e){
+  return {nombre:e.nombre||null, tipo_deporte:e.tipo_deporte||null, prioridad:e.prioridad||null,
+    sede:e.sede||null, fecha_inicio:e.fecha_inicio||null, fecha_fin:e.fecha_fin||null,
+    fecha_viaje:e.fecha_viaje||null, meta:e.meta||null};
+}
+
+/* ---------------- Fuentes (Datos) ---------------- */
+const SOURCES = [
+  {nm:"WHOOP", sub:"Recovery, HRV, sueño", bg:"#00b0b9", ic:"◉", on:true},
+  {nm:"Polar", sub:"FC continua · R-R (H10)", bg:"#d51e2a", ic:"●", on:true},
+  {nm:"Strava", sub:"Carreras, ritmo, zonas", bg:"#fc4c02", ic:"▲"},
+  {nm:"Garmin", sub:"Multideporte + natación", bg:"#007cc3", ic:"◆"},
+];
+
+/* ---------------- Vistas de pestañas ---------------- */
+function vHoy(d){
+  const semc = SEMC[d.semaforo]||"--warn";
+  const s=d.sueno||{}, h=d.hrv||{}, fo=d.forma||{};
+  const ev = eventoActivo();
+  const evNombre = ev ? ev.nombre : (d.evento||"—");
+  const evDias = ev ? diasHasta(ev.fecha_inicio) : (d.dias_al_evento);
+  return `
+  <div class="top">
+    <div><div class="h">Hola, Carlos</div><div class="s">${esc(d.fecha_texto||"")}</div></div>
+    <div class="tid">TID</div>
+  </div>
+  <div class="card" style="display:flex;align-items:center;gap:13px">
+    <div class="dot" style="background:radial-gradient(circle at 35% 30%, #ffffff66, var(${semc}));box-shadow:0 0 0 6px color-mix(in srgb, var(${semc}) 16%, transparent)"></div>
+    <div><div class="k">Semáforo de hoy</div>
+      <div style="font-size:19px;font-weight:800;margin-top:2px"><span style="color:var(${semc})">${(d.semaforo||"").toUpperCase()}</span> · ${d.recovery}%</div>
+      <div class="hint" style="margin-top:2px">${esc(d.semaforo_desc||"")}</div></div>
+  </div>
+  <div class="mini">
+    <div class="m"><div class="mv num">${d.recovery}<span class="u">%</span></div><div class="ml">Recovery</div></div>
+    <div class="m"><div class="mv num">${h.ms??"—"}<span class="u">ms</span></div><div class="ml">HRV</div></div>
+    <div class="m"><div class="mv num">${s.total_h??"—"}<span class="u">h</span></div><div class="ml">Sueño</div></div>
+  </div>
+  <div class="card">
+    <div class="k" style="color:var(--accent-ink)">Coach de hoy</div>
+    <div class="hint" style="color:var(--ink);margin-top:6px">${esc(fo.lectura||"—")}</div>
+  </div>
+  <div class="card tap" onclick="openEventos()" style="display:flex;justify-content:space-between;align-items:center">
+    <div><div class="k">Evento objetivo</div><div style="font-size:14px;font-weight:700;margin-top:2px">${esc(evNombre)}</div><div class="hint" style="margin-top:2px">Toca para ver o editar</div></div>
+    <div style="text-align:right"><div style="font-size:24px;font-weight:800;line-height:1" class="num">${evDias??"—"}</div><div style="font-size:10px;color:var(--dim)">días</div></div>
+  </div>`;
+}
+
+function vEntrenar(d){
+  const fo=d.forma||{};
+  return `
+  <div class="top"><div><div class="h">Tu plan de hoy</div><div class="s">Calibrado a tu readiness y al taper</div></div></div>
+  <div class="card" style="border-color:color-mix(in srgb,var(--good) 34%,var(--line));background:color-mix(in srgb,var(--good) 8%,transparent)">
+    <div class="k" style="color:var(--good)">Pico: ${esc((fo.estado_pico||"—").replace("_"," "))}</div>
+    <div class="hint" style="color:var(--ink);margin-top:6px">${esc(fo.lectura||"—")}</div>
+  </div>
+  <div class="plan"><span class="e">🏊</span><div><div class="t">Entreno</div><div class="d">Sesión del día según tu plan</div></div></div>
+  <div class="plan"><span class="e">😴</span><div><div class="t">Sueño</div><div class="d">Meta calibrada a tu recuperación</div></div></div>
+  <div class="plan"><span class="e">🥗</span><div><div class="t">Nutrición</div><div class="d">Consumido vs meta del día</div></div></div>
+  <button class="btn pri" style="margin-top:14px" onclick="toast('GPS + FC en vivo (BLE al H10) — llega en la v1 🏃')">▶  Iniciar entrenamiento</button>
+  <button class="btn sec" onclick="openSesion()">＋  Registrar sesión (multisport)</button>
+  <div class="sub-note">GPS + FC en vivo · llega en la v1</div>`;
+}
+
+/* Tarjeta "Salud del teléfono" — lee el tanque del SO (Apple Salud / Health Connect) */
+function healthCard(){
+  const H = window.TIDHealth;
+  const st = H ? H.state() : {supported:false, hub:null, enabled:false, lastSyncText:null, counts:null};
+  const hub = st.hub || "Salud del teléfono";
+  // Toggle según estado
+  let toggle;
+  if(st.demo){
+    toggle = `<button class="pill" style="background:var(--warn);color:var(--on-accent);border:none;cursor:pointer;font-family:inherit" onclick="tidHealthDisconnect()">Demo ✕</button>`;
+  } else if(!st.supported){
+    toggle = `<button class="pill go" style="border:none;cursor:pointer;font-family:inherit" onclick="tidHealthDemo()">Ver demo</button>`;
+  } else if(st.enabled){
+    toggle = `<span class="pill ok">Conectado</span>`;
+  } else {
+    toggle = `<button class="pill go" style="border:none;cursor:pointer;font-family:inherit" onclick="tidHealthConnect()">Conectar</button>`;
+  }
+  // Fila de sincronización (si está conectado o en demo)
+  const total = st.counts ? Object.values(st.counts).reduce((a,b)=>a+b,0) : null;
+  const syncRow = st.enabled ? `
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:12px;padding-top:12px;border-top:1px solid var(--line)">
+      <div class="hint">Última sincronización: <b class="num">${st.lastSyncText||"—"}</b>${total!=null?` · ${total} reg.`:""}</div>
+      <button class="pill go" style="border:none;cursor:pointer;font-family:inherit" onclick="tidHealthSync()">Sincronizar ahora</button>
+    </div>` : "";
+  const sub = st.demo
+    ? `Simulación · así se ve conectado`
+    : (st.supported ? `${esc(hub)} · FC, entrenos, HRV y sueño`
+                    : `Disponible en la app instalada (iPhone / Android)`);
+  const hint = st.demo
+    ? `Esto es una <b>demo</b> con datos simulados para que veas la pantalla. En la app instalada, aquí entran tus datos reales de ${esc(st.hub||"Apple Salud / Health Connect")}.`
+    : `Tomamos los datos que tu reloj ya deja en el teléfono (Polar, Garmin, Whoop, Samsung, Apple Watch…) — un solo enchufe para casi cualquier marca.`;
+  const iconBg = st.demo ? "color-mix(in srgb,var(--warn) 18%,transparent)" : "color-mix(in srgb,var(--crit) 16%,transparent)";
+  const iconFg = st.demo ? "var(--warn)" : "var(--crit)";
+  return `
+  <div class="card">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div style="width:38px;height:38px;border-radius:10px;flex:none;display:grid;place-items:center;font-size:17px;background:${iconBg};color:${iconFg}">♥</div>
+      <div style="flex:1"><div class="nm">Salud del teléfono</div><div class="sub">${sub}</div></div>
+      ${toggle}
+    </div>
+    ${syncRow}
+    <div class="hint" style="margin-top:12px">${hint}</div>
+  </div>`;
+}
+async function tidHealthConnect(){
+  if(!window.TIDHealth){ toast("Puente de salud no cargó"); return; }
+  const r = await window.TIDHealth.connect();
+  toast(r.ok ? `Conectado a ${window.TIDHealth.hubName()} ✓` : r.msg);
+  if(activeTab==="datos" && !screen) paint();
+}
+async function tidHealthSync(){
+  if(!window.TIDHealth){ toast("Puente de salud no cargó"); return; }
+  toast("Sincronizando…");
+  const r = await window.TIDHealth.sync();
+  toast(r.ok ? `Listo · ${r.total} registros de 2 semanas${r.demo?" (demo)":""} ✓` : r.msg);
+  if(activeTab==="datos" && !screen) paint();
+}
+async function tidHealthDemo(){
+  if(!window.TIDHealth){ toast("Puente de salud no cargó"); return; }
+  const r = await window.TIDHealth.enableDemo();
+  toast(r.ok ? `Demo activada · ${r.total} registros simulados` : (r.msg||"No se pudo"));
+  if(activeTab==="datos" && !screen) paint();
+}
+async function tidHealthDisconnect(){
+  if(!window.TIDHealth){ return; }
+  await window.TIDHealth.disconnect();
+  toast("Desconectado");
+  if(activeTab==="datos" && !screen) paint();
+}
+
+function vDatos(){
+  return `
+  <div class="top"><div><div class="h">Conecta tus datos</div><div class="s">Salud del teléfono ahora · cuentas en la nube cuando quieras</div></div></div>
+  ${healthCard()}
+  <div class="k" style="margin:16px 2px 10px">Cuentas en la nube</div>
+  ${SOURCES.map(s=>`
+    <div class="src">
+      <div class="ic" style="background:${s.bg};color:${s.fg||"#04121a"}">${s.ic}</div>
+      <div style="flex:1"><div class="nm">${esc(s.nm)}</div><div class="sub">${esc(s.sub)}</div></div>
+      ${s.on?`<span class="pill ok">Conectado</span>`:`<button class="pill go" style="border:none;cursor:pointer;font-family:inherit" onclick="toast('Aquí abre el login de ${esc(s.nm)} (OAuth).')">Conectar</button>`}
+    </div>`).join("")}
+  <div class="sub-note">Nunca guardamos tu contraseña — la tecleas en el sitio de cada plataforma.</div>`;
+}
+
+function vPerfil(d){
+  const t=getTheme();
+  return `
+  <div class="top"><div><div class="h">Perfil</div><div class="s">${esc(d.atleta||"")}</div></div><div class="tid">TID</div></div>
+  <div class="card"><div class="k">Deporte</div><div style="font-size:15px;font-weight:700;margin-top:3px">${esc(d.deporte||"—")} · ${esc(d.fase||"")}</div></div>
+  <div class="card tap" onclick="openEventos()" style="display:flex;justify-content:space-between;align-items:center">
+    <div><div class="k">Eventos objetivo</div><div style="font-size:14px;font-weight:700;margin-top:3px">${loadEventos().length||"Sin"} evento(s)</div></div>
+    <div style="font-size:20px;color:var(--accent-ink)">＋</div>
+  </div>
+  <div class="card">
+    <div class="k" style="margin-bottom:9px">Apariencia</div>
+    <div class="seg">
+      <button data-theme-btn="auto" class="${t==="auto"?"on":""}" onclick="applyTheme('auto')">Auto</button>
+      <button data-theme-btn="light" class="${t==="light"?"on":""}" onclick="applyTheme('light')">☀️ Claro</button>
+      <button data-theme-btn="dark" class="${t==="dark"?"on":""}" onclick="applyTheme('dark')">🌙 Oscuro</button>
+    </div>
+    <div class="hint" style="margin-top:8px">“Auto” sigue el modo de tu teléfono.</div>
+  </div>
+  <div class="card">
+    <div class="k" style="margin-bottom:9px">Sincronización con el motor</div>
+    <input class="inp" id="f_secret" type="password" placeholder="Clave de sincronización" value="${esc(localStorage.getItem('tid_secret')||'')}">
+    <button class="btn sec" onclick="guardarSecret()" style="margin-top:8px">Guardar clave</button>
+    <div class="hint" style="margin-top:8px">Con esta clave (la misma de la familia) tus eventos se envían al motor TID-MAX. Sin ella, se guardan solo en el teléfono.</div>
+  </div>
+  <div class="card"><div class="k">Datos</div><div class="hint" style="margin-top:4px">${d.dias_datos||0} días · fuente: WHOOP + Polar + motor TID-MAX</div></div>
+  <div class="sub-note">TID-MAX · orientación de rendimiento y bienestar, no diagnóstico médico.</div>`;
+}
+
+/* ---------------- Pantalla: lista de eventos ---------------- */
+function vEventos(){
+  const evs = loadEventos();
+  const act = eventoActivo();
+  const lista = evs.length ? evs.map((e,i)=>{
+    const d = diasHasta(e.fecha_inicio);
+    const p = e.prioridad||"C";
+    const esAct = act && act.__i===i;
+    return `
+    <div class="ev ${esAct?"act":""}">
+      <div class="rib ${p}"></div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px">
+        <div class="nm">${esc(e.nombre||"(sin nombre)")}</div>
+        <span class="pill" style="background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent-ink);flex:none">Evento ${p}</span>
+      </div>
+      <div class="meta">
+        ${e.tipo_deporte?`${esc(labelDep(e.tipo_deporte))}<br>`:""}
+        ${e.sede?`📍 ${esc(e.sede)}<br>`:""}
+        ${e.fecha_inicio?`📅 ${esc(fmtFecha(e.fecha_inicio))}${e.fecha_fin?` – ${esc(fmtFecha(e.fecha_fin))}`:""}<br>`:""}
+        ${e.meta?`🎯 ${esc(e.meta)}`:""}
+      </div>
+      ${d!=null?`<div class="cd"><span class="n num">${d}</span><span class="l">días · ${esc(fase(d))}${esAct?" · <b style='color:var(--accent-ink)'>ACTIVO</b>":""}</span></div>`:""}
+      <div class="acts">
+        <button onclick="openCapturar(${i})">Editar</button>
+        <button onclick="copiarJSON(${i})">Copiar JSON</button>
+        <button class="del" onclick="borrarEvento(${i})">Borrar</button>
+      </div>
+    </div>`;
+  }).join("") : `<div class="empty">Aún no tienes eventos objetivo.<br>Agrega tu próxima competencia para calcular tu taper.</div>`;
+  return `
+  <div class="top">
+    <div class="back" onclick="switchTab(activeTab)">‹</div>
+    <div style="flex:1"><div class="h">Eventos objetivo</div><div class="s">Para qué estás entrenando</div></div>
+  </div>
+  ${lista}
+  <button class="btn pri" onclick="openCapturar()">＋  Nuevo evento</button>`;
+}
+
+/* ---------------- Pantalla: capturar / editar ---------------- */
+function vCapturar(id){
+  const e = (id!=null) ? loadEventos()[id] : {};
+  const prio = e.prioridad || "A";
+  const opts = SPORTS.map(([v,t])=>`<option value="${v}" ${e.tipo_deporte===v?"selected":""}>${t}</option>`).join("");
+  return `
+  <div class="top">
+    <div class="back" onclick="openEventos()">‹</div>
+    <div style="flex:1"><div class="h">${id!=null?"Editar evento":"Nuevo evento"}</div><div class="s">¿Para qué estás entrenando?</div></div>
+  </div>
+  ${id==null?`<div class="k" style="margin-bottom:8px">Atajos</div><div class="quick" id="quick"></div>`:""}
+  <div class="field"><label>Nombre del evento</label><input class="inp" id="f_nombre" placeholder="Ej. Maratón de Boston 2027" value="${esc(e.nombre||"")}"></div>
+  <div class="field"><label>Deporte</label><select class="selc" id="f_deporte">${opts}</select></div>
+  <div class="field"><label>Prioridad <span class="opt">— ¿qué tan importante es?</span></label>
+    <div class="prio" id="prio">
+      <button type="button" class="A ${prio==="A"?"on":""}" data-p="A" onclick="pickPrio(this)">A<small>Objetivo</small></button>
+      <button type="button" class="B ${prio==="B"?"on":""}" data-p="B" onclick="pickPrio(this)">B<small>Importante</small></button>
+      <button type="button" class="C ${prio==="C"?"on":""}" data-p="C" onclick="pickPrio(this)">C<small>Prep.</small></button>
+    </div>
+  </div>
+  <div class="row2">
+    <div class="field"><label>Fecha inicio</label><input class="inp" id="f_inicio" type="date" value="${esc(e.fecha_inicio||"")}"></div>
+    <div class="field"><label>Fecha fin <span class="opt">(opc)</span></label><input class="inp" id="f_fin" type="date" value="${esc(e.fecha_fin||"")}"></div>
+  </div>
+  <div class="field"><label>Fecha de viaje <span class="opt">(opc)</span></label><input class="inp" id="f_viaje" type="date" value="${esc(e.fecha_viaje||"")}"></div>
+  <div class="field"><label>Lugar / Sede</label><input class="inp" id="f_lugar" placeholder="Ciudad, País" value="${esc(e.sede||"")}"></div>
+  <div class="field"><label>Meta <span class="opt">(opc)</span></label><input class="inp" id="f_meta" placeholder="Ej. Bajar de 2:45 llegando fresco" value="${esc(e.meta||"")}"></div>
+  <button class="btn pri" onclick="guardarEvento(${id==null?"null":id})">Guardar evento</button>
+  <button class="btn sec" onclick="openEventos()">Cancelar</button>`;
+}
+let prioSel = "A";
+function pickPrio(b){ prioSel=b.dataset.p; b.parentElement.querySelectorAll("button").forEach(x=>x.classList.remove("on")); b.classList.add("on"); }
+function bindCapturar(){
+  const q=document.getElementById("quick");
+  if(q){ QUICK.forEach(item=>{
+    const b=document.createElement("button"); b.className="qchip"; b.innerHTML=`<span>${item.em}</span>${esc(item.nm)}`;
+    b.onclick=()=>{ document.getElementById("f_nombre").value=item.nm; document.getElementById("f_deporte").value=item.dep;
+      document.getElementById("f_lugar").value=item.lugar; if(item.inicio) document.getElementById("f_inicio").value=item.inicio;
+      toast(`${item.nm} cargado`); };
+    q.appendChild(b);
+  }); }
+}
+function guardarEvento(id){
+  const g=k=>{ const el=document.getElementById(k); return el?el.value.trim():""; };
+  const nombre=g("f_nombre"), dep=g("f_deporte");
+  if(!nombre){ toast("Falta el nombre"); return; }
+  if(!dep){ toast("Elige un deporte"); return; }
+  const obj={nombre, tipo_deporte:dep, prioridad:prioSel, fecha_inicio:g("f_inicio"),
+    fecha_fin:g("f_fin"), fecha_viaje:g("f_viaje"), sede:g("f_lugar"), meta:g("f_meta")};
+  const evs=loadEventos();
+  if(id==null) evs.push(obj); else evs[id]=obj;
+  saveEventos(evs);
+  toast(id==null?"Evento guardado 🏆":"Evento actualizado");
+  sincronizarEvento(obj);
+  openEventos();
+}
+async function sincronizarEvento(obj){
+  const secret = localStorage.getItem("tid_secret") || "";
+  if(!secret) return;  // sin clave: se queda solo en el teléfono
+  try{
+    const r = await fetch("/api/evento", {
+      method:"POST", headers:{"content-type":"application/json"},
+      body: JSON.stringify({secret, evento: evToJSON(obj)}),
+    });
+    if(r.ok) toast("Evento sincronizado al motor ✓");
+    else { const e = await r.json().catch(()=>({})); toast("No sincronizó: "+(e.error||("HTTP "+r.status))); }
+  }catch(e){ /* sin conexión: queda guardado local, se puede reintentar */ }
+}
+function guardarSecret(){
+  const el=document.getElementById("f_secret"); if(!el) return;
+  localStorage.setItem("tid_secret", el.value.trim());
+  toast(el.value.trim()?"Clave guardada ✓":"Clave borrada");
+}
+function borrarEvento(i){ const evs=loadEventos(); evs.splice(i,1); saveEventos(evs); toast("Evento borrado"); paint(); }
+function copiarJSON(i){
+  const e=loadEventos()[i]; const txt=JSON.stringify(evToJSON(e),null,2);
+  if(navigator.clipboard){ navigator.clipboard.writeText(txt).then(()=>toast("JSON copiado ✓"), ()=>toast("No pude copiar")); }
+  else toast("Copia manual: revisa consola"), console.log(txt);
+}
+
+/* ---------------- Registrar sesión multisport ---------------- */
+const SES_KEY = "tidmax_sesiones";
+const SPORTS_LOG = {
+  natacion:{nm:"Natación",em:"🏊"}, basquet:{nm:"Básket",em:"🏀"},
+  atletismo:{nm:"Carrera",em:"🏃"}, ciclismo:{nm:"Ciclismo",em:"🚴"},
+  futbol:{nm:"Fútbol",em:"⚽"}, fuerza:{nm:"Fuerza",em:"🏋️"},
+};
+let sesSport=null, sesSegs=[];
+function _inp(lbl,f,ph,unit){ return `<div class="field"><label>${lbl}${unit?` <span class="opt">(${unit})</span>`:""}</label><input class="inp" data-f="${f}" placeholder="${ph}"></div>`; }
+function _seg(lbl,f,opts){ return `<div class="field"><label>${lbl}</label><div class="seg" data-seg="${f}">${opts.map((o,i)=>`<button type="button" class="${i===0?"on":""}" onclick="pickSegBtn(this)">${esc(o)}</button>`).join("")}</div></div>`; }
+function _rpe(){ return `<div class="field"><label>RPE <span class="opt">esfuerzo 1-10</span></label><input class="inp" data-f="rpe" type="number" inputmode="numeric" placeholder="6"></div>`; }
+function _notas(){ return `<div class="field"><label>Notas <span class="opt">(opc)</span></label><input class="inp" data-f="notas" placeholder="¿Cómo te sentiste?"></div>`; }
+function fieldsFor(id){
+  if(id==="natacion") return _seg("Piscina","piscina",["25 m","50 m","Aguas abiertas"])+_seg("Estilo","estilo",["Libre","Dorso","Pecho","Mariposa","Combi"])+`<div class="row2">${_inp("Distancia","dist","1500","m")}${_inp("Tiempo","tiempo","00:26:00")}</div>`+_rpe()+_notas();
+  if(id==="basquet") return _seg("Tipo","tipo",["Partido","Entreno","Scrimmage"])+`<div class="row2">${_inp("Duración","dur","90","min")}${_inp("Min. jugados","min_jug","28","min")}</div>`+_rpe()+_notas();
+  if(id==="atletismo") return _seg("Superficie","superf",["Ruta","Trail","Pista"])+`<div class="row2">${_inp("Distancia","dist","10","km")}${_inp("Tiempo","tiempo","00:42:00")}</div>`+`<div class="row2">${_inp("Desnivel","desnivel","120","m")}${_inp("Cadencia","cad","178","ppm")}</div>`+_rpe()+_notas();
+  if(id==="ciclismo") return _seg("Superficie","superf",["Ruta","Gravel","Rodillo"])+`<div class="row2">${_inp("Distancia","dist","40","km")}${_inp("Tiempo","tiempo","01:05:00")}</div>`+`<div class="row2">${_inp("Desnivel","desnivel","300","m")}${_inp("Potencia","pot","210","W")}</div>`+_rpe()+_notas();
+  if(id==="futbol") return _seg("Tipo","tipo",["Partido","Entreno"])+`<div class="row2">${_inp("Duración","dur","90","min")}${_inp("Min. jugados","min_jug","70","min")}</div>`+_rpe()+_notas();
+  if(id==="fuerza") return _seg("Bloque","bloque",["Gym","CrossFit"])+_inp("Duración","dur","45","min")+_rpe()+_notas();
+  return "";
+}
+function detalleSeg(id,d){
+  if(id==="natacion") return `${d.dist||"—"} m · ${d.estilo||""} · ${d.piscina||""}`;
+  if(id==="basquet")  return `${d.tipo||""} · ${d.min_jug||"—"} min · RPE ${d.rpe||"—"}`;
+  if(id==="atletismo")return `${d.dist||"—"} km · ${d.superf||""} · ${d.desnivel||0} m D+`;
+  if(id==="ciclismo") return `${d.dist||"—"} km · ${d.superf||""} · ${d.pot||"—"} W`;
+  if(id==="futbol")   return `${d.tipo||""} · ${d.min_jug||"—"} min`;
+  if(id==="fuerza")   return `${d.bloque||""} · ${d.dur||"—"} min`;
+  return "";
+}
+function pickSegBtn(b){ b.parentElement.querySelectorAll("button").forEach(x=>x.classList.remove("on")); b.classList.add("on"); }
+function pickSesSport(id){ sesSport=id; paint(); }
+function addSegSesion(){
+  const card=document.getElementById("sesForm"); if(!card) return;
+  const d={};
+  card.querySelectorAll("[data-f]").forEach(i=>d[i.dataset.f]=i.value.trim());
+  card.querySelectorAll("[data-seg]").forEach(g=>{ const on=g.querySelector("button.on"); d[g.dataset.seg]=on?on.textContent:""; });
+  sesSegs.push({deporte:sesSport, ...d});
+  toast(`${SPORTS_LOG[sesSport].nm} agregado`);
+  sesSport=null; paint();
+}
+function rmSegSesion(i){ sesSegs.splice(i,1); paint(); }
+function guardarSesion(){
+  if(!sesSegs.length){ toast("Agrega al menos una disciplina"); return; }
+  const arr=JSON.parse(localStorage.getItem(SES_KEY)||"[]");
+  arr.push({fecha:new Date().toISOString().slice(0,10), segmentos:sesSegs});
+  localStorage.setItem(SES_KEY, JSON.stringify(arr));
+  toast(`Sesión guardada · ${sesSegs.length} disciplina(s) 🎉`);
+  sesSegs=[]; sesSport=null; switchTab("entrenar");
+}
+function vSesion(){
+  const chips = Object.entries(SPORTS_LOG).map(([id,s])=>`
+    <button class="qchip" style="${sesSport===id?"border-color:var(--accent);color:var(--accent-ink)":""}" onclick="pickSesSport('${id}')"><span>${s.em}</span>${s.nm}</button>`).join("");
+  const form = sesSport ? `
+    <div class="card" id="sesForm">
+      <div style="display:flex;align-items:center;gap:9px;margin-bottom:12px">
+        <div style="font-size:20px">${SPORTS_LOG[sesSport].em}</div>
+        <div style="font-weight:800;font-size:15px">${SPORTS_LOG[sesSport].nm}</div>
+      </div>
+      ${fieldsFor(sesSport)}
+      <button class="btn pri" onclick="addSegSesion()">＋  Agregar al registro</button>
+    </div>` : "";
+  const lista = sesSegs.length ? sesSegs.map((sg,i)=>`
+    <div class="src">
+      <div class="ic" style="background:var(--panel2)">${SPORTS_LOG[sg.deporte].em}</div>
+      <div style="flex:1"><div class="nm">${i+1}. ${SPORTS_LOG[sg.deporte].nm}</div><div class="sub">${esc(detalleSeg(sg.deporte,sg))}</div></div>
+      <div onclick="rmSegSesion(${i})" style="color:var(--crit);cursor:pointer;font-size:18px;padding:2px 6px">×</div>
+    </div>`).join("") : `<div class="empty">Elige un deporte arriba para empezar.</div>`;
+  return `
+  <div class="top">
+    <div class="back" onclick="switchTab('entrenar')">‹</div>
+    <div style="flex:1"><div class="h">Registrar sesión</div><div class="s">Multisport · encadena disciplinas</div></div>
+  </div>
+  <div class="k" style="margin-bottom:9px">1 · ¿Qué deporte?</div>
+  <div class="quick">${chips}</div>
+  ${form}
+  <div class="k" style="margin:6px 0 9px">2 · Disciplinas de la sesión</div>
+  ${lista}
+  <button class="btn pri" style="margin-top:6px" onclick="guardarSesion()">Guardar sesión</button>`;
+}
+
+/* ---------------- Router ---------------- */
+const VIEWS = {hoy:vHoy, entrenar:vEntrenar, datos:()=>vDatos(), perfil:vPerfil};
+function paint(){
+  const el=document.getElementById("view"); el.scrollTop=0;
+  if(screen==="eventos"){ el.innerHTML=vEventos(); }
+  else if(screen==="capturar"){ prioSel=(editId!=null?(loadEventos()[editId]?.prioridad||"A"):"A"); el.innerHTML=vCapturar(editId); bindCapturar(); }
+  else if(screen==="sesion"){ el.innerHTML=vSesion(); }
+  else { el.innerHTML = DATA ? VIEWS[activeTab](DATA) : '<div class="loading">Cargando…</div>'; }
+  document.querySelectorAll(".tabs button").forEach(b=>b.classList.toggle("on", !screen && b.dataset.tab===activeTab));
+}
+function switchTab(tab){ activeTab=tab; screen=null; editId=null; paint(); }
+function openEventos(){ screen="eventos"; editId=null; paint(); }
+function openCapturar(id){ screen="capturar"; editId=(id==null?null:id); paint(); }
+function openSesion(){ screen="sesion"; sesSport=null; sesSegs=[]; paint(); }
+document.querySelectorAll(".tabs button").forEach(b=>b.addEventListener("click",()=>switchTab(b.dataset.tab)));
+
+let tt; function toast(m){ const t=document.getElementById("toast"); t.textContent=m; t.classList.add("show"); clearTimeout(tt); tt=setTimeout(()=>t.classList.remove("show"),1900); }
+
+fetch("./data.json?v="+Date.now()).then(r=>r.json()).then(d=>{DATA=d; paint();})
+  .catch(e=>{document.getElementById("view").innerHTML='<div class="loading">No pude cargar los datos.<br>'+esc(e.message)+'</div>';});
+
+if("serviceWorker" in navigator){navigator.serviceWorker.register("./sw.js").catch(()=>{});}
+</script>
+</body>
+</html>
