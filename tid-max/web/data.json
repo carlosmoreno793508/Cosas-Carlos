@@ -9,45 +9,51 @@
   "dias_al_evento": 8,
   "dias_al_viaje": 5,
   "semaforo": "amarillo",
-  "semaforo_titulo": "Recovery media (55%)",
+  "semaforo_titulo": "Recovery media (43%)",
   "semaforo_desc": "Precaución: modera hoy. Entrena, pero con cabeza.",
-  "recovery": 55.0,
+  "recovery": 43.0,
   "hrv": {
-    "ms": 105.5,
-    "vs_base_pct": -11,
-    "base": 118.6
+    "ms": 98.5,
+    "vs_base_pct": -17,
+    "base": 118.0
   },
   "rhr": {
-    "lpm": 51.0,
-    "vs_base_pct": 1,
-    "base": 50.6
+    "lpm": 52.0,
+    "vs_base_pct": 2,
+    "base": 50.8
   },
   "sueno": {
-    "total_h": 8.27,
-    "noche_h": 6.78,
+    "total_h": 5.19,
+    "noche_h": 5.19,
     "siesta_h": 1.49,
     "n_siestas": 1,
-    "perf": 81.0,
-    "efic": 81.8,
-    "deep_pct": 27.4,
-    "rem_pct": 31.8,
-    "consist": 83.0,
-    "despertares": 9,
-    "deuda_min": 35.9,
-    "acostado": "23:35",
-    "despertar": "07:59",
-    "prom_7d": 8.5,
-    "perf_prom_7d": 74
+    "perf": 49.0,
+    "efic": 70.8,
+    "deep_pct": 26.3,
+    "rem_pct": 30.1,
+    "consist": 38.0,
+    "despertares": 8,
+    "deuda_min": 213.6,
+    "acostado": "02:03",
+    "despertar": "09:31",
+    "prom_7d": 8.2,
+    "perf_prom_7d": 73
   },
   "forma": {
-    "ctl": 13.6,
-    "atl": 14.7,
-    "tsb": -1.4,
-    "tsb_previa": -2.1,
+    "ctl": 10.9,
+    "atl": 13.2,
+    "tsb": -3.5,
+    "tsb_previa": -4.4,
     "estado_pico": "afinando",
     "lectura": "La forma va SUBIENDO hacia el pico (aún algo cargado). Vas por buen camino; sigue soltando fatiga estos días — no metas volumen alto."
   },
-  "alertas": [],
+  "alertas": [
+    {
+      "nivel": "med",
+      "tag": "Preventivo",
+      "texto": "HRV cayó bastante vs tu base — señal temprana de fatiga. Vigila."
+    }
+  ],
   "nutricion": {
     "consumido": 0,
     "meta": 2870,
