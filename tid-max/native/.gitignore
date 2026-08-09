@@ -1,0 +1,13 @@
+# Dependencias y build (se regeneran en tu Mac con npm install / npm run build)
+node_modules/
+www/
+
+# Artefactos pesados de los proyectos nativos (se generan con `cap add`)
+ios/App/Pods/
+ios/App/build/
+ios/DerivedData/
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+*.xcuserstate
