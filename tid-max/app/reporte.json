@@ -1,0 +1,589 @@
+{
+  "header": {
+    "nombre": "Gael Moreno Sarmiento",
+    "titulo_suffix": " — Reporte del día",
+    "fecha": "2026-08-05",
+    "evento": "Junior Pan Pacific Championships",
+    "dias_al_evento": 12,
+    "dias_a_vuelo": 9,
+    "link_calificaciones": {
+      "href": "reporte_calificaciones_semanales.html",
+      "texto": "📊 Ver calificaciones semanales"
+    }
+  },
+  "kpis": [
+    {
+      "clase": "cetes-karla",
+      "label": "Recovery",
+      "value": "60%",
+      "badge": "🟡 Amarillo"
+    },
+    {
+      "clase": "purple",
+      "label": "HRV",
+      "value": "112.8 ms",
+      "badge": "FC reposo 51 lpm"
+    },
+    {
+      "clase": "teal",
+      "label": "Sueño real",
+      "value": "7h 44m",
+      "badge": "Performance 77%"
+    },
+    {
+      "clase": "cetes-gael",
+      "label": "Strain del día",
+      "value": "4.3",
+      "badge": "1330 kcal"
+    }
+  ],
+  "vitales": {
+    "titulo": "Recovery y señales vitales",
+    "muted": "con rango óptimo",
+    "rows": [
+      {
+        "name": "Recovery",
+        "width": "60%",
+        "fill": "linear-gradient(90deg,#ff5a60,#37d29a)",
+        "val": "60% ",
+        "pct": "≥ 67% verde / 34–66% amarillo / < 33% rojo",
+        "pill": {
+          "text": "🟡 Amarillo",
+          "bg": "rgba(246,181,67,0.20)",
+          "color": "#f6b543"
+        },
+        "key": "recovery"
+      },
+      {
+        "name": "HRV",
+        "width": "80.57142857142857%",
+        "fill": "linear-gradient(90deg,#7cb000,#c6ff3d)",
+        "val": "112.8 ms ",
+        "pct": "70–120 ms (baseline Gael ~75 ms)",
+        "pill": {
+          "text": "✅ Óptima",
+          "bg": "rgba(55,210,154,0.18)",
+          "color": "#37d29a"
+        },
+        "key": "hrv"
+      },
+      {
+        "name": "FC reposo",
+        "width": "72.5%",
+        "fill": "linear-gradient(90deg,#c6ff3d,#37d29a)",
+        "val": "51 lpm ",
+        "pct": "42–58 lpm (nadadores élite)",
+        "pill": {
+          "text": "✅ Óptima",
+          "bg": "rgba(55,210,154,0.18)",
+          "color": "#37d29a"
+        },
+        "key": "rhr"
+      },
+      {
+        "name": "SpO2",
+        "width": "60.0%",
+        "fill": "linear-gradient(90deg,#f6b543,#37d29a)",
+        "val": "94.0% ",
+        "pct": "≥ 95% óptimo / 93–94% aceptable / < 93% bajo",
+        "pill": {
+          "text": "⚠️ Aceptable",
+          "bg": "rgba(246,181,67,0.20)",
+          "color": "#f6b543"
+        },
+        "key": "spo2"
+      },
+      {
+        "name": "Temp. piel",
+        "width": "50%",
+        "fill": "linear-gradient(90deg,#8792a6,#c6ff3d)",
+        "val": "34.0 °C ",
+        "pct": "±0.5°C de su baseline — alertar si sube >0.8°C",
+        "pill": {
+          "text": "✅",
+          "bg": "rgba(55,210,154,0.18)",
+          "color": "#37d29a"
+        },
+        "key": "skin_temp"
+      }
+    ]
+  },
+  "sueno": {
+    "titulo": "😴 Sueño completo",
+    "muted": "con rango óptimo",
+    "rows": [
+      {
+        "kv": true,
+        "name": "Inicio de sueño",
+        "val": "11:25 PM"
+      },
+      {
+        "name": "Tiempo en cama",
+        "width": "100%",
+        "fill": "linear-gradient(90deg,#0f8ea8,#37c8d4)",
+        "val": "9h 33m ",
+        "pct": "8–9.5h en cama",
+        "pill": {
+          "text": "✅ Extendido",
+          "bg": "rgba(55,210,154,0.18)",
+          "color": "#37d29a"
+        },
+        "key": "sleep_cama"
+      },
+      {
+        "name": "Sueño real",
+        "width": "96.66666666666667%",
+        "fill": "linear-gradient(90deg,#0f8ea8,#37c8d4)",
+        "val": "7h 44m (1h 48m despierto / 16 interrupciones) ",
+        "pct": "≥ 8h sueño real / < 8 interrupciones",
+        "pill": {
+          "text": "🟡 Corto",
+          "bg": "rgba(246,181,67,0.20)",
+          "color": "#f6b543"
+        },
+        "key": "sleep_real"
+      },
+      {
+        "name": "REM",
+        "width": "72.0%",
+        "fill": "linear-gradient(90deg,#9fd400,#c6ff3d)",
+        "val": "1h 48m ",
+        "pct": "1h 45m–2h 30m",
+        "pill": {
+          "text": "✅ Óptimo",
+          "bg": "rgba(55,210,154,0.18)",
+          "color": "#37d29a"
+        },
+        "key": "sleep_rem"
+      },
+      {
+        "name": "Profundo",
+        "width": "78.33333333333333%",
+        "fill": "linear-gradient(90deg,#7cb000,#c6ff3d)",
+        "val": "1h 34m ",
+        "pct": "≥ 1h 30m",
+        "pill": {
+          "text": "✅ Óptimo",
+          "bg": "rgba(55,210,154,0.18)",
+          "color": "#37d29a"
+        },
+        "key": "sleep_profundo"
+      },
+      {
+        "name": "Ligero",
+        "width": "100%",
+        "fill": "linear-gradient(90deg,#4c5a6d,#93a2b5)",
+        "val": "4h 22m ",
+        "pct": "50–60% del sueño total",
+        "pill": {
+          "text": "✅ Óptimo",
+          "bg": "rgba(55,210,154,0.18)",
+          "color": "#37d29a"
+        },
+        "key": "sleep_ligero"
+      },
+      {
+        "name": "Ciclos de sueño",
+        "width": "100%",
+        "fill": "linear-gradient(90deg,#2fbf8c,#37d29a)",
+        "val": "8 ",
+        "pct": "4–6 ciclos completos",
+        "pill": {
+          "text": "🟡 Alto",
+          "bg": "rgba(246,181,67,0.20)",
+          "color": "#f6b543"
+        },
+        "key": "sleep_ciclos"
+      },
+      {
+        "name": "Respiración nocturna",
+        "width": "58.57142857142856%",
+        "fill": "linear-gradient(90deg,#37d29a,#f6b543)",
+        "val": "16.2 rpm ",
+        "pct": "12–15 rpm óptimo / 15–17 aceptable / >17 alta",
+        "pill": {
+          "text": "🟡 Aceptable",
+          "bg": "rgba(246,181,67,0.20)",
+          "color": "#f6b543"
+        },
+        "key": "sleep_resp"
+      },
+      {
+        "name": "Performance",
+        "width": "77.0%",
+        "fill": "linear-gradient(90deg,#ff5a60,#37d29a)",
+        "val": "77% ",
+        "pct": "≥ 85% ideal / 70–84% aceptable",
+        "pill": {
+          "text": "🟡 Aceptable",
+          "bg": "rgba(246,181,67,0.20)",
+          "color": "#f6b543"
+        },
+        "key": "sleep_perf"
+      },
+      {
+        "name": "Consistencia horaria",
+        "width": "56.0%",
+        "fill": "linear-gradient(90deg,#ff5a60,#37d29a)",
+        "val": "56% ",
+        "pct": "≥ 75%",
+        "pill": {
+          "text": "🟡 Baja",
+          "bg": "rgba(246,181,67,0.20)",
+          "color": "#f6b543"
+        },
+        "key": "sleep_consist"
+      },
+      {
+        "kv": true,
+        "name": "Sueño necesario hoy",
+        "val": "9h 31m"
+      },
+      {
+        "name": "Deuda de sueño",
+        "width": "0%",
+        "fill": "linear-gradient(90deg,#2fbf8c,#ff5a60)",
+        "val": "36m ",
+        "pct": "< 30 min ideal",
+        "pill": {
+          "text": "🟡 Moderada",
+          "bg": "rgba(246,181,67,0.20)",
+          "color": "#f6b543"
+        },
+        "key": "sleep_debt"
+      },
+      {
+        "kv": true,
+        "name": "😴 Siesta de hoy",
+        "nameStyle": "font-weight:700;",
+        "rowStyle": "margin-top:2px;"
+      },
+      {
+        "kv": true,
+        "name": "Inicio",
+        "val": "12:00 PM"
+      },
+      {
+        "kv": true,
+        "name": "Fin",
+        "val": "2:07 PM"
+      },
+      {
+        "kv": true,
+        "name": "Duración en cama",
+        "val": "2h07m"
+      },
+      {
+        "kv": true,
+        "name": "Sueño real",
+        "val": "1h29m (0h38m despierto, 5 interrupciones)"
+      },
+      {
+        "kv": true,
+        "name": "Ligero",
+        "val": "0h44m"
+      },
+      {
+        "kv": true,
+        "name": "Profundo",
+        "val": "0h42m"
+      },
+      {
+        "kv": true,
+        "name": "REM",
+        "val": "0h02m"
+      },
+      {
+        "kv": true,
+        "name": "Eficiencia",
+        "val": "85%"
+      },
+      {
+        "kv": true,
+        "name": "Respiración",
+        "val": "17.6 rpm"
+      }
+    ]
+  },
+  "strain_energia": {
+    "titulo": "💪 Strain y energía",
+    "muted": "con referencia",
+    "rows": [
+      {
+        "name": "Strain del día",
+        "width": "20.476190476190474%",
+        "fill": "linear-gradient(90deg,#2fbf8c,#f6b543)",
+        "val": "4.3 — leve ",
+        "pct": "Entrenamiento fuerte: 14–18 / Moderado: 10–13 / Recuperación: < 10",
+        "key": "strain"
+      },
+      {
+        "name": "Calorías totales",
+        "width": "26.6%",
+        "fill": "linear-gradient(90deg,#f6b543,#ff8a4d)",
+        "val": "1330 kcal ",
+        "pct": "Día descanso: 2,000–2,500 kcal / Entrenamiento: 3,000–4,000 kcal",
+        "key": "kcal_total"
+      },
+      {
+        "name": "Calorías de ejercicio",
+        "width": "2%",
+        "fill": "linear-gradient(90deg,#9fd400,#ff5a60)",
+        "val": "43 kcal ",
+        "pct": "—",
+        "key": "kcal_ejercicio"
+      },
+      {
+        "name": "Metabolismo basal aprox.",
+        "width": "51.480000000000004%",
+        "fill": "linear-gradient(90deg,#4c5a6d,#93a2b5)",
+        "val": "1287 kcal ",
+        "pct": "Gael BMR estimado: ~1,900–2,100 kcal (dato Whoop parcial)",
+        "key": "bmr"
+      }
+    ]
+  },
+  "zonas_fc": {
+    "titulo": "Motor real · zonas de FC",
+    "muted": "PE Somnia 26/01/2026",
+    "viewBox": "0 -26 520 112",
+    "width": 520,
+    "height": 112,
+    "rects": [
+      {
+        "x": "0.0",
+        "w": "260.0",
+        "fill": "#37d29a"
+      },
+      {
+        "x": "260.0",
+        "w": "145.1",
+        "fill": "#37c8d4"
+      },
+      {
+        "x": "405.1",
+        "w": "36.3",
+        "fill": "#f6b543"
+      },
+      {
+        "x": "441.4",
+        "w": "48.4",
+        "fill": "#ff8a4d"
+      },
+      {
+        "x": "489.8",
+        "w": "30.2",
+        "fill": "#ff5a60"
+      }
+    ],
+    "marks": [
+      {
+        "x": "260.0",
+        "label": "VT1 143",
+        "labelY": "42",
+        "sub": "AERÓBICO",
+        "subY": "54"
+      },
+      {
+        "x": "405.1",
+        "label": "VT2 167",
+        "labelY": "66",
+        "sub": "ANAERÓBICO",
+        "subY": "78"
+      },
+      {
+        "x": "441.4",
+        "label": "FATmax 173",
+        "labelY": "42",
+        "sub": "GRASA MÁX.*",
+        "subY": "54"
+      },
+      {
+        "x": "489.8",
+        "label": "FCmax 181",
+        "labelY": "66",
+        "sub": "PRUEBA MÁX.",
+        "subY": "78"
+      }
+    ],
+    "max_hoy": {
+      "x": "139.1",
+      "textY": "-10.0",
+      "label": "MÁX HOY 123",
+      "cy": "13.0"
+    },
+    "sesion": {
+      "name": "🚶 Walking · 8:19 PM (15m)",
+      "val": "FC prom 99 / max 123",
+      "pct": "Z1-Z2 · base aeróbica · strain 4.3 · 43 kcal"
+    },
+    "note": "Zona clave a priorizar en calidad: <b>143–167 lpm</b> (\"zona sensible\", entre VT1 y VT2 — recomendación textual del reporte Somnia). *FATmax está desplazada por encima de VT2 (91% VO2, hallazgo notable de alta flexibilidad metabólica) — no es un error, así lo reporta el laboratorio. Whoop no mide dentro del agua con precisión — esta lectura es orientativa por FC promedio/máxima de la sesión, no latido a latido."
+  },
+  "comidas": {
+    "titulo": "🍽️ Comidas del día",
+    "muted": "valorado por el agente de nutrición",
+    "rows": [
+      {
+        "name": "Consumido (2 comidas)",
+        "width": "43%",
+        "fill": "#f6b543",
+        "val": "1405 / 3260 kcal",
+        "pct": "43% de la meta · toca para ver por comida",
+        "key": "comidas_dist",
+        "pctStyle": "color:#f6b543; font-weight:800;"
+      },
+      {
+        "name": "Carbohidratos",
+        "width": "22%",
+        "fill": "linear-gradient(90deg,#f6b543,#ffc76b)",
+        "val": "106 / 490 g",
+        "pct": " · toca para ver por comida",
+        "key": "comidas_dist_cho"
+      },
+      {
+        "name": "Proteína",
+        "width": "53%",
+        "fill": "linear-gradient(90deg,#9fd400,#c6ff3d)",
+        "val": "77 / 145 g",
+        "pct": " · toca para ver por comida",
+        "key": "comidas_dist_proteina"
+      },
+      {
+        "name": "Grasa",
+        "width": "92%",
+        "fill": "linear-gradient(90deg,#4c5a6d,#93a2b5)",
+        "val": "74 / 80 g",
+        "pct": " · toca para ver por comida",
+        "key": "comidas_dist_grasa"
+      },
+      {
+        "kv": true,
+        "name": "Falta por cubrir",
+        "val": "~1855 kcal",
+        "valStyle": "color:#37c8d4;"
+      }
+    ],
+    "registro_titulo": "Registro de comidas",
+    "registro": [
+      {
+        "name": "Almuerzo",
+        "text": "6 huevos estrellados (fritos en aceite de aguacate, como cocina siempre Karla) con un poco de chorizo y frijoles negros; 1 vaso de agua simple",
+        "macros": "685 kcal · 28g CHO · 45g prot · 44g grasa"
+      },
+      {
+        "name": "Comida",
+        "text": "6 taquitos de tortilla de maíz con fish sticks (palitos de pescado empanizados), repollo, limón y aderezo de chipotle",
+        "macros": "720 kcal · 78g CHO · 32g prot · 30g grasa"
+      }
+    ]
+  },
+  "forma_chart": {
+    "titulo": "Forma · Cansancio · Frescura",
+    "muted": "últimos 45 días, calculado del historial de strain",
+    "viewBox": "0 0 560 150",
+    "series": [
+      {
+        "color": "#c6ff3d",
+        "points": "0.0,109.3 12.7,91.6 25.5,72.9 38.2,66.3 50.9,76.0 63.6,100.3 76.4,116.1 89.1,99.0 101.8,84.5 114.5,65.5 127.3,52.7 140.0,40.4 152.7,22.1 165.5,54.2 178.2,45.6 190.9,31.7 203.6,27.0 216.4,15.7 229.1,5.8 241.8,0.0 254.5,30.3 267.3,43.1 280.0,47.3 292.7,50.5 305.5,68.3 318.2,81.6 330.9,98.3 343.6,105.9 356.4,140.0 369.1,126.9 381.8,105.8 394.5,96.8 407.3,87.5 420.0,81.7 432.7,111.4 445.5,90.6 458.2,68.0 470.9,50.5 483.6,48.1 496.4,28.0 509.1,31.1 521.8,63.8 534.5,51.9 547.3,40.5 560.0,73.0"
+      },
+      {
+        "color": "#ff5a60",
+        "points": "0.0,136.0 12.7,96.2 25.5,64.1 38.2,54.1 50.9,66.9 63.6,95.5 76.4,107.7 89.1,76.2 101.8,54.7 114.5,32.2 127.3,21.9 140.0,14.1 152.7,0.0 165.5,52.0 178.2,41.4 190.9,26.4 203.6,25.8 216.4,16.8 229.1,11.2 241.8,11.6 254.5,57.2 267.3,71.0 280.0,71.2 292.7,70.3 305.5,88.4 318.2,97.3 330.9,109.0 343.6,107.4 356.4,140.0 369.1,106.8 381.8,71.0 394.5,58.3 407.3,47.8 420.0,43.8 432.7,85.4 445.5,54.5 458.2,27.7 470.9,12.8 483.6,19.7 496.4,2.4 509.1,17.5 521.8,66.4 534.5,48.7 547.3,35.3 560.0,80.1"
+      }
+    ],
+    "legend": [
+      {
+        "color": "#c6ff3d",
+        "text": "Forma (carga crónica, ~6 sem)"
+      },
+      {
+        "color": "#ff5a60",
+        "text": "Cansancio (carga aguda, ~1 sem)"
+      }
+    ],
+    "note": "Frescura (Forma − Cansancio) va <b>bajando</b> en los últimos 45 días. Con el volumen bajando (taper), la brecha entre las dos líneas se amplía — eso es lo que se busca antes del 17 de agosto. Esta curva es cálculo propio (estilo TSB) a partir del strain diario de Whoop, no viene de TID-MAX."
+  },
+  "taper": {
+    "titulo": "Taper · Grupo K",
+    "muted": "plan oficial Coach Ascanio",
+    "rows": [
+      {
+        "name": "27 jul–2 ago",
+        "width": "100%",
+        "fill": "linear-gradient(90deg,#4c5a6d,#c6ff3d)",
+        "val": "40 km"
+      },
+      {
+        "name": "3–9 ago",
+        "width": "88%",
+        "fill": "linear-gradient(90deg,#4c5a6d,#c6ff3d)",
+        "val": "35 km"
+      },
+      {
+        "name": "Lun 10 – Jue 13 ago",
+        "width": "40%",
+        "fill": "linear-gradient(90deg,#0f8ea8,#37c8d4)",
+        "val": "16.0 km",
+        "pct": "Club QRO — descarga → sharpening, últimos días en casa"
+      },
+      {
+        "name": "Vie 14 ago",
+        "width": "3%",
+        "fill": "linear-gradient(90deg,#2b3646,#63728a)",
+        "val": "Descanso",
+        "pct": "Viaje — descanso total (vuelo a Vancouver)"
+      },
+      {
+        "name": "Sáb 15 ago",
+        "width": "7%",
+        "fill": "linear-gradient(90deg,#0f8ea8,#37c8d4)",
+        "val": "2.75 km",
+        "pct": "Vancouver — reconocimiento pool oficial"
+      },
+      {
+        "name": "Dom 16 ago*",
+        "width": "7%",
+        "fill": "linear-gradient(90deg,#0f8ea8,#37c8d4)",
+        "val": "2.75 km",
+        "pct": "Vancouver — afinado final pool oficial (excepción aprobada)"
+      },
+      {
+        "name": "Lun 17 – Jue 20 ago",
+        "width": "100%",
+        "fill": "linear-gradient(90deg,#f6b543,#ff5a60)",
+        "val": "COMPETENCIA — Junior Pan Pacific"
+      }
+    ],
+    "note": "Taper personalizado de Gael <b>aprobado por Coach Ascanio</b>: entrena normal hasta la mañana del 13 ago, viaja esa tarde a CDMX, vuela madrugada del 14 (único día de descanso total). 15-16 ago: reconocimiento en el pool oficial de Vancouver (acceso confirmado). 17-20 ago: competencia. *El domingo 16 ago normalmente sería día libre, pero es excepción aprobada por el viaje/reconocimiento de sede."
+  },
+  "recomendacion": {
+    "titulo": "Recomendación del día",
+    "texto": "🟡 <b>Día moderado</b> — CHO 6–7 g/kg, evaluar intensidad con Coach Ascanio.\n- HRV buena ✓\n- ⚠️ Consistencia de sueño baja — intentar acostarse y levantarse a la misma hora\n- ⚠️ SpO2 94.0% — ligeramente bajo, observar si persiste"
+  },
+  "footer": "Todos los datos de Whoop (vitales/sueño/strain/calorías, con sus rangos) sin cambios respecto al formato de siempre · Zonas FC: PE Somnia Sport Clinic 26/01/2026 · Forma/Cansancio/Frescura: cálculo propio sobre historial de strain · Generado 2026-08-05 17:22 · Toca cualquier métrica de vitales, sueño o strain/energía para ver su histórico de 7 días",
+  "details": {
+    "recovery": "<div class=\"dtitle\" style=\"color:#ff5a60;\">Recovery — últimos 7 días</div><svg viewBox=\"0 0 460 120\" width=\"100%\" height=\"140\" preserveAspectRatio=\"none\" style=\"overflow:visible;\"><polyline points=\"0.0,24.3 76.7,36.2 153.3,110.0 230.0,107.6 306.7,67.1 383.3,31.4 460.0,10.0\" fill=\"none\" stroke=\"#ff5a60\" stroke-width=\"2.5\"/><circle cx=\"0.0\" cy=\"24.3\" r=\"4\" fill=\"#ff5a60\"/><circle cx=\"76.7\" cy=\"36.2\" r=\"4\" fill=\"#ff5a60\"/><circle cx=\"153.3\" cy=\"110.0\" r=\"4\" fill=\"#ff5a60\"/><circle cx=\"230.0\" cy=\"107.6\" r=\"4\" fill=\"#ff5a60\"/><circle cx=\"306.7\" cy=\"67.1\" r=\"4\" fill=\"#ff5a60\"/><circle cx=\"383.3\" cy=\"31.4\" r=\"4\" fill=\"#ff5a60\"/><circle cx=\"460.0\" cy=\"10.0\" r=\"4\" fill=\"#ff5a60\"/></svg><table><tr><th>Fecha</th><th style=\"text-align:right;\">Valor</th></tr><tr><td>5 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">60%</td></tr><tr><td>4 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">51%</td></tr><tr><td>3 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">36%</td></tr><tr><td>2 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">19%</td></tr><tr><td>1 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">18%</td></tr><tr><td>31 jul</td><td style=\"text-align:right; font-weight:700; color:#fff;\">49%</td></tr><tr><td>30 jul</td><td style=\"text-align:right; font-weight:700; color:#fff;\">54%</td></tr></table>",
+    "hrv": "<div class=\"dtitle\" style=\"color:#c6ff3d;\">HRV — últimos 7 días</div><svg viewBox=\"0 0 460 120\" width=\"100%\" height=\"140\" preserveAspectRatio=\"none\" style=\"overflow:visible;\"><polyline points=\"0.0,10.0 76.7,17.6 153.3,103.6 230.0,110.0 306.7,51.5 383.3,26.8 460.0,11.5\" fill=\"none\" stroke=\"#c6ff3d\" stroke-width=\"2.5\"/><circle cx=\"0.0\" cy=\"10.0\" r=\"4\" fill=\"#c6ff3d\"/><circle cx=\"76.7\" cy=\"17.6\" r=\"4\" fill=\"#c6ff3d\"/><circle cx=\"153.3\" cy=\"103.6\" r=\"4\" fill=\"#c6ff3d\"/><circle cx=\"230.0\" cy=\"110.0\" r=\"4\" fill=\"#c6ff3d\"/><circle cx=\"306.7\" cy=\"51.5\" r=\"4\" fill=\"#c6ff3d\"/><circle cx=\"383.3\" cy=\"26.8\" r=\"4\" fill=\"#c6ff3d\"/><circle cx=\"460.0\" cy=\"11.5\" r=\"4\" fill=\"#c6ff3d\"/></svg><table><tr><th>Fecha</th><th style=\"text-align:right;\">Valor</th></tr><tr><td>5 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">112.8 ms</td></tr><tr><td>4 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">105.1 ms</td></tr><tr><td>3 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">92.6 ms</td></tr><tr><td>2 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">63.0 ms</td></tr><tr><td>1 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">66.3 ms</td></tr><tr><td>31 jul</td><td style=\"text-align:right; font-weight:700; color:#fff;\">109.7 ms</td></tr><tr><td>30 jul</td><td style=\"text-align:right; font-weight:700; color:#fff;\">113.6 ms</td></tr></table>",
+    "rhr": "<div class=\"dtitle\" style=\"color:#37d29a;\">FC reposo — últimos 7 días</div><svg viewBox=\"0 0 460 120\" width=\"100%\" height=\"140\" preserveAspectRatio=\"none\" style=\"overflow:visible;\"><polyline points=\"0.0,97.5 76.7,85.0 153.3,35.0 230.0,10.0 306.7,97.5 383.3,97.5 460.0,110.0\" fill=\"none\" stroke=\"#37d29a\" stroke-width=\"2.5\"/><circle cx=\"0.0\" cy=\"97.5\" r=\"4\" fill=\"#37d29a\"/><circle cx=\"76.7\" cy=\"85.0\" r=\"4\" fill=\"#37d29a\"/><circle cx=\"153.3\" cy=\"35.0\" r=\"4\" fill=\"#37d29a\"/><circle cx=\"230.0\" cy=\"10.0\" r=\"4\" fill=\"#37d29a\"/><circle cx=\"306.7\" cy=\"97.5\" r=\"4\" fill=\"#37d29a\"/><circle cx=\"383.3\" cy=\"97.5\" r=\"4\" fill=\"#37d29a\"/><circle cx=\"460.0\" cy=\"110.0\" r=\"4\" fill=\"#37d29a\"/></svg><table><tr><th>Fecha</th><th style=\"text-align:right;\">Valor</th></tr><tr><td>5 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">51 lpm</td></tr><tr><td>4 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">52 lpm</td></tr><tr><td>3 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">52 lpm</td></tr><tr><td>2 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">59 lpm</td></tr><tr><td>1 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">57 lpm</td></tr><tr><td>31 jul</td><td style=\"text-align:right; font-weight:700; color:#fff;\">53 lpm</td></tr><tr><td>30 jul</td><td style=\"text-align:right; font-weight:700; color:#fff;\">52 lpm</td></tr></table>",
+    "spo2": "<div class=\"dtitle\" style=\"color:#f6b543;\">SpO2 — últimos 7 días</div><svg viewBox=\"0 0 460 120\" width=\"100%\" height=\"140\" preserveAspectRatio=\"none\" style=\"overflow:visible;\"><polyline points=\"0.0,110.0 76.7,63.4 153.3,63.4 230.0,85.2 306.7,10.0 383.3,57.0 460.0,63.4\" fill=\"none\" stroke=\"#f6b543\" stroke-width=\"2.5\"/><circle cx=\"0.0\" cy=\"110.0\" r=\"4\" fill=\"#f6b543\"/><circle cx=\"76.7\" cy=\"63.4\" r=\"4\" fill=\"#f6b543\"/><circle cx=\"153.3\" cy=\"63.4\" r=\"4\" fill=\"#f6b543\"/><circle cx=\"230.0\" cy=\"85.2\" r=\"4\" fill=\"#f6b543\"/><circle cx=\"306.7\" cy=\"10.0\" r=\"4\" fill=\"#f6b543\"/><circle cx=\"383.3\" cy=\"57.0\" r=\"4\" fill=\"#f6b543\"/><circle cx=\"460.0\" cy=\"63.4\" r=\"4\" fill=\"#f6b543\"/></svg><table><tr><th>Fecha</th><th style=\"text-align:right;\">Valor</th></tr><tr><td>5 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">94.0%</td></tr><tr><td>4 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">94.2%</td></tr><tr><td>3 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">95.7%</td></tr><tr><td>2 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">93.3%</td></tr><tr><td>1 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">94.0%</td></tr><tr><td>31 jul</td><td style=\"text-align:right; font-weight:700; color:#fff;\">94.0%</td></tr><tr><td>30 jul</td><td style=\"text-align:right; font-weight:700; color:#fff;\">92.5%</td></tr></table>",
+    "skin_temp": "<div class=\"dtitle\" style=\"color:#c6ff3d;\">Temp. piel — últimos 7 días</div><svg viewBox=\"0 0 460 120\" width=\"100%\" height=\"140\" preserveAspectRatio=\"none\" style=\"overflow:visible;\"><polyline points=\"0.0,102.5 76.7,63.9 153.3,110.0 230.0,10.0 306.7,37.1 383.3,28.6 460.0,74.4\" fill=\"none\" stroke=\"#c6ff3d\" stroke-width=\"2.5\"/><circle cx=\"0.0\" cy=\"102.5\" r=\"4\" fill=\"#c6ff3d\"/><circle cx=\"76.7\" cy=\"63.9\" r=\"4\" fill=\"#c6ff3d\"/><circle cx=\"153.3\" cy=\"110.0\" r=\"4\" fill=\"#c6ff3d\"/><circle cx=\"230.0\" cy=\"10.0\" r=\"4\" fill=\"#c6ff3d\"/><circle cx=\"306.7\" cy=\"37.1\" r=\"4\" fill=\"#c6ff3d\"/><circle cx=\"383.3\" cy=\"28.6\" r=\"4\" fill=\"#c6ff3d\"/><circle cx=\"460.0\" cy=\"74.4\" r=\"4\" fill=\"#c6ff3d\"/></svg><table><tr><th>Fecha</th><th style=\"text-align:right;\">Valor</th></tr><tr><td>5 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">34.0 °C</td></tr><tr><td>4 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">34.2 °C</td></tr><tr><td>3 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">34.2 °C</td></tr><tr><td>2 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">34.3 °C</td></tr><tr><td>1 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">33.8 °C</td></tr><tr><td>31 jul</td><td style=\"text-align:right; font-weight:700; color:#fff;\">34.0 °C</td></tr><tr><td>30 jul</td><td style=\"text-align:right; font-weight:700; color:#fff;\">33.8 °C</td></tr></table>",
+    "sleep_cama": "<div class=\"dtitle\" style=\"color:#37c8d4;\">Tiempo en cama — últimos 7 días</div><svg viewBox=\"0 0 460 120\" width=\"100%\" height=\"140\" preserveAspectRatio=\"none\" style=\"overflow:visible;\"><polyline points=\"0.0,31.8 76.7,33.5 153.3,110.0 230.0,22.3 306.7,53.6 383.3,27.9 460.0,10.0\" fill=\"none\" stroke=\"#37c8d4\" stroke-width=\"2.5\"/><circle cx=\"0.0\" cy=\"31.8\" r=\"4\" fill=\"#37c8d4\"/><circle cx=\"76.7\" cy=\"33.5\" r=\"4\" fill=\"#37c8d4\"/><circle cx=\"153.3\" cy=\"110.0\" r=\"4\" fill=\"#37c8d4\"/><circle cx=\"230.0\" cy=\"22.3\" r=\"4\" fill=\"#37c8d4\"/><circle cx=\"306.7\" cy=\"53.6\" r=\"4\" fill=\"#37c8d4\"/><circle cx=\"383.3\" cy=\"27.9\" r=\"4\" fill=\"#37c8d4\"/><circle cx=\"460.0\" cy=\"10.0\" r=\"4\" fill=\"#37c8d4\"/></svg><table><tr><th>Fecha</th><th style=\"text-align:right;\">Valor</th></tr><tr><td>5 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">9h 33m</td></tr><tr><td>4 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">8h 58m</td></tr><tr><td>3 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">8h 07m</td></tr><tr><td>2 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">9h 09m</td></tr><tr><td>1 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">6h 14m</td></tr><tr><td>31 jul</td><td style=\"text-align:right; font-weight:700; color:#fff;\">8h 47m</td></tr><tr><td>30 jul</td><td style=\"text-align:right; font-weight:700; color:#fff;\">8h 50m</td></tr></table>",
+    "sleep_real": "<div class=\"dtitle\" style=\"color:#37c8d4;\">Sueño real — últimos 7 días</div><svg viewBox=\"0 0 460 120\" width=\"100%\" height=\"140\" preserveAspectRatio=\"none\" style=\"overflow:visible;\"><polyline points=\"0.0,18.8 76.7,34.3 153.3,110.0 230.0,21.7 306.7,37.9 383.3,24.3 460.0,10.0\" fill=\"none\" stroke=\"#37c8d4\" stroke-width=\"2.5\"/><circle cx=\"0.0\" cy=\"18.8\" r=\"4\" fill=\"#37c8d4\"/><circle cx=\"76.7\" cy=\"34.3\" r=\"4\" fill=\"#37c8d4\"/><circle cx=\"153.3\" cy=\"110.0\" r=\"4\" fill=\"#37c8d4\"/><circle cx=\"230.0\" cy=\"21.7\" r=\"4\" fill=\"#37c8d4\"/><circle cx=\"306.7\" cy=\"37.9\" r=\"4\" fill=\"#37c8d4\"/><circle cx=\"383.3\" cy=\"24.3\" r=\"4\" fill=\"#37c8d4\"/><circle cx=\"460.0\" cy=\"10.0\" r=\"4\" fill=\"#37c8d4\"/></svg><table><tr><th>Fecha</th><th style=\"text-align:right;\">Valor</th></tr><tr><td>5 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">7h 45m</td></tr><tr><td>4 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">7h 23m</td></tr><tr><td>3 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">7h 02m</td></tr><tr><td>2 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">7h 27m</td></tr><tr><td>1 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">5h 10m</td></tr><tr><td>31 jul</td><td style=\"text-align:right; font-weight:700; color:#fff;\">7h 07m</td></tr><tr><td>30 jul</td><td style=\"text-align:right; font-weight:700; color:#fff;\">7h 31m</td></tr></table>",
+    "sleep_rem": "<div class=\"dtitle\" style=\"color:#c6ff3d;\">REM — últimos 7 días</div><svg viewBox=\"0 0 460 120\" width=\"100%\" height=\"140\" preserveAspectRatio=\"none\" style=\"overflow:visible;\"><polyline points=\"0.0,67.8 76.7,10.0 153.3,110.0 230.0,26.1 306.7,25.7 383.3,37.3 460.0,79.9\" fill=\"none\" stroke=\"#c6ff3d\" stroke-width=\"2.5\"/><circle cx=\"0.0\" cy=\"67.8\" r=\"4\" fill=\"#c6ff3d\"/><circle cx=\"76.7\" cy=\"10.0\" r=\"4\" fill=\"#c6ff3d\"/><circle cx=\"153.3\" cy=\"110.0\" r=\"4\" fill=\"#c6ff3d\"/><circle cx=\"230.0\" cy=\"26.1\" r=\"4\" fill=\"#c6ff3d\"/><circle cx=\"306.7\" cy=\"25.7\" r=\"4\" fill=\"#c6ff3d\"/><circle cx=\"383.3\" cy=\"37.3\" r=\"4\" fill=\"#c6ff3d\"/><circle cx=\"460.0\" cy=\"79.9\" r=\"4\" fill=\"#c6ff3d\"/></svg><table><tr><th>Fecha</th><th style=\"text-align:right;\">Valor</th></tr><tr><td>5 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">1h 48m</td></tr><tr><td>4 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">2h 36m</td></tr><tr><td>3 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">2h 49m</td></tr><tr><td>2 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">2h 48m</td></tr><tr><td>1 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">1h 15m</td></tr><tr><td>31 jul</td><td style=\"text-align:right; font-weight:700; color:#fff;\">3h 06m</td></tr><tr><td>30 jul</td><td style=\"text-align:right; font-weight:700; color:#fff;\">2h 02m</td></tr></table>",
+    "sleep_profundo": "<div class=\"dtitle\" style=\"color:#9fd400;\">Profundo — últimos 7 días</div><svg viewBox=\"0 0 460 120\" width=\"100%\" height=\"140\" preserveAspectRatio=\"none\" style=\"overflow:visible;\"><polyline points=\"0.0,56.5 76.7,80.7 153.3,110.0 230.0,10.0 306.7,82.7 383.3,85.7 460.0,100.9\" fill=\"none\" stroke=\"#9fd400\" stroke-width=\"2.5\"/><circle cx=\"0.0\" cy=\"56.5\" r=\"4\" fill=\"#9fd400\"/><circle cx=\"76.7\" cy=\"80.7\" r=\"4\" fill=\"#9fd400\"/><circle cx=\"153.3\" cy=\"110.0\" r=\"4\" fill=\"#9fd400\"/><circle cx=\"230.0\" cy=\"10.0\" r=\"4\" fill=\"#9fd400\"/><circle cx=\"306.7\" cy=\"82.7\" r=\"4\" fill=\"#9fd400\"/><circle cx=\"383.3\" cy=\"85.7\" r=\"4\" fill=\"#9fd400\"/><circle cx=\"460.0\" cy=\"100.9\" r=\"4\" fill=\"#9fd400\"/></svg><table><tr><th>Fecha</th><th style=\"text-align:right;\">Valor</th></tr><tr><td>5 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">1h 35m</td></tr><tr><td>4 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">1h 42m</td></tr><tr><td>3 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">1h 44m</td></tr><tr><td>2 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">2h 20m</td></tr><tr><td>1 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">1h 30m</td></tr><tr><td>31 jul</td><td style=\"text-align:right; font-weight:700; color:#fff;\">1h 45m</td></tr><tr><td>30 jul</td><td style=\"text-align:right; font-weight:700; color:#fff;\">1h 57m</td></tr></table>",
+    "sleep_ligero": "<div class=\"dtitle\" style=\"color:#93a2b5;\">Ligero — últimos 7 días</div><svg viewBox=\"0 0 460 120\" width=\"100%\" height=\"140\" preserveAspectRatio=\"none\" style=\"overflow:visible;\"><polyline points=\"0.0,49.1 76.7,110.0 153.3,102.8 230.0,108.0 306.7,99.7 383.3,71.7 460.0,10.0\" fill=\"none\" stroke=\"#93a2b5\" stroke-width=\"2.5\"/><circle cx=\"0.0\" cy=\"49.1\" r=\"4\" fill=\"#93a2b5\"/><circle cx=\"76.7\" cy=\"110.0\" r=\"4\" fill=\"#93a2b5\"/><circle cx=\"153.3\" cy=\"102.8\" r=\"4\" fill=\"#93a2b5\"/><circle cx=\"230.0\" cy=\"108.0\" r=\"4\" fill=\"#93a2b5\"/><circle cx=\"306.7\" cy=\"99.7\" r=\"4\" fill=\"#93a2b5\"/><circle cx=\"383.3\" cy=\"71.7\" r=\"4\" fill=\"#93a2b5\"/><circle cx=\"460.0\" cy=\"10.0\" r=\"4\" fill=\"#93a2b5\"/></svg><table><tr><th>Fecha</th><th style=\"text-align:right;\">Valor</th></tr><tr><td>5 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">4h 22m</td></tr><tr><td>4 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">3h 05m</td></tr><tr><td>3 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">2h 30m</td></tr><tr><td>2 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">2h 19m</td></tr><tr><td>1 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">2h 26m</td></tr><tr><td>31 jul</td><td style=\"text-align:right; font-weight:700; color:#fff;\">2h 17m</td></tr><tr><td>30 jul</td><td style=\"text-align:right; font-weight:700; color:#fff;\">3h 33m</td></tr></table>",
+    "sleep_ciclos": "<div class=\"dtitle\" style=\"color:#37d29a;\">Ciclos de sueño — últimos 7 días</div><svg viewBox=\"0 0 460 120\" width=\"100%\" height=\"140\" preserveAspectRatio=\"none\" style=\"overflow:visible;\"><polyline points=\"0.0,35.0 76.7,35.0 153.3,85.0 230.0,10.0 306.7,110.0 383.3,60.0 460.0,35.0\" fill=\"none\" stroke=\"#37d29a\" stroke-width=\"2.5\"/><circle cx=\"0.0\" cy=\"35.0\" r=\"4\" fill=\"#37d29a\"/><circle cx=\"76.7\" cy=\"35.0\" r=\"4\" fill=\"#37d29a\"/><circle cx=\"153.3\" cy=\"85.0\" r=\"4\" fill=\"#37d29a\"/><circle cx=\"230.0\" cy=\"10.0\" r=\"4\" fill=\"#37d29a\"/><circle cx=\"306.7\" cy=\"110.0\" r=\"4\" fill=\"#37d29a\"/><circle cx=\"383.3\" cy=\"60.0\" r=\"4\" fill=\"#37d29a\"/><circle cx=\"460.0\" cy=\"35.0\" r=\"4\" fill=\"#37d29a\"/></svg><table><tr><th>Fecha</th><th style=\"text-align:right;\">Valor</th></tr><tr><td>5 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">8</td></tr><tr><td>4 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">7</td></tr><tr><td>3 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">5</td></tr><tr><td>2 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">9</td></tr><tr><td>1 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">6</td></tr><tr><td>31 jul</td><td style=\"text-align:right; font-weight:700; color:#fff;\">8</td></tr><tr><td>30 jul</td><td style=\"text-align:right; font-weight:700; color:#fff;\">8</td></tr></table>",
+    "sleep_resp": "<div class=\"dtitle\" style=\"color:#f6b543;\">Respiración nocturna — últimos 7 días</div><svg viewBox=\"0 0 460 120\" width=\"100%\" height=\"140\" preserveAspectRatio=\"none\" style=\"overflow:visible;\"><polyline points=\"0.0,10.0 76.7,22.2 153.3,14.6 230.0,15.7 306.7,78.6 383.3,98.6 460.0,110.0\" fill=\"none\" stroke=\"#f6b543\" stroke-width=\"2.5\"/><circle cx=\"0.0\" cy=\"10.0\" r=\"4\" fill=\"#f6b543\"/><circle cx=\"76.7\" cy=\"22.2\" r=\"4\" fill=\"#f6b543\"/><circle cx=\"153.3\" cy=\"14.6\" r=\"4\" fill=\"#f6b543\"/><circle cx=\"230.0\" cy=\"15.7\" r=\"4\" fill=\"#f6b543\"/><circle cx=\"306.7\" cy=\"78.6\" r=\"4\" fill=\"#f6b543\"/><circle cx=\"383.3\" cy=\"98.6\" r=\"4\" fill=\"#f6b543\"/><circle cx=\"460.0\" cy=\"110.0\" r=\"4\" fill=\"#f6b543\"/></svg><table><tr><th>Fecha</th><th style=\"text-align:right;\">Valor</th></tr><tr><td>5 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">16.2 rpm</td></tr><tr><td>4 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">16.3 rpm</td></tr><tr><td>3 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">16.5 rpm</td></tr><tr><td>2 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">17.2 rpm</td></tr><tr><td>1 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">17.2 rpm</td></tr><tr><td>31 jul</td><td style=\"text-align:right; font-weight:700; color:#fff;\">17.1 rpm</td></tr><tr><td>30 jul</td><td style=\"text-align:right; font-weight:700; color:#fff;\">17.2 rpm</td></tr></table>",
+    "sleep_perf": "<div class=\"dtitle\" style=\"color:#ff5a60;\">Performance — últimos 7 días</div><svg viewBox=\"0 0 460 120\" width=\"100%\" height=\"140\" preserveAspectRatio=\"none\" style=\"overflow:visible;\"><polyline points=\"0.0,10.0 76.7,14.3 153.3,75.2 230.0,110.0 306.7,49.1 383.3,40.4 460.0,27.4\" fill=\"none\" stroke=\"#ff5a60\" stroke-width=\"2.5\"/><circle cx=\"0.0\" cy=\"10.0\" r=\"4\" fill=\"#ff5a60\"/><circle cx=\"76.7\" cy=\"14.3\" r=\"4\" fill=\"#ff5a60\"/><circle cx=\"153.3\" cy=\"75.2\" r=\"4\" fill=\"#ff5a60\"/><circle cx=\"230.0\" cy=\"110.0\" r=\"4\" fill=\"#ff5a60\"/><circle cx=\"306.7\" cy=\"49.1\" r=\"4\" fill=\"#ff5a60\"/><circle cx=\"383.3\" cy=\"40.4\" r=\"4\" fill=\"#ff5a60\"/><circle cx=\"460.0\" cy=\"27.4\" r=\"4\" fill=\"#ff5a60\"/></svg><table><tr><th>Fecha</th><th style=\"text-align:right;\">Valor</th></tr><tr><td>5 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">77%</td></tr><tr><td>4 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">74%</td></tr><tr><td>3 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">72%</td></tr><tr><td>2 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">58%</td></tr><tr><td>1 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">66%</td></tr><tr><td>31 jul</td><td style=\"text-align:right; font-weight:700; color:#fff;\">80%</td></tr><tr><td>30 jul</td><td style=\"text-align:right; font-weight:700; color:#fff;\">81%</td></tr></table>",
+    "sleep_consist": "<div class=\"dtitle\" style=\"color:#ff5a60;\">Consistencia horaria — últimos 7 días</div><svg viewBox=\"0 0 460 120\" width=\"100%\" height=\"140\" preserveAspectRatio=\"none\" style=\"overflow:visible;\"><polyline points=\"0.0,10.0 76.7,13.2 153.3,29.4 230.0,110.0 306.7,74.5 383.3,64.8 460.0,45.5\" fill=\"none\" stroke=\"#ff5a60\" stroke-width=\"2.5\"/><circle cx=\"0.0\" cy=\"10.0\" r=\"4\" fill=\"#ff5a60\"/><circle cx=\"76.7\" cy=\"13.2\" r=\"4\" fill=\"#ff5a60\"/><circle cx=\"153.3\" cy=\"29.4\" r=\"4\" fill=\"#ff5a60\"/><circle cx=\"230.0\" cy=\"110.0\" r=\"4\" fill=\"#ff5a60\"/><circle cx=\"306.7\" cy=\"74.5\" r=\"4\" fill=\"#ff5a60\"/><circle cx=\"383.3\" cy=\"64.8\" r=\"4\" fill=\"#ff5a60\"/><circle cx=\"460.0\" cy=\"45.5\" r=\"4\" fill=\"#ff5a60\"/></svg><table><tr><th>Fecha</th><th style=\"text-align:right;\">Valor</th></tr><tr><td>5 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">56%</td></tr><tr><td>4 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">44%</td></tr><tr><td>3 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">38%</td></tr><tr><td>2 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">16%</td></tr><tr><td>1 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">66%</td></tr><tr><td>31 jul</td><td style=\"text-align:right; font-weight:700; color:#fff;\">76%</td></tr><tr><td>30 jul</td><td style=\"text-align:right; font-weight:700; color:#fff;\">78%</td></tr></table>",
+    "sleep_debt": "<div class=\"dtitle\" style=\"color:#ff5a60;\">Deuda de sueño — últimos 7 días</div><svg viewBox=\"0 0 460 120\" width=\"100%\" height=\"140\" preserveAspectRatio=\"none\" style=\"overflow:visible;\"><polyline points=\"0.0,51.5 76.7,59.1 153.3,67.8 230.0,10.0 306.7,71.1 383.3,76.0 460.0,110.0\" fill=\"none\" stroke=\"#ff5a60\" stroke-width=\"2.5\"/><circle cx=\"0.0\" cy=\"51.5\" r=\"4\" fill=\"#ff5a60\"/><circle cx=\"76.7\" cy=\"59.1\" r=\"4\" fill=\"#ff5a60\"/><circle cx=\"153.3\" cy=\"67.8\" r=\"4\" fill=\"#ff5a60\"/><circle cx=\"230.0\" cy=\"10.0\" r=\"4\" fill=\"#ff5a60\"/><circle cx=\"306.7\" cy=\"71.1\" r=\"4\" fill=\"#ff5a60\"/><circle cx=\"383.3\" cy=\"76.0\" r=\"4\" fill=\"#ff5a60\"/><circle cx=\"460.0\" cy=\"110.0\" r=\"4\" fill=\"#ff5a60\"/></svg><table><tr><th>Fecha</th><th style=\"text-align:right;\">Valor</th></tr><tr><td>5 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">0h 37m</td></tr><tr><td>4 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">1h 06m</td></tr><tr><td>3 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">1h 10m</td></tr><tr><td>2 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">2h 03m</td></tr><tr><td>1 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">1h 13m</td></tr><tr><td>31 jul</td><td style=\"text-align:right; font-weight:700; color:#fff;\">1h 21m</td></tr><tr><td>30 jul</td><td style=\"text-align:right; font-weight:700; color:#fff;\">1h 27m</td></tr></table>",
+    "strain": "<div class=\"dtitle\" style=\"color:#2fbf8c;\">Strain del día — últimos 7 días</div><svg viewBox=\"0 0 460 120\" width=\"100%\" height=\"140\" preserveAspectRatio=\"none\" style=\"overflow:visible;\"><polyline points=\"0.0,44.0 76.7,10.0 153.3,52.4 230.0,109.5 306.7,27.0 383.3,26.8 460.0,110.0\" fill=\"none\" stroke=\"#2fbf8c\" stroke-width=\"2.5\"/><circle cx=\"0.0\" cy=\"44.0\" r=\"4\" fill=\"#2fbf8c\"/><circle cx=\"76.7\" cy=\"10.0\" r=\"4\" fill=\"#2fbf8c\"/><circle cx=\"153.3\" cy=\"52.4\" r=\"4\" fill=\"#2fbf8c\"/><circle cx=\"230.0\" cy=\"109.5\" r=\"4\" fill=\"#2fbf8c\"/><circle cx=\"306.7\" cy=\"27.0\" r=\"4\" fill=\"#2fbf8c\"/><circle cx=\"383.3\" cy=\"26.8\" r=\"4\" fill=\"#2fbf8c\"/><circle cx=\"460.0\" cy=\"110.0\" r=\"4\" fill=\"#2fbf8c\"/></svg><table><tr><th>Fecha</th><th style=\"text-align:right;\">Valor</th></tr><tr><td>5 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">4.3</td></tr><tr><td>4 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">17.4</td></tr><tr><td>3 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">17.4</td></tr><tr><td>2 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">4.4</td></tr><tr><td>1 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">13.4</td></tr><tr><td>31 jul</td><td style=\"text-align:right; font-weight:700; color:#fff;\">20.1</td></tr><tr><td>30 jul</td><td style=\"text-align:right; font-weight:700; color:#fff;\">14.7</td></tr></table>",
+    "kcal_total": "<div class=\"dtitle\" style=\"color:#f6b543;\">Calorías totales — últimos 7 días</div><svg viewBox=\"0 0 460 120\" width=\"100%\" height=\"140\" preserveAspectRatio=\"none\" style=\"overflow:visible;\"><polyline points=\"0.0,60.8 76.7,10.0 153.3,52.8 230.0,92.4 306.7,53.9 383.3,41.7 460.0,110.0\" fill=\"none\" stroke=\"#f6b543\" stroke-width=\"2.5\"/><circle cx=\"0.0\" cy=\"60.8\" r=\"4\" fill=\"#f6b543\"/><circle cx=\"76.7\" cy=\"10.0\" r=\"4\" fill=\"#f6b543\"/><circle cx=\"153.3\" cy=\"52.8\" r=\"4\" fill=\"#f6b543\"/><circle cx=\"230.0\" cy=\"92.4\" r=\"4\" fill=\"#f6b543\"/><circle cx=\"306.7\" cy=\"53.9\" r=\"4\" fill=\"#f6b543\"/><circle cx=\"383.3\" cy=\"41.7\" r=\"4\" fill=\"#f6b543\"/><circle cx=\"460.0\" cy=\"110.0\" r=\"4\" fill=\"#f6b543\"/></svg><table><tr><th>Fecha</th><th style=\"text-align:right;\">Valor</th></tr><tr><td>5 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">1330 kcal</td></tr><tr><td>4 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">3223 kcal</td></tr><tr><td>3 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">2884 kcal</td></tr><tr><td>2 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">1816 kcal</td></tr><tr><td>1 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">2913 kcal</td></tr><tr><td>31 jul</td><td style=\"text-align:right; font-weight:700; color:#fff;\">4100 kcal</td></tr><tr><td>30 jul</td><td style=\"text-align:right; font-weight:700; color:#fff;\">2693 kcal</td></tr></table>",
+    "kcal_ejercicio": "<div class=\"dtitle\" style=\"color:#9fd400;\">Calorías de ejercicio — últimos 7 días</div><svg viewBox=\"0 0 460 120\" width=\"100%\" height=\"140\" preserveAspectRatio=\"none\" style=\"overflow:visible;\"><polyline points=\"0.0,70.2 76.7,10.0 153.3,78.9 230.0,110.0 306.7,58.1 383.3,47.6 460.0,108.2\" fill=\"none\" stroke=\"#9fd400\" stroke-width=\"2.5\"/><circle cx=\"0.0\" cy=\"70.2\" r=\"4\" fill=\"#9fd400\"/><circle cx=\"76.7\" cy=\"10.0\" r=\"4\" fill=\"#9fd400\"/><circle cx=\"153.3\" cy=\"78.9\" r=\"4\" fill=\"#9fd400\"/><circle cx=\"230.0\" cy=\"110.0\" r=\"4\" fill=\"#9fd400\"/><circle cx=\"306.7\" cy=\"58.1\" r=\"4\" fill=\"#9fd400\"/><circle cx=\"383.3\" cy=\"47.6\" r=\"4\" fill=\"#9fd400\"/><circle cx=\"460.0\" cy=\"108.2\" r=\"4\" fill=\"#9fd400\"/></svg><table><tr><th>Fecha</th><th style=\"text-align:right;\">Valor</th></tr><tr><td>5 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">43 kcal</td></tr><tr><td>4 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">1458 kcal</td></tr><tr><td>3 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">1213 kcal</td></tr><tr><td>2 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">0 kcal</td></tr><tr><td>1 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">726 kcal</td></tr><tr><td>31 jul</td><td style=\"text-align:right; font-weight:700; color:#fff;\">2337 kcal</td></tr><tr><td>30 jul</td><td style=\"text-align:right; font-weight:700; color:#fff;\">929 kcal</td></tr></table>",
+    "bmr": "<div class=\"dtitle\" style=\"color:#93a2b5;\">Metabolismo basal aprox. — últimos 7 días</div><svg viewBox=\"0 0 460 120\" width=\"100%\" height=\"140\" preserveAspectRatio=\"none\" style=\"overflow:visible;\"><polyline points=\"0.0,57.0 76.7,57.1 153.3,10.0 230.0,51.2 306.7,67.3 383.3,56.8 460.0,110.0\" fill=\"none\" stroke=\"#93a2b5\" stroke-width=\"2.5\"/><circle cx=\"0.0\" cy=\"57.0\" r=\"4\" fill=\"#93a2b5\"/><circle cx=\"76.7\" cy=\"57.1\" r=\"4\" fill=\"#93a2b5\"/><circle cx=\"153.3\" cy=\"10.0\" r=\"4\" fill=\"#93a2b5\"/><circle cx=\"230.0\" cy=\"51.2\" r=\"4\" fill=\"#93a2b5\"/><circle cx=\"306.7\" cy=\"67.3\" r=\"4\" fill=\"#93a2b5\"/><circle cx=\"383.3\" cy=\"56.8\" r=\"4\" fill=\"#93a2b5\"/><circle cx=\"460.0\" cy=\"110.0\" r=\"4\" fill=\"#93a2b5\"/></svg><table><tr><th>Fecha</th><th style=\"text-align:right;\">Valor</th></tr><tr><td>5 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">1287 kcal</td></tr><tr><td>4 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">1766 kcal</td></tr><tr><td>3 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">1671 kcal</td></tr><tr><td>2 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">1816 kcal</td></tr><tr><td>1 ago</td><td style=\"text-align:right; font-weight:700; color:#fff;\">2187 kcal</td></tr><tr><td>31 jul</td><td style=\"text-align:right; font-weight:700; color:#fff;\">1763 kcal</td></tr><tr><td>30 jul</td><td style=\"text-align:right; font-weight:700; color:#fff;\">1764 kcal</td></tr></table>",
+    "comidas_dist": "<div class=\"dtitle\" style=\"color:#c6ff3d;\">Distribución del día — Consumido</div>\n        <div class=\"bar-row\">\n          <div class=\"bar-name\">Almuerzo</div>\n          <div class=\"bar-track\"><div class=\"bar-fill\" style=\"width:49%; background:#37d29a;\"></div></div>\n          <div class=\"bar-val-wrap\"><span class=\"bar-val\">685 kcal</span><span class=\"bar-pct\">49% del día</span></div>\n        </div>\n        <div class=\"note-box\" style=\"margin-top:-6px; margin-bottom:6px; font-size:11px;\">\n          <b>28g</b> CHO · <b>45g</b> proteína · <b>44g</b> grasa<br>6 huevos estrellados (fritos en aceite de agu\n        </div>\n        <div class=\"bar-row\">\n          <div class=\"bar-name\">Comida</div>\n          <div class=\"bar-track\"><div class=\"bar-fill\" style=\"width:51%; background:#37c8d4;\"></div></div>\n          <div class=\"bar-val-wrap\"><span class=\"bar-val\">720 kcal</span><span class=\"bar-pct\">51% del día</span></div>\n        </div>\n        <div class=\"note-box\" style=\"margin-top:-6px; margin-bottom:6px; font-size:11px;\">\n          <b>78g</b> CHO · <b>32g</b> proteína · <b>30g</b> grasa<br>6 taquitos de tortilla de maíz con fish stick\n        </div>",
+    "comidas_dist_cho": "<div class=\"dtitle\" style=\"color:#c6ff3d;\">Distribución del día — Carbohidratos</div>\n        <div class=\"bar-row\">\n          <div class=\"bar-name\">Almuerzo</div>\n          <div class=\"bar-track\"><div class=\"bar-fill\" style=\"width:26%; background:#37d29a;\"></div></div>\n          <div class=\"bar-val-wrap\"><span class=\"bar-val\">28 g</span><span class=\"bar-pct\">26% del día</span></div>\n        </div>\n        <div class=\"note-box\" style=\"margin-top:-6px; margin-bottom:6px; font-size:11px;\">\n          <b>28g</b> CHO · <b>45g</b> proteína · <b>44g</b> grasa<br>6 huevos estrellados (fritos en aceite de agu\n        </div>\n        <div class=\"bar-row\">\n          <div class=\"bar-name\">Comida</div>\n          <div class=\"bar-track\"><div class=\"bar-fill\" style=\"width:74%; background:#37c8d4;\"></div></div>\n          <div class=\"bar-val-wrap\"><span class=\"bar-val\">78 g</span><span class=\"bar-pct\">74% del día</span></div>\n        </div>\n        <div class=\"note-box\" style=\"margin-top:-6px; margin-bottom:6px; font-size:11px;\">\n          <b>78g</b> CHO · <b>32g</b> proteína · <b>30g</b> grasa<br>6 taquitos de tortilla de maíz con fish stick\n        </div>",
+    "comidas_dist_proteina": "<div class=\"dtitle\" style=\"color:#c6ff3d;\">Distribución del día — Proteína</div>\n        <div class=\"bar-row\">\n          <div class=\"bar-name\">Almuerzo</div>\n          <div class=\"bar-track\"><div class=\"bar-fill\" style=\"width:58%; background:#37d29a;\"></div></div>\n          <div class=\"bar-val-wrap\"><span class=\"bar-val\">45 g</span><span class=\"bar-pct\">58% del día</span></div>\n        </div>\n        <div class=\"note-box\" style=\"margin-top:-6px; margin-bottom:6px; font-size:11px;\">\n          <b>28g</b> CHO · <b>45g</b> proteína · <b>44g</b> grasa<br>6 huevos estrellados (fritos en aceite de agu\n        </div>\n        <div class=\"bar-row\">\n          <div class=\"bar-name\">Comida</div>\n          <div class=\"bar-track\"><div class=\"bar-fill\" style=\"width:42%; background:#37c8d4;\"></div></div>\n          <div class=\"bar-val-wrap\"><span class=\"bar-val\">32 g</span><span class=\"bar-pct\">42% del día</span></div>\n        </div>\n        <div class=\"note-box\" style=\"margin-top:-6px; margin-bottom:6px; font-size:11px;\">\n          <b>78g</b> CHO · <b>32g</b> proteína · <b>30g</b> grasa<br>6 taquitos de tortilla de maíz con fish stick\n        </div>",
+    "comidas_dist_grasa": "<div class=\"dtitle\" style=\"color:#c6ff3d;\">Distribución del día — Grasa</div>\n        <div class=\"bar-row\">\n          <div class=\"bar-name\">Almuerzo</div>\n          <div class=\"bar-track\"><div class=\"bar-fill\" style=\"width:59%; background:#37d29a;\"></div></div>\n          <div class=\"bar-val-wrap\"><span class=\"bar-val\">44 g</span><span class=\"bar-pct\">59% del día</span></div>\n        </div>\n        <div class=\"note-box\" style=\"margin-top:-6px; margin-bottom:6px; font-size:11px;\">\n          <b>28g</b> CHO · <b>45g</b> proteína · <b>44g</b> grasa<br>6 huevos estrellados (fritos en aceite de agu\n        </div>\n        <div class=\"bar-row\">\n          <div class=\"bar-name\">Comida</div>\n          <div class=\"bar-track\"><div class=\"bar-fill\" style=\"width:41%; background:#37c8d4;\"></div></div>\n          <div class=\"bar-val-wrap\"><span class=\"bar-val\">30 g</span><span class=\"bar-pct\">41% del día</span></div>\n        </div>\n        <div class=\"note-box\" style=\"margin-top:-6px; margin-bottom:6px; font-size:11px;\">\n          <b>78g</b> CHO · <b>32g</b> proteína · <b>30g</b> grasa<br>6 taquitos de tortilla de maíz con fish stick\n        </div>"
+  }
+}
