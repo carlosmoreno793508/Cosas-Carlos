@@ -1,7 +1,7 @@
 // TID-MAX PWA — service worker mínimo (instalable + cache básico del shell).
 // v0: cachea el shell para que abra offline; los datos (data.json) van siempre a la red.
-const CACHE = "tidmax-v0-2";
-const SHELL = ["./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png"];
+const CACHE = "tidmax-v0-3";
+const SHELL = ["./index.html", "./health.js", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()));

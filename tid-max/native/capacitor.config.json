@@ -1,0 +1,11 @@
+{
+  "appId": "mx.com.tidmexico.tidmax",
+  "appName": "TID-MAX",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  },
+  "ios": {
+    "contentInset": "always"
+  }
+}
