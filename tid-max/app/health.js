@@ -158,10 +158,22 @@
         supported: this.supported(),
         hub: hubName(),
         enabled: !!s.enabled,
+        demo: !!s.demo,
         lastSync: s.lastSync || null,
         lastSyncText: fmtDate(s.lastSync),
         counts: s.counts || null,
       };
+    },
+
+    // ¿Podemos ofrecer una demo? (solo en web, donde no hay tanque real)
+    canDemo() { return !this.supported(); },
+
+    // Demo: simula el flujo completo para PROBAR la pantalla en el telefono
+    // (via web/PWA) sin la app nativa. Siempre etiquetado como simulacion;
+    // NO envia datos falsos al motor.
+    async enableDemo() {
+      setState({ enabled: true, demo: true });
+      return await this.sync();
     },
 
     // Conectar: comprueba disponibilidad, pide permisos y hace la 1a lectura.
@@ -186,6 +198,15 @@
 
     // Sincronizar ahora: lee la ventana reciente y guarda la marca de tiempo.
     async sync(days = WINDOW_DAYS) {
+      // Modo demo (web): conteos plausibles y timestamp real, sin tocar el motor.
+      if (getState().demo) {
+        const counts = { "heart-rate": 4032, "workouts": 6, "hrv": 14,
+                         "resting-heart-rate": 14, "sleep": 14, "vo2max": 2 };
+        const total = Object.values(counts).reduce((a, b) => a + b, 0);
+        const now = new Date().toISOString();
+        setState({ lastSync: now, counts });
+        return { ok: true, demo: true, lastSync: now, total, counts };
+      }
       if (!this.supported()) {
         return { ok: false, reason: "solo-app", msg: "Disponible en la app instalada." };
       }
@@ -203,7 +224,7 @@
 
     // Desconectar (solo apaga el toggle local; los permisos se quitan en Ajustes del SO).
     async disconnect() {
-      setState({ enabled: false });
+      setState({ enabled: false, demo: false, counts: null });
       return { ok: true };
     },
   };

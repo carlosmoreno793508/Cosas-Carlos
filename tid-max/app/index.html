@@ -273,32 +273,40 @@ function healthCard(){
   const hub = st.hub || "Salud del teléfono";
   // Toggle según estado
   let toggle;
-  if(!st.supported){
-    toggle = `<span class="pill" style="background:var(--panel2);color:var(--faint)">Solo app</span>`;
+  if(st.demo){
+    toggle = `<button class="pill" style="background:var(--warn);color:var(--on-accent);border:none;cursor:pointer;font-family:inherit" onclick="tidHealthDisconnect()">Demo ✕</button>`;
+  } else if(!st.supported){
+    toggle = `<button class="pill go" style="border:none;cursor:pointer;font-family:inherit" onclick="tidHealthDemo()">Ver demo</button>`;
   } else if(st.enabled){
     toggle = `<span class="pill ok">Conectado</span>`;
   } else {
     toggle = `<button class="pill go" style="border:none;cursor:pointer;font-family:inherit" onclick="tidHealthConnect()">Conectar</button>`;
   }
-  // Fila de sincronización (solo si está conectado)
+  // Fila de sincronización (si está conectado o en demo)
   const total = st.counts ? Object.values(st.counts).reduce((a,b)=>a+b,0) : null;
   const syncRow = st.enabled ? `
     <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:12px;padding-top:12px;border-top:1px solid var(--line)">
       <div class="hint">Última sincronización: <b class="num">${st.lastSyncText||"—"}</b>${total!=null?` · ${total} reg.`:""}</div>
       <button class="pill go" style="border:none;cursor:pointer;font-family:inherit" onclick="tidHealthSync()">Sincronizar ahora</button>
     </div>` : "";
-  const sub = st.supported
-    ? `${esc(hub)} · FC, entrenos, HRV y sueño`
-    : `Disponible en la app instalada (iPhone / Android)`;
+  const sub = st.demo
+    ? `Simulación · así se ve conectado`
+    : (st.supported ? `${esc(hub)} · FC, entrenos, HRV y sueño`
+                    : `Disponible en la app instalada (iPhone / Android)`);
+  const hint = st.demo
+    ? `Esto es una <b>demo</b> con datos simulados para que veas la pantalla. En la app instalada, aquí entran tus datos reales de ${esc(st.hub||"Apple Salud / Health Connect")}.`
+    : `Tomamos los datos que tu reloj ya deja en el teléfono (Polar, Garmin, Whoop, Samsung, Apple Watch…) — un solo enchufe para casi cualquier marca.`;
+  const iconBg = st.demo ? "color-mix(in srgb,var(--warn) 18%,transparent)" : "color-mix(in srgb,var(--crit) 16%,transparent)";
+  const iconFg = st.demo ? "var(--warn)" : "var(--crit)";
   return `
   <div class="card">
     <div style="display:flex;align-items:center;gap:12px">
-      <div style="width:38px;height:38px;border-radius:10px;flex:none;display:grid;place-items:center;font-size:17px;background:color-mix(in srgb,var(--crit) 16%,transparent);color:var(--crit)">♥</div>
+      <div style="width:38px;height:38px;border-radius:10px;flex:none;display:grid;place-items:center;font-size:17px;background:${iconBg};color:${iconFg}">♥</div>
       <div style="flex:1"><div class="nm">Salud del teléfono</div><div class="sub">${sub}</div></div>
       ${toggle}
     </div>
     ${syncRow}
-    <div class="hint" style="margin-top:12px">Tomamos los datos que tu reloj ya deja en el teléfono (Polar, Garmin, Whoop, Samsung, Apple Watch…) — un solo enchufe para casi cualquier marca.</div>
+    <div class="hint" style="margin-top:12px">${hint}</div>
   </div>`;
 }
 async function tidHealthConnect(){
@@ -311,7 +319,19 @@ async function tidHealthSync(){
   if(!window.TIDHealth){ toast("Puente de salud no cargó"); return; }
   toast("Sincronizando…");
   const r = await window.TIDHealth.sync();
-  toast(r.ok ? `Listo · ${r.total} registros de 2 semanas ✓` : r.msg);
+  toast(r.ok ? `Listo · ${r.total} registros de 2 semanas${r.demo?" (demo)":""} ✓` : r.msg);
+  if(activeTab==="datos" && !screen) paint();
+}
+async function tidHealthDemo(){
+  if(!window.TIDHealth){ toast("Puente de salud no cargó"); return; }
+  const r = await window.TIDHealth.enableDemo();
+  toast(r.ok ? `Demo activada · ${r.total} registros simulados` : (r.msg||"No se pudo"));
+  if(activeTab==="datos" && !screen) paint();
+}
+async function tidHealthDisconnect(){
+  if(!window.TIDHealth){ return; }
+  await window.TIDHealth.disconnect();
+  toast("Desconectado");
   if(activeTab==="datos" && !screen) paint();
 }
 
