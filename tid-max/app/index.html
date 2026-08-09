@@ -296,6 +296,12 @@ function vPerfil(d){
     </div>
     <div class="hint" style="margin-top:8px">“Auto” sigue el modo de tu teléfono.</div>
   </div>
+  <div class="card">
+    <div class="k" style="margin-bottom:9px">Sincronización con el motor</div>
+    <input class="inp" id="f_secret" type="password" placeholder="Clave de sincronización" value="${esc(localStorage.getItem('tid_secret')||'')}">
+    <button class="btn sec" onclick="guardarSecret()" style="margin-top:8px">Guardar clave</button>
+    <div class="hint" style="margin-top:8px">Con esta clave (la misma de la familia) tus eventos se envían al motor TID-MAX. Sin ella, se guardan solo en el teléfono.</div>
+  </div>
   <div class="card"><div class="k">Datos</div><div class="hint" style="margin-top:4px">${d.dias_datos||0} días · fuente: WHOOP + Polar + motor TID-MAX</div></div>
   <div class="sub-note">TID-MAX · orientación de rendimiento y bienestar, no diagnóstico médico.</div>`;
 }
@@ -391,7 +397,25 @@ function guardarEvento(id){
   if(id==null) evs.push(obj); else evs[id]=obj;
   saveEventos(evs);
   toast(id==null?"Evento guardado 🏆":"Evento actualizado");
+  sincronizarEvento(obj);
   openEventos();
+}
+async function sincronizarEvento(obj){
+  const secret = localStorage.getItem("tid_secret") || "";
+  if(!secret) return;  // sin clave: se queda solo en el teléfono
+  try{
+    const r = await fetch("/api/evento", {
+      method:"POST", headers:{"content-type":"application/json"},
+      body: JSON.stringify({secret, evento: evToJSON(obj)}),
+    });
+    if(r.ok) toast("Evento sincronizado al motor ✓");
+    else { const e = await r.json().catch(()=>({})); toast("No sincronizó: "+(e.error||("HTTP "+r.status))); }
+  }catch(e){ /* sin conexión: queda guardado local, se puede reintentar */ }
+}
+function guardarSecret(){
+  const el=document.getElementById("f_secret"); if(!el) return;
+  localStorage.setItem("tid_secret", el.value.trim());
+  toast(el.value.trim()?"Clave guardada ✓":"Clave borrada");
 }
 function borrarEvento(i){ const evs=loadEventos(); evs.splice(i,1); saveEventos(evs); toast("Evento borrado"); paint(); }
 function copiarJSON(i){
