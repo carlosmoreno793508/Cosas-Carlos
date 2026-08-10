@@ -58,8 +58,9 @@ Lo produce `software/tid_data.py` en `datos/procesado/`.
 ### `workouts[]` — una fila por sesión
 `fecha, inicio, fin, dur_min, deporte, strain, fc_prom, fc_max, kcal, km_whoop, fuente[, atleta]`
 > `km_whoop` no es confiable en natación (ver OPP-01). El volumen real de nado va en `daily.swim_km`.
-> `fuente` identifica el origen real: `whoop` (directo) o la marca vía **agregador** (`polar`, `garmin`,
-> `oura`, `fitbit`…). Con agregador, `km_whoop` guarda la distancia que reporta el dispositivo (sea la
+> `fuente` identifica el origen real: `whoop` (directo), `polar` (Polar Flow directo vía `polar_sync.py`),
+> o la marca vía **agregador** (`polar`, `garmin`, `oura`, `fitbit`…). Con agregador/Polar directo,
+> `km_whoop` guarda la distancia que reporta el dispositivo (sea la
 > marca que sea) y `strain` viaja `null` (solo WHOOP lo calcula). `atleta` aparece cuando el workout
 > viene por agregador (multi-atleta); se deduplica por `(fecha, inicio, deporte)`.
 

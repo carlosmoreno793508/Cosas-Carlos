@@ -305,6 +305,63 @@ def build_workouts_agregador():
     return [r for r in rows if r.get("fecha")]
 
 
+def _iso_dur_seg(s):
+    """Convierte una duracion ISO8601 (ej. 'PT1H5M45.5S') a segundos. None si no aplica."""
+    if not isinstance(s, str) or not s.startswith("PT"):
+        return None
+    import re
+    m = re.fullmatch(r"PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+(?:\.\d+)?)S)?", s)
+    if not m:
+        return None
+    h, mm, ss = m.group(1), m.group(2), m.group(3)
+    total = (int(h or 0) * 3600) + (int(mm or 0) * 60) + float(ss or 0)
+    return total or None
+
+
+def build_workouts_polar_flow():
+    """Workouts de Polar Flow DIRECTO (los que baja polar_sync.py a
+    datos/polar_flow/<cuenta>/). Entran al MISMO esquema canonico de workouts[].
+
+    El summary de Polar AccessLink trae start-time (hora local), duration (ISO8601),
+    distance (m), calories, heart-rate {average, maximum} y sport/detailed-sport-info.
+    'atleta' = el nombre de la cuenta (carpeta). strain viaja null (solo lo da WHOOP)."""
+    rows = []
+    patron = os.path.join(DATA_DIR, "polar_flow", "*", "polar_*.json")
+    for path in sorted(glob.glob(patron)):
+        # El glob tambien pesca los sub-recursos (_zonas_fc/_muestras): saltarlos.
+        base = os.path.basename(path)
+        if base.endswith("_zonas_fc.json") or base.endswith("_muestras.json"):
+            continue
+        cuenta = os.path.basename(os.path.dirname(path))
+        with open(path, encoding="utf-8") as f:
+            try:
+                s = json.load(f)
+            except (ValueError, OSError):
+                continue
+        if not isinstance(s, dict) or "start-time" not in s:
+            continue
+        start = _parse_dt(s.get("start-time"))  # ya viene en hora local
+        dur_seg = _iso_dur_seg(s.get("duration"))
+        end = (start + timedelta(seconds=dur_seg)) if (start and dur_seg) else None
+        fc = s.get("heart-rate") or {}
+        dist = s.get("distance")
+        rows.append({
+            "fecha": start.date().isoformat() if start else None,
+            "inicio": start.strftime("%H:%M") if start else None,
+            "fin": end.strftime("%H:%M") if end else None,
+            "dur_min": round(dur_seg / 60) if dur_seg else None,
+            "deporte": s.get("detailed-sport-info") or s.get("sport"),
+            "strain": None,
+            "fc_prom": fc.get("average"),
+            "fc_max": fc.get("maximum"),
+            "kcal": s.get("calories"),
+            "km_whoop": _round(dist / 1000, 2) if isinstance(dist, (int, float)) else None,
+            "fuente": "polar",
+            "atleta": cuenta,
+        })
+    return [r for r in rows if r.get("fecha")]
+
+
 def merge_workouts(*listas):
     """Une varias listas de workouts y quita duplicados por (fecha, inicio, deporte),
     para no contar doble si la misma sesion llega por WHOOP directo y por agregador."""
@@ -661,7 +718,8 @@ def write_csv(path, rows, cols):
 
 def main():
     daily = build_daily()
-    workouts = merge_workouts(build_workouts(), build_workouts_agregador())
+    workouts = merge_workouts(build_workouts(), build_workouts_agregador(),
+                              build_workouts_polar_flow())
     polar = build_polar()
     athlete = build_athlete()
     evento = build_evento()
