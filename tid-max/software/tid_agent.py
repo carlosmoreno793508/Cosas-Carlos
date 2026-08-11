@@ -40,8 +40,11 @@ import math
 from datetime import datetime, timezone
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-DEFAULT_DATASET = os.path.join(SCRIPT_DIR, "datos", "procesado", "dataset.json")
-COACH_OUT = os.path.join(SCRIPT_DIR, "datos", "procesado", "coach-hoy.json")
+# TID_PROC_DIR permite al pipeline multiusuario apuntar la lectura/escritura del
+# coach a la carpeta 'procesado' de un atleta. Sin la env = como siempre.
+_PROC_DIR = os.environ.get("TID_PROC_DIR") or os.path.join(SCRIPT_DIR, "datos", "procesado")
+DEFAULT_DATASET = os.path.join(_PROC_DIR, "dataset.json")
+COACH_OUT = os.path.join(_PROC_DIR, "coach-hoy.json")
 
 MODEL = "claude-opus-5"  # el más capaz de uso general; claude-haiku-4-5 para abaratar a escala
 
