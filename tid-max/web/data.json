@@ -1,7 +1,7 @@
 {
   "fecha": "2026-08-11",
   "fecha_texto": "martes 11 ago 2026",
-  "atleta": "Carlos Gael Moreno Sarmiento",
+  "atleta": "Gael Moreno",
   "dias_datos": 25,
   "deporte": "Natación",
   "fase": "competencia / pico",
@@ -10,7 +10,7 @@
   "dias_al_viaje": 3,
   "semaforo": "rojo",
   "semaforo_titulo": "Recovery muy baja (31%)",
-  "semaforo_desc": "Rojo, Gael. Recovery 31%, HRV 92.7 ms (-19% vs tu base de 114.1) y tercer día seguido de recovery baja: tu cuerpo está pidiendo freno justo a 6 días del Junior Pan Pacific y 3 del viaje a Vancouver. Estamos en Taper (viaje): hoy la meta no es entrenar más, es llegar fresco. La buena noticia es que la tendencia de HRV a 7 días va +10% y el ACWR está sano (0.87), así que no hay sobrecarga acumulada: esto huele más a deuda de sueño (189 min) y estrés previaje que a exceso de carga.",
+  "semaforo_desc": "Rojo, Gael. Recovery en 31%, HRV en 92.7 ms (-19% vs tu base de 114.1) y tres días seguidos de recuperación baja, justo a 6 días del Junior Pan Pacific y 3 del viaje a Vancouver. Hoy no se gana nada forzando: el objetivo del taper es llegar fresco, así que tocamos la sesión de calidad y priorizamos descargar.",
   "recovery": 31.0,
   "hrv": {
     "ms": 92.7,
@@ -23,9 +23,9 @@
     "base": 51.1
   },
   "sueno": {
-    "total_h": 6.83,
+    "total_h": 7.9,
     "noche_h": 6.83,
-    "siesta_h": 1.49,
+    "siesta_h": 1.07,
     "n_siestas": 1,
     "perf": 78.0,
     "efic": 90.1,
@@ -33,10 +33,10 @@
     "rem_pct": 31.9,
     "consist": 68.0,
     "despertares": 19,
-    "deuda_min": 189.2,
+    "deuda_min": 125.1,
     "acostado": "23:40",
     "despertar": "07:30",
-    "prom_7d": 7.7,
+    "prom_7d": 7.8,
     "perf_prom_7d": 74
   },
   "forma": {
@@ -49,29 +49,19 @@
   },
   "alertas": [
     {
-      "nivel": "med",
+      "nivel": "good",
       "tag": "Preventivo",
-      "texto": "Tercer día consecutivo de recovery baja con HRV -19% vs base: si mañana no repunta, recorta también la sesión aeróbica de 5.1 km del miércoles."
+      "texto": "HRV -19% vs base y 3 días consecutivos de recovery baja a 6 días del evento: si mañana no rebota, replantea con tu entrenador la sesión aeróbica del miércoles."
     },
     {
       "nivel": "med",
       "tag": "Preventivo",
-      "texto": "Deuda de sueño de 189 min y consistencia de 68% justo antes de un vuelo: es el mayor riesgo de llegar apagado a Vancouver; fija horarios de sueño desde hoy."
+      "texto": "Consistencia de sueño 68% y 19 despertares: el viaje en 3 días lo puede empeorar, empieza a ordenar horarios desde hoy."
     },
     {
       "nivel": "med",
       "tag": "Preventivo",
-      "texto": "Semana de viaje: extrema higiene (manos, no compartir botella, sueño) para no llegar tocado a la competencia."
-    },
-    {
-      "nivel": "med",
-      "tag": "Preventivo",
-      "texto": "Si aparecen síntomas reales (fiebre, dolor de garganta, malestar general, mareo o falta de aire), no lo gestiones con el plan: consúltalo con un profesional de la salud antes de entrenar."
-    },
-    {
-      "nivel": "med",
-      "tag": "Preventivo",
-      "texto": "No hay registro de líquidos ni de sesiones reales hoy: sin esos datos mi lectura de hidratación y carga real es incompleta."
+      "texto": "SpO2 promedio 94.25% junto con recovery muy baja: si aparecen síntomas (garganta, fiebre, mucha fatiga inusual), consúltalo con un profesional de la salud antes de viajar."
     }
   ],
   "nutricion": {
