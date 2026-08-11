@@ -1,53 +1,59 @@
 {
-  "fecha": "2026-08-10",
-  "fecha_texto": "lunes 10 ago 2026",
+  "fecha": "2026-08-11",
+  "fecha_texto": "martes 11 ago 2026",
   "atleta": "Carlos Gael Moreno Sarmiento",
   "dias_datos": 25,
   "deporte": "Natación",
   "fase": "competencia / pico",
   "evento": "Junior Pan Pacific Championships 2026",
-  "dias_al_evento": 7,
-  "dias_al_viaje": 4,
-  "semaforo": "amarillo",
-  "semaforo_titulo": "Recovery media (47%)",
-  "semaforo_desc": "Precaución: modera hoy. Entrena, pero con cabeza.",
-  "recovery": 47.0,
+  "dias_al_evento": 6,
+  "dias_al_viaje": 3,
+  "semaforo": "rojo",
+  "semaforo_titulo": "Recovery muy baja (31%)",
+  "semaforo_desc": "Bandera roja: hoy toca recuperar, no forzar.",
+  "recovery": 31.0,
   "hrv": {
-    "ms": 102.2,
-    "vs_base_pct": -12,
-    "base": 116.7
+    "ms": 92.7,
+    "vs_base_pct": -19,
+    "base": 114.1
   },
   "rhr": {
-    "lpm": 50.0,
-    "vs_base_pct": -2,
-    "base": 50.9
+    "lpm": 52.0,
+    "vs_base_pct": 2,
+    "base": 51.1
   },
   "sueno": {
-    "total_h": 6.82,
-    "noche_h": 6.82,
+    "total_h": 6.83,
+    "noche_h": 6.83,
     "siesta_h": 1.49,
     "n_siestas": 1,
-    "perf": 74.0,
-    "efic": 87.3,
-    "deep_pct": 26.2,
-    "rem_pct": 25.3,
-    "consist": 52.0,
-    "despertares": 17,
-    "deuda_min": 137.7,
-    "acostado": "23:29",
+    "perf": 78.0,
+    "efic": 90.1,
+    "deep_pct": 28.7,
+    "rem_pct": 31.9,
+    "consist": 68.0,
+    "despertares": 19,
+    "deuda_min": 189.2,
+    "acostado": "23:40",
     "despertar": "07:30",
-    "prom_7d": 8.0,
-    "perf_prom_7d": 73
+    "prom_7d": 7.7,
+    "perf_prom_7d": 74
   },
   "forma": {
-    "ctl": 11.5,
-    "atl": 13.0,
-    "tsb": -1.8,
-    "tsb_previa": -2.5,
+    "ctl": 10.7,
+    "atl": 11.6,
+    "tsb": -2.5,
+    "tsb_previa": -3.5,
     "estado_pico": "afinando",
     "lectura": "La forma va SUBIENDO hacia el pico (aún algo cargado). Vas por buen camino; sigue soltando fatiga estos días — no metas volumen alto."
   },
-  "alertas": [],
+  "alertas": [
+    {
+      "nivel": "med",
+      "tag": "Preventivo",
+      "texto": "HRV cayó bastante vs tu base — señal temprana de fatiga. Vigila."
+    }
+  ],
   "nutricion": {
     "consumido": 0,
     "meta": 4110,
