@@ -28,7 +28,7 @@ const CFG = {
 
 const JCFG = {
   apiKey: process.env.JUNCTION_API_KEY || "",
-  apiBase: (process.env.JUNCTION_API_BASE || "https://api.sandbox.us.tryvital.io").replace(/\/+$/, ""),
+  apiBase: (process.env.JUNCTION_API_BASE || "https://api.sandbox.us.junction.com").replace(/\/+$/, ""),
   linkBase: (process.env.JUNCTION_LINK_BASE || "https://link.tryvital.io").replace(/\/+$/, ""),
   env: process.env.JUNCTION_ENV || "sandbox",
   region: process.env.JUNCTION_REGION || "us",

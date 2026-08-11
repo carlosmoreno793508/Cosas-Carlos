@@ -20,7 +20,7 @@ Uso:
 
 Requisitos previos en .env (de tu dashboard de Junction, https://app.junction.com):
     JUNCTION_API_KEY=...            (trátalo como contraseña)
-    JUNCTION_API_BASE=https://api.sandbox.us.tryvital.io   (COPIA el de tu dashboard)
+    JUNCTION_API_BASE=https://api.sandbox.us.junction.com   (COPIA el de tu dashboard)
     JUNCTION_ENV=sandbox           (sandbox | production)
     JUNCTION_REGION=us             (us | eu)
 
@@ -51,7 +51,7 @@ ENV_PATH = os.path.join(SCRIPT_DIR, ".env")
 STORE_PATH = os.path.join(SCRIPT_DIR, "datos", "agregador_users.json")
 
 # Base por defecto (sandbox US). Se sobreescribe con JUNCTION_API_BASE del .env.
-DEFAULT_API_BASE = "https://api.sandbox.us.tryvital.io"
+DEFAULT_API_BASE = "https://api.sandbox.us.junction.com"
 DEFAULT_LINK_BASE = "https://link.tryvital.io"
 
 

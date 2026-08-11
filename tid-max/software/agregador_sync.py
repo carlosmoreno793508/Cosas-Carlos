@@ -48,7 +48,7 @@ STORE_PATH = os.path.join(SCRIPT_DIR, "datos", "agregador_users.json")
 STORE_PATH_REPO = os.path.join(SCRIPT_DIR, "agregador_users.json")
 OUT_BASE = os.path.join(SCRIPT_DIR, "datos", "agregador")
 
-DEFAULT_API_BASE = "https://api.sandbox.us.tryvital.io"
+DEFAULT_API_BASE = "https://api.sandbox.us.junction.com"
 
 # Resumenes que intentamos bajar de cada atleta (los que no existan se saltan).
 # (etiqueta, ruta_api)  ->  /v2/summary/<ruta>/<user_id>?start_date&end_date
