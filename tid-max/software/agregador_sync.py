@@ -42,7 +42,10 @@ except ImportError:
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ENV_PATH = os.path.join(SCRIPT_DIR, ".env")
+# Mapeo local (agregador_connect.py, gitignored) + versionado (lo escribe la app
+# via api/connect.js, para el sync en la nube). Se leen ambos; el local gana.
 STORE_PATH = os.path.join(SCRIPT_DIR, "datos", "agregador_users.json")
+STORE_PATH_REPO = os.path.join(SCRIPT_DIR, "agregador_users.json")
 OUT_BASE = os.path.join(SCRIPT_DIR, "datos", "agregador")
 
 DEFAULT_API_BASE = "https://api.sandbox.us.tryvital.io"
@@ -57,10 +60,15 @@ SUMMARIES = [
 
 
 def load_store():
-    if os.path.exists(STORE_PATH):
-        with open(STORE_PATH, encoding="utf-8") as f:
-            return json.load(f)
-    return {}
+    store = {}
+    for path in (STORE_PATH_REPO, STORE_PATH):  # el local (2o) pisa al versionado
+        if os.path.exists(path):
+            try:
+                with open(path, encoding="utf-8") as f:
+                    store.update(json.load(f))
+            except (ValueError, OSError):
+                pass
+    return store
 
 
 def _cfg():

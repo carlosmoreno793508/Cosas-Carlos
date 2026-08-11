@@ -211,10 +211,12 @@ function evToJSON(e){
 
 /* ---------------- Fuentes (Datos) ---------------- */
 const SOURCES = [
-  {nm:"WHOOP", sub:"Recovery, HRV, sueño", bg:"#00b0b9", ic:"◉", on:true},
-  {nm:"Polar", sub:"FC continua · R-R (H10)", bg:"#d51e2a", ic:"●", on:true},
-  {nm:"Strava", sub:"Carreras, ritmo, zonas", bg:"#fc4c02", ic:"▲"},
-  {nm:"Garmin", sub:"Multideporte + natación", bg:"#007cc3", ic:"◆"},
+  {nm:"WHOOP", sub:"Recovery, HRV, sueño", bg:"#00b0b9", ic:"◉", prov:"whoop", on:true},
+  {nm:"Polar", sub:"FC continua · R-R (H10)", bg:"#d51e2a", ic:"●", prov:"polar", on:true},
+  {nm:"Strava", sub:"Carreras, ritmo, zonas", bg:"#fc4c02", ic:"▲", prov:"strava"},
+  {nm:"Garmin", sub:"Multideporte + natación", bg:"#007cc3", ic:"◆", prov:"garmin"},
+  {nm:"Oura", sub:"Sueño · recuperación", bg:"#1a1a2e", ic:"○", prov:"oura"},
+  {nm:"Fitbit", sub:"Actividad · sueño", bg:"#00b0b9", ic:"◇", prov:"fitbit"},
 ];
 
 /* ---------------- Vistas de pestañas ---------------- */
@@ -336,6 +338,26 @@ async function tidHealthDisconnect(){
   if(activeTab==="datos" && !screen) paint();
 }
 
+/* Conectar una cuenta en la nube vía el agregador (Junction) — sin la Mac.
+   Pide un link "Conéctate" al backend (api/connect) y lo abre para que el
+   atleta haga login en SU marca. Reusa la clave de sincronización de la familia. */
+async function tidConnectSource(prov, nm){
+  const secret = (localStorage.getItem('tid_secret')||"").trim();
+  if(!secret){ toast("Primero guarda tu clave de sincronización en Perfil."); return; }
+  const atleta = (DATA && DATA.atleta) ? DATA.atleta : "atleta";
+  toast(`Preparando conexión con ${nm}…`);
+  try{
+    const r = await fetch("/api/connect", {
+      method:"POST", headers:{"content-type":"application/json"},
+      body: JSON.stringify({ secret, atleta, provider: prov }),
+    });
+    const j = await r.json();
+    if(!r.ok || !j.widget_url){ toast(j.error || `No se pudo conectar ${nm}.`); return; }
+    // Abre el widget de Junction (el atleta elige y hace login en su marca).
+    window.open(j.widget_url, "_blank") || (location.href = j.widget_url);
+  }catch(e){ toast("Error de red al conectar."); }
+}
+
 function vDatos(){
   return `
   <div class="top"><div><div class="h">Conecta tus datos</div><div class="s">Salud del teléfono ahora · cuentas en la nube cuando quieras</div></div></div>
@@ -345,7 +367,7 @@ function vDatos(){
     <div class="src">
       <div class="ic" style="background:${s.bg};color:${s.fg||"#04121a"}">${s.ic}</div>
       <div style="flex:1"><div class="nm">${esc(s.nm)}</div><div class="sub">${esc(s.sub)}</div></div>
-      ${s.on?`<span class="pill ok">Conectado</span>`:`<button class="pill go" style="border:none;cursor:pointer;font-family:inherit" onclick="toast('Aquí abre el login de ${esc(s.nm)} (OAuth).')">Conectar</button>`}
+      ${s.on?`<span class="pill ok">Conectado</span>`:`<button class="pill go" style="border:none;cursor:pointer;font-family:inherit" onclick="tidConnectSource('${esc(s.prov)}','${esc(s.nm)}')">Conectar</button>`}
     </div>`).join("")}
   <div class="sub-note">Nunca guardamos tu contraseña — la tecleas en el sitio de cada plataforma.</div>`;
 }
