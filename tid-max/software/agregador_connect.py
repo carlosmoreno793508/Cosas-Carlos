@@ -118,7 +118,7 @@ def crear_o_reusar_usuario(api_key, api_base, atleta, store):
 
 
 def crear_link_token(api_key, api_base, user_id, provider=None):
-    """Genera el link token para abrir el widget 'Conectate'."""
+    """Genera el link token. Devuelve el JSON: {link_token, link_web_url?}."""
     body = {"user_id": user_id}
     if provider:
         body["provider"] = provider  # p.ej. 'polar', 'whoop', 'garmin', 'oura'
@@ -126,7 +126,7 @@ def crear_link_token(api_key, api_base, user_id, provider=None):
                       headers=_hdr(api_key), json=body, timeout=30)
     if r.status_code not in (200, 201):
         sys.exit(f"\nNo pude crear el link token ({r.status_code}):\n{r.text}")
-    return r.json().get("link_token")
+    return r.json()
 
 
 def main():
@@ -143,10 +143,12 @@ def main():
 
     print(f"\n=== Junction — Conectar al atleta '{atleta}' ({env}/{region}) ===")
     user_id = crear_o_reusar_usuario(api_key, api_base, atleta, store)
-    link_token = crear_link_token(api_key, api_base, user_id, args.provider)
+    link = crear_link_token(api_key, api_base, user_id, args.provider)
 
-    # URL del widget hospedado por Junction (el atleta elige su marca y hace login ahi).
-    widget_url = f"{link_base}/?token={link_token}&env={env}&region={region}"
+    # Junction ya devuelve la URL lista del widget (link_web_url). La usamos tal cual;
+    # solo si no viene, la armamos como respaldo.
+    widget_url = link.get("link_web_url") or (
+        f"{link_base}/?token={link.get('link_token')}&env={env}&region={region}")
 
     store[atleta] = {"user_id": user_id, "client_user_id": f"tidmax-{atleta}", "env": env}
     save_store(store)

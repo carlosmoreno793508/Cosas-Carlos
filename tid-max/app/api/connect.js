@@ -12,7 +12,7 @@
 // Variables de entorno (Vercel → Project → Settings → Environment Variables):
 //   JUNCTION_API_KEY   — de tu dashboard https://app.junction.com > API Keys.
 //   JUNCTION_API_BASE  — la base EXACTA de tu dashboard (default sandbox US).
-//   JUNCTION_LINK_BASE — base del widget (default https://link.tryvital.io).
+//   JUNCTION_LINK_BASE — base del widget (default https://link.junction.com).
 //   JUNCTION_ENV       — sandbox | production (default sandbox).
 //   JUNCTION_REGION    — us | eu (default us).
 //   GH_TOKEN           — PAT fino con "Contents: Read and write" (para el mapeo).
@@ -53,9 +53,11 @@ export default async function handler(req, res) {
       ? String(provider).toLowerCase() : null;
 
     const userId = await junctionUser(slug);
-    const linkToken = await junctionLinkToken(userId, prov);
-    const widgetUrl = `${JCFG.linkBase}/?token=${encodeURIComponent(linkToken)}`
-      + `&env=${JCFG.env}&region=${JCFG.region}`;
+    const link = await junctionLinkToken(userId, prov);
+    // Junction devuelve la URL lista del widget (link_web_url). La usamos tal cual
+    // (a prueba de rebrands/dominios). Solo si no viene, la armamos como respaldo.
+    const widgetUrl = link.link_web_url
+      || `${JCFG.linkBase}/?token=${encodeURIComponent(link.link_token)}&env=${JCFG.env}&region=${JCFG.region}`;
 
     // Guardar el mapeo es "mejor esfuerzo": si falta GH_TOKEN o falla el commit,
     // NO bloqueamos la conexion (el widget se abre igual). El mapeo se necesita
@@ -107,7 +109,7 @@ async function junctionLinkToken(userId, provider) {
     method: "POST", headers: jhdr(), body: JSON.stringify(body),
   });
   if (!r.ok) throw new Error("Junction /v2/link/token " + r.status + ": " + (await r.text()).slice(0, 160));
-  return (await r.json()).link_token;
+  return await r.json();  // { link_token, link_web_url? }
 }
 
 // Commit del mapeo atleta -> user_id a agregador_users.json (crea o actualiza, merge).
