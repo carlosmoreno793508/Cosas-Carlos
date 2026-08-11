@@ -40,8 +40,10 @@ export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "Usa POST." });
   try {
     const { secret, atleta, provider } = req.body || {};
-    if (!process.env.UPLOAD_SECRET || secret !== process.env.UPLOAD_SECRET)
-      return res.status(401).json({ error: "Clave de sincronización incorrecta." });
+    if (!process.env.UPLOAD_SECRET)
+      return res.status(401).json({ error: "Servidor sin UPLOAD_SECRET (variable no cargada en este deploy)." });
+    if (secret !== process.env.UPLOAD_SECRET)
+      return res.status(401).json({ error: "Clave de sincronización incorrecta (no coincide con UPLOAD_SECRET)." });
     if (!JCFG.apiKey)
       return res.status(500).json({ error: "Falta JUNCTION_API_KEY en las variables de entorno de Vercel." });
 
