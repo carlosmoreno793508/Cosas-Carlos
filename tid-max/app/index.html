@@ -385,7 +385,7 @@ function vPerfil(d){
         <button class="btn sec" onclick="tidLogout()" style="margin-top:8px">Cerrar sesión</button></div>`;
     }
     return `<div class="card"><div class="k" style="margin-bottom:9px">Entrar (tu tablero privado)</div>
-      <input class="inp" id="lg_user" placeholder="Usuario" autocapitalize="off" autocomplete="username" style="margin-bottom:8px">
+      <input class="inp" id="lg_user" placeholder="Correo" type="email" inputmode="email" autocapitalize="off" autocorrect="off" autocomplete="username" style="margin-bottom:8px">
       <input class="inp" id="lg_pin" type="password" placeholder="PIN" inputmode="numeric" autocomplete="current-password"
         onkeydown="if(event.key==='Enter')tidLoginFromUI()">
       <button class="btn sec" onclick="tidLoginFromUI()" style="margin-top:8px">Entrar</button>

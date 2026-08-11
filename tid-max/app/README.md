@@ -58,10 +58,12 @@ Si aún no hay sesión, la app cae al **dashboard público** actual (no rompe na
 **Config (una vez, en Vercel → tid-max-app → Settings → Environment Variables):**
 ```
 AUTH_SECRET = (una cadena larga y aleatoria, mín. 16 caracteres — sirve para firmar)
-TID_LOGINS  = [{"user":"gael","pin":"____","slug":"gael-moreno","nombre":"Gael Moreno"},
-               {"user":"carlos","pin":"____","slug":"carlos-moreno","nombre":"Carlos Moreno"}]
+TID_LOGINS  = [{"user":"gaelmoreno@icloud.com","pin":"____","slug":"gael-moreno","nombre":"Gael Moreno"},
+               {"user":"carlosmoreno99@gmail.com","pin":"____","slug":"carlos-moreno","nombre":"Carlos Moreno"}]
 GH_TOKEN    = (ya existe, el de api/connect/evento — con "Contents: Read")
 ```
+El `user` puede ser correo o un alias — es lo que se teclea en **Perfil → Entrar** (no distingue
+mayúsculas). El `slug` es la carpeta del reporte y NO cambia.
 > **Privacidad real:** hoy el repo es **público**, así que los `reportes/*.json` se pueden
 > leer en GitHub. Para privacidad de verdad, poner el repo en **privado** (`api/me` ya lee
 > con `GH_TOKEN`, así que sigue funcionando). Los PINs viven **solo** en `TID_LOGINS` (Vercel),
