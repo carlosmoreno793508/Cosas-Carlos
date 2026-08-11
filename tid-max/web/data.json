@@ -1,21 +1,21 @@
 {
-  "fecha": "2026-08-05",
-  "fecha_texto": "miércoles 5 ago 2026",
+  "fecha": "2026-08-11",
+  "fecha_texto": "martes 11 ago 2026",
   "atleta": "Carlos Gael Moreno Sarmiento",
   "dias_datos": 25,
   "deporte": "Natación",
-  "fase": "taper (afinamiento)",
+  "fase": "competencia / pico",
   "evento": "Junior Pan Pacific Championships 2026",
-  "dias_al_evento": 12,
-  "dias_al_viaje": 9,
-  "semaforo": "amarillo",
-  "semaforo_titulo": "Recovery media (51%)",
-  "semaforo_desc": "Precaución: modera hoy. Entrena, pero con cabeza.",
-  "recovery": 51.0,
+  "dias_al_evento": 6,
+  "dias_al_viaje": 3,
+  "semaforo": "rojo",
+  "semaforo_titulo": "Recovery muy baja (31%)",
+  "semaforo_desc": "Bandera roja: hoy toca recuperar, no forzar.",
+  "recovery": 31.0,
   "hrv": {
-    "ms": 105.1,
-    "vs_base_pct": -8,
-    "base": 114.2
+    "ms": 92.7,
+    "vs_base_pct": -19,
+    "base": 114.1
   },
   "rhr": {
     "lpm": 52.0,
@@ -23,47 +23,44 @@
     "base": 51.1
   },
   "sueno": {
-    "total_h": 8.93,
-    "noche_h": 7.38,
-    "siesta_h": 1.55,
+    "total_h": 6.83,
+    "noche_h": 6.83,
+    "siesta_h": 1.49,
     "n_siestas": 1,
-    "perf": 74.0,
-    "efic": 86.0,
-    "deep_pct": 23.1,
-    "rem_pct": 35.1,
-    "consist": 44.0,
-    "despertares": 12,
-    "deuda_min": 65.3,
-    "acostado": "23:34",
-    "despertar": "08:31",
-    "prom_7d": 7.9,
-    "perf_prom_7d": 73
+    "perf": 78.0,
+    "efic": 90.1,
+    "deep_pct": 28.7,
+    "rem_pct": 31.9,
+    "consist": 68.0,
+    "despertares": 19,
+    "deuda_min": 189.2,
+    "acostado": "23:40",
+    "despertar": "07:30",
+    "prom_7d": 7.7,
+    "perf_prom_7d": 74
   },
   "forma": {
-    "ctl": 15.2,
-    "atl": 14.8,
-    "tsb": 0.8,
-    "tsb_previa": 1.6,
-    "estado_pico": "en_pico",
-    "lectura": "Vas llegando FRESCO: la forma (TSB) ya está en positivo. El taper está haciendo su trabajo; mantén algo de intensidad corta para no 'apagarte', pero baja volumen."
+    "ctl": 10.8,
+    "atl": 12.2,
+    "tsb": -2.5,
+    "tsb_previa": -3.5,
+    "estado_pico": "afinando",
+    "lectura": "La forma va SUBIENDO hacia el pico (aún algo cargado). Vas por buen camino; sigue soltando fatiga estos días — no metas volumen alto."
   },
-  "alertas": [],
+  "alertas": [
+    {
+      "nivel": "med",
+      "tag": "Preventivo",
+      "texto": "HRV cayó bastante vs tu base — señal temprana de fatiga. Vigila."
+    }
+  ],
   "nutricion": {
-    "consumido": 1100,
-    "meta": 4320,
-    "c": 103,
-    "p": 58,
-    "g": 42,
-    "comidas": [
-      {
-        "hora": "14:30",
-        "nombre": "6 tacos de pescado (tira empanizada, comal, repollo, crema chipotle)",
-        "kcal": 1100,
-        "prot_g": 58,
-        "carb_g": 103,
-        "grasa_g": 42
-      }
-    ],
+    "consumido": 0,
+    "meta": 4110,
+    "c": 604,
+    "p": 146,
+    "g": 123,
+    "comidas": [],
     "pendiente": null
   },
   "nota_datos": "Fuente: WHOOP + motor determinista + agentes Claude. El sueño suma las siestas. “Forma” es un proxy sobre el strain de WHOOP: lee la tendencia, no el número absoluto."
