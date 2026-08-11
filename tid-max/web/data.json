@@ -10,7 +10,7 @@
   "dias_al_viaje": 3,
   "semaforo": "rojo",
   "semaforo_titulo": "Recovery muy baja (31%)",
-  "semaforo_desc": "Bandera roja: hoy toca recuperar, no forzar.",
+  "semaforo_desc": "Rojo, Gael. Recovery 31%, HRV 92.7 ms (-19% vs tu base de 114.1) y tercer día seguido de recovery baja: tu cuerpo está pidiendo freno justo a 6 días del Junior Pan Pacific y 3 del viaje a Vancouver. Estamos en Taper (viaje): hoy la meta no es entrenar más, es llegar fresco. La buena noticia es que la tendencia de HRV a 7 días va +10% y el ACWR está sano (0.87), así que no hay sobrecarga acumulada: esto huele más a deuda de sueño (189 min) y estrés previaje que a exceso de carga.",
   "recovery": 31.0,
   "hrv": {
     "ms": 92.7,
@@ -51,7 +51,27 @@
     {
       "nivel": "med",
       "tag": "Preventivo",
-      "texto": "HRV cayó bastante vs tu base — señal temprana de fatiga. Vigila."
+      "texto": "Tercer día consecutivo de recovery baja con HRV -19% vs base: si mañana no repunta, recorta también la sesión aeróbica de 5.1 km del miércoles."
+    },
+    {
+      "nivel": "med",
+      "tag": "Preventivo",
+      "texto": "Deuda de sueño de 189 min y consistencia de 68% justo antes de un vuelo: es el mayor riesgo de llegar apagado a Vancouver; fija horarios de sueño desde hoy."
+    },
+    {
+      "nivel": "med",
+      "tag": "Preventivo",
+      "texto": "Semana de viaje: extrema higiene (manos, no compartir botella, sueño) para no llegar tocado a la competencia."
+    },
+    {
+      "nivel": "med",
+      "tag": "Preventivo",
+      "texto": "Si aparecen síntomas reales (fiebre, dolor de garganta, malestar general, mareo o falta de aire), no lo gestiones con el plan: consúltalo con un profesional de la salud antes de entrenar."
+    },
+    {
+      "nivel": "med",
+      "tag": "Preventivo",
+      "texto": "No hay registro de líquidos ni de sesiones reales hoy: sin esos datos mi lectura de hidratación y carga real es incompleta."
     }
   ],
   "nutricion": {

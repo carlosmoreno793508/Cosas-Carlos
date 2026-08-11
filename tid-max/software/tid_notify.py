@@ -51,6 +51,11 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 COACH_JSON = os.path.join(SCRIPT_DIR, "datos", "procesado", "coach-hoy.json")
 SEM_EMOJI = {"verde": "🟢", "amarillo": "🟡", "rojo": "🔴"}
 
+# Link FIJO del tablero en la nube (Vercel). Reemplaza el túnel viejo de Cloudflare,
+# que moría cuando la Mac se apagaba (Karla veía "Safari no encuentra el servidor").
+# Se puede sobreescribir con TID_DASHBOARD_URL, pero el default ya es el bueno.
+DASHBOARD_URL = "https://cosas-carlos.vercel.app"
+
 
 def cargar():
     if not os.path.exists(COACH_JSON):
@@ -106,8 +111,8 @@ def construir_mensaje(p):
     alertas = p.get("alertas") or []
     for a in alertas[:2]:
         L.append(f"⚠️ {a}")
-    # El túnel vivo (publico/url.txt) manda; TID_DASHBOARD_URL solo si no hay túnel.
-    url = _url_tunel() or os.environ.get("TID_DASHBOARD_URL")
+    # Link fijo de Vercel (24/7, no depende de la Mac). TID_DASHBOARD_URL lo sobreescribe.
+    url = os.environ.get("TID_DASHBOARD_URL") or DASHBOARD_URL
     if url:
         L.append("")
         L.append(f"📊 Tablero del día: {url}")
@@ -125,7 +130,7 @@ def construir_mensaje_corto(p):
     fecha = (p.get("generado_utc") or "")[:10]
     L = [f"🏊 TID-MAX · {p.get('atleta', 'Gael')} — {fecha}",
          f"{emoji} {sem.upper()} · Recovery {f.get('recovery_pct', '—')}%"]
-    url = _url_tunel() or os.environ.get("TID_DASHBOARD_URL")
+    url = os.environ.get("TID_DASHBOARD_URL") or DASHBOARD_URL
     if url:
         L.append(f"📊 Ver el día completo: {url}")
     return "\n".join(L)

@@ -30,8 +30,26 @@ python3 -m http.server 8080
 Nuevo proyecto en Vercel con **Root Directory = `tid-max/app`**, framework **Other** (estático).
 Cada push que toque `app/` redepliega. Luego en el teléfono: **Compartir → Agregar a inicio**.
 
+## Conectar fuentes desde la app (sin la Mac) — `api/connect.js`
+Los botones "Conectar" del tab **Datos** ya no son stub: piden a `api/connect` (serverless)
+un link **"Conéctate"** del agregador **Junction** y lo abren, para que el atleta haga login
+en SU marca (WHOOP/Strava/Garmin/Oura/Fitbit) desde el teléfono. El mapeo atleta→usuario se
+commitea al repo (`software/agregador_users.json`) para que el sync en la nube sepa a quién bajarle.
+
+**Config (una sola vez, desde el dashboard de Vercel → Settings → Environment Variables — no la Mac):**
+```
+JUNCTION_API_KEY    = (de app.junction.com > API Keys)
+JUNCTION_API_BASE   = https://api.sandbox.us.tryvital.io   (la base EXACTA de tu dashboard)
+JUNCTION_ENV        = sandbox        # luego: production
+JUNCTION_REGION     = us
+GH_TOKEN            = (ya existe, el de api/evento)
+UPLOAD_SECRET       = (ya existe, la clave de sincronización de la familia)
+```
+La clave de sincronización se teclea en la app (Perfil → "Clave de sincronización").
+
 ## Siguiente (v0 → completar)
 1. **Login real** (Apple/Google/correo) — hoy entra directo.
-2. **OAuth de fuentes** — cablear los botones "Conectar" (Strava/Polar directos o vía agregador Vital/Terra).
+2. ~~**OAuth de fuentes**~~ ✅ cableado vía agregador Junction (`api/connect.js`). Falta el **paso 2**:
+   sync automático en la nube (extender el cron de GitHub Actions con `agregador_sync.py`).
 3. **Datos por usuario** — que cada quien vea su propio `data.json` (multiusuario).
 4. **v1:** grabar workout con **GPS + FC en vivo** (BLE al H10) → tu "info en vivo de carreras".

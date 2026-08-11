@@ -249,6 +249,133 @@ def build_workouts():
     return sorted([r for r in rows if r["fecha"]], key=lambda x: x["fecha"], reverse=True)
 
 
+def _agg_first(d, *keys):
+    """Primer valor no-nulo entre varios nombres de campo posibles (defensivo)."""
+    for k in keys:
+        v = d.get(k)
+        if v not in (None, ""):
+            return v
+    return None
+
+
+def build_workouts_agregador():
+    """Workouts que llegan por el AGREGADOR (Junction/Vital): WHOOP, Polar, Garmin,
+    Oura, Fitbit... Todos entran al MISMO esquema canonico de workouts[].
+
+    Lee datos/agregador/<atleta>/workouts_*.json (crudo que baja agregador_sync.py).
+    Es defensivo con los nombres de campo porque varian un poco por proveedor."""
+    rows = []
+    patron = os.path.join(DATA_DIR, "agregador", "*", "workouts_*.json")
+    for path in sorted(glob.glob(patron)):
+        atleta = os.path.basename(os.path.dirname(path))
+        with open(path, encoding="utf-8") as f:
+            try:
+                data = json.load(f)
+            except (ValueError, OSError):
+                continue
+        workouts = data.get("workouts") if isinstance(data, dict) else data
+        if not isinstance(workouts, list):
+            continue
+        for w in workouts:
+            if not isinstance(w, dict):
+                continue
+            tz = _agg_first(w, "timezone_offset")
+            tz_str = tz if isinstance(tz, str) else None
+            start = _to_local(_parse_dt(_agg_first(w, "time_start", "start", "start_time")), tz_str)
+            end = _to_local(_parse_dt(_agg_first(w, "time_end", "end", "end_time")), tz_str)
+            sport = _agg_first(w, "sport")
+            deporte = sport.get("name") if isinstance(sport, dict) else (sport or _agg_first(w, "sport_name"))
+            source = _agg_first(w, "source")
+            provider = source.get("provider") if isinstance(source, dict) else _agg_first(w, "provider", "source")
+            dist = _agg_first(w, "distance", "distance_meter")
+            rows.append({
+                "fecha": start.date().isoformat() if start else _agg_first(w, "calendar_date", "date"),
+                "inicio": start.strftime("%H:%M") if start else None,
+                "fin": end.strftime("%H:%M") if end else None,
+                "dur_min": round((end - start).total_seconds() / 60) if (start and end) else None,
+                "deporte": deporte,
+                "strain": None,  # strain solo lo da WHOOP directo
+                "fc_prom": _agg_first(w, "average_hr", "heart_rate_average"),
+                "fc_max": _agg_first(w, "max_hr", "heart_rate_maximum"),
+                "kcal": _agg_first(w, "calories", "calories_active"),
+                "km_whoop": _round(dist / 1000, 2) if isinstance(dist, (int, float)) else None,
+                "fuente": (provider or "agregador"),
+                "atleta": atleta,
+            })
+    return [r for r in rows if r.get("fecha")]
+
+
+def _iso_dur_seg(s):
+    """Convierte una duracion ISO8601 (ej. 'PT1H5M45.5S') a segundos. None si no aplica."""
+    if not isinstance(s, str) or not s.startswith("PT"):
+        return None
+    import re
+    m = re.fullmatch(r"PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+(?:\.\d+)?)S)?", s)
+    if not m:
+        return None
+    h, mm, ss = m.group(1), m.group(2), m.group(3)
+    total = (int(h or 0) * 3600) + (int(mm or 0) * 60) + float(ss or 0)
+    return total or None
+
+
+def build_workouts_polar_flow():
+    """Workouts de Polar Flow DIRECTO (los que baja polar_sync.py a
+    datos/polar_flow/<cuenta>/). Entran al MISMO esquema canonico de workouts[].
+
+    El summary de Polar AccessLink trae start-time (hora local), duration (ISO8601),
+    distance (m), calories, heart-rate {average, maximum} y sport/detailed-sport-info.
+    'atleta' = el nombre de la cuenta (carpeta). strain viaja null (solo lo da WHOOP)."""
+    rows = []
+    patron = os.path.join(DATA_DIR, "polar_flow", "*", "polar_*.json")
+    for path in sorted(glob.glob(patron)):
+        # El glob tambien pesca los sub-recursos (_zonas_fc/_muestras): saltarlos.
+        base = os.path.basename(path)
+        if base.endswith("_zonas_fc.json") or base.endswith("_muestras.json"):
+            continue
+        cuenta = os.path.basename(os.path.dirname(path))
+        with open(path, encoding="utf-8") as f:
+            try:
+                s = json.load(f)
+            except (ValueError, OSError):
+                continue
+        if not isinstance(s, dict) or "start-time" not in s:
+            continue
+        start = _parse_dt(s.get("start-time"))  # ya viene en hora local
+        dur_seg = _iso_dur_seg(s.get("duration"))
+        end = (start + timedelta(seconds=dur_seg)) if (start and dur_seg) else None
+        fc = s.get("heart-rate") or {}
+        dist = s.get("distance")
+        rows.append({
+            "fecha": start.date().isoformat() if start else None,
+            "inicio": start.strftime("%H:%M") if start else None,
+            "fin": end.strftime("%H:%M") if end else None,
+            "dur_min": round(dur_seg / 60) if dur_seg else None,
+            "deporte": s.get("detailed-sport-info") or s.get("sport"),
+            "strain": None,
+            "fc_prom": fc.get("average"),
+            "fc_max": fc.get("maximum"),
+            "kcal": s.get("calories"),
+            "km_whoop": _round(dist / 1000, 2) if isinstance(dist, (int, float)) else None,
+            "fuente": "polar",
+            "atleta": cuenta,
+        })
+    return [r for r in rows if r.get("fecha")]
+
+
+def merge_workouts(*listas):
+    """Une varias listas de workouts y quita duplicados por (fecha, inicio, deporte),
+    para no contar doble si la misma sesion llega por WHOOP directo y por agregador."""
+    vistos, salida = set(), []
+    for lista in listas:
+        for w in lista:
+            clave = (w.get("fecha"), w.get("inicio"), w.get("deporte"))
+            if clave in vistos:
+                continue
+            vistos.add(clave)
+            salida.append(w)
+    return sorted(salida, key=lambda x: (x["fecha"], x.get("inicio") or ""), reverse=True)
+
+
 def _percentil(vals, p):
     if not vals:
         return None
@@ -591,7 +718,8 @@ def write_csv(path, rows, cols):
 
 def main():
     daily = build_daily()
-    workouts = build_workouts()
+    workouts = merge_workouts(build_workouts(), build_workouts_agregador(),
+                              build_workouts_polar_flow())
     polar = build_polar()
     athlete = build_athlete()
     evento = build_evento()

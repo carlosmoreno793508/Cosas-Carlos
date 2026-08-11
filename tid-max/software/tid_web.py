@@ -22,6 +22,7 @@ PROC = os.path.join(SCRIPT_DIR, "datos", "procesado")
 COACH_JSON = os.path.join(PROC, "coach-hoy.json")
 CONSUMO_JSON = os.path.join(PROC, "consumo-hoy.json")
 WEB_DATA = os.path.join(SCRIPT_DIR, "..", "web", "data.json")
+APP_DATA = os.path.join(SCRIPT_DIR, "..", "app", "data.json")
 
 _MESES = ["", "ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"]
 _DIAS = ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"]
@@ -145,14 +146,20 @@ def build_data():
 
 def main():
     data = build_data()
-    out = os.path.abspath(WEB_DATA)
-    os.makedirs(os.path.dirname(out), exist_ok=True)
-    with open(out, "w", encoding="utf-8") as fh:
-        json.dump(data, fh, ensure_ascii=False, indent=2)
-    print(f"web/data.json actualizado ({data['fecha']} · {data['semaforo'].upper()} · "
+    # Mismo data.json para la WEB (dashboard) y para la APP (PWA instalable).
+    salidas = []
+    for destino in (WEB_DATA, APP_DATA):
+        out = os.path.abspath(destino)
+        os.makedirs(os.path.dirname(out), exist_ok=True)
+        with open(out, "w", encoding="utf-8") as fh:
+            json.dump(data, fh, ensure_ascii=False, indent=2)
+        salidas.append(out)
+    print(f"data.json actualizado ({data['fecha']} · {data['semaforo'].upper()} · "
           f"recovery {data.get('recovery')}%).")
-    print(f"  → {out}")
-    print("Sube el cambio (git add web/data.json && git commit && git push) y Vercel redepliega solo.")
+    for out in salidas:
+        print(f"  → {out}")
+    print("Sube el cambio (git add web/data.json app/data.json && git commit && git push) "
+          "y Vercel redepliega web + app.")
 
 
 if __name__ == "__main__":

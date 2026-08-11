@@ -66,8 +66,35 @@ Al correr `whoop_dashboard.py`, el panel muestra la banda **NATACIÓN** (km real
 una hoja **Natación** con gráfica de km/día, y marca el Km de WHOOP como *no confiable*.
 Ver la oportunidad de producto en `../analisis/oportunidades-producto.md` (OPP-01).
 
+## Agregador (Junction / ex-Vital) — UNA API para todas las marcas
+
+En vez de cablear WHOOP, Polar, Garmin, Oura… uno por uno, un **agregador** cubre 300+
+dispositivos con una sola integración. El atleta elige su marca en un widget que hospeda
+Junction (con logos), hace login en **su** marca desde **su** celular, y sus entrenos llegan
+ya normalizados. Ideal para dar de alta atletas sin tocar tu Mac.
+
+**Configuración (una vez):** en `.env` pon `JUNCTION_API_KEY` y `JUNCTION_API_BASE`
+(cópialos de tu dashboard en https://app.junction.com — la base cambia por región/entorno).
+Empieza en `sandbox` (gratis, datos simulados); pásate a `production` para datos reales.
+
+```bash
+# 1) Conectar un atleta: te da un link "Conéctate" que le mandas por WhatsApp.
+python agregador_connect.py --atleta carlos
+python agregador_connect.py --atleta gael --provider whoop   # o salta directo a una marca
+
+# 2) Bajar lo nuevo de TODOS los atletas conectados (una API = todas las marcas).
+python agregador_sync.py                 # últimos 14 días
+python agregador_sync.py --atleta carlos --dias 30
+
+# 3) Normalizar al esquema canónico (ya lee datos/agregador/).
+python tid_data.py
+```
+Modelo **pull** (corres el sync). El **push** por webhook (data automática apenas termina el
+entreno) está en `agregador_webhook.py` — Fase 2, requiere URL pública (túnel o backend desplegado).
+Tokens y mapeos viven en `datos/agregador_users.json` (ignorado por git, como los de Polar).
+
 ## Pipeline de datos: normalización al esquema canónico
-`tid_data.py` toma TODO lo crudo (WHOOP + Polar + registro de nado) y lo unifica en un **esquema
+`tid_data.py` toma TODO lo crudo (WHOOP + Polar + **agregador** + registro de nado) y lo unifica en un **esquema
 canónico único** — el contrato que consumen el dashboard, el coach y los agentes AI:
 ```bash
 python whoop_sync.py     # baja WHOOP
