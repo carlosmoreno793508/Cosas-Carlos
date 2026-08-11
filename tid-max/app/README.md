@@ -47,6 +47,26 @@ UPLOAD_SECRET       = (ya existe, la clave de sincronización de la familia)
 ```
 La clave de sincronización se teclea en la app (Perfil → "Clave de sincronización").
 
+## Login privado por persona (Fase 2) — `api/login.js` + `api/me.js`
+Cada atleta entra con **usuario + PIN** y ve **solo su** tablero (su `reportes/<slug>.json`,
+que genera el pipeline multiusuario `software/tid_multi.py`). El login usa un **token
+firmado** (HMAC), sin sesión en el servidor; `api/me` lee el reporte por la API de GitHub.
+
+Si aún no hay sesión, la app cae al **dashboard público** actual (no rompe nada). En
+**Perfil → Entrar** se inicia sesión; **Perfil → Cerrar sesión** vuelve al público.
+
+**Config (una vez, en Vercel → tid-max-app → Settings → Environment Variables):**
+```
+AUTH_SECRET = (una cadena larga y aleatoria, mín. 16 caracteres — sirve para firmar)
+TID_LOGINS  = [{"user":"gael","pin":"____","slug":"gael-moreno","nombre":"Gael Moreno"},
+               {"user":"carlos","pin":"____","slug":"carlos-moreno","nombre":"Carlos Moreno"}]
+GH_TOKEN    = (ya existe, el de api/connect/evento — con "Contents: Read")
+```
+> **Privacidad real:** hoy el repo es **público**, así que los `reportes/*.json` se pueden
+> leer en GitHub. Para privacidad de verdad, poner el repo en **privado** (`api/me` ya lee
+> con `GH_TOKEN`, así que sigue funcionando). Los PINs viven **solo** en `TID_LOGINS` (Vercel),
+> nunca en el repo ni en el chat. Endurecer (hash de PIN, rate-limit) al meter clientes externos.
+
 ## Siguiente (v0 → completar)
 1. **Login real** (Apple/Google/correo) — hoy entra directo.
 2. ~~**OAuth de fuentes**~~ ✅ cableado vía agregador Junction (`api/connect.js`). Falta el **paso 2**:

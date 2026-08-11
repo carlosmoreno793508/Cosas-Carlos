@@ -376,6 +376,21 @@ function vPerfil(d){
   const t=getTheme();
   return `
   <div class="top"><div><div class="h">Perfil</div><div class="s">${esc(d.atleta||"")}</div></div><div class="tid">TID</div></div>
+  ${(function(){
+    const s = tidSession();
+    if(s){
+      return `<div class="card"><div class="k">Sesión</div>
+        <div style="font-size:15px;font-weight:700;margin-top:3px">${esc(s.nombre||s.slug)}</div>
+        <div class="hint" style="margin-top:4px">Estás viendo tu tablero privado.</div>
+        <button class="btn sec" onclick="tidLogout()" style="margin-top:8px">Cerrar sesión</button></div>`;
+    }
+    return `<div class="card"><div class="k" style="margin-bottom:9px">Entrar (tu tablero privado)</div>
+      <input class="inp" id="lg_user" placeholder="Usuario" autocapitalize="off" autocomplete="username" style="margin-bottom:8px">
+      <input class="inp" id="lg_pin" type="password" placeholder="PIN" inputmode="numeric" autocomplete="current-password"
+        onkeydown="if(event.key==='Enter')tidLoginFromUI()">
+      <button class="btn sec" onclick="tidLoginFromUI()" style="margin-top:8px">Entrar</button>
+      <div class="hint" style="margin-top:8px">Cada quien ve solo sus datos. ¿Sin cuenta aún? Pídesela a Carlos.</div></div>`;
+  })()}
   <div class="card"><div class="k">Deporte</div><div style="font-size:15px;font-weight:700;margin-top:3px">${esc(d.deporte||"—")} · ${esc(d.fase||"")}</div></div>
   <div class="card tap" onclick="openEventos()" style="display:flex;justify-content:space-between;align-items:center">
     <div><div class="k">Eventos objetivo</div><div style="font-size:14px;font-weight:700;margin-top:3px">${loadEventos().length||"Sin"} evento(s)</div></div>
@@ -617,8 +632,51 @@ document.querySelectorAll(".tabs button").forEach(b=>b.addEventListener("click",
 
 let tt; function toast(m){ const t=document.getElementById("toast"); t.textContent=m; t.classList.add("show"); clearTimeout(tt); tt=setTimeout(()=>t.classList.remove("show"),1900); }
 
-fetch("./data.json?v="+Date.now()).then(r=>r.json()).then(d=>{DATA=d; paint();})
-  .catch(e=>{document.getElementById("view").innerHTML='<div class="loading">No pude cargar los datos.<br>'+esc(e.message)+'</div>';});
+/* ---------------- Sesión / login privado por persona ---------------- */
+const TID_TOKEN_KEY = "tid_token";
+function tidToken(){ return (localStorage.getItem(TID_TOKEN_KEY)||"").trim(); }
+function tidSession(){ try{ return JSON.parse(localStorage.getItem("tid_session")||"null"); }catch(e){ return null; } }
+
+// Carga los datos: si hay sesión, trae el reporte PRIVADO del atleta (/api/me);
+// si no, cae al dashboard público actual (para no romper nada antes del login).
+async function bootData(){
+  const view=document.getElementById("view");
+  const tok = tidToken();
+  if(tok){
+    try{
+      const r = await fetch("/api/me", {method:"POST", headers:{"content-type":"application/json"}, body: JSON.stringify({token:tok})});
+      if(r.ok){ const j=await r.json(); DATA=j.data; paint(); return; }
+      if(r.status===401){ localStorage.removeItem(TID_TOKEN_KEY); localStorage.removeItem("tid_session"); toast("Tu sesión expiró, entra de nuevo."); }
+      else if(r.status===404){ const j=await r.json().catch(()=>({})); view.innerHTML='<div class="loading">'+esc((j&&j.error)||"Aún no hay reporte para tu cuenta.")+'</div>'; return; }
+    }catch(e){ /* sin red: cae al público */ }
+  }
+  try{ const r = await fetch("./data.json?v="+Date.now()); DATA = await r.json(); paint(); }
+  catch(e){ view.innerHTML='<div class="loading">No pude cargar los datos.<br>'+esc(e.message)+'</div>'; }
+}
+
+async function tidLogin(user, pin){
+  try{
+    const r = await fetch("/api/login", {method:"POST", headers:{"content-type":"application/json"}, body: JSON.stringify({user, pin})});
+    const j = await r.json().catch(()=>({}));
+    if(!r.ok || !j.token){ toast(j.error||"No pude iniciar sesión."); return false; }
+    localStorage.setItem(TID_TOKEN_KEY, j.token);
+    localStorage.setItem("tid_session", JSON.stringify({slug:j.slug, nombre:j.nombre}));
+    toast("Bienvenido"+(j.nombre?(", "+String(j.nombre).split(" ")[0]):"")+" 👋");
+    await bootData(); activeTab="hoy"; screen=null; paint(); return true;
+  }catch(e){ toast("Error de red al entrar."); return false; }
+}
+function tidLoginFromUI(){
+  const u=(document.getElementById("lg_user")||{}).value||"";
+  const p=(document.getElementById("lg_pin")||{}).value||"";
+  if(!u.trim()||!p.trim()){ toast("Escribe usuario y PIN."); return; }
+  tidLogin(u, p);
+}
+function tidLogout(){
+  localStorage.removeItem(TID_TOKEN_KEY); localStorage.removeItem("tid_session");
+  toast("Sesión cerrada"); bootData(); activeTab="hoy"; screen=null; paint();
+}
+
+bootData();
 
 // Regreso del widget de Junction: si la URL trae ?connected=<marca>, avisa y abre Datos.
 (function(){
