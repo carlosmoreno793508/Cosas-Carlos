@@ -55,9 +55,18 @@ export default async function handler(req, res) {
     const widgetUrl = `${JCFG.linkBase}/?token=${encodeURIComponent(linkToken)}`
       + `&env=${JCFG.env}&region=${JCFG.region}`;
 
-    await guardarMapeo(slug, userId);
+    // Guardar el mapeo es "mejor esfuerzo": si falta GH_TOKEN o falla el commit,
+    // NO bloqueamos la conexion (el widget se abre igual). El mapeo se necesita
+    // para el sync en la nube (paso 2), no para conectar.
+    let mappingSaved = false;
+    try {
+      await guardarMapeo(slug, userId);
+      mappingSaved = true;
+    } catch (e) {
+      console.error("guardarMapeo (no fatal):", (e && e.message) || e);
+    }
 
-    return res.status(200).json({ ok: true, atleta: slug, provider: prov, user_id: userId, widget_url: widgetUrl });
+    return res.status(200).json({ ok: true, atleta: slug, provider: prov, user_id: userId, widget_url: widgetUrl, mapping_saved: mappingSaved });
   } catch (e) {
     return res.status(500).json({ error: String((e && e.message) || e) });
   }
