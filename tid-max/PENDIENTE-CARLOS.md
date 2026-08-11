@@ -13,19 +13,23 @@ solo pruébalo de nuevo (Datos → Conectar → conecta → Continue → te regr
 
 ---
 
-## 2) Persistir QUIÉN conectó (para el sync automático)  ← **tú, ~3 min**
-Hoy el connect funciona pero **no guarda** el mapeo atleta→usuario (falta un token de GitHub).
+## 2) Persistir QUIÉN conectó  ✅ HECHO (2026-08-11)
+Ya creaste el `GH_TOKEN` y lo pusiste en Vercel. **Confirmado funcionando:** el mapeo se
+guardó en `software/agregador_users.json` (atleta `carlos-gael-moreno-sarmiento` → user_id).
 
-**Qué hacer:**
-1. Crea un **GitHub Personal Access Token (fine-grained)**:
-   github.com → Settings → Developer settings → *Fine-grained tokens* → *Generate new token*
-   - Repo: `carlosmoreno793508/Cosas-Carlos`
-   - Permiso: **Contents → Read and write**
-   - Copia el token (`github_pat_...`)
-2. En **Vercel → tid-max-app → Environment Variables → Add**:
-   - `GH_TOKEN` = (el token) · **All Environments** · Save
-3. Avísame y redeployeo. Con esto, cada "Conectar" guarda el mapeo en
-   `software/agregador_users.json` (no lleva secretos, solo el id del usuario).
+## 2b) Habilitar WHOOP (es "Bring Your Own OAuth")  ← **tú, ~10 min**  (opcional)
+WHOOP abrió en blanco porque **exige TU propia app de desarrollador de WHOOP** (no la da
+Junction). Polar sí conectó porque no es BYOO. Ya cambié el flujo para que **conectar abra el
+picker de Junction** (elige tu marca ahí) y no salga en blanco — pero para que WHOOP aparezca y
+funcione, hay que configurarlo una vez:
+
+1. Crea una app en el **WHOOP Developer Dashboard** (developer.whoop.com) → crea un *Team* → una *App*.
+   - Redirect URI: el que te indique Junction en el paso siguiente.
+   - Copia el **Client ID** y **Client Secret**.
+2. En **Junction Dashboard → Config → Custom Credentials → WHOOP V2 → Setup** → pega esas credenciales.
+3. Listo: WHOOP aparecerá en el picker y conectará (límite de 10 miembros hasta que WHOOP apruebe la app).
+
+> Si por ahora no quieres WHOOP, **Polar ya funciona** — con eso validamos el ciclo completo.
 
 ---
 

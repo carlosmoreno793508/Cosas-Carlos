@@ -49,14 +49,15 @@ export default async function handler(req, res) {
 
     const slug = slugify(atleta);
     if (!slug) return res.status(400).json({ error: "Falta el atleta." });
-    const prov = provider && PROVIDERS.includes(String(provider).toLowerCase())
-      ? String(provider).toLowerCase() : null;
 
     const userId = await junctionUser(slug);
     // A dónde regresa el widget al terminar ("Continue"): de vuelta a la app.
     const origin = req.headers.origin || (req.headers.host ? `https://${req.headers.host}` : "");
-    const redirectUrl = origin ? `${origin}/?connected=${encodeURIComponent(prov || "ok")}` : null;
-    const link = await junctionLinkToken(userId, prov, redirectUrl);
+    const redirectUrl = origin ? `${origin}/?connected=ok` : null;
+    // Abrimos el PICKER de Junction (sin forzar 'provider'): el usuario elige su marca
+    // de las DISPONIBLES. Evita páginas en blanco con proveedores BYOO (WHOOP, Garmin…),
+    // que piden configurar tus propias credenciales en el dashboard de Junction.
+    const link = await junctionLinkToken(userId, null, redirectUrl);
     // Junction devuelve la URL lista del widget (link_web_url). La usamos tal cual
     // (a prueba de rebrands/dominios). Solo si no viene, la armamos como respaldo.
     const widgetUrl = link.link_web_url
