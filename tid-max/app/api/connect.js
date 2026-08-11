@@ -53,7 +53,10 @@ export default async function handler(req, res) {
       ? String(provider).toLowerCase() : null;
 
     const userId = await junctionUser(slug);
-    const link = await junctionLinkToken(userId, prov);
+    // A dónde regresa el widget al terminar ("Continue"): de vuelta a la app.
+    const origin = req.headers.origin || (req.headers.host ? `https://${req.headers.host}` : "");
+    const redirectUrl = origin ? `${origin}/?connected=${encodeURIComponent(prov || "ok")}` : null;
+    const link = await junctionLinkToken(userId, prov, redirectUrl);
     // Junction devuelve la URL lista del widget (link_web_url). La usamos tal cual
     // (a prueba de rebrands/dominios). Solo si no viene, la armamos como respaldo.
     const widgetUrl = link.link_web_url
@@ -102,14 +105,21 @@ async function junctionUser(slug) {
 }
 
 // Genera el link token para abrir el widget "Conéctate".
-async function junctionLinkToken(userId, provider) {
-  const body = { user_id: userId };
-  if (provider) body.provider = provider;
-  const r = await fetch(`${JCFG.apiBase}/v2/link/token`, {
-    method: "POST", headers: jhdr(), body: JSON.stringify(body),
-  });
-  if (!r.ok) throw new Error("Junction /v2/link/token " + r.status + ": " + (await r.text()).slice(0, 160));
-  return await r.json();  // { link_token, link_web_url? }
+// Intenta con redirect_url (para que "Continue" regrese a la app); si la API lo
+// rechaza, reintenta SIN el, para nunca romper el flujo que ya funciona.
+async function junctionLinkToken(userId, provider, redirectUrl) {
+  const base = { user_id: userId };
+  if (provider) base.provider = provider;
+  const intentos = redirectUrl ? [{ ...base, redirect_url: redirectUrl }, base] : [base];
+  let lastErr = "";
+  for (const body of intentos) {
+    const r = await fetch(`${JCFG.apiBase}/v2/link/token`, {
+      method: "POST", headers: jhdr(), body: JSON.stringify(body),
+    });
+    if (r.ok) return await r.json();  // { link_token, link_web_url? }
+    lastErr = r.status + ": " + (await r.text()).slice(0, 160);
+  }
+  throw new Error("Junction /v2/link/token " + lastErr);
 }
 
 // Commit del mapeo atleta -> user_id a agregador_users.json (crea o actualiza, merge).

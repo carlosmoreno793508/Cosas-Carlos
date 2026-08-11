@@ -45,14 +45,26 @@ jobs:
           WHOOP_REFRESH_TOKEN: ${{ secrets.WHOOP_REFRESH_TOKEN }}
         run: printf 'WHOOP_REFRESH_TOKEN=%s\n' "$WHOOP_REFRESH_TOKEN" > .env
 
-      - name: Correr pipeline (WHOOP → datos → coach → web)
+      - name: Correr pipeline (WHOOP + agregador → datos → coach → web)
         working-directory: tid-max/software
         env:
           WHOOP_CLIENT_ID: ${{ secrets.WHOOP_CLIENT_ID }}
           WHOOP_CLIENT_SECRET: ${{ secrets.WHOOP_CLIENT_SECRET }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          # Agregador (Junction) — OPCIONAL. Agrega estos SECRETS para activar el sync
+          # automatico en la nube. Si faltan (o no hay atletas conectados), se omite.
+          JUNCTION_API_KEY: ${{ secrets.JUNCTION_API_KEY }}
+          JUNCTION_API_BASE: ${{ secrets.JUNCTION_API_BASE }}
+          JUNCTION_ENV: ${{ secrets.JUNCTION_ENV }}
+          JUNCTION_REGION: ${{ secrets.JUNCTION_REGION }}
         run: |
           python whoop_sync.py
+          # Baja del agregador si hay llave + atletas; nunca rompe el pipeline.
+          if [ -n "$JUNCTION_API_KEY" ]; then
+            python agregador_sync.py || echo "(agregador: sin atletas o error no fatal, se omite)"
+          else
+            echo "(agregador: sin JUNCTION_API_KEY en secrets, se omite)"
+          fi
           python tid_data.py
           python tid_agent.py
           python tid_web.py
