@@ -38,7 +38,7 @@ export default async function handler(req, res) {
     if (!process.env.GH_TOKEN)
       return res.status(500).json({ error: "Servidor sin GH_TOKEN (no puedo guardar la cuenta)." });
 
-    const { nombre, email, pin, deporte, reloj, code, hp, t, nacimiento } = req.body || {};
+    const { nombre, email, pin, deporte, reloj, code, hp, t, nacimiento, peso } = req.body || {};
 
     // --- Anti-bot (siempre activo, sin setup) ---
     // 1) Honeypot: un campo invisible que solo los bots llenan.
@@ -73,6 +73,14 @@ export default async function handler(req, res) {
     const edad = edadDesde(nac);
     if (edad == null || edad < 5 || edad > 100) return res.status(400).json({ error: "Revisa tu fecha de nacimiento." });
 
+    // Peso — OPCIONAL. Si viene, se valida el rango; si no, queda null (no bloquea el alta).
+    let pesoKg = null;
+    if (peso != null && String(peso).trim() !== "") {
+      const n = Number(peso);
+      if (!Number.isFinite(n) || n < 20 || n > 300) return res.status(400).json({ error: "Revisa el peso (20–300 kg)." });
+      pesoKg = Math.round(n * 10) / 10;
+    }
+
     const slug = slugify(nom);
     if (!slug) return res.status(400).json({ error: "Nombre no válido." });
 
@@ -87,7 +95,7 @@ export default async function handler(req, res) {
     const hash = crypto.scryptSync(p, salt, 64).toString("hex");
     usuarios[slug] = {
       slug, email: mail, nombre: nom, salt, hash,
-      nacimiento: nac, edad,
+      nacimiento: nac, edad, peso_kg: pesoKg,
       created: new Date().toISOString(),
     };
     await ghPut(CFG.usuarios, usuarios, uFile.sha, `Alta de usuario: ${slug}`);
@@ -122,7 +130,7 @@ export default async function handler(req, res) {
           fecha_nacimiento: nac,
           edad,
           fc_max_estimada: 220 - edad,
-          sexo: null, peso_kg: null, altura_cm: null,
+          sexo: null, peso_kg: pesoKg, altura_cm: null,
           fc_reposo: null, fc_max_carrera: null,
           vt1_fc: null, vt2_fc: null, fatmax_fc: null,
           _nota: "Zonas provisionales por edad (FC máx ≈ 220 − edad). Se recalibran con FC en reposo y una FC máx real medida.",

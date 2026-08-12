@@ -398,6 +398,7 @@ function vPerfil(d){
         <input class="inp" id="rg_pin" type="password" placeholder="Crea un PIN (mín. 4)" inputmode="numeric" autocomplete="new-password" style="margin-bottom:8px">
         <label for="rg_nac" class="hint" style="display:block;margin:2px 2px 4px">Fecha de nacimiento</label>
         <input class="inp" id="rg_nac" type="date" max="${new Date().toISOString().slice(0,10)}" autocomplete="bday" style="margin-bottom:8px">
+        <input class="inp" id="rg_peso" type="number" inputmode="decimal" min="20" max="300" step="0.1" placeholder="Peso en kg (opcional)" style="margin-bottom:8px">
         <select class="inp" id="rg_deporte" style="margin-bottom:8px">
           <option value="running">Running / carrera</option>
           <option value="natacion">Natación</option>
@@ -837,12 +838,13 @@ function tidRegisterFromUI(){
   const g=id=>(document.getElementById(id)||{}).value||"";
   const nombre=g("rg_nombre").trim(), email=g("rg_email").trim(), pin=g("rg_pin");
   const deporte=g("rg_deporte")||"otro", code=g("rg_code").trim(), nacimiento=g("rg_nac").trim();
+  const peso=g("rg_peso").trim();
   const hp=g("rg_hp"), t=Date.now()-(parseInt(g("rg_t"),10)||Date.now());
   if(!nombre){ toast("Escribe tu nombre."); return; }
   if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){ toast("Correo no válido."); return; }
   if((pin||"").length<4){ toast("El PIN debe tener al menos 4 caracteres."); return; }
   if(!nacimiento){ toast("Pon tu fecha de nacimiento."); return; }
-  tidRegister({nombre, email, pin, deporte, code, hp, t, nacimiento});
+  tidRegister({nombre, email, pin, deporte, code, hp, t, nacimiento, peso});
 }
 function tidLogout(){
   localStorage.removeItem(TID_TOKEN_KEY); localStorage.removeItem("tid_session");
