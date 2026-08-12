@@ -250,9 +250,7 @@ function vHoy(d){
     <div><div class="k">Evento objetivo</div><div style="font-size:14px;font-weight:700;margin-top:2px">${esc(evNombre)}</div><div class="hint" style="margin-top:2px">Toca para ver o editar</div></div>
     <div style="text-align:right"><div style="font-size:24px;font-weight:800;line-height:1" class="num">${evDias??"—"}</div><div style="font-size:10px;color:var(--dim)">días</div></div>
   </div>
-  ${(!tidToken() || ((tidSession()||{}).slug === "gael-moreno"))
-    ? `<a href="./reporte.html" class="btn pri" style="margin-top:12px;text-decoration:none;display:block">📊  Ver reporte completo</a>`
-    : `<div class="sub-note" style="margin-top:12px">📊 Tu reporte completo aparecerá cuando conectes tu reloj.</div>`}`;
+  <div class="sub-note" style="margin-top:12px">📊 Reporte completo en vivo — en reconstrucción para que cuadre con tu WHOOP del día.</div>`;
 }
 
 function vEntrenar(d){
