@@ -38,7 +38,7 @@ export default async function handler(req, res) {
     if (!process.env.GH_TOKEN)
       return res.status(500).json({ error: "Servidor sin GH_TOKEN (no puedo guardar la cuenta)." });
 
-    const { nombre, email, pin, deporte, reloj, code, hp, t } = req.body || {};
+    const { nombre, email, pin, deporte, reloj, code, hp, t, nacimiento } = req.body || {};
 
     // --- Anti-bot (siempre activo, sin setup) ---
     // 1) Honeypot: un campo invisible que solo los bots llenan.
@@ -67,6 +67,12 @@ export default async function handler(req, res) {
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(mail)) return res.status(400).json({ error: "Correo no válido." });
     if (p.length < 4) return res.status(400).json({ error: "El PIN debe tener al menos 4 caracteres." });
 
+    // Fecha de nacimiento — para calibrar las zonas de FC (FC máx estimada por edad).
+    const nac = String(nacimiento || "").trim();
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(nac)) return res.status(400).json({ error: "Fecha de nacimiento no válida." });
+    const edad = edadDesde(nac);
+    if (edad == null || edad < 5 || edad > 100) return res.status(400).json({ error: "Revisa tu fecha de nacimiento." });
+
     const slug = slugify(nom);
     if (!slug) return res.status(400).json({ error: "Nombre no válido." });
 
@@ -81,6 +87,7 @@ export default async function handler(req, res) {
     const hash = crypto.scryptSync(p, salt, 64).toString("hex");
     usuarios[slug] = {
       slug, email: mail, nombre: nom, salt, hash,
+      nacimiento: nac, edad,
       created: new Date().toISOString(),
     };
     await ghPut(CFG.usuarios, usuarios, uFile.sha, `Alta de usuario: ${slug}`);
@@ -101,6 +108,30 @@ export default async function handler(req, res) {
       await ghPut(CFG.roster, roster, rFile.sha, `Registro: alta de ${slug}`);
     }
 
+    // 2b) perfil-<slug>.json — arranca el perfil con la fecha de nacimiento (edad → FC máx
+    //     estimada). Solo si aún no existe, para no pisar un perfil ya afinado a mano.
+    const perfilPath = `tid-max/software/perfil-${slug}.json`;
+    const pFile = await ghGet(perfilPath);
+    if (!pFile.json) {
+      const perfil = {
+        _fuente: `Perfil de ${nom} — creado desde el alta en la app.`,
+        atleta: nom,
+        deporte: String(deporte || "").trim() || "otro",
+        reloj: String(reloj || "").trim() || undefined,
+        perfil: {
+          fecha_nacimiento: nac,
+          edad,
+          fc_max_estimada: 220 - edad,
+          sexo: null, peso_kg: null, altura_cm: null,
+          fc_reposo: null, fc_max_carrera: null,
+          vt1_fc: null, vt2_fc: null, fatmax_fc: null,
+          _nota: "Zonas provisionales por edad (FC máx ≈ 220 − edad). Se recalibran con FC en reposo y una FC máx real medida.",
+        },
+        objetivos: [],
+      };
+      await ghPut(perfilPath, perfil, pFile.sha, `Perfil inicial de ${slug}`);
+    }
+
     // 3) Token (auto-login).
     const exp = Math.floor(Date.now() / 1000) + TOKEN_TTL_S;
     const token = sign({ slug, exp }, authSecret);
@@ -108,6 +139,19 @@ export default async function handler(req, res) {
   } catch (e) {
     return res.status(500).json({ error: String((e && e.message) || e) });
   }
+}
+
+function edadDesde(iso) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso);
+  if (!m) return null;
+  const [y, mo, d] = [Number(m[1]), Number(m[2]), Number(m[3])];
+  const nac = new Date(Date.UTC(y, mo - 1, d));
+  if (nac.getUTCFullYear() !== y || nac.getUTCMonth() !== mo - 1 || nac.getUTCDate() !== d) return null;
+  const hoy = new Date();
+  let e = hoy.getUTCFullYear() - y;
+  const cumpleDespues = (hoy.getUTCMonth() + 1 < mo) || (hoy.getUTCMonth() + 1 === mo && hoy.getUTCDate() < d);
+  if (cumpleDespues) e -= 1;
+  return e;
 }
 
 function slugify(v) {
