@@ -10,7 +10,7 @@
   "dias_al_viaje": 2,
   "semaforo": "rojo",
   "semaforo_titulo": "Recovery muy baja (30%)",
-  "semaforo_desc": "Rojo, Gael: recovery 30% y HRV en 87.1 ms (-21% vs tu base de 110) tras 4 días seguidos de recovery baja. Faltan 5 días para el Junior Pan Pacific y viajas en 2: hoy la misión NO es entrenar duro, es llegar fresco a Vancouver. Bajamos el acelerador sin perder sensaciones de agua.",
+  "semaforo_desc": "Rojo, Gael. Recovery en 30% y HRV en 87.1 ms (-21% vs tu base de 110), con 4 días seguidos de recovery baja. Estamos a 5 días del Junior Pan Pacific y a 2 del viaje a Vancouver: hoy toca proteger la frescura, no buscar sensaciones. La buena noticia es que la tendencia de HRV a 7 días va +7% y la FC de reposo está estable (52 vs 51.5) y bajando -5% en la semana; el cuerpo está respondiendo, solo pide un día suave.",
   "recovery": 30.0,
   "hrv": {
     "ms": 87.1,
@@ -23,9 +23,9 @@
     "base": 51.5
   },
   "sueno": {
-    "total_h": 7.63,
+    "total_h": 8.57,
     "noche_h": 7.63,
-    "siesta_h": 1.07,
+    "siesta_h": 0.94,
     "n_siestas": 1,
     "perf": 79.0,
     "efic": 87.3,
@@ -33,15 +33,15 @@
     "rem_pct": 41.0,
     "consist": 67.0,
     "despertares": 16,
-    "deuda_min": 176.0,
+    "deuda_min": 119.8,
     "acostado": "23:39",
     "despertar": "08:30",
-    "prom_7d": 7.6,
+    "prom_7d": 7.7,
     "perf_prom_7d": 74
   },
   "forma": {
-    "ctl": 12.1,
-    "atl": 11.8,
+    "ctl": 12.2,
+    "atl": 12.4,
     "tsb": -1.2,
     "tsb_previa": -2.4,
     "estado_pico": "afinando",
@@ -51,28 +51,28 @@
     "spo2": 94.4,
     "temp_piel": 34.519833,
     "resp_rate": 16.2,
-    "strain": 0.2
+    "strain": 4.48
   },
   "alertas": [
     {
       "nivel": "med",
       "tag": "Preventivo",
-      "texto": "HRV -21% vs base con 4 días consecutivos de recovery baja a 5 días del evento: si mañana sigue igual o peor, recorta también la sesión de jueves y avisa al entrenador."
+      "texto": "4 días seguidos de recovery baja con HRV -21% vs base: si mañana no sube, recorta intensidad de la sesión de ritmo y avisa al entrenador antes del viaje."
     },
     {
       "nivel": "med",
       "tag": "Preventivo",
-      "texto": "SpO2 94.4% y frecuencia respiratoria 16.2 son datos a vigilar; si aparecen síntomas reales (molestia de garganta, tos, fiebre, sensación de falta de aire), consulta a un profesional de la salud antes de viajar."
+      "texto": "SpO2 en 94.4%, algo por debajo de lo habitual: obsérvalo; si se mantiene bajo o aparecen síntomas (tos, congestión, malestar), consulta a un profesional de la salud antes de volar."
     },
     {
       "nivel": "med",
       "tag": "Preventivo",
-      "texto": "Sin registro de hidratación ni de horas de agua/seco hoy: falta información para afinar el consejo; regístralo."
+      "texto": "Consistencia de sueño en 67% y viaje en 2 días con cambio de zona horaria: empieza hoy a ajustar horarios para no llegar desfasado a Vancouver."
     },
     {
       "nivel": "med",
       "tag": "Preventivo",
-      "texto": "Viaje en 2 días a Vancouver: planifica sueño, hidratación y comidas del vuelo desde hoy para no sumar más fatiga."
+      "texto": "No hay registro de hidratación ni de sesiones reales hoy: sin esos datos el seguimiento de la semana de competencia queda incompleto."
     }
   ],
   "nutricion": {
