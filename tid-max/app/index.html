@@ -228,7 +228,7 @@ function vHoy(d){
   const evDias = ev ? diasHasta(ev.fecha_inicio) : (d.dias_al_evento);
   return `
   <div class="top">
-    <div><div class="h">Hola, Carlos</div><div class="s">${esc(d.fecha_texto||"")}</div></div>
+    <div><div class="h">Hola, ${esc((tidSession()&&tidSession().nombre?tidSession().nombre:(d.atleta||"")).split(" ")[0]||"atleta")}</div><div class="s">${esc(d.fecha_texto||"")}</div></div>
     <div class="tid">TID</div>
   </div>
   <div class="card" style="display:flex;align-items:center;gap:13px">
@@ -250,7 +250,9 @@ function vHoy(d){
     <div><div class="k">Evento objetivo</div><div style="font-size:14px;font-weight:700;margin-top:2px">${esc(evNombre)}</div><div class="hint" style="margin-top:2px">Toca para ver o editar</div></div>
     <div style="text-align:right"><div style="font-size:24px;font-weight:800;line-height:1" class="num">${evDias??"—"}</div><div style="font-size:10px;color:var(--dim)">días</div></div>
   </div>
-  <a href="./reporte.html" class="btn pri" style="margin-top:12px;text-decoration:none;display:block">📊  Ver reporte completo</a>`;
+  ${tidToken()
+    ? `<div class="sub-note" style="margin-top:12px">📊 Reporte completo por atleta — próximamente en tu cuenta.</div>`
+    : `<a href="./reporte.html" class="btn pri" style="margin-top:12px;text-decoration:none;display:block">📊  Ver reporte completo</a>`}`;
 }
 
 function vEntrenar(d){
