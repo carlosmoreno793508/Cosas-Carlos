@@ -96,8 +96,9 @@ def procesar_atleta(atleta, do_sync=True):
 
     # Env base del atleta: aísla datos + elige su config/perfil.
     env = {"TID_DATA_DIR": base, "TID_PROC_DIR": proc}
-    if atleta.get("perfil"):
-        env["TID_CONFIG"] = atleta["perfil"]
+    # Config/perfil del atleta. Si no tiene uno propio, usamos perfil-<slug>.json
+    # (probablemente inexistente aún) para NO caer al config por defecto de otro atleta.
+    env["TID_CONFIG"] = atleta.get("perfil") or f"perfil-{slug}.json"
     if atleta.get("nombre"):
         env["TID_ATLETA"] = atleta["nombre"]
     if atleta.get("deporte"):

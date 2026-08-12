@@ -154,7 +154,7 @@
 <script>
 const esc = s => String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const SEMC = {verde:"--good", amarillo:"--warn", rojo:"--crit"};
-let DATA = null, activeTab = "hoy", screen = null, editId = null;
+let DATA = null, activeTab = "hoy", screen = null, editId = null, authMode = "login";
 
 /* ---------------- Tema (auto + manual) ---------------- */
 const THEME_KEY = "tidmax_theme";  // 'auto' | 'light' | 'dark'
@@ -344,7 +344,9 @@ async function tidHealthDisconnect(){
 async function tidConnectSource(prov, nm){
   const secret = (localStorage.getItem('tid_secret')||"").trim();
   if(!secret){ toast("Primero guarda tu clave de sincronización en Perfil."); return; }
-  const atleta = (DATA && DATA.atleta) ? DATA.atleta : "atleta";
+  // Conecta como el usuario logueado (su slug es exacto); si no hay sesión, cae al del tablero.
+  const s = tidSession();
+  const atleta = (s && s.slug) ? s.slug : ((DATA && DATA.atleta) ? DATA.atleta : "atleta");
   toast(`Preparando conexión con ${nm}…`);
   try{
     const r = await fetch("/api/connect", {
@@ -384,12 +386,34 @@ function vPerfil(d){
         <div class="hint" style="margin-top:4px">Estás viendo tu tablero privado.</div>
         <button class="btn sec" onclick="tidLogout()" style="margin-top:8px">Cerrar sesión</button></div>`;
     }
-    return `<div class="card"><div class="k" style="margin-bottom:9px">Entrar (tu tablero privado)</div>
-      <input class="inp" id="lg_user" placeholder="Correo" type="email" inputmode="email" autocapitalize="off" autocorrect="off" autocomplete="username" style="margin-bottom:8px">
-      <input class="inp" id="lg_pin" type="password" placeholder="PIN" inputmode="numeric" autocomplete="current-password"
-        onkeydown="if(event.key==='Enter')tidLoginFromUI()">
-      <button class="btn sec" onclick="tidLoginFromUI()" style="margin-top:8px">Entrar</button>
-      <div class="hint" style="margin-top:8px">Cada quien ve solo sus datos. ¿Sin cuenta aún? Pídesela a Carlos.</div></div>`;
+    const reg = (authMode==="registro");
+    return `<div class="card">
+      <div class="seg" style="margin-bottom:10px">
+        <button class="${reg?"":"on"}" onclick="setAuthMode('login')">Entrar</button>
+        <button class="${reg?"on":""}" onclick="setAuthMode('registro')">Crear cuenta</button>
+      </div>
+      ${reg ? `
+        <input class="inp" id="rg_nombre" placeholder="Nombre y apellido" autocomplete="name" style="margin-bottom:8px">
+        <input class="inp" id="rg_email" placeholder="Correo" type="email" inputmode="email" autocapitalize="off" autocorrect="off" autocomplete="email" style="margin-bottom:8px">
+        <input class="inp" id="rg_pin" type="password" placeholder="Crea un PIN (mín. 4)" inputmode="numeric" autocomplete="new-password" style="margin-bottom:8px">
+        <select class="inp" id="rg_deporte" style="margin-bottom:8px">
+          <option value="running">Running / carrera</option>
+          <option value="natacion">Natación</option>
+          <option value="ciclismo">Ciclismo</option>
+          <option value="triatlon">Triatlón</option>
+          <option value="otro">Otro</option>
+        </select>
+        <input class="inp" id="rg_code" type="password" placeholder="Clave de la familia" autocomplete="off"
+          onkeydown="if(event.key==='Enter')tidRegisterFromUI()">
+        <button class="btn sec" onclick="tidRegisterFromUI()" style="margin-top:8px">Crear mi cuenta</button>
+        <div class="hint" style="margin-top:8px">Con tu correo + PIN entrarás a tu tablero privado. La clave de la familia evita altas de extraños.</div>
+      ` : `
+        <input class="inp" id="lg_user" placeholder="Correo" type="email" inputmode="email" autocapitalize="off" autocorrect="off" autocomplete="username" style="margin-bottom:8px">
+        <input class="inp" id="lg_pin" type="password" placeholder="PIN" inputmode="numeric" autocomplete="current-password"
+          onkeydown="if(event.key==='Enter')tidLoginFromUI()">
+        <button class="btn sec" onclick="tidLoginFromUI()" style="margin-top:8px">Entrar</button>
+        <div class="hint" style="margin-top:8px">Cada quien ve solo sus datos.</div>
+      `}</div>`;
   })()}
   <div class="card"><div class="k">Deporte</div><div style="font-size:15px;font-weight:700;margin-top:3px">${esc(d.deporte||"—")} · ${esc(d.fase||"")}</div></div>
   <div class="card tap" onclick="openEventos()" style="display:flex;justify-content:space-between;align-items:center">
@@ -668,8 +692,33 @@ async function tidLogin(user, pin){
 function tidLoginFromUI(){
   const u=(document.getElementById("lg_user")||{}).value||"";
   const p=(document.getElementById("lg_pin")||{}).value||"";
-  if(!u.trim()||!p.trim()){ toast("Escribe usuario y PIN."); return; }
+  if(!u.trim()||!p.trim()){ toast("Escribe correo y PIN."); return; }
   tidLogin(u, p);
+}
+function setAuthMode(m){ authMode=m; if(activeTab==="perfil"&&!screen) paint(); }
+
+// Alta de usuario real desde la app: crea la cuenta (api/registro) y deja logueado.
+async function tidRegister(nombre, email, pin, deporte, code){
+  try{
+    const r = await fetch("/api/registro", {method:"POST", headers:{"content-type":"application/json"},
+      body: JSON.stringify({nombre, email, pin, deporte, code})});
+    const j = await r.json().catch(()=>({}));
+    if(!r.ok || !j.token){ toast(j.error||"No pude crear la cuenta."); return false; }
+    localStorage.setItem(TID_TOKEN_KEY, j.token);
+    localStorage.setItem("tid_session", JSON.stringify({slug:j.slug, nombre:j.nombre}));
+    toast("Cuenta creada 🎉 Bienvenido"+(j.nombre?(", "+String(j.nombre).split(" ")[0]):""));
+    authMode="login"; await bootData(); activeTab="hoy"; screen=null; paint(); return true;
+  }catch(e){ toast("Error de red al crear la cuenta."); return false; }
+}
+function tidRegisterFromUI(){
+  const g=id=>(document.getElementById(id)||{}).value||"";
+  const nombre=g("rg_nombre").trim(), email=g("rg_email").trim(), pin=g("rg_pin"), code=g("rg_code").trim();
+  const deporte=g("rg_deporte")||"otro";
+  if(!nombre){ toast("Escribe tu nombre."); return; }
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){ toast("Correo no válido."); return; }
+  if((pin||"").length<4){ toast("El PIN debe tener al menos 4 caracteres."); return; }
+  if(!code){ toast("Falta la clave de la familia."); return; }
+  tidRegister(nombre, email, pin, deporte, code);
 }
 function tidLogout(){
   localStorage.removeItem(TID_TOKEN_KEY); localStorage.removeItem("tid_session");

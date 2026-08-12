@@ -5,21 +5,30 @@
 // a /api/me para leer SOLO su reporte. Los PINs viven como SECRETO del servidor
 // (variable de entorno TID_LOGINS), nunca en el repo ni en el cliente.
 //
-// Variables de entorno (Vercel → tid-max-app → Settings → Environment Variables):
-//   TID_LOGINS  — JSON con las cuentas. Ejemplo (una sola línea):
-//       [{"user":"gael","pin":"1234","slug":"gael-moreno"},
-//        {"user":"carlos","pin":"5678","slug":"carlos-moreno"}]
-//     'user' es lo que teclea el atleta (insensible a mayúsculas/espacios),
-//     'pin' su clave, 'slug' su carpeta de reporte (reportes/<slug>.json).
-//   AUTH_SECRET — cadena larga y aleatoria para firmar los tokens (mínimo 16).
+// Dos fuentes de cuentas:
+//   1) TID_LOGINS (env) — cuentas "semilla"/admin, PIN en claro en la variable.
+//   2) usuarios.json (repo) — las que se dan de alta desde la app (api/registro),
+//      con PIN hasheado (scrypt+salt). Se buscan por CORREO.
 //
-// Seguridad: comparación de PIN en tiempo ~constante; token con expiración (30 d).
-// No es banca — es un candado honesto para una app familiar/equipo; endurecer
-// (hash de PIN, rate-limit) cuando entren clientes externos.
+// Variables de entorno (Vercel → tid-max-app → Settings → Environment Variables):
+//   AUTH_SECRET — cadena larga y aleatoria para firmar los tokens (mínimo 16).
+//   TID_LOGINS  — (opcional) JSON de cuentas semilla. Ejemplo (una línea):
+//       [{"user":"gaelmoreno@icloud.com","pin":"1234","slug":"gael-moreno"}]
+//   GH_TOKEN    — (para leer usuarios.json del repo) PAT con "Contents: Read".
+//   (opcionales) GH_OWNER, GH_REPO, GH_BRANCH, USUARIOS_PATH.
+//
+// Seguridad: comparación en tiempo ~constante; token con expiración (30 d).
 
 import crypto from "crypto";
 
 const TOKEN_TTL_S = 60 * 60 * 24 * 30; // 30 días
+
+const CFG = {
+  owner: process.env.GH_OWNER || "carlosmoreno793508",
+  repo: process.env.GH_REPO || "Cosas-Carlos",
+  branch: process.env.GH_BRANCH || "main",
+  usuarios: process.env.USUARIOS_PATH || "tid-max/software/usuarios.json",
+};
 
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "Usa POST." });
@@ -28,34 +37,35 @@ export default async function handler(req, res) {
     if (!secret || secret.length < 16)
       return res.status(500).json({ error: "Servidor sin AUTH_SECRET (config faltante)." });
 
-    let logins;
-    try {
-      logins = JSON.parse(process.env.TID_LOGINS || "[]");
-    } catch {
-      return res.status(500).json({ error: "TID_LOGINS mal formado (no es JSON)." });
-    }
-    if (!Array.isArray(logins) || !logins.length)
-      return res.status(500).json({ error: "Servidor sin cuentas (TID_LOGINS vacío)." });
-
     const { user, pin } = req.body || {};
     const u = norm(user);
     const p = String(pin == null ? "" : pin);
-    if (!u || !p) return res.status(400).json({ error: "Faltan usuario o PIN." });
+    if (!u || !p) return res.status(400).json({ error: "Faltan correo o PIN." });
 
-    // Busca la cuenta y compara el PIN en tiempo ~constante (evita fugas por timing).
-    const cuenta = logins.find((c) => norm(c.user) === u);
-    const okUser = !!cuenta;
-    const pinRef = okUser ? String(cuenta.pin == null ? "" : cuenta.pin) : "";
-    const okPin = safeEqual(p, pinRef);
-    if (!okUser || !okPin)
-      return res.status(401).json({ error: "Usuario o PIN incorrectos." });
+    // 1) Cuentas semilla (env TID_LOGINS) — PIN en claro, compare tiempo-constante.
+    let match = null;
+    let logins = [];
+    try { logins = JSON.parse(process.env.TID_LOGINS || "[]"); } catch { logins = []; }
+    if (Array.isArray(logins)) {
+      const cuenta = logins.find((c) => norm(c.user) === u);
+      if (cuenta && safeEqual(p, String(cuenta.pin == null ? "" : cuenta.pin)))
+        match = { slug: String(cuenta.slug || "").trim(), nombre: cuenta.nombre || null };
+    }
 
-    const slug = String(cuenta.slug || "").trim();
-    if (!slug) return res.status(500).json({ error: "Cuenta sin 'slug' configurado." });
+    // 2) Cuentas dadas de alta desde la app (usuarios.json, repo) — PIN con scrypt.
+    if (!match) {
+      const usuarios = await leerUsuarios();
+      const cuenta = usuarios && Object.values(usuarios).find((c) => norm(c.email) === u);
+      if (cuenta && scryptVerify(p, cuenta.salt, cuenta.hash))
+        match = { slug: String(cuenta.slug || "").trim(), nombre: cuenta.nombre || null };
+    }
+
+    if (!match || !match.slug)
+      return res.status(401).json({ error: "Correo o PIN incorrectos." });
 
     const exp = nowS() + TOKEN_TTL_S;
-    const token = sign({ slug, exp }, secret);
-    return res.status(200).json({ ok: true, token, slug, nombre: cuenta.nombre || null, exp });
+    const token = sign({ slug: match.slug, exp }, secret);
+    return res.status(200).json({ ok: true, token, slug: match.slug, nombre: match.nombre, exp });
   } catch (e) {
     return res.status(500).json({ error: String((e && e.message) || e) });
   }
@@ -63,6 +73,33 @@ export default async function handler(req, res) {
 
 function norm(v) {
   return String(v == null ? "" : v).trim().toLowerCase();
+}
+
+// Lee usuarios.json del repo (cuentas dadas de alta). {} si no existe o sin GH_TOKEN.
+async function leerUsuarios() {
+  if (!process.env.GH_TOKEN) return {};
+  try {
+    const r = await fetch(`https://api.github.com/repos/${CFG.owner}/${CFG.repo}/contents/${CFG.usuarios}?ref=${CFG.branch}`, {
+      headers: { authorization: `Bearer ${process.env.GH_TOKEN}`, "user-agent": "tid-max-login", accept: "application/vnd.github+json" },
+    });
+    if (!r.ok) return {};
+    const j = await r.json();
+    return JSON.parse(Buffer.from(j.content, "base64").toString("utf8")) || {};
+  } catch {
+    return {};
+  }
+}
+
+// Verifica un PIN contra su hash scrypt (tiempo-constante).
+function scryptVerify(pin, salt, hashHex) {
+  if (!salt || !hashHex) return false;
+  try {
+    const calc = crypto.scryptSync(String(pin), String(salt), 64);
+    const ref = Buffer.from(String(hashHex), "hex");
+    return calc.length === ref.length && crypto.timingSafeEqual(calc, ref);
+  } catch {
+    return false;
+  }
 }
 
 function nowS() {
