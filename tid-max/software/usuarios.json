@@ -6,5 +6,13 @@
     "salt": "086ba19783cd01cd249add6b05ef91a5",
     "hash": "57f8a15a31685ce5bc6338f737732781e6227fa4d3e4f35c0319411eccde2db41fd455f4549c8d1cef057d871270db264cb75c618c3af53c6c7f964755dc0c51",
     "created": "2026-08-12T01:50:49.487Z"
+  },
+  "gael-moreno": {
+    "slug": "gael-moreno",
+    "email": "gaelmoreno@icloud.com",
+    "nombre": "Gael Moreno",
+    "salt": "5d71bd6674158de41a554b357b3a1068",
+    "hash": "543fc6d664b290f2a6d2dac45a4fc0c475034f0954fa219faab94af75d3ac0e9755d636a37b72a7f0c84ef505916ef08f2950dfa31b44863234474a66c15fbde",
+    "created": "2026-08-12T02:51:27.603Z"
   }
 }
