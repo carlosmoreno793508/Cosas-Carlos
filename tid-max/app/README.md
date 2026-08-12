@@ -47,23 +47,29 @@ UPLOAD_SECRET       = (ya existe, la clave de sincronización de la familia)
 ```
 La clave de sincronización se teclea en la app (Perfil → "Clave de sincronización").
 
-## Login privado por persona (Fase 2) — `api/login.js` + `api/me.js`
-Cada atleta entra con **usuario + PIN** y ve **solo su** tablero (su `reportes/<slug>.json`,
-que genera el pipeline multiusuario `software/tid_multi.py`). El login usa un **token
-firmado** (HMAC), sin sesión en el servidor; `api/me` lee el reporte por la API de GitHub.
+## Login + alta de usuario (Fase 2) — `api/registro.js` · `api/login.js` · `api/me.js`
+Cada atleta se **da de alta desde la app** (Perfil → **Crear cuenta**: nombre, correo, PIN,
+deporte + la **clave de la familia**) y entra con **correo + PIN** a ver **solo su** tablero
+(su `reportes/<slug>.json`, del pipeline `software/tid_multi.py`). El login usa un **token
+firmado** (HMAC); `api/me` lee el reporte por la API de GitHub.
 
-Si aún no hay sesión, la app cae al **dashboard público** actual (no rompe nada). En
-**Perfil → Entrar** se inicia sesión; **Perfil → Cerrar sesión** vuelve al público.
+- **`api/registro`** crea la cuenta ("repo como BD"): PIN con **hash scrypt+salt** en
+  `software/usuarios.json` y agrega al atleta en `software/atletas.json`. Queda logueado.
+- Si no hay sesión, la app cae al **dashboard público** (no rompe nada). Perfil → Cerrar sesión.
 
 **Config (una vez, en Vercel → tid-max-app → Settings → Environment Variables):**
 ```
-AUTH_SECRET = (una cadena larga y aleatoria, mín. 16 caracteres — sirve para firmar)
-TID_LOGINS  = [{"user":"gaelmoreno@icloud.com","pin":"____","slug":"gael-moreno","nombre":"Gael Moreno"},
-               {"user":"carlosmoreno99@gmail.com","pin":"____","slug":"carlos-moreno","nombre":"Carlos Moreno"}]
-GH_TOKEN    = (ya existe, el de api/connect/evento — con "Contents: Read")
+AUTH_SECRET = (una cadena larga y aleatoria, mín. 16 caracteres — firma los tokens)
+GH_TOKEN    = (ya existe — necesita "Contents: Read and write" para guardar el alta)
+UPLOAD_SECRET = (ya existe — es la "clave de la familia" que pide el alta)
 ```
-El `user` puede ser correo o un alias — es lo que se teclea en **Perfil → Entrar** (no distingue
-mayúsculas). El `slug` es la carpeta del reporte y NO cambia.
+Con eso, **cualquiera de la familia** se registra desde la app. (Opcional: `TID_LOGINS`
+en env sigue sirviendo para cuentas "semilla" sin darse de alta — formato
+`[{"user":"correo","pin":"____","slug":"...","nombre":"..."}]`.)
+
+> **Privacidad:** el repo es **público**, así que `usuarios.json` (con hashes) y los
+> `reportes/*.json` se pueden leer en GitHub. Para privacidad de verdad, poner el repo en
+> **privado** (`api/me`/`api/login` ya leen con `GH_TOKEN`). Endurecer (rate-limit) con clientes externos.
 > **Privacidad real:** hoy el repo es **público**, así que los `reportes/*.json` se pueden
 > leer en GitHub. Para privacidad de verdad, poner el repo en **privado** (`api/me` ya lee
 > con `GH_TOKEN`, así que sigue funcionando). Los PINs viven **solo** en `TID_LOGINS` (Vercel),
