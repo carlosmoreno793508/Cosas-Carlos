@@ -1,0 +1,12 @@
+{
+  "atletas": [
+    {
+      "slug": "carlos-moreno",
+      "nombre": "Carlos Moreno",
+      "deporte": "running",
+      "fuente": "agregador",
+      "perfil": "perfil-carlos-moreno.json",
+      "activo": true
+    }
+  ]
+}
