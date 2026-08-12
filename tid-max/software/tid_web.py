@@ -139,6 +139,12 @@ def build_data():
             "estado_pico": rend.get("estado") or "sin_datos",
             "lectura": rend.get("lectura") or "",
         },
+        "vitales": {
+            "spo2": f.get("spo2_pct"),
+            "temp_piel": f.get("skin_temp_c"),
+            "resp_rate": f.get("resp_rate"),
+            "strain": f.get("strain_hoy"),
+        },
         "alertas": [{"nivel": _nivel_alerta(a), "tag": "Preventivo", "texto": a}
                     for a in (p.get("alertas") or []) if isinstance(a, str)],
         "nutricion": nutricion,
