@@ -264,7 +264,7 @@ function vEntrenar(d){
   <div class="plan"><span class="e">🏊</span><div><div class="t">Entreno</div><div class="d">Sesión del día según tu plan</div></div></div>
   <div class="plan"><span class="e">😴</span><div><div class="t">Sueño</div><div class="d">Meta calibrada a tu recuperación</div></div></div>
   <div class="plan"><span class="e">🥗</span><div><div class="t">Nutrición</div><div class="d">Consumido vs meta del día</div></div></div>
-  <button class="btn pri" style="margin-top:14px" onclick="toast('GPS + FC en vivo (BLE al H10) — llega en la v1 🏃')">▶  Iniciar entrenamiento</button>
+  <button class="btn pri" style="margin-top:14px" onclick="openCorrer()">▶  Iniciar entrenamiento</button>
   <button class="btn sec" onclick="openSesion()">＋  Registrar sesión (multisport)</button>
   <div class="sub-note">GPS + FC en vivo · llega en la v1</div>`;
 }
@@ -648,6 +648,7 @@ function paint(){
   if(screen==="eventos"){ el.innerHTML=vEventos(); }
   else if(screen==="capturar"){ prioSel=(editId!=null?(loadEventos()[editId]?.prioridad||"A"):"A"); el.innerHTML=vCapturar(editId); bindCapturar(); }
   else if(screen==="sesion"){ el.innerHTML=vSesion(); }
+  else if(screen==="correr"){ el.innerHTML=vCorrer(); bindCorrer(); }
   else if(DATA){ el.innerHTML = VIEWS[activeTab](DATA); }
   else if(tidToken()){
     // Logueado pero sin datos propios (cuentas independientes): Datos y Perfil
@@ -672,9 +673,95 @@ function switchTab(tab){ activeTab=tab; screen=null; editId=null; paint(); }
 function openEventos(){ screen="eventos"; editId=null; paint(); }
 function openCapturar(id){ screen="capturar"; editId=(id==null?null:id); paint(); }
 function openSesion(){ screen="sesion"; sesSport=null; sesSegs=[]; paint(); }
+function openCorrer(){ screen="correr"; runReset(); paint(); }
 document.querySelectorAll(".tabs button").forEach(b=>b.addEventListener("click",()=>switchTab(b.dataset.tab)));
 
 let tt; function toast(m){ const t=document.getElementById("toast"); t.textContent=m; t.classList.add("show"); clearTimeout(tt); tt=setTimeout(()=>t.classList.remove("show"),1900); }
+
+/* ---------------- Correr en vivo (GPS) — Fase A ---------------- */
+let runState="idle", runStartMs=0, runElapsedMs=0, runTimer=null;
+let runPoints=[], runDistM=0, runWatchId=null, runWakeLock=null, runLastPt=null;
+
+function runReset(){ runStopWatch(); runState="idle"; runStartMs=0; runElapsedMs=0; runPoints=[]; runDistM=0; runLastPt=null; }
+function fmtTime(ms){ const s=Math.floor(ms/1000), h=Math.floor(s/3600), m=Math.floor((s%3600)/60), ss=s%60;
+  return (h>0?h+":"+String(m).padStart(2,"0"):m)+":"+String(ss).padStart(2,"0"); }
+function fmtPace(mpk){ if(!mpk||!isFinite(mpk)) return "—"; const m=Math.floor(mpk), s=Math.round((mpk-m)*60);
+  return (s===60?(m+1)+"'00":m+"'"+String(s).padStart(2,"0"))+'"'; }
+function hav(a,b){ const R=6371000, toR=x=>x*Math.PI/180, dLa=toR(b.lat-a.lat), dLo=toR(b.lon-a.lon);
+  const q=Math.sin(dLa/2)**2+Math.cos(toR(a.lat))*Math.cos(toR(b.lat))*Math.sin(dLo/2)**2; return 2*R*Math.asin(Math.min(1,Math.sqrt(q))); }
+function runStatusText(){ return runState==="running"?"Grabando… GPS activo":runState==="paused"?"En pausa":runState==="done"?"Terminada":"Listo para iniciar"; }
+
+function vCorrer(){
+  const km=runDistM/1000;
+  const paceAvg = runDistM>20 ? (runElapsedMs/60000)/(runDistM/1000) : null;
+  const running=runState==="running";
+  let ctrls;
+  if(runState==="done") ctrls=`
+    <div class="sub-note" style="text-align:center">Sesión guardada en el teléfono. En la app nativa se subirá a tu tablero.</div>
+    <button class="btn pri" onclick="openCorrer()" style="margin-top:10px">Nueva carrera</button>
+    <button class="btn sec" onclick="switchTab('entrenar')">Volver</button>`;
+  else if(running) ctrls=`
+    <button class="btn sec" onclick="runPause()">⏸  Pausar</button>
+    <button class="btn pri" style="background:var(--crit);color:#fff" onclick="runStop()">■  Terminar</button>`;
+  else if(runState==="paused") ctrls=`
+    <button class="btn pri" onclick="runResume()">▶  Reanudar</button>
+    <button class="btn pri" style="background:var(--crit);color:#fff" onclick="runStop()">■  Terminar</button>`;
+  else ctrls=`
+    <button class="btn pri" onclick="runStart()">▶  Iniciar</button>
+    <div class="sub-note">Deja la pantalla encendida. Se registra ruta, distancia, ritmo y tiempo. (El pulso del H10 llega con la app nativa.)</div>`;
+  return `
+  <div class="top">
+    <div class="back" onclick="runQuit()">‹</div>
+    <div style="flex:1"><div class="h">Correr</div><div class="s" id="run_status">${runStatusText()}</div></div>
+  </div>
+  <div class="card" style="text-align:center;padding:26px 16px">
+    <div style="font-size:12px;letter-spacing:.08em;color:var(--faint);text-transform:uppercase;font-weight:700">Tiempo</div>
+    <div id="run_time" class="num" style="font-size:52px;font-weight:800;line-height:1.05;margin:2px 0">${fmtTime(runElapsedMs)}</div>
+    <div style="display:flex;justify-content:center;gap:30px;margin-top:14px">
+      <div><div id="run_dist" class="num" style="font-size:28px;font-weight:800">${km.toFixed(2)}</div><div style="font-size:11px;color:var(--dim)">km</div></div>
+      <div><div id="run_pace" class="num" style="font-size:28px;font-weight:800">${fmtPace(paceAvg)}</div><div style="font-size:11px;color:var(--dim)">ritmo /km</div></div>
+    </div>
+  </div>
+  ${ctrls}`;
+}
+function bindCorrer(){ /* los botones llaman a las funciones del motor */ }
+
+function runStart(){
+  if(!navigator.geolocation){ toast("Este teléfono/navegador no da GPS."); return; }
+  runReset(); runState="running"; runStartMs=Date.now(); runElapsedMs=0;
+  runWatchId=navigator.geolocation.watchPosition(runOnPos, runOnErr, {enableHighAccuracy:true, maximumAge:1000, timeout:20000});
+  runTimer=setInterval(runTick, 1000); runReqWake(); paint();
+}
+function runPause(){ if(runState!=="running")return; runElapsedMs+=Date.now()-runStartMs; runState="paused"; if(runTimer){clearInterval(runTimer);runTimer=null;} runLastPt=null; paint(); }
+function runResume(){ if(runState!=="paused")return; runState="running"; runStartMs=Date.now(); runTimer=setInterval(runTick,1000); paint(); }
+function runStop(){ if(runState==="running") runElapsedMs+=Date.now()-runStartMs; runStopWatch(); runState="done"; runSave(); paint(); }
+function runStopWatch(){ if(runWatchId!=null){ try{navigator.geolocation.clearWatch(runWatchId);}catch(e){} runWatchId=null; } if(runTimer){clearInterval(runTimer);runTimer=null;} runRelWake(); }
+function runTick(){ const el=document.getElementById("run_time"); if(el) el.textContent=fmtTime(runElapsedMs+(runState==="running"?Date.now()-runStartMs:0)); }
+function runOnPos(pos){
+  if(runState!=="running")return;
+  const c=pos.coords; if(c.accuracy && c.accuracy>40){ return; }
+  const pt={lat:c.latitude, lon:c.longitude, t:Date.now()};
+  if(runLastPt){ const d=hav(runLastPt,pt); if(d>=2 && d<80){ runDistM+=d; runPoints.push(pt); } }
+  else runPoints.push(pt);
+  runLastPt=pt;
+  const dk=document.getElementById("run_dist"); if(dk) dk.textContent=(runDistM/1000).toFixed(2);
+  const totMs=runElapsedMs+(Date.now()-runStartMs);
+  const pace=runDistM>20?(totMs/60000)/(runDistM/1000):null;
+  const pk=document.getElementById("run_pace"); if(pk) pk.textContent=fmtPace(pace);
+  const st=document.getElementById("run_status"); if(st) st.textContent="Grabando… GPS activo";
+}
+function runOnErr(e){ const s=document.getElementById("run_status"); if(s) s.textContent=(e&&e.code===1)?"GPS: permiso denegado":"GPS: buscando señal…"; }
+function runReqWake(){ try{ if("wakeLock" in navigator) navigator.wakeLock.request("screen").then(w=>{runWakeLock=w;}).catch(()=>{}); }catch(e){} }
+function runRelWake(){ try{ if(runWakeLock){ runWakeLock.release(); runWakeLock=null; } }catch(e){} }
+function runQuit(){ if((runState==="running"||runState==="paused") && !confirm("¿Salir y descartar la carrera en curso?")) return; runStopWatch(); runReset(); switchTab("entrenar"); }
+function runSave(){
+  const km=runDistM/1000, durS=Math.round(runElapsedMs/1000), pace=km>0.02?(runElapsedMs/60000)/km:null;
+  const rec={ fecha:new Date().toISOString(), deporte:"running", dist_km:+km.toFixed(3), dur_s:durS,
+    pace_min_km: pace?+pace.toFixed(2):null, n_puntos:runPoints.length,
+    ruta: runPoints.map(p=>[+p.lat.toFixed(5),+p.lon.toFixed(5)]) };
+  try{ const arr=JSON.parse(localStorage.getItem("tid_runs")||"[]"); arr.unshift(rec); localStorage.setItem("tid_runs", JSON.stringify(arr.slice(0,50))); }catch(e){}
+  toast(`Carrera guardada · ${km.toFixed(2)} km`);
+}
 
 /* ---------------- Sesión / login privado por persona ---------------- */
 const TID_TOKEN_KEY = "tid_token";
