@@ -648,8 +648,25 @@ function paint(){
   if(screen==="eventos"){ el.innerHTML=vEventos(); }
   else if(screen==="capturar"){ prioSel=(editId!=null?(loadEventos()[editId]?.prioridad||"A"):"A"); el.innerHTML=vCapturar(editId); bindCapturar(); }
   else if(screen==="sesion"){ el.innerHTML=vSesion(); }
-  else { el.innerHTML = DATA ? VIEWS[activeTab](DATA) : '<div class="loading">Cargando…</div>'; }
+  else if(DATA){ el.innerHTML = VIEWS[activeTab](DATA); }
+  else if(tidToken()){
+    // Logueado pero sin datos propios (cuentas independientes): Datos y Perfil
+    // funcionan normal (conectar reloj / sesión); Hoy y Entrenar muestran el vacío PROPIO.
+    if(activeTab==="datos"){ el.innerHTML = vDatos(); }
+    else if(activeTab==="perfil"){ el.innerHTML = vPerfil({atleta:(tidSession()||{}).nombre||"", deporte:"", fase:""}); }
+    else { el.innerHTML = estadoVacio(); }
+  }
+  else { el.innerHTML = '<div class="loading">Cargando…</div>'; }
   document.querySelectorAll(".tabs button").forEach(b=>b.classList.toggle("on", !screen && b.dataset.tab===activeTab));
+}
+// Estado vacío PROPIO (logueado sin reporte aún) — nunca muestra datos de otro atleta.
+let sinDatosMsg = "";
+function estadoVacio(){
+  const s = tidSession()||{};
+  return '<div class="loading" style="padding:26px 20px;text-align:center">'
+    +'<div style="font-size:16px;font-weight:800;margin-bottom:6px">'+esc(s.nombre||"Tu cuenta")+'</div>'
+    +esc(sinDatosMsg||"Aún no hay datos de tu cuenta.")
+    +'<br><span style="opacity:.72;font-size:13px;display:inline-block;margin-top:8px">Conecta tu reloj en la pestaña <b>Datos</b> para empezar a ver tu tablero.</span></div>';
 }
 function switchTab(tab){ activeTab=tab; screen=null; editId=null; paint(); }
 function openEventos(){ screen="eventos"; editId=null; paint(); }
@@ -664,8 +681,9 @@ const TID_TOKEN_KEY = "tid_token";
 function tidToken(){ return (localStorage.getItem(TID_TOKEN_KEY)||"").trim(); }
 function tidSession(){ try{ return JSON.parse(localStorage.getItem("tid_session")||"null"); }catch(e){ return null; } }
 
-// Carga los datos: si hay sesión, trae el reporte PRIVADO del atleta (/api/me);
-// si no, cae al dashboard público actual (para no romper nada antes del login).
+// Carga los datos. CUENTAS INDEPENDIENTES: si hay sesión, muestra SOLO el reporte
+// propio (/api/me) y NUNCA cae al tablero público de otro atleta. El tablero público
+// (data.json) es únicamente para quien NO ha iniciado sesión.
 async function bootData(){
   const view=document.getElementById("view");
   const tok = tidToken();
@@ -673,10 +691,23 @@ async function bootData(){
     try{
       const r = await fetch("/api/me", {method:"POST", headers:{"content-type":"application/json"}, body: JSON.stringify({token:tok})});
       if(r.ok){ const j=await r.json(); DATA=j.data; paint(); return; }
-      if(r.status===401){ localStorage.removeItem(TID_TOKEN_KEY); localStorage.removeItem("tid_session"); toast("Tu sesión expiró, entra de nuevo."); }
-      else if(r.status===404){ const j=await r.json().catch(()=>({})); view.innerHTML='<div class="loading">'+esc((j&&j.error)||"Aún no hay reporte para tu cuenta.")+'</div>'; return; }
-    }catch(e){ /* sin red: cae al público */ }
+      if(r.status===401){
+        // Sesión inválida/expirada: cerrar sesión y (ya sin token) mostrar el público.
+        localStorage.removeItem(TID_TOKEN_KEY); localStorage.removeItem("tid_session");
+        toast("Tu sesión expiró, entra de nuevo.");
+      } else {
+        // Logueado pero sin reporte propio (404) u otro error: estado vacío PROPIO,
+        // jamás el tablero de otro atleta. paint() lo renderiza y deja navegar tabs.
+        const j = await r.json().catch(()=>({}));
+        sinDatosMsg = (j&&j.error) || "Aún no hay datos de tu cuenta.";
+        DATA = null; paint(); return;
+      }
+    }catch(e){
+      sinDatosMsg = "Sin conexión. Reintenta en un momento.";
+      DATA = null; paint(); return;
+    }
   }
+  // Sin sesión → tablero público (como hoy).
   try{ const r = await fetch("./data.json?v="+Date.now()); DATA = await r.json(); paint(); }
   catch(e){ view.innerHTML='<div class="loading">No pude cargar los datos.<br>'+esc(e.message)+'</div>'; }
 }
