@@ -38,7 +38,9 @@ API_BASE = "https://www.polaraccesslink.com/v3"
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ENV_PATH = os.path.join(SCRIPT_DIR, ".env")
 STORE_PATH = os.path.join(SCRIPT_DIR, "datos", "polar_accounts.json")
-OUT_BASE = os.path.join(SCRIPT_DIR, "datos", "polar_flow")
+# OUT_BASE respeta TID_DATA_DIR para aislar el crudo de Polar en la carpeta del atleta
+# (datos/atletas/<slug>/polar_flow/) en el pipeline multiusuario. Sin la env = como siempre.
+OUT_BASE = os.path.join(os.environ.get("TID_DATA_DIR") or os.path.join(SCRIPT_DIR, "datos"), "polar_flow")
 
 # Sub-recursos que intentamos bajar de cada ejercicio (los que no existan se saltan).
 # (nombre_archivo, ruta_api, es_json)

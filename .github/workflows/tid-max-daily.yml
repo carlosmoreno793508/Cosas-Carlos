@@ -45,7 +45,7 @@ jobs:
           WHOOP_REFRESH_TOKEN: ${{ secrets.WHOOP_REFRESH_TOKEN }}
         run: printf 'WHOOP_REFRESH_TOKEN=%s\n' "$WHOOP_REFRESH_TOKEN" > .env
 
-      - name: Correr pipeline (WHOOP + agregador → datos → coach → web)
+      - name: Correr pipeline MULTIUSUARIO (por atleta → reporte privado + dashboard público)
         working-directory: tid-max/software
         env:
           WHOOP_CLIENT_ID: ${{ secrets.WHOOP_CLIENT_ID }}
@@ -58,16 +58,12 @@ jobs:
           JUNCTION_ENV: ${{ secrets.JUNCTION_ENV }}
           JUNCTION_REGION: ${{ secrets.JUNCTION_REGION }}
         run: |
-          python whoop_sync.py
-          # Baja del agregador si hay llave + atletas; nunca rompe el pipeline.
-          if [ -n "$JUNCTION_API_KEY" ]; then
-            python agregador_sync.py || echo "(agregador: sin atletas o error no fatal, se omite)"
-          else
-            echo "(agregador: sin JUNCTION_API_KEY en secrets, se omite)"
-          fi
-          python tid_data.py
-          python tid_agent.py
-          python tid_web.py
+          # tid_multi.py recorre atletas.json: por CADA atleta baja su fuente (WHOOP /
+          # Polar / agregador) AISLADA en su carpeta, genera su reporte privado
+          # (reportes/<slug>.json) y refresca el dashboard público (web+app data.json)
+          # desde el atleta primario (Gael). Es defensivo: si a un atleta le falta su
+          # fuente, se omite sin romper a los demás ni al dashboard actual.
+          python tid_multi.py
 
       - name: Reguardar el refresh token rotado (WHOOP lo rota en cada sync)
         if: ${{ env.GH_PAT != '' }}
@@ -84,13 +80,14 @@ jobs:
             echo "El token no cambió; nada que actualizar."
           fi
 
-      - name: Publicar el reporte (commit de data.json)
+      - name: Publicar los reportes (commit de data.json + reportes por atleta)
         run: |
           git config user.name  "tid-max-bot"
           git config user.email "bot@tid-max.local"
-          git add tid-max/web/data.json
+          # Dashboard público (web + app) y los reportes PRIVADOS por atleta.
+          git add tid-max/web/data.json tid-max/app/data.json tid-max/software/reportes
           if git diff --staged --quiet; then
-            echo "Sin cambios en data.json (¿ya corrió hoy?)."
+            echo "Sin cambios (¿ya corrió hoy?)."
           else
             git commit -m "Reporte diario TID-MAX ($(date -u +%F))"
             git push

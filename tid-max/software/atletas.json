@@ -1,11 +1,33 @@
 {
+  "_uso": "Registro (roster) de atletas del ecosistema TID-MAX. Es la ÚNICA fuente de verdad de QUIÉNES son las cuentas de la app. El pipeline multiusuario (tid_multi.py) recorre este archivo y genera UN reporte por atleta (privado, en reportes/<slug>.json). Agregar una persona = agregar una entrada aquí + conectar su reloj desde la app. Este archivo NO lleva secretos: el slug/nombre/fuente no sirven sin las llaves del servidor.",
+  "_campos": {
+    "slug": "identificador estable y URL-safe (minúsculas, guiones). No cambiarlo una vez creado.",
+    "nombre": "nombre visible en la app y el reporte.",
+    "deporte": "running | natacion | ... (elige el módulo de coaching y las zonas).",
+    "fuente": "de dónde bajan sus datos: 'whoop' (directo), 'polar' (Polar Flow directo) o 'agregador' (Junction).",
+    "perfil": "archivo de perfil/config del atleta (relativo a software/). Manda sobre los defaults compartidos.",
+    "planes": "archivos de planificación de ESTE atleta (evento/plan-macro/plan-semana) que el driver aísla en su carpeta para que no se filtren a otros. Opcional.",
+    "agregador_atleta": "solo fuente 'agregador': nombre de su carpeta de usuario en Junction (default: el slug).",
+    "activo": "true = el pipeline lo procesa; false = se omite sin borrarlo."
+  },
   "atletas": [
+    {
+      "slug": "gael-moreno",
+      "nombre": "Gael Moreno",
+      "deporte": "natacion",
+      "fuente": "whoop",
+      "perfil": "nutricion-gael.json",
+      "planes": ["evento.json", "plan-macro.json", "plan-semana.json"],
+      "activo": true
+    },
     {
       "slug": "carlos-moreno",
       "nombre": "Carlos Moreno",
       "deporte": "running",
+      "reloj": "Polar",
       "fuente": "agregador",
-      "perfil": "perfil-carlos-moreno.json",
+      "perfil": "perfil-carlos.json",
+      "agregador_atleta": "carlos-gael-moreno-sarmiento",
       "activo": true
     }
   ]

@@ -46,7 +46,10 @@ ENV_PATH = os.path.join(SCRIPT_DIR, ".env")
 # via api/connect.js, para el sync en la nube). Se leen ambos; el local gana.
 STORE_PATH = os.path.join(SCRIPT_DIR, "datos", "agregador_users.json")
 STORE_PATH_REPO = os.path.join(SCRIPT_DIR, "agregador_users.json")
-OUT_BASE = os.path.join(SCRIPT_DIR, "datos", "agregador")
+# OUT_BASE respeta TID_DATA_DIR para que el pipeline multiusuario aisle el crudo del
+# agregador en la carpeta del atleta (datos/atletas/<slug>/agregador/). El STORE (quién
+# está conectado) sigue siendo GLOBAL. Sin la env = como siempre.
+OUT_BASE = os.path.join(os.environ.get("TID_DATA_DIR") or os.path.join(SCRIPT_DIR, "datos"), "agregador")
 
 DEFAULT_API_BASE = "https://api.sandbox.us.junction.com"
 

@@ -18,11 +18,15 @@ import json
 import datetime
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-PROC = os.path.join(SCRIPT_DIR, "datos", "procesado")
+# TID_PROC_DIR: carpeta 'procesado' de origen (per-atleta en el pipeline multiusuario).
+PROC = os.environ.get("TID_PROC_DIR") or os.path.join(SCRIPT_DIR, "datos", "procesado")
 COACH_JSON = os.path.join(PROC, "coach-hoy.json")
 CONSUMO_JSON = os.path.join(PROC, "consumo-hoy.json")
 WEB_DATA = os.path.join(SCRIPT_DIR, "..", "web", "data.json")
 APP_DATA = os.path.join(SCRIPT_DIR, "..", "app", "data.json")
+# TID_REPORT_OUT: si está, escribe el reporte a ESA sola ruta (privada, por atleta)
+# en vez de a web/ y app/. El login (Fase 2) sirve estos reportes por atleta autenticado.
+REPORT_OUT = os.environ.get("TID_REPORT_OUT") or None
 
 _MESES = ["", "ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"]
 _DIAS = ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"]
@@ -90,7 +94,7 @@ def build_data():
     # MISMO día ya tenía comidas, no las borres: un re-sync de la tarde (para atrapar la siesta)
     # no debe tirar lo que la familia ya cargó. En un día nuevo la fecha no coincide → limpio.
     if not nutricion["comidas"]:
-        prev = _load(os.path.abspath(WEB_DATA))
+        prev = _load(os.path.abspath(REPORT_OUT or WEB_DATA))
         prev_nu = (prev or {}).get("nutricion") or {}
         if prev and prev.get("fecha") == fecha_iso and prev_nu.get("comidas"):
             nutricion.update({
@@ -146,9 +150,11 @@ def build_data():
 
 def main():
     data = build_data()
-    # Mismo data.json para la WEB (dashboard) y para la APP (PWA instalable).
+    # Multiusuario: si TID_REPORT_OUT está, el reporte va a UNA ruta privada por atleta.
+    # (El login de la Fase 2 lo sirve; NO se publica como data.json estático.)
+    destinos = (REPORT_OUT,) if REPORT_OUT else (WEB_DATA, APP_DATA)
     salidas = []
-    for destino in (WEB_DATA, APP_DATA):
+    for destino in destinos:
         out = os.path.abspath(destino)
         os.makedirs(os.path.dirname(out), exist_ok=True)
         with open(out, "w", encoding="utf-8") as fh:

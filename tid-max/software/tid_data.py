@@ -28,6 +28,14 @@ from datetime import datetime, timezone, timedelta
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = sys.argv[1] if len(sys.argv) > 1 else os.path.join(SCRIPT_DIR, "datos")
 OUT_DIR = sys.argv[2] if len(sys.argv) > 2 else os.path.join(DATA_DIR, "procesado")
+# Archivo de perfil/config del atleta (zonas de FC + nutrición). El pipeline
+# multiusuario lo cambia por atleta vía TID_CONFIG (p. ej. perfil-carlos.json).
+# Sin la env = el default histórico (Gael). Se busca 1º en DATA_DIR, luego en SCRIPT_DIR.
+CONFIG_NAME = os.environ.get("TID_CONFIG") or "nutricion-gael.json"
+# Modo multiusuario: cuando el driver aísla los datos por atleta (TID_DATA_DIR), los
+# archivos de PLANIFICACIÓN compartidos (evento.json, plan-semana.json) NO deben caer al
+# SCRIPT_DIR global — si no, el evento/plan de un atleta se filtra al reporte de otro.
+_MULTI = bool(os.environ.get("TID_DATA_DIR"))
 
 SCHEMA_VERSION = "1.0"
 
@@ -59,6 +67,36 @@ def _single(prefix):
     with open(files[-1], encoding="utf-8") as f:
         d = json.load(f)
     return d if isinstance(d, dict) else {}
+
+
+def _load_config():
+    """El perfil/config del atleta (CONFIG_NAME). Se busca en DATA_DIR y luego en
+    SCRIPT_DIR (el perfil SÍ puede vivir compartido: perfil-carlos.json, nutricion-gael.json)."""
+    for p in (os.path.join(DATA_DIR, CONFIG_NAME), os.path.join(SCRIPT_DIR, CONFIG_NAME)):
+        if os.path.exists(p):
+            try:
+                with open(p, encoding="utf-8") as f:
+                    d = json.load(f)
+                return d if isinstance(d, dict) else {}
+            except (ValueError, OSError):
+                return {}
+    return {}
+
+
+def _load_plan(nombre):
+    """Archivo de planificación (evento.json, plan-semana.json). En modo multiusuario
+    NO cae al SCRIPT_DIR compartido, para no filtrar el plan de un atleta a otro."""
+    rutas = [os.path.join(DATA_DIR, nombre)]
+    if not _MULTI:
+        rutas.append(os.path.join(SCRIPT_DIR, nombre))
+    for p in rutas:
+        if os.path.exists(p):
+            try:
+                with open(p, encoding="utf-8") as f:
+                    return json.load(f)
+            except (ValueError, OSError):
+                return {}
+    return {}
 
 
 def _to_local(dt_utc, tz_offset):
@@ -447,24 +485,26 @@ def build_polar():
 
 
 def build_athlete():
+    # WHOOP trae nombre/medidas (si el atleta usa WHOOP); el perfil/config del atleta
+    # (perfil-carlos.json, nutricion-gael.json) manda para nombre, deporte y datos base.
     perfil = _single("perfil")
     body = _single("medidas_cuerpo")
+    cfg = _load_config()
+    cperfil = cfg.get("perfil") or {}
+    whoop_nombre = f"{perfil.get('first_name', '')} {perfil.get('last_name', '')}".strip()
+    # El registro (atletas.json) manda: el driver pasa nombre/deporte por env.
     return {
-        "nombre": f"{perfil.get('first_name', '')} {perfil.get('last_name', '')}".strip() or None,
-        "altura_m": body.get("height_meter"),
-        "peso_kg": body.get("weight_kilogram"),
-        "fc_max": body.get("max_heart_rate"),
+        "nombre": os.environ.get("TID_ATLETA") or cfg.get("atleta") or whoop_nombre or None,
+        "deporte": os.environ.get("TID_DEPORTE") or cfg.get("deporte"),
+        "altura_m": body.get("height_meter") or (cperfil.get("altura_cm") / 100 if cperfil.get("altura_cm") else None),
+        "peso_kg": body.get("weight_kilogram") or cperfil.get("peso_kg"),
+        "fc_max": body.get("max_heart_rate") or cperfil.get("fc_max_carrera"),
     }
 
 
 def build_evento():
     """Evento objetivo + fase calculada (carga/taper/pico) según los días que faltan."""
-    ev = {}
-    for p in (os.path.join(DATA_DIR, "evento.json"), os.path.join(SCRIPT_DIR, "evento.json")):
-        if os.path.exists(p):
-            with open(p, encoding="utf-8") as f:
-                ev = json.load(f)
-            break
+    ev = _load_plan("evento.json") or {}
     if not ev:
         return None
 
@@ -503,12 +543,7 @@ def build_evento():
 
 def build_plan_semana():
     """Semana del macrociclo (plan-macro.json) que cae en la fecha de hoy: km/ses/fase planeados."""
-    plan = {}
-    for p in (os.path.join(DATA_DIR, "plan-macro.json"), os.path.join(SCRIPT_DIR, "plan-macro.json")):
-        if os.path.exists(p):
-            with open(p, encoding="utf-8") as f:
-                plan = json.load(f)
-            break
+    plan = _load_plan("plan-macro.json") or {}
     semanas = plan.get("semanas") or []
     if not semanas:
         return None
@@ -560,7 +595,7 @@ def build_zonas_fc():
     Si faltan umbrales, cae a %FCmáx. Nota: FC máx del PE es de CARRERA; en nado suele ser
     ~5-10 lpm menor."""
     cfg = {}
-    for p in (os.path.join(DATA_DIR, "nutricion-gael.json"), os.path.join(SCRIPT_DIR, "nutricion-gael.json")):
+    for p in (os.path.join(DATA_DIR, CONFIG_NAME), os.path.join(SCRIPT_DIR, CONFIG_NAME)):
         if os.path.exists(p):
             with open(p, encoding="utf-8") as f:
                 cfg = json.load(f)
@@ -602,7 +637,7 @@ def build_nutricion(km_dia, seco_min, atleta):
     BMR (Mifflin-St Jeor) + actividad no-entreno + gasto de nado/seco, con un pequeño
     margen de seguridad para no subalimentar. Es una ESTIMACIÓN para orientar, no una prescripción."""
     cfg = {}
-    for p in (os.path.join(DATA_DIR, "nutricion-gael.json"), os.path.join(SCRIPT_DIR, "nutricion-gael.json")):
+    for p in (os.path.join(DATA_DIR, CONFIG_NAME), os.path.join(SCRIPT_DIR, CONFIG_NAME)):
         if os.path.exists(p):
             with open(p, encoding="utf-8") as f:
                 cfg = json.load(f)
@@ -672,12 +707,7 @@ def build_sesiones_reales(workouts, dia_iso):
 
 def build_plan_dias(km_semana):
     """Reparte km_semana por día según plan-semana.json (patrón + horarios). Devuelve hoy y mañana."""
-    cfg = {}
-    for p in (os.path.join(DATA_DIR, "plan-semana.json"), os.path.join(SCRIPT_DIR, "plan-semana.json")):
-        if os.path.exists(p):
-            with open(p, encoding="utf-8") as f:
-                cfg = json.load(f)
-            break
+    cfg = _load_plan("plan-semana.json") or {}
     dias = cfg.get("dias") or {}
     if not dias or not isinstance(km_semana, (int, float)):
         return None

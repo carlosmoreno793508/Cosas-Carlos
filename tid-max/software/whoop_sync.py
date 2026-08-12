@@ -34,7 +34,9 @@ API_BASE = "https://api.prod.whoop.com/developer"
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ENV_PATH = os.path.join(SCRIPT_DIR, ".env")
-DATA_DIR = os.path.join(SCRIPT_DIR, "datos")
+# TID_DATA_DIR permite al pipeline multiusuario (tid_multi.py) apuntar el crudo de
+# WHOOP a la carpeta de un atleta (datos/atletas/<slug>/). Sin la env = como siempre.
+DATA_DIR = os.environ.get("TID_DATA_DIR") or os.path.join(SCRIPT_DIR, "datos")
 
 # Endpoints v2: (nombre_archivo, ruta, es_coleccion)
 ENDPOINTS = [
