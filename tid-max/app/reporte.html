@@ -2,9 +2,9 @@
 <html lang="es"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#F5F7F9" id="metaTheme">
-<title>Reporte del día — Gael Moreno Sarmiento</title>
+<title>Reporte del día — TID-MAX</title>
 <script>
-/* Sigue el mismo tema que la app (localStorage tidmax_theme: auto | light | dark) */
+/* Mismo tema que la app (localStorage tidmax_theme: auto | light | dark) */
 (function(){ try{
   var t = localStorage.getItem("tidmax_theme") || "auto";
   var root = document.documentElement;
@@ -14,300 +14,166 @@
 }catch(e){} })();
 </script>
 <style>
-/* ===== TEMA (igual que la app: claro por defecto, oscuro auto + manual) ===== */
 :root{
-  --ground:#F5F7F9; --panel:#FFFFFF; --panel2:#EDF1F5; --raise:#E7ECF1; --line:#E2E8EF;
+  --ground:#F5F7F9; --panel:#FFFFFF; --panel2:#EDF1F5; --line:#E2E8EF;
   --ink:#101722; --dim:#5A6B7D; --faint:#93A2B4;
-  --accent:#B4EF2E; --accent2:#8FD400; --on-accent:#16210A; --accent-ink:#4F7A00;
+  --accent:#B4EF2E; --accent-ink:#4F7A00;
   --good:#12936A; --warn:#C67E00; --crit:#DB3A44;
   --shadow:0 1px 0 rgba(0,0,0,.02),0 12px 30px rgba(20,50,70,.10);
 }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
-  --ground:#0A0E14; --panel:#121822; --panel2:#18202c; --raise:#1e2a38; --line:#26303f;
+  --ground:#0A0E14; --panel:#121822; --panel2:#18202c; --line:#26303f;
   --ink:#eef3f8; --dim:#93a2b5; --faint:#63728a;
-  --accent:#C6FF3D; --accent2:#8FD400; --on-accent:#0f1a00; --accent-ink:#C6FF3D;
-  --good:#37d29a; --warn:#f6b543; --crit:#ff5a60;
+  --accent:#C6FF3D; --accent-ink:#C6FF3D; --good:#37d29a; --warn:#f6b543; --crit:#ff5a60;
   --shadow:0 0 0 1px rgba(255,255,255,.04),0 14px 34px rgba(0,0,0,.55);
 } }
 :root[data-theme="dark"]{
-  --ground:#0A0E14; --panel:#121822; --panel2:#18202c; --raise:#1e2a38; --line:#26303f;
+  --ground:#0A0E14; --panel:#121822; --panel2:#18202c; --line:#26303f;
   --ink:#eef3f8; --dim:#93a2b5; --faint:#63728a;
-  --accent:#C6FF3D; --accent2:#8FD400; --on-accent:#0f1a00; --accent-ink:#C6FF3D;
-  --good:#37d29a; --warn:#f6b543; --crit:#ff5a60;
+  --accent:#C6FF3D; --accent-ink:#C6FF3D; --good:#37d29a; --warn:#f6b543; --crit:#ff5a60;
   --shadow:0 0 0 1px rgba(255,255,255,.04),0 14px 34px rgba(0,0,0,.55);
 }
-* { box-sizing: border-box; }
-body { margin:0; color:var(--ink);
-  background:radial-gradient(1100px 620px at 82% -12%, color-mix(in srgb,var(--accent) 10%,transparent), transparent 60%), var(--ground);
-  font-family:-apple-system,"Segoe UI","Helvetica Neue",Arial,sans-serif;
-  max-width:1120px; padding:32px; transition:background .2s,color .2s; }
-.header { margin-bottom:22px; display:flex; justify-content:space-between; align-items:baseline; }
-.header h1 { font-size:22px; color:var(--ink); margin:0; }
-.header .sub { font-size:12.5px; color:var(--dim); }
-.kpis { display:flex; gap:16px; margin-bottom:20px; align-items:stretch; }
-.kpi { flex:1; border-radius:16px; padding:18px 20px; border:1px solid rgba(255,255,255,0.10);
-  box-shadow:0 8px 20px rgba(0,0,0,0.18); }
-/* KPI = tarjetas de color propio (legibles en claro y oscuro). Alias limpios + nombres heredados del pipeline. */
-.kpi.crit,   .kpi.cripto      { background:linear-gradient(150deg,#e0454d,#ff5a60); }
-.kpi.warn,   .kpi.cetes-karla { background:linear-gradient(150deg,#a8790f,#f6b543); }
-.kpi.good,   .kpi.cetes-gael  { background:linear-gradient(150deg,#2fbf8c,#37d29a); }
-.kpi.accent, .kpi.purple      { background:linear-gradient(150deg,#8fd400,#c6ff3d); }
-.kpi.teal                     { background:linear-gradient(150deg,#0f8ea8,#37c8d4); }
-.kpi.accent .label,.kpi.purple .label{ color:rgba(15,26,0,0.70); }
-.kpi.accent .value,.kpi.purple .value{ color:#12210a; }
-.kpi.accent .value .unit,.kpi.purple .value .unit{ color:rgba(15,26,0,0.6); }
-.kpi.accent .badge,.kpi.purple .badge{ background:rgba(15,26,0,0.16); color:#12210a; }
-.kpi .label { font-size:11px; letter-spacing:1.5px; color:rgba(255,255,255,0.78); margin-bottom:8px; text-transform:uppercase; }
-.kpi .value { font-size:30px; font-weight:700; color:#fff; }
-.kpi .value .unit { font-size:14px; color:rgba(255,255,255,0.7); font-weight:400; margin-left:3px; }
-.badge { display:inline-block; margin-top:10px; padding:4px 10px; border-radius:20px; font-size:12px; font-weight:700; background:rgba(0,0,0,0.28); color:#fff; }
-.row { display:flex; gap:16px; margin-bottom:16px; align-items:flex-start; }
-.panel { background:linear-gradient(165deg,var(--panel2),var(--panel)); border:1px solid color-mix(in srgb,var(--accent) 22%,var(--line));
-  border-radius:16px; padding:20px 22px; box-shadow:var(--shadow); flex:1; }
-.panel h2 { font-size:14px; color:var(--ink); margin:0 0 14px; font-weight:600; }
-.panel h2 .muted { color:var(--dim); font-weight:400; font-size:12px; }
-.bar-row { display:flex; align-items:center; gap:6px; margin-bottom:13px; }
-.bar-name { width:132px; font-size:13px; color:var(--ink); flex-shrink:0; font-weight:600; }
-.bar-track { flex:1; background:var(--panel2); border-radius:8px; height:14px; overflow:hidden; box-shadow:inset 0 0 0 1px var(--line); }
-.bar-fill { height:100%; border-radius:8px; }
-.bar-val-wrap { width:225px; text-align:right; flex-shrink:0; display:flex; flex-direction:column; align-items:flex-end; line-height:1.25; }
-.bar-val { font-size:17px; color:var(--ink); font-weight:800; }
-.bar-pct { font-size:10px; color:var(--dim); margin-left:0; }
-.estado-pill { display:inline-block; font-size:10.5px; font-weight:800; padding:2px 8px; border-radius:20px; margin-left:6px; vertical-align:middle; }
-.line-chart { position:relative; height:150px; }
-.line-chart svg { width:100%; height:100%; }
-.legend { display:flex; gap:16px; margin-top:8px; font-size:11.5px; color:var(--dim); }
-.legend span { display:inline-flex; align-items:center; gap:6px; }
-.dot { width:9px; height:9px; border-radius:50%; display:inline-block; }
-.note-box { margin-top:12px; font-size:11.5px; color:var(--dim); background:color-mix(in srgb,var(--accent) 8%,transparent);
-  border:1px solid color-mix(in srgb,var(--accent) 22%,transparent); padding:10px 12px; border-radius:10px; }
-.reco { background:linear-gradient(165deg,var(--panel2),var(--panel)); border:1px solid color-mix(in srgb,var(--accent) 22%,var(--line));
-  border-radius:16px; padding:18px 22px; margin-bottom:16px; box-shadow:var(--shadow); }
-.footer { margin-top:10px; text-align:center; font-size:11px; color:var(--faint); }
-.sec-title { font-size:16px; color:var(--ink); font-weight:700; margin:26px 0 10px; }
-.zona-row { display:flex; align-items:baseline; gap:10px; margin-bottom:10px; }
-.zona-dot { width:12px; height:12px; border-radius:4px; flex-shrink:0; margin-top:2px; }
-.zona-nombre { width:160px; font-size:13px; color:var(--ink); font-weight:700; flex-shrink:0; }
-.zona-rango { width:100px; font-size:12px; color:var(--dim); flex-shrink:0; }
-.zona-desc { font-size:12px; color:var(--dim); }
-.bar-row[data-key] { padding:4px; margin:-4px -4px 12px; border-radius:8px; transition:background 0.12s ease; }
-.bar-row[data-key]:hover { background:color-mix(in srgb,var(--ink) 6%,transparent); }
-/* etiquetas del gráfico de zonas: siguen el tema (el pico "MÁX HOY" queda blanco con contorno) */
-.zsvg text { fill:var(--dim); }
-.zsvg text.mh { fill:#ffffff; }
-#detail { display:none; margin-top:16px; margin-bottom:16px; border-radius:16px; padding:4px;
-  background:linear-gradient(150deg,#7cb000,#9fd400); box-shadow:0 14px 34px rgba(0,0,0,0.55); }
-#detail.show { display:block; }
-#detail .dinner { border-radius:13px; padding:20px 22px; background:linear-gradient(165deg,var(--panel2),var(--panel)); color:var(--ink); }
-#detail .dtitle { font-size:17px; font-weight:800; margin-bottom:10px; }
-#detail .dclose { float:right; cursor:pointer; color:var(--ink); font-size:12px; font-weight:700; background:color-mix(in srgb,var(--ink) 10%,transparent); padding:4px 10px; border-radius:20px; }
-#detail table { width:100%; border-collapse:collapse; margin-top:14px; font-size:13px; }
-#detail th { text-align:left; color:var(--accent-ink); font-weight:800; font-size:11px; text-transform:uppercase; letter-spacing:0.5px; padding-bottom:8px; border-bottom:2px solid color-mix(in srgb,var(--accent) 34%,transparent); }
-#detail td { padding:9px 4px; border-bottom:1px solid var(--line); color:var(--ink); }
-#detail tr:nth-child(even) td { background:color-mix(in srgb,var(--accent) 7%,transparent); }
-</style>
-<style>
-/* --- TID-MAX · adaptación a teléfono (no altera el look en desktop) --- */
-svg { max-width:100%; height:auto; }
-@media (max-width:760px){
-  body{ max-width:100% !important; padding:16px 14px !important; }
-  .header{ flex-direction:column; gap:4px; }
-  .kpis{ flex-wrap:wrap; gap:10px; }
-  .kpi{ flex:1 1 calc(50% - 10px); padding:14px 15px; }
-  .kpi .value{ font-size:24px; }
-  .row{ flex-direction:column; gap:14px; }
-  .panel{ padding:16px 15px; }
-  .bar-row{ flex-wrap:wrap; gap:4px 8px; }
-  .bar-name{ width:auto; min-width:104px; flex:1 0 auto; }
-  .bar-track{ order:3; flex:1 1 100%; height:12px; }
-  .bar-val-wrap{ width:auto; min-width:0; text-align:right; }
-  .bar-val{ font-size:15px; }
-  .zona-nombre{ width:auto; min-width:120px; }
-  .zona-rango{ width:auto; }
-}
-</style>
-</head><body>
-<div id="app"></div>
+*{box-sizing:border-box}
+body{margin:0;color:var(--ink);background:var(--ground);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:760px;margin:0 auto;padding:20px 16px 60px}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:4px}
+.h{font-size:24px;font-weight:800;letter-spacing:-.3px}
+.sub{color:var(--dim);font-size:13.5px;margin-top:4px}
+a.back{color:var(--accent-ink);text-decoration:none;font-weight:700;font-size:14px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:13px;box-shadow:var(--shadow)}
+.kpi .l{font-size:10.5px;letter-spacing:.06em;color:var(--faint);text-transform:uppercase;font-weight:700}
+.kpi .v{font-size:23px;font-weight:800;margin-top:3px}
+.kpi .v small{font-size:12px;color:var(--dim);font-weight:600}
+.kpi .b{font-size:11px;font-weight:700;margin-top:4px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;margin-top:14px;box-shadow:var(--shadow)}
+.card h2{font-size:15px;margin:0 0 3px;font-weight:800}
+.card .muted{color:var(--dim);font-size:12.5px;margin-bottom:10px}
+.row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:9px 0;border-top:1px solid var(--line)}
+.row:first-of-type{border-top:0}
+.row .k{color:var(--dim);font-size:14px}
+.row .val{font-weight:800;font-size:15px;text-align:right}
+.row .val small{color:var(--dim);font-weight:600;font-size:12px}
+.badge{display:inline-block;font-size:11px;font-weight:800;padding:2px 8px;border-radius:999px;margin-left:6px}
+.b-good{background:color-mix(in srgb,var(--good) 18%,transparent);color:var(--good)}
+.b-warn{background:color-mix(in srgb,var(--warn) 20%,transparent);color:var(--warn)}
+.b-crit{background:color-mix(in srgb,var(--crit) 18%,transparent);color:var(--crit)}
+.coach{font-size:14.5px;line-height:1.55}
+.alert{display:flex;gap:9px;padding:9px 0;border-top:1px solid var(--line);font-size:14px}
+.alert:first-of-type{border-top:0}
+.foot{color:var(--faint);font-size:12px;margin-top:20px;text-align:center}
+.loading{color:var(--dim);text-align:center;padding:60px 20px}
+</style></head>
+<body>
+<div class="wrap"><div id="app"><div class="loading">Cargando tu reporte…</div></div></div>
 <script>
+var TOKEN_KEY="tid_token";
+function tok(){ try{ return (localStorage.getItem(TOKEN_KEY)||"").trim(); }catch(e){ return ""; } }
+function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];}); }
+function num(v,d){ return (v==null||v==="")?"—":(typeof v==="number"?(d!=null?v.toFixed(d):v):v); }
+function pct(v){ if(v==null) return ""; return (v>0?"+":"")+v+"%"; }
 
-const COMO_LEER = `<div class="panel" style="margin-bottom:16px;">
-  <h2>📖 Cómo leer "Motor real · zonas de FC" <span class="muted">las 5 zonas explicadas</span></h2>
-  
-        <div class="zona-row">
-          <span class="zona-dot" style="background:#37d29a;"></span>
-          <span class="zona-nombre">Z1-Z2 · Base aeróbica</span>
-          <span class="zona-rango">hasta 143 lpm</span>
-          <span class="zona-desc">Recuperación, técnica, aeróbico ligero.</span>
-        </div>
-        <div class="zona-row">
-          <span class="zona-dot" style="background:#37c8d4;"></span>
-          <span class="zona-nombre">Z2 · Zona sensible</span>
-          <span class="zona-rango">143–167 lpm</span>
-          <span class="zona-desc">Construcción de rendimiento aeróbico — la zona que el reporte recomienda priorizar.</span>
-        </div>
-        <div class="zona-row">
-          <span class="zona-dot" style="background:#f6b543;"></span>
-          <span class="zona-nombre">Z3 · Umbral</span>
-          <span class="zona-rango">167–173 lpm</span>
-          <span class="zona-desc">Trabajo de umbral: el lactato empieza a acumularse más rápido de lo que el cuerpo lo aclara.</span>
-        </div>
-        <div class="zona-row">
-          <span class="zona-dot" style="background:#ff8a4d;"></span>
-          <span class="zona-nombre">Z4 · Alta intensidad</span>
-          <span class="zona-rango">173–181 lpm</span>
-          <span class="zona-desc">Intervalos duros, tolerancia al lactato.</span>
-        </div>
-        <div class="zona-row">
-          <span class="zona-dot" style="background:#ff5a60;"></span>
-          <span class="zona-nombre">Z5 · Máxima</span>
-          <span class="zona-rango">181+ lpm</span>
-          <span class="zona-desc">Esfuerzo máximo, muy corto — VO2pico.</span>
-        </div>
-  <div class="note-box">
-    <b>VT1 (143 lpm, umbral aeróbico):</b> donde el cuerpo empieza a depender más de carbohidrato que de grasa.<br>
-    <b>VT2 (167 lpm, umbral anaeróbico):</b> donde el lactato empieza a acumularse más rápido de lo que se puede aclarar.<br>
-    <b>FATmax (173 lpm, quema grasa máxima):</b> en Gael está por encima de VT2 (fuera de lo típico) — el propio laboratorio lo marca como hallazgo notable: excelente flexibilidad metabólica, quema grasa incluso a intensidad alta.<br>
-    <b>FCmax (181 lpm, máxima):</b> su frecuencia cardíaca máxima medida en la prueba de esfuerzo (equivale a su VO2pico).<br><br>
-    <b>MÁX HOY</b> (marcado dentro de la barra): frecuencia cardíaca máxima alcanzada en las sesiones de hoy. Su posición sobre la barra muestra en qué zona llegó a trabajar Gael ese día.
-  </div>
-  <div class="note-box" style="margin-top:10px;">
-    <b>🎯 Regla rápida para leer "MÁX HOY":</b> no hay una zona "buena" fija — depende de qué tipo de sesión tocaba ese día. Antes de juzgar el número, pregúntate qué se buscaba entrenar:<br><br>
-    <b>Descanso/recuperación</b> → máximo bajo, hasta ~143 (Z1) = perfecto. Si se disparó a 170+, no descansó.<br>
-    <b>Aeróbico/técnica/moderado (gym+alberca normal)</b> → 160-178 (Z2 alta a Z4) = justo lo que se busca.<br>
-    <b>Intervalos/velocidad/afinado</b> → 178-185+ (Z4-Z5) = correcto, ese día se busca apretar.<br><br>
-    Lo que preocupa no es un número alto o bajo en sí — es que esté <b>al revés de lo esperado</b>: alto en día de descanso, o bajo en día de velocidad. Un pico aislado en Z5 durante un sprint es normal y bueno; varios días seguidos en Z4-Z5 fuera de semana de velocidad/taper es señal de vigilar fatiga.
-  </div>
-</div>`;
+// Rango → badge (good/warn/crit) según umbrales simples por métrica.
+function badge(txt,cls){ return '<span class="badge '+cls+'">'+esc(txt)+'</span>'; }
+function recBadge(r){ if(r==null) return ""; return r>=67?badge("Verde","b-good"):r>=34?badge("Amarillo","b-warn"):badge("Rojo","b-crit"); }
+function spoBadge(v){ if(v==null) return ""; return v>=95?badge("Óptima","b-good"):v>=93?badge("Aceptable","b-warn"):badge("Baja","b-crit"); }
 
-function barRow(r){
-  if(r.kv){
-    let h = '<div class="bar-row"' + (r.rowStyle ? ' style="'+r.rowStyle+'"' : '') + '>';
-    h += '<div class="bar-name"' + (r.nameStyle ? ' style="'+r.nameStyle+'"' : '') + '>' + r.name + '</div>';
-    if(r.val !== undefined){
-      h += '<div class="bar-val-wrap" style="flex:1; text-align:left; align-items:flex-start;">';
-      h += '<span class="bar-val"' + (r.valStyle ? ' style="'+r.valStyle+'"' : '') + '>' + r.val + '</span>';
-      if(r.pct !== undefined) h += '<span class="bar-pct">' + r.pct + '</span>';
-      h += '</div>';
-    }
-    h += '</div>';
-    return h;
-  }
-  let attrs = 'class="bar-row"';
-  if(r.key) attrs = 'class="bar-row" data-key="'+r.key+'" onclick="mostrarDetalle(\''+r.key+'\')" style="cursor:pointer;"';
-  let h = '<div ' + attrs + '><div class="bar-name">' + r.name + '</div>';
-  h += '<div class="bar-track"><div class="bar-fill" style="width:'+r.width+'; background:'+r.fill+';"></div></div>';
-  let valInner = r.val || '';
-  if(r.pill) valInner += '<span class="estado-pill" style="background:'+r.pill.bg+'; color:'+r.pill.color+';">'+r.pill.text+'</span>';
-  h += '<div class="bar-val-wrap"><span class="bar-val">' + valInner + '</span>';
-  if(r.pct !== undefined) h += '<span class="bar-pct"' + (r.pctStyle ? ' style="'+r.pctStyle+'"' : '') + '>' + r.pct + '</span>';
-  h += '</div></div>';
-  return h;
-}
-
-function panel(p){
-  return '<div class="panel"><h2>' + p.titulo + ' <span class="muted">' + p.muted + '</span></h2>'
-    + p.rows.map(barRow).join('') + '</div>';
-}
-
-function mealRow(m){
-  return '<div class="bar-row" style="align-items:flex-start;">'
-    + '<div class="bar-name" style="width:80px;">' + m.name + '</div>'
-    + '<div class="bar-val-wrap" style="flex:1; text-align:left; align-items:flex-start;">'
-    + '<span class="bar-val" style="font-size:13px;">' + m.text + '</span>'
-    + '<span class="bar-pct">' + m.macros + '</span></div></div>';
-}
-
-function comidasPanel(c){
-  return '<div class="panel" style="flex:1;"><h2>' + c.titulo + ' <span class="muted">' + c.muted + '</span></h2>'
-    + c.rows.map(barRow).join('')
-    + '<div class="sec-title" style="font-size:13px; margin:16px 0 8px;">' + c.registro_titulo + '</div>'
-    + c.registro.map(mealRow).join('') + '</div>';
-}
-
-function zonasPanel(z){
-  let svg = '<svg class="zsvg" viewBox="'+z.viewBox+'" width="'+z.width+'" height="'+z.height+'" style="overflow:visible;">';
-  z.rects.forEach(function(rc){
-    svg += '<rect x="'+rc.x+'" y="0" width="'+rc.w+'" height="26" fill="'+rc.fill+'" opacity="0.85"/>';
-  });
-  z.marks.forEach(function(mk){
-    svg += '<line x1="'+mk.x+'" y1="-3" x2="'+mk.x+'" y2="29" stroke="#0A0E14" stroke-width="2"/>';
-    svg += '<text x="'+mk.x+'" y="'+mk.labelY+'" font-size="9.5" font-weight="700" fill="#c7d0dc" text-anchor="middle">'+mk.label+'</text>';
-    svg += '<text x="'+mk.x+'" y="'+mk.subY+'" font-size="8" font-weight="700" letter-spacing="0.3" fill="#8792a6" text-anchor="middle">'+mk.sub+'</text>';
-  });
-  let mh = z.max_hoy;
-  svg += '<text class="mh" x="'+mh.x+'" y="'+mh.textY+'" font-size="11.5" font-weight="800" fill="#ffffff" stroke="#0A0E14" stroke-width="3" paint-order="stroke" text-anchor="middle">'+mh.label+'</text>';
-  svg += '<circle cx="'+mh.x+'" cy="'+mh.cy+'" r="6" fill="#ffffff" stroke="#0A0E14" stroke-width="2"/>';
-  svg += '</svg>';
-  let s = z.sesion;
-  return '<div class="panel"><h2>' + z.titulo + ' <span class="muted">' + z.muted + '</span></h2>'
-    + '<div style="position:relative; margin-top:18px;">' + svg + '</div>'
-    + '<div class="bar-row" style="margin-top:12px;"><div class="bar-name">' + s.name + '</div>'
-    + '<div class="bar-val-wrap" style="flex:1; text-align:left; align-items:flex-start;"><span class="bar-val">' + s.val + '</span><span class="bar-pct">' + s.pct + '</span></div></div>'
-    + '<div class="note-box">' + z.note + '</div></div>';
-}
-
-function formaPanel(fc){
-  let svg = '<svg viewBox="'+fc.viewBox+'" preserveAspectRatio="none">';
-  fc.series.forEach(function(se){
-    svg += '<polyline points="'+se.points+'" fill="none" stroke="'+se.color+'" stroke-width="3"/>';
-  });
-  svg += '</svg>';
-  let legend = fc.legend.map(function(l){
-    return '<span><span class="dot" style="background:'+l.color+';"></span>'+l.text+'</span>';
-  }).join('');
-  return '<div class="panel" style="flex:1.4;"><h2>' + fc.titulo + ' <span class="muted">' + fc.muted + '</span></h2>'
-    + '<div class="line-chart">' + svg + '</div>'
-    + '<div class="legend">' + legend + '</div>'
-    + '<div class="note-box">' + fc.note + '</div></div>';
-}
-
-function taperPanel(t){
-  return '<div class="panel"><h2>' + t.titulo + ' <span class="muted">' + t.muted + '</span></h2>'
-    + t.rows.map(barRow).join('')
-    + '<div class="note-box">' + t.note + '</div></div>';
+function row(k,val,sub,bdg){
+  return '<div class="row"><div class="k">'+esc(k)+'</div><div class="val">'+val
+    +(sub?' <small>'+esc(sub)+'</small>':'')+(bdg||'')+'</div></div>';
 }
 
 function render(d){
-  window.DETAILS = d.details;
-  let hd = d.header;
-  let html = '';
-  html += '<div class="header"><h1>' + hd.nombre + hd.titulo_suffix + '</h1>'
-    + '<div class="sub"><b>' + hd.fecha + '</b> · ' + hd.evento + ': ' + hd.dias_al_evento + ' días · vuela en ' + hd.dias_a_vuelo + ' días'
-    + ' · <a href="' + hd.link_calificaciones.href + '" target="_blank" style="color:var(--accent-ink);">' + hd.link_calificaciones.texto + '</a></div></div>';
+  var s=d.sueno||{}, h=d.hrv||{}, rh=d.rhr||{}, fo=d.forma||{}, vi=d.vitales||{};
+  var evTxt = d.evento && d.evento!=="el evento"
+     ? esc(d.evento)+(d.dias_al_evento!=null?' · '+d.dias_al_evento+' días':'') : '';
+  var html='';
+  html+='<div class="top"><div>'
+      +'<div class="h">'+esc(d.atleta||"Atleta")+'</div>'
+      +'<div class="sub">'+esc(d.fecha_texto||d.fecha||"")+(evTxt?' · '+evTxt:'')+'</div>'
+      +'</div><a class="back" href="./">‹ Volver</a></div>';
 
-  html += '<div class="kpis">' + d.kpis.map(function(k){
-    return '<div class="kpi ' + k.clase + '"><div class="label">' + k.label + '</div><div class="value">' + k.value + '</div><div class="badge">' + k.badge + '</div></div>';
-  }).join('') + '</div>';
+  // KPIs
+  html+='<div class="kpis">'
+      +'<div class="kpi"><div class="l">Recovery</div><div class="v">'+num(d.recovery)+'<small>%</small></div><div class="b">'+recBadge(d.recovery)+'</div></div>'
+      +'<div class="kpi"><div class="l">HRV</div><div class="v">'+num(h.ms)+'<small>ms</small></div><div class="b" style="color:var(--dim)">'+esc(pct(h.vs_base_pct))+' vs base</div></div>'
+      +'<div class="kpi"><div class="l">Sueño</div><div class="v">'+num(s.total_h)+'<small>h</small></div><div class="b" style="color:var(--dim)">'+num(s.perf)+'% perf</div></div>'
+      +'<div class="kpi"><div class="l">Strain</div><div class="v">'+num(vi.strain)+'</div><div class="b" style="color:var(--dim)">del día</div></div>'
+      +'</div>';
 
-  html += '<div class="row">' + panel(d.vitales) + panel(d.sueno) + '</div>';
-  html += '<div class="row">' + panel(d.strain_energia) + zonasPanel(d.zonas_fc) + '</div>';
-  html += '<div class="row">' + comidasPanel(d.comidas) + '</div>';
-  html += '<div class="row">' + formaPanel(d.forma_chart) + taperPanel(d.taper) + '</div>';
-  html += COMO_LEER;
-  html += '<div class="reco"><h2 style="margin-bottom:8px;">' + d.recomendacion.titulo + '</h2>'
-    + '<div style="font-size:13px; color:var(--ink); white-space:pre-line;">' + d.recomendacion.texto + '</div></div>';
-  html += '<div class="footer">' + d.footer + '</div>';
-  html += '<div id="detail"></div>';
+  // Veredicto / coach
+  if(d.semaforo_desc||fo.lectura){
+    html+='<div class="card"><h2 style="color:var(--accent-ink)">Coach de hoy</h2>';
+    if(d.semaforo_desc) html+='<div class="coach">'+esc(d.semaforo_desc)+'</div>';
+    if(fo.lectura) html+='<div class="coach" style="margin-top:8px;color:var(--dim)">'+esc(fo.lectura)+'</div>';
+    html+='</div>';
+  }
 
-  document.getElementById('app').innerHTML = html;
+  // Vitales
+  html+='<div class="card"><h2>Recovery y señales vitales</h2><div class="muted">Del WHOOP del día</div>';
+  html+=row("Recovery", num(d.recovery)+'%', null, recBadge(d.recovery));
+  html+=row("HRV", num(h.ms)+' ms', (h.base!=null?'base '+num(h.base):'')+(h.vs_base_pct!=null?' · '+pct(h.vs_base_pct):''));
+  html+=row("FC reposo", num(rh.lpm)+' lpm', (rh.base!=null?'base '+num(rh.base):'')+(rh.vs_base_pct!=null?' · '+pct(rh.vs_base_pct):''));
+  if(vi.spo2!=null) html+=row("SpO₂", num(vi.spo2)+'%', null, spoBadge(vi.spo2));
+  if(vi.temp_piel!=null) html+=row("Temp. piel", num(vi.temp_piel,1)+' °C');
+  if(vi.resp_rate!=null) html+=row("Respiración", num(vi.resp_rate,1)+' rpm');
+  html+='</div>';
+
+  // Sueño
+  html+='<div class="card"><h2>Sueño</h2><div class="muted">El total suma las siestas</div>';
+  html+=row("Dormido", num(s.total_h)+' h', (s.noche_h!=null?num(s.noche_h)+' h noche':'')+(s.siesta_h?' + '+num(s.siesta_h)+' h siesta':''));
+  html+=row("Performance", num(s.perf)+'%', (s.perf_prom_7d!=null?'7d '+num(s.perf_prom_7d)+'%':''));
+  if(s.efic!=null) html+=row("Eficiencia", num(s.efic)+'%');
+  if(s.deep_pct!=null||s.rem_pct!=null) html+=row("Profundo / REM", num(s.deep_pct)+'% / '+num(s.rem_pct)+'%');
+  if(s.consist!=null) html+=row("Consistencia", num(s.consist)+'%');
+  if(s.despertares!=null) html+=row("Despertares", num(s.despertares));
+  if(s.deuda_min!=null) html+=row("Deuda de sueño", num(s.deuda_min)+' min');
+  if(s.acostado||s.despertar) html+=row("Horario", esc((s.acostado||"—"))+' → '+esc((s.despertar||"—")));
+  html+='</div>';
+
+  // Forma
+  if(fo.ctl!=null||fo.tsb!=null){
+    html+='<div class="card"><h2>Forma (carga)</h2><div class="muted">Proxy sobre el strain de WHOOP — lee la tendencia</div>';
+    html+=row("Fitness (CTL)", num(fo.ctl,1));
+    html+=row("Fatiga (ATL)", num(fo.atl,1));
+    html+=row("Forma (TSB)", num(fo.tsb,1), (fo.tsb_previa!=null?'previa '+num(fo.tsb_previa,1):''));
+    if(fo.estado_pico) html+=row("Estado", esc(fo.estado_pico));
+    html+='</div>';
+  }
+
+  // Alertas
+  var al=(d.alertas||[]).filter(function(a){return a&&a.texto;});
+  if(al.length){
+    html+='<div class="card"><h2>Señales a vigilar</h2>';
+    al.forEach(function(a){ html+='<div class="alert">⚠️ <div>'+esc(a.texto)+'</div></div>'; });
+    html+='</div>';
+  }
+
+  html+='<div class="foot">'+esc(d.nota_datos||"Fuente: WHOOP + motor TID-MAX.")+'</div>';
+  document.getElementById("app").innerHTML=html;
 }
 
-function mostrarDetalle(key){
-  const d = document.getElementById('detail');
-  const html = window.DETAILS[key];
-  if(!html) return;
-  d.innerHTML = '<div class="dinner"><span class="dclose" onclick="cerrarDetalle()">cerrar ✕</span>' + html + '</div>';
-  d.classList.add('show');
-  d.scrollIntoView({behavior: 'smooth', block: 'center'});
-}
-function cerrarDetalle(){
-  document.getElementById('detail').classList.remove('show');
+function errorBox(msg){
+  document.getElementById("app").innerHTML='<div class="loading">'+esc(msg)+'<br><a class="back" href="./" style="display:inline-block;margin-top:12px">‹ Volver a la app</a></div>';
 }
 
-fetch('./reporte.json')
-  .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
-  .then(render)
-  .catch(function(e){ document.getElementById('app').innerHTML = '<pre style="color:#ff5a60;">Error cargando reporte.json: ' + e.message + '</pre>'; });
-
+// Carga EN VIVO por atleta: si hay sesión, /api/me (tu reporte); si no, data.json (público).
+(function(){
+  var t=tok();
+  if(t){
+    fetch("/api/me",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({token:t})})
+      .then(function(r){
+        if(r.ok) return r.json().then(function(j){ render(j.data); });
+        if(r.status===401){ try{localStorage.removeItem(TOKEN_KEY);localStorage.removeItem("tid_session");}catch(e){} errorBox("Tu sesión expiró. Entra de nuevo en la app."); return; }
+        return r.json().catch(function(){return {};}).then(function(j){ errorBox((j&&j.error)||"Aún no hay reporte para tu cuenta."); });
+      })
+      .catch(function(){ errorBox("Sin conexión. Reintenta."); });
+  } else {
+    fetch("./data.json?v="+Date.now())
+      .then(function(r){ if(!r.ok) throw new Error("HTTP "+r.status); return r.json(); })
+      .then(render)
+      .catch(function(e){ errorBox("No pude cargar el reporte: "+e.message); });
+  }
+})();
 </script>
 </body></html>
