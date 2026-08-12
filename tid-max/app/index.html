@@ -403,10 +403,13 @@ function vPerfil(d){
           <option value="triatlon">Triatlón</option>
           <option value="otro">Otro</option>
         </select>
-        <input class="inp" id="rg_code" type="password" placeholder="Clave de la familia" autocomplete="off"
+        <input class="inp" id="rg_code" type="password" placeholder="Clave de la familia (si te la pidieron)" autocomplete="off"
           onkeydown="if(event.key==='Enter')tidRegisterFromUI()">
+        <input id="rg_hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"
+          style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+        <input id="rg_t" type="hidden" value="${Date.now()}">
         <button class="btn sec" onclick="tidRegisterFromUI()" style="margin-top:8px">Crear mi cuenta</button>
-        <div class="hint" style="margin-top:8px">Con tu correo + PIN entrarás a tu tablero privado. La clave de la familia evita altas de extraños.</div>
+        <div class="hint" style="margin-top:8px">Con tu correo + PIN entrarás a tu tablero privado.</div>
       ` : `
         <input class="inp" id="lg_user" placeholder="Correo" type="email" inputmode="email" autocapitalize="off" autocorrect="off" autocomplete="username" style="margin-bottom:8px">
         <input class="inp" id="lg_pin" type="password" placeholder="PIN" inputmode="numeric" autocomplete="current-password"
@@ -698,10 +701,10 @@ function tidLoginFromUI(){
 function setAuthMode(m){ authMode=m; if(activeTab==="perfil"&&!screen) paint(); }
 
 // Alta de usuario real desde la app: crea la cuenta (api/registro) y deja logueado.
-async function tidRegister(nombre, email, pin, deporte, code){
+async function tidRegister(payload){
   try{
     const r = await fetch("/api/registro", {method:"POST", headers:{"content-type":"application/json"},
-      body: JSON.stringify({nombre, email, pin, deporte, code})});
+      body: JSON.stringify(payload)});
     const j = await r.json().catch(()=>({}));
     if(!r.ok || !j.token){ toast(j.error||"No pude crear la cuenta."); return false; }
     localStorage.setItem(TID_TOKEN_KEY, j.token);
@@ -712,13 +715,13 @@ async function tidRegister(nombre, email, pin, deporte, code){
 }
 function tidRegisterFromUI(){
   const g=id=>(document.getElementById(id)||{}).value||"";
-  const nombre=g("rg_nombre").trim(), email=g("rg_email").trim(), pin=g("rg_pin"), code=g("rg_code").trim();
-  const deporte=g("rg_deporte")||"otro";
+  const nombre=g("rg_nombre").trim(), email=g("rg_email").trim(), pin=g("rg_pin");
+  const deporte=g("rg_deporte")||"otro", code=g("rg_code").trim();
+  const hp=g("rg_hp"), t=Date.now()-(parseInt(g("rg_t"),10)||Date.now());
   if(!nombre){ toast("Escribe tu nombre."); return; }
   if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){ toast("Correo no válido."); return; }
   if((pin||"").length<4){ toast("El PIN debe tener al menos 4 caracteres."); return; }
-  if(!code){ toast("Falta la clave de la familia."); return; }
-  tidRegister(nombre, email, pin, deporte, code);
+  tidRegister({nombre, email, pin, deporte, code, hp, t});
 }
 function tidLogout(){
   localStorage.removeItem(TID_TOKEN_KEY); localStorage.removeItem("tid_session");

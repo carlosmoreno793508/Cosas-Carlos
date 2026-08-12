@@ -67,6 +67,11 @@ Con eso, **cualquiera de la familia** se registra desde la app. (Opcional: `TID_
 en env sigue sirviendo para cuentas "semilla" sin darse de alta — formato
 `[{"user":"correo","pin":"____","slug":"...","nombre":"..."}]`.)
 
+**Registro abierto (sin clave) + anti-bot:** el alta trae **honeypot + control de tiempo**
+(sin setup) que frena bots. Para que NO se pida la clave de la familia, pon
+`SIGNUP_OPEN=true` en Vercel: el registro queda abierto y el anti-bot es la barrera.
+Para blindaje fuerte tipo CAPTCHA, se puede cablear **Cloudflare Turnstile** (cuenta gratis).
+
 > **Privacidad:** el repo es **público**, así que `usuarios.json` (con hashes) y los
 > `reportes/*.json` se pueden leer en GitHub. Para privacidad de verdad, poner el repo en
 > **privado** (`api/me`/`api/login` ya leen con `GH_TOKEN`). Endurecer (rate-limit) con clientes externos.

@@ -37,12 +37,28 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: "Servidor sin AUTH_SECRET." });
     if (!process.env.GH_TOKEN)
       return res.status(500).json({ error: "Servidor sin GH_TOKEN (no puedo guardar la cuenta)." });
-    if (!process.env.UPLOAD_SECRET)
-      return res.status(500).json({ error: "Servidor sin UPLOAD_SECRET (verja del alta)." });
 
-    const { nombre, email, pin, deporte, reloj, code } = req.body || {};
-    if (String(code || "") !== process.env.UPLOAD_SECRET)
-      return res.status(401).json({ error: "Clave de la familia incorrecta." });
+    const { nombre, email, pin, deporte, reloj, code, hp, t } = req.body || {};
+
+    // --- Anti-bot (siempre activo, sin setup) ---
+    // 1) Honeypot: un campo invisible que solo los bots llenan.
+    if (String(hp || "").trim())
+      return res.status(400).json({ error: "No pude crear la cuenta." });
+    // 2) Tiempo: un humano tarda segundos en llenar el formulario; los bots, milisegundos.
+    const ms = Number(t);
+    if (Number.isFinite(ms) && ms < 1500)
+      return res.status(400).json({ error: "Fue demasiado rápido; intenta de nuevo." });
+
+    // --- Verja del alta ---
+    // Por defecto se pide la clave de la familia. Con SIGNUP_OPEN="true" el registro
+    // queda ABIERTO (sin clave): el anti-bot de arriba es la única barrera.
+    const abierto = process.env.SIGNUP_OPEN === "true";
+    if (!abierto) {
+      if (!process.env.UPLOAD_SECRET)
+        return res.status(500).json({ error: "Servidor sin UPLOAD_SECRET (verja del alta). O pon SIGNUP_OPEN=true para abrir el registro." });
+      if (String(code || "") !== process.env.UPLOAD_SECRET)
+        return res.status(401).json({ error: "Clave de la familia incorrecta." });
+    }
 
     const nom = String(nombre || "").trim();
     const mail = String(email || "").trim().toLowerCase();
