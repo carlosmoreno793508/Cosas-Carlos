@@ -8,76 +8,71 @@
   "evento": "Junior Pan Pacific Championships 2026",
   "dias_al_evento": 4,
   "dias_al_viaje": 1,
-  "semaforo": "rojo",
-  "semaforo_titulo": "Recovery muy baja (30%)",
-  "semaforo_desc": "Rojo, Gael: recovery 30% y HRV 87.1 ms (-21% vs tu base de 110) tras 4 días seguidos de recovery baja, justo a 1 día del viaje a Vancouver y 4 del Junior Pan Pacific. Hoy NO se gana nada forzando: el objetivo es llegar fresco al bloque, así que la sesión de hoy se hace, pero recortada y a intensidad controlada. Buena noticia: tu HRV va +7% en la tendencia de 7 días y la FC de reposo -5%, señal de que el cuerpo está reaccionando bien si le das margen.",
-  "recovery": 30.0,
+  "semaforo": "amarillo",
+  "semaforo_titulo": "Recovery media (40%)",
+  "semaforo_desc": "Amarillo, Gael: recovery en 40% y HRV 96.4 ms (-9% vs tu base de 105.6) con 5 días seguidos de recovery baja. A 4 días del Junior Pan Pacific y con viaje mañana, el objetivo de hoy es CALIDAD CORTA y llegar fresco, no sumar trabajo. Ojo: ya nadaste 80 min esta mañana (FC prom 111, strain 9.0), así que la sesión de las 15:30 debe ajustarse, no duplicarse.",
+  "recovery": 40.0,
   "hrv": {
-    "ms": 87.1,
-    "vs_base_pct": -21,
-    "base": 110.0
+    "ms": 96.4,
+    "vs_base_pct": -9,
+    "base": 105.6
   },
   "rhr": {
-    "lpm": 52.0,
-    "vs_base_pct": 1,
-    "base": 51.5
+    "lpm": 51.0,
+    "vs_base_pct": -2,
+    "base": 51.9
   },
   "sueno": {
-    "total_h": 8.57,
-    "noche_h": 7.63,
+    "total_h": 7.03,
+    "noche_h": 7.03,
     "siesta_h": 0.94,
     "n_siestas": 1,
-    "perf": 79.0,
-    "efic": 87.3,
-    "deep_pct": 24.0,
-    "rem_pct": 41.0,
-    "consist": 67.0,
+    "perf": 84.0,
+    "efic": 90.3,
+    "deep_pct": 29.4,
+    "rem_pct": 31.1,
+    "consist": 76.0,
     "despertares": 16,
-    "deuda_min": 119.8,
-    "acostado": "23:39",
-    "despertar": "08:30",
-    "prom_7d": 7.7,
-    "perf_prom_7d": 74
+    "deuda_min": 143.1,
+    "acostado": "23:30",
+    "despertar": "07:30",
+    "prom_7d": 7.5,
+    "perf_prom_7d": 75
   },
   "forma": {
-    "ctl": 12.4,
-    "atl": 13.5,
-    "tsb": -1.2,
-    "tsb_previa": -2.4,
+    "ctl": 7.8,
+    "atl": 12.5,
+    "tsb": -5.1,
+    "tsb_previa": -7.3,
     "estado_pico": "afinando",
     "lectura": "La forma va SUBIENDO hacia el pico (aún algo cargado). Vas por buen camino; sigue soltando fatiga estos días — no metas volumen alto."
   },
   "vitales": {
-    "spo2": 94.4,
-    "temp_piel": 34.519833,
-    "resp_rate": 16.2,
-    "strain": 12.63
+    "spo2": 93.0,
+    "temp_piel": 34.04717,
+    "resp_rate": 15.9,
+    "strain": 10.03
   },
   "alertas": [
     {
       "nivel": "med",
       "tag": "Preventivo",
-      "texto": "4 días consecutivos de recovery baja con HRV -21% vs base: si mañana sigue igual o peor, recorta la sesión de calidad del viernes a solo técnica y activación."
+      "texto": "5 días consecutivos de recovery baja: si mañana no sube tras el viaje, recorta la sesión de calidad y avisa al entrenador."
     },
     {
       "nivel": "med",
       "tag": "Preventivo",
-      "texto": "SpO2 94.4% es tu valor más bajo del reporte; Vancouver está a nivel del mar así que no es altitud, pero si aparecen congestión, tos, dolor de garganta o fiebre, consulta al médico del equipo antes de viajar."
+      "texto": "SpO2 en 93% (por debajo de lo habitual) junto con 16 despertares: vigílalo hoy y mañana; si se mantiene bajo o aparecen síntomas respiratorios, que lo valore un profesional de la salud antes de competir."
     },
     {
       "nivel": "med",
       "tag": "Preventivo",
-      "texto": "Consistencia de sueño 67% y 16 despertares: con el vuelo y cambio de horario, riesgo de llegar con más deuda; empieza hoy a ajustar horarios de luz y comidas hacia la zona de destino."
+      "texto": "Vancouver implica vuelo y cambio de horario: planea desde hoy el ajuste de sueño y luz para no llegar desfasado al día 4."
     },
     {
       "nivel": "med",
       "tag": "Preventivo",
-      "texto": "Día de viaje mañana: riesgo de deshidratación e ingesta calórica insuficiente en tránsito; lleva líquidos y comida preparada."
-    },
-    {
-      "nivel": "med",
-      "tag": "Preventivo",
-      "texto": "No hay registro de sesiones reales, horas de agua ni hidratación de hoy: sin esos datos no puedo afinar el consejo, conviene que tú y tu entrenador los registren estos días clave."
+      "texto": "No hay km reales registrados en el reloj; la referencia es el plan (30 km). Registrar distancia por sesión ayudaría a afinar el taper."
     }
   ],
   "nutricion": {
