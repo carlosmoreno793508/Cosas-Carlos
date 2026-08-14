@@ -1,78 +1,78 @@
 {
-  "fecha": "2026-08-13",
-  "fecha_texto": "jueves 13 ago 2026",
+  "fecha": "2026-08-14",
+  "fecha_texto": "viernes 14 ago 2026",
   "atleta": "Gael Moreno",
   "dias_datos": 25,
   "deporte": "Natación",
   "fase": "competencia / pico",
   "evento": "Junior Pan Pacific Championships 2026",
-  "dias_al_evento": 4,
-  "dias_al_viaje": 1,
-  "semaforo": "amarillo",
-  "semaforo_titulo": "Recovery media (40%)",
-  "semaforo_desc": "Amarillo, Gael: recovery en 40% y HRV 96.4 ms (-9% vs tu base de 105.6) con 5 días seguidos de recovery baja. A 4 días del Junior Pan Pacific y con viaje mañana, el objetivo de hoy es CALIDAD CORTA y llegar fresco, no sumar trabajo. Ojo: ya nadaste 80 min esta mañana (FC prom 111, strain 9.0), así que la sesión de las 15:30 debe ajustarse, no duplicarse.",
-  "recovery": 40.0,
+  "dias_al_evento": 3,
+  "dias_al_viaje": 0,
+  "semaforo": "rojo",
+  "semaforo_titulo": "Recovery muy baja (4%)",
+  "semaforo_desc": "Rojo, Gael. Faltan 3 días para el Junior Pan Pacific y hoy es día de viaje: recovery 4%, HRV 80.1 ms (-22% vs tu base de 102.3) y solo 2.89 h de sueño anoche (rendimiento 20%), con 6 días seguidos de recovery baja. No es momento de exigirle nada al cuerpo: hoy la medalla se gana durmiendo y llegando fresco, no nadando fuerte.",
+  "recovery": 4.0,
   "hrv": {
-    "ms": 96.4,
-    "vs_base_pct": -9,
-    "base": 105.6
+    "ms": 80.1,
+    "vs_base_pct": -22,
+    "base": 102.3
   },
   "rhr": {
-    "lpm": 51.0,
-    "vs_base_pct": -2,
-    "base": 51.9
+    "lpm": 55.0,
+    "vs_base_pct": 5,
+    "base": 52.3
   },
   "sueno": {
-    "total_h": 7.03,
-    "noche_h": 7.03,
+    "total_h": 2.89,
+    "noche_h": 2.89,
     "siesta_h": 0.94,
     "n_siestas": 1,
-    "perf": 84.0,
-    "efic": 90.3,
-    "deep_pct": 29.4,
-    "rem_pct": 31.1,
-    "consist": 76.0,
-    "despertares": 16,
-    "deuda_min": 143.1,
-    "acostado": "23:30",
-    "despertar": "07:30",
-    "prom_7d": 7.5,
-    "perf_prom_7d": 75
+    "perf": 20.0,
+    "efic": 78.5,
+    "deep_pct": 37.8,
+    "rem_pct": 28.0,
+    "consist": 53.0,
+    "despertares": 4,
+    "deuda_min": 377.0,
+    "acostado": "01:40",
+    "despertar": "05:30",
+    "prom_7d": 6.7,
+    "perf_prom_7d": 66
   },
   "forma": {
-    "ctl": 7.8,
-    "atl": 12.5,
-    "tsb": -5.1,
-    "tsb_previa": -7.3,
-    "estado_pico": "afinando",
-    "lectura": "La forma va SUBIENDO hacia el pico (aún algo cargado). Vas por buen camino; sigue soltando fatiga estos días — no metas volumen alto."
+    "ctl": 15.3,
+    "atl": 11.3,
+    "tsb": 2.6,
+    "tsb_previa": 1.0,
+    "estado_pico": "en_pico",
+    "lectura": "Vas llegando FRESCO: la forma (TSB) ya está en positivo. El taper está haciendo su trabajo; mantén algo de intensidad corta para no 'apagarte', pero baja volumen."
   },
   "vitales": {
     "spo2": 93.0,
-    "temp_piel": 34.04717,
-    "resp_rate": 15.9,
-    "strain": 10.03
+    "temp_piel": 33.823666,
+    "resp_rate": 15.5,
+    "strain": 0.33
   },
   "alertas": [
     {
       "nivel": "med",
       "tag": "Preventivo",
-      "texto": "5 días consecutivos de recovery baja: si mañana no sube tras el viaje, recorta la sesión de calidad y avisa al entrenador."
+      "texto": "Recovery 4% y HRV -22% durante 6 días seguidos a 3 días del evento: si mañana no repunta, avisa al entrenador para recortar la sesión de 4.3 km del sábado a puro afinamiento en Z1."
     },
     {
       "nivel": "med",
       "tag": "Preventivo",
-      "texto": "SpO2 en 93% (por debajo de lo habitual) junto con 16 despertares: vigílalo hoy y mañana; si se mantiene bajo o aparecen síntomas respiratorios, que lo valore un profesional de la salud antes de competir."
+      "texto": "SpO2 de 93% junto con sueño de 2.89 h y 4 despertares: vigílalo hoy y mañana; si se mantiene bajo o aparecen sensación de falta de aire, garganta irritada, fiebre o malestar general, consulta al médico del equipo antes de competir (no es algo que deba manejarse solo con entrenamiento)."
     },
     {
       "nivel": "med",
       "tag": "Preventivo",
-      "texto": "Vancouver implica vuelo y cambio de horario: planea desde hoy el ajuste de sueño y luz para no llegar desfasado al día 4."
+      "texto": "Deuda de sueño de 377 min y consistencia de 53%: es el mayor riesgo de rendimiento de esta semana; el horario de sueño debe tratarse como parte del entrenamiento en el viaje."
     },
     {
       "nivel": "med",
       "tag": "Preventivo",
-      "texto": "No hay km reales registrados en el reloj; la referencia es el plan (30 km). Registrar distancia por sesión ayudaría a afinar el taper."
+      "texto": "Viaje hoy (día 0) hacia Vancouver: riesgo de deshidratación, desfase horario y comida desconocida; planifica agua, snacks propios y horario de luz/sueño en destino."
     }
   ],
   "nutricion": {
