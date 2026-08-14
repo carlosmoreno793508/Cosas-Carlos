@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Manifiesto de la app web para Samsung Smart TV (Tizen), que es el sistema de
+  los televisores Samsung Crystal UHD / QLED / Neo QLED. Con este config.xml, el
+  contenido de `apps/web/dist` se empaqueta como un widget .wgt instalable.
+
+  Pasos (ver ../TIZEN.md):
+    1) npm run build:web            → genera apps/web/dist
+    2) copiar este config.xml y un icon.png (512x512) dentro de dist/
+    3) tizen package -t wgt -- dist → genera el .wgt
+    4) tizen install -n <app>.wgt -t <TV>  → instala en el Samsung Crystal
+-->
+<widget xmlns="http://www.w3.org/ns/widgets"
+        xmlns:tizen="http://tizen.org/ns/widgets"
+        id="http://tvapp.local/TVApp"
+        version="0.1.0"
+        viewmodes="maximized">
+  <tizen:application id="TVApp0001.TVApp" package="TVApp0001" required_version="6.0"/>
+  <content src="index.html"/>
+  <name>MoreTV</name>
+  <icon src="icon.png"/>
+
+  <!-- Perfil de televisor y resolución 1080p (Full HD), base del diseño 10-foot. -->
+  <tizen:profile name="tv"/>
+  <feature name="http://tizen.org/feature/screen.size.normal.1080.1920"/>
+
+  <!-- Permisos: internet para descargar listas M3U/Xtream y los streams. -->
+  <tizen:privilege name="http://tizen.org/privilege/internet"/>
+  <!-- Acceso a cualquier origen (los servidores de contenido del usuario). -->
+  <access origin="*" subdomains="true"/>
+
+  <tizen:setting screen-orientation="landscape"
+                 context-menu="disable"
+                 background-support="disable"
+                 encryption="disable"
+                 install-location="auto"
+                 hwkey-event="enable"/>
+</widget>

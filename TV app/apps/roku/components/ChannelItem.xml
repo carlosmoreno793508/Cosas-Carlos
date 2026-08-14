@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Tarjeta de un canal en la rejilla: póster/logo + título, con marco de foco. -->
+<component name="ChannelItem" extends="Group">
+  <interface>
+    <field id="itemContent" type="node" onChange="onContentSet" />
+    <field id="focusPercent" type="float" onChange="onFocusChanged" />
+  </interface>
+  <script type="text/brightscript" uri="pkg:/components/ChannelItem.brs" />
+  <children>
+    <Rectangle id="bg" width="320" height="200" color="0x1b1e27FF" />
+    <Poster id="poster" width="300" height="180" translation="[10,10]" />
+    <Rectangle id="focusRing" width="320" height="200" color="0xFFFFFFFF"
+               opacity="0.0" />
+    <Label id="label" translation="[10,210]" width="300"
+           color="0xf4f6fbFF" font="font:MediumSystemFont" />
+  </children>
+</component>
