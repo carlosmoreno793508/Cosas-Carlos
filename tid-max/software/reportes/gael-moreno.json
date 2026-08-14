@@ -10,7 +10,7 @@
   "dias_al_viaje": 0,
   "semaforo": "rojo",
   "semaforo_titulo": "Recovery muy baja (4%)",
-  "semaforo_desc": "Rojo, Gael. Faltan 3 días para el Junior Pan Pacific y hoy es día de viaje: recovery 4%, HRV 80.1 ms (-22% vs tu base de 102.3) y solo 2.89 h de sueño anoche (rendimiento 20%), con 6 días seguidos de recovery baja. No es momento de exigirle nada al cuerpo: hoy la medalla se gana durmiendo y llegando fresco, no nadando fuerte.",
+  "semaforo_desc": "Rojo, Gael. Recovery 4%, HRV 80.1 ms (-22% vs tu base de 102.3), FC en reposo 55 lpm (+5%) y sueño 20% con solo 2.89 h anoche: tu cuerpo viene de una noche muy corta y del día de viaje, con 6 días seguidos de recovery baja. Faltan 3 días para el Junior Pan Pacific en Vancouver y estás en Taper (viaje): hoy la meta NO es entrenar más, es recuperar. La sesión de las 15:30 (5.1 km de calidad corta/afinamiento) se mantiene, pero recortada y muy controlada en sensaciones, no en reloj.",
   "recovery": 4.0,
   "hrv": {
     "ms": 80.1,
@@ -41,7 +41,7 @@
   },
   "forma": {
     "ctl": 15.3,
-    "atl": 11.3,
+    "atl": 11.7,
     "tsb": 2.6,
     "tsb_previa": 1.0,
     "estado_pico": "en_pico",
@@ -51,28 +51,28 @@
     "spo2": 93.0,
     "temp_piel": 33.823666,
     "resp_rate": 15.5,
-    "strain": 0.33
+    "strain": 3.51
   },
   "alertas": [
     {
       "nivel": "med",
       "tag": "Preventivo",
-      "texto": "Recovery 4% y HRV -22% durante 6 días seguidos a 3 días del evento: si mañana no repunta, avisa al entrenador para recortar la sesión de 4.3 km del sábado a puro afinamiento en Z1."
+      "texto": "6 días consecutivos de recovery baja + HRV -22%: si mañana no repunta, la sesión del sábado (4.3 km aeróbico + técnica) debería quedar en puro nado suelto y técnica."
     },
     {
       "nivel": "med",
       "tag": "Preventivo",
-      "texto": "SpO2 de 93% junto con sueño de 2.89 h y 4 despertares: vigílalo hoy y mañana; si se mantiene bajo o aparecen sensación de falta de aire, garganta irritada, fiebre o malestar general, consulta al médico del equipo antes de competir (no es algo que deba manejarse solo con entrenamiento)."
+      "texto": "SpO2 93% es el valor más bajo de tu perfil habitual y coincide con viaje y sueño muy corto; vigílalo mañana y, si sigue bajo o aparecen tos, fiebre, dolor de cabeza o falta de aire, que te valore un profesional de la salud del equipo antes de competir."
     },
     {
       "nivel": "med",
       "tag": "Preventivo",
-      "texto": "Deuda de sueño de 377 min y consistencia de 53%: es el mayor riesgo de rendimiento de esta semana; el horario de sueño debe tratarse como parte del entrenamiento en el viaje."
+      "texto": "Deuda de sueño de 377 min a 3 días del evento: es el mayor riesgo de rendimiento ahora mismo; entrenador, protege horarios de sueño y evita traslados o compromisos nocturnos."
     },
     {
       "nivel": "med",
       "tag": "Preventivo",
-      "texto": "Viaje hoy (día 0) hacia Vancouver: riesgo de deshidratación, desfase horario y comida desconocida; planifica agua, snacks propios y horario de luz/sueño en destino."
+      "texto": "Faltan datos de hidratación y de sesiones reales de hoy; regístralos para que el ajuste de mañana sea más preciso."
     }
   ],
   "nutricion": {
