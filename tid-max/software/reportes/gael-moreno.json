@@ -8,71 +8,76 @@
   "evento": "Junior Pan Pacific Championships 2026",
   "dias_al_evento": 2,
   "dias_al_viaje": -1,
-  "semaforo": "rojo",
-  "semaforo_titulo": "Recovery muy baja (4%)",
-  "semaforo_desc": "Rojo, Gael. Con 4% de recovery, HRV en 80.1 ms (-22% vs tu base de 102.3) y solo 3.54 h de sueño anoche, tu cuerpo está muy justo — y faltan 2 días para el Junior Pan Pacific en Vancouver. Hoy no se gana nada forzando: hoy se gana durmiendo y llegando fresco. Que el nado sea suave, corto y técnico; la prioridad absoluta es recuperar el sueño y bajar la activación.",
-  "recovery": 4.0,
+  "semaforo": "amarillo",
+  "semaforo_titulo": "Recovery media (55%)",
+  "semaforo_desc": "Amarillo, Gael: recovery en 55% con HRV alta (113.9 ms, +13% sobre tu base de 101.2) y FC de reposo baja (50 lpm, -4%). Faltan 2 días para el Junior Pan Pacific y ya cumpliste la sesión de agua de hoy (70 min, FC prom 127). El objetivo ya no es sumar: es llegar fresco. Hoy y mañana la consigna es afinar sensaciones y dormir.",
+  "recovery": 55.0,
   "hrv": {
-    "ms": 80.1,
-    "vs_base_pct": -22,
-    "base": 102.3
+    "ms": 113.9,
+    "vs_base_pct": 13,
+    "base": 101.2
   },
   "rhr": {
-    "lpm": 55.0,
-    "vs_base_pct": 5,
+    "lpm": 50.0,
+    "vs_base_pct": -4,
     "base": 52.3
   },
   "sueno": {
-    "total_h": 3.54,
-    "noche_h": 2.89,
+    "total_h": 6.97,
+    "noche_h": 6.97,
     "siesta_h": 0.65,
     "n_siestas": 1,
-    "perf": 20.0,
-    "efic": 78.5,
-    "deep_pct": 37.8,
-    "rem_pct": 28.0,
-    "consist": 53.0,
-    "despertares": 4,
-    "deuda_min": 338.0,
-    "acostado": "01:40",
-    "despertar": "05:30",
-    "prom_7d": 6.8,
+    "perf": 76.0,
+    "efic": 88.6,
+    "deep_pct": 30.0,
+    "rem_pct": 39.2,
+    "consist": 56.0,
+    "despertares": 9,
+    "deuda_min": 198.6,
+    "acostado": "23:40",
+    "despertar": "07:38",
+    "prom_7d": 6.6,
     "perf_prom_7d": 66
   },
   "forma": {
-    "ctl": 15.4,
-    "atl": 12.4,
-    "tsb": 2.6,
-    "tsb_previa": 1.0,
+    "ctl": 16.8,
+    "atl": 12.6,
+    "tsb": 4.5,
+    "tsb_previa": 2.4,
     "estado_pico": "en_pico",
     "lectura": "Vas llegando FRESCO: la forma (TSB) ya está en positivo. El taper está haciendo su trabajo; mantén algo de intensidad corta para no 'apagarte', pero baja volumen."
   },
   "vitales": {
-    "spo2": 93.0,
-    "temp_piel": 33.823666,
-    "resp_rate": 15.5,
-    "strain": 8.48
+    "spo2": 95.5,
+    "temp_piel": 34.348,
+    "resp_rate": 16.1,
+    "strain": 13.75
   },
   "alertas": [
     {
       "nivel": "med",
       "tag": "Preventivo",
-      "texto": "6 días consecutivos de recovery baja + HRV -22% vs base: señal clara de fatiga acumulada; a 2 días del evento, cualquier sesión extra o intensidad alta es riesgo, no beneficio."
+      "texto": "Deuda de sueño de ~199 min y consistencia de 56% a 2 días del evento: es la variable más urgente a corregir estas dos noches."
     },
     {
       "nivel": "med",
       "tag": "Preventivo",
-      "texto": "Deuda de sueño de 338 min y consistencia de 53%: es el factor que más puede costarte rendimiento en Vancouver. Prioridad número uno hoy y mañana."
+      "texto": "9 despertares anoche con eficiencia 88.6%: revisa ambiente del cuarto (oscuridad, temperatura, pantallas) y cafeína después de las 14:00."
     },
     {
       "nivel": "med",
       "tag": "Preventivo",
-      "texto": "SpO2 en 93% junto con la caída de HRV y FC en reposo elevada: probablemente efecto de viaje y falta de sueño, pero si aparece malestar, fiebre, tos o dificultad para respirar, consulta al médico del equipo antes de competir. Esto no es un diagnóstico, es una recomendación de precaución."
+      "texto": "Viaje ya realizado (dias_al_viaje -1): ancla horarios de comida y luz al horario de Vancouver para acelerar el ajuste."
     },
     {
-      "nivel": "good",
+      "nivel": "med",
       "tag": "Preventivo",
-      "texto": "Faltan datos de hidratación y de sesiones reales de hoy: registrarlos permitiría ajustar mejor el consejo en estos días clave."
+      "texto": "SpO2 95.5% y frecuencia respiratoria 16.1: dentro de tu rango habitual, pero si aparece tos, garganta irritada o sensación de falta de aire antes de competir, consúltalo con el médico del equipo, no lo dejes pasar."
+    },
+    {
+      "nivel": "med",
+      "tag": "Preventivo",
+      "texto": "No hay datos de hidratación ni de peso corporal: sin ellos no puedo detectar déficit de líquidos en un cambio de clima y altitud de viaje."
     }
   ],
   "nutricion": {
