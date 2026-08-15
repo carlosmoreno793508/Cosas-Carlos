@@ -1,16 +1,16 @@
 {
-  "fecha": "2026-08-14",
-  "fecha_texto": "viernes 14 ago 2026",
+  "fecha": "2026-08-15",
+  "fecha_texto": "sábado 15 ago 2026",
   "atleta": "Gael Moreno",
   "dias_datos": 25,
   "deporte": "Natación",
   "fase": "competencia / pico",
   "evento": "Junior Pan Pacific Championships 2026",
-  "dias_al_evento": 3,
-  "dias_al_viaje": 0,
+  "dias_al_evento": 2,
+  "dias_al_viaje": -1,
   "semaforo": "rojo",
   "semaforo_titulo": "Recovery muy baja (4%)",
-  "semaforo_desc": "Rojo, Gael. Recovery 4%, HRV 80.1 ms (-22% vs tu base de 102.3), FC en reposo 55 lpm (+5%) y sueño 20% con solo 2.89 h anoche: tu cuerpo viene de una noche muy corta y del día de viaje, con 6 días seguidos de recovery baja. Faltan 3 días para el Junior Pan Pacific en Vancouver y estás en Taper (viaje): hoy la meta NO es entrenar más, es recuperar. La sesión de las 15:30 (5.1 km de calidad corta/afinamiento) se mantiene, pero recortada y muy controlada en sensaciones, no en reloj.",
+  "semaforo_desc": "Rojo, Gael. Con 4% de recovery, HRV en 80.1 ms (-22% vs tu base de 102.3) y solo 3.54 h de sueño anoche, tu cuerpo está muy justo — y faltan 2 días para el Junior Pan Pacific en Vancouver. Hoy no se gana nada forzando: hoy se gana durmiendo y llegando fresco. Que el nado sea suave, corto y técnico; la prioridad absoluta es recuperar el sueño y bajar la activación.",
   "recovery": 4.0,
   "hrv": {
     "ms": 80.1,
@@ -23,9 +23,9 @@
     "base": 52.3
   },
   "sueno": {
-    "total_h": 2.89,
+    "total_h": 3.54,
     "noche_h": 2.89,
-    "siesta_h": 0.94,
+    "siesta_h": 0.65,
     "n_siestas": 1,
     "perf": 20.0,
     "efic": 78.5,
@@ -33,15 +33,15 @@
     "rem_pct": 28.0,
     "consist": 53.0,
     "despertares": 4,
-    "deuda_min": 377.0,
+    "deuda_min": 338.0,
     "acostado": "01:40",
     "despertar": "05:30",
-    "prom_7d": 6.7,
+    "prom_7d": 6.8,
     "perf_prom_7d": 66
   },
   "forma": {
-    "ctl": 15.3,
-    "atl": 11.7,
+    "ctl": 15.4,
+    "atl": 12.4,
     "tsb": 2.6,
     "tsb_previa": 1.0,
     "estado_pico": "en_pico",
@@ -51,36 +51,36 @@
     "spo2": 93.0,
     "temp_piel": 33.823666,
     "resp_rate": 15.5,
-    "strain": 3.51
+    "strain": 8.48
   },
   "alertas": [
     {
       "nivel": "med",
       "tag": "Preventivo",
-      "texto": "6 días consecutivos de recovery baja + HRV -22%: si mañana no repunta, la sesión del sábado (4.3 km aeróbico + técnica) debería quedar en puro nado suelto y técnica."
+      "texto": "6 días consecutivos de recovery baja + HRV -22% vs base: señal clara de fatiga acumulada; a 2 días del evento, cualquier sesión extra o intensidad alta es riesgo, no beneficio."
     },
     {
       "nivel": "med",
       "tag": "Preventivo",
-      "texto": "SpO2 93% es el valor más bajo de tu perfil habitual y coincide con viaje y sueño muy corto; vigílalo mañana y, si sigue bajo o aparecen tos, fiebre, dolor de cabeza o falta de aire, que te valore un profesional de la salud del equipo antes de competir."
+      "texto": "Deuda de sueño de 338 min y consistencia de 53%: es el factor que más puede costarte rendimiento en Vancouver. Prioridad número uno hoy y mañana."
     },
     {
       "nivel": "med",
       "tag": "Preventivo",
-      "texto": "Deuda de sueño de 377 min a 3 días del evento: es el mayor riesgo de rendimiento ahora mismo; entrenador, protege horarios de sueño y evita traslados o compromisos nocturnos."
+      "texto": "SpO2 en 93% junto con la caída de HRV y FC en reposo elevada: probablemente efecto de viaje y falta de sueño, pero si aparece malestar, fiebre, tos o dificultad para respirar, consulta al médico del equipo antes de competir. Esto no es un diagnóstico, es una recomendación de precaución."
     },
     {
-      "nivel": "med",
+      "nivel": "good",
       "tag": "Preventivo",
-      "texto": "Faltan datos de hidratación y de sesiones reales de hoy; regístralos para que el ajuste de mañana sea más preciso."
+      "texto": "Faltan datos de hidratación y de sesiones reales de hoy: registrarlos permitiría ajustar mejor el consejo en estos días clave."
     }
   ],
   "nutricion": {
     "consumido": 0,
-    "meta": 4110,
-    "c": 604,
+    "meta": 3910,
+    "c": 569,
     "p": 146,
-    "g": 123,
+    "g": 117,
     "comidas": [],
     "pendiente": null
   },
