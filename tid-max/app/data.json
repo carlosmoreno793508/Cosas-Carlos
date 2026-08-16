@@ -10,7 +10,7 @@
   "dias_al_viaje": -2,
   "semaforo": "amarillo",
   "semaforo_titulo": "Recovery media (59%)",
-  "semaforo_desc": "Amarillo, Gael: mañana es el día del Junior Pan Pacific y hoy toca descanso planeado, así que el trabajo de hoy es LLEGAR FRESCO. Tu recovery está en 59% (media) y la tendencia de HRV a 7 días cae 6%, pero hoy tu HRV está 17% por encima de tu base (120.9 vs 103 ms) y tu FC en reposo está 6% más baja (49 lpm): el cuerpo responde bien, solo viene con algo de desgaste de viaje y sueño corto. Nada de improvisar carga: activación, comida, hidratación y cama.",
+  "semaforo_desc": "Amarillo por Recovery en 59%, pero con matices muy buenos: mañana compites (Junior Pan Pacific, día 1) y tu HRV está 17% sobre tu base (120.9 ms vs 103) con FC en reposo en 49 lpm (-6%). Hoy el plan marca descanso y ya hiciste 1.3 h de agua muy suave (FC 95 y 108). Con eso es suficiente: el resto del día es para bajar revoluciones, comer bien y dormir. No añadas nada.",
   "recovery": 59.0,
   "hrv": {
     "ms": 120.9,
@@ -40,8 +40,8 @@
     "perf_prom_7d": 70
   },
   "forma": {
-    "ctl": 14.6,
-    "atl": 11.0,
+    "ctl": 14.8,
+    "atl": 12.0,
     "tsb": 2.3,
     "tsb_previa": 0.7,
     "estado_pico": "en_pico",
@@ -51,28 +51,33 @@
     "spo2": 96.0,
     "temp_piel": 34.269,
     "resp_rate": 16.7,
-    "strain": 0.07
+    "strain": 7.65
   },
   "alertas": [
     {
       "nivel": "med",
       "tag": "Preventivo",
-      "texto": "La tendencia de HRV a 7 días baja 6% y el sueño promedia 6.9 h con 173 min de deuda: son señales de desgaste acumulado por el viaje; prioriza dormir hoy y no añadir estímulos duros."
+      "texto": "Recovery 59% en día previo a competir: no compenses con actividad extra ni con una sesión 'de sensaciones' larga; cualquier estímulo mañana debe ser solo calentamiento y activación."
     },
     {
       "nivel": "med",
       "tag": "Preventivo",
-      "texto": "Consistencia de sueño en 71% y 17 despertares: fija hora de acostarte y despertar, y controla luz/pantallas para no repetir una noche fragmentada la víspera de la final."
-    },
-    {
-      "nivel": "good",
-      "tag": "Preventivo",
-      "texto": "No hay registro de hidratación ni de sesiones reales hoy; sin ese dato solo puedo darte pautas generales. Anótalos para poder ajustar mejor."
+      "texto": "Consistencia de sueño en 71% y 173 min de deuda acumulada, con promedio de 6.9 h en 7 días: prioriza horario fijo esta noche para no llegar al día 1 con déficit."
     },
     {
       "nivel": "med",
       "tag": "Preventivo",
-      "texto": "Si aparece algo que no es fatiga normal (dolor de garganta, fiebre, mareo, molestia articular que no cede o dificultad para respirar), no lo gestiones tú ni con medicación: consulta al médico del equipo antes de competir."
+      "texto": "La siesta de 0.65 h de hoy está bien, pero no la extiendas ni la hagas tarde para no comprometer el sueño de esta noche."
+    },
+    {
+      "nivel": "med",
+      "tag": "Preventivo",
+      "texto": "No hay datos de hidratación ni de peso corporal registrados; sería útil pesarte antes y después de la sesión de mañana para estimar pérdida de líquidos."
+    },
+    {
+      "nivel": "med",
+      "tag": "Preventivo",
+      "texto": "Si aparece algo fuera de lo normal (dolor de garganta, fiebre, molestia articular o mareo), consúltalo con el médico del equipo antes de competir, no lo resuelvas por tu cuenta."
     }
   ],
   "nutricion": {
