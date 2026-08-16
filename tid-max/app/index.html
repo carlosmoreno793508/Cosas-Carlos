@@ -1026,6 +1026,17 @@ function runSave(){
     ruta: runPoints.map(p=>[+p.lat.toFixed(5),+p.lon.toFixed(5)]) };
   try{ const arr=JSON.parse(localStorage.getItem("tid_runs")||"[]"); arr.unshift(rec); localStorage.setItem("tid_runs", JSON.stringify(arr.slice(0,50))); }catch(e){}
   toast(`Carrera guardada · ${km.toFixed(2)} km`);
+  runUpload(rec);
+}
+// Sube la corrida a tu cuenta (repo como BD) si hay sesión. Best-effort: si falla,
+// queda guardada en el teléfono y se puede reintentar; nunca bloquea el guardado.
+async function runUpload(rec){
+  const tok=tidToken(); if(!tok) return;
+  try{
+    const r=await fetch("/api/run",{method:"POST",headers:{"content-type":"application/json"},
+      body:JSON.stringify({token:tok, run:rec})});
+    if(r.ok){ const j=await r.json().catch(()=>({})); if(j.ok&&!j.dup) toast("Corrida subida a tu cuenta ✓"); }
+  }catch(e){ /* sin conexión: se queda en el teléfono */ }
 }
 
 /* ---------------- FC en vivo por Bluetooth (Polar H10 / reloj con broadcast) ---------------- */
