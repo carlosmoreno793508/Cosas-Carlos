@@ -1,91 +1,86 @@
 {
-  "fecha": "2026-08-15",
-  "fecha_texto": "sábado 15 ago 2026",
+  "fecha": "2026-08-16",
+  "fecha_texto": "domingo 16 ago 2026",
   "atleta": "Gael Moreno",
   "dias_datos": 25,
   "deporte": "Natación",
   "fase": "competencia / pico",
   "evento": "Junior Pan Pacific Championships 2026",
-  "dias_al_evento": 2,
-  "dias_al_viaje": -1,
+  "dias_al_evento": 1,
+  "dias_al_viaje": -2,
   "semaforo": "amarillo",
-  "semaforo_titulo": "Recovery media (55%)",
-  "semaforo_desc": "Amarillo, Gael: recovery en 55% con HRV alta (113.9 ms, +13% sobre tu base de 101.2) y FC de reposo baja (50 lpm, -4%). Faltan 2 días para el Junior Pan Pacific y ya cumpliste la sesión de agua de hoy (70 min, FC prom 127). El objetivo ya no es sumar: es llegar fresco. Hoy y mañana la consigna es afinar sensaciones y dormir.",
-  "recovery": 55.0,
+  "semaforo_titulo": "Recovery media (59%)",
+  "semaforo_desc": "Amarillo, Gael: mañana es el día del Junior Pan Pacific y hoy toca descanso planeado, así que el trabajo de hoy es LLEGAR FRESCO. Tu recovery está en 59% (media) y la tendencia de HRV a 7 días cae 6%, pero hoy tu HRV está 17% por encima de tu base (120.9 vs 103 ms) y tu FC en reposo está 6% más baja (49 lpm): el cuerpo responde bien, solo viene con algo de desgaste de viaje y sueño corto. Nada de improvisar carga: activación, comida, hidratación y cama.",
+  "recovery": 59.0,
   "hrv": {
-    "ms": 113.9,
-    "vs_base_pct": 13,
-    "base": 101.2
+    "ms": 120.9,
+    "vs_base_pct": 17,
+    "base": 103.0
   },
   "rhr": {
-    "lpm": 50.0,
-    "vs_base_pct": -4,
-    "base": 52.3
+    "lpm": 49.0,
+    "vs_base_pct": -6,
+    "base": 52.0
   },
   "sueno": {
-    "total_h": 6.97,
-    "noche_h": 6.97,
+    "total_h": 7.43,
+    "noche_h": 7.43,
     "siesta_h": 0.65,
     "n_siestas": 1,
-    "perf": 76.0,
-    "efic": 88.6,
-    "deep_pct": 30.0,
-    "rem_pct": 39.2,
-    "consist": 56.0,
-    "despertares": 9,
-    "deuda_min": 198.6,
-    "acostado": "23:40",
-    "despertar": "07:38",
-    "prom_7d": 6.6,
-    "perf_prom_7d": 66
+    "perf": 80.0,
+    "efic": 95.3,
+    "deep_pct": 27.8,
+    "rem_pct": 36.8,
+    "consist": 71.0,
+    "despertares": 17,
+    "deuda_min": 173.0,
+    "acostado": "23:36",
+    "despertar": "07:30",
+    "prom_7d": 6.9,
+    "perf_prom_7d": 70
   },
   "forma": {
-    "ctl": 16.8,
-    "atl": 12.6,
-    "tsb": 4.5,
-    "tsb_previa": 2.4,
+    "ctl": 14.6,
+    "atl": 11.0,
+    "tsb": 2.3,
+    "tsb_previa": 0.7,
     "estado_pico": "en_pico",
     "lectura": "Vas llegando FRESCO: la forma (TSB) ya está en positivo. El taper está haciendo su trabajo; mantén algo de intensidad corta para no 'apagarte', pero baja volumen."
   },
   "vitales": {
-    "spo2": 95.5,
-    "temp_piel": 34.348,
-    "resp_rate": 16.1,
-    "strain": 13.75
+    "spo2": 96.0,
+    "temp_piel": 34.269,
+    "resp_rate": 16.7,
+    "strain": 0.07
   },
   "alertas": [
     {
       "nivel": "med",
       "tag": "Preventivo",
-      "texto": "Deuda de sueño de ~199 min y consistencia de 56% a 2 días del evento: es la variable más urgente a corregir estas dos noches."
+      "texto": "La tendencia de HRV a 7 días baja 6% y el sueño promedia 6.9 h con 173 min de deuda: son señales de desgaste acumulado por el viaje; prioriza dormir hoy y no añadir estímulos duros."
     },
     {
       "nivel": "med",
       "tag": "Preventivo",
-      "texto": "9 despertares anoche con eficiencia 88.6%: revisa ambiente del cuarto (oscuridad, temperatura, pantallas) y cafeína después de las 14:00."
+      "texto": "Consistencia de sueño en 71% y 17 despertares: fija hora de acostarte y despertar, y controla luz/pantallas para no repetir una noche fragmentada la víspera de la final."
+    },
+    {
+      "nivel": "good",
+      "tag": "Preventivo",
+      "texto": "No hay registro de hidratación ni de sesiones reales hoy; sin ese dato solo puedo darte pautas generales. Anótalos para poder ajustar mejor."
     },
     {
       "nivel": "med",
       "tag": "Preventivo",
-      "texto": "Viaje ya realizado (dias_al_viaje -1): ancla horarios de comida y luz al horario de Vancouver para acelerar el ajuste."
-    },
-    {
-      "nivel": "med",
-      "tag": "Preventivo",
-      "texto": "SpO2 95.5% y frecuencia respiratoria 16.1: dentro de tu rango habitual, pero si aparece tos, garganta irritada o sensación de falta de aire antes de competir, consúltalo con el médico del equipo, no lo dejes pasar."
-    },
-    {
-      "nivel": "med",
-      "tag": "Preventivo",
-      "texto": "No hay datos de hidratación ni de peso corporal: sin ellos no puedo detectar déficit de líquidos en un cambio de clima y altitud de viaje."
+      "texto": "Si aparece algo que no es fatiga normal (dolor de garganta, fiebre, mareo, molestia articular que no cede o dificultad para respirar), no lo gestiones tú ni con medicación: consulta al médico del equipo antes de competir."
     }
   ],
   "nutricion": {
     "consumido": 0,
-    "meta": 3910,
-    "c": 569,
+    "meta": 2870,
+    "c": 379,
     "p": 146,
-    "g": 117,
+    "g": 86,
     "comidas": [],
     "pendiente": null
   },
