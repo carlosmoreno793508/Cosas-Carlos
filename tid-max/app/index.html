@@ -690,6 +690,64 @@ let runSplits=[]; // [{km, sec, hrAvg, hrMax, _cumMs}]  — km completados
 
 function runReset(){ runStopWatch(); runState="idle"; runStartMs=0; runElapsedMs=0; runPoints=[]; runDistM=0; runLastPt=null;
   runHrSamples=[]; runSplits=[]; }
+
+/* ===== PUENTE NATIVO (Capacitor) — un solo lugar para ajustar los plugins =====
+   En la app NATIVA (Fase B) usa: FC por Bluetooth (@capacitor-community/bluetooth-le)
+   y GPS en segundo plano (@capacitor-community/background-geolocation).
+   En el NAVEGADOR cae a Web Bluetooth + watchPosition (la PWA no cambia). */
+const NATIVE = !!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform());
+const CAP = (window.Capacitor && window.Capacitor.Plugins) || {};
+function parseHr(v){ const flags=v.getUint8(0); return (flags&1)? v.getUint16(1,true) : v.getUint8(1); }
+
+const RunGeo = {
+  _id:null, _native:false,
+  start(onPos, onErr){
+    if(NATIVE && CAP.BackgroundGeolocation){
+      this._native=true;
+      CAP.BackgroundGeolocation.addWatcher(
+        { backgroundMessage:"Grabando tu carrera…", backgroundTitle:"TID-MAX", requestPermissions:true, stale:false, distanceFilter:5 },
+        (loc, err)=>{ if(err){ onErr({code: err.code==="NOT_AUTHORIZED"?1:2}); return; }
+                      if(loc) onPos({coords:{latitude:loc.latitude, longitude:loc.longitude, accuracy:loc.accuracy}}); }
+      ).then(id=>{ this._id=id; }).catch(()=>{ this._native=false;
+        this._id=navigator.geolocation.watchPosition(onPos,onErr,{enableHighAccuracy:true,maximumAge:1000,timeout:20000}); });
+      return;
+    }
+    this._native=false;
+    this._id=navigator.geolocation.watchPosition(onPos, onErr, {enableHighAccuracy:true, maximumAge:1000, timeout:20000});
+  },
+  stop(){
+    if(this._id==null) return;
+    if(this._native && CAP.BackgroundGeolocation){ try{ CAP.BackgroundGeolocation.removeWatcher({id:this._id}); }catch(e){} }
+    else { try{ navigator.geolocation.clearWatch(this._id); }catch(e){} }
+    this._id=null;
+  }
+};
+
+const RunHR = {
+  _dev:null, _char:null,
+  connected(){ return !!this._char || !!this._dev; },
+  async connect(onHr){
+    if(NATIVE && CAP.BluetoothLe){ return this._nativeConnect(onHr); }
+    if(!navigator.bluetooth) throw new Error("no-bt");
+    const dev=await navigator.bluetooth.requestDevice({filters:[{services:["heart_rate"]}]});
+    this._dev=dev;
+    dev.addEventListener("gattserverdisconnected", ()=>{ this._char=null; onHr(null,true); });
+    const srv=await dev.gatt.connect();
+    const ch=await (await srv.getPrimaryService("heart_rate")).getCharacteristic("heart_rate_measurement");
+    await ch.startNotifications();
+    ch.addEventListener("characteristicvaluechanged", ev=>onHr(parseHr(ev.target.value)));
+    this._char=ch;
+  },
+  // NATIVO — se finaliza en la sesión de compilado (necesita el proyecto Capacitor real).
+  // Flujo del plugin bluetooth-le: initialize → requestDevice({services:['heart_rate']})
+  // → connect(deviceId) → startNotifications(deviceId,'180D','2A37', bytes=>onHr(parseHr(new DataView(bytes.buffer)))).
+  async _nativeConnect(onHr){ throw new Error("native-hr-pending"); },
+  async disconnect(){
+    try{ if(this._char) await this._char.stopNotifications(); }catch(e){}
+    try{ if(this._dev&&this._dev.gatt&&this._dev.gatt.connected) this._dev.gatt.disconnect(); }catch(e){}
+    this._char=null; this._dev=null;
+  }
+};
 function fmtTime(ms){ const s=Math.floor(ms/1000), h=Math.floor(s/3600), m=Math.floor((s%3600)/60), ss=s%60;
   return (h>0?h+":"+String(m).padStart(2,"0"):m)+":"+String(ss).padStart(2,"0"); }
 function fmtPace(mpk){ if(!mpk||!isFinite(mpk)) return "—"; const m=Math.floor(mpk), s=Math.round((mpk-m)*60);
@@ -913,15 +971,15 @@ function vCorrerDone(){
 function bindCorrer(){ if(runState==="done") setTimeout(renderRunMap, 40); }
 
 function runStart(){
-  if(!navigator.geolocation){ toast("Este teléfono/navegador no da GPS."); return; }
+  if(!NATIVE && !navigator.geolocation){ toast("Este teléfono/navegador no da GPS."); return; }
   runReset(); runState="running"; runStartMs=Date.now(); runElapsedMs=0;
-  runWatchId=navigator.geolocation.watchPosition(runOnPos, runOnErr, {enableHighAccuracy:true, maximumAge:1000, timeout:20000});
+  RunGeo.start(runOnPos, runOnErr);
   runTimer=setInterval(runTick, 1000); runReqWake(); paint();
 }
 function runPause(){ if(runState!=="running")return; runElapsedMs+=Date.now()-runStartMs; runState="paused"; if(runTimer){clearInterval(runTimer);runTimer=null;} runLastPt=null; paint(); }
 function runResume(){ if(runState!=="paused")return; runState="running"; runStartMs=Date.now(); runTimer=setInterval(runTick,1000); paint(); }
 function runStop(){ if(runState==="running") runElapsedMs+=Date.now()-runStartMs; runStopWatch(); runState="done"; runSave(); paint(); }
-function runStopWatch(){ if(runWatchId!=null){ try{navigator.geolocation.clearWatch(runWatchId);}catch(e){} runWatchId=null; } if(runTimer){clearInterval(runTimer);runTimer=null;} runRelWake(); }
+function runStopWatch(){ RunGeo.stop(); if(runTimer){clearInterval(runTimer);runTimer=null;} runRelWake(); }
 function runTick(){ const el=document.getElementById("run_time"); if(el) el.textContent=fmtTime(runElapsedMs+(runState==="running"?Date.now()-runStartMs:0)); }
 function runOnPos(pos){
   if(runState!=="running")return;
@@ -977,30 +1035,24 @@ function updateHrUI(){
     ze.innerHTML = zc? `<span style="display:inline-block;font-size:12px;font-weight:800;color:#fff;background:${zc.c};padding:3px 9px;border-radius:999px">${zc.n}</span>`
       : `<span style="font-size:12px;color:var(--faint)">${fcMax()?"Sin señal de pulso":"Falta tu FC máx"}</span>`; }
 }
-function onHr(ev){
-  const v=ev.target.value, flags=v.getUint8(0);
-  const hr=(flags&1)? v.getUint16(1,true) : v.getUint8(1);
+function onHrSample(hr, dropped){
+  if(dropped){ runHr=null; runBtChar=false; if(screen==="correr"&&runState!=="done") paint(); return; }
   if(!hr) return; runHr=hr;
   if(runState==="running") runHrSamples.push({rel:runElapsedMs+(Date.now()-runStartMs), bpm:hr});
   updateHrUI();
 }
-function onBtDrop(){ runBtChar=null; runHr=null; if(screen==="correr"&&runState!=="done") paint(); }
 async function runConnectHr(){
-  if(!navigator.bluetooth){ toast("Tu navegador no lee Bluetooth. En iPhone usa la app Bluefy; en Android, Chrome."); return; }
   try{
-    const dev=await navigator.bluetooth.requestDevice({filters:[{services:["heart_rate"]}]});
-    runBtDevice=dev; dev.addEventListener("gattserverdisconnected", onBtDrop);
-    const srv=await dev.gatt.connect();
-    const ch=await (await srv.getPrimaryService("heart_rate")).getCharacteristic("heart_rate_measurement");
-    await ch.startNotifications(); ch.addEventListener("characteristicvaluechanged", onHr);
-    runBtChar=ch; toast("Polar conectado ✓"); paint();
-  }catch(e){ toast("No se pudo conectar. Acerca el Polar y verifica que esté encendido."); }
+    await RunHR.connect(onHrSample);
+    runBtChar=true; toast("Polar conectado ✓"); paint();
+  }catch(e){
+    const m=String((e&&e.message)||e);
+    if(m==="no-bt") toast("Tu navegador no lee Bluetooth. En iPhone usa la app Bluefy; en Android, Chrome.");
+    else if(m==="native-hr-pending") toast("La FC nativa se activa en la app compilada (Fase B).");
+    else toast("No se pudo conectar. Acerca el Polar y verifica que esté encendido.");
+  }
 }
-async function runDisconnectHr(){
-  try{ if(runBtChar) await runBtChar.stopNotifications(); }catch(e){}
-  try{ if(runBtDevice&&runBtDevice.gatt.connected) runBtDevice.gatt.disconnect(); }catch(e){}
-  runBtChar=null; runHr=null; paint();
-}
+async function runDisconnectHr(){ await RunHR.disconnect(); runBtChar=false; runHr=null; paint(); }
 
 /* ---------------- Mapa de la ruta (Leaflet + OpenStreetMap, respaldo SVG) ---------------- */
 function getCss(v){ return getComputedStyle(document.documentElement).getPropertyValue(v).trim()||"#888"; }
