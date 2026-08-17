@@ -698,6 +698,9 @@ function runReset(){ runStopWatch(); runState="idle"; runStartMs=0; runElapsedMs
 const NATIVE = !!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform());
 const CAP = (window.Capacitor && window.Capacitor.Plugins) || {};
 function parseHr(v){ const flags=v.getUint8(0); return (flags&1)? v.getUint16(1,true) : v.getUint8(1); }
+// El plugin nativo entrega los bytes de la característica en base64 → DataView.
+function b64ToDataView(b64){ try{ const s=atob(b64||""); const u=new Uint8Array(s.length);
+  for(let i=0;i<s.length;i++) u[i]=s.charCodeAt(i); return new DataView(u.buffer); }catch(e){ return null; } }
 
 const RunGeo = {
   _id:null, _native:false,
@@ -738,11 +741,28 @@ const RunHR = {
     ch.addEventListener("characteristicvaluechanged", ev=>onHr(parseHr(ev.target.value)));
     this._char=ch;
   },
-  // NATIVO — se finaliza en la sesión de compilado (necesita el proyecto Capacitor real).
-  // Flujo del plugin bluetooth-le: initialize → requestDevice({services:['heart_rate']})
-  // → connect(deviceId) → startNotifications(deviceId,'180D','2A37', bytes=>onHr(parseHr(new DataView(bytes.buffer)))).
-  async _nativeConnect(onHr){ throw new Error("native-hr-pending"); },
+  // NATIVO (Capacitor + @capacitor-community/bluetooth-le) — lee el Polar por BLE.
+  async _nativeConnect(onHr){
+    const BLE=CAP.BluetoothLe;
+    const SVC="0000180d-0000-1000-8000-00805f9b34fb";   // Heart Rate Service
+    const CH ="00002a37-0000-1000-8000-00805f9b34fb";   // Heart Rate Measurement
+    await BLE.initialize({ androidNeverForLocation:true });
+    const dev=await BLE.requestDevice({ services:[SVC] });
+    const deviceId=dev.deviceId;
+    this._native=true; this._deviceId=deviceId; this._svc=SVC; this._ch=CH;
+    await BLE.connect({ deviceId });
+    try{ await BLE.addListener("disconnected|"+deviceId, ()=>{ this._deviceId=null; onHr(null,true); }); }catch(e){}
+    // Notificaciones de FC: el plugin emite un evento con los bytes en base64.
+    const key=("notification|"+deviceId+"|"+SVC+"|"+CH).toLowerCase();
+    await BLE.addListener(key, ev=>{ const dv=b64ToDataView(ev&&ev.value); if(dv) onHr(parseHr(dv)); });
+    await BLE.startNotifications({ deviceId, service:SVC, characteristic:CH });
+  },
   async disconnect(){
+    if(this._native && CAP.BluetoothLe && this._deviceId){
+      try{ await CAP.BluetoothLe.stopNotifications({deviceId:this._deviceId, service:this._svc, characteristic:this._ch}); }catch(e){}
+      try{ await CAP.BluetoothLe.disconnect({deviceId:this._deviceId}); }catch(e){}
+      this._native=false; this._deviceId=null; return;
+    }
     try{ if(this._char) await this._char.stopNotifications(); }catch(e){}
     try{ if(this._dev&&this._dev.gatt&&this._dev.gatt.connected) this._dev.gatt.disconnect(); }catch(e){}
     this._char=null; this._dev=null;
