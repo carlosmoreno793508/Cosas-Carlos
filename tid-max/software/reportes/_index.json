@@ -6,7 +6,7 @@
       "nombre": "Gael Moreno",
       "deporte": "natacion",
       "fuente": "whoop",
-      "tiene_reporte": true
+      "tiene_reporte": false
     },
     {
       "slug": "carlos-moreno",
