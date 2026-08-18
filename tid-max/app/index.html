@@ -672,10 +672,15 @@ function paint(){
 let sinDatosMsg = "";
 function estadoVacio(){
   const s = tidSession()||{};
-  return '<div class="loading" style="padding:26px 20px;text-align:center">'
-    +'<div style="font-size:16px;font-weight:800;margin-bottom:6px">'+esc(s.nombre||"Tu cuenta")+'</div>'
+  // Aunque no haya reporte todavía (falta que fluya la fuente de datos), el atleta
+  // SÍ puede grabar una corrida y registrar su bienestar — no dependen del tablero.
+  return '<div style="padding:26px 20px;text-align:center;color:var(--dim)">'
+    +'<div style="font-size:16px;font-weight:800;margin-bottom:6px;color:var(--ink)">'+esc(s.nombre||"Tu cuenta")+'</div>'
     +esc(sinDatosMsg||"Aún no hay datos de tu cuenta.")
-    +'<br><span style="opacity:.72;font-size:13px;display:inline-block;margin-top:8px">Conecta tu reloj en la pestaña <b>Datos</b> para empezar a ver tu tablero.</span></div>';
+    +'<div style="opacity:.72;font-size:13px;margin-top:8px">Conecta tu reloj en <b>Datos</b> para ver tu tablero — o empieza a registrar ya:</div>'
+    +'<button class="btn pri" style="margin-top:16px" onclick="openCorrer()">▶  Iniciar entrenamiento (GPS)</button>'
+    +'<button class="btn sec" onclick="openBienestar()">🩺  Bienestar diario</button>'
+    +'</div>';
 }
 function switchTab(tab){ activeTab=tab; screen=null; editId=null; paint(); }
 function openEventos(){ screen="eventos"; editId=null; paint(); }
