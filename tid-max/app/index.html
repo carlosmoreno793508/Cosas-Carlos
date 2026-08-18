@@ -250,6 +250,10 @@ function vHoy(d){
     <div><div class="k">Evento objetivo</div><div style="font-size:14px;font-weight:700;margin-top:2px">${esc(evNombre)}</div><div class="hint" style="margin-top:2px">Toca para ver o editar</div></div>
     <div style="text-align:right"><div style="font-size:24px;font-weight:800;line-height:1" class="num">${evDias??"—"}</div><div style="font-size:10px;color:var(--dim)">días</div></div>
   </div>
+  <div class="card tap" onclick="openBienestar()" style="display:flex;justify-content:space-between;align-items:center;margin-top:12px">
+    <div><div class="k">Bienestar diario</div><div style="font-size:14px;font-weight:700;margin-top:2px">RPE, Hooper y ACWR</div><div class="hint" style="margin-top:2px">${wxTodayDone()?"Registrado hoy ✓":"Toca para registrar"}</div></div>
+    <div style="text-align:right">${wxAcwrChip()}</div>
+  </div>
   <a href="./reporte.html" class="btn pri" style="margin-top:12px;text-decoration:none;display:block">📊  Ver reporte completo</a>`;
 }
 
@@ -652,6 +656,7 @@ function paint(){
   else if(screen==="capturar"){ prioSel=(editId!=null?(loadEventos()[editId]?.prioridad||"A"):"A"); el.innerHTML=vCapturar(editId); bindCapturar(); }
   else if(screen==="sesion"){ el.innerHTML=vSesion(); }
   else if(screen==="correr"){ el.innerHTML=vCorrer(); bindCorrer(); }
+  else if(screen==="bienestar"){ el.innerHTML=vBienestar(); }
   else if(DATA){ el.innerHTML = VIEWS[activeTab](DATA); }
   else if(tidToken()){
     // Logueado pero sin datos propios (cuentas independientes): Datos y Perfil
@@ -677,6 +682,7 @@ function openEventos(){ screen="eventos"; editId=null; paint(); }
 function openCapturar(id){ screen="capturar"; editId=(id==null?null:id); paint(); }
 function openSesion(){ screen="sesion"; sesSport=null; sesSegs=[]; paint(); }
 function openCorrer(){ screen="correr"; runReset(); paint(); }
+function openBienestar(){ screen="bienestar"; paint(); }
 document.querySelectorAll(".tabs button").forEach(b=>b.addEventListener("click",()=>switchTab(b.dataset.tab)));
 
 let tt; function toast(m){ const t=document.getElementById("toast"); t.textContent=m; t.classList.add("show"); clearTimeout(tt); tt=setTimeout(()=>t.classList.remove("show"),1900); }
@@ -1139,6 +1145,185 @@ function drawSvgRoute(box,pts){
     <circle cx="${X(pts[0].lon).toFixed(1)}" cy="${Y(pts[0].lat).toFixed(1)}" r="6" fill="${getCss("--good")}" stroke="#fff" stroke-width="2"/>
     <circle cx="${X(pts[pts.length-1].lon).toFixed(1)}" cy="${Y(pts[pts.length-1].lat).toFixed(1)}" r="6" fill="${getCss("--crit")}" stroke="#fff" stroke-width="2"/>
   </svg><div style="position:absolute;bottom:6px;left:8px;font-size:10px;color:var(--faint)">Mapa sin conexión — trazo aproximado</div>`;
+}
+
+/* ================= Bienestar diario — sRPE + Hooper-Mackinnon + ACWR + zonas ================= */
+// Modelo (natación / general): carga interna = sRPE (RPE 1-10 × minutos). Wellness diario
+// Hooper-Mackinnon (sueño+estrés+fatiga+dolor, 1-7 c/u → /28). ACWR = carga semanal aguda /
+// promedio de las últimas 4 semanas (sweet spot 0.8-1.3). Zonas Z1-Z8 por % de FC máx.
+function wxAll(){ try{ return JSON.parse(localStorage.getItem("tid_wellness")||"[]"); }catch(e){ return []; } }
+function wxSaveAll(a){ try{ localStorage.setItem("tid_wellness", JSON.stringify(a.slice(-400))); }catch(e){} }
+function wxHoyISO(){ return new Date().toISOString().slice(0,10); }
+function wxToday(){ const d=wxHoyISO(); return wxAll().find(r=>r.fecha===d)||null; }
+function wxTodayDone(){ return !!wxToday(); }
+function hooperTotal(r){ return (+r.sueno||0)+(+r.estres||0)+(+r.fatiga||0)+(+r.dolor||0); }
+function hooperBand(t){ if(!t) return {t:"—",c:"var(--faint)"}; if(t<=11) return {t:"Óptimo",c:"var(--good)"}; if(t<=19) return {t:"Atención",c:"var(--warn)"}; return {t:"Alerta",c:"var(--crit)"}; }
+function wxMonday(iso){ const d=new Date(iso+"T00:00:00"); const off=(d.getDay()+6)%7; d.setDate(d.getDate()-off); return d.toISOString().slice(0,10); }
+function wxWeekly(n){
+  const byWk={}; wxAll().forEach(r=>{ if(!r.carga) return; const w=wxMonday(r.fecha); byWk[w]=(byWk[w]||0)+r.carga; });
+  const out=[]; let m=new Date(wxMonday(wxHoyISO())+"T00:00:00");
+  for(let i=0;i<n;i++){ const k=m.toISOString().slice(0,10); out.unshift({wk:k, load:Math.round(byWk[k]||0)}); m.setDate(m.getDate()-7); }
+  return out;
+}
+function wxAcwrSeries(weeks){ return weeks.map((w,i)=>{ const sl=weeks.slice(Math.max(0,i-3),i+1).map(x=>x.load); const ch=sl.reduce((a,b)=>a+b,0)/sl.length; return ch? +(w.load/ch).toFixed(2) : null; }); }
+function wxAcwr(){ const w=wxWeekly(8); const s=wxAcwrSeries(w); return s.length? s[s.length-1] : null; }
+function acwrBand(r){ if(r==null) return {t:"Sin datos",c:"var(--faint)"}; if(r<0.8) return {t:"Bajo",c:"var(--dim)"}; if(r<=1.3) return {t:"Óptimo",c:"var(--good)"}; if(r<=1.5) return {t:"Elevado",c:"var(--warn)"}; return {t:"Alto",c:"var(--crit)"}; }
+function wxAcwrChip(){ const r=wxAcwr(); const b=acwrBand(r);
+  return `<div class="num" style="font-size:20px;font-weight:800;color:${b.c}">${r!=null?r.toFixed(2):"—"}</div><div style="font-size:10px;color:var(--dim)">ACWR</div>`; }
+
+// Zonas de FC de natación (Z1-Z8) — % de FC máx. Igual referencia que usan los coaches MX.
+const ZONAS_NAT=[
+  {k:"Z1 · REC",lo:50,hi:60,c:"#8FD3F0"},{k:"Z2 · AEL",lo:55,hi:65,c:"#5CB8E6"},
+  {k:"Z3 · AEM",lo:60,hi:70,c:"#2E9BD6"},{k:"Z4 · UAN",lo:65,hi:75,c:"#1B7FC0"},
+  {k:"Z5 · VO₂máx",lo:70,hi:80,c:"#155FA0"},{k:"Z6 · TOLA",lo:75,hi:85,c:"#E9A521"},
+  {k:"Z7 · MPLA",lo:80,hi:90,c:"#E06C1F"},{k:"Z8 · VEL",lo:85,hi:95,c:"#CE3742"}];
+
+function wxOpts(sel){ const L={1:"Excelente",2:"Muy bien",3:"Bien",4:"Normal",5:"Regular",6:"Mal",7:"Muy mal"};
+  const E={1:"😃",2:"🙂",3:"🙂",4:"😐",5:"😕",6:"😖",7:"😣"};
+  let o=""; for(let i=1;i<=7;i++) o+=`<option value="${i}" ${+sel===i?"selected":""}>${i} · ${L[i]} ${E[i]}</option>`; return o; }
+function wxRpeOpts(sel){ let o=`<option value="" ${!sel?"selected":""}>—</option>`;
+  for(let i=1;i<=10;i++) o+=`<option value="${i}" ${+sel===i?"selected":""}>${i}${i<=2?" · muy suave":i>=9?" · máximo":i>=7?" · duro":""}</option>`; return o; }
+
+function vBienestar(){
+  const t=wxToday()||{sueno:4,estres:4,fatiga:4,dolor:4,rpe:"",min:""};
+  const ht=hooperTotal(t), hb=hooperBand(ht);
+  const carga=(+t.rpe&&+t.min)?(+t.rpe*+t.min):0;
+  const mx=fcMax();
+  const weeks=wxWeekly(8), ser=wxAcwrSeries(weeks), acwr=ser[ser.length-1], ab=acwrBand(acwr);
+  const sel=(id,val,opts)=>`<select class="inp" id="${id}" onchange="wxLive()" style="width:100%">${opts}</select>`;
+  // Tabla de zonas
+  const zrows=ZONAS_NAT.map(z=>{
+    const r=mx?`${Math.round(mx*z.lo/100)}–${Math.round(mx*z.hi/100)}`:"—";
+    return `<tr><td style="padding:7px 8px"><span style="display:inline-block;width:9px;height:9px;border-radius:2px;background:${z.c};margin-right:7px;vertical-align:middle"></span>${z.k}</td>
+      <td class="num" style="text-align:center;color:var(--dim)">${z.lo}–${z.hi}%</td>
+      <td class="num" style="text-align:right;font-weight:700">${r}</td></tr>`; }).join("");
+  return `
+  <div class="top">
+    <div class="back" onclick="switchTab('hoy')">‹</div>
+    <div style="flex:1"><div class="h">Bienestar diario</div><div class="s">${esc(wxHoyFecha())}</div></div>
+  </div>
+
+  <div class="card">
+    <div class="k" style="color:var(--accent-ink)">Wellness (Hooper-Mackinnon)</div>
+    <div class="hint" style="margin:2px 0 10px">Sueño · estrés · fatiga · dolor muscular. 1 = excelente, 7 = muy mal.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div><label class="hint">Sueño</label>${sel("wx_sueno",t.sueno,wxOpts(t.sueno))}</div>
+      <div><label class="hint">Estrés</label>${sel("wx_estres",t.estres,wxOpts(t.estres))}</div>
+      <div><label class="hint">Fatiga</label>${sel("wx_fatiga",t.fatiga,wxOpts(t.fatiga))}</div>
+      <div><label class="hint">Dolor muscular</label>${sel("wx_dolor",t.dolor,wxOpts(t.dolor))}</div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:10px;border-top:1px solid var(--line)">
+      <div class="hint">Estado del día</div>
+      <div><span id="wx_total" class="num" style="font-size:20px;font-weight:800">${ht}</span><span style="color:var(--faint)">/28</span>
+        <span id="wx_band" style="display:inline-block;font-size:12px;font-weight:800;color:#fff;background:${hb.c};padding:2px 8px;border-radius:999px;margin-left:6px">${hb.t}</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="k" style="color:var(--accent-ink)">Esfuerzo de la sesión (sRPE)</div>
+    <div class="hint" style="margin:2px 0 10px">Tu percepción del esfuerzo × los minutos = carga interna.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div><label class="hint">RPE (1–10)</label>${sel("wx_rpe",t.rpe,wxRpeOpts(t.rpe))}</div>
+      <div><label class="hint">Duración (min)</label><input class="inp" id="wx_min" type="number" inputmode="numeric" min="0" max="600" value="${t.min||""}" placeholder="Ej: 90" oninput="wxLive()" style="width:100%"></div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:10px;border-top:1px solid var(--line)">
+      <div class="hint">Carga interna de hoy</div>
+      <div><span id="wx_carga" class="num" style="font-size:20px;font-weight:800">${carga||"—"}</span> <span style="color:var(--faint);font-size:12px">UA</span></div>
+    </div>
+  </div>
+
+  <button class="btn pri" onclick="wxSave()">💾  Guardar bienestar de hoy</button>
+
+  <div class="card" style="margin-top:14px">
+    <div style="display:flex;justify-content:space-between;align-items:baseline">
+      <div class="k" style="color:var(--accent-ink)">Control de carga (ACWR)</div>
+      <div><span class="num" style="font-size:22px;font-weight:800;color:${ab.c}">${acwr!=null?acwr.toFixed(2):"—"}</span>
+        <span style="font-size:12px;font-weight:800;color:${ab.c}">${ab.t}</span></div>
+    </div>
+    <div class="hint" style="margin:2px 0 8px">Carga aguda (semana) vs crónica (4 semanas). Zona segura 0.8–1.3.</div>
+    ${wxChart(weeks,ser)}
+  </div>
+
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div class="k" style="color:var(--accent-ink)">Zonas de FC · natación</div>
+      <div style="display:flex;gap:6px;align-items:center">
+        <input class="inp" id="wx_fcmax" type="number" inputmode="numeric" min="120" max="230" value="${mx||""}" placeholder="FC máx" style="width:92px;padding:6px 8px">
+        <button class="pill go" style="border:none;cursor:pointer;font-family:inherit" onclick="runSetFcMax((document.getElementById('wx_fcmax')||{}).value)">OK</button>
+      </div>
+    </div>
+    <div class="hint" style="margin:2px 0 8px">${mx?`Sobre FC máx ${mx} lpm.`:"Pon tu FC máx para ver los rangos en lpm."} Z7/Z8 son neuromusculares.</div>
+    <div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:13.5px">
+      <thead><tr style="color:var(--faint);font-size:11px;text-transform:uppercase">
+        <th style="text-align:left;padding:4px 8px;font-weight:600">Zona</th>
+        <th style="text-align:center;padding:4px 8px;font-weight:600">% FCmáx</th>
+        <th style="text-align:right;padding:4px 8px;font-weight:600">Rango (lpm)</th></tr></thead>
+      <tbody>${zrows}</tbody></table></div>
+  </div>
+
+  ${wxRecientes()}
+  <button class="btn sec" onclick="switchTab('hoy')" style="margin-top:6px">Volver</button>`;
+}
+
+function wxLive(){
+  const g=id=>{ const e=document.getElementById(id); return e?e.value:""; };
+  const r={sueno:g("wx_sueno"),estres:g("wx_estres"),fatiga:g("wx_fatiga"),dolor:g("wx_dolor")};
+  const ht=hooperTotal(r), hb=hooperBand(ht);
+  const te=document.getElementById("wx_total"); if(te) te.textContent=ht;
+  const be=document.getElementById("wx_band"); if(be){ be.textContent=hb.t; be.style.background=hb.c; }
+  const carga=(+g("wx_rpe")&&+g("wx_min"))?(+g("wx_rpe")*+g("wx_min")):0;
+  const ce=document.getElementById("wx_carga"); if(ce) ce.textContent=carga||"—";
+}
+function wxSave(){
+  const g=id=>{ const e=document.getElementById(id); return e?e.value:""; };
+  const rec={ fecha:wxHoyISO(),
+    sueno:+g("wx_sueno")||4, estres:+g("wx_estres")||4, fatiga:+g("wx_fatiga")||4, dolor:+g("wx_dolor")||4,
+    rpe:+g("wx_rpe")||null, min:+g("wx_min")||null };
+  rec.hooper=hooperTotal(rec);
+  rec.carga=(rec.rpe&&rec.min)?rec.rpe*rec.min:0;
+  const all=wxAll().filter(r=>r.fecha!==rec.fecha); all.push(rec); all.sort((a,b)=>a.fecha<b.fecha?-1:1);
+  wxSaveAll(all);
+  toast("Bienestar guardado ✓");
+  wxUpload(rec);
+  paint();
+}
+async function wxUpload(rec){
+  const tok=tidToken(); if(!tok) return;
+  try{ await fetch("/api/wellness",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({token:tok, dia:rec})}); }catch(e){}
+}
+function wxHoyFecha(){ try{ return new Date().toLocaleDateString("es-MX",{weekday:"long",day:"numeric",month:"short"}); }catch(e){ return wxHoyISO(); } }
+
+// Mini-gráfica: barras de carga semanal + línea ACWR (banda segura sombreada).
+function wxChart(weeks,ser){
+  const W=320,H=140,pad=18, n=weeks.length;
+  const maxL=Math.max(1,...weeks.map(w=>w.load));
+  const bw=(W-2*pad)/n*0.62, gap=(W-2*pad)/n;
+  const xAt=i=>pad+gap*i+gap/2;
+  const yLoad=v=>H-pad-(v/maxL)*(H-2*pad);
+  const yAcwr=v=>H-pad-(Math.min(v,2)/2)*(H-2*pad);
+  let bars="",line="",dots="";
+  weeks.forEach((w,i)=>{ const h=(H-pad)-yLoad(w.load);
+    bars+=`<rect x="${(xAt(i)-bw/2).toFixed(1)}" y="${yLoad(w.load).toFixed(1)}" width="${bw.toFixed(1)}" height="${Math.max(0,h).toFixed(1)}" rx="3" fill="var(--panel2)" stroke="var(--line)"/>`; });
+  const pts=ser.map((v,i)=> v==null?null:[xAt(i),yAcwr(v)]).filter(Boolean);
+  if(pts.length) line=`<polyline points="${pts.map(p=>p[0].toFixed(1)+","+p[1].toFixed(1)).join(" ")}" fill="none" stroke="var(--crit)" stroke-width="2.5"/>`;
+  ser.forEach((v,i)=>{ if(v==null)return; const b=acwrBand(v); dots+=`<circle cx="${xAt(i).toFixed(1)}" cy="${yAcwr(v).toFixed(1)}" r="3.5" fill="${b.c}"/>`; });
+  const bandTop=yAcwr(1.3), bandBot=yAcwr(0.8);
+  const labels=weeks.map((w,i)=>`<text x="${xAt(i).toFixed(1)}" y="${H-5}" text-anchor="middle" font-size="8" fill="var(--faint)">${w.wk.slice(8,10)}/${w.wk.slice(5,7)}</text>`).join("");
+  return `<div style="overflow-x:auto"><svg viewBox="0 0 ${W} ${H}" width="100%" style="min-width:300px;display:block">
+    <rect x="${pad}" y="${bandTop.toFixed(1)}" width="${W-2*pad}" height="${(bandBot-bandTop).toFixed(1)}" fill="var(--good)" opacity=".10"/>
+    ${bars}${line}${dots}${labels}
+  </svg><div style="font-size:10px;color:var(--faint);margin-top:2px">Barras = carga semanal (UA) · línea = ACWR · franja verde = zona segura</div></div>`;
+}
+function wxRecientes(){
+  const all=wxAll().slice(-7).reverse();
+  if(!all.length) return "";
+  const rows=all.map(r=>{ const hb=hooperBand(r.hooper);
+    return `<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--line)">
+      <div class="num" style="width:52px;font-size:12px;color:var(--dim)">${r.fecha.slice(8,10)}/${r.fecha.slice(5,7)}</div>
+      <div style="flex:1;font-size:13px">Hooper <b>${r.hooper}</b>/28 · <span style="color:${hb.c};font-weight:700">${hb.t}</span></div>
+      <div class="num" style="font-size:13px;font-weight:700">${r.carga?r.carga+" UA":"—"}</div>
+    </div>`; }).join("");
+  return `<div class="card"><div class="k" style="color:var(--accent-ink);margin-bottom:4px">Últimos registros</div>${rows}</div>`;
 }
 
 /* ---------------- Sesión / login privado por persona ---------------- */
