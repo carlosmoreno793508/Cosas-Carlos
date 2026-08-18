@@ -65,21 +65,9 @@ jobs:
           # fuente, se omite sin romper a los demás ni al dashboard actual.
           python tid_multi.py
 
-      - name: Reguardar el refresh token rotado (WHOOP lo rota en cada sync)
-        if: ${{ env.GH_PAT != '' }}
-        working-directory: tid-max/software
-        env:
-          GH_TOKEN: ${{ secrets.GH_PAT }}
-          VIEJO: ${{ secrets.WHOOP_REFRESH_TOKEN }}
-        run: |
-          NUEVO=$(python -c "from dotenv import dotenv_values; print(dotenv_values('.env').get('WHOOP_REFRESH_TOKEN',''))")
-          if [ -n "$NUEVO" ] && [ "$NUEVO" != "$VIEJO" ]; then
-            echo "Token WHOOP rotó — actualizando el secret…"
-            gh secret set WHOOP_REFRESH_TOKEN --body "$NUEVO" --repo "${{ github.repository }}"
-          else
-            echo "El token no cambió; nada que actualizar."
-          fi
-
+      # IMPORTANTE: primero PUBLICAR el reporte (es el artefacto valioso), y HASTA DESPUÉS
+      # reguardar el token. Antes iba al revés: si el guardado del token fallaba (p. ej. un
+      # 503 transitorio de GitHub), el commit del reporte se saltaba y el reporte se congelaba.
       - name: Publicar los reportes (commit de data.json + reportes por atleta)
         run: |
           git config user.name  "tid-max-bot"
@@ -92,3 +80,27 @@ jobs:
             git commit -m "Reporte diario TID-MAX ($(date -u +%F))"
             git push
           fi
+
+      - name: Reguardar el refresh token rotado (WHOOP lo rota en cada sync)
+        if: ${{ always() && env.GH_PAT != '' }}
+        working-directory: tid-max/software
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+          VIEJO: ${{ secrets.WHOOP_REFRESH_TOKEN }}
+        run: |
+          NUEVO=$(python -c "from dotenv import dotenv_values; print(dotenv_values('.env').get('WHOOP_REFRESH_TOKEN',''))")
+          if [ -z "$NUEVO" ] || [ "$NUEVO" = "$VIEJO" ]; then
+            echo "El token no cambió; nada que actualizar."
+            exit 0
+          fi
+          echo "Token WHOOP rotó — actualizando el secret (con reintentos ante 503)…"
+          for intento in 1 2 3 4 5; do
+            if gh secret set WHOOP_REFRESH_TOKEN --body "$NUEVO" --repo "${{ github.repository }}"; then
+              echo "Secret actualizado en el intento $intento."
+              exit 0
+            fi
+            echo "Intento $intento falló (posible 503 transitorio). Reintentando…"
+            sleep $((intento * 3))
+          done
+          echo "::error::No pude reguardar el token WHOOP tras 5 intentos. Si el reporte se congela, re-autoriza WHOOP con whoop_auth.py y actualiza el secret WHOOP_REFRESH_TOKEN."
+          exit 1
