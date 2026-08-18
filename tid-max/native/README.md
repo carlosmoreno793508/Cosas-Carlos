@@ -48,6 +48,48 @@ Reloj (Polar/Garmin/Whoop/Samsung/Apple Watch) → escribe → Tanque de Salud �
 - ✅ Pantalla **"Salud del teléfono"** en el tab **Datos** (toggle + "Sincronizar
   ahora" + "última sincronización"), igual que Polar Flow.
 
+## Fase B — Grabador de carrera nativo (FC en vivo + GPS en segundo plano)
+
+El grabador de `app/index.html` ya está **cableado a un puente nativo** (bloque
+`RunGeo` / `RunHR`, marcado como "PUENTE NATIVO"). En el navegador cae a Web
+Bluetooth + `watchPosition` (la PWA no cambia); en la app nativa usará:
+
+- **FC en vivo** → `@capacitor-community/bluetooth-le` (lee el Polar H10 por BLE;
+  en iPhone es la ÚNICA vía, porque Safari no da Web Bluetooth).
+- **GPS en segundo plano** → `@capacitor-community/background-geolocation`
+  (sigue grabando con la pantalla apagada / app en fondo).
+
+Ambos ya están en `package.json`. Falta, en la sesión de compilado:
+
+1. **Terminar el método `RunHR._nativeConnect`** en `app/index.html` con las llamadas
+   reales del plugin BLE (el comentario de arriba trae el flujo: `requestDevice` →
+   `connect` → `startNotifications('180D','2A37')` → `parseHr`). Es el ÚNICO lugar a tocar.
+2. **Declarar los background modes** (abajo).
+
+### iOS — `ios/App/App/Info.plist`
+```xml
+<key>NSBluetoothAlwaysUsageDescription</key>
+<string>TID-MAX se conecta a tu banda Polar para leer tu ritmo cardiaco durante la carrera.</string>
+<key>NSLocationWhenInUseUsageDescription</key>
+<string>TID-MAX usa el GPS para trazar tu ruta y medir distancia y ritmo.</string>
+<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+<string>TID-MAX sigue registrando tu carrera aunque la pantalla esté apagada.</string>
+<key>UIBackgroundModes</key>
+<array><string>location</string><string>bluetooth-central</string></array>
+```
+
+### Android — `android/app/src/main/AndroidManifest.xml`
+```xml
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+<uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION"/>
+<uses-permission android:name="android.permission.BLUETOOTH_SCAN"/>
+<uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
+```
+
+---
+
 ## Qué falta hacer en tu Mac (necesita Xcode / Android Studio)
 
 Estos pasos **no** se pueden correr en el entorno del repo (piden los SDK nativos);

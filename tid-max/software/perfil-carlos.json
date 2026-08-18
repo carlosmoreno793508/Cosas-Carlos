@@ -5,19 +5,21 @@
   "deporte": "running",
   "reloj": "Polar",
   "perfil": {
-    "edad": null,
+    "fecha_nacimiento": "1976-10-01",
+    "edad": 49,
     "sexo": "M",
-    "peso_kg": null,
+    "peso_kg": 93,
     "altura_cm": null,
     "vo2max": null,
     "fc_reposo": null,
     "fc_max_carrera": null,
+    "fc_max_estimada": 171,
     "vt1_fc": null,
     "vt2_fc": null,
     "fatmax_fc": null,
     "nivel_inicial": "bajo",
     "historial": "corredor que retoma tras tiempo sin correr; sin base aeróbica reciente construida",
-    "_nota_datos_faltantes": "Para cerrar las zonas de FC necesito, del Polar o de ti: (1) edad, (2) peso, (3) FC en reposo (el Polar la da al despertar), (4) idealmente FC máxima real de una salida dura o un test de campo. Mientras tanto la intensidad se prescribe por SENSACIÓN (poder-hablar) y por las zonas automáticas del Polar; cuando tengamos FCmáx real, se recalibran las zonas medidas (VT1/VT2), igual que hicimos con Gael."
+    "_nota_datos_faltantes": "Edad ya cargada (nac. 1-oct-1976 → 49). Con ella, FC máx estimada ≈ 220−49 = 171 lpm, suficiente para pintar zonas provisionales. Peso ya cargado (93 kg). Para AFINAR aún faltan, del Polar o de ti: (1) FC en reposo (el Polar la da al despertar), (2) idealmente FC máxima real de una salida dura o un test de campo. Mientras tanto la intensidad se prescribe por SENSACIÓN (poder-hablar) y por las zonas del Polar; cuando tengamos FCmáx real, se recalibran las zonas medidas (VT1/VT2), igual que hicimos con Gael."
   },
   "objetivos": [
     {"carrera": "Medio maratón", "fecha": "2026-10-11", "distancia_km": 21.1, "rol": "A-race #1 / test de forma", "meta": "terminar fuerte y cómodo (sin buscar tiempo aún)"},
