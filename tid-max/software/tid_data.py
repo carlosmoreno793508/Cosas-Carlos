@@ -505,7 +505,8 @@ def build_athlete():
 def build_evento():
     """Evento objetivo + fase calculada (carga/taper/pico) según los días que faltan."""
     ev = _load_plan("evento.json") or {}
-    if not ev:
+    # Sin evento, o un evento "vaciado" (sin nombre / marcado desde la app) = sin evento.
+    if not ev or ev.get("_vaciado") or not ev.get("nombre"):
         return None
 
     hoy = datetime.now().date()

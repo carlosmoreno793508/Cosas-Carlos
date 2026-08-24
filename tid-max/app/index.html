@@ -540,27 +540,44 @@ function guardarEvento(id){
   if(id==null) evs.push(obj); else evs[id]=obj;
   saveEventos(evs);
   toast(id==null?"Evento guardado 🏆":"Evento actualizado");
-  sincronizarEvento(obj);
+  sincronizarEvento();
   openEventos();
 }
-async function sincronizarEvento(obj){
+// Sincroniza el EVENTO OBJETIVO ACTIVO (el próximo por fecha) a la cuenta del atleta.
+// El motor usa un solo evento objetivo; mandamos eventoActivo() (o null para limpiar si ya
+// no queda ninguno futuro). Autentica con el TOKEN de sesión → se guarda POR-ATLETA.
+async function sincronizarEvento(){
+  const tok = tidToken();
+  const act = eventoActivo();
+  const evJSON = act ? evToJSON(act) : null;   // null = limpiar el evento del atleta
+  if(tok){
+    try{
+      const r = await fetch("/api/evento", {
+        method:"POST", headers:{"content-type":"application/json"},
+        body: JSON.stringify({token: tok, evento: evJSON}),
+      });
+      if(r.ok) toast(evJSON ? "Evento sincronizado al motor ✓" : "Evento quitado del motor ✓");
+      else { const e = await r.json().catch(()=>({})); toast("No sincronizó: "+(e.error||("HTTP "+r.status))); }
+    }catch(e){ /* sin conexión: queda guardado local, se reintenta al próximo cambio */ }
+    return;
+  }
+  // Fallback LEGACY (sin sesión): clave compartida → evento global. Solo si hay evento.
   const secret = localStorage.getItem("tid_secret") || "";
-  if(!secret) return;  // sin clave: se queda solo en el teléfono
+  if(!secret || !evJSON) return;
   try{
     const r = await fetch("/api/evento", {
       method:"POST", headers:{"content-type":"application/json"},
-      body: JSON.stringify({secret, evento: evToJSON(obj)}),
+      body: JSON.stringify({secret, evento: evJSON}),
     });
     if(r.ok) toast("Evento sincronizado al motor ✓");
-    else { const e = await r.json().catch(()=>({})); toast("No sincronizó: "+(e.error||("HTTP "+r.status))); }
-  }catch(e){ /* sin conexión: queda guardado local, se puede reintentar */ }
+  }catch(e){ /* offline: queda local */ }
 }
 function guardarSecret(){
   const el=document.getElementById("f_secret"); if(!el) return;
   localStorage.setItem("tid_secret", el.value.trim());
   toast(el.value.trim()?"Clave guardada ✓":"Clave borrada");
 }
-function borrarEvento(i){ const evs=loadEventos(); evs.splice(i,1); saveEventos(evs); toast("Evento borrado"); paint(); }
+function borrarEvento(i){ const evs=loadEventos(); evs.splice(i,1); saveEventos(evs); toast("Evento borrado"); sincronizarEvento(); paint(); }
 function copiarJSON(i){
   const e=loadEventos()[i]; const txt=JSON.stringify(evToJSON(e),null,2);
   if(navigator.clipboard){ navigator.clipboard.writeText(txt).then(()=>toast("JSON copiado ✓"), ()=>toast("No pude copiar")); }

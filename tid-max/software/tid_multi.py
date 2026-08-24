@@ -35,6 +35,7 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ROSTER = os.path.join(SCRIPT_DIR, "atletas.json")
 ATLETAS_BASE = os.path.join(SCRIPT_DIR, "datos", "atletas")
 REPORTES_DIR = os.path.join(SCRIPT_DIR, "reportes")
+EVENTOS_DIR = os.path.join(SCRIPT_DIR, "eventos")   # evento objetivo POR-ATLETA (lo pone la app)
 WEB_DATA = os.path.join(SCRIPT_DIR, "..", "web", "data.json")
 APP_DATA = os.path.join(SCRIPT_DIR, "..", "app", "data.json")
 
@@ -111,6 +112,22 @@ def procesar_atleta(atleta, do_sync=True):
         origen = os.path.join(SCRIPT_DIR, nombre)
         if os.path.exists(origen):
             shutil.copyfile(origen, os.path.join(base, nombre))
+
+    # Evento objetivo POR-ATLETA (lo captura la app vía /api/evento → eventos/<slug>.json).
+    # Gana sobre el evento.json compartido: se copia a la carpeta del atleta como evento.json,
+    # que es lo que build_evento (tid_data.py) lee. Un evento "_vaciado" (sin nombre) deja al
+    # atleta SIN evento: escribimos {} para que build_evento devuelva None y no muestre nada.
+    ev_atleta = os.path.join(EVENTOS_DIR, f"{slug}.json")
+    if os.path.exists(ev_atleta):
+        destino = os.path.join(base, "evento.json")
+        try:
+            with open(ev_atleta, encoding="utf-8") as f:
+                ev = json.load(f)
+        except (ValueError, OSError):
+            ev = {}
+        vaciado = (not isinstance(ev, dict)) or ev.get("_vaciado") or not ev.get("nombre")
+        with open(destino, "w", encoding="utf-8") as f:
+            json.dump({} if vaciado else ev, f, ensure_ascii=False, indent=2)
 
     print(f"\n═══ {atleta.get('nombre', slug)}  ({slug} · {atleta.get('fuente')} · {atleta.get('deporte')}) ═══")
 
