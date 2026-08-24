@@ -1,9 +1,4 @@
 {
-  "nombre": "Junior Pan Pacific Championships 2026",
-  "sede": "Vancouver, Canadá",
-  "fecha_inicio": "2026-08-17",
-  "fecha_fin": "2026-08-20",
-  "fecha_viaje": "2026-08-14",
-  "meta": "Llegar afinado y sin fatiga acumulada al pico de competencia",
-  "_nota": "Fuente de verdad del evento objetivo. El pipeline (tid_data.py) calcula días al evento y la fase (carga/taper/pico). Para sobrescribir sin tocar el repo, crea datos/evento.json."
+  "_vaciado": true,
+  "_nota": "Sin evento objetivo GLOBAL activo. Desde el rediseño multiusuario, cada atleta captura su propio evento desde la app (POST /api/evento con su token de sesión), que se guarda en eventos/<slug>.json y el driver (tid_multi.py) lo usa aislado por persona. Este archivo global queda como respaldo/plantilla legacy; un objeto vaciado o sin 'nombre' cuenta como 'sin evento' (build_evento devuelve None)."
 }
