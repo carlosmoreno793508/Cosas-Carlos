@@ -1,83 +1,78 @@
 {
-  "fecha": "2026-08-16",
-  "fecha_texto": "domingo 16 ago 2026",
+  "fecha": "2026-08-24",
+  "fecha_texto": "lunes 24 ago 2026",
   "atleta": "Gael Moreno",
   "dias_datos": 25,
   "deporte": "Natación",
-  "fase": "competencia / pico",
+  "fase": "post-evento",
   "evento": "Junior Pan Pacific Championships 2026",
-  "dias_al_evento": 1,
-  "dias_al_viaje": -2,
-  "semaforo": "amarillo",
-  "semaforo_titulo": "Recovery media (59%)",
-  "semaforo_desc": "Amarillo por Recovery en 59%, pero con matices muy buenos: mañana compites (Junior Pan Pacific, día 1) y tu HRV está 17% sobre tu base (120.9 ms vs 103) con FC en reposo en 49 lpm (-6%). Hoy el plan marca descanso y ya hiciste 1.3 h de agua muy suave (FC 95 y 108). Con eso es suficiente: el resto del día es para bajar revoluciones, comer bien y dormir. No añadas nada.",
-  "recovery": 59.0,
+  "dias_al_evento": -7,
+  "dias_al_viaje": -10,
+  "semaforo": "rojo",
+  "semaforo_titulo": "Recovery muy baja (19%)",
+  "semaforo_desc": "Rojo, Gael: recovery 19%, HRV 52.8 ms (-46% vs tu base de 98.1) y FC en reposo en 60 lpm (+14%) tras tres días seguidos de recovery baja. La buena noticia es que estás en post-evento (Junior Pan Pacific ya pasó hace 7 días) y el plan marca 'Vacaciones (sin alberca)' con 0 km: hoy no hay nada que forzar, tu único trabajo es descansar y dejar que el cuerpo cierre la factura de la competencia.",
+  "recovery": 19.0,
   "hrv": {
-    "ms": 120.9,
-    "vs_base_pct": 17,
-    "base": 103.0
+    "ms": 52.8,
+    "vs_base_pct": -46,
+    "base": 98.1
   },
   "rhr": {
-    "lpm": 49.0,
-    "vs_base_pct": -6,
-    "base": 52.0
+    "lpm": 60.0,
+    "vs_base_pct": 14,
+    "base": 52.8
   },
   "sueno": {
-    "total_h": 7.43,
-    "noche_h": 7.43,
-    "siesta_h": 0.65,
-    "n_siestas": 1,
-    "perf": 80.0,
-    "efic": 95.3,
-    "deep_pct": 27.8,
-    "rem_pct": 36.8,
-    "consist": 71.0,
-    "despertares": 17,
-    "deuda_min": 173.0,
-    "acostado": "23:36",
-    "despertar": "07:30",
-    "prom_7d": 6.9,
-    "perf_prom_7d": 70
+    "total_h": 7.33,
+    "noche_h": 7.33,
+    "siesta_h": 1.63,
+    "n_siestas": 2,
+    "perf": 68.0,
+    "efic": 93.3,
+    "deep_pct": 20.4,
+    "rem_pct": 21.0,
+    "consist": 39.0,
+    "despertares": 15,
+    "deuda_min": 178.0,
+    "acostado": "01:46",
+    "despertar": "09:44",
+    "prom_7d": 6.5,
+    "perf_prom_7d": 61
   },
   "forma": {
-    "ctl": 14.8,
-    "atl": 12.0,
-    "tsb": 2.3,
-    "tsb_previa": 0.7,
+    "ctl": 12.9,
+    "atl": 8.7,
+    "tsb": 3.8,
+    "tsb_previa": 1.6,
     "estado_pico": "en_pico",
     "lectura": "Vas llegando FRESCO: la forma (TSB) ya está en positivo. El taper está haciendo su trabajo; mantén algo de intensidad corta para no 'apagarte', pero baja volumen."
   },
   "vitales": {
-    "spo2": 96.0,
-    "temp_piel": 34.269,
-    "resp_rate": 16.7,
-    "strain": 7.65
+    "spo2": 93.2,
+    "temp_piel": 32.957,
+    "resp_rate": 17.1,
+    "strain": 5.03
   },
   "alertas": [
     {
       "nivel": "med",
       "tag": "Preventivo",
-      "texto": "Recovery 59% en día previo a competir: no compenses con actividad extra ni con una sesión 'de sensaciones' larga; cualquier estímulo mañana debe ser solo calentamiento y activación."
+      "texto": "HRV -46% vs base y FC reposo +14% con 3 días consecutivos de recovery baja: si el patrón sigue igual 2-3 días más pese al descanso total, conviene una valoración con un profesional de la salud."
     },
     {
       "nivel": "med",
       "tag": "Preventivo",
-      "texto": "Consistencia de sueño en 71% y 173 min de deuda acumulada, con promedio de 6.9 h en 7 días: prioriza horario fijo esta noche para no llegar al día 1 con déficit."
+      "texto": "SpO2 en 93.2%, por debajo de lo habitual: si se mantiene bajo o aparece sensación de falta de aire, congestión o malestar, consúltalo con un profesional de la salud."
+    },
+    {
+      "nivel": "good",
+      "tag": "Preventivo",
+      "texto": "Consistencia de sueño en 39% con hora de dormir a la 01:46 y 15 despertares: es el factor más modificable ahora mismo y el que más frena la recuperación."
     },
     {
       "nivel": "med",
       "tag": "Preventivo",
-      "texto": "La siesta de 0.65 h de hoy está bien, pero no la extiendas ni la hagas tarde para no comprometer el sueño de esta noche."
-    },
-    {
-      "nivel": "med",
-      "tag": "Preventivo",
-      "texto": "No hay datos de hidratación ni de peso corporal registrados; sería útil pesarte antes y después de la sesión de mañana para estimar pérdida de líquidos."
-    },
-    {
-      "nivel": "med",
-      "tag": "Preventivo",
-      "texto": "Si aparece algo fuera de lo normal (dolor de garganta, fiebre, molestia articular o mareo), consúltalo con el médico del equipo antes de competir, no lo resuelvas por tu cuenta."
+      "texto": "No hay registro de hidratación ni de sesiones reales hoy; sin esos datos no puedo cerrar la lectura completa del día."
     }
   ],
   "nutricion": {
