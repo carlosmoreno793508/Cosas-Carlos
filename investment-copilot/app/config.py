@@ -102,6 +102,10 @@ class Settings(BaseSettings):
     # 0.6 = deja 40% en efectivo siempre (menos retorno, menos drawdown).
     max_exposure: float = 1.0
 
+    # Tasa CETES anual: el efectivo ocioso "gana" esta tasa mientras el bot no
+    # esta en cripto (Agente de Proteccion). 0.08 = 8% anual. 0 = efectivo muerto.
+    cetes_annual_rate: float = 0.08
+
     @property
     def exchange_list(self) -> list[str]:
         return [x.strip() for x in self.exchange_ids.split(",") if x.strip()]

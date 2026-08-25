@@ -40,10 +40,26 @@ class PaperBroker:
     equity_start: float = field(default=0.0)
     positions: dict[str, Position] = field(default_factory=dict)
     closed: list[dict] = field(default_factory=list)
+    interest_earned: float = 0.0   # rendimiento tipo CETES acumulado en el efectivo
+    last_accrual: str = ""         # ultima fecha en que se aplico el rendimiento (para el bot)
 
     def __post_init__(self):
         if not self.equity_start:
             self.equity_start = self.cash
+
+    # --- rendimiento del efectivo (CETES) ---
+    def accrue_cash_yield(self, annual_rate: float, days: float = 1.0) -> float:
+        """Aplica rendimiento tipo CETES al efectivo ocioso (compuesto diario).
+
+        Modela el "Agente de Proteccion": el dinero que NO esta en cripto no se
+        queda en 0%, gana la tasa CETES mientras espera. Devuelve el interes ganado.
+        """
+        if annual_rate <= 0 or days <= 0 or self.cash <= 0:
+            return 0.0
+        interest = self.cash * ((1 + annual_rate) ** (days / 365.0) - 1)
+        self.cash += interest
+        self.interest_earned += interest
+        return interest
 
     # --- ordenes ---
     def buy(self, symbol: str, price: float, size: float, stop: float, target: float, when: str) -> bool:
@@ -92,6 +108,7 @@ class PaperBroker:
             "equity": round(eq, 2),
             "return_pct": round((eq / self.equity_start - 1) * 100, 2),
             "cash": round(self.cash, 2),
+            "interest_earned": round(self.interest_earned, 2),
             "open_positions": len(self.positions),
             "trades_closed": len(self.closed),
             "win_rate_pct": round(len(wins) / len(self.closed) * 100, 1) if self.closed else 0.0,
@@ -104,6 +121,8 @@ class PaperBroker:
             "equity_start": self.equity_start,
             "positions": {s: asdict(p) for s, p in self.positions.items()},
             "closed": self.closed,
+            "interest_earned": self.interest_earned,
+            "last_accrual": self.last_accrual,
         }
 
     @classmethod
@@ -111,4 +130,6 @@ class PaperBroker:
         b = cls(cash=d["cash"], equity_start=d.get("equity_start", d["cash"]))
         b.positions = {s: Position(**p) for s, p in d.get("positions", {}).items()}
         b.closed = d.get("closed", [])
+        b.interest_earned = d.get("interest_earned", 0.0)
+        b.last_accrual = d.get("last_accrual", "")
         return b

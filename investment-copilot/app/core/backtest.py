@@ -21,7 +21,8 @@ DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__
 INVEST_FRACTION = 0.98  # fraccion del capital que se pone al activo mientras esta dentro
 
 
-def backtest_symbol(symbol: str, df: pd.DataFrame, capital: float = 10_000.0) -> dict:
+def backtest_symbol(symbol: str, df: pd.DataFrame, capital: float = 10_000.0,
+                    cetes_rate: float = 0.0) -> dict:
     ind = RiskEngine.calculate_indicators(df).dropna(subset=["ma200"])
     if ind.empty:
         return {"symbol": symbol, "error": "historia insuficiente"}
@@ -31,6 +32,7 @@ def backtest_symbol(symbol: str, df: pd.DataFrame, capital: float = 10_000.0) ->
     max_dd = 0.0
 
     for when, row in ind.iterrows():
+        broker.accrue_cash_yield(cetes_rate, days=1)  # efectivo gana CETES cada dia
         price, ma200, high = float(row["close"]), float(row["ma200"]), float(row["high"])
         day = when.date().isoformat()
         pos = broker.positions.get(symbol)
@@ -74,6 +76,7 @@ def backtest_portfolio(
     capital: float = 10_000.0,
     data_dir: str = DATA_DIR,
     max_exposure: float = 1.0,
+    cetes_rate: float = 0.0,
 ) -> dict:
     """Backtest de CARTERA: las N monedas juntas, reparto 1/N (como opera el bot).
 
@@ -103,6 +106,7 @@ def backtest_portfolio(
     all_dates = sorted(set().union(*[set(ind.index) for ind in inds.values()]))
 
     for d in all_dates:
+        broker.accrue_cash_yield(cetes_rate, days=1)  # efectivo gana CETES cada dia
         for s, ind in inds.items():
             if d in ind.index:
                 last_prices[s] = float(ind.loc[d, "close"])
@@ -147,28 +151,30 @@ def backtest_portfolio(
     return stats
 
 
-def run_backtests(symbols: list[str], capital: float = 10_000.0, data_dir: str = DATA_DIR) -> list[dict]:
+def run_backtests(symbols: list[str], capital: float = 10_000.0, data_dir: str = DATA_DIR,
+                  cetes_rate: float = 0.0) -> list[dict]:
     engine = RiskEngine(data_dir)
     results = []
     for symbol in symbols:
         df = engine.load_data(symbol)
         if df is None:
             continue
-        results.append(backtest_symbol(symbol, df, capital))
+        results.append(backtest_symbol(symbol, df, capital, cetes_rate=cetes_rate))
     return results
 
 
 if __name__ == "__main__":
     from app.config import active_symbols, settings
 
-    print("\n📈 BACKTEST — regimen MA200 + stop de proteccion")
+    cetes = settings.cetes_annual_rate
+    print("\n📈 BACKTEST — regimen MA200 + stop de proteccion + efectivo en CETES")
     print(f"   activos: {', '.join(active_symbols(settings.quote_currency))}")
-    print(f"   (slippage {SLIPPAGE:.1%} + comision {COMMISSION:.1%} por lado)")
+    print(f"   (slippage {SLIPPAGE:.1%} + comision {COMMISSION:.1%} por lado | CETES {cetes:.1%} anual)")
     print("=" * 70)
     print(f"   {'activo':<12} {'estrategia':>11} {'buy&hold':>11} {'maxDD':>9} {'trades':>7} {'win':>7}")
     print("-" * 70)
     syms = active_symbols(settings.quote_currency)
-    for r in run_backtests(syms):
+    for r in run_backtests(syms, cetes_rate=cetes):
         if r.get("error"):
             print(f"🔹 {r['symbol']:<12} {r['error']}")
             continue
@@ -178,7 +184,7 @@ if __name__ == "__main__":
             f"{r['max_drawdown_pct']:>7.2f}%  {r['trades_closed']:>6}  {r['win_rate_pct']:>5.1f}%"
         )
 
-    p = backtest_portfolio(syms, max_exposure=settings.max_exposure)
+    p = backtest_portfolio(syms, max_exposure=settings.max_exposure, cetes_rate=cetes)
     if not p.get("error"):
         print("-" * 70)
         beat = "✅" if p["return_pct"] > p["buy_hold_pct"] else "  "
@@ -188,6 +194,15 @@ if __name__ == "__main__":
         )
     print("=" * 70)
     print("✅ = le gano al buy & hold  |  CARTERA = las 3 juntas (lo que vives de verdad)")
+
+    # Efecto CETES: cuanto suma el rendimiento del efectivo ocioso vs 0%.
+    if cetes > 0:
+        p0 = backtest_portfolio(syms, max_exposure=settings.max_exposure, cetes_rate=0.0)
+        if not p0.get("error") and not p.get("error"):
+            extra = p["return_pct"] - p0["return_pct"]
+            print(f"\n🇲🇽 EFECTO CETES ({cetes:.0%} anual sobre el efectivo ocioso)")
+            print(f"   Sin CETES: {p0['return_pct']:+.2f}%   |   Con CETES: {p['return_pct']:+.2f}%"
+                  f"   -> +{extra:.2f}% extra (interes: ${p['interest_earned']:,.2f})")
 
     # Frontera riesgo/retorno: como cambia todo segun cuanto capital inviertes.
     print("\n🎚️  DIAL DE EXPOSICION — elige tu punto de comodidad")

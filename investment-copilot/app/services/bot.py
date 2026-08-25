@@ -52,6 +52,16 @@ def run_bot_cycle(update_data: bool = True, notify: bool = True) -> dict:
 
     engine = RiskEngine()
     broker = _load_broker()
+
+    # El efectivo ocioso gana la tasa CETES por los dias transcurridos desde
+    # la ultima corrida (Agente de Proteccion: el dinero no se queda en 0%).
+    today = datetime.now(timezone.utc).date()
+    if broker.last_accrual:
+        elapsed = (today - datetime.fromisoformat(broker.last_accrual).date()).days
+        if elapsed > 0:
+            broker.accrue_cash_yield(settings.cetes_annual_rate, days=elapsed)
+    broker.last_accrual = today.isoformat()
+
     symbols = active_symbols(settings.quote_currency)
     actions: list[str] = []
     prices: dict[str, float] = {}
@@ -123,7 +133,8 @@ def _notify(actions: list[str], stats: dict) -> None:
     msg = f"🤖 *BOT (paper)*\n{line}\n"
     msg += "\n".join(actions) if actions else "Sin operaciones nuevas."
     msg += f"\n{line}\n💼 Equity: *${stats['equity']:,.2f}* ({stats['return_pct']:+.2f}%)\n"
-    msg += f"Posiciones abiertas: {stats['open_positions']}  |  Operaciones: {stats['trades_closed']}"
+    msg += f"Posiciones abiertas: {stats['open_positions']}  |  Operaciones: {stats['trades_closed']}\n"
+    msg += f"🇲🇽 Efectivo (CETES): ${stats['cash']:,.2f}  |  interés ganado: ${stats['interest_earned']:,.2f}"
     TelegramBot().send_message(msg)
 
 

@@ -96,3 +96,33 @@ def test_exposure_dial_reduces_drawdown(tmp_path):
     half = backtest_portfolio(["BTC/USDT", "ETH/USDT"], data_dir=str(tmp_path), max_exposure=0.5)
     assert half["max_drawdown_pct"] > full["max_drawdown_pct"]  # menos hondo
     assert half["return_pct"] < full["return_pct"]              # y menos retorno
+
+
+def test_cetes_yield_grows_idle_cash():
+    # El efectivo ocioso debe crecer con la tasa CETES; 8% anual por 365 dias ~ +8%.
+    b = PaperBroker(cash=10_000)
+    total = 0.0
+    for _ in range(365):
+        total += b.accrue_cash_yield(0.08, days=1)
+    assert abs(b.cash - 10_800) < 5           # ~+8% en un anio
+    assert abs(b.interest_earned - total) < 1e-6
+    # Sin tasa o sin efectivo, no pasa nada.
+    b2 = PaperBroker(cash=10_000)
+    assert b2.accrue_cash_yield(0.0, days=1) == 0.0
+
+
+def test_cetes_lifts_backtest_return(tmp_path):
+    # Con CETES, una cartera que pasa tiempo en efectivo rinde mas que sin CETES.
+    from app.core.backtest import backtest_portfolio
+    # Serie que sube y luego cae bajo MA200 (el bot sale y se queda en cash).
+    up = list(100 * (1.005 ** np.arange(300)))
+    peak = up[-1]
+    crash = list(np.linspace(peak, peak * 0.5, 250))
+    for s in ["BTC/USDT", "ETH/USDT"]:
+        df = _make_df(up + crash, 0.01)
+        df.index.name = "date"
+        df.to_csv(tmp_path / f"{s.replace('/', '_')}_1d.csv")
+    sin = backtest_portfolio(["BTC/USDT", "ETH/USDT"], data_dir=str(tmp_path), cetes_rate=0.0)
+    con = backtest_portfolio(["BTC/USDT", "ETH/USDT"], data_dir=str(tmp_path), cetes_rate=0.10)
+    assert con["return_pct"] > sin["return_pct"]
+    assert con["interest_earned"] > 0

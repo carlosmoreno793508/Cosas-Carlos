@@ -15,7 +15,7 @@ def main() -> None:
     print("\n🤖 ESTADO DEL BOT (paper)")
     print("=" * 44)
     print(f"💼 Equity:      ${s['equity']:,.2f}  ({s['return_pct']:+.2f}%)")
-    print(f"💵 Efectivo:    ${s['cash']:,.2f}")
+    print(f"🇲🇽 Efectivo:    ${s['cash']:,.2f}  (CETES ganado: ${s.get('interest_earned', 0):,.2f})")
     print(f"📊 Posiciones:  {s['open_positions']} abiertas")
     print(f"🔁 Operaciones: {s['trades_closed']} cerradas  (aciertos {s['win_rate_pct']}%)")
     print(f"🛑 Kill switch: {'ACTIVO' if snap['kill_switch'] else 'apagado'}")
