@@ -105,7 +105,8 @@
   @media (max-width:640px){ .kpis{grid-template-columns:repeat(2,1fr)} .grid2{grid-template-columns:1fr} .top .h{font-size:25px} }
 
   /* Motor real · zonas de FC */
-  .zwrap{margin:16px 0 4px}
+  .zwrap{margin:16px 0 4px;position:relative}
+  .zband{position:absolute;top:0;height:32px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);border-radius:6px;z-index:1}
   .zbar{display:flex;height:32px;border-radius:9px;overflow:hidden;position:relative}
   .zbar > i{display:block;height:100%}
   .zmax{position:absolute;top:8px;transform:translateX(-50%);z-index:2;text-align:center}
@@ -190,11 +191,15 @@ function zonaBar(z){
   var lo=120, hi=(z.fcmax||181)+14, span=hi-lo, prev=lo, segs="";
   zs.forEach(function(zn){ var end=Math.min(hi, isN(zn.hasta)?zn.hasta:hi); var w=Math.max(0,(end-prev)/span*100); segs+='<i style="width:'+w.toFixed(2)+'%;background:'+(zn.color||"var(--track)")+'"></i>'; prev=end; });
   var pos=function(v){ return clamp((v-lo)/span*100); };
+  // Banda prom→máx de la(s) sesión(es) del día: muestra el RANGO donde trabajó, no solo el pico.
+  var band="";
+  if(isN(z.avg_hoy)&&isN(z.max_hoy)){ var a=pos(z.avg_hoy), b=pos(z.max_hoy);
+    band='<div class="zband" style="left:'+Math.min(a,b).toFixed(1)+'%;width:'+Math.max(1.5,Math.abs(b-a)).toFixed(1)+'%"></div>'; }
   var maxHoy = isN(z.max_hoy) ? '<div class="zmax" style="left:'+pos(z.max_hoy).toFixed(1)+'%"><div class="lab">MÁX HOY '+n0(z.max_hoy)+'</div><div class="dot"></div></div>' : '';
   var marks=[["vt1","VT1","AERÓBICO"],["vt2","VT2","ANAERÓBICO"],["fatmax","FATmax","GRASA MÁX*"],["fcmax","FCmax","PRUEBA MÁX"]]
     .filter(function(m){return isN(z[m[0]]);})
     .map(function(m){ return '<div class="zmk" style="left:'+pos(z[m[0]]).toFixed(1)+'%"><div class="n">'+m[1]+' '+n0(z[m[0]])+'</div><div class="t">'+m[2]+'</div></div>'; }).join("");
-  return '<div class="zwrap"><div class="zbar">'+segs+'</div>'+maxHoy+'<div class="zmarks">'+marks+'</div></div>';
+  return '<div class="zwrap"><div class="zbar">'+segs+'</div>'+band+maxHoy+'<div class="zmarks">'+marks+'</div></div>';
 }
 // Chart Forma vs Cansancio (serie ~45 días). serie: [{forma,cansancio}] o [{ctl,atl}].
 function formaChart(serie){

@@ -124,6 +124,9 @@ def build_data():
         fc_hoy = f.get("fc_max_hoy") or f.get("hr_max_hoy")
         if fc_hoy is not None:
             zonas["max_hoy"] = fc_hoy
+        avg_hoy = f.get("fc_prom_hoy") or f.get("hr_avg_hoy")
+        if avg_hoy is not None:
+            zonas["avg_hoy"] = avg_hoy
         ses = f.get("sesiones_hoy") or f.get("workouts_hoy")
         if ses:
             zonas["sesiones"] = ses
