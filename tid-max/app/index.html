@@ -66,6 +66,25 @@
   .mv{font-size:23px;font-weight:800}
   .mv .u{font-size:12px;color:var(--dim);font-weight:600}
   .ml{font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.05em;margin-top:3px}
+  /* Héroe de anillos (estilo WHOOP) + chips de vitales dentro de rango */
+  .hero{padding:16px}
+  .hero-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+  .semaf{font-size:11px;font-weight:800;padding:3px 10px;border-radius:999px;white-space:nowrap}
+  .semaf-rojo{color:var(--crit);background:color-mix(in srgb,var(--crit) 15%,transparent)}
+  .semaf-amarillo{color:var(--warn);background:color-mix(in srgb,var(--warn) 15%,transparent)}
+  .semaf-verde{color:var(--good);background:color-mix(in srgb,var(--good) 15%,transparent)}
+  .rings{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;place-items:center}
+  .ring{text-align:center}
+  .ring svg{display:block;margin:0 auto}
+  .ring-v{font-weight:800;font-size:19px;fill:var(--ink)}
+  .ring-u{font-size:10px;font-weight:600;fill:var(--dim)}
+  .ring-l{font-size:10.5px;color:var(--dim);text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-top:5px}
+  .chips{display:flex;gap:8px;margin-bottom:12px}
+  .chip{flex:1;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 8px;text-align:center}
+  .chip .cv{font-weight:800;font-size:16px}
+  .chip .cl{font-size:9.5px;color:var(--dim);text-transform:uppercase;letter-spacing:.05em;margin-top:2px}
+  .chip .cb{font-size:9.5px;font-weight:700;margin-top:4px}
+  .cb.ok{color:var(--good)} .cb.warn{color:var(--warn)} .cb.bad{color:var(--crit)}
   .btn{display:block;width:100%;text-align:center;padding:14px;border-radius:14px;font-weight:800;font-size:15px;border:none;cursor:pointer;font-family:inherit}
   .btn.pri{background:linear-gradient(135deg,var(--accent),var(--accent2));color:var(--on-accent)}
   .btn.sec{background:var(--panel2);color:var(--ink);border:1px solid var(--line);margin-top:10px}
@@ -219,10 +238,32 @@ const SOURCES = [
   {nm:"Fitbit", sub:"Actividad · sueño", bg:"#00b0b9", ic:"◇", prov:"fitbit"},
 ];
 
+/* ---------------- Anillos de progreso (héroe estilo WHOOP) ---------------- */
+// arcPct 0-100 = cuánto se llena el arco; disp/unit = lo que va al centro.
+function ringSVG(arcPct, color, disp, unit, label){
+  const r=32, c=2*Math.PI*r;
+  const v=Math.max(0, Math.min(100, Number(arcPct)||0));
+  const dash=c*v/100;
+  return `<div class="ring"><svg viewBox="0 0 76 76" width="82" height="82" aria-hidden="true">
+    <circle cx="38" cy="38" r="${r}" fill="none" stroke="var(--line)" stroke-width="7"/>
+    <circle cx="38" cy="38" r="${r}" fill="none" stroke="${color}" stroke-width="7" stroke-linecap="round"
+      stroke-dasharray="${dash.toFixed(1)} ${(c-dash).toFixed(1)}" transform="rotate(-90 38 38)"/>
+    <text x="38" y="38" text-anchor="middle" dominant-baseline="central" class="ring-v">${disp}<tspan class="ring-u">${unit||""}</tspan></text>
+  </svg><div class="ring-l">${esc(label)}</div></div>`;
+}
+// Color por umbral (más alto = mejor): verde ≥67, ámbar ≥34, rojo <34.
+function ringColor(v){ if(v==null||isNaN(v)) return "var(--line)"; if(v>=67) return "var(--good)"; if(v>=34) return "var(--warn)"; return "var(--crit)"; }
+// Chip de vital contra su rango normal (banda: ok|warn|bad; nota corta ej "-46% vs base").
+function vitalChip(val, unit, label, band, note){
+  const sym = band==="ok" ? "✓" : "⚠";
+  return `<div class="chip"><div class="cv num">${val}<span style="font-size:10px;color:var(--dim);font-weight:600"> ${esc(unit)}</span></div>
+    <div class="cl">${esc(label)}</div><div class="cb ${band}">${sym} ${esc(note||"")}</div></div>`;
+}
+
 /* ---------------- Vistas de pestañas ---------------- */
 function vHoy(d){
   const semc = SEMC[d.semaforo]||"--warn";
-  const s=d.sueno||{}, h=d.hrv||{}, fo=d.forma||{};
+  const s=d.sueno||{}, h=d.hrv||{}, fo=d.forma||{}, v=d.vitales||{}, r2=d.rhr||{};
   const ev = eventoActivo();
   const evNombre = ev ? ev.nombre : (d.evento||"—");
   const evDias = ev ? diasHasta(ev.fecha_inicio) : (d.dias_al_evento);
@@ -231,20 +272,27 @@ function vHoy(d){
     <div><div class="h">Hola, ${esc((tidSession()&&tidSession().nombre?tidSession().nombre:(d.atleta||"")).split(" ")[0]||"atleta")}</div><div class="s">${esc(d.fecha_texto||"")}</div></div>
     <div class="tid">TID</div>
   </div>
-  <div class="card" style="display:flex;align-items:center;gap:13px">
-    <div class="dot" style="background:radial-gradient(circle at 35% 30%, #ffffff66, var(${semc}));box-shadow:0 0 0 6px color-mix(in srgb, var(${semc}) 16%, transparent)"></div>
-    <div><div class="k">Semáforo de hoy</div>
-      <div style="font-size:19px;font-weight:800;margin-top:2px"><span style="color:var(${semc})">${(d.semaforo||"").toUpperCase()}</span> · ${d.recovery}%</div>
-      <div class="hint" style="margin-top:2px">${esc(d.semaforo_desc||"")}</div></div>
+  <div class="card hero">
+    <div class="hero-top"><span class="k">Estado de hoy</span><span class="semaf semaf-${d.semaforo||'amarillo'}">${esc(d.semaforo_titulo || (d.semaforo||'').toUpperCase())}</span></div>
+    <div class="rings">
+      ${ringSVG(d.recovery, ringColor(d.recovery), (d.recovery==null?"—":Math.round(d.recovery)), "%", "Recovery")}
+      ${ringSVG(s.perf, ringColor(s.perf), (s.perf==null?"—":Math.round(s.perf)), "%", "Sueño")}
+      ${ringSVG((v.strain==null?0:v.strain/21*100), "var(--accent-ink)", (v.strain==null?"—":Math.round(v.strain*10)/10), "", "Carga")}
+    </div>
   </div>
-  <div class="mini">
-    <div class="m"><div class="mv num">${d.recovery}<span class="u">%</span></div><div class="ml">Recovery</div></div>
-    <div class="m"><div class="mv num">${h.ms??"—"}<span class="u">ms</span></div><div class="ml">HRV</div></div>
-    <div class="m"><div class="mv num">${s.total_h??"—"}<span class="u">h</span></div><div class="ml">Sueño</div></div>
+  <div class="chips">
+    ${vitalChip(h.ms??"—","ms","HRV",
+        h.vs_base_pct==null?"ok":(h.vs_base_pct>=-8?"ok":h.vs_base_pct>=-20?"warn":"bad"),
+        h.vs_base_pct==null?"":(h.vs_base_pct>0?"+":"")+h.vs_base_pct+"% vs base")}
+    ${vitalChip(r2.lpm??"—","lpm","FC reposo",
+        r2.vs_base_pct==null?"ok":(r2.vs_base_pct<=8?"ok":r2.vs_base_pct<=15?"warn":"bad"),
+        r2.vs_base_pct==null?"":(r2.vs_base_pct>0?"+":"")+r2.vs_base_pct+"%")}
+    ${vitalChip(v.spo2??"—","%","SpO₂",
+        v.spo2==null?"ok":(v.spo2>=95?"ok":v.spo2>=92?"warn":"bad"), "meta 95+")}
   </div>
   <div class="card">
     <div class="k" style="color:var(--accent-ink)">Coach de hoy</div>
-    <div class="hint" style="color:var(--ink);margin-top:6px">${esc(fo.lectura||"—")}</div>
+    <div class="hint" style="color:var(--ink);margin-top:6px">${esc(d.semaforo_desc||fo.lectura||"—")}</div>
   </div>
   <div class="card tap" onclick="openEventos()" style="display:flex;justify-content:space-between;align-items:center">
     <div><div class="k">Evento objetivo</div><div style="font-size:14px;font-weight:700;margin-top:2px">${esc(evNombre)}</div><div class="hint" style="margin-top:2px">Toca para ver o editar</div></div>
