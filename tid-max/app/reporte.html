@@ -103,6 +103,53 @@
   .foot{color:var(--faint);font-size:11.5px;margin-top:22px;text-align:center;line-height:1.6}
   .loading{color:var(--dim);text-align:center;padding:70px 20px;font-family:"Rajdhani";font-size:16px}
   @media (max-width:640px){ .kpis{grid-template-columns:repeat(2,1fr)} .grid2{grid-template-columns:1fr} .top .h{font-size:25px} }
+
+  /* Motor real · zonas de FC */
+  .zwrap{margin:16px 0 4px}
+  .zbar{display:flex;height:32px;border-radius:9px;overflow:hidden;position:relative}
+  .zbar > i{display:block;height:100%}
+  .zmax{position:absolute;top:8px;transform:translateX(-50%);z-index:2;text-align:center}
+  .zmax .dot{width:15px;height:15px;border-radius:50%;background:#fff;border:3px solid var(--panel);box-shadow:0 0 0 2px #fff, 0 2px 6px rgba(0,0,0,.5);margin:0 auto}
+  .zmax .lab{position:absolute;top:-19px;left:50%;transform:translateX(-50%);white-space:nowrap;font-family:"Rajdhani";font-weight:700;font-size:11px;color:var(--ink)}
+  .zmarks{position:relative;height:30px;margin-top:6px}
+  .zmk{position:absolute;transform:translateX(-50%);text-align:center;top:0}
+  .zmk .n{font-family:"Rajdhani";font-weight:700;font-size:11px;color:var(--ink);white-space:nowrap}
+  .zmk .t{font-size:8px;color:var(--faint);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
+  .znote{font-size:12px;color:var(--dim);line-height:1.5;background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:11px 12px;margin-top:14px}
+  .znote b{color:var(--ink)}
+  .zlegend .zr{display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--line);font-size:13px}
+  .zlegend .zr:first-child{border-top:0}
+  .zdot{width:12px;height:12px;border-radius:4px;flex:none}
+  .zlegend .zn{font-weight:700;min-width:132px;font-family:"Rajdhani"}
+  .zlegend .zg{color:var(--faint);min-width:90px;font-size:11.5px;font-family:"Rajdhani"}
+  .zlegend .zd{color:var(--dim);flex:1;font-size:12.5px}
+  .ses{display:flex;gap:10px;align-items:baseline;margin-top:12px;font-size:13px}
+  .ses .st{font-family:"Rajdhani";font-weight:700}
+
+  /* Comidas — registro expandible */
+  .meal{border-top:1px solid var(--line);padding:11px 0}
+  .meal:first-of-type{border-top:0}
+  .meal .mh{display:flex;justify-content:space-between;gap:10px;cursor:pointer;align-items:baseline}
+  .meal .mn{font-weight:700;font-size:13.5px}
+  .meal .mk{font-family:"Rajdhani";font-weight:700;font-size:15px;white-space:nowrap}
+  .meal .macros{font-size:11.5px;color:var(--faint);margin-top:3px;font-family:"Rajdhani";letter-spacing:.02em}
+  .meal .det{max-height:0;overflow:hidden;transition:max-height .28s ease;color:var(--dim);font-size:12.5px;line-height:1.5}
+  .meal.open .det{max-height:240px;margin-top:7px}
+  .falta{display:flex;justify-content:space-between;align-items:baseline;padding:11px 0 2px;border-top:1px solid var(--line);margin-top:4px}
+  .falta .fl{color:var(--dim);font-size:13px} .falta .fv{font-family:"Rajdhani";font-weight:800;font-size:18px;color:var(--sleep)}
+
+  /* Forma chart */
+  .fchart{margin-top:8px} .fchart svg{width:100%;height:auto;display:block}
+  .flg{display:flex;gap:16px;margin-top:8px;font-size:11.5px;color:var(--dim)}
+  .flg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:middle}
+
+  /* Taper timeline */
+  .tp{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
+  .tp:first-of-type{border-top:0}
+  .tp .tw{color:var(--dim);font-size:12.5px;min-width:96px}
+  .tp .tk{width:38px;height:12px;border-radius:999px;flex:none}
+  .tp .tv{font-family:"Rajdhani";font-weight:700;font-size:16px;text-align:right;flex:1}
+  .tp .tn{font-size:11px;color:var(--faint);margin-top:2px}
 </style></head>
 <body>
 <div class="wrap"><div id="app"><div class="loading">Cargando tu reporte…</div></div></div>
@@ -136,6 +183,33 @@ var GRAD={
   sleep:"linear-gradient(90deg,#0f8ea8,#37c8d4)", green:"linear-gradient(90deg,#1f9e70,#37d29a)",
   cool:"linear-gradient(90deg,#4b73c9,#8fb0f0)", warm:"linear-gradient(90deg,#c98120,#f6b543)"
 };
+
+// Barra segmentada de zonas de FC (Motor real) con marcadores VT1/VT2/FATmax/FCmax + MÁX HOY.
+function zonaBar(z){
+  var zs=z.zonas||[]; if(!zs.length) return "";
+  var lo=120, hi=(z.fcmax||181)+14, span=hi-lo, prev=lo, segs="";
+  zs.forEach(function(zn){ var end=Math.min(hi, isN(zn.hasta)?zn.hasta:hi); var w=Math.max(0,(end-prev)/span*100); segs+='<i style="width:'+w.toFixed(2)+'%;background:'+(zn.color||"var(--track)")+'"></i>'; prev=end; });
+  var pos=function(v){ return clamp((v-lo)/span*100); };
+  var maxHoy = isN(z.max_hoy) ? '<div class="zmax" style="left:'+pos(z.max_hoy).toFixed(1)+'%"><div class="lab">MÁX HOY '+n0(z.max_hoy)+'</div><div class="dot"></div></div>' : '';
+  var marks=[["vt1","VT1","AERÓBICO"],["vt2","VT2","ANAERÓBICO"],["fatmax","FATmax","GRASA MÁX*"],["fcmax","FCmax","PRUEBA MÁX"]]
+    .filter(function(m){return isN(z[m[0]]);})
+    .map(function(m){ return '<div class="zmk" style="left:'+pos(z[m[0]]).toFixed(1)+'%"><div class="n">'+m[1]+' '+n0(z[m[0]])+'</div><div class="t">'+m[2]+'</div></div>'; }).join("");
+  return '<div class="zwrap"><div class="zbar">'+segs+'</div>'+maxHoy+'<div class="zmarks">'+marks+'</div></div>';
+}
+// Chart Forma vs Cansancio (serie ~45 días). serie: [{forma,cansancio}] o [{ctl,atl}].
+function formaChart(serie){
+  var pts=(serie||[]).map(function(p){ return {f:isN(p.forma)?p.forma:p.ctl, c:isN(p.cansancio)?p.cansancio:p.atl}; })
+    .filter(function(p){return isN(p.f)&&isN(p.c);});
+  if(pts.length<3) return "";
+  var W=640,H=170,pad=8, n=pts.length;
+  var vals=[]; pts.forEach(function(p){vals.push(p.f,p.c);});
+  var mn=Math.min.apply(null,vals), mx=Math.max.apply(null,vals); if(mx===mn) mx=mn+1;
+  var x=function(i){return pad+i/(n-1)*(W-2*pad);}, y=function(v){return H-pad-(v-mn)/(mx-mn)*(H-2*pad);};
+  var line=function(key,col){ return '<polyline fill="none" stroke="'+col+'" stroke-width="2.5" stroke-linejoin="round" points="'+pts.map(function(p,i){return x(i).toFixed(1)+","+y(p[key]).toFixed(1);}).join(" ")+'"/>'; };
+  return '<div class="fchart"><svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none">'+line("f","#7d8cf0")+line("c","#f0685f")+'</svg></div>'
+    +'<div class="flg"><span><i style="background:#7d8cf0"></i>Forma (carga crónica ~6 sem)</span><span><i style="background:#f0685f"></i>Cansancio (carga aguda ~1 sem)</span></div>';
+}
+function mealToggle(i){ var el=document.getElementById("meal-"+i); if(el) el.classList.toggle("open"); }
 
 function render(d){
   d=d||{};
@@ -225,32 +299,93 @@ function render(d){
   html+=sl;
   html+='</div>'; // grid2
 
+  // ---- Motor real · zonas de FC (prueba de laboratorio, por-atleta) ----
+  var z=d.zonas_fc;
+  if(z && (z.zonas||[]).length){
+    html+='<div class="card" style="margin-top:14px"><h2>🫀 Motor real · zonas de FC '
+       +'<span style="color:var(--faint);font-weight:600;font-size:12px">'+esc(z.fuente_txt||"")+'</span></h2>';
+    html+=zonaBar(z);
+    (z.sesiones||[]).forEach(function(se){
+      html+='<div class="ses"><span>🚶</span><div><span class="st">'+esc(se.nombre||se.tipo||"Sesión")+'</span>'
+         +(isN(se.fc_prom)||isN(se.fc_max)?' · FC prom '+n0(se.fc_prom)+' / max '+n0(se.fc_max):'')+'</div></div>';
+    });
+    if(z.zona_clave) html+='<div class="znote">Zona clave a priorizar en calidad: <b>'+n0(z.zona_clave[0])+'–'+n0(z.zona_clave[1])
+       +' lpm</b> ("zona sensible", entre VT1 y VT2).'+(z.fatmax_sobre_vt2?' *FATmax está por encima de VT2 — hallazgo notable de alta flexibilidad metabólica (así lo reporta el laboratorio).':'')+'</div>';
+    html+='</div>';
+  }
+
   // ---- Strain y energía + Comidas ----
+  var se=d.strain_energia||{}; var strainV=isN(se.strain)?se.strain:vi.strain;
   html+='<div class="grid2">';
   var en='<div class="card"><h2>💪 Strain y energía</h2><div class="muted">con referencia</div>';
-  en+=metric("Strain del día", n1(vi.strain), isN(vi.strain)?clamp(vi.strain/21*100):0, GRAD.green,
+  en+=metric("Strain del día", n1(strainV), isN(strainV)?clamp(strainV/21*100):0, GRAD.green,
        "Fuerte 14–18 / Moderado 10–13 / Recuperación < 10", "");
-  if(isN(nu.meta)) en+=kv("Meta calórica", n0(nu.meta)+' kcal');
-  if(isN(nu.consumido)) en+=kv("Consumido", n0(nu.consumido)+' kcal');
+  if(isN(se.kcal_total)) en+=kv("Calorías totales", n0(se.kcal_total)+' kcal');
+  if(isN(se.kcal_ejercicio)) en+=kv("Calorías de ejercicio", n0(se.kcal_ejercicio)+' kcal');
+  if(se.bmr!=null) en+=kv("Metabolismo basal aprox.", (Array.isArray(se.bmr)?(n0(se.bmr[0])+'–'+n0(se.bmr[1])):n0(se.bmr))+' kcal');
+  if(isN(nu.meta)) en+=kv("Meta calórica hoy", n0(nu.meta)+' kcal');
   en+='</div>';
   html+=en;
 
-  // Comidas
+  // Comidas (con falta por cubrir + registro expandible por comida)
   var co='<div class="card"><h2>🍽️ Comidas del día</h2><div class="muted">valorado por el agente de nutrición</div>';
-  if(isN(nu.consumido)&&isN(nu.meta)){
-    co+=metric("Consumido", n0(nu.consumido)+' / '+n0(nu.meta)+' kcal', clamp(nu.consumido/nu.meta*100), GRAD.warm,
-       Math.round((nu.consumido/nu.meta)*100)+"% de la meta", "");
+  var cm=(nu.comidas||[]).filter(function(x){return x;});
+  if(isN(nu.consumido)&&isN(nu.meta)&&nu.meta>0){
+    co+=metric("Consumido"+(cm.length?' ('+cm.length+' comidas)':''), n0(nu.consumido)+' / '+n0(nu.meta)+' kcal',
+       clamp(nu.consumido/nu.meta*100), GRAD.warm, Math.round(nu.consumido/nu.meta*100)+"% de la meta", "");
   }
   if(isN(nu.c)) co+=metric("Carbohidratos", n0(nu.c)+' g', 100, GRAD.warm, "objetivo del día", "");
   if(isN(nu.p)) co+=metric("Proteína", n0(nu.p)+' g', 100, GRAD.hrv, "objetivo del día", "");
   if(isN(nu.g)) co+=metric("Grasa", n0(nu.g)+' g', 100, GRAD.cool, "objetivo del día", "");
-  var cm=(nu.comidas||[]).filter(function(x){return x;});
-  if(cm.length){ co+='<div class="sub-h">Registro de comidas</div>';
-    cm.forEach(function(m){ co+=kv(esc(m.tipo||m.nombre||"Comida"), (isN(m.kcal)?n0(m.kcal)+' kcal':'')); }); }
-  else { co+='<div class="kv" style="color:var(--faint)"><span class="kk">Aún sin comidas registradas hoy</span><span></span></div>'; }
+  if(isN(nu.falta)) co+='<div class="falta"><div class="fl">Falta por cubrir</div><div class="fv">~'+n0(nu.falta)+' kcal</div></div>';
+  if(cm.length){ co+='<div class="sub-h">Registro de comidas <span style="color:var(--faint);font-weight:500;font-size:11px">· toca para el detalle</span></div>';
+    cm.forEach(function(m,i){
+      var macro=[isN(m.c)?n0(m.c)+'g CHO':'', isN(m.p)?n0(m.p)+'g prot':'', isN(m.g)?n0(m.g)+'g grasa':''].filter(Boolean).join(' · ');
+      var titulo=m.tipo||m.hora||("Comida "+(i+1));
+      co+='<div class="meal" id="meal-'+i+'"><div class="mh" onclick="mealToggle('+i+')">'
+        +'<div><div class="mn">'+esc(titulo)+'</div>'+(macro?'<div class="macros">'+esc(macro)+'</div>':'')+'</div>'
+        +'<div class="mk">'+(isN(m.kcal)?n0(m.kcal)+' kcal':'')+'</div></div>'
+        +'<div class="det">'+esc(m.nombre||m.platillo||m.desc||"")+'</div></div>';
+    });
+  } else { co+='<div class="kv" style="color:var(--faint)"><span class="kk">Aún sin comidas registradas hoy</span><span></span></div>'; }
   co+='</div>';
   html+=co;
   html+='</div>'; // grid2
+
+  // ---- Forma · Cansancio · Frescura ----
+  if((d.forma_serie&&d.forma_serie.length)||isN(fo.ctl)||isN(fo.tsb)){
+    html+='<div class="card" style="margin-top:14px"><h2>📈 Forma · Cansancio · Frescura</h2><div class="muted">últimos ~45 días, sobre el historial de strain</div>';
+    var fchart=formaChart(d.forma_serie);
+    if(fchart){ html+=fchart; }
+    else {
+      html+=metric("Forma (carga crónica ~6 sem)", n1(fo.ctl), isN(fo.ctl)?clamp(fo.ctl/50*100):0, GRAD.cool, "", "");
+      html+=metric("Cansancio (carga aguda ~1 sem)", n1(fo.atl), isN(fo.atl)?clamp(fo.atl/50*100):0, GRAD.rec, "", "");
+      html+=kv("Frescura (TSB)", n1(fo.tsb)+(isN(fo.tsb_previa)?' <small style="color:var(--dim)">(previa '+n1(fo.tsb_previa)+')</small>':''));
+    }
+    html+='</div>';
+  }
+
+  // ---- Taper (plan del coach) — aparece cuando hay plan cargado ----
+  var tp=d.taper&&(d.taper.filas||(Array.isArray(d.taper)?d.taper:null));
+  if(Array.isArray(tp)&&tp.length){
+    html+='<div class="card" style="margin-top:14px"><h2>🏁 Taper'+(d.taper.plan?' · '+esc(d.taper.plan):'')+'</h2>';
+    tp.forEach(function(r){ html+='<div class="tp"><div class="tw">'+esc(r.sem||r.semana||"")+'</div>'
+       +'<div class="tk" style="background:'+(r.color||"var(--track)")+'"></div>'
+       +'<div style="flex:1;text-align:right"><div class="tv">'+esc(r.km||r.valor||"")+'</div>'+(r.nota?'<div class="tn">'+esc(r.nota)+'</div>':'')+'</div></div>'; });
+    html+='</div>';
+  }
+
+  // ---- Cómo leer las zonas (explicador) ----
+  if(z && (z.zonas||[]).length){
+    html+='<div class="card" style="margin-top:14px"><h2>📖 Cómo leer "Motor real · zonas de FC"</h2><div class="zlegend">';
+    z.zonas.forEach(function(zn){ html+='<div class="zr"><span class="zdot" style="background:'+zn.color+'"></span>'
+       +'<span class="zn">'+esc(zn.z+' · '+zn.nombre)+'</span><span class="zg">'+esc(zn.rango)+'</span><span class="zd">'+esc(zn.desc)+'</span></div>'; });
+    html+='</div>';
+    if(z.notas_umbrales){ html+='<div class="znote">';
+      ["vt1","vt2","fatmax","fcmax"].forEach(function(k){ if(z.notas_umbrales[k]) html+='<div style="margin-bottom:6px">'+esc(z.notas_umbrales[k])+'</div>'; });
+      html+='</div>'; }
+    html+='</div>';
+  }
 
   // ---- Recomendación del día ----
   if(d.semaforo_desc || fo.lectura || (d.alertas||[]).length){

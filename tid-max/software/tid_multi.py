@@ -104,6 +104,11 @@ def procesar_atleta(atleta, do_sync=True):
         env["TID_ATLETA"] = atleta["nombre"]
     if atleta.get("deporte"):
         env["TID_DEPORTE"] = atleta["deporte"]
+    # Zonas de FC de laboratorio POR-ATLETA (zonas-<slug>.json). tid_web las emite en el
+    # reporte como "Motor real · zonas de FC". Si el archivo no existe, la sección se omite.
+    zonas = atleta.get("zonas") or f"zonas-{slug}.json"
+    if os.path.exists(os.path.join(SCRIPT_DIR, zonas)):
+        env["TID_ZONAS"] = zonas
 
     # Copia los archivos de planificación de ESTE atleta a su carpeta aislada. En modo
     # multiusuario tid_data NO cae al SCRIPT_DIR compartido (para no filtrar el plan de
