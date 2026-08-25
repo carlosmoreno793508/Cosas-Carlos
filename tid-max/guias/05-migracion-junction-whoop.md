@@ -1,86 +1,103 @@
-# Guía 05 · Migrar WHOOP al agregador (Junction) — self-serve, sin re-autorizar a mano
+# Guía 05 — Migrar WHOOP al agregador (Junction) · adiós a los tokens frágiles
 
-**Problema que resuelve:** hoy el token de WHOOP es un refresh token rotativo guardado
-como secreto de GitHub. Sobrevive una sincronización y a la mínima falla (503, dos
-corridas cercanas, cambio de Client Secret) **se muere** y hay que re-autorizar desde la
-Mac. No escala ni a un usuario. La solución es que WHOOP entre **por Junction**: el token
-vive en Junction (no en nuestros secretos), el usuario conecta/reconecta desde la app, y
-Junction nos **empuja** los datos por webhook.
+**Por qué:** hasta hoy bajábamos WHOOP con nuestro propio OAuth y **un solo refresh
+token** guardado como secreto de GitHub. El token de WHOOP rota en cada sync y de un
+solo uso; cualquier tropiezo lo mata. Ya se rompió 4 veces (incluida la regeneración
+del Client Secret). **No escala ni a un usuario.**
 
-Este código ya quedó listo (`api/connect.js`, `api/webhook.js`, y el driver que ya lee
-atletas `fuente: agregador`). Faltan **pasos de configuración que solo tú puedes hacer** en
-los dashboards de Junction, Vercel y GitHub.
+**La solución:** que WHOOP entre por **Junction** (agregador). Junction guarda el token
+por-usuario en su bóveda, lo refresca del lado servidor y nos **empuja** los datos por
+webhook. El atleta conecta **una vez desde el teléfono** y no volvemos a tocar un token.
+
+El código ya está (PR de esta rama): `api/connect.js` (conectar/reconectar por-usuario
+con token de sesión) y `api/webhook.js` (recibe el push de Junction y dispara el
+pipeline). Falta **la configuración del dashboard**, que es lo que hace esta guía.
 
 ---
 
-## Parte A · Junction dashboard (una vez)
+## Parte A — Configuración en el dashboard de Junction (una sola vez)
 
-1. Entra a https://app.junction.com → tu proyecto.
-2. **WHOOP como proveedor (BYOO — Bring Your Own OAuth):** WHOOP exige credenciales
-   propias. En Junction: *Providers → WHOOP → Enable* y pega el **Client ID** y **Client
-   Secret** de tu app de WHOOP (los mismos del dashboard de WHOOP). Configura el
-   **redirect URI** que Junction te indique dentro del dashboard de WHOOP.
-3. **Producción vs sandbox:** para datos reales de la banda de Gael necesitas llaves de
-   **producción** (`API base` tipo `https://api.us.junction.com`). Sandbox solo da datos
-   simulados.
-4. **Webhook:** *Webhooks → Add endpoint* →
-   URL: `https://tid-max-app.vercel.app/api/webhook`
-   Suscríbete a los eventos de datos (workouts / sleep / recovery / body / daily) y, si lo
-   ofrece, `provider.connection.created`. Copia el **Signing Secret** (formato `whsec_...`).
+1. **WHOOP como proveedor (BYOO — "bring your own OAuth").**
+   WHOOP es un proveedor que exige credenciales propias. En el dashboard de Junction
+   (https://app.junction.com) → *Providers / Connections* → **WHOOP** → pega el
+   **Client ID** y **Client Secret** de tu app de WHOOP (los mismos del dashboard de
+   WHOOP developer). En WHOOP developer, agrega a los **redirect URIs** el callback que
+   te indique Junction (algo como `https://api.prod.us.junction.com/...`). Junction te
+   dice la URL exacta en esa pantalla.
 
-## Parte B · Variables de entorno en Vercel (proyecto tid-max-app)
+2. **Pasar a PRODUCTION.** Hoy estamos en `sandbox` (datos simulados). Para datos reales
+   de la banda de Gael necesitas las llaves de **production** de Junction.
 
-Settings → Environment Variables (no las pegues en el chat):
+3. **Registrar el webhook.** Dashboard de Junction → *Webhooks* → **Add endpoint**:
+   - URL: `https://tid-max-app.vercel.app/api/webhook`
+   - Eventos: los de datos (workouts, sleep, recovery, body, daily/historical) y, si
+     está, `provider.connection.created`.
+   - Copia el **Signing Secret** (formato `whsec_...`) — lo necesitas en la Parte B.
+
+---
+
+## Parte B — Variables de entorno en Vercel (proyecto `tid-max-app`)
+
+Settings → Environment Variables. Pon/actualiza:
 
 | Variable | Valor |
 |---|---|
-| `JUNCTION_API_KEY` | API key de Junction |
-| `JUNCTION_API_BASE` | la base EXACTA del dashboard (producción para datos reales) |
-| `JUNCTION_ENV` | `production` (o `sandbox` para probar) |
-| `JUNCTION_REGION` | `us` |
-| `JUNCTION_WEBHOOK_SECRET` | el Signing Secret `whsec_...` del webhook |
-| `AUTH_SECRET` | la MISMA con que `/api/login` firma los tokens (ya debería existir) |
-| `GH_ACTIONS_TOKEN` | PAT con permiso **Actions: write** (para que el webhook dispare el pipeline). Si no lo pones, cae a `GH_PAT`/`GH_TOKEN`. |
+| `JUNCTION_API_KEY` | tu API key de **production** de Junction |
+| `JUNCTION_API_BASE` | la base **exacta** de production que te da tu dashboard (ej. `https://api.prod.us.junction.com`) |
+| `JUNCTION_ENV` | `production` |
+| `JUNCTION_REGION` | `us` (o `eu`) |
+| `JUNCTION_WEBHOOK_SECRET` | el `whsec_...` del paso A.3 (sin él, el webhook responde 200 pero **no dispara** — es a prueba de abuso) |
+| `GH_ACTIONS_TOKEN` | PAT fino con permiso **"Actions: write"** en el repo, para que el webhook pueda disparar el pipeline. (Si tu `GH_PAT` actual ya tiene Actions:write, el webhook lo usa como respaldo.) |
+| `AUTH_SECRET` | la MISMA con que `/api/login` firma los tokens (ya debería existir; `connect.js` la usa para el conectar por-usuario) |
 
-> Seguridad del webhook: si `JUNCTION_WEBHOOK_SECRET` NO está puesto, `/api/webhook`
-> responde 200 pero **no dispara nada** — así nadie más puede provocar corridas. En cuanto
-> pongas el secreto, solo los eventos con firma Svix válida disparan el pipeline.
-
-## Parte C · Conectar / reconectar desde la app
-
-- El usuario entra a **Datos → Conectar** (o el botón de reconectar) → se abre el widget de
-  Junction → elige WHOOP → hace login en WHOOP → listo. El token queda en Junction.
-- `api/connect.js` ahora autentica con el **token de sesión** del usuario (cada quien
-  conecta SU fuente; el slug sale del token, no se puede suplantar).
-
-## Parte D · Cambiar a Gael de WHOOP-directo → Junction
-
-En `tid-max/software/atletas.json`, la entrada de Gael cambia de:
-
-```json
-{ "slug": "gael-moreno", "fuente": "whoop", ... }
-```
-
-a:
-
-```json
-{ "slug": "gael-moreno", "fuente": "agregador", "agregador_atleta": "gael-moreno", ... }
-```
-
-**Hazlo solo DESPUÉS** de que Gael haya conectado su WHOOP por el widget (Parte C) y de
-que exista su mapeo en `agregador_users.json`. Si lo cambias antes, su fuente queda vacía
-hasta que conecte. (Se puede tener a Gael en `agregador` y a otros en `whoop`/`polar` sin
-problema — el driver es por-atleta.)
-
-## Cómo verificar que quedó
-
-1. Gael conecta WHOOP por el widget → aparece su entrada en `agregador_users.json`.
-2. Haces una actividad (o esperas datos) → Junction manda webhook → `/api/webhook` dispara
-   el workflow → en minutos el reporte de Gael se actualiza **sin tocar nada**.
-3. Ya no necesitas `whoop_auth.py` ni re-guardar tokens: si algo se desconecta, el usuario
-   solo toca **Reconectar** en la app.
+> Nota: en **software/.env** (para pruebas locales con `agregador_*.py`) también va
+> `JUNCTION_WEBHOOK_SECRET` si quieres verificar firmas en el receptor local.
 
 ---
 
-**Resumen:** después de esta migración, dar de alta un cliente nuevo = "conecta tu WHOOP"
-desde su teléfono. Cero mantenimiento de tokens de tu lado.
+## Parte C — Conectar a Gael (desde el teléfono, 1 minuto)
+
+1. Gael abre la app **con su sesión** (login), va a **Datos → Conectar → WHOOP**.
+   (El botón ya usa su token de sesión: guarda el evento/fuente en SU cuenta, no en la
+   de otro.)
+2. Se abre el widget de Junction; elige **WHOOP**, hace login en WHOOP y autoriza.
+3. Junction empieza a jalar su histórico y a **empujar** lo nuevo por webhook.
+
+## Parte D — Cambiar la fuente de Gael a "agregador"
+
+Cuando Gael ya conectó (Parte C), cambiar en `tid-max/software/atletas.json` su entrada:
+
+```json
+{ "slug": "gael-moreno", "nombre": "Gael Moreno", "deporte": "natacion",
+  "fuente": "agregador", "agregador_atleta": "gael-moreno",
+  "perfil": "nutricion-gael.json", "planes": ["plan-macro.json","plan-semana.json"], "activo": true }
+```
+
+- `fuente`: `whoop` → **`agregador`** (deja de usar nuestro OAuth propio).
+- Quitar `evento.json` de `planes` no es necesario (el evento ya es por-atleta vía la app).
+- Avísame y yo hago este cambio + disparo un run para confirmar que sus datos vuelven a
+  fluir vía Junction.
+
+---
+
+## Cómo probar que quedó
+
+- **Webhook vivo:** abre en el navegador `https://tid-max-app.vercel.app/api/webhook`
+  → debe responder `{"ok":true,"servicio":"tidmax-webhook"}`.
+- **Push real:** tras conectar a Gael, en minutos debería llegar un evento y disparar un
+  run del pipeline (pestaña Actions). El reporte de Gael vuelve a moverse **sin** que
+  nadie toque un token.
+- **Reconectar:** si algún día WHOOP pide re-permiso, el atleta solo vuelve a
+  **Datos → Conectar** — cero intervención nuestra.
+
+---
+
+## Qué ganamos (vs. el token manual)
+
+| | Antes (OAuth propio) | Ahora (Junction) |
+|---|---|---|
+| Token | 1 secreto de GitHub, re-escrito por CI | bóveda por-usuario en Junction |
+| Rotación | nuestra (frágil, se rompió 4×) | de Junction (servidor, con lock) |
+| Datos | cron 2×/día (polling) | **webhook** (push casi en vivo) |
+| Si expira | Carlos re-autoriza en la Mac | el atleta toca **Reconectar** |
+| Multi-marca | un flujo por marca | una integración: WHOOP/Oura/Garmin/Polar/… |
