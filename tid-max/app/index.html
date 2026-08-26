@@ -411,20 +411,22 @@ async function tidHealthDisconnect(){
    Pide un link "Conéctate" al backend (api/connect) y lo abre para que el
    atleta haga login en SU marca. Reusa la clave de sincronización de la familia. */
 async function tidConnectSource(prov, nm){
+  // Si hay SESIÓN, conectas con tu token (sin clave). La clave compartida es solo respaldo
+  // legacy para quien no ha iniciado sesión. api/connect acepta ambos.
+  const tok = tidToken();
   const secret = (localStorage.getItem('tid_secret')||"").trim();
-  if(!secret){ toast("Primero guarda tu clave de sincronización en Perfil."); return; }
-  // Conecta como el usuario logueado (su slug es exacto); si no hay sesión, cae al del tablero.
-  const s = tidSession();
-  const atleta = (s && s.slug) ? s.slug : ((DATA && DATA.atleta) ? DATA.atleta : "atleta");
+  if(!tok && !secret){ toast("Inicia sesión para conectar tu cuenta."); return; }
   toast(`Preparando conexión con ${nm}…`);
   try{
+    const body = tok
+      ? { token: tok, provider: prov }
+      : { secret, atleta: ((tidSession()&&tidSession().slug) || (DATA&&DATA.atleta) || "atleta"), provider: prov };
     const r = await fetch("/api/connect", {
-      method:"POST", headers:{"content-type":"application/json"},
-      body: JSON.stringify({ secret, atleta, provider: prov }),
+      method:"POST", headers:{"content-type":"application/json"}, body: JSON.stringify(body),
     });
     const j = await r.json();
     if(!r.ok || !j.widget_url){ toast(j.error || `No se pudo conectar ${nm}.`); return; }
-    // Abre el widget de Junction (el atleta elige y hace login en su marca).
+    // Abre el widget de Junction (eliges y haces login en tu marca ahí mismo).
     window.open(j.widget_url, "_blank") || (location.href = j.widget_url);
   }catch(e){ toast("Error de red al conectar."); }
 }
