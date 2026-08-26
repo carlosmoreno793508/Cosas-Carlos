@@ -86,7 +86,9 @@ def build_data():
             "meta": meta.get("kcal") or meta_k or 0,
             "c": tot.get("carb_g"), "p": tot.get("prot_g"), "g": tot.get("grasa_g"),
             "comidas": [{"hora": c.get("hora", ""), "nombre": c.get("platillo", ""),
-                         "kcal": c.get("kcal", 0)} for c in consumo.get("comidas", [])],
+                         "kcal": c.get("kcal", 0), "c": c.get("carb_g"),
+                         "p": c.get("prot_g"), "g": c.get("grasa_g")}
+                        for c in consumo.get("comidas", [])],
         })
 
     # Preserva las comidas YA publicadas en data.json (p. ej. subidas por API/foto, o por un
@@ -104,6 +106,44 @@ def build_data():
                 "comidas": prev_nu.get("comidas"),
                 "pendiente": prev_nu.get("pendiente"),
             })
+
+    # Falta por cubrir (meta − consumido), para la tarjeta de Comidas.
+    try:
+        nutricion["falta"] = max(0, round((nutricion.get("meta") or 0) - (nutricion.get("consumido") or 0)))
+    except Exception:
+        nutricion["falta"] = None
+
+    # Zonas de FC de laboratorio (por-atleta) — opcional. Se emite tal cual para que el
+    # reporte pinte el "Motor real". MAX HOY sale del pico de FC de las sesiones de hoy si existe.
+    zonas = None
+    zpath = os.getenv("TID_ZONAS")
+    if zpath:
+        zonas = _load(zpath if os.path.isabs(zpath) else os.path.join(SCRIPT_DIR, zpath))
+    if zonas:
+        zonas = dict(zonas)
+        fc_hoy = f.get("fc_max_hoy") or f.get("hr_max_hoy")
+        if fc_hoy is not None:
+            zonas["max_hoy"] = fc_hoy
+        avg_hoy = f.get("fc_prom_hoy") or f.get("hr_avg_hoy")
+        if avg_hoy is not None:
+            zonas["avg_hoy"] = avg_hoy
+        ses = f.get("sesiones_hoy") or f.get("workouts_hoy")
+        if ses:
+            zonas["sesiones"] = ses
+
+    # Strain y energía extendida (BMR / calorías) — usa lo que haya, sin inventar.
+    bmr = f.get("bmr_kcal")
+    if bmr is None and zonas and zonas.get("bmr_estimado_kcal"):
+        bmr = zonas.get("bmr_estimado_kcal")
+    strain_energia = {
+        "strain": f.get("strain_hoy"),
+        "kcal_total": f.get("kcal_total_hoy") or f.get("calorias_hoy"),
+        "kcal_ejercicio": f.get("kcal_ejercicio_hoy"),
+        "bmr": bmr,
+    }
+
+    # Forma/Cansancio/Frescura (serie ~45 días) — opcional; el chart aparece si hay serie.
+    forma_serie = forma.get("serie") or f.get("forma_serie") or None
 
     razones = f.get("razones") or []
     data = {
@@ -148,6 +188,9 @@ def build_data():
         "alertas": [{"nivel": _nivel_alerta(a), "tag": "Preventivo", "texto": a}
                     for a in (p.get("alertas") or []) if isinstance(a, str)],
         "nutricion": nutricion,
+        "strain_energia": strain_energia,
+        "zonas_fc": zonas,
+        "forma_serie": forma_serie,
         "nota_datos": "Fuente: WHOOP + motor determinista + agentes Claude. El sueño suma las siestas. "
                       "“Forma” es un proxy sobre el strain de WHOOP: lee la tendencia, no el número absoluto.",
     }

@@ -66,6 +66,42 @@
   .mv{font-size:23px;font-weight:800}
   .mv .u{font-size:12px;color:var(--dim);font-weight:600}
   .ml{font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.05em;margin-top:3px}
+  /* Héroe de anillos (estilo WHOOP) + chips de vitales dentro de rango */
+  .hero{padding:16px}
+  .hero-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+  .semaf{font-size:11px;font-weight:800;padding:3px 10px;border-radius:999px;white-space:nowrap}
+  .semaf-rojo{color:var(--crit);background:color-mix(in srgb,var(--crit) 15%,transparent)}
+  .semaf-amarillo{color:var(--warn);background:color-mix(in srgb,var(--warn) 15%,transparent)}
+  .semaf-verde{color:var(--good);background:color-mix(in srgb,var(--good) 15%,transparent)}
+  .rings{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;place-items:center}
+  .ring{text-align:center}
+  .ring svg{display:block;margin:0 auto}
+  .ring-v{font-weight:800;font-size:19px;fill:var(--ink)}
+  .ring-u{font-size:10px;font-weight:600;fill:var(--dim)}
+  .ring-l{font-size:10.5px;color:var(--dim);text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-top:5px}
+  .chips{display:flex;gap:8px;margin-bottom:12px}
+  .chip{flex:1;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 8px;text-align:center}
+  .chip .cv{font-weight:800;font-size:16px}
+  .chip .cl{font-size:9.5px;color:var(--dim);text-transform:uppercase;letter-spacing:.05em;margin-top:2px}
+  .chip .cb{font-size:9.5px;font-weight:700;margin-top:4px}
+  .cb.ok{color:var(--good)} .cb.warn{color:var(--warn)} .cb.bad{color:var(--crit)}
+  /* Barra de zonas EN VIVO (grabador) — punto que se mueve con la FC */
+  .rzwrap{position:relative;margin-top:14px;padding-top:20px}
+  .rzbar{display:flex;height:16px;border-radius:9px;overflow:hidden}
+  .rzbar > i{height:100%}
+  .rzdot{position:absolute;top:12px;transform:translateX(-50%);transition:left .6s ease;z-index:2}
+  .rzdot .rzd{width:20px;height:20px;border-radius:50%;background:#fff;border:3px solid var(--panel);box-shadow:0 0 0 2px #fff,0 2px 8px rgba(0,0,0,.5);margin:0 auto}
+  .rzlab{position:absolute;top:-6px;left:50%;transform:translateX(-50%);font-family:"num",inherit;font-weight:800;font-size:12px;color:var(--ink);white-space:nowrap}
+  .rzmk{display:flex;justify-content:space-between;margin-top:7px;font-size:9px;color:var(--faint);letter-spacing:.03em;text-transform:uppercase;font-weight:700}
+  /* Tiempo por zona (en vivo + resumen) */
+  .zdist{margin-top:14px}
+  .zdbar{display:flex;height:12px;border-radius:7px;overflow:hidden;background:var(--panel2)}
+  .zdbar > i{height:100%}
+  .ztleg{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:9px}
+  .ztl{display:flex;align-items:center;gap:6px;font-size:11.5px}
+  .ztl .zdot{width:9px;height:9px;border-radius:3px;flex:none}
+  .ztl .zn{color:var(--dim);font-weight:700;font-family:var(--num-ff,inherit)}
+  .ztl .zt{color:var(--ink);font-weight:800}
   .btn{display:block;width:100%;text-align:center;padding:14px;border-radius:14px;font-weight:800;font-size:15px;border:none;cursor:pointer;font-family:inherit}
   .btn.pri{background:linear-gradient(135deg,var(--accent),var(--accent2));color:var(--on-accent)}
   .btn.sec{background:var(--panel2);color:var(--ink);border:1px solid var(--line);margin-top:10px}
@@ -219,10 +255,32 @@ const SOURCES = [
   {nm:"Fitbit", sub:"Actividad · sueño", bg:"#00b0b9", ic:"◇", prov:"fitbit"},
 ];
 
+/* ---------------- Anillos de progreso (héroe estilo WHOOP) ---------------- */
+// arcPct 0-100 = cuánto se llena el arco; disp/unit = lo que va al centro.
+function ringSVG(arcPct, color, disp, unit, label){
+  const r=32, c=2*Math.PI*r;
+  const v=Math.max(0, Math.min(100, Number(arcPct)||0));
+  const dash=c*v/100;
+  return `<div class="ring"><svg viewBox="0 0 76 76" width="82" height="82" aria-hidden="true">
+    <circle cx="38" cy="38" r="${r}" fill="none" stroke="var(--line)" stroke-width="7"/>
+    <circle cx="38" cy="38" r="${r}" fill="none" stroke="${color}" stroke-width="7" stroke-linecap="round"
+      stroke-dasharray="${dash.toFixed(1)} ${(c-dash).toFixed(1)}" transform="rotate(-90 38 38)"/>
+    <text x="38" y="38" text-anchor="middle" dominant-baseline="central" class="ring-v">${disp}<tspan class="ring-u">${unit||""}</tspan></text>
+  </svg><div class="ring-l">${esc(label)}</div></div>`;
+}
+// Color por umbral (más alto = mejor): verde ≥67, ámbar ≥34, rojo <34.
+function ringColor(v){ if(v==null||isNaN(v)) return "var(--line)"; if(v>=67) return "var(--good)"; if(v>=34) return "var(--warn)"; return "var(--crit)"; }
+// Chip de vital contra su rango normal (banda: ok|warn|bad; nota corta ej "-46% vs base").
+function vitalChip(val, unit, label, band, note){
+  const sym = band==="ok" ? "✓" : "⚠";
+  return `<div class="chip"><div class="cv num">${val}<span style="font-size:10px;color:var(--dim);font-weight:600"> ${esc(unit)}</span></div>
+    <div class="cl">${esc(label)}</div><div class="cb ${band}">${sym} ${esc(note||"")}</div></div>`;
+}
+
 /* ---------------- Vistas de pestañas ---------------- */
 function vHoy(d){
   const semc = SEMC[d.semaforo]||"--warn";
-  const s=d.sueno||{}, h=d.hrv||{}, fo=d.forma||{};
+  const s=d.sueno||{}, h=d.hrv||{}, fo=d.forma||{}, v=d.vitales||{}, r2=d.rhr||{};
   const ev = eventoActivo();
   const evNombre = ev ? ev.nombre : (d.evento||"—");
   const evDias = ev ? diasHasta(ev.fecha_inicio) : (d.dias_al_evento);
@@ -231,20 +289,27 @@ function vHoy(d){
     <div><div class="h">Hola, ${esc((tidSession()&&tidSession().nombre?tidSession().nombre:(d.atleta||"")).split(" ")[0]||"atleta")}</div><div class="s">${esc(d.fecha_texto||"")}</div></div>
     <div class="tid">TID</div>
   </div>
-  <div class="card" style="display:flex;align-items:center;gap:13px">
-    <div class="dot" style="background:radial-gradient(circle at 35% 30%, #ffffff66, var(${semc}));box-shadow:0 0 0 6px color-mix(in srgb, var(${semc}) 16%, transparent)"></div>
-    <div><div class="k">Semáforo de hoy</div>
-      <div style="font-size:19px;font-weight:800;margin-top:2px"><span style="color:var(${semc})">${(d.semaforo||"").toUpperCase()}</span> · ${d.recovery}%</div>
-      <div class="hint" style="margin-top:2px">${esc(d.semaforo_desc||"")}</div></div>
+  <div class="card hero">
+    <div class="hero-top"><span class="k">Estado de hoy</span><span class="semaf semaf-${d.semaforo||'amarillo'}">${esc(d.semaforo_titulo || (d.semaforo||'').toUpperCase())}</span></div>
+    <div class="rings">
+      ${ringSVG(d.recovery, ringColor(d.recovery), (d.recovery==null?"—":Math.round(d.recovery)), "%", "Recovery")}
+      ${ringSVG(s.perf, ringColor(s.perf), (s.perf==null?"—":Math.round(s.perf)), "%", "Sueño")}
+      ${ringSVG((v.strain==null?0:v.strain/21*100), "var(--accent-ink)", (v.strain==null?"—":Math.round(v.strain*10)/10), "", "Carga")}
+    </div>
   </div>
-  <div class="mini">
-    <div class="m"><div class="mv num">${d.recovery}<span class="u">%</span></div><div class="ml">Recovery</div></div>
-    <div class="m"><div class="mv num">${h.ms??"—"}<span class="u">ms</span></div><div class="ml">HRV</div></div>
-    <div class="m"><div class="mv num">${s.total_h??"—"}<span class="u">h</span></div><div class="ml">Sueño</div></div>
+  <div class="chips">
+    ${vitalChip(h.ms??"—","ms","HRV",
+        h.vs_base_pct==null?"ok":(h.vs_base_pct>=-8?"ok":h.vs_base_pct>=-20?"warn":"bad"),
+        h.vs_base_pct==null?"":(h.vs_base_pct>0?"+":"")+h.vs_base_pct+"% vs base")}
+    ${vitalChip(r2.lpm??"—","lpm","FC reposo",
+        r2.vs_base_pct==null?"ok":(r2.vs_base_pct<=8?"ok":r2.vs_base_pct<=15?"warn":"bad"),
+        r2.vs_base_pct==null?"":(r2.vs_base_pct>0?"+":"")+r2.vs_base_pct+"%")}
+    ${vitalChip(v.spo2??"—","%","SpO₂",
+        v.spo2==null?"ok":(v.spo2>=95?"ok":v.spo2>=92?"warn":"bad"), "meta 95+")}
   </div>
   <div class="card">
     <div class="k" style="color:var(--accent-ink)">Coach de hoy</div>
-    <div class="hint" style="color:var(--ink);margin-top:6px">${esc(fo.lectura||"—")}</div>
+    <div class="hint" style="color:var(--ink);margin-top:6px">${esc(d.semaforo_desc||fo.lectura||"—")}</div>
   </div>
   <div class="card tap" onclick="openEventos()" style="display:flex;justify-content:space-between;align-items:center">
     <div><div class="k">Evento objetivo</div><div style="font-size:14px;font-weight:700;margin-top:2px">${esc(evNombre)}</div><div class="hint" style="margin-top:2px">Toca para ver o editar</div></div>
@@ -824,6 +889,57 @@ const ZONAS=[null,
 function hrZone(bpm){ const mx=fcMax(); if(!mx||!bpm) return null; const p=bpm/mx;
   if(p<0.60)return 1; if(p<0.70)return 2; if(p<0.80)return 3; if(p<0.90)return 4; return 5; }
 
+/* Barra de zonas EN VIVO: usa las zonas de laboratorio (Somnia) si el reporte las trae
+   (DATA.zonas_fc), o cae a %FCmáx. Pinta un punto en la FC actual que se mueve solo. */
+function runZoneBar(bpm){
+  const zf=(typeof DATA!=="undefined"&&DATA&&DATA.zonas_fc)||null;
+  let lo, hi, segs="", loLab="", hiLab="";
+  if(zf&&(zf.zonas||[]).length){
+    lo=120; hi=(zf.fcmax||fcMax()||190)+8; let prev=lo;
+    zf.zonas.forEach(z=>{ const end=Math.min(hi, z.hasta||hi); const w=Math.max(0,(end-prev)/(hi-lo)*100);
+      segs+=`<i style="width:${w.toFixed(1)}%;background:${z.color||'var(--line)'}"></i>`; prev=end; });
+    loLab=lo+" lpm"; hiLab=(zf.fcmax||"máx")+" máx";
+  } else {
+    const mx=fcMax(); if(!mx) return "";
+    lo=Math.round(mx*0.5); hi=mx;
+    const cols=["#37d29a","#37d29a","#C6FF3D","#f6b543","#ff5661"], b=[0.6,0.7,0.8,0.9,1.0]; let prev=lo;
+    b.forEach((bb,i)=>{ const end=Math.round(mx*bb); const w=Math.max(0,(end-prev)/(hi-lo)*100);
+      segs+=`<i style="width:${w.toFixed(1)}%;background:${cols[i]}"></i>`; prev=end; });
+    loLab="Z1"; hiLab="Z5 · "+mx;
+  }
+  const pos = bpm? Math.max(0,Math.min(100,(bpm-lo)/(hi-lo)*100)) : null;
+  const dot = pos!=null? `<div class="rzdot" style="left:${pos.toFixed(1)}%"><div class="rzlab">${bpm}</div><div class="rzd"></div></div>` : "";
+  return `<div class="rzwrap"><div class="rzbar">${segs}</div>${dot}<div class="rzmk"><span>${esc(loLab)}</span><span>${esc(hiLab)}</span></div></div>`;
+}
+
+/* Definición de zonas para el reparto de tiempo: lab (Somnia) si hay, si no %FCmáx. */
+function runZoneDefs(){
+  const zf=(typeof DATA!=="undefined"&&DATA&&DATA.zonas_fc)||null;
+  if(zf&&(zf.zonas||[]).length){ let prev=0;
+    return zf.zonas.map(z=>{ const d={hi:z.hasta||999, name:(z.z||z.nombre||""), color:z.color||"var(--line)"}; prev=z.hasta||prev; return d; }); }
+  const mx=fcMax(); if(!mx) return null;
+  const cols=["#37d29a","#37d29a","#C6FF3D","#f6b543","#ff5661"], names=["Z1","Z2","Z3","Z4","Z5"], b=[0.6,0.7,0.8,0.9,1.0];
+  return b.map((bb,i)=>({hi:Math.round(mx*bb), name:names[i], color:cols[i]}));
+}
+function _zoneIdx(defs,bpm){ for(let i=0;i<defs.length;i++){ if(bpm<=defs[i].hi) return i; } return defs.length-1; }
+/* Segundos acumulados por zona a partir de las muestras de FC del entreno. */
+function zoneTimes(){
+  const defs=runZoneDefs(); if(!defs) return null;
+  const secs=defs.map(()=>0), s=runHrSamples;
+  for(let i=0;i<s.length-1;i++){ let dt=(s[i+1].rel-s[i].rel)/1000; if(dt<0)dt=0; if(dt>5)dt=5; secs[_zoneIdx(defs,s[i].bpm)]+=dt; }
+  return {defs,secs};
+}
+/* Barra apilada + leyenda de minutos/% por zona (en vivo y en el resumen). */
+function zoneDistBar(){
+  const zt=zoneTimes(); if(!zt) return ""; const defs=zt.defs, secs=zt.secs;
+  const tot=secs.reduce((a,b)=>a+b,0); if(tot<2) return "";
+  const bar=defs.map((d,i)=>{ const w=secs[i]/tot*100; return w>0?`<i style="width:${w.toFixed(1)}%;background:${d.color}"></i>`:""; }).join("");
+  const leg=defs.map((d,i)=>{ if(secs[i]<1) return ""; const m=Math.floor(secs[i]/60), p=Math.round(secs[i]/tot*100);
+    const t=m>0?m+" min":Math.round(secs[i])+"s";
+    return `<div class="ztl"><span class="zdot" style="background:${d.color}"></span><span class="zn">${esc(d.name)}</span><span class="zt">${t} · ${p}%</span></div>`; }).join("");
+  return `<div class="zdist"><div class="zdbar">${bar}</div><div class="ztleg">${leg}</div></div>`;
+}
+
 /* --- Splits por km --- */
 function splitStats(){
   const secs=runSplits.map(s=>s.sec).filter(x=>x>0);
@@ -872,7 +988,8 @@ function vCorrerLive(){
   const zc = z? ZONAS[z] : null;
   const hrConn = !!runBtChar;
   const hrBox = `
-  <div class="card" style="display:flex;align-items:center;gap:14px;padding:16px">
+  <div class="card" style="padding:16px">
+   <div style="display:flex;align-items:center;gap:14px">
     <div style="flex:1">
       <div style="font-size:11px;letter-spacing:.06em;color:var(--faint);text-transform:uppercase;font-weight:700">Ritmo cardiaco</div>
       <div style="display:flex;align-items:baseline;gap:6px">
@@ -884,6 +1001,9 @@ function vCorrerLive(){
     <div>${ hrConn
         ? `<button class="btn sec" style="padding:8px 12px" onclick="runDisconnectHr()">Desconectar</button>`
         : `<button class="btn pri" style="padding:8px 12px" onclick="runConnectHr()">❤ Conectar Polar</button>` }</div>
+   </div>
+   <div id="run_zbar">${ runHr? runZoneBar(runHr) : "" }</div>
+   <div id="run_zdist">${ runHrSamples.length>2? zoneDistBar() : "" }</div>
   </div>
   ${ fcMax()? "" : `<div class="card" style="padding:12px 14px">
       <div style="font-size:12px;color:var(--dim);margin-bottom:6px">Para pintar tus zonas necesito tu <b>FC máx</b>. Si no la sabes, te la estimo por edad en tu perfil.</div>
@@ -996,6 +1116,11 @@ function vCorrerDone(){
     </div>
     <div style="font-size:11px;color:var(--faint);margin-top:8px">${u.n} entreno(s) con FC · ${u.calidad} de calidad${u.n<u.metaEstim?` · faltan ${u.metaEstim-u.n} (incluye ${Math.max(0,2-u.calidad)} de calidad)`:""}.</div>
   </div>`;
+  // Tiempo por zona de la sesión (minutos/% en cada zona de FC)
+  const zoneCard = runHrSamples.length>2 ? `<div class="card" style="padding:16px">
+    <div style="font-size:13px;font-weight:800;margin-bottom:2px">Tiempo por zona</div>
+    <div style="font-size:12px;color:var(--dim);margin-bottom:2px">Cuánto trabajaste en cada zona de FC</div>
+    ${zoneDistBar()}</div>` : "";
   return `
   <div class="card" style="padding:0;overflow:hidden">
     <div id="run_map" style="height:220px;width:100%;background:var(--map);position:relative">
@@ -1009,6 +1134,7 @@ function vCorrerDone(){
   </div>
   ${kpi3}
   ${hrCard}
+  ${zoneCard}
   ${stat3}
   ${splitsList}
   ${unlockCard}
@@ -1093,6 +1219,8 @@ function updateHrUI(){
   const ze=document.getElementById("run_zone"); if(ze){ const z=runHr?hrZone(runHr):null, zc=z?ZONAS[z]:null;
     ze.innerHTML = zc? `<span style="display:inline-block;font-size:12px;font-weight:800;color:#fff;background:${zc.c};padding:3px 9px;border-radius:999px">${zc.n}</span>`
       : `<span style="font-size:12px;color:var(--faint)">${fcMax()?"Sin señal de pulso":"Falta tu FC máx"}</span>`; }
+  const zb=document.getElementById("run_zbar"); if(zb) zb.innerHTML = runHr? runZoneBar(runHr) : "";
+  const zd=document.getElementById("run_zdist"); if(zd) zd.innerHTML = runHrSamples.length>2? zoneDistBar() : "";
 }
 function onHrSample(hr, dropped){
   if(dropped){ runHr=null; runBtChar=false; if(screen==="correr"&&runState!=="done") paint(); return; }

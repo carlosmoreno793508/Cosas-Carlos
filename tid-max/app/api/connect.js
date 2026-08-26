@@ -19,6 +19,8 @@
 //   UPLOAD_SECRET      — la MISMA clave de sincronización de la familia.
 //   (opcionales) GH_OWNER, GH_REPO, GH_BRANCH, AGREGADOR_USERS_PATH.
 
+import crypto from "crypto";
+
 const CFG = {
   owner: process.env.GH_OWNER || "carlosmoreno793508",
   repo: process.env.GH_REPO || "Cosas-Carlos",
@@ -40,15 +42,29 @@ export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "Usa POST." });
   try {
     const { secret, atleta, provider } = req.body || {};
-    if (!process.env.UPLOAD_SECRET)
-      return res.status(401).json({ error: "Servidor sin UPLOAD_SECRET (variable no cargada en este deploy)." });
-    if (secret !== process.env.UPLOAD_SECRET)
-      return res.status(401).json({ error: "Clave de sincronización incorrecta (no coincide con UPLOAD_SECRET)." });
     if (!JCFG.apiKey)
       return res.status(500).json({ error: "Falta JUNCTION_API_KEY en las variables de entorno de Vercel." });
 
-    const slug = slugify(atleta);
-    if (!slug) return res.status(400).json({ error: "Falta el atleta." });
+    // Autenticación. Camino nuevo (correcto, multiusuario): el TOKEN de sesión (HMAC,
+    // igual que /api/run, /api/wellness, /api/evento) → cada atleta conecta/RECONECTA
+    // SU propia fuente, y el slug sale del token (no se puede suplantar a otro).
+    // Camino LEGACY: la clave compartida UPLOAD_SECRET + 'atleta' del body.
+    let slug = "";
+    const authSecret = process.env.AUTH_SECRET || "";
+    const token = (req.body && req.body.token) ||
+      ((req.headers.authorization || "").startsWith("Bearer ") ? req.headers.authorization.slice(7).trim() : "");
+    if (token) {
+      if (!authSecret) return res.status(500).json({ error: "Servidor sin AUTH_SECRET." });
+      const payload = verify(token, authSecret);
+      if (!payload) return res.status(401).json({ error: "Sesión inválida o expirada." });
+      slug = String(payload.slug || "").replace(/[^a-z0-9-]/g, "");
+      if (!slug) return res.status(400).json({ error: "Token sin atleta." });
+    } else if (process.env.UPLOAD_SECRET && secret === process.env.UPLOAD_SECRET) {
+      slug = slugify(atleta);
+      if (!slug) return res.status(400).json({ error: "Falta el atleta." });
+    } else {
+      return res.status(401).json({ error: "Necesitas iniciar sesión (o clave válida)." });
+    }
 
     const userId = await junctionUser(slug);
     // A dónde regresa el widget al terminar ("Continue"): de vuelta a la app.
@@ -74,7 +90,7 @@ export default async function handler(req, res) {
       console.error("guardarMapeo (no fatal):", (e && e.message) || e);
     }
 
-    return res.status(200).json({ ok: true, atleta: slug, provider: prov, user_id: userId, widget_url: widgetUrl, mapping_saved: mappingSaved });
+    return res.status(200).json({ ok: true, atleta: slug, provider: provider || null, user_id: userId, widget_url: widgetUrl, mapping_saved: mappingSaved });
   } catch (e) {
     return res.status(500).json({ error: String((e && e.message) || e) });
   }
@@ -85,6 +101,23 @@ function slugify(v) {
     .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
     .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 40);
 }
+
+// ---- Token de sesi\u00f3n HMAC (igual que /api/wellness, /api/evento) ----
+function verify(token, secret) {
+  if (!token) return null;
+  const dot = token.lastIndexOf(".");
+  if (dot < 1) return null;
+  const bodyB = token.slice(0, dot), sig = token.slice(dot + 1);
+  const esperado = b64url(crypto.createHmac("sha256", secret).update(bodyB).digest());
+  const a = Buffer.from(sig, "utf8"), b = Buffer.from(esperado, "utf8");
+  if (a.length !== b.length || !crypto.timingSafeEqual(a, b)) return null;
+  let payload;
+  try { payload = JSON.parse(Buffer.from(bodyB.replace(/-/g, "+").replace(/_/g, "/"), "base64").toString("utf8")); }
+  catch { return null; }
+  if (!payload || typeof payload.exp !== "number" || payload.exp < Math.floor(Date.now() / 1000)) return null;
+  return payload;
+}
+function b64url(buf) { return buf.toString("base64").replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, ""); }
 
 function jhdr() {
   return { "x-vital-api-key": JCFG.apiKey, "content-type": "application/json", accept: "application/json" };

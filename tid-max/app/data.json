@@ -82,7 +82,82 @@
     "p": 146,
     "g": 86,
     "comidas": [],
-    "pendiente": null
+    "pendiente": null,
+    "falta": 2870
   },
-  "nota_datos": "Fuente: WHOOP + motor determinista + agentes Claude. El sueño suma las siestas. “Forma” es un proxy sobre el strain de WHOOP: lee la tendencia, no el número absoluto."
+  "nota_datos": "Fuente: WHOOP + motor determinista + agentes Claude. El sueño suma las siestas. “Forma” es un proxy sobre el strain de WHOOP: lee la tendencia, no el número absoluto.",
+  "zonas_fc": {
+    "fuente_txt": "PE Somnia 26/01/2026",
+    "vt1": 143,
+    "vt2": 167,
+    "fatmax": 173,
+    "fcmax": 181,
+    "zona_clave": [
+      143,
+      167
+    ],
+    "fatmax_sobre_vt2": true,
+    "zonas": [
+      {
+        "z": "Z1-Z2",
+        "nombre": "Base aeróbica",
+        "rango": "hasta 143 lpm",
+        "hasta": 143,
+        "color": "#2fae7a",
+        "desc": "Recuperación, técnica, aeróbico ligero."
+      },
+      {
+        "z": "Z2",
+        "nombre": "Zona sensible",
+        "rango": "143–167 lpm",
+        "hasta": 167,
+        "color": "#1f9bd1",
+        "desc": "Construcción de rendimiento aeróbico — la zona que el reporte recomienda priorizar."
+      },
+      {
+        "z": "Z3",
+        "nombre": "Umbral",
+        "rango": "167–173 lpm",
+        "hasta": 173,
+        "color": "#e0a92e",
+        "desc": "Trabajo de umbral: el lactato empieza a acumularse más rápido de lo que el cuerpo lo aclara."
+      },
+      {
+        "z": "Z4",
+        "nombre": "Alta intensidad",
+        "rango": "173–181 lpm",
+        "hasta": 181,
+        "color": "#e0682e",
+        "desc": "Intervalos duros, tolerancia al lactato."
+      },
+      {
+        "z": "Z5",
+        "nombre": "Máxima",
+        "rango": "181+ lpm",
+        "hasta": 195,
+        "color": "#d6394a",
+        "desc": "Esfuerzo máximo, muy corto — VO2pico."
+      }
+    ],
+    "bmr_estimado_kcal": [
+      1900,
+      2100
+    ],
+    "notas_umbrales": {
+      "vt1": "VT1 (143 lpm, umbral aeróbico): donde el cuerpo empieza a depender más de carbohidrato que de grasa.",
+      "vt2": "VT2 (167 lpm, umbral anaeróbico): donde el lactato empieza a acumularse más rápido de lo que se puede aclarar.",
+      "fatmax": "FATmax (173 lpm, quema grasa máxima): en Gael está por encima de VT2 (fuera de lo típico) — el propio laboratorio lo marca como hallazgo notable: excelente flexibilidad metabólica, quema grasa incluso a intensidad alta.",
+      "fcmax": "FCmax (181 lpm, máxima): su frecuencia cardíaca máxima medida en la prueba de esfuerzo (equivale a su VO2pico)."
+    }
+  },
+  "strain_energia": {
+    "strain": 5.03,
+    "kcal_total": null,
+    "kcal_ejercicio": null,
+    "bmr": [
+      1900,
+      2100
+    ]
+  },
+  "forma_serie": null
 }
