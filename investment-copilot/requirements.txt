@@ -1,0 +1,33 @@
+# ==========================================================
+#  Dependencias del MVP. Pines "flexibles" (>=) para que pip
+#  elija versiones compatibles con tu Python (3.11 - 3.14).
+# ==========================================================
+
+# --- Nucleo API ---
+fastapi>=0.115
+uvicorn[standard]>=0.34
+pydantic>=2.10
+pydantic-settings>=2.7
+
+# --- Datos de mercado y analisis ---
+ccxt>=4.4
+pandas>=2.2.3
+numpy>=2.1
+requests>=2.32
+
+# --- Utilidades ---
+python-dotenv>=1.0
+APScheduler>=3.11
+
+# --- Dashboard ---
+streamlit>=1.40
+
+# --- Testing ---
+pytest>=8.3
+
+# --- Persistencia en Postgres (OPCIONAL) ---
+#  Aun NO se usa: el MVP guarda en CSV. Descomenta cuando conectes la DB.
+#  Nota: en Python muy nuevo, psycopg2-binary puede tardar en tener wheel.
+# SQLAlchemy>=2.0
+# psycopg2-binary>=2.9
+# alembic>=1.14
