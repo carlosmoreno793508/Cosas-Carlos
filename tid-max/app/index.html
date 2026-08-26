@@ -248,7 +248,7 @@ function evToJSON(e){
 /* ---------------- Fuentes (Datos) ---------------- */
 const SOURCES = [
   {nm:"WHOOP", sub:"Recovery, HRV, sueño", bg:"#00b0b9", ic:"◉", prov:"whoop"},
-  {nm:"Polar", sub:"FC continua · R-R (H10)", bg:"#d51e2a", ic:"●", prov:"polar"},
+  {nm:"Polar", sub:"Polar Flow · entrenos, sueño, recup.", bg:"#d51e2a", ic:"●", prov:"polar"},
   {nm:"Strava", sub:"Carreras, ritmo, zonas", bg:"#fc4c02", ic:"▲", prov:"strava"},
   {nm:"Garmin", sub:"Multideporte + natación", bg:"#007cc3", ic:"◆", prov:"garmin"},
   {nm:"Oura", sub:"Sueño · recuperación", bg:"#1a1a2e", ic:"○", prov:"oura"},
@@ -426,6 +426,8 @@ async function tidConnectSource(prov, nm){
     });
     const j = await r.json();
     if(!r.ok || !j.widget_url){ toast(j.error || `No se pudo conectar ${nm}.`); return; }
+    // Recuerda qué marca estás conectando para marcarla ✓ cuando el widget regrese.
+    try{ localStorage.setItem("tid_connecting", prov); }catch(e){}
     // Abre el widget de Junction (eliges y haces login en tu marca ahí mismo).
     window.open(j.widget_url, "_blank") || (location.href = j.widget_url);
   }catch(e){ toast("Error de red al conectar."); }
@@ -440,9 +442,12 @@ function vDatos(){
     <div class="src">
       <div class="ic" style="background:${s.bg};color:${s.fg||"#04121a"}">${s.ic}</div>
       <div style="flex:1"><div class="nm">${esc(s.nm)}</div><div class="sub">${esc(s.sub)}</div></div>
-      ${s.on?`<span class="pill ok">Conectado</span>`:`<button class="pill go" style="border:none;cursor:pointer;font-family:inherit" onclick="tidConnectSource('${esc(s.prov)}','${esc(s.nm)}')">Conectar</button>`}
+      ${(s.on||tidConnected().indexOf(s.prov)>=0)
+        ? `<button class="pill ok" style="border:none;cursor:pointer;font-family:inherit" title="Toca para reconectar" onclick="tidConnectSource('${esc(s.prov)}','${esc(s.nm)}')">Conectado ✓</button>`
+        : `<button class="pill go" style="border:none;cursor:pointer;font-family:inherit" onclick="tidConnectSource('${esc(s.prov)}','${esc(s.nm)}')">Conectar</button>`}
     </div>`).join("")}
-  <div class="sub-note">Al conectar, elige tu marca en la ventana que abre. Nunca guardamos tu contraseña — la tecleas en el sitio de cada plataforma.</div>`;
+  <div class="sub-note">Al conectar, elige tu marca en la ventana que abre. Nunca guardamos tu contraseña — la tecleas en el sitio de cada plataforma.</div>
+  <div class="sub-note" style="margin-top:6px">💡 <b>Aquí conectas tu cuenta en la nube</b> (p. ej. <b>Polar Flow</b>) → trae tus datos diarios (sueño, recovery, entrenos). Para <b>FC en vivo por Bluetooth</b> con el Polar H10, ve a <b>Entrenar → Iniciar entrenamiento → Conectar Polar</b>.</div>`;
 }
 
 function vPerfil(d){
@@ -1483,6 +1488,23 @@ const TID_TOKEN_KEY = "tid_token";
 function tidToken(){ return (localStorage.getItem(TID_TOKEN_KEY)||"").trim(); }
 function tidSession(){ try{ return JSON.parse(localStorage.getItem("tid_session")||"null"); }catch(e){ return null; } }
 
+/* Fuentes conectadas (para mostrar "Conectado ✓"). Se marca cuando el widget de Junction
+   regresa a la app con ?connected=ok. Es optimista: la confirmación DEFINITIVA es cuando
+   los datos de esa marca aparecen en tu reporte. */
+function tidConnected(){ try{ return JSON.parse(localStorage.getItem("tid_connected")||"[]"); }catch(e){ return []; } }
+function tidMarkConnected(prov){ if(!prov) return; var a=tidConnected(); if(a.indexOf(prov)<0){ a.push(prov); try{ localStorage.setItem("tid_connected", JSON.stringify(a)); }catch(e){} } }
+function tidCheckConnected(){
+  try{
+    var p=new URLSearchParams(location.search);
+    if(p.get("connected")==="ok"){
+      var prov=(localStorage.getItem("tid_connecting")||"").trim();
+      if(prov){ tidMarkConnected(prov); try{ localStorage.removeItem("tid_connecting"); }catch(e){} }
+      toast("Cuenta conectada ✓ — tus datos empezarán a llegar en unos minutos.");
+      try{ history.replaceState({}, "", location.pathname); }catch(e){}  // limpia el ?connected=ok
+    }
+  }catch(e){}
+}
+
 // Carga los datos. CUENTAS INDEPENDIENTES: si hay sesión, muestra SOLO el reporte
 // propio (/api/me) y NUNCA cae al tablero público de otro atleta. El tablero público
 // (data.json) es únicamente para quien NO ha iniciado sesión.
@@ -1563,6 +1585,7 @@ function tidLogout(){
   toast("Sesión cerrada"); bootData(); activeTab="hoy"; screen=null; paint();
 }
 
+tidCheckConnected();
 bootData();
 
 // Regreso del widget de Junction: si la URL trae ?connected=<marca>, avisa y abre Datos.
