@@ -8,5 +8,10 @@
     "user_id": "1ed26d55-0254-4e59-ae1d-f942ca544476",
     "client_user_id": "tidmax-carlos-moreno",
     "env": "sandbox"
+  },
+  "gael-moreno": {
+    "user_id": "5e24f9f8-ba2a-497b-a80d-ecc60d8f86fc",
+    "client_user_id": "tidmax-gael-moreno",
+    "env": "sandbox"
   }
 }
