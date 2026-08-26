@@ -1,0 +1,82 @@
+# Compila el APK de MoreTV para Fire TV / Android TV EN LA NUBE.
+# Genera el proyecto nativo Android desde la plantilla react-native-tvos,
+# integra el código de apps/tv y produce un APK descargable como artefacto.
+# No necesitas Android Studio: ejecútalo desde la pestaña "Actions" y descarga.
+name: build-android
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["**"]
+    paths:
+      - "TV app/apps/tv/**"
+      - ".github/workflows/build-android.yml"
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: android-actions/setup-android@v3
+
+      - name: Construir el núcleo (@tvapp/core)
+        run: |
+          set -e
+          cd "$GITHUB_WORKSPACE/TV app/packages/core"
+          npm install --no-audit --no-fund
+          npm run build
+
+      - name: Generar proyecto nativo e integrar el código de MoreTV
+        run: |
+          set -e
+          APPTV="$GITHUB_WORKSPACE/TV app/apps/tv"
+          TMP="$RUNNER_TEMP/host"
+          # Plantilla oficial de react-native-tvos (crea android/ e ios/).
+          npx --yes react-native@npm:react-native-tvos@0.74.5-0 init MoreTV \
+            --template npm:react-native-tvos@0.74.5-0 --skip-install --directory "$TMP"
+          # Trae el proyecto Android generado a apps/tv.
+          cp -r "$TMP/android" "$APPTV/android"
+          # react-native-video (media3 1.8) exige compilar contra Android API 35.
+          sed -i 's/compileSdkVersion = 34/compileSdkVersion = 35/' "$APPTV/android/build.gradle"
+          grep -q suppressUnsupportedCompileSdk "$APPTV/android/gradle.properties" \
+            || echo "android.suppressUnsupportedCompileSdk=35" >> "$APPTV/android/gradle.properties"
+          # Instala dependencias reales de la app (con nuestro package.json).
+          cd "$APPTV"
+          npm install --legacy-peer-deps
+
+      - name: Compilar APK (release autónomo, JS incluido, instalable por ADB)
+        run: |
+          cd "$GITHUB_WORKSPACE/TV app/apps/tv/android"
+          chmod +x ./gradlew
+          ./gradlew assembleRelease --no-daemon
+
+      - name: Subir el APK (artefacto)
+        uses: actions/upload-artifact@v4
+        with:
+          name: MoreTV-FireTV-AndroidTV-apk
+          path: "TV app/apps/tv/android/app/build/outputs/apk/release/*.apk"
+          if-no-files-found: error
+
+      - name: Publicar APK como Release (descarga directa para Downloader)
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: apk-firetv
+          name: MoreTV APK — Fire TV / Android TV
+          body: |
+            APK de MoreTV listo para instalar. En el Fire TV usa la app "Downloader"
+            con este enlace directo:
+            https://github.com/carlosmoreno793508/Cosas-Carlos/releases/download/apk-firetv/app-release.apk
+          files: "TV app/apps/tv/android/app/build/outputs/apk/release/*.apk"
+          fail_on_unmatched_files: true

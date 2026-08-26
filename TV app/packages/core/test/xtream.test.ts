@@ -1,0 +1,156 @@
+import { test } from "node:test";
+import assert from "node:assert/strict";
+import { XtreamClient, fromPlaylist, withCounts } from "../src/xtream.ts";
+import type { FetchLike } from "../src/xtream.ts";
+
+/** fetch falso que devuelve respuestas predefinidas por URL (subcadena). */
+function fakeFetch(routes: Array<[string, unknown]>): FetchLike {
+  return async (url: string) => {
+    const hit = routes.find(([frag]) => url.includes(frag));
+    if (!hit) {
+      return { ok: false, status: 404, json: async () => ({}), text: async () => "" };
+    }
+    return {
+      ok: true,
+      status: 200,
+      json: async () => hit[1],
+      text: async () => JSON.stringify(hit[1]),
+    };
+  };
+}
+
+const config = {
+  baseUrl: "https://portal.example.com:8080",
+  username: "user1",
+  password: "pass1",
+};
+
+test("buildStreamUrl arma la URL de reproducción correcta", () => {
+  const c = new XtreamClient(config, fakeFetch([]));
+  assert.equal(
+    c.buildStreamUrl("live", 42, "m3u8"),
+    "https://portal.example.com:8080/live/user1/pass1/42.m3u8",
+  );
+  assert.equal(
+    c.buildStreamUrl("movie", 7, "mp4"),
+    "https://portal.example.com:8080/movie/user1/pass1/7.mp4",
+  );
+});
+
+test("getLiveStreams normaliza a MediaItem", async () => {
+  const c = new XtreamClient(
+    config,
+    fakeFetch([
+      [
+        "get_live_streams",
+        [
+          {
+            stream_id: 100,
+            name: "CNN",
+            stream_icon: "http://x/cnn.png",
+            epg_channel_id: "cnn.us",
+            category_id: "3",
+          },
+        ],
+      ],
+    ]),
+  );
+  const items = await c.getLiveStreams();
+  assert.equal(items.length, 1);
+  assert.equal(items[0].id, "live-100");
+  assert.equal(items[0].title, "CNN");
+  assert.equal(items[0].streamUrl, "https://portal.example.com:8080/live/user1/pass1/100.m3u8");
+  assert.equal(items[0].epgId, "cnn.us");
+});
+
+test("getCategories mapea id/nombre", async () => {
+  const c = new XtreamClient(
+    config,
+    fakeFetch([
+      ["get_live_categories", [{ category_id: "3", category_name: "Noticias" }]],
+    ]),
+  );
+  const cats = await c.getCategories("live");
+  assert.deepEqual(cats, [{ id: "3", name: "Noticias", type: "live" }]);
+});
+
+test("lanza error en respuesta no OK", async () => {
+  const c = new XtreamClient(config, fakeFetch([]));
+  await assert.rejects(() => c.getLiveStreams(), /respondió 404/);
+});
+
+test("getMovies normaliza rating 5-based a escala 0-10", async () => {
+  const c = new XtreamClient(
+    config,
+    fakeFetch([
+      [
+        "get_vod_streams",
+        [
+          {
+            stream_id: 5,
+            name: "Peli",
+            category_id: "9",
+            container_extension: "mkv",
+            rating_5based: 4,
+            year: "2024",
+          },
+        ],
+      ],
+    ]),
+  );
+  const items = await c.getMovies();
+  assert.equal(items[0].rating, 8);
+  assert.equal(items[0].year, "2024");
+  assert.equal(items[0].streamUrl, "https://portal.example.com:8080/movie/user1/pass1/5.mkv");
+});
+
+test("getSeriesInfo arma temporadas y URLs de episodios", async () => {
+  const c = new XtreamClient(
+    config,
+    fakeFetch([
+      [
+        "get_series_info",
+        {
+          info: { name: "Mi Serie", cover: "http://x/c.jpg" },
+          episodes: {
+            "1": [
+              { id: 900, title: "Piloto", episode_num: 1, container_extension: "mkv" },
+              { id: 901, title: "Cap 2", episode_num: 2, container_extension: "mp4" },
+            ],
+          },
+        },
+      ],
+    ]),
+  );
+  const detail = await c.getSeriesInfo(7);
+  assert.equal(detail.name, "Mi Serie");
+  assert.equal(detail.seasons.length, 1);
+  assert.equal(detail.seasons[0].episodes[0].title, "Piloto");
+  assert.equal(
+    detail.seasons[0].episodes[0].streamUrl,
+    "https://portal.example.com:8080/series/user1/pass1/900.mkv",
+  );
+});
+
+test("withCounts cuenta items por categoría", () => {
+  const cats = withCounts(
+    [
+      { id: "a", name: "A", type: "live" },
+      { id: "b", name: "B", type: "live" },
+    ],
+    [
+      { id: "1", type: "live", title: "x", streamUrl: "u", group: "a" },
+      { id: "2", type: "live", title: "y", streamUrl: "u", group: "a" },
+      { id: "3", type: "live", title: "z", streamUrl: "u", group: "b" },
+    ],
+  );
+  assert.equal(cats.find((c) => c.id === "a")?.count, 2);
+  assert.equal(cats.find((c) => c.id === "b")?.count, 1);
+});
+
+test("fromPlaylist exige credenciales", () => {
+  assert.throws(
+    () => fromPlaylist({ id: "1", kind: "xtream", url: "http://x", createdAt: 0 }),
+    /Faltan credenciales/,
+  );
+});

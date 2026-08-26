@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Escena principal del canal MoreTV para Roku. Muestra una rejilla de canales
+     en vivo y un reproductor de video a pantalla completa. -->
+<component name="MainScene" extends="Scene">
+  <interface>
+    <field id="serverUrl" type="string" />
+    <field id="username" type="string" />
+    <field id="password" type="string" />
+  </interface>
+
+  <script type="text/brightscript" uri="pkg:/components/MainScene.brs" />
+  <script type="text/brightscript" uri="pkg:/source/Xtream.brs" />
+
+  <children>
+    <Label id="title" text="MoreTV" translation="[80,50]"
+           color="0x4c6fffFF" font="font:LargeBoldSystemFont" />
+
+    <MarkupGrid id="grid" translation="[80,140]"
+                itemComponentName="ChannelItem"
+                numColumns="5" numRows="3"
+                itemSize="[320,260]" itemSpacing="[20,20]" />
+
+    <Video id="video" visible="false" width="1920" height="1080" />
+  </children>
+</component>

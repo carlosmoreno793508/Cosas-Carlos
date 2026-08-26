@@ -1,0 +1,230 @@
+{
+  "_comment": "Catálogo de DEMOSTRACIÓN con videos públicos que SÍ reproducen (W3C, samplelib) y streams HLS de prueba (Mux). Reemplázalo por el tuyo (contenido propio, TV abierta/FAST o licenciado). Guía en README.md.",
+  "live": [
+    {
+      "id": "101",
+      "name": "Mi Canal Abierto 1",
+      "logo": "https://picsum.photos/seed/canal1/300/300",
+      "category": "TV Abierta",
+      "epgId": "canal1.mx",
+      "addedAt": 1783900000,
+      "url": "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8"
+    },
+    {
+      "id": "102",
+      "name": "Noticias 24/7",
+      "logo": "https://picsum.photos/seed/noticias/300/300",
+      "category": "Noticias",
+      "epgId": "noticias.mx",
+      "url": "https://test-streams.mux.dev/tos_ismc/main.m3u8"
+    },
+    {
+      "id": "103",
+      "name": "Cine en Vivo",
+      "logo": "https://picsum.photos/seed/cine/300/300",
+      "category": "Películas",
+      "epgId": "cine.mx",
+      "url": "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8"
+    },
+    {
+      "id": "104",
+      "name": "Documental HD",
+      "logo": "https://picsum.photos/seed/doc/300/300",
+      "category": "Documentales",
+      "epgId": "doc.mx",
+      "url": "https://test-streams.mux.dev/tos_ismc/main.m3u8"
+    },
+    {
+      "id": "105",
+      "name": "Deportes Live",
+      "logo": "https://picsum.photos/seed/dep/300/300",
+      "category": "Deportes",
+      "epgId": "dep.mx",
+      "addedAt": 1783950000,
+      "url": "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8"
+    },
+    {
+      "id": "106",
+      "name": "Música 24h",
+      "logo": "https://picsum.photos/seed/musica/300/300",
+      "category": "Música",
+      "epgId": "mus.mx",
+      "url": "https://test-streams.mux.dev/tos_ismc/main.m3u8"
+    }
+  ],
+  "movies": [
+    {
+      "id": "201",
+      "name": "Big Buck Bunny",
+      "logo": "https://picsum.photos/seed/bunny/300/450",
+      "category": "Animación",
+      "rating": 8.1,
+      "year": "2008",
+      "addedAt": 1783960000,
+      "url": "https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_2MB.mp4"
+    },
+    {
+      "id": "202",
+      "name": "Bunny (trailer)",
+      "logo": "https://picsum.photos/seed/bunny2/300/450",
+      "category": "Animación",
+      "rating": 7.4,
+      "year": "2008",
+      "url": "https://media.w3.org/2010/05/bunny/trailer.mp4"
+    },
+    {
+      "id": "203",
+      "name": "Sintel (trailer)",
+      "logo": "https://picsum.photos/seed/sintel/300/450",
+      "category": "Animación",
+      "rating": 8.0,
+      "year": "2010",
+      "addedAt": 1783955000,
+      "url": "https://media.w3.org/2010/05/sintel/trailer.mp4"
+    },
+    {
+      "id": "204",
+      "name": "Video Demo 300",
+      "logo": "https://picsum.photos/seed/demo300/300/450",
+      "category": "Ciencia Ficción",
+      "rating": 7.8,
+      "year": "2012",
+      "url": "https://media.w3.org/2010/05/video/movie_300.mp4"
+    },
+    {
+      "id": "205",
+      "name": "Clip de 5 segundos",
+      "logo": "https://picsum.photos/seed/s5/300/450",
+      "category": "Cortometrajes",
+      "rating": 6.9,
+      "year": "2020",
+      "url": "https://download.samplelib.com/mp4/sample-5s.mp4"
+    },
+    {
+      "id": "206",
+      "name": "Clip de 10 segundos",
+      "logo": "https://picsum.photos/seed/s10/300/450",
+      "category": "Cortometrajes",
+      "rating": 6.5,
+      "year": "2020",
+      "url": "https://download.samplelib.com/mp4/sample-10s.mp4"
+    },
+    {
+      "id": "207",
+      "name": "Clip de 15 segundos",
+      "logo": "https://picsum.photos/seed/s15/300/450",
+      "category": "Cortometrajes",
+      "rating": 6.7,
+      "year": "2020",
+      "url": "https://download.samplelib.com/mp4/sample-15s.mp4"
+    },
+    {
+      "id": "208",
+      "name": "Clip de 20 segundos",
+      "logo": "https://picsum.photos/seed/s20/300/450",
+      "category": "Cortometrajes",
+      "rating": 7.0,
+      "year": "2020",
+      "url": "https://download.samplelib.com/mp4/sample-20s.mp4"
+    },
+    {
+      "id": "209",
+      "name": "Clip de 30 segundos",
+      "logo": "https://picsum.photos/seed/s30/300/450",
+      "category": "Cortometrajes",
+      "rating": 6.8,
+      "year": "2020",
+      "url": "https://download.samplelib.com/mp4/sample-30s.mp4"
+    },
+    {
+      "id": "210",
+      "name": "Big Buck Bunny (720p)",
+      "logo": "https://picsum.photos/seed/bunny720/300/450",
+      "category": "Animación",
+      "rating": 8.0,
+      "year": "2008",
+      "url": "https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_1MB.mp4"
+    },
+    {
+      "id": "211",
+      "name": "Big Buck Bunny (1080p)",
+      "logo": "https://picsum.photos/seed/bunny1080/300/450",
+      "category": "Animación",
+      "rating": 8.2,
+      "year": "2008",
+      "url": "https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/1080/Big_Buck_Bunny_1080_10s_5MB.mp4"
+    },
+    {
+      "id": "212",
+      "name": "Jellyfish (1080p)",
+      "logo": "https://picsum.photos/seed/jelly/300/450",
+      "category": "Documentales",
+      "rating": 7.1,
+      "year": "2018",
+      "url": "https://test-videos.co.uk/vids/jellyfish/mp4/h264/1080/Jellyfish_1080_10s_5MB.mp4"
+    }
+  ],
+  "series": [
+    {
+      "id": "301",
+      "name": "Mi Serie Demo",
+      "cover": "https://picsum.photos/seed/serie1/300/450",
+      "category": "Demo",
+      "rating": 7.5,
+      "year": "2024",
+      "addedAt": 1783965000,
+      "seasons": [
+        {
+          "season": 1,
+          "episodes": [
+            {
+              "id": "3011",
+              "title": "Episodio 1 — El comienzo",
+              "url": "https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_2MB.mp4"
+            },
+            {
+              "id": "3012",
+              "title": "Episodio 2 — El sueño",
+              "url": "https://media.w3.org/2010/05/sintel/trailer.mp4"
+            }
+          ]
+        },
+        {
+          "season": 2,
+          "episodes": [
+            {
+              "id": "3021",
+              "title": "Episodio 1 — El regreso",
+              "url": "https://media.w3.org/2010/05/video/movie_300.mp4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "302",
+      "name": "Aventuras Demo",
+      "cover": "https://picsum.photos/seed/serie2/300/450",
+      "category": "Animación",
+      "rating": 8.2,
+      "year": "2012",
+      "seasons": [
+        {
+          "season": 1,
+          "episodes": [
+            {
+              "id": "30201",
+              "title": "Episodio 1 — Inicio",
+              "url": "https://download.samplelib.com/mp4/sample-10s.mp4"
+            },
+            {
+              "id": "30202",
+              "title": "Episodio 2 — Continuación",
+              "url": "https://download.samplelib.com/mp4/sample-20s.mp4"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

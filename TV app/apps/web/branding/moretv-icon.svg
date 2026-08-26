@@ -1,0 +1,46 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!--
+    Ícono de la app MoreTV.
+    Concepto: un cuadro de app (rounded square) con degradado azul de la marca,
+    una pantalla de TV con botón de "play", y un "+" (More) en la esquina que da
+    nombre a la app. Diseñado a 512x512, escala limpia a 1024/192/favicon.
+  -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#4c6fff"/>
+      <stop offset="1" stop-color="#6b8bff"/>
+    </linearGradient>
+    <linearGradient id="play" x1="196" y1="196" x2="316" y2="316" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#dbe4ff"/>
+    </linearGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#0b1b6b" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <!-- Fondo redondeado (estilo ícono de TV/móvil) -->
+  <rect x="16" y="16" width="480" height="480" rx="108" fill="url(#bg)"/>
+  <!-- Brillo superior sutil -->
+  <rect x="16" y="16" width="480" height="240" rx="108" fill="#ffffff" opacity="0.06"/>
+
+  <!-- Pantalla de TV -->
+  <g filter="url(#soft)">
+    <rect x="112" y="150" width="288" height="196" rx="28" fill="#0f1116"/>
+    <rect x="112" y="150" width="288" height="196" rx="28" fill="none" stroke="#ffffff" stroke-opacity="0.12" stroke-width="3"/>
+  </g>
+  <!-- Base/patas de la TV -->
+  <rect x="214" y="346" width="84" height="16" rx="8" fill="#0f1116"/>
+  <rect x="176" y="360" width="160" height="14" rx="7" fill="#0f1116"/>
+
+  <!-- Botón de play centrado en la pantalla -->
+  <path d="M228 205 L316 248 L228 291 Z" fill="url(#play)" stroke="#ffffff" stroke-width="4" stroke-linejoin="round"/>
+
+  <!-- Insignia "+" (More) en la esquina superior derecha -->
+  <circle cx="372" cy="150" r="52" fill="#0f1116"/>
+  <circle cx="372" cy="150" r="52" fill="none" stroke="url(#bg)" stroke-width="6"/>
+  <g stroke="#ffffff" stroke-width="12" stroke-linecap="round">
+    <line x1="372" y1="126" x2="372" y2="174"/>
+    <line x1="348" y1="150" x2="396" y2="150"/>
+  </g>
+</svg>

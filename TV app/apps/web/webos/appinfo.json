@@ -1,0 +1,14 @@
+{
+  "id": "com.moretv.app",
+  "version": "0.1.0",
+  "vendor": "MoreTV",
+  "type": "web",
+  "main": "index.html",
+  "title": "MoreTV",
+  "icon": "icon.png",
+  "largeIcon": "largeIcon.png",
+  "bgColor": "#0f1116",
+  "iconColor": "#4c6fff",
+  "disableBackHistoryAPI": true,
+  "supportPortraitMode": false
+}

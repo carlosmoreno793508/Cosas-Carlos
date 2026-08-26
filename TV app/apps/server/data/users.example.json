@@ -1,0 +1,6 @@
+{
+  "_comment": "Usuarios que pueden conectarse a tu servidor. Cada uno usa estas credenciales en MoreTV (modo Xtream). Cambia las contraseñas antes de exponerlo a internet.",
+  "users": [
+    { "username": "carlos", "password": "cambia-esto", "maxConnections": 2, "expDate": "2027-12-31" }
+  ]
+}
