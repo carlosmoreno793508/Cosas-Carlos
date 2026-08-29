@@ -140,12 +140,24 @@ for r in ws.iter_rows(min_row=2,values_only=True):
     if k: tsu_keys[k]=s(r[ti]) if ti is not None and ti<len(r) else ""; tsu_list.append(k)
 wb.close()
 tsu_set=set(tsu_keys)
+STOP={"de","la","el","los","del","and","the","group","grupo","mexico","usa","inc","corp"}
+def sig(tokens): return {t for t in tokens if len(t)>2 and t not in STOP}
+tsu_tokens={tk:sig(set(tk.split())) for tk in tsu_set}
 def tsunami_match(k):
     if k in tsu_set: return "EXISTING CUSTOMER","HIGH"
-    if len(k)>=5:
-        for tk in tsu_set:
-            if len(tk)>=5 and (k in tk or tk in k): return "EXISTING ACCOUNT (posible)","POSSIBLE"
+    kt=sig(set(k.split()))
+    if not kt: return "PROSPECT",""
+    for tk,tts in tsu_tokens.items():
+        if not tts: continue
+        inter=kt & tts
+        if inter and (inter==kt or inter==tts):   # una contiene a la otra (por tokens)
+            if len(inter)>=2 or (len(inter)==1 and len(next(iter(inter)))>=7):
+                return "EXISTING (posible)","POSSIBLE"
     return "PROSPECT",""
+# marcadores de fabricante de componentes (proveedor, no comprador ideal para distribuidor)
+def is_component_maker(c):
+    t=(c["sector"]+" "+c["tipo"]).lower()
+    return ("semiconductor" in t and any(x in t for x in ("oem","fab","idm","foundry","semi"))) or "wafer" in t
 
 # ---------- SMT EVIDENCE SCORE ----------
 def smt_score(c):
@@ -194,10 +206,12 @@ for k,c in companies.items():
     score = round(mfg*0.0+  # keep mfg separate below
                   0)
     score = mfg + round(smt/5*15) + comp_intensity + proc_complex + scpain + scale + ind + imp + eol + cavail
+    maker=is_component_maker(c)
+    if maker: score=max(0, score-25)   # penalización: proveedor, no comprador ideal
     score = min(score,100)
     tier = "A+" if score>=90 else "A" if score>=80 else "B" if score>=70 else "C" if score>=60 else "Low"
     match,conf_match=tsunami_match(k)
-    rows.append({**c,"n_contacts":n_contacts,"n_purch":n_purch,"smt":smt,"ind":ind,
+    rows.append({**c,"n_contacts":n_contacts,"n_purch":n_purch,"smt":smt,"ind":ind,"maker":maker,
         "score":score,"tier":tier,"tsunami":match,"tsunami_conf":conf_match,
         "best_name":best["contacto"] if best else "","best_title":best["puesto"] if best else "",
         "best_email":best.get("email","") if best else "","best_pri":best["pri"] if best else ""})
@@ -216,12 +230,13 @@ def sheet(title):
     ws=wb.create_sheet(title); return ws
 # Master DB
 ws=wb.active; ws.title="Master Company DB"
-cols=["MasterID","Empresa","Pais","Estado","Ciudad","Tipo","Sector","SMT_Score(0-5)","ImportEv","#Contactos","#Compras","Tsunami","TsunamiConf","OpportunityScore","Tier","PrimaryContact","PrimaryTitle","PrimaryEmail","PrimaryPri","Web","Fuentes"]
+cols=["MasterID","Empresa","Pais","Estado","Ciudad","Tipo","Sector","SMT_Score(0-5)","ImportEv","#Contactos","#Compras","Tsunami","TsunamiConf","CompMaker","OpportunityScore","Tier","PrimaryContact","PrimaryTitle","PrimaryEmail","PrimaryPri","Web","Fuentes"]
 ws.append(cols)
 for r in rows:
     ws.append([r["key"],r["display"],r["pais"],r["estado"],r["ciudad"],r["tipo"],r["sector"],r["smt"],
         "Sí" if r["import_ev"] else "",r["n_contacts"],r["n_purch"],r["tsunami"],r["tsunami_conf"],
-        r["score"],r["tier"],r["best_name"],r["best_title"],r["best_email"],r["best_pri"],r["web"],", ".join(sorted(r["fuentes"]))])
+        "Sí (revisar fit)" if r["maker"] else "",r["score"],r["tier"],r["best_name"],r["best_title"],r["best_email"],r["best_pri"],r["web"],", ".join(sorted(r["fuentes"]))])
+ws.auto_filter.ref=f"A1:{openpyxl.utils.get_column_letter(len(cols))}{ws.max_row}"
 # Top 100 prospects (exclude existing customers for pure new-biz; keep existing as separate)
 prospects=[r for r in rows if r["tsunami"].startswith("PROSPECT")]
 top100=prospects[:100]
@@ -230,7 +245,7 @@ for i,r in enumerate(top100,1):
     why=f"{r['tipo'] or 'Mfg'} · {r['sector'] or 'electronica'} · {r['n_contacts']} contactos" + (" · importador" if r["import_ev"] else "")
     ws2.append([i,r["display"],r["pais"],r["estado"],(r["tipo"]+" / "+r["sector"]).strip(" /"),r["smt"],r["score"],r["tier"],r["best_name"],r["best_pri"],r["best_email"],why])
 # Top 25 actionable (prospect + has A/B purchasing contact w/ email)
-actionable=[r for r in prospects if r["best_email"] and r["best_pri"] in ("A","B")][:25]
+actionable=[r for r in prospects if r["best_email"] and r["best_pri"] in ("A","B") and not r["maker"]][:25]
 ws3=sheet("Top 25 Atacar Ya"); ws3.append(["Rank","Empresa","Pais","Estado","Industria","Score","Contact","Role","Email","Oportunidad(hipotesis)","Next Action"])
 for i,r in enumerate(actionable,1):
     opp=[]
@@ -246,6 +261,16 @@ existing=[r for r in rows if r["tsunami"].startswith("EXISTING")][:200]
 ws4=sheet("Tsunami - Cuentas Existentes"); ws4.append(["Empresa","Pais","Match","Conf","#Contactos nuevos","PrimaryContact","Role","Email","Nota"])
 for r in existing:
     ws4.append([r["display"],r["pais"],r["tsunami"],r["tsunami_conf"],r["n_contacts"],r["best_name"],r["best_pri"],r["best_email"],"Cross-sell / new plant / new buyer"])
+# Posibles Tsunami (revisar manualmente)
+posibles=[r for r in rows if r["tsunami_conf"]=="POSSIBLE"]
+ws6=sheet("Posibles Tsunami (revisar)"); ws6.append(["Empresa","Pais","Score","Tier","PrimaryContact","Email","Nota"])
+for r in posibles:
+    ws6.append([r["display"],r["pais"],r["score"],r["tier"],r["best_name"],r["best_email"],"Revisar si es el mismo cliente de Tsunami antes de excluir del ranking"])
+# Component makers (revisar fit — proveedores)
+makers=[r for r in rows if r["maker"]]
+ws7=sheet("Fabricantes componentes"); ws7.append(["Empresa","Pais","Tipo","Score(post-penal)","Nota"])
+for r in makers:
+    ws7.append([r["display"],r["pais"],r["tipo"],r["score"],"Fabricante de componentes/semis: proveedor, no comprador ideal. Fit sólo MRO/excedentes."])
 # Data quality / methodology
 ws5=sheet("Metodologia y Calidad")
 notes=[
@@ -261,9 +286,17 @@ notes=[
  ["PENDIENTE (Fase externa)","Sales triggers en vivo (nuevas plantas, expansiones), verificación de email, ImportYeti/Panjiva real, plant-level detallado — hacer selectivo en Top 25."],
  ["NO destruir datos","La Base Maestra original se conserva; esto es una capa de inteligencia derivada."],
 ]
+notes.append(["CALIBRACIÓN v2 (2026-08-29)","(1) Fabricantes de semiconductores/fabs penalizados -25 (proveedores, no compradores ideales) y excluidos del Top 25. (2) Match Tsunami endurecido a tokens (contención + 2 tokens signif. o 1 token largo) para reducir falsos 'posibles'. (3) Autofiltro en todas las hojas."])
 for n in notes: ws5.append(n)
 
+# autofiltro en todas las hojas tabulares
+for wsx in wb.worksheets:
+    if wsx.max_row>1 and wsx.title!="Metodologia y Calidad":
+        wsx.auto_filter.ref=f"A1:{openpyxl.utils.get_column_letter(wsx.max_column)}{wsx.max_row}"
+
 wb.save(OUT)
+print("Fabricantes de componentes marcados:",sum(1 for r in rows if r["maker"]))
+print("Posibles Tsunami (revisar):",sum(1 for r in rows if r["tsunami_conf"]=='POSSIBLE'))
 print("\nGuardado:",OUT)
 print("Top 100 prospectos:",len(top100),"| Top 25 accionables:",len(actionable),"| Existentes Tsunami:",len(existing))
 print("\n--- TOP 15 PROSPECTOS ---")
