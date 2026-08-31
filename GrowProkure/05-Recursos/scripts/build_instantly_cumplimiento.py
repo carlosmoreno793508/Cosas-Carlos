@@ -69,11 +69,23 @@ def evaluar(email, empresa):
         return "buzon generico, no nominal (R3)", ""
     return None, ("MEDIA" if e in RIESGO_MEDIA else "")
 
+# El pais decide el idioma del copy (R: "la geografia no se infiere del dominio"),
+# asi que se normaliza a un solo nombre por pais.
+PAIS_CANON = {
+    "mx": "Mexico", "mexico": "Mexico", "méxico": "Mexico",
+    "us": "United States", "usa": "United States", "eeuu": "United States",
+    "united states": "United States", "estados unidos": "United States",
+    "ca": "Canada", "canada": "Canada", "br": "Brasil", "brazil": "Brasil",
+    "rep. dominicana": "Republica Dominicana", "republica dominicana": "Republica Dominicana",
+    "cr": "Costa Rica", "co": "Colombia", "cl": "Chile", "ar": "Argentina", "pe": "Peru",
+}
+
 # ---------- fuentes ----------
 filas, excluidos = [], []
 vistos = set()
 
 def agregar(email, first, last, empresa, estado, pais, prioridad, arquetipo, idioma, fuente):
+    pais = PAIS_CANON.get((pais or "").strip().lower(), (pais or "").strip())
     motivo, riesgo_f = evaluar(email, empresa)
     reg = OrderedDict(email=(email or "").strip().lower(), first_name=first or "", last_name=last or "",
                       company_name=empresa or "", estado=estado or "", pais=pais or "",
