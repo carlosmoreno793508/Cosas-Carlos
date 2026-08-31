@@ -1,0 +1,101 @@
+rank,region,Clave,Nombre,URL,tipo_final,Notas
+1,MX,1005538,AJ Electronic Design SA de CV,www.a...,EMS/CM,EMS
+2,MX,1006293,TKR de Mexico S.A. de C.V.,tkrde...,EMS/CM,
+3,MX,1013136,Textron Aviation Mexico,textron.com,OEM,
+4,MX,1010948,Turck Duotec,turck.com.mx,OEM,
+5,MX,1004637,Bunker Electronics S.A. de C.V.,www...,OEM,Manufacturing their own technology (speakers)
+6,US,1010920,ACC Electronix,accelectronix.com,EMS/CM,CM supplying rugged products
+7,US,1011756,ASI,acceleratedsystems.com,EMS/CM,acceleratedsystems
+8,US,1011638,"Altek Electronics, Inc A Cyient DLM Company",altekelectronics.com,EMS/CM,"EMS & CM: PCB assemblies, box builds - Torrington"
+9,US,1008901,Anand Industrial Enterprises,aiesmt.com,EMS/CM,EMS customer service
+10,US,1010944,Arc-tronics,arc-tronics.com,EMS/CM,Tier 2 CM
+11,US,1011840,BSU Inc,bsuinc.com,EMS/CM,CM of circuit board assembly & design
+12,US,1012117,CE3 Electronics,ce3electronics.com,EMS/CM,EMS
+13,US,1011843,Carnegie Robotics,carnegierobotics.com,EMS/CM,creating full-stack autonomous systems
+14,US,1011849,"DTS, Inc.",dtsweb.com,EMS/CM,manufacturer of data acquisition systems
+15,US,1012929,Delta Star Inc.,deltastar.com,EMS/CM,"~680 Employees, $500M-$1B revenue - EMS"
+16,US,1009797,EME Automation,emeautomation.com,EMS/CM,electronic systems
+17,US,1008684,FEMSA,femsa.com,EMS/CM,grupo FEMSA - Imbera / Torey
+18,US,1011813,Globalstar,globalstar.com,EMS/CM,OEM & CM (supports MDA Space) of satellite
+19,US,1012063,Hensoldt AG,hensoldt.net,EMS/CM,"Radar systems for land, sea and air"
+20,US,1005199,Hiller Measurements,hillermeas.com,EMS/CM,provides electronic services
+21,US,1005356,Iceberg Technology Corporation,N/A,EMS/CM,OEM -- connected via Gerald Hom @ Rocket EMS
+22,US,1010188,Kopin,kopin.com,EMS/CM,Mack Tech is their CM
+23,US,1008839,Laird Thermal Systems,lairdthermal.com,EMS/CM,Laird Thermal Systems s.r.o - CZ
+24,US,1011818,Lectrosonics,lectrosonics.com,EMS/CM,OEM of wireless microphone systems
+25,US,1008788,MD Helicopter,mdhelicopters.com,EMS/CM,"Helicopter manufacturer for Military, law enforcement"
+26,US,1013208,Megaforce Corporation Inc.,megaforcecorp.com,EMS/CM,EMS company to start-ups and Fortune 1000
+27,US,1012300,PEKO Precision Products,pekoprecision.com,EMS/CM,full-service contract manufacturer
+28,US,1012591,Precise Systems,goprecise.com,EMS/CM,Precise Systems is a professional services co
+29,US,1010910,Quality Manufacturing Services,qmscfl.com,EMS/CM,CM for Emerson/NGC/DRS/CAE/Canyon Aero
+30,US,1009134,ROOTS INDUSTRIES INDIA PRIVATE LIMITED,rootsindia.com,EMS/CM,Since start-up EMS
+31,US,1012857,RV Mobile Power,rvmp.co,EMS/CM,Flock CM
+32,US,1012222,S and Y Industries,sandyindustries.com,EMS/CM,ems
+33,US,1008811,Semecs,semecs.com,EMS/CM,Part of Sero EMS group
+34,US,1012455,Servatron,servatron.com,EMS/CM,provides custom and contract manufacturing
+35,US,1011785,"Stracon, Inc",straconinc.com,EMS/CM,CM of electronic equipment including printed
+36,US,1006135,Suzhou Xinjun Longguan Electronic Technology,NA,EMS/CM,EMS
+37,US,1010100,System Level Solutions,slscorp.com,EMS/CM,EMS Services with Turkey design
+38,US,1011890,Test Fuchs,test-fuchs.com,EMS/CM,Test systems for Aerospace applications
+39,US,1012236,VR Industries,vrindustries.com,EMS/CM,provides comprehensive electronic contract mfr
+40,US,1006460,Valley Services Electronics,vse.com,EMS/CM,CM for Applied Materials
+41,US,1009183,Verigon,verigon.com,EMS/CM,premier contract electronic manufacturer
+42,US,1009444,Voler Systems,volersystems.com,EMS/CM,CM
+43,US,1012924,Winbro,winbrogroup.com,EMS/CM,"~176 Employees, $50M-$100M revenue - EMS"
+44,US,1012122,XLR8,xlr8ems.com,EMS/CM,PCBa mfr
+45,US,1010415,Dynamic Source Manufacturing,dynamicsourcemfg.com,EMS/CM,
+46,US,1011028,Hanza Electronics Prabuty Sp. z o.o.,hanza.com,EMS/CM,
+47,US,1010721,Hanza Group,hanza.com,EMS/CM,
+48,US,1008913,INCAP CONT MFG SERV (P) LTD,incapcorp.com,EMS/CM,
+49,US,1011086,Kitron Sp. z o. o.,kitron.com,EMS/CM,
+50,US,1010981,Scanfil Poland Sp. z o.o.,scanfil.com,EMS/CM,
+51,US,1009188,Unigen Corporation,unigen.com,EMS/CM,
+52,US,1001030,"4Front Solutions, LLC",4fronts...,EMS/CM,"Customer: GE Locomotive (Erie, PA): CM"
+53,US,1007623,ACDI Ems,www.a...,EMS/CM,Revenue per Zoom $41M. Tier 3 CM for DoD
+54,US,1003454,ADCO Circuits,www.a...,EMS/CM,Mfgs for EATON MS (formerly Cobham MS)
+55,US,1003185,AF Technologies,aftechn...,EMS/CM,CM
+56,US,1011814,AST SpaceMobile,ast-science.com,OEM,OEM (Formerly New Providence Acq)
+57,US,1011792,Acutronic,acutronic.com,OEM,"OEM of servo-controlled, precision motion sys"
+58,US,1001136,Aimtron Corporation,aimtron...,EMS/CM,EMS
+59,US,1011797,"All Flex Solutions, Inc",allflexinc.com,OEM,OEM of unique flexible packaging solutions
+60,US,1003488,Ansen Corporation,www.a...,EMS/CM,"ODM & EMS: PCB assembly - Ogdensburg, NY"
+61,US,1010036,Antelope- Elektrosfera EOOD,antelopeaudio.com,OEM,OEM
+62,US,1011413,Apex Tool Group,apextoolgroup.com,OEM,Power Tools OEM
+63,US,1008372,Apollo Manufacturing,apollo...,EMS/CM,EMS
+64,US,1007771,Ascentron INC.,as...,EMS/CM,experts in manufacturing Printed Circuits
+65,US,1007005,Assa Abloy Group,www.a...,EMS/CM,security & Door systems
+66,US,1011819,Astronautics,astronautics.com,OEM,OEM of avionics equipment
+67,US,1007593,"Bema Electronics, Inc",bema...,EMS/CM,total manufacturing services / prototype
+68,US,1001197,Bestronics,www.b...,EMS/CM,PST-
+69,US,1004977,Bharat Electronics Ltd,www.b...,EMS/CM,Distribution/Indirect Sales CM/EMS
+70,US,1004889,Broach Bilt Manufacturing Inc.,www.b...,EMS/CM,"CM specialized in circuit board assembly, cable"
+71,US,1007248,"Buchanan Automation, Inc.",bucha...,EMS/CM,CM for Applied Materials | Industrial equipment
+72,US,1008006,C-MAC Microcircuits,cmac...,EMS/CM,"EMS - complex, high reliability"
+73,US,1006389,CALEX Mfg. Co. Inc.,calex.co...,EMS/CM,Murata CM
+74,US,1008520,CBL electronics,www.c...,EMS/CM,EMS - Consumer electronics
+75,US,1007335,CSI Electronics,csiele...,EMS/CM,premier electronics contract manufacturer
+76,US,1004758,"Canyon Manufacturing Services, Inc.",www.ca...,EMS/CM,provides PCB
+77,US,1010418,Chatsworth Products,chatsworth.com,OEM,OEM - Global MFR of IT infrastructure
+78,US,1006599,"Circuitronics, Inc",circuit...,EMS/CM,40+ years
+79,US,1011827,Clarience Technologies,clariencetechnologies.com,OEM,OEM (owns Truck-Lite) of camera and vision
+80,US,1011335,Communications and Power Industries,cpii.com,OEM,Rev ~ $495 Million in 2023
+81,US,1003260,Corvalent,corval...,EMS/CM,"CM: Energy, Infrastructure, Automation, Defense"
+82,US,1011765,D-Wave Systems,dwavequantum.com,OEM,OEM of quantum computers
+83,US,1008588,DCX Systems Limited,dcxind...,EMS/CM,EMS for defense and Aerospace
+84,US,1006465,DSP Technology (HK) Ltd.,dsp-te...,EMS/CM,EMS
+85,US,1004601,Dell,Dell.com,OEM,Dell Computing
+86,US,1005277,"Delta Information Systems, Inc",www.d...,EMS/CM,"Ampex Data Systems, Delta Digital Video, GDP"
+87,US,1012805,Demant,demant.com,OEM,"Medical OEM, hearing aids"
+88,US,1006097,Dongguan Xinyibao Electronic Technology,NA,OEM,OEM
+89,US,1006354,DriSteem Corporation,www.d...,EMS/CM,Design and manufacture humidification systems
+90,US,1007316,EE Technologies,eetec...,EMS/CM,Working with industries across the scope
+91,US,1004084,EIT LLC,www.e...,EMS/CM,CM
+92,US,1008120,Eastek International Corporation,www.e...,EMS/CM,Electronic Manufacturing Services
+93,US,1002643,"Electromax, Inc.",www.el...,EMS/CM,Sub-contractor for Meggitt Orange County
+94,US,1002375,"Electronic Systems, Inc",www.el...,EMS/CM,"EMS a Xerox company - Sioux Falls, SD (HQ)"
+95,US,1007225,"Everi Holdings, Inc",everi.com,OEM,Everi Digital - server-based
+96,US,1004057,FINE Laboratories,www.fi...,EMS/CM,CM
+97,US,1005230,Fideltronik,fideltro...,EMS/CM,EMS based in Poland
+98,US,1005097,Firstronics LLC,fir...,EMS/CM,Electronic Manufacturing/CM
+99,US,1006462,G&D KOREA COMPONENT,www.g...,EMS/CM,ODM
+100,US,1007738,GMI Solutions,www.g...,EMS/CM,OEMs have relied on GMI Solutions for outsourcing
