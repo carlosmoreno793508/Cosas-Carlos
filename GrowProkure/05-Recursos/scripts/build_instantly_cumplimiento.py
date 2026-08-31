@@ -86,6 +86,8 @@ vistos = set()
 
 def agregar(email, first, last, empresa, estado, pais, prioridad, arquetipo, idioma, fuente):
     pais = PAIS_CANON.get((pais or "").strip().lower(), (pais or "").strip())
+    if not (idioma or "").strip():          # el idioma se deriva del pais, no se deja vacio
+        idioma = "EN" if pais in ("United States", "Canada") else ("ES" if pais else "")
     motivo, riesgo_f = evaluar(email, empresa)
     reg = OrderedDict(email=(email or "").strip().lower(), first_name=first or "", last_name=last or "",
                       company_name=empresa or "", estado=estado or "", pais=pais or "",
