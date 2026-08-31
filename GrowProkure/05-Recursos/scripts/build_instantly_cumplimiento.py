@@ -116,6 +116,20 @@ for r in crm:
     agregar(r["email_contacto"], f, l, r["Nombre"], "", "",
             "4 - Directorio ampliado", r.get("tipo_final"), "", "Tsunami_CRM_gratis")
 
+# 5) Fase 2 tanda 1: EMS comprados esta sesion (13 creditos)
+for r in leer(os.path.join(INV, "Tsunami_Fase2_Tanda1_ENRIQUECIDO.csv")):
+    f, l = partir(r.get("comprador"))
+    # R6: la confianza Baja no entra a envio, se queda para verificacion manual
+    if r.get("confianza") == "Baja":
+        excluidos.append(OrderedDict(
+            email=r["email"], first_name=f, last_name=l, company_name=r["Nombre_CRM"],
+            estado="", pais=r.get("pais",""), prioridad="2 - Decisor compras",
+            arquetipo=r.get("tipo_final",""), idioma_copy="", riesgo="",
+            fuente="Tsunami_Fase2_Tanda1", motivo_exclusion="confianza Baja: %s" % r.get("nota","")[:80]))
+        continue
+    agregar(r.get("email"), f, l, r.get("Nombre_CRM"), "", r.get("pais"),
+            "2 - Decisor compras", r.get("tipo_final"), "EN", "Tsunami_Fase2_Tanda1")
+
 # ---------- salidas ----------
 COLS = ["email","first_name","last_name","company_name","estado","pais",
         "prioridad","arquetipo","idioma_copy","riesgo","fuente"]
