@@ -1,9 +1,8 @@
 email,first_name,last_name,company_name,estado,pais,prioridad,arquetipo,idioma_copy,riesgo,fuente
 mariacristina.ramos@bcs-ais.com,Maria,Cristina Ramos Aguilar,BCS Automotive Interface Solutions,Queretaro,Mexico,1 - Clave electrónicos,,ES,,Astute_Instantly_LISTO
 dsanchez@borgwarner.com,Daniel,Sánchez,BorgWarner,Tamaulipas,Mexico,1 - Clave electrónicos,,ES,,Astute_Instantly_LISTO
-andres.kuajara@bosch.com,Andres,Kuajara,Bosch (Brasil),Brasil,Mexico,1 - Clave electrónicos,Compras / Sourcing,ES,,INBOX_MX
+andres.kuajara@bosch.com,Andres,Kuajara,Bosch (Brasil),Brasil,Brasil,1 - Clave electrónicos,Compras / Sourcing,ES,,INBOX_MX
 viridiana.riveradimas@bosch.com,Viridiana,Rivera Dimas,Bosch Mexico,CDMX,Mexico,1 - Clave electrónicos,,ES,,Astute_Instantly_LISTO
-viridiana@bosch.com.mx,Viridiana,Rivera Dimas,Bosch México,,Mexico,1 - Clave electrónicos,Compras / Sourcing,ES,,INBOX_MX
 montserrat.mendoza@brose.com,Montserrat,Mendoza,Brose,Queretaro,Mexico,1 - Clave electrónicos,,ES,,Astute_Instantly_LISTO
 philip.schnabel@brose.com,Philip,Schnabel,Brose,Alemania,Mexico,1 - Clave electrónicos,Compras / Sourcing,ES,,INBOX_MX
 verena.baeuerlein@brose.com,Verena,Bauerlein,Brose,Alemania,Mexico,1 - Clave electrónicos,Compras / Sourcing,ES,,INBOX_MX
@@ -15,7 +14,6 @@ rodriguez.j@duraauto.com,Jacqueline,Rodriguez Sierra,Dura Automotive Systems,Tam
 diego.gomez@flex.com,Diego,Gomez Ramon,Flex,Por confirmar,Mexico,1 - Clave electrónicos,Compras / Sourcing,ES,,INBOX_MX
 eduardo.garcia@forvia.com,Eduardo,Garcia Gonzalez,Forvia Hella,Por confirmar,Mexico,1 - Clave electrónicos,,ES,,Astute_Instantly_LISTO
 brenda.orozco@hella.com,Brenda,Orozco,Forvia Hella,,Mexico,1 - Clave electrónicos,Compras / Sourcing,ES,,INBOX_MX
-frida.acosta@mail.foxconn.com,Frida,Acosta,Foxconn Baja California,Baja California,Mexico,1 - Clave electrónicos,Compras / Sourcing,ES,,INBOX_MX
 arturo.martinez@gehealthcare.com,Arturo,Martínez López,GE HealthCare,,Mexico,1 - Clave electrónicos,,ES,,Astute_Instantly_LISTO
 rosa.loyola@gentherm.com,Rosa,Loyola,Gentherm,Coahuila,Mexico,1 - Clave electrónicos,,ES,,Astute_Instantly_LISTO
 elena.rasmussen@harman.com,Elena,Rasmussen,Harman International,Global,Mexico,1 - Clave electrónicos,Compras / Sourcing,ES,,INBOX_MX
@@ -28,7 +26,7 @@ g.montiel@kostal.com,Gabriel,Aragon Montiel,KOSTAL,Queretaro,Mexico,1 - Clave el
 m.rojas@kostal.com,Miriam,Rojas,KOSTAL,Queretaro,Mexico,1 - Clave electrónicos,,ES,,Astute_Instantly_LISTO
 azbel.rodriguez@keenfinity-group.com,Azbel,Rodriguez,Keenfinity,Sonora,Mexico,1 - Clave electrónicos,,ES,,Astute_Instantly_LISTO
 issis.melgoza@latecoere.aero,Issis,Maria Melgoza Caballero,Latecoere,Sonora,Mexico,1 - Clave electrónicos,Compras / Sourcing,ES,,INBOX_MX
-tiago.formaggio@lear.com,Tiago,Formaggio,Lear (Brasil),Brasil,Mexico,1 - Clave electrónicos,Compras / Sourcing,ES,,INBOX_MX
+tiago.formaggio@lear.com,Tiago,Formaggio,Lear (Brasil),Brasil,Brasil,1 - Clave electrónicos,Compras / Sourcing,ES,,INBOX_MX
 edorre@lear.com,Edison,Dorre,Lear Corporation,Michigan,United States,1 - Clave electrónicos,Purchasing / Sourcing,EN,,INBOX_US
 vrodriguez@littelfuse.com,Viridiana,Rodriguez Salazar,Littelfuse,Por confirmar,Mexico,1 - Clave electrónicos,,ES,,Astute_Instantly_LISTO
 mosiah.sosa@mahle.com,Mosiah,Sosa,MAHLE,Nuevo Leon,Mexico,1 - Clave electrónicos,,ES,,Astute_Instantly_LISTO
@@ -47,7 +45,6 @@ gerardo.ruelaslopez@nissan.com.mx,Gerardo,Ruelas López,Nissan Mexicana,Estado d
 maria.d.cruz@omnionpower.com,Maria,D. Cruz,OmniOn Power,Tamaulipas,Mexico,1 - Clave electrónicos,,ES,,Astute_Instantly_LISTO
 eduardo.guerra@seg-automotive.com,Eduardo,Guerra Ferro,SEG Automotive,Por confirmar,Mexico,1 - Clave electrónicos,,ES,,Astute_Instantly_LISTO
 r.preciado@samsung.com,Roberto,Preciado,Samsung Electronics,Queretaro,Mexico,1 - Clave electrónicos,,ES,,Astute_Instantly_LISTO
-preciador@samsung.com,Roberto,Preciado,Samsung Electronics,Queretaro,Mexico,1 - Clave electrónicos,Compras / Sourcing,ES,,INBOX_MX
 shawna.callison@seagate.com,Shawna,Callison,Seagate Technology,Colorado,United States,1 - Clave electrónicos,Purchasing / Sourcing,EN,,INBOX_US
 pan_victor@shure.com,Victor,Pan,Shure,(por confirmar),Mexico,1 - Clave electrónicos,,ES,,Astute_Instantly_LISTO
 juan.gutierrez@stellantis.com,Juan,Mario Gutierrez,Stellantis,Tlaxcala,Mexico,1 - Clave electrónicos,,ES,,Astute_Instantly_LISTO
@@ -65,7 +62,7 @@ karla_martinez@whirlpool.com,Karla,Martinez,Whirlpool,Nuevo Leon,Mexico,1 - Clav
 osvaldo_f_duran@whirlpool.com,Osvaldo,Duran,Whirlpool,(por confirmar),Mexico,1 - Clave electrónicos,,ES,,Astute_Instantly_LISTO
 osvaldo_elizondo@whirlpool.com,Osvaldo,Durán Elizondo,Whirlpool,Nuevo León,Mexico,1 - Clave electrónicos,,ES,,Astute_Instantly_LISTO
 valeria_martinez@whirlpool.com,Valeria,González Martínez,Whirlpool,Nuevo León,Mexico,1 - Clave electrónicos,,ES,,Astute_Instantly_LISTO
-eloisa_marcon@whirlpool.com,Eloisa,Bascheroto Marcon,Whirlpool (Brasil),Brasil,Mexico,1 - Clave electrónicos,Compras / Sourcing,ES,,INBOX_MX
+eloisa_marcon@whirlpool.com,Eloisa,Bascheroto Marcon,Whirlpool (Brasil),Brasil,Brasil,1 - Clave electrónicos,Compras / Sourcing,ES,,INBOX_MX
 eloisa_bascheroto@whirlpool.com,Eloisa,Marcon Bascheroto,Whirlpool Latin America,,Brasil,1 - Clave electrónicos,Compras / Sourcing,ES,,INBOX_LATAM
 carlos.tavares@zf.com,Carlos,Tavares,ZF,St. Gallen,Mexico,1 - Clave electrónicos,Compras / Sourcing,ES,,INBOX_MX
 paola.evangelista@zkw.mx,Paola,Evangelista Cruz,ZKW,Guanajuato,Mexico,1 - Clave electrónicos,,ES,,Astute_Instantly_LISTO
@@ -90,7 +87,6 @@ bbarker@aosmith.com,Brad,Barker,A. O. Smith,Tennessee,United States,2 - Decisor 
 dkanarek@aosmith.com,Donna,Kanarek,A. O. Smith,Kentucky,United States,2 - Decisor compras,Purchasing / Sourcing,EN,,INBOX_US
 carmen.ortiz-figueroa@mx.abb.com,Carmen,Paola Ortiz Figueroa,ABB,Sonora,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 silvia.real-loyola@mx.abb.com,Silvia,Real Loyola,ABB,San Luis Potosí,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
-carmen.paola@global.abb,Carmen,Paola Ortiz Figueroa,ABB,Sonora,Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX
 daniela.garcia@mx.abb.com,Daniela,Garcia,ABB,(por confirmar),Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX
 jhugo@accelectronix.com,Jessica,Hugo,ACC Electronix,,United States,2 - Decisor compras,EMS/CM,EN,,Tsunami_Top100_ENRIQUECIDO
 jrichardson@acdi.com,Joyce,Richardson,ACDI Ems,,United States,2 - Decisor compras,EMS/CM,EN,,Tsunami_Top100_ENRIQUECIDO
@@ -181,7 +177,6 @@ alicia.martinez@bench.com,Alicia,Martinez,Benchmark Electronics,Jalisco,Mexico,2
 elizabeth.lara@bench.com,Elizabeth,Lara Santiago,Benchmark Electronics,Jalisco,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 karina.paz@bench.com,Karina,Paz,Benchmark Electronics,Baja California,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 marlen.gil@bench.com,Marlen,Gil,Benchmark Electronics,Jalisco,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
-alicia.martinez@flex.com,Alicia,Martinez,Benchmark Electronics,Jalisco,Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX
 tim.thul@bench.com,Timothy,Thul,Benchmark Electronics,,Mexico,2 - Decisor compras,Materiales / Planeación,ES,,INBOX_MX
 alonso.alegria@bendix.com,Alonso,Alegria,Bendix CVS (Knorr-Bremse),Coahuila,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 xavier.segura@bendix.com,Francisco,Xavier Segura,Bendix CVS (Knorr-Bremse),Coahuila,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
@@ -284,7 +279,6 @@ jose.jesus@continental.com,Jose,Lopez Solano,Continental (Mexico - varias planta
 salvador.2.larrauri@continental.com,Salvador,Larrauri,Continental (Mexico - varias plantas),MX,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 mark.mcclellan@vitesco.com,Mark,McClellan,Continental / Vitesco,Chihuahua,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 raul.ordonez@vitesco-technologies.com,Raul,Ordonez,Continental / Vitesco,Chihuahua,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
-mark.mcclellan@vitesco-technologies.com,Mark,McClellan,Continental / Vitesco,Chihuahua,Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX
 patrick.dougherty@continental-corporation.com,Patrick,Dougherty,Continental Automotive,Michigan,United States,2 - Decisor compras,Purchasing / Sourcing,EN,,INBOX_US
 steve.byhre@continental-corporation.com,Steve,Byhre,Continental Automotive,Illinois,United States,2 - Decisor compras,Purchasing / Sourcing,EN,,INBOX_US
 brian.diplock@controltekusa.com,Brian,Diplock,ControlTek,WA,United States,2 - Decisor compras,Purchasing / Sourcing,EN,,INBOX_US
@@ -442,7 +436,6 @@ dromero@frisa.com,Diana,Romero Romero,Frisa,(por confirmar),Mexico,2 - Decisor c
 j.simoneit@fritsch-gmbh.de,Jan,Simoneit,Fritsch Elektronik,,Germany,2 - Decisor compras,EMS/CM,EN,,Tsunami_Fase2_Tanda1
 cuauhtemoc.reyes@fujikura.com,Cuauhtemoc,Reyes,Fujikura Automotive Mexico,Coahuila,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 perez.norma@jp.fujikura.com,Norma,Perez,Fujikura Automotive Mexico,Coahuila,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
-norma@fujikura.com,Norma,Perez,Fujikura Automotive Mexico,Coahuila,Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX
 mikael.emnevik@finesa.com.mx,Lic.,Mikael Emnevik,"FÁBRICA DE INSTRUMENTOS Y EQUIPOS, S.A. DE C.V.",,Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX
 martha.amaya@ge.com,Martha,Amaya,GE,(por confirmar),Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX
 gustavoiyatihe.castrejon@ge.com,Ing.,Gustavo Castrejón,"GE GRID SOLUTIONS, S.A. DE C.V.",,Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX
@@ -456,7 +449,6 @@ cindy.bartelt@gmisolutions.com,Cindy,Bartelt,GMI Solutions,,United States,2 - De
 mayra.valdez@gpv-group.com,Mayra,Valdez,GPV,Jalisco,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 joseluis.rodriguez@grammer.com,Jose,Luis Rodriguez Mandujano,GRAMMER Americas,Queretaro,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 juanmanuel.cortes@grammer.com,Juan,Manuel Cortes Limon,GRAMMER Americas,Queretaro,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
-manuel.cortes@grammer.com,Juan,Manuel Cortes Limon,GRAMMER Americas,Queretaro,Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX
 edgar.duque@gabriel.com,Edgar,Duque Duque,Gabriel North America,(por confirmar),Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX
 will.boeh@garmin.com,William,Boeh,Garmin,Kansas,United States,2 - Decisor compras,Purchasing / Sourcing,EN,,INBOX_US
 mark.andretzky@generac.com,Mark,Andretzky,Generac Power Systems,Wisconsin,United States,2 - Decisor compras,Purchasing / Sourcing,EN,,INBOX_US
@@ -661,7 +653,6 @@ sebastian.garza@mabe.com.mx,Sebastian,Garza Sigler,Mabe (MPT Electronica),San Lu
 carlos.aranda@mabe.com.mx,Carlos,Aranda Hornedo,Mabe (MPT Electronica),Queretaro,Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX
 brenda.almanza@mabe.com.mx,Brenda,Almanza,Mabe (MPT Electronica),Guanajuato,Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX
 alberto.marin@mabe.com.mx,Alberto,Marin,Mabe (MPT Electronica),San Luis Potosi,Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX
-jose.rangel@mabe.com.mx,Jose,Abraham Rangel,Mabe (MPT Electronica),Queretaro,Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX
 roberto.ynurrigarro@mabe.com.mx,Roberto,Ynurrigarro,Mabe (MPT Electronica),San Luis Potosi,Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX
 cinthya.aparicio@mabe.com.mx,Cinthya,Aparicio Martinez,Mabe (MPT Electronica),CDMX,Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX
 javier.ontiveros@mabe.com.mx,Javier,Ontiveros,Mabe (MPT Electronica),Queretaro,Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX
@@ -731,7 +722,6 @@ edmundo-nicanor.guzman@metasensetec.com,Edmundo,Guzman,Metasensetec (ex-Valeo),P
 cesar.farfan@methode.com,Cesar,Farfan Becerril,Methode Electronics,Nuevo León,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 magnolia.castillo@methode.com,Magnolia,Castillo Resendiz,Methode Electronics,Nuevo León,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 miruegasrodriguez@methode.com,Marco,Iruegas Rodriguez,Methode Electronics,Nuevo León,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
-miruegas@methode.com,Marco,Iruegas Rodriguez,Methode Electronics,Nuevo León,Mexico,2 - Decisor compras,Materiales / Planeación,ES,,INBOX_MX
 sesturi@micron.com,S.,Esturi (nombre por confirmar),Micron,California,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 sandeep@micron.com,Sandeep,Joy,Micron Technology,ID,United States,2 - Decisor compras,Purchasing / Sourcing,EN,,INBOX_US
 gdegrave@milwaukeeelectronics.com,Gary,DeGrave,Milwaukee Electronics,WI,United States,2 - Decisor compras,Materials / Planning,EN,,INBOX_US
@@ -924,7 +914,6 @@ daniel.vences@siemens.com,Daniel,Vences,Siemens,DISTRITO FEDERAL | JALISCO,Mexic
 irma.lerma@sigmatronintl.com,Irma,Lerma,SigmaTron International,Chihuahua,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 krystel.jimenez@sigmatronintl.com,Krystel,Jimenez,SigmaTron International,Chihuahua,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 joanne.tai@sigmatronintl.com,Joanne,Tai,SigmaTron International,IL,United States,2 - Decisor compras,Materials / Planning,EN,,INBOX_US
-jesus.payan@sigmatronintl.com,Jesus,Payan,SigmaTron International,Chihuahua,Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX
 mlopez@silbit.com,Monserrat,López,Silbit,Jalisco,Mexico,2 - Decisor compras,EMS/CM,ES,,Tsunami_MX_Hueco_ENRIQUECIDO
 sergio.morales@skyworksinc.com,Sergio,Morales,Skyworks,,Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX
 alberto.beltran@skyworksinc.com,Alberto,Beltran,Skyworks Solutions,Baja California,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
@@ -964,7 +953,6 @@ raguilar02@txtav.com,Reyna,Aguilar,Textron Aviation Mexico,,Mexico,2 - Decisor c
 ryan_oquin@trimble.com,Ryan,O'Quin,Trimble Inc.,Colorado,United States,2 - Decisor compras,Purchasing / Sourcing,EN,,INBOX_US
 sebastian.hernandez@turck.com,Sebastian,Hernandez,Turck Duotec,,Mexico,2 - Decisor compras,OEM,ES,,Tsunami_Top100_ENRIQUECIDO
 rlarrache@tycoelectronics.com,Ramon,Larrache,Tyco Electronics Power Systems,Tamaulipas,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
-rlarrache@te.com,Ramon,Larrache,Tyco Electronics Power Systems,Tamaulipas,Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX
 sonia_giovana@usiglobal.com,Sonia,Giovana,USI (Universal Scientific Industrial / Asteelflash),Jalisco,Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX
 michelle_sanchez@usiglobal.com,Michelle,Sanchez,USI (Universal Scientific Industrial / Asteelflash),Jalisco,Mexico,2 - Decisor compras,Materiales / Planeación,ES,,INBOX_MX
 ramon_luque@usiglobal.com,Ramon,Luque,USI (Universal Scientific Industrial / Asteelflash),Jalisco,Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX
@@ -988,7 +976,6 @@ juan-jose.medrano@valeo.com,Juan,Jose Medrano,Valeo,Estado de Mexico,Mexico,2 - 
 karina.nunez@valeo.com,Karina,Nunez,Valeo,Queretaro,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 lorena.meza@valeo.com,Lorena,Meza,Valeo,Queretaro,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 paola.romo@valeo.com,Paola,Romo,Valeo,San Luis Potosi,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
-javier_milln@valeo.com,Javier,Millan,Valeo,Queretaro,Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX
 gregg2@vse.com,Gregory,Andrade,Valley Services Electronics,,United States,2 - Decisor compras,EMS/CM,EN,,Tsunami_Top100_ENRIQUECIDO
 mburton@verigon.com,Mark,Burton,Verigon,,United States,2 - Decisor compras,EMS/CM,EN,,Tsunami_Top100_ENRIQUECIDO
 alan.tarango@vertiv.com,Alan,Tarango,Vertiv,Tamaulipas,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
@@ -1019,7 +1006,6 @@ mmedina@wkk.com.hk,Martin,Medina Morales,WKK Technology Queretaro,Queretaro,Mexi
 carolina.alanis@wabtec.com,Carolina,Alanis,Wabtec,Por confirmar,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 cesar.schmidt@wabtec.com,Cesar,Schmidt,Wabtec,Por confirmar,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 bmendez@watlow.com,Brayan,Mendez,Watlow,(por confirmar),Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
-jbalbino@watlow.com,Julieta,Balbino,Watlow,(por confirmar),Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX
 adilah.azahar@wdc.com,Adilah,Azahar,Western Digital,CA,United States,2 - Decisor compras,Purchasing / Sourcing,EN,,INBOX_US
 sharen.chin@wdc.com,Sharen,Chin,Western Digital,CA,United States,2 - Decisor compras,Purchasing / Sourcing,EN,,INBOX_US
 adolfo_castillon@whirlpool.com,Adolfo,González Castillón,Whirlpool,Nuevo León,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
@@ -1061,11 +1047,9 @@ joeld@zf.com,Joel,La,ZF,n/e,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LIS
 jorgeeduardo.sierrabustamante@zf.com,Jorge,Sierra Bustamante,ZF,Queretaro,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 liliana.perez@zf.com,Liliana,Perez,ZF,Estado de Mexico,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 marine.froment@zf.com,Marine,Froment,ZF,n/e,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
-alejandro_castillo@zf.com,Alejandro,Castillo,ZF,Guanajuato,Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX
 m.miller@zf.com,Matt,Miller,ZF North America,Michigan,United States,2 - Decisor compras,Purchasing / Sourcing,EN,,INBOX_US
 brenda.hernandez@zkw.mx,Brenda,Hernandez,ZKW,Guanajuato,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 stephan.zauner@zkw-elektronik.at,Stephan,Zauner,ZKW,Guanajuato,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
-stephan.zauner@zkw.mx,Stephan,Zauner,ZKW,Guanajuato,Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX
 jose.fuentes@zkw.mx,Jose,Fuentes,ZKW,(por confirmar),Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX
 oacevedo@zebra.com,Omar,Acevedo,Zebra Technologies,Illinois,United States,2 - Decisor compras,Purchasing / Sourcing,EN,,INBOX_US
 carmen_ramirez@zollner-electronics.com,Carmen,Ramirez,Zollner,,Germany,2 - Decisor compras,EMS/CM,EN,,Tsunami_Fase2_Tanda1
@@ -1211,10 +1195,8 @@ vanak.men@cirtecmed.com,Vanak,Men,Cirtec Medical,MN,United States,3 - Comprador,
 daniel.hahn@coherent.com,Dan,Hahn,Coherent (II-VI),New York,United States,3 - Comprador,Purchasing / Sourcing,EN,,INBOX_US
 jill.lorenzen@collinsaerospace.com,Jill,Lorenzen,Collins Aerospace,IA,United States,3 - Comprador,Purchasing / Sourcing,EN,,INBOX_US
 oziel.gonzalez@commscope.com,Oziel,Gonzalez,CommScope,Chihuahua,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO
-oziel.gonzalez@vistancenetworks.com,Oziel,Gonzalez,CommScope,Chihuahua,Mexico,3 - Comprador,Compras / Sourcing,ES,,INBOX_MX
 angel.mosqueda.herrera@continental.com,Angel,Mosqueda Herrera,Continental,San Luis Potosi,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO
 sendy.torres@continental.com,Sendy,Torres,Continental,Chihuahua,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO
-yasir.abitia@continental.com,Yasir,Abitia,Continental,Jalisco,Mexico,3 - Comprador,Compras / Sourcing,ES,,INBOX_MX
 eduardo.riebeling@continental-corporation.com,Eduardo,Riebeling,Continental (Aumovio),Jalisco,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO
 paul.tracy@creationtech.com,Paul,Tracy,Creation Technologies,NY,United States,3 - Comprador,Purchasing / Sourcing,EN,,INBOX_US
 jeff.westfall@creationtech.com,Jeffery,Westfall,Creation Technologies,NY,United States,3 - Comprador,Purchasing / Sourcing,EN,,INBOX_US
@@ -1313,7 +1295,6 @@ kevin.aguirre@foxconn.com,Kevin,Aguirre,Foxconn (FII),Chihuahua,Mexico,3 - Compr
 frida.acosta@foxconn.com,Frida,Acosta,Foxconn Baja California,Baja California,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO
 luis.reyna@fujikura.com,Luis,Reyna,Fujikura Automotive Mexico,Coahuila,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO
 miguel.huerta@jp.fujikura.com,Miguel,Huerta,Fujikura Automotive Mexico,Coahuila,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO
-miguel.huerta@fujikura.com,Miguel,Huerta,Fujikura Automotive Mexico,Coahuila,Mexico,3 - Comprador,Compras / Sourcing,ES,,INBOX_MX
 alanignacio.velazquez@gehealthcare.com,Alan,Velazquez,GE HealthCare,Chihuahua/Nuevo Leon,Mexico,3 - Comprador,Materiales / Planeación,ES,,INBOX_MX
 jennyjacqueline.ortega@gehealthcare.com,Jenny,Ortega,GE HealthCare,Chihuahua/Nuevo Leon,Mexico,3 - Comprador,Materiales / Planeación,ES,,INBOX_MX
 wendolyn.garza@gehealthcare.com,Wendolyn,Garza,GE HealthCare,Chihuahua/Nuevo Leon,Mexico,3 - Comprador,Materiales / Planeación,ES,,INBOX_MX
@@ -1351,7 +1332,6 @@ carlos.hipolito.ke@astemo.com,Carlos,Hipolito Nestoso,Hitachi Astemo,Guanajuato,
 carlos.perez.jb@hitachiastemo.com,Juan,Carlos Perez Becerra,Hitachi Astemo,Guanajuato,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO
 salvadorisaac.ruiz.rr@astemo.com,Salvador,Isaac Ruiz,Hitachi Astemo,Guanajuato,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO
 guillermina_arriaga@hdm.honda.com,Guillermina,Arriaga,Honda de Mexico,(por confirmar),Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO
-lsandoval@impulsora.com,(contacto,general),IMPULSORA INDUSTRIAL MONTERREY S.A.,NUEVO LEON,Mexico,3 - Comprador,Compras / Sourcing,ES,,INBOX_MX
 ruiz.carolina@inventec.com,Carolina,Ruiz,Inventec,Chihuahua,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO
 payan.elisa@inventec.com,Elisa,Payan,Inventec,Chihuahua,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO
 rios.gerardo@inventec.com,Gerardo,Rios,Inventec,Chihuahua,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO
@@ -1583,7 +1563,6 @@ marioscar.azpeitia@usi.com,Marioscar,Azpeitia,USI Asteelflash,Jalisco,Mexico,3 -
 diana.valenzuela@asteelflash.com,Diana,Valenzuela,USI Asteelflash,Jalisco,Mexico,3 - Comprador,Compras / Sourcing,ES,,INBOX_MX
 joaquin.flores@valeo.com,Joaquin,Flores,Valeo,N/D,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO
 pablo.gonzalez@valeo.com,Pablo,Gonzalez,Valeo,Chihuahua,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO
-cesar.morado@valeo.com,Cesar,Garcia Morado,Valeo,San Luis Potosi,Mexico,3 - Comprador,Compras / Sourcing,ES,,INBOX_MX
 andres.gil@valeo.com,Andres,Gil,Valeo,(por confirmar),Mexico,3 - Comprador,Compras / Sourcing,ES,,INBOX_MX
 hector.garza@valeo.com,Hector,Garza,Valeo,(por confirmar),Mexico,3 - Comprador,Compras / Sourcing,ES,,INBOX_MX
 elsa.mireles@valeo.com,Elsa,Elizabeth Mireles,Valeo (Thermal Systems),San Luis Potosi,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO
@@ -1665,7 +1644,6 @@ ulises.mendoza@continental-corporation.com,Ulises,Mendoza de la Torre,continenta
 elizabeth02.hernandez@continental.com,Elizabeth,Hernandez C,continental.com,Chihuahua,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO
 ana.karen.gonzalez@continental.com,Ana,Karen Gonzalez VillaGomez,continental.com,Guanajuato,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO
 isis.vazquez@cummins.com,Isis,Vazquez,cummins.com,(por confirmar),Mexico,3 - Comprador,Compras / Sourcing,ES,,INBOX_MX
-jose.c.martinez@cummins.com,Jose,Martinez,cummins.com,(por confirmar),Mexico,3 - Comprador,Compras / Sourcing,ES,,INBOX_MX
 comprador@daieistamping.com.mx,Lucia,Orellana,daieistamping.com.mx,(por confirmar),Mexico,3 - Comprador,Compras / Sourcing,ES,,INBOX_MX
 shernandez@dekko.com,Silvia,Hernandez,dekko.com,(por confirmar),Mexico,3 - Comprador,Compras / Sourcing,ES,,INBOX_MX
 gr-garcia@dnmex.com.mx,Griselda,Garcia,dnmex.com.mx,(por confirmar),Mexico,3 - Comprador,Compras / Sourcing,ES,,INBOX_MX
@@ -1822,13 +1800,10 @@ finanzas@apem.com,(contacto,general),"APEM MEXICO, S.A. DE C.V.",QUERETARO,Mexic
 jorge.gonzalez@arindustrial.com.mx,Jorge,Gonzalez,AR CONTROLS LLC,,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 pmarroquin@condumex.com.mx,(contacto,general),ARCOMEX PLANTA ATLTZAYANCA,Tlaxcala,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
 falonso@condumex.com.mx,Ing.,Francisco Alonso Gasca,"ARCOMEX, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-rblanco@condumex.com.mx,(contacto,general),"ARCOMEX, S.A. DE C.V.",TLAXCALA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-jjrivera@condumex.com.mx,(contacto,general),"ARCOMEX, S.A. DE C.V.",TLAXCALA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 ventas.mexico@areva-td.com,(contacto,general),"AREVA T&D, S.A. DE C.V.",DISTRITO FEDERAL,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 rsierra@argoselectrica.com,Ing.,Moisés Wengrowsky Chejanoviesky,"ARGOS ELÉCTRICA, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 pgarcia@argoselectrica.com,Ing.,Pablo García Camacho,"ARGOS ELÉCTRICA, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 carlos.gonzalezg@mx.yazaki,Ing.,Carlos González Guerra,"ARNECOM, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-gosorio@arneses.com.mx,(contacto,general),"ARNESES AUTOMOTRICES, S.A. DE C.V.",ESTADO DE MEXICO,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 mbarbosas@condumex.com.mx,Ing.,Marcial Barbosa Saldierna,"ARNESES ELECTRÓNICOS ARNELEC, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 zhernandez@condumex.com.mx,Ing.,Zeferino Hernández,"ARNESES ELECTRÓNICOS ARNELEC, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 alexp@osca-arcosa.com,(contacto,general),"ARNESES Y CONEXIONES, S.A. DE C.V.",BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
@@ -1839,7 +1814,6 @@ askco@mexis.com,(contacto,general),"ASKCO DE MÉXICO, S.A.",NUEVO LEON,Mexico,4 
 luz.elena@aurora-electric-motors.com,(contacto,general),"AURORA ELECTRIC MOTORS, S.A. DE C.V.",NUEVO LEON,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 gerardo.vazquez@brakepartsinc.com,Ing.,Gerardo Vázquez,"AUTO ELÉCTRICOS DE MÉXICO, S.A.P.I. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 elia.lemus@brakepartsinc.com,Ing.,Vicente López Guiza,"AUTO ELÉCTRICOS DE MÉXICO, S.A.P.I. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-rir@mpc-inc.com,(contacto,general),AUTOPARTES DE PRESICION DE SANTA ANA S. DE R.L. DE C.V.,SONORA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 salvador.lara@yzk.com.mx,(contacto,general),AUTOPARTES Y ARNESES DE MEXICO SA DE CV,CHIHUAHUA,Mexico,4 - Directorio ampliado,Técnico / Procesos,ES,,INBOX_MX
 sgonzalez@sewsus.com.mx,(contacto,general),"AUTOSISTEMAS DE TORREON, S.A. DE C.V.",COAHUILA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 a.terrones@axoncable.com,(contacto,general),AXON CABLE,QUERETARO,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
@@ -1913,7 +1887,6 @@ teresa.duran@bdk.com,(contacto,general),BLACK & DECKER DE REYNOSA S DE RL DE CV,
 denise.espino@sbdinc.com,Lic.,Gilberto de la Mora,"BLACK AND DECKER, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 alexander.wehr@bmw.com.mx,Sr.,Alexander W. Wehr,"BMW DE MÉXICO, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 ana_elena.carrillo@reil.bombardier.com,Lic.,Patrick Plichon,"BOMBARDIER TRANSPORTATION MÉXICO, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-ngarcia@borderassembly.net,(contacto,general),BORDER ASSEMBLY S. DE R.L. DE C.V.,BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 gangulo@borderassembly.net,(contacto,general),"BORDER ASSEMBLY, S. DE R.L. DE C.V.",BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Técnico / Procesos,ES,,INBOX_MX
 irma_flores@bose.com,(contacto,general),"BOSE, S.A. DE C.V.",SONORA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 allan.acosta@mx.board-ocean.com,(contacto,general),BROAD-OCEAN MOTOR DE MEXICO S DE RL DE CV,,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
@@ -1950,7 +1923,6 @@ alfonso.aguilar@bitron.com,Alfonso,Aguilar,Bitron,Queretaro,Mexico,4 - Directori
 marcela.villasenor@bitron.com,Marcela,Villasenor,Bitron,Queretaro,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
 manuel.mamone@bitron.com,Manuel,Mamone,Bitron Electronics S.p.A.,Italia,Mexico,4 - Directorio ampliado,Técnico / Procesos,ES,,INBOX_MX
 christine.wojak@boeing.com,Christine,Wojak,Boeing,,,4 - Directorio ampliado,OEM,,,Tsunami_CRM_gratis
-alfonso.reyes@aero.bombardier.com,Alfonso,Reyes,"Bombardier Aerospace Mexico, S.A. de C.V.",,,4 - Directorio ampliado,OEM,,,Tsunami_CRM_gratis
 mayra.lopez@aero.bombardier.com,Mayra,I. Lopez,Bombardier Querétaro,Querétaro,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
 victor.abelleyra@aero.bombardier.com,Victor,Abelleyra,Bombardier Querétaro,Querétaro,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
 edgar.garcia@aero.bombardier.com,Edgar,Garcia,Bombardier Querétaro,Querétaro,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
@@ -1972,7 +1944,6 @@ mario.esparza2@brose.com,Mario,Esparza,Brose,Queretaro,Mexico,4 - Directorio amp
 griselle.conde@brose.com,Griselle,Conde,Brose,Yucatan,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
 maria.urriola@brose.com,Maria,Urriola,Brose,Michigan,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 elva.r@revuelta.com.mx,Lic.,Elva Martha Rodríguez Torres,"BÁSCULAS REVUELTA MAZA, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-mnafarrate@cdtechno.com,(contacto,general),C & D TECHNOLOGIES DE MEXICO SA DE CV,SONORA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 etaglia@cde.com,(contacto,general),"C.D. ELECTRONICA DE MEXICO, S.A. DE C.V.",BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 claudia.alvarez@pkcgroup.com,(contacto,general),CABLEADOS DEL NORTE II,Coahuila de Zaragoza,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 alfonso.esqueda@cal-comp.com.mx,(contacto,general),CAL-COMP,Tamaulipas,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
@@ -1986,9 +1957,7 @@ rroqdriguez@cdec.com.mx,(contacto,general),"CDC WIRE, S.A. DE C.V.",JALISCO,Mexi
 carlosrdz@ciesa.com.mx,(contacto,general),"CDY DEL NORTE, S.A. DE C.V.",NUEVO LEON,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 cecohesagdl@infosel.net.mx,(contacto,general),CECOHESA S.A. DE C.V.,JALISCO,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 optimaenergia@optimaenergia.com,(contacto,general),"CELSOL, S.A. DE C.V.",NUEVO LEON,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-csv@cabyplast.com,(contacto,general),"CENTRO DE SERVICIOS VARIOS, S.A. DE C.V.",ESTADO DE MEXICO,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 sergio.mascarenas@delphi.com,(contacto,general),CENTRO TECNICO HERRAMENTAL SA DE CV,COAHUILA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-nrodriguez@ceramaspeedusa.com,(contacto,general),CERAMASPEED PRODENSA SERVICES S DE RL DE CV,NUEVO LEON,Mexico,4 - Directorio ampliado,Técnico / Procesos,ES,,INBOX_MX
 ralanis@prodensa.com.mx,(contacto,general),"CERAMASPEED PRODENSA SERVICES, S.A. DE R.L. DE C.V.",NUEVO LEON,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 nreyes@ig.com.mx,(contacto,general),"CIA. MANUFACTURERA DE ARTEFACTOS ELECTRICOS, SA DE CV",GUANAJUATO,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 rgonzalez@cinch.com,(contacto,general),"CINCH CONNECTORS DE MEXICO, S.A. DE C.V.",TAMAULIPAS,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
@@ -1996,23 +1965,17 @@ kenneth.kidd@cnhmexico.com.mx,Ing.,Kenneth Kidd,"CNH DE MÉXICO, S.A. DE C.V.",,
 sandra.hernandez@cnhmexico.com.mx,Ing.,Thierry Mahé,"CNH DE MÉXICO, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 norma.duran@cnhmexico.com.mx,Norma,Duran,CNH Industrial,,,4 - Directorio ampliado,OEM,,,Tsunami_CRM_gratis
 mplascencia@comairrotron.com,(contacto,general),"COMAIR ROTRON DE MEXICO, S. DE R.L. DE C.V.",BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-jcervantes@comairrotron.com,(contacto,general),"COMAIR ROTRON DE MEXICO, S. DE R.L. DE C.V.",BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 mauro.castro@commscope.com,(contacto,general),COMMSCOPE,Chihuahua,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
-patricia.gonzalez@commscope.com,(contacto,general),COMMSCOPE TECHNOLOGIES DE JUAREZ,Chihuahua,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
 diana.vences@regalbeloit.com,(contacto,general),COMPAÑIA ARMADORA S DE RL DE CV,CHIHUAHUA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-amocampo@cgs.com.mx,(contacto,general),"COMPAÑIA GENERAL DE ELECTRONICA, S.A. DE C.V.",DISTRITO FEDERAL,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 cesar.rodriguez@carrier.utc.com,Ing.,César Alberto Rodríguez Sansores,"COMPAÑÍA CARRIER, S. DE R.L. DE C.V.",,Mexico,4 - Directorio ampliado,Técnico / Procesos,ES,,INBOX_MX
 laura.sarmiento@carrier.utc.com,Ing.,José Francisco Gómez,"COMPAÑÍA CARRIER, S. DE R.L. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 sergio.fernandez@carrier.utc.com,Ing.,Sergio Fernández,"COMPAÑÍA CARRIER, S. DE R.L. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-ruben.villarreal@emotors.com,(contacto,general),"COMPAÑÍA DE MOTORES DOMESTICOS, S.A. DE C.V.",NUEVO LEON,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 cmaesa@ig.com.mx,Lic.,Yuriria María Hernández Rodríguez,"COMPAÑÍA MANUFACTURERA DE ARTEFACTOS ELÉCTRICOS, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 crodriguez@ig.com.mx,Sra.,Consuelo Rodríguez de Hernández,"COMPAÑÍA MANUFACTURERA DE ARTEFACTOS ELÉCTRICOS, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 mguadalupe@conhesa.com.mx,María,Guadalupe Román Hernández,"COMPAÑÍA NACIONAL DE HERRAJES ELÉCTRICOS, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 produccionzi@conhesa.com.mx,Antonio,González Blanco,"COMPAÑÍA NACIONAL DE HERRAJES ELÉCTRICOS, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 croman@conhesa.com.mx,Carlos,Román Miranda,"COMPAÑÍA NACIONAL DE HERRAJES ELÉCTRICOS, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 ricardo@thermistor.com,(contacto,general),COMPONENTES DE CALIDAD S.A. DE C.V.,BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-ccelorio@cydesabatteries.com,(contacto,general),"COMPONENTES Y DESARROLLOS ELECTRONICOS, S.A. DE C.V.",DISTRITO FEDERAL,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-informatica@cydesabatteries.com.mx,(contacto,general),"COMPONENTES Y DESARROLLOS ELECTRONICOS, S.A. DE C.V.",JALISCO,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 d.suarez@condumex.com.mx,(contacto,general),CONALUM,Puebla,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
 angeles.nieto@condelmex.com,J.,Rafael Maldonado Aguilar,"CONDELMEX, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 miguel.vega@condelmex.com,Miguel,Vega Castro,"CONDELMEX, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
@@ -2021,7 +1984,6 @@ jeazuela@cdeln.com,José,Enrique Azuela de la Rosa,"CONDUCTORES DEL NORTE, S.A. 
 alejandroq@quinro.com.mx,Alejandro,Quintero Rodríguez,"CONDUCTORES ELÉCTRICOS QUINRO, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 arnoldoq@quinro.com.mx,Arnoldo,Quintero Rodríguez,"CONDUCTORES ELÉCTRICOS QUINRO, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 miguel@quinro.com.mx,Miguel,Meneses,"CONDUCTORES ELÉCTRICOS QUINRO, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-fleal@condumex.com.mx,(contacto,general),"CONDUCTORES MEXICANOS ELECTRICOS Y DE TELECOMUNICACIONES,S.A. DE C.V.",QUERETARO,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 marssoleil.vazquez@viakon.com,(contacto,general),CONDUCTORES MONTERREY,Puebla,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
 svaldes@viakable.com,Sergio,Valdés Ramírez,"CONDUCTORES MONTERREY, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 mgsalcedo@condumex.com.mx,Hugo,Goméz,"CONDUMEX, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
@@ -2033,12 +1995,9 @@ efdez@condumex.com.mx,Elías,Fernández Godínez,"CONTICON, S.A. DE C.V.",,Mexic
 jmgomez@condumex.com.mx,José,Miguel Gómez,"CONTICON, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Técnico / Procesos,ES,,INBOX_MX
 juan.padilla-rivera@continental-corporation.com,(contacto,general),"CONTINENTAL AUTOMOTIVE GUADALAJARA MEXICO, S.A. DE C.V.",JALISCO,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 jorge.sanchez@jci.com,(contacto,general),"CONTROLES DE PRESION DE CIUDAD JUAREZ, S.A. DE C.V.",CHIHUAHUA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-echmanuel@terra.com.mx,(contacto,general),"CONTROLES ELECTROMECANICOS, S.A. DE C.V.",DISTRITO FEDERAL,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-cem@controleselectronicos.com,(contacto,general),"CONTROLES ELECTRÓNICOS DE MONTERREY, S.A. DE C.V.",NUEVO LEON,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 armando.moreno@crouse-hinds.com,(contacto,general),"COOPER CROUSE HINDS, S.A. DE C.V.",DISTRITO FEDERAL,Mexico,4 - Directorio ampliado,Materiales / Planeación,ES,,INBOX_MX
 fernandovillanueva@eaton.com,Fernando,Villanueva Sánchez,"COOPER CROUSE-HINDS, S. DE R.L. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 robertovazquez@eaton.com,Roberto,Vázquez Lozano,"COOPER CROUSE-HINDS, S. DE R.L. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-gabriel.salinas@cooperindustries.com,(contacto,general),"COOPER CROUSE-HINDS, S.A. DE C.V.",JALISCO,Mexico,4 - Directorio ampliado,Materiales / Planeación,ES,,INBOX_MX
 josegrendonsandoval@eaton.com,Ing.,José Gerardo Rendón Sandoval,"COOPER LIGHTING DE MÉXICO, S. DE R.L. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 rafael.doria@eaton.com,Ing.,Rafael Doria,"COOPER LIGHTING DE MÉXICO, S. DE R.L. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 alfonso.vargas@cooperindustries.com,Ing.,Alfonso Vargas Zavala,"COOPER WIRING DEVICES MANUFACTURING, S. DE R.L. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
@@ -2093,7 +2052,6 @@ flavio.rivera@daimler.com,Ing.,Flavio Rivera Mejía,"DAIMLER MANUFACTURA, S. DE 
 disa@disa.com.mx,(contacto,general),"DDISA LATIN MUSIC, S. DE R.L. DE C.V.",NUEVO LEON,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 vpalmer@oatey.com,(contacto,general),DEARBORN HL S DE RL DE CV,SONORA,Mexico,4 - Directorio ampliado,Técnico / Procesos,ES,,INBOX_MX
 rosario.osuna@delphi.com,(contacto,general),"DELPHI CONNECTION SYSTEMS TIJUANA, S.A. DE C.V.",BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-barry.f.goodrich@delphi.com,(contacto,general),"DELPHI DELCO ELECTRONICS DE MEXICO, S.A. DE C.V.",TAMAULIPAS,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 silvia.lopez@delphi.com,Ing.,Francisco Tinoco,"DELPHI DIESEL SYSTEMS, S. DE R.L. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 navarrete@mx.delta-corp.com,(contacto,general),"DELTA ELECTRONICS MEXICO, S.A. DE C.V.",BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 cabledem@ad.com.mx,(contacto,general),"DEMA, S.A. DE C.V.",DISTRITO FEDERAL,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
@@ -2164,26 +2122,18 @@ marco.sandoval@egoproducts.com,Marco,Sandoval,EGO Products,Queretaro,Mexico,4 - 
 federico.moran@egoproducts.com,Federico,Moran,EGO Products,(por confirmar),Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 intstales@difus.com,(contacto,general),"ELECTREY, S.A. DE C.V.",NUEVO LEON,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 jaime.villagran@ecintl.com,(contacto,general),ELECTRO COMPONENTES DE MEXICO,Chihuahua,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
-ribarra@electromag.com.mx,(contacto,general),ELECTRO MAG SA DE CV,,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 rmacias@electrocanada.com,(contacto,general),ELECTROCANADA SA DE CV,SONORA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 marcela.almazan@electrolux.com,Ing.,Eduardo Gómez González,"ELECTROLUX COMERCIAL, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 freul@electromag.com.mx,Ing.,Arturo Reúl Jiménez,"ELECTROMAG, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 amartinez@electromag.com.mx,Srita.,Adriana Martínez,"ELECTROMAG, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 danielbueno@eaton.com,Ing.,Daniel Bueno,"ELECTROMANUFACTURAS, S. DE R.L. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 juancarlossilva@eaton.com,Ing.,Juan Carlos Silva Valladares,"ELECTROMANUFACTURAS, S. DE R.L. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-leticia.espinoza@newellco.com,(contacto,general),ELECTRONICA BRK DE MEXICO PLANTA 1,Chihuahua,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
-efpcompras@electronicafina.com.mx,(contacto,general),ELECTRONICA FINA DE PUEBLA,Puebla,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
-efpggg@podigy.net.mx,(contacto,general),ELECTRONICA FINA DE PUEBLA S.A. DE C.V.,PUEBLA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 iveth.alvarez@navico.com,(contacto,general),ELECTRONICA LOWRANCE,Baja California,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
-andres.campos@navico.com,(contacto,general),"ELECTRONICA LOWRANCE DE MEXICO, S.A. DE C.V.",BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-pedro.trevino@ips.invensys.com,(contacto,general),"ELECTRONICA REYNOSA, S. DE R.L. DE C.V.",TAMAULIPAS,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-sramos@ve1.com,(contacto,general),"ELECTRONICA VANGUARD, S.A. DE C.V.",BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 soporte@ensa.com.mx,Dr.,Ricardo Strausz Santiago,"ELECTROTÉRMICA NACIONAL, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Técnico / Procesos,ES,,INBOX_MX
 restrada@clarionmx.com,C.P.,Rodolfo Estrada Palafox,"ELECTRÓNICA CLARION, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 ctorres@clarionmx.com,Ing.,Claudia Torres Cabrera,"ELECTRÓNICA CLARION, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 jloose@clarionmx.com,Ing.,Joaquín Loose Doedter,"ELECTRÓNICA CLARION, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 abadin@clarionmx.com,Ing.,Óscar Anuar Badin Cherit,"ELECTRÓNICA CLARION, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-eytempo@terra.com.mx,(contacto,general),"ELECTRÓNICA Y TEMPORIZADORES, S.A. DE C.V.",NUEVO LEON,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 eduardo.borjes@otis.com,Lic.,Eduardo Borjes,"ELEVADORES OTIS, S. DE R.L. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 jaime.fuentes@otis.com,Lic.,Jaime Fuentes,"ELEVADORES OTIS, S. DE R.L. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 edgar.herrera@schindler.com,Ing.,Edgar Herrera,"ELEVADORES SCHINDLER, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
@@ -2202,7 +2152,6 @@ eleal@parpro.com,(contacto,general),"ENSAMBLES DEL PACIFICO, S. DE R.L. DE C.V."
 hmachado@calpacifico-tijuana.com,(contacto,general),"ENSATEC, S.A. DE C.V.",BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 salvador.baca@neotech.com,(contacto,general),EPI,Chihuahua,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
 candrade@plantcml.com,(contacto,general),"EQUIPO DE PLANTA DE MEXICO, S.A. DE C.V.",BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-impor@ainco.com,(contacto,general),"EQUIPO INDUSTRIAL Y ACCESORIOS, S.A. DE C.V.",NUEVO LEON,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 apacheco@esesasjr.com,(contacto,general),ESTAMPADOS Y ELECTROSOLDADOS,QUERETARO,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 jcastellanos@ejc.com.mx,(contacto,general),"ESTRATEGIAS INTEGRALES DE COMERCIO, S. DE R.L. DE C.V.",BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 dganser@etal.com.mx,Ing.,David Ralph Ganser,"ETAL, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
@@ -2216,7 +2165,6 @@ mario-alberto.ojeda-ruiz@exfo.com,Mario,Alberto Ojeda Ruiz,EXFO,(por confirmar),
 miguel.arias@exfo.com,Miguel,Arias,EXFO,Catalunya,Mexico,4 - Directorio ampliado,Técnico / Procesos,ES,,INBOX_MX
 nancy.crespo-juarez@exfo.com,Nancy,Crespo Juarez,EXFO,(por confirmar),Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 laura.lopez-lopez@exfo.com,Laura,Lopez (Luselma?),EXFO,(por confirmar),Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-alejandro.salguero@exfo.com,Alejandro,Arroyo Salguero,EXFO Products,Queretaro,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
 cgoodnoe@ewmfg.com,Calli,Goodnoe,East West Manufacturing,,,4 - Directorio ampliado,EMS/CM,,,Tsunami_CRM_gratis
 jsalaices@ewmfg.com,Javier,Salaices,East West Manufacturing,GA,United States,4 - Directorio ampliado,Technical / Process Eng.,EN,,INBOX_US
 franciscomuniz@eaton.com,Francisco,Muniz,Eaton,Baja California,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
@@ -2345,7 +2293,6 @@ valeria.ruiztamborrell@hella.com,Valeria,Ruiz Tamborrell,Forvia Hella,Por confir
 frida.carolina@foxconn.com,Frida,Carolina,Foxconn,(por confirmar),Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 ricardo.medina@foxconn.com,Ricardo,Medina,Foxconn,(por confirmar),Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 carolina.trejo@foxconn.com,Frida,Carolina Trejo,Foxconn,(por confirmar),Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-frida.trejo@foxconn.com,Frida,Carolina Trejo,Foxconn,(por confirmar),Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 efrem.castro@foxconn.com,Efrem,Bittencourt,Foxconn,,Brasil,4 - Directorio ampliado,Ingenieria / Manufactura,ES,,INBOX_LATAM
 luis.valtierra@fii-foxconn.com,Luis,Valtierra,Foxconn (FII Guadalajara),Jalisco,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
 priscilla.avina@mail.foxconn.com,Priscilla,Avina,Foxconn (FII),Jalisco,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
@@ -2368,9 +2315,7 @@ tyler.steward@geappliances.com,Tyler,Steward,GE Appliances,KY,United States,4 - 
 ivette.castillo@ge.com,Ing.,Ivette Castillo,"GE GRID SOLUTIONS, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 adolfo.escoto@ge.com,(contacto,general),"GE INDUSTRIAL MOTORS MÉXICO , S. DE R.L. DE C.V.",NUEVO LEON,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 vladimiro.delamora@ge.com,Vladimiro,de la Mora,"GE INTERNATIONAL MÉXICO, S. DE R.L. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-leonel.ruiz@ge.com,(contacto,general),GE TOSHIBA TURBINE COMPONENTS DE MEXICO S.R.L. DE C.V.,NUEVO LEON,Mexico,4 - Directorio ampliado,Técnico / Procesos,ES,,INBOX_MX
 heelizondo@genermex.com,Ing.,Héctor Elizondo Chapa,"GENERADORES MEXICANOS, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-jlechuga@generalcable.com,(contacto,general),"GENERAL CABLE DE LATINOAMERICA, S.A. DE C.V.",TLAXCALA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 mluevano@generalcable.com,Max,Luévano Chavarría,"GENERAL CABLE DE MÉXICO, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Técnico / Procesos,ES,,INBOX_MX
 emorales@generalcable.com,Erik,Morales,"GENERAL CABLE DE MÉXICO, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 amartinez@generalcable.com,(contacto,general),GENERAL DE CABLE DE MEXICO DEL NORTE S.A. DE C.V.,COAHUILA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
@@ -2383,7 +2328,6 @@ ray.may@gknaerospace.com,(contacto,general),"GKN AEROSPACE SAN LUIS, S.DE R.L. D
 elizabeth.vincent@grammer.com,Elizabeth,Vincent,GRAMMER Americas,Queretaro,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
 ichagoyanc@cestek-dimeyco.com.mx,Arq.,Ignacio Chagoyán Carmona,GRUPO CESTEK DIMEYCO,,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 cluna@cestek-dimeyco.com.mx,Ing.,Carlos Luna,GRUPO CESTEK DIMEYCO,,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-samuel_govea@superioressex.com,(contacto,general),"GRUPO ESSEX DE MEXICO,S. DE R.L. DE C.V.",COAHUILA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 claudio.arriola@qlmex.com,(contacto,general),"GRUPO LOGISTICO MEXICANO, S.A. DE C.V.",BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 peter.godfrinjr@garmin.com,Peter,Godfrin,Garmin,,,4 - Directorio ampliado,OEM,,,Tsunami_CRM_gratis
 edith.aguilar@generac.com,Edith,Aguilar,Generac,,,4 - Directorio ampliado,OEM,,,Tsunami_CRM_gratis
@@ -2450,7 +2394,6 @@ abel.herrera@hella.com,Abel,Herrera,Hella,(por confirmar),Mexico,4 - Directorio 
 jimena.tonix@hella.com,Jimena,Tonix,Hella,Mexico City,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 jose.moretthernandez@hella.com,Jose,Moret Hernandez,Hella,(por confirmar),Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 ikeraguilar@hella.com,Iker,Aguilar,Hella,(por confirmar),Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-iker.aguilar@hella.com,Iker,Aguilar,Hella,(por confirmar),Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 gustavo.gomez@hpe.com,Gustavo,Adolfo Gómez López,Hewlett Packard Enterprise (HPE),,,4 - Directorio ampliado,OEM,,,Tsunami_CRM_gratis
 daniele.macan@hi-mix.com.br,Daniele,Macan,Hi-Mix Eletronicos S/A,,,4 - Directorio ampliado,EMS/CM,,,Tsunami_CRM_gratis
 marco.esponda@hisense.com,Marco,Esponda,Hisense,Nuevo Leon,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
@@ -2469,7 +2412,6 @@ hramire@iacgroup.com,Hugo,ramirez,IAC - Rusemi Automation,,Mexico,4 - Directorio
 jleyva@mx1.ibm.com,Jorge,Leyva,"IBM DE MÉXICO, S. DE R.L.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 claudcp@mx1.ibm.com,Eduardo,Gutiérrez,"IBM DE MÉXICO, S. DE R.L.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 pedro.garcia@icpautomation.com,Pedro,Garcia,ICP Automation,,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-pedro.garcia@icp-mx.com,Pedro,Garcia,ICP Automation,,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 sergio.cazares@icpautomation.com,Sergio,Cazares,ICP Automation,,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 lopez.jose@inventec.com,(contacto,general),IEC TECHNOLOGIES S. DE R.L DE C.V.,CHIHUAHUA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 iemsa1@prodigywed.net.mx,(contacto,general),"IEMSA TRANSFORMADORES, S.A. DE C.V.",NUEVO LEON,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
@@ -2481,15 +2423,8 @@ carlosmc@capitalino.com,(contacto,general),"IMPULSORA Y TROQUELADOS INDUSTRIALES
 e.bernalr@industrialafiliada.com.mx,Esteban,Bernal Rico,"INDUSTRIAL AFILIADA, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 jsimon@industrialafiliada.com.mx,Jorge,Simón Martínez,"INDUSTRIAL AFILIADA, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 jorgeleal@igesa.com.mx,Ing.,Octavio Jorge Leal Treviño,"INDUSTRIAL DE TERMINALES, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-indgalher@infosel.net.mx,(contacto,general),"INDUSTRIAL GALHER, S.A. DE C.V.",NUEVO LEON,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 amartinez@ivemsa.com.mx,(contacto,general),"INDUSTRIAL VALLERA DE MEXICALLI, S.A. DE C.V.",BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 olivos@telnor.net,(contacto,general),"INDUSTRIALIZADORA Y MADERERA LOS OLIVOS, S.A. DE C.V.",BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-raul_garza@whirlpool.com,(contacto,general),"INDUSTRIAS ACROS WHIRLPOOL, S.A. DE C.V.",NUEVO LEON,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-mcouste@condor.com.mx,(contacto,general),"INDUSTRIAS CONDOR, S.A. DE C.V.",DISTRITO FEDERAL,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-humberto@transformador.com,(contacto,general),"INDUSTRIAS CONTINENTAL ELECTRIC, S.A. DE C.V.",ESTADO DE MEXICO,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-ieb@iebsa.com.mx,(contacto,general),"INDUSTRIAS ELECTRONICAS BASICAS, S.A. DE C.V.",NUEVO LEON,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-mcouste@condor.com,(contacto,general),"INDUSTRIAS ELVAC, S.A. DE C.V.",DISTRITO FEDERAL,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-alpena@condumex.com.mx,(contacto,general),"INDUSTRIAS IEM, S.A. DE C.V.",ESTADO DE MEXICO,Mexico,4 - Directorio ampliado,Técnico / Procesos,ES,,INBOX_MX
 antonio.delgado@onubainc.com,(contacto,general),INDUSTRIAS INNOVADORAS S.A. DE C.V.,BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 salazarricardo@johndeere.com,C.P.,Ricardo Salazar Meza,"INDUSTRIAS JOHN DEERE, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 chapanelson@johndeere.com,Ing.,Nelson Chapa,"INDUSTRIAS JOHN DEERE, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Técnico / Procesos,ES,,INBOX_MX
@@ -2497,10 +2432,8 @@ sgutierrez@lenomex.com,C.P.,Sergio Gutiérrez Garza,"INDUSTRIAS LENNOX DE MÉXIC
 ichavez@lenomex.com,Ing.,Isidro Chávez,"INDUSTRIAS LENNOX DE MÉXICO, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 ecatan@isbmex.com,Ing.,Emilio Catán Giovanelli,"INDUSTRIAS SOLA BASIC, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 sdaridof@isbmex.com,Ing.,Steven Daridof,"INDUSTRIAS SOLA BASIC, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-guadalupetrevino@msn.com,(contacto,general),"INDUSTRIAS UNITRON, S.A. DE C.V.",TAMAULIPAS,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 ina@ingelectric.com.mx,(contacto,general),"INGELECTRIC NORTEAMERICA, S.A. DE C.V.",NUEVO LEON,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 wcantu@ingenieriamc.com,(contacto,general),"INGENIERÍA, DISEÑO Y CONSTRUCCIÓN MC, S.A. DE C.V.",NUEVO LEON,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-ricardo.mones@vica.com.mx,(contacto,general),"INNOVACIONES ELECTRONICAS VICA, S.A. DE C.V.",DISTRITO FEDERAL,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 cuentasporpagarycobrar@in-led.com.mx,(contacto,general),INNOVACIONES TECNOLOGICAS DE ORIENTE,Puebla,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
 alejandro@intec.com.mx,Ing.,Alejandro Armijo,"INTEC DE MÉXICO, S.A.P.I. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 gpascual@rosasgoiz.net,(contacto,general),INTEGRACION DE SERVICIOS MEXICANOS,Puebla,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
@@ -2545,14 +2478,12 @@ antoniohernandez@kemet.com,Antonio,Hernandez,KEMET (Yageo),Tamaulipas,Mexico,4 -
 carlos.hernandez@paccar.com,Ing.,Carlos Hernández,"KENWORTH MEXICANA, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 francisco.monje@paccar.com,Ing.,Francisco Monje,"KENWORTH MEXICANA, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 renato.villalpando@paccar.com,Ing.,Renato Villalpando Rivera,"KENWORTH MEXICANA, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-rhernand@keytronicems.com,(contacto,general),"KEY TRONIC JUAREZ, S.A. DE C.V. PLANTA No.1",CHIHUAHUA,Mexico,4 - Directorio ampliado,Técnico / Procesos,ES,,INBOX_MX
 eperez@keytronicems.com,(contacto,general),"KEY TRONIC JUAREZ, S.A. DE C.V. PLANTA No.3",CHIHUAHUA,Mexico,4 - Directorio ampliado,Técnico / Procesos,ES,,INBOX_MX
 ana.arzate@khs.com,C.P.,José Vicente Reyes Montes,"KHS MÉXICO, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Técnico / Procesos,ES,,INBOX_MX
 hnavarro@pyhlm.com,Héctor,Manuel Navarro Franco,"KOBREX, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 jeanette.rasgado@kone.com,Ing.,Alicia Isabel Bandala Pimentel,"KONE MÉXICO, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 agustin.pardo@kone.com,Sr.,Agustín Pardo,"KONE MÉXICO, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 arizbeth.rojas@kostal.com,Arizbeth,Rojas,KOSTAL,Queretaro,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
-a.rojas@kostal.com,Arizbeth,Rojas,KOSTAL,Queretaro,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
 e.gonzalez@kostal.com,Estefania,Gonzalez,KOSTAL,Queretaro,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
 m.alanis@kostal.com,Miguel,Alanis,KOSTAL,Queretaro,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
 h.morales@kostal.com,Humberto,Morales,KOSTAL,Queretaro,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
@@ -2563,7 +2494,6 @@ cvisser@kirkwood.com.mx,Sr.,Craig Visser,"KWD, S.A. DE C.V.",,Mexico,4 - Directo
 israel.gardea@kyocera-avx.com,Israel,Gardea,KYOCERA AVX (Kyocera Mexicana),Chihuahua,Mexico,4 - Directorio ampliado,Materiales / Planeación,ES,,INBOX_MX
 jose.carreon@kyocera-avx.com,Jose,Luis Carreon,KYOCERA AVX (Kyocera Mexicana),Chihuahua,Mexico,4 - Directorio ampliado,Técnico / Procesos,ES,,INBOX_MX
 saul.garcia@kyocera.com,(contacto,general),"KYOCERA MEXICANA, S.A. DE C.V.",BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-alberto.ochoa@kyocera.com,(contacto,general),"KYOCERA MEXICANA, S.A. DE C.V.",BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 eoliveros@keytronic.com,Edgar,Oliveros,Key Tronic,Chihuahua,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
 lrosales@keytronic.com,Luis,Rosales,Key Tronic,Chihuahua,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
 asaenz@keytronic.com,Abel,Saenz,Key Tronic,(por confirmar),Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
@@ -2594,12 +2524,10 @@ david.nguyen@l3harris.com,David,Nguyen,L3Harris,FL,United States,4 - Directorio 
 matthew.laney@l3harris.com,Matthew,Laney,L3Harris Corp.,,,4 - Directorio ampliado,OEM,,,Tsunami_CRM_gratis
 apalma@napsmexico.com,(contacto,general),"LEACH INTERNACIONAL MEXICO, S. DE R.L. DE C.V.",BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 cmedrano@lear.com,(contacto,general),LEAR ELECTRICAL SYSTEMS DE MEXICO S DE RL. DE C.V. ( PLANTA ZARAGOZA),CHIHUAHUA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-hlujan@lear.com,(contacto,general),LEAR ELECTRICAL SYSTEMS DE MÉXICO S. DE R.L. M.I.,CHIHUAHUA,Mexico,4 - Directorio ampliado,Técnico / Procesos,ES,,INBOX_MX
 pauld@leonicable.com,(contacto,general),LEONI CABLE S.A DE C.V.,CHIHUAHUA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 ricardoalvarez@mail.nidec.com,(contacto,general),LEROY,Tamaulipas,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
 emarin@leviton.com,(contacto,general),"LEVITON DE MEXICO, S. DE R.L. DE C.V.",BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 pcastello@lexmark.com,Ing.,Paula Castello,"LEXMARK INTERNATIONAL DE MÉXICO, S. DE R.L. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-afloresl@lge.com,(contacto,general),"LG ELECTRONICS MONTERREY MÉXICO , S.A. DE C.V.",NUEVO LEON,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 angeles@lginnotek.com,(contacto,general),LG Innotek,,,4 - Directorio ampliado,OEM,,,Tsunami_CRM_gratis
 diego.medel@lginnotek.com,Diego,Barron Medel,LG Innotek (Mexicali),Guanajuato,Mexico,4 - Directorio ampliado,Técnico / Procesos,ES,,INBOX_MX
 ytorres@lincolnelectric.com.mx,C.P.,Sergio Eduardo Romero Díaz,"LINCOLN ELECTRIC MEXICANA, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
@@ -2616,7 +2544,6 @@ felicia.rojas@landisgyr.com,Felicia,Rojas,Landis + Gyr,,,4 - Directorio ampliado
 gvillegas@lanix.com,Lic.,Gildardo Villegas Gutiérrez,Lanix,,,4 - Directorio ampliado,Otro/Por clasificar,,,Tsunami_CRM_gratis
 mrocha@lear.com,Maria,Jose Rocha Barrera,Lear,Chihuahua,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
 rchavez@lear.com,Rafael,Chavez,Lear (E-Systems Saltillo),Coahuila,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
-rchavez02@lear.com,Rafael,Chavez,Lear (E-Systems Saltillo),Coahuila,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 rtassinari@lenovo.com,Raul,Tassinari,Lenovo,Nuevo Leon,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
 carmen.eaton@drs.com,Carmen,Eaton,Leonardo DRS,,,4 - Directorio ampliado,OEM,,,Tsunami_CRM_gratis
 mvillar@leviton.com,Mireya,Villar Garcia,Leviton,,,4 - Directorio ampliado,OEM,,,Tsunami_CRM_gratis
@@ -2636,14 +2563,11 @@ uriel.sanchez@lucasautomation.com,Uriel,Sanchez,Lucas Automation,,Mexico,4 - Dir
 luis.berrondo@mabe.com.mx,Ing.,José Luis Berrondo Ávalos,"MABE, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 agarciam@macktech.com,(contacto,general),MACK TECHNOLOGIES MEXICO,Chihuahua,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
 carloseduardo.romero@magnetimarelli.com,Ing.,Carlos Eduardo Romero Osorio,"MAGNETI MARELLI SISTEMAS ELECTRÓNICOS MÉXICO, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-acastelo@tacna.net,(contacto,general),"MAM DE LA FRONTERA, S.A. DE C.V.",BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Técnico / Procesos,ES,,INBOX_MX
 mulbruch@tacna.net,(contacto,general),"MAM DE LAS FRONTERAS, S.A. DE C.V.",BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 bflores@indutecllc.com,(contacto,general),MANUFACTURAS INDUTEC,Baja California,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
-operations@hobbyllc.com,(contacto,general),MANUFACTURAS KE S.A..DE C.V,SONORA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 fernando.ayala@conecel.com.mx,(contacto,general),"MANUFACTURERA CONECEL, S.A. DE C.V.",GUANAJUATO,Mexico,4 - Directorio ampliado,Técnico / Procesos,ES,,INBOX_MX
 iramirez@mapartel.com.mx,(contacto,general),MAPARTEL,Ciudad de México,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
 contabilidad@busa.com.mx,(contacto,general),"MAQUILAS ELECTRONICAS, S.A. DE C.V.",ESTADO DE MEXICO,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-maquilas-eko@att.net.mx,(contacto,general),"MAQUILAS METÁLICAS EKO, S.A. DE C.V.",NUEVO LEON,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 maquise@infosel.net.mx,(contacto,general),"MAQUINADOS E INGENIERIA DE SERVICIOS, S.A. DE C.V.",JALISCO,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 gustavo@continentalelectric.com.mx,Ing.,Gustavo Castañeiras Orozco,"MAQUINARIA CONTINENTAL ELECTRIC, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 humberto@continentalelectric.com.mx,Ing.,Humberto Castañeiras Orozco,"MAQUINARIA CONTINENTAL ELECTRIC, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
@@ -2663,7 +2587,6 @@ luis.perez@metalor.com,Lic.,Luis Antonio Pérez Covarrubías,"METALOR TECHNOLOGI
 srangel@mexel.com.mx,(contacto,general),"MEXEL DOMINION, S.A. DE C.V.",NUEVO LEON,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 lety.marquez@meximotor.mx,(contacto,general),MEXIMOTOR SA DE CV,,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 rhanaoka@computec.com.mx,(contacto,general),"MICRO COMPUTEC, S.A. DE C.V.",BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-elizanp@avantel.net,(contacto,general),"MICRO GRAPHIC PLUS, S.A. DE C.V.",NUEVO LEON,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 a-isablo@microsoft.com,Jorge,Silva Luján,"MICROSOFT MÉXICO, S. DE R.L. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 a-alegar@microsoft.com,Iván,Gómez,"MICROSOFT MÉXICO, S. DE R.L. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 azaragoza@minco.com.mx,(contacto,general),"MINCO PRODUCTOS PARA LA INDUS.DEL ACERO Y FUNDICION,S.ADE C.",NUEVO LEON,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
@@ -2679,7 +2602,6 @@ mario.levario@molautomation.com,Mario,Levario,MOL AUTOMATION,,Mexico,4 - Directo
 fiscal@mopesa.com.mx,(contacto,general),MOPESA MOTORES POWER SA,,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 dmacias@emerson-ept.com,(contacto,general),"MOTOREDUCTORES US, S.A. DE C.V.",NUEVO LEON,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 marredondo@aosepc.com,(contacto,general),"MOTORES ELÉCTRICOS DE MONTERREY, S. DE R.L. DE C.V.",NUEVO LEON,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-sergio.martinez@emerson.com,(contacto,general),MOTORES HERMETICOS DEL SUR  S.A. DE C.V.,TAMAULIPAS,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 gabriela.selem@nidec-motor.com,Ing.,Juan Antonio Salazar Vallone,"MOTORES U.S. DE MÉXICO, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 javier.branca@motorola.com,(contacto,general),MOTOROLA DE REYNOSA S DE RL DE CV,TAMAULIPAS,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 alejandro.rivera@mabe.com.mx,Alejandro,Rivera,MPT Electronica,Queretaro,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
@@ -2817,10 +2739,7 @@ carlos.filio@generac.com,Lic.,Carlos Filio,"OTTOMOTORES COMERCIALIZADORA, S.A. D
 rodrigo.villasenor@omnionpower.com,Rodrigo,Villasenor,Omnion Power,(por confirmar),Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 marco.banuelos@paccar.com,Ing.,Marco Vinicio Bañuelos Aguirre,PACCAR,,,4 - Directorio ampliado,OEM,,,Tsunami_CRM_gratis
 contabilidad@ul.panasonic.com,(contacto,general),"PANASONIC COMMUNICATIONS DE MEXICO, S.A. DE C.V.",BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-vera.ana@mx.panasonic.com,(contacto,general),"PANASONIC DE MEXICO, S.A. DE C.V.",BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-vera.ana@mx.panasonic.com.mx,(contacto,general),"PANASONIC DE MEXICO, S.A. DE C.V.",DISTRITO FEDERAL,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 nitta.kaori@mx.panasonic.com,Sr.,Yoshihiro Kanamaru,"PANASONIC DE MÉXICO, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-arroyoe@us.panasonic.com,(contacto,general),PANASONIC ELECTRONIC DEVICES DE TAMAULIPAS SA DE CV,TAMAULIPAS,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 iperezpc@corporativosade.com.mx,(contacto,general),PEGASUS CONTROL SA DE CV,,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 edmundo.gonzalez@philips.com,Sr.,Edmundo González,"PHILIPS MEXICANA, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 ario.morales@pioneer-usa.com,(contacto,general),PIONEER SPEAKERS S.A. DE C.V.,BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Técnico / Procesos,ES,,INBOX_MX
@@ -2828,7 +2747,6 @@ karla.carrillo@pkcgroup.com,(contacto,general),PKC GROUP DE MEXICO S . A DE C. V
 rosario.rojo@plantronics.com,(contacto,general),"PLAMEX, S.A. DE C.V.",BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Técnico / Procesos,ES,,INBOX_MX
 editgarza@idmmex.com,(contacto,general),PLASTIMAQ DE TOLUCA S.A DE C.V,ESTADO DE MEXICO,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 ismael.marcial@plcautomation.com.mx,Gerardo,Gutierrez,PLC Automation,,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-ljuarez@applied.com.mx,Gerardo,Gutierrez,PLC Automation,,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 bertha.muela@plexus.com,(contacto,general),"PLEXUS ELECTRONICA, S. DE R.L. DE C.V.",CHIHUAHUA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 raularroyo@pluz.com.mx,(contacto,general),"PLUZ, S.A. DE C.V.",ESTADO DE MEXICO,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 carino.gil@possehlelectronics.com,(contacto,general),POSSEHL ELECTRONICS PUEBLA,Puebla,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
@@ -2836,10 +2754,8 @@ khernandez@prestolitewire.com,(contacto,general),PRESTOLITE DE MEXICO S.A. DE C.
 bjimenez@novalinkmx.com,(contacto,general),"PROCESOS ESLABONADOS DE MANUFACTURA, S.A. DE C.V.",TAMAULIPAS,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 hromano@isbmex.com,Ing.,Héctor Romano,"PRODUCTORA Y MAQUILADORA QUERETANA, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 christian.navarro@mercmarine.com,(contacto,general),PRODUCTOS MARINE DE MEXICO,Chihuahua,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
-contabilidad@flexarc.com.mx,(contacto,general),PRODUCTOS MEXICANOS FLEX ARC S.A. DE C.V.,ESTADO DE MEXICO,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 produccion@plascomolding.com,Roberto,Rivas López,"PRODUCTOS PLASCO, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 ricardo.suarez@ge.com,Ing.,Ricardo Suárez Garza,"PROLEC GE INTERNACIONAL, S. DE R.L. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-efren.trejo@mx.panasonic.com,Efren,Trejo,Panasonic,Nuevo Leon,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
 salazarju@us.panasonic.com,Salazar,(localpart salazarju - nombre por confirmar),Panasonic,(EE.UU.),Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 chavezi@us.panasonic.com,Ivan,Chavez,Panasonic,(EE.UU.),Mexico,4 - Directorio ampliado,Técnico / Procesos,ES,,INBOX_MX
 paul.schultz@us.panasonic.com,Paul,Schultz,Panasonic,(EE.UU.),Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
@@ -2879,7 +2795,6 @@ t-endo@saginomiya.com.mx,(contacto,general),"RIMSA SAGINOMIYA, SA.DE CV",ESTADO 
 gunter.daut2@mx.bosch.com,Sr.,Daut Günter,"ROBERT BOSCH MÉXICO SISTEMAS AUTOMOTRICES, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 gerardo.bedolla@mx.bosch.com,Ing.,Gerardo Huerta Bedolla,"ROBERT BOSCH MÉXICO, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 ana.nieto@mx.bosch.com,Sr.,René Schlegel,"ROBERT BOSCH MÉXICO, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-angeles.vazquez@bosh.com.mx,(contacto,general),ROBERT BOSCH S DE R.L. DE C.V.,ESTADO DE MEXICO,Mexico,4 - Directorio ampliado,Técnico / Procesos,ES,,INBOX_MX
 l.covarrubias@us.bosch.com,(contacto,general),"ROBERT BOSCH TOOL DE MEXICO, S.A. DE C.V.",BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 lavelez@ra.rockwell.com,Ing.,Luis Arturo Vélez,"ROCKWELL AUTOMATION DE MÉXICO, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 jeffrey.bill@rtx.com,Jeffrey,Bill,Raytheon Deutschland,,,4 - Directorio ampliado,OEM,,,Tsunami_CRM_gratis
@@ -2906,13 +2821,11 @@ cristina.morales@sandc.com,(contacto,general),S&C ELECTRIC MEXICANA,,Mexico,4 - 
 miniquez@saehanusa.com,(contacto,general),"SAEHAN ELECTRONICS DE MEXICO, S.A. DE C.V.",BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 irma.enriquez@sanmina.com,(contacto,general),SANMINA SCI SYSTEMS DE MEXICO,Chihuahua,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 funatsu@tecusa.com.mx,(contacto,general),"SANTOMI, S.A. DE C.V.",BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-azavala@tecusa.com.mx,(contacto,general),"SANTOMI, S.A. DE C.V.",BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 jacobos@falcon.com,Jacobo,S.,SC Falcon Electronics Prod. SRL,,,4 - Directorio ampliado,EMS/CM,,,Tsunami_CRM_gratis
 gerardo.guzman@schneider-electric.com,C.P.,Gerardo Guzmán,"SCHNEIDER ELECTRIC MÉXICO, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 enrique.gonzalez-haas@schneider-electric.com,Ing.,Enrique González Haas,"SCHNEIDER ELECTRIC MÉXICO, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 gladys.juarez@schneider-electric.com,Lic.,Gladys Juárez Velázquez,"SCHNEIDER ELECTRIC MÉXICO, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 dulce.gallegos@se.com,(contacto,general),SCHNEIDER ELECTRIC PAC BREAKERS,Baja California,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
-bautistv@squared.com,(contacto,general),"SCHNEIDER INDUSTRIAL TLAXCALA, S.A. DE C.V.",TLAXCALA,Mexico,4 - Directorio ampliado,Técnico / Procesos,ES,,INBOX_MX
 ramiro.ornelas@seacomp.com,Ramiro,Ornelas,SEACOMP,Baja California,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
 francois@seacomp.com,Francois,Suignard-Ravalec,SEACOMP,Baja California,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
 aquezada@seaconglobal.com,(contacto,general),"SEACON GLOBAL PRODUCTION, S. DE R.L. DE C.V.",BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
@@ -2923,9 +2836,6 @@ higino.soares@semptcl.com.br,Jose,Higino Soares Neto,SEMP TCL,,Brasil,4 - Direct
 daniel.palacios@serpromx.com,Daniel,Palacios,"SERVICIOS PROFESIONALES DE AUTOMATIZACIÓN Y COMUNICACIÓN, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 javier.mendez@serpromx.com,Javier,Méndez Franzoni,"SERVICIOS PROFESIONALES DE AUTOMATIZACIÓN Y COMUNICACIÓN, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 guillermo.lopez@siecautomation.com,(contacto,general),SIEC AUTOMATION,,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-figueroa.luis@siemens.com,(contacto,general),"SIEMENS TRANSFORMADORES, S.A. DE C.V.",GUANAJUATO,Mexico,4 - Directorio ampliado,Técnico / Procesos,ES,,INBOX_MX
-mauro.valdes@siemens.com,(contacto,general),"SIEMENS, S. A. DE C. V.",DISTRITO FEDERAL,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-augusto.nava@siemens.com,(contacto,general),"SIEMENS, S.A. DE C.V.",JALISCO,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 javier.banda@siemens.com,Ing.,Javier Banda,"SIEMENS, S.A. DE C.V. DIVISIÓN TRANSFORMADORES",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 maria.orneles_casas@siemens.com,(contacto,general),SIEMENS/ITESA,Chihuahua,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
 lmarquez@siix.co.jp,Leisvi,Marquez,SIIX EMS Mexico,San Luis Potosi,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
@@ -2945,7 +2855,6 @@ eramos@simonelectrica.com,(contacto,general),SIMON ELECTRICA,México,Mexico,4 - 
 lmonteys@simonelectrica.com,Lic.,Luis Monteys Roig,"SIMÓN ELÉCTRICA, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 mrodriguez@simonelectrica.com,Lic.,Mauricio Rodríguez,"SIMÓN ELÉCTRICA, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 eudave.guillermo@ksmex.com.mx,(contacto,general),"SISTEMAS DE ARNESES K&S MEXICANA, S.A. DE C.V.",AGUASCALIENTES,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-edias@sce.com.mx,(contacto,general),SISTEMAS DE CONTROL ELECTRONICO S.A DE C.V,CHIHUAHUA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 juan.casillas@skyworsinc.com,(contacto,general),"SKYWORKS SOLUTIONS, S.A. DE C.V.",BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 kamalesh.chavan@smartm.com,Kamalesh,Chavan,SMART Modular,CA,United States,4 - Directorio ampliado,Technical / Process Eng.,EN,,INBOX_US
 jgamez@smcmx.com.mx,Ing.,Jesús Gámez,"SMC CORPORATION MÉXICO, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
@@ -3024,7 +2933,6 @@ david-lerma@sumitronics.co.jp,David,Lerma,Sumitronics Corporation,,,4 - Director
 jalcantara@summit.com,Juan,Alcantara,Summit Electric Supply,,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 pheredia@sewsus.com,Patricia,Heredia,Summit Electric Supply,,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 raul.minjares@summit.com,Raul,Minjares,Summit Electric Supply,,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-rminjares@summit.com,Raul,Minjares,Summit Electric Supply,,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 hung.voong@suntronicinc.com,Hung,Voong,Suntronic,TX,United States,4 - Directorio ampliado,Technical / Process Eng.,EN,,INBOX_US
 vu.nguyen@suntronicinc.com,Vu,Nguyen,Suntronic,TX,United States,4 - Directorio ampliado,Technical / Process Eng.,EN,,INBOX_US
 a.cunningham@suntronicinc.com,Albert,Cunningham,Suntronic Electronics Co,,,4 - Directorio ampliado,Broker/Trader,,,Tsunami_CRM_gratis
@@ -3049,7 +2957,6 @@ erika.vargas@te.com,Erika,Vargas,TE Connectivity,Queretaro,Mexico,4 - Directorio
 carlo.amigon@te.com,Carlo,Amigon,TE Connectivity,Queretaro,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 fidel.nunez@te.com,Fidel,Nunez,TE Connectivity,Queretaro,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 mxl_sales@techmastermx.com,(contacto,general),"TECHMASTER DE MEXICO, S.A. DE C.V.",BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-gescandon@techamastermx.com,(contacto,general),"TECHMASTER DE MEXICO, S.A. DE C.V.",BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 norte@tecnicadieelectrica.com.mx,(contacto,general),"TECNICA DIEELECTRICA DEL NORTE, S.A. DE C.V.",SINALOA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 jose.villa@ctscorp.com,(contacto,general),TECNOLOGIA MEXICANA S.A DE C.V,SONORA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 jhernandez@tde.com.mx,Ing.,José Hernández,"TECNOLOGÍA Y DISEÑO ELECTRÓNICO, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
@@ -3069,7 +2976,6 @@ lyvier.romero@teal.com,(contacto,general),TPE DE MEXICO S. DE R.L. DE C.V.,BAJA 
 jaime.jimenez@trane.com,Ing.,Jaime Antonio Jiménez Núñez,"TRANE, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 claudia.trevino@trane.com,Lic.,Claudia Treviño,"TRANE, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 franciscovaldes@basler.com,(contacto,general),"TRANSFORMADORES DE PIEDRAS NEGRAS, S.A. DE C.V.",COAHUILA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-ricardo.colsa@inelap.com.mx,(contacto,general),"TRANSFORMADORES Y TECNOLOGIA,S.A. DE C.V.",HIDALGO,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 edmundo.gerardo@tdipower.com,(contacto,general),TRANSISTOR DEVICES DE MEXICO S. DE R.L. DE C.V.,BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 cuentasporpagar@mx.truck-lite.com,(contacto,general),TRUCK LITE,Puebla,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
 will.ariail@tsc.com,Will,Ariail,TSC,Alabama,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
@@ -3530,7 +3436,6 @@ jramirez@leviton.com,Jorge,Jose,leviton.com,(por confirmar),Mexico,4 - Directori
 mamparan@leviton.com,Mary,Amparan,leviton.com,(por confirmar),Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 sontiveros@leviton.com,Sandra,Ontiveros,leviton.com,(por confirmar),Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 fidueta@lincolnelectric.com.mx,(contacto,general),lincolnelectric.com.mx,COAHUILA,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
-lcruzc@lincolnelectric.com.mx,(contacto,general),lincolnelectric.com.mx,CIUDAD DE MEXICO,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
 agonzalez@littelfuse.com,Alicia,Gonzalez,littelfuse.com,COAHUILA,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
 mcruz@ltcroll.com,Maria,Cruz,ltcroll.com,GUANAJUATO,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
 laura.alamilla@macauto-group.com,Laura,Angelica Alamilla Lemus,macauto-group.com,GUANAJUATO,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO

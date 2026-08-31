@@ -71,6 +71,7 @@ def evaluar(email, empresa):
 
 # El pais decide el idioma del copy (R: "la geografia no se infiere del dominio"),
 # asi que se normaliza a un solo nombre por pais.
+RE_PAIS_EMPRESA = re.compile(r"\((brasil|brazil|colombia|chile|argentina|peru|costa rica|usa|eeuu|canada|india|china)\)", re.I)
 PAIS_CANON = {
     "mx": "Mexico", "mexico": "Mexico", "méxico": "Mexico",
     "us": "United States", "usa": "United States", "eeuu": "United States",
@@ -82,9 +83,12 @@ PAIS_CANON = {
 
 # ---------- fuentes ----------
 filas, excluidos = [], []
-vistos = set()
+vistos, personas = set(), {}
 
 def agregar(email, first, last, empresa, estado, pais, prioridad, arquetipo, idioma, fuente):
+    _m = RE_PAIS_EMPRESA.search(empresa or "")
+    if _m:                                  # "Bosch (Brasil)" manda sobre la columna Pais
+        pais = PAIS_CANON.get(_m.group(1).lower(), _m.group(1).title())
     pais = PAIS_CANON.get((pais or "").strip().lower(), (pais or "").strip())
     if not (idioma or "").strip():          # el idioma se deriva del pais, no se deja vacio
         idioma = "EN" if pais in ("United States", "Canada") else ("ES" if pais else "")
@@ -96,9 +100,17 @@ def agregar(email, first, last, empresa, estado, pais, prioridad, arquetipo, idi
     if motivo:
         reg["motivo_exclusion"] = motivo
         excluidos.append(reg); return
-    if reg["email"] in vistos:                      # R2
+    if reg["email"] in vistos:                      # R2 por correo
         reg["motivo_exclusion"] = "duplicado por email (R2)"
         excluidos.append(reg); return
+    # R2 por (contacto + empresa): la misma persona en dos dominios recibiria dos
+    # correos, que es senal de spam justo durante el warm-up.
+    raiz = norm(empresa).split()[0] if norm(empresa) else ""
+    kper = (norm(first + " " + last), raiz)
+    if kper[0] and raiz and kper in personas:
+        reg["motivo_exclusion"] = "misma persona ya incluida con otro correo (R2): %s" % personas[kper]
+        excluidos.append(reg); return
+    if kper[0] and raiz: personas[kper] = reg["email"]
     vistos.add(reg["email"]); filas.append(reg)
 
 # 1) Astute (estudios propios, ya con prioridad/tier)
