@@ -1,0 +1,151 @@
+tanda,Clave,Nombre,tipo_final,confianza_tipo,dominio,URL_cruda,presencia_mx,estado_mx,listo_para_comprar,Notas
+2,1008731,"Hill-Rom Holdings, Inc",OEM,Media,hillrom.com,hillrom.com,,,SI,Medical Devices Company
+2,1012125,Horiba,OEM,Media,horiba.com,horiba.com,,,SI,Japanese manufacturer of precision instruments
+2,1008155,INARI TECHNOLOGY SDN BHD,OEM,Media,inari-tech.com,inari-tech.com,,,SI,semiconductor company
+2,1001119,Ikor,OEM,Media,www.ikor.com,www.ikor.com,,,SI,Manufacture of electronic circuits
+2,1011015,Innoflight,EMS/CM,Media,innoflight.com,innoflight.com,,,SI,Verigon builds for them
+2,1009792,Kern PCB-FACTORY GmbH,EMS/CM,Media,pcb-factory.de,pcb-factory.de,,,SI,
+2,1009152,Killdeer Mountain Manufacturing,OEM,Media,kmmnorthdakota.com,kmmnorthdakota.com,,,SI,KMM - leading manufacturer of electronic
+2,1009893,Lakshmi Electricals control system,OEM,Media,lecsindia.com,lecsindia.com,,,SI,"LECS, pioneer and top manufacturers"
+2,1009547,MTS Systems,OEM,Media,mts.com,mts.com,,,SI,they ARE manufacturers
+2,1013290,"Manufactured Assemblies Corp, LLC",EMS/CM,Media,mac-cable.com,mac-cable.com,,,SI,
+2,1013355,Maverick Power,OEM,Media,maverickpwr.com,maverickpwr.com,,,SI,Privately held U.S. manufacturer of electrical
+2,1009303,Nash Tech Labs,OEM,Media,nashtechlabs.com,nashtechlabs.com,,,SI,"Design, Development"
+2,1009408,National Circuit Assembly,EMS/CM,Media,ncatx.com,ncatx.com,,,SI,
+2,1012169,Next Computing,OEM,Media,solutions.nextcomputing.com,solutions.nextcomputing.com,,,SI,computer mfr
+2,1009833,Nielsen-Kellerman,OEM,Media,nkhome.com,nkhome.com,,,SI,award-winning designer and manufacturer
+2,1013195,OnLogic Inc.,OEM,Media,onlogic.com,onlogic.com,,,SI,Manufacturer Industrial Computers for the Edge
+2,1012244,OneMonroe,OEM,Media,monroeengineering.com,monroeengineering.com,,,SI,global industrial manufacturing company
+2,1011823,"Rambus, Inc.",OEM,Media,rambus.com,rambus.com,,,SI,produces semiconductors
+2,1009425,Royal Enfield,OEM,Media,royalenfield.com,royalenfield.com,,,SI,largest two wheeler manufacturer
+2,1009585,SYNEGRA EMS LIMITED,EMS/CM,Media,synegra.com,synegra.com,,,SI,
+2,1012489,Sciton,OEM,Media,sciton.com,sciton.com,,,SI,medical device/esthetic lasers
+2,1009063,Screen Innovations,OEM,Media,screeninnovations.com,screeninnovations.com,,,SI,not your traditional screen manufacturer
+2,1010055,Sine Wavetronix Circuits Pvt Ltd,EMS/CM,Media,sinewavetronixcircuits.com,sinewavetronixcircuits.com,,,SI,
+2,1008795,Stanley Black & Decker,OEM,Media,stanleyblackanddecker.com,stanleyblackanddecker.com,,,SI,Manufacturer of a large variety of products
+2,1009540,Statcon Energiaa Pvt. Ltd,OEM,Media,energiaa.in,energiaa.in,,,SI,Leading Power Converter Manufacturer In India
+2,1011110,"Swarco McCain, Inc.",OEM,Media,swarco.com,swarco.com,,,SI,Manufactures most traffic
+2,1002287,TASC - Technical & Assembly Services Corporation,EMS/CM,Media,tasc-wa.com,tasc-wa.com,,,SI,
+2,1010035,Varian,OEM,Media,varian.com,varian.com,,,SI,Medical Device company - part of Siemens Healthineers
+2,1009016,Vermeer Corporation,OEM,Media,vermeer.com,vermeer.com,,,SI,leading manufacturer of agricultural
+2,1012136,Visionary Solutions,OEM,Media,visionary-av.com,visionary-av.com,,,SI,manufactures Audio and Video Internet Protocol
+2,1008946,Vista Outdoor Inc,OEM,Media,vistaoutdoor.com,vistaoutdoor.com,,,SI,"American designer, manufacturer"
+2,1011567,"WUXI SHENNAN CIRCUITS CO,LTD",EMS/CM,Media,scc.com.cn,scc.com.cn,,,SI,
+2,1012105,Wilson Audio,OEM,Media,wilsonaudio.com,wilsonaudio.com,,,SI,premier audio component manufacturer
+2,1009017,Winnebago Industries,OEM,Media,winnebagoind.com,winnebagoind.com,,,SI,leading manufacturer
+2,1012120,Xante,OEM,Media,xante.com,xante.com,,,SI,printer mfr
+2,1009531,violin technologies Pvt.Ltd,EMS/CM,Media,violintec.com,violintec.com,,,SI,wire harnesses
+2,1002343,ABB,OEM,Alta,,new.a...,SI,San Luis Potosi | (por confirmar),"NO - URL truncada, re-exportar CRM primero",
+2,1004607,Aptiv Services,OEM,Alta,,www.a...,SI,Chihuahua | Tamaulipas,"NO - URL truncada, re-exportar CRM primero",
+2,1012818,BOSCH AUTO,OEM,Alta,,,SI,Guanajuato | Chihuahua,"NO - URL truncada, re-exportar CRM primero",
+2,1007649,Bosch Rexroth AG,OEM,Alta,,www.s...,SI,Guanajuato | Chihuahua,"NO - URL truncada, re-exportar CRM primero",
+2,1007831,Cal-Comp Electronics & Communications CO.,EMS/CM,Alta,,www.c...,SI,Tamaulipas,"NO - URL truncada, re-exportar CRM primero",
+2,1001232,Caterpillar,OEM,Alta,,www.c...,SI,Tamaulipas,"NO - URL truncada, re-exportar CRM primero",
+2,1004885,Continental Corporation,OEM,Alta,,www.c...,SI,Coahuila | MX,"NO - URL truncada, re-exportar CRM primero",Astute Supplier number 700047794
+2,1001024,Flex,EMS/CM,Alta,,flex.co...,SI,Aguascalientes | Jalisco,"NO - URL truncada, re-exportar CRM primero",
+2,1001099,GPV,EMS/CM,Alta,,www.g...,SI,Jalisco,"NO - URL truncada, re-exportar CRM primero",
+2,1008568,HELLA Lithuania,OEM,Alta,,www.h...,SI,Guanajuato | Queretaro,"NO - URL truncada, re-exportar CRM primero","sensors, actuators"
+2,1004608,Hella Automotive,OEM,Alta,,www.h...,SI,,"NO - URL truncada, re-exportar CRM primero",Automotive
+2,1007587,International Control Services,EMS/CM,Alta,,intern...,SI,NUEVO LEON,"NO - URL truncada, re-exportar CRM primero",EMS
+2,1004679,Lear Corporation,OEM,Alta,,www.l...,SI,Chihuahua | Coahuila,"NO - URL truncada, re-exportar CRM primero",
+2,1006724,MABE,OEM,Alta,,mabe...,SI,Guanajuato | Coahuila,"NO - URL truncada, re-exportar CRM primero",
+2,1003396,Osram Continental,OEM,Alta,,www.o...,SI,,"NO - URL truncada, re-exportar CRM primero",Automotive Lighting
+2,1006851,Preh Group,OEM,Alta,,pr...,SI,Nuevo Leon,"NO - URL truncada, re-exportar CRM primero",global automotive supplier
+2,1002272,Thales,OEM,Alta,,www.t...,SI,CDMX,"NO - URL truncada, re-exportar CRM primero",DEFENSE & SECURITY
+2,1008435,Thales Alenia Space,OEM,Alta,,www.t...,SI,CDMX,"NO - URL truncada, re-exportar CRM primero",
+2,1003001,Thales Avionics,OEM,Alta,,www.t...,SI,CDMX,"NO - URL truncada, re-exportar CRM primero",Avionics
+2,1007190,Trane Technologies,OEM,Alta,,www.t...,SI,,"NO - URL truncada, re-exportar CRM primero",
+2,1008408,ZKW,OEM,Alta,,zkw-g...,SI,Guanajuato | Mexico City,"NO - URL truncada, re-exportar CRM primero",LED lighting and electrical systems for car lamps
+2,1004121,Zollner Electronics,EMS/CM,Alta,,zollner-...,SI,Tamaulipas,"NO - URL truncada, re-exportar CRM primero",EMS
+2,1008501,"CCM Assembly & Manufacturing, Inc",EMS/CM,Media,,ccmass...,SI,BAJA CALIFORNIA,"NO - URL truncada, re-exportar CRM primero",Assemblies
+2,1008285,SIT Group,OEM,Media,,www.s...,SI,,"NO - URL truncada, re-exportar CRM primero",Manufacturer of Electronic Controls / Electric
+2,1002729,AMD,OEM,Alta,,www.a...,,,"NO - URL truncada, re-exportar CRM primero",Advanced Micro Devices - SEMICONDUCTOR
+2,1004024,API Technologies Corporation,EMS/CM,Alta,,www.a...,,,"NO - URL truncada, re-exportar CRM primero",
+2,1006695,AVO Carbon,OEM,Alta,,www.a...,,,"NO - URL truncada, re-exportar CRM primero","Motors carbon brushes, brush assemblies"
+2,1005493,"Acumentrics RUPS, LLC",OEM,Alta,,www.a...,,,"NO - URL truncada, re-exportar CRM primero",OEM
+2,1006281,Addvalue Innovation Pte Ltd,EMS/CM,Alta,,www.a...,,,"NO - URL truncada, re-exportar CRM primero","ODM: IOT, Vessels, Communication, Radio/Defense"
+2,1007629,"Adtran, Inc",OEM,Alta,,www.a...,,,"NO - URL truncada, re-exportar CRM primero",Revenue per Zoom $983M. Innovative next-gen
+2,1005414,Advanced Assembly,EMS/CM,Alta,,aapcb...,,,"NO - URL truncada, re-exportar CRM primero","CM, PCB assembly"
+2,1003458,"Agilent Technologies, Inc.",OEM,Alta,,www.a...,,,"NO - URL truncada, re-exportar CRM primero",OCM
+2,1005998,Alaris Antennas,OEM,Alta,,www.a...,,,"NO - URL truncada, re-exportar CRM primero",global defense and security markets
+2,1007427,Allison Transmission,OEM,Alta,,www.a...,,,"NO - URL truncada, re-exportar CRM primero",American manufacturer
+2,1007256,Alstom,OEM,Alta,,www.a...,,,"NO - URL truncada, re-exportar CRM primero",45011839 is our US code
+2,1004435,Altum Aerospace,OEM,Alta,,altumae...,,,"NO - URL truncada, re-exportar CRM primero",
+2,1006107,"Anjie Wireless Technology (Suzhou) Co., Ltd",EMS/CM,Alta,,www.a...,,,"NO - URL truncada, re-exportar CRM primero","CEM/EMS Application: wireless, automobile"
+2,1007441,Apple,OEM,Alta,,www.a...,,,"NO - URL truncada, re-exportar CRM primero",
+2,1002728,Applied Materials,OEM,Alta,,www.a...,,,"NO - URL truncada, re-exportar CRM primero","OEM - Semiconductor mfg, display, solar"
+2,1005874,Apptronik,OEM,Alta,,www...,,,"NO - URL truncada, re-exportar CRM primero",Robotics company
+2,1008477,Astrodyne TDI,OEM,Alta,,www.a...,,,"NO - URL truncada, re-exportar CRM primero",OEM - power technology and products
+2,1007549,"Athena Manufacturing, LP",OEM,Alta,,www.a...,,,"NO - URL truncada, re-exportar CRM primero",precision machining
+2,1006449,Atomberg,OEM,Alta,,atomb...,,,"NO - URL truncada, re-exportar CRM primero",Company motto is 'why not?'
+2,1007772,Avidyne Corporation,OEM,Alta,,www.a...,,,"NO - URL truncada, re-exportar CRM primero",avionics company
+2,1007327,BPM Microsystems,OEM,Alta,,bpmm...,,,"NO - URL truncada, re-exportar CRM primero",device programmers and access
+2,1005583,"BYD Precision Manufacture Co., Ltd.",EMS/CM,Alta,,by...,,,"NO - URL truncada, re-exportar CRM primero",EMS
+2,1004456,Baker Hughes,OEM,Alta,,www...,,,"NO - URL truncada, re-exportar CRM primero",
+2,1007591,Banner Engineering,OEM,Alta,,www...,,,"NO - URL truncada, re-exportar CRM primero",
+2,1002743,Beckman Coulter,OEM,Alta,,www...,,,"NO - URL truncada, re-exportar CRM primero",subsidiary of Danaher Corp - medical device
+2,1002386,Bell Flight Textron Inc.,OEM,Alta,,www...,,,"NO - URL truncada, re-exportar CRM primero",the way into Bell is through the Amarillo prod
+2,1007592,Biosense Webster,OEM,Alta,,www.j...,,,"NO - URL truncada, re-exportar CRM primero",Subset of Johnson and Johnson
+2,1007388,Boxx Technologies,OEM,Alta,,www...,,,"NO - URL truncada, re-exportar CRM primero",OEM of computer hardware
+2,1007218,Boyd Corporation,OEM,Alta,,www...,,,"NO - URL truncada, re-exportar CRM primero","OEM - Appliances, Electrical, and Electronics"
+2,1008515,Brancaro industries,OEM,Alta,,www...,,,"NO - URL truncada, re-exportar CRM primero",OEM - Avionics Development & Integration
+2,1002405,"Brooks Automation, Inc.",OEM,Alta,,www...,,,"NO - URL truncada, re-exportar CRM primero",leading worldwide provider of automation
+2,1006350,Brooks Singapore,OEM,Alta,,brooks...,,,"NO - URL truncada, re-exportar CRM primero",
+2,1006761,COMET Group,OEM,Alta,,www.c...,,,"NO - URL truncada, re-exportar CRM primero",OEM - two core technologies of radio frequency
+2,1005914,CPI,OEM,Alta,,www.c...,,,"NO - URL truncada, re-exportar CRM primero",CPI Electron Device Business
+2,1007626,Cal/Amp,OEM,Alta,,www.c...,,,"NO - URL truncada, re-exportar CRM primero",flexible solutions
+2,1003278,Caron Engineering,OEM,Alta,,www.c...,,,"NO - URL truncada, re-exportar CRM primero",
+2,1006502,Casco Automotive,OEM,Alta,,www.c...,,,"NO - URL truncada, re-exportar CRM primero",OEM
+2,1006175,Charge Point,OEM,Alta,,www.c...,,,"NO - URL truncada, re-exportar CRM primero",OEM
+2,1007824,Christie Digital,OEM,Alta,,www.c...,,,"NO - URL truncada, re-exportar CRM primero",Audiovisual company headquartered in Cypress
+2,1007418,"Christie Digital Systems (Shenzhen) Co.,Ltd",OEM,Alta,,,,,"NO - URL truncada, re-exportar CRM primero",
+2,1002275,Ciena,OEM,Alta,,www.c...,,,"NO - URL truncada, re-exportar CRM primero",
+2,1003513,Cirrus Aircraft,OEM,Alta,,cirrus...,,,"NO - URL truncada, re-exportar CRM primero",Avionics Manufacturer
+2,1007682,Cirrus Logic Inc.,OEM,Alta,,www.c...,,,"NO - URL truncada, re-exportar CRM primero","Leading supplier of low-power, high precision"
+2,1007815,Cisco,OEM,Alta,,www.c...,,,"NO - URL truncada, re-exportar CRM primero",
+2,1004826,"Clarion Asia (Thailand) Co., Ltd",OEM,Alta,,www.c...,,,"NO - URL truncada, re-exportar CRM primero",leading OEM manufacturer
+2,1005989,Comlux Completions,OEM,Alta,,comlux...,,,"NO - URL truncada, re-exportar CRM primero","Business Aviation, Transaction and Completion"
+2,1008432,Continental Automotive Components Malaysia,OEM,Alta,,www.c...,,,"NO - URL truncada, re-exportar CRM primero",
+2,1006850,Copper Mountain Technologies,OEM,Alta,,coppe...,,,"NO - URL truncada, re-exportar CRM primero",2025 estimated revenue $10-25 million
+2,1007108,Corvus Energy,OEM,Alta,,corvu...,,,"NO - URL truncada, re-exportar CRM primero",OEM
+2,1002958,Cree Inc.,OEM,Alta,,www.c...,,,"NO - URL truncada, re-exportar CRM primero",Now Wolfspeed
+2,1007320,Crestron Electronics,OEM,Alta,,www.c...,,,"NO - URL truncada, re-exportar CRM primero",American privately held
+2,1006284,Cross Control,OEM,Alta,,crossco...,,,"NO - URL truncada, re-exportar CRM primero",CAT Referral
+2,1004978,"DREAMTECH Co., Ltd",EMS/CM,Alta,,id...,,,"NO - URL truncada, re-exportar CRM primero",CM/EMS Instrumentation
+2,1007927,Daimler Trucks,OEM,Alta,,www.d...,,,"NO - URL truncada, re-exportar CRM primero",Daimler Truck North America (DTNA)
+2,1004990,"Data Patterns (India) Pvt., Ltd",OEM,Alta,,,,,"NO - URL truncada, re-exportar CRM primero",OEM // Defence
+2,1004991,"Digital Lighting Co., Ltd",EMS/CM,Alta,,dii...,,,"NO - URL truncada, re-exportar CRM primero",CM/EMS // Distribution/Indirect Sales
+2,1007310,Digitronic GmbH,EMS/CM,Alta,,www.d...,,,"NO - URL truncada, re-exportar CRM primero",EMS
+2,1007228,"Diodes, Inc",OEM,Alta,,www.d...,,,"NO - URL truncada, re-exportar CRM primero",leading global manufacturer
+2,1007216,"Doorking, INC",OEM,Alta,,www.d...,,,"NO - URL truncada, re-exportar CRM primero",manufacture PC & Cloud Programmable Telephone
+2,1003189,Dover Corporation,OEM,Alta,,www.d...,,,"NO - URL truncada, re-exportar CRM primero",OEM - Oil & Gas company | Wayne Fueling
+2,1002952,Dytran Instruments Inc.,OEM,Alta,,www.d...,,,"NO - URL truncada, re-exportar CRM primero",new vendor form loaded
+2,1004262,E.J. Ward,OEM,Alta,,www.e...,,,"NO - URL truncada, re-exportar CRM primero",Fleet Vehicle Solutions
+2,1004257,"EControls, LCC",OEM,Alta,,econtro...,,,"NO - URL truncada, re-exportar CRM primero",Manufacturer of fuel and flow controls
+2,1003143,EOS Power,OEM,Alta,,www.e...,,,"NO - URL truncada, re-exportar CRM primero",Manufacturer of power supplies industrial
+2,1005179,Electric Power Systems,OEM,Alta,,ep-sy...,,,"NO - URL truncada, re-exportar CRM primero",leading provider
+2,1008204,Embraer,OEM,Alta,,embra...,,,"NO - URL truncada, re-exportar CRM primero","design, imaginative engineering"
+2,1005594,Enerpac,OEM,Alta,,enerpac...,,,"NO - URL truncada, re-exportar CRM primero",advanced industrial tools
+2,1005001,Enics,EMS/CM,Alta,,enics...,,,"NO - URL truncada, re-exportar CRM primero",
+2,1006433,Establishment Labs,OEM,Alta,,establishmen...,,,"NO - URL truncada, re-exportar CRM primero",
+2,1005557,Ethicon,OEM,Alta,,,,,"NO - URL truncada, re-exportar CRM primero",
+2,1004992,"Exa Thermometrics India Pvt., Ltd DTA",EMS/CM,Alta,,ex...,,,"NO - URL truncada, re-exportar CRM primero",CM/EMS // Distribution/indirect sales
+2,1006948,FREQUENTIS AG,OEM,Alta,,www.f...,,,"NO - URL truncada, re-exportar CRM primero",
+2,1005428,"Fabrinet Co., Ltd.",EMS/CM,Alta,,fabrinet...,,,"NO - URL truncada, re-exportar CRM primero",
+2,1007075,Famous Connections,OEM,Alta,,famou...,,,"NO - URL truncada, re-exportar CRM primero",OEM
+2,1004756,Feniex,OEM,Alta,,www.f...,,,"NO - URL truncada, re-exportar CRM primero",Feniex Industries - manufacturing
+2,1006679,Festo SE & Co. KG,OEM,Alta,,www.f...,,,"NO - URL truncada, re-exportar CRM primero",
+2,1005191,First Texas Products,OEM,Alta,,ftpcirc...,,,"NO - URL truncada, re-exportar CRM primero",Electronics Manufacturer
+2,1004816,"Fitbit, Inc",OEM,Alta,,www.fi...,,,"NO - URL truncada, re-exportar CRM primero",wearable devices
+2,1002741,Fluke Corporation,OEM,Alta,,www.fl...,,,"NO - URL truncada, re-exportar CRM primero",
+2,1006494,Fontane ACM Group,OEM,Alta,,fo...,,,"NO - URL truncada, re-exportar CRM primero",OEM: Wireless Products & Designs
+2,1006046,Fourth Frontier,OEM,Alta,,fourth...,,,"NO - URL truncada, re-exportar CRM primero",health tech company
+2,1004594,Fuba Automotive,OEM,Alta,,www.f...,,,"NO - URL truncada, re-exportar CRM primero",Electronics tier 1 market leading
+2,1007604,Gemosz Kft,EMS/CM,Alta,,gemosz...,,,"NO - URL truncada, re-exportar CRM primero",Ems of Zollner Hungary
+2,1007602,Gemosz Kft.,EMS/CM,Alta,,gemosz...,,,"NO - URL truncada, re-exportar CRM primero",EMS
+2,1005518,Gen3 Defense and Aerospace,OEM,Alta,,gen3d...,,,"NO - URL truncada, re-exportar CRM primero",Defense & Aerospace Integrator & Supplier
+2,1001121,General Atomics,OEM,Alta,,www.g...,,,"NO - URL truncada, re-exportar CRM primero",defense and diversified technology
+2,1007520,Genesys Controls,OEM,Alta,,www.g...,,,"NO - URL truncada, re-exportar CRM primero",Genesys Controls Corporation engineers
+2,1007287,GoPro Inc.,OEM,Alta,,gopro...,,,"NO - URL truncada, re-exportar CRM primero",
+2,1002828,Goodman Manufacturing,OEM,Alta,,www.g...,,,"NO - URL truncada, re-exportar CRM primero",HVAC manufacturer
+2,1005053,"Grant Industrial Controls, Inc.",OEM,Alta,,www.g...,,,"NO - URL truncada, re-exportar CRM primero",specialized electronics
