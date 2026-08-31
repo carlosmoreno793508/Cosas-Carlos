@@ -130,6 +130,31 @@ for r in leer(os.path.join(INV, "Tsunami_Fase2_Tanda1_ENRIQUECIDO.csv")):
     agregar(r.get("email"), f, l, r.get("Nombre_CRM"), "", r.get("pais"),
             "2 - Decisor compras", r.get("tipo_final"), "EN", "Tsunami_Fase2_Tanda1")
 
+# 6) Ingesta de _INBOX (estudios US ACT, MX estructurado, LATAM/Caribe)
+# Prioridad por PUESTO, no por hoja: las hojas "Compras y Sourcing" no aportan
+# nadie nuevo (son un subconjunto de "Contactos"), asi que el titulo es la senal.
+RE_COMPRAS = re.compile(r"compra|buyer|purchas|procure|sourcing|abastec|supply chain|"
+                        r"materiale?s|commodity|einkauf", re.I)
+RE_ELEC    = re.compile(r"electr|pcb|pcba|smt|component|semiconduct", re.I)
+NIVEL_ALTO = {"Director", "VP-Level", "C-Level", "Director / Head", "Gerente", "Manager"}
+
+_inbox = os.path.join(INV, "INBOX_Contactos_NUEVOS.csv")
+if os.path.exists(_inbox):
+    for r in leer(_inbox):
+        puesto  = r.get("Puesto", "")
+        funcion = r.get("Funcion", "")
+        compras = bool(RE_COMPRAS.search(puesto)) or "ourcing" in funcion or "ompras" in funcion
+        if compras and RE_ELEC.search(puesto):        prio = "1 - Clave electrónicos"
+        elif compras and r.get("nivel") in NIVEL_ALTO: prio = "2 - Decisor compras"
+        elif compras:                                  prio = "3 - Comprador"
+        else:                                          prio = "4 - Directorio ampliado"
+        partes = (r["Contacto"] or "").strip().split()
+        f = partes[0] if partes else ""
+        l = " ".join(partes[1:]) if len(partes) > 1 else ""
+        agregar(r["Email"], f, l, r["Empresa"], r["Estado"], r["Pais"], prio,
+                funcion, "ES" if r["region"] in ("MX", "LATAM") else "EN",
+                "INBOX_" + r["region"])
+
 # ---------- salidas ----------
 COLS = ["email","first_name","last_name","company_name","estado","pais",
         "prioridad","arquetipo","idioma_copy","riesgo","fuente"]
