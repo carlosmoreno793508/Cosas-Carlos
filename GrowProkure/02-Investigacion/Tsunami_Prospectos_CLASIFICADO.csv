@@ -24,7 +24,7 @@
 23,1001070,RTX,,Raytheon; NFDs approved by RIS,raytheon.com,Otro/Por clasificar,OEM,"lista curada (nombre exacto): ""rtx""",Alta,,,,,,,
 24,1001071,Amphenol Borisch Technologies,Mesa AZ and London ONT sites (Cab...),,www.borisch...,Otro/Por clasificar,OEM,"directorio estudio [US_Electronics_SMT_Study_ACT] via token principal del nombre = dominio del estudio (nombre compatible) -> tipo ""OEM / Connectors"" (empresa: Amphenol Corporation)",Alta,,,Biplaw Adhikari,Sourcing Manager,biplaw.adhikari@amphenol-tcs.com,nominal,"Estudio US_Electronics_SMT_Study_ACT/Contacts via empresa del directorio ""Amphenol Corporation"" (nombre exacto)"
 25,1001073,OnCore Manufacturing,,,www.n...,Otro/Por clasificar,Otro/Por clasificar,"sin senal suficiente (no se adivina, R6)",,,,,,,,
-26,1001074,BAE Systems,,BU: Electronic Systems (ES) - Endicott #155,www...,EMS/CM,EMS/CM,"CRM original (sin cambio) | CONFLICTO: directorio del estudio lo tipifica como OEM (""OEM (Defense)"") - revisar",Alta,,,Cristine Heggelke,Commodity Manager,cristine.heggelke@baesystems.com,nominal,Estudio US_Electronics_SMT_Study_ACT/Contacts via nombre exacto
+26,1001074,BAE Systems,,BU: Electronic Systems (ES) - Endicott #155,www...,EMS/CM,OEM,"CRM original (sin cambio) | RESUELTO: directorio del estudio lo tipifica como OEM (""OEM (Defense)"") - revisar | corregido EMS/CM->OEM contra el directorio de los estudios",Alta,,,Cristine Heggelke,Commodity Manager,cristine.heggelke@baesystems.com,nominal,Estudio US_Electronics_SMT_Study_ACT/Contacts via nombre exacto
 27,1001075,Nortech Systems,,,www.n...,Otro/Por clasificar,EMS/CM,"directorio estudio [US_Electronics_SMT_Study_ACT] via nombre exacto -> tipo ""EMS"" (empresa: Nortech Systems Inc.)",Alta,,,Rocio Tolentino,"Manager, Purchasing",rtolentino@nortechsys.com,nominal,Estudio Estudio_Electronica_Mexico_ESTRUCTURADO_ES/Contactos via nombre exacto
 28,1001076,CRFS,,DO NOT CALL,www.c...,Otro/Por clasificar,Otro/Por clasificar,"sin senal suficiente (no se adivina, R6)",,SI,DO NOT CALL en notas/CRM,,,,,
 29,1001077,Plexus Corp.,C001146/Vendor:1499610/Shortages,Component Sense in Scotland posts Plexus' EOL,www...,Otro/Por clasificar,EMS/CM,"directorio estudio [US_Electronics_SMT_Study_ACT] via nombre exacto -> tipo ""Large EMS"" (empresa: Plexus Corp.)",Alta,,,Hector Morales,"Senior Director, Commodity & Sourcing",hector.morales@plexus.com,nominal,Estudio Estudio_Electronica_Mexico_ESTRUCTURADO_ES/Contactos via nombre exacto
@@ -198,7 +198,7 @@
 197,1002497,4 Star Electronics,"4 Star Electronics, Inc.",CERT EXPR AC-00-56B; AS91...,www.4...,Otro/Por clasificar,Broker/Trader,"lista curada (nombre exacto): ""4 star electronics""",Alta,,,,,,,
 198,1002506,"Abstract Electronics, Inc.",,Authorized LEDTronics Distributor,www.abstrac...,Otro/Por clasificar,Broker/Trader,"lista curada (nombre exacto): ""abstract electronics""",Alta,,,,,,,
 199,1002516,ikor,,(dup de Ikor 1001119),www.u...,DUP/Inactivo,DUP/Inactivo,CRM original (sin cambio),Alta,,,,,,,
-200,1002517,Eaton,,OEM/EMS - Power management company,www.e...,EMS/CM,EMS/CM,"CRM original (sin cambio) | CONFLICTO: directorio del estudio lo tipifica como OEM (""OEM"") - revisar",Alta,,,Anabelle Matos,Supply Chain Manager,anabellematos@eaton.com,nominal,Estudio Estudio_Mercado_Electronica_LATAM_Caribe/Contactos via nombre exacto
+200,1002517,Eaton,,OEM/EMS - Power management company,www.e...,EMS/CM,OEM,"CRM original (sin cambio) | RESUELTO: directorio del estudio lo tipifica como OEM (""OEM"") - revisar | corregido EMS/CM->OEM contra el directorio de los estudios",Alta,,,Anabelle Matos,Supply Chain Manager,anabellematos@eaton.com,nominal,Estudio Estudio_Mercado_Electronica_LATAM_Caribe/Contactos via nombre exacto
 201,1002521,DIS-TEC GmbH & Co. KG,,,www.d...,Otro/Por clasificar,Otro/Por clasificar,"sin senal suficiente (no se adivina, R6)",,,,,,,,
 202,1002535,Huntchip International Ltd,,broker,www.h...,Broker/Trader,Broker/Trader,CRM original (sin cambio),Alta,,,,,,,
 203,1002536,"Telmar Network Technology, Inc.",,,www.i...,Otro/Por clasificar,Otro/Por clasificar,"sin senal suficiente (no se adivina, R6)",,,,,,,,
@@ -272,7 +272,7 @@
 271,1002881,Broadline Components,,broker,www.broadlin...,Broker/Trader,Broker/Trader,CRM original (sin cambio),Alta,,,,,,,
 272,1002883,Swift Tech LLC,,,www.swifttec...,Otro/Por clasificar,Otro/Por clasificar,"sin senal suficiente (no se adivina, R6)",,,,,,,,
 273,1002888,ABX Engineering,,"EMS circuitboards, pcbs",www.a...,EMS/CM,EMS/CM,CRM original (sin cambio),Alta,,,Tam Lu,"Manager, Commodity",tam@abxengineering.com,nominal,Estudio US_Electronics_SMT_Study_ACT/Contacts via nombre exacto
-274,1002889,"Medtronic, Inc.",,EMS: Sanmina & Plexus. MEDICAL AND SURGICAL,www...,EMS/CM,EMS/CM,"CRM original (sin cambio) | CONFLICTO: directorio del estudio lo tipifica como OEM (""OEM medico"") - revisar",Alta,,,Victor Soto,Supply Chain Director,victor.s@medtronic.com,nominal,Estudio Estudio_Mercado_Electronica_LATAM_Caribe/Contactos via nombre exacto
+274,1002889,"Medtronic, Inc.",,EMS: Sanmina & Plexus. MEDICAL AND SURGICAL,www...,EMS/CM,OEM,"CRM original (sin cambio) | RESUELTO: directorio del estudio lo tipifica como OEM (""OEM medico"") - revisar | corregido EMS/CM->OEM contra el directorio de los estudios",Alta,,,Victor Soto,Supply Chain Director,victor.s@medtronic.com,nominal,Estudio Estudio_Mercado_Electronica_LATAM_Caribe/Contactos via nombre exacto
 275,1002892,Braun Electronic Components,,broker,www.braunec...,Broker/Trader,Broker/Trader,CRM original (sin cambio),Alta,,,,,,,
 276,1002893,OrthoSensor Inc.,,,,Otro/Por clasificar,Otro/Por clasificar,"sin senal suficiente (no se adivina, R6)",,,,,,,,
 277,1002895,Evolution Interconnect Systems,,,,Otro/Por clasificar,Otro/Por clasificar,"sin senal suficiente (no se adivina, R6)",,,,,,,,
@@ -803,7 +803,7 @@
 802,1005272,"Monday Electronic Technology Co., Ltd",,broker,,Broker/Trader,Broker/Trader,CRM original (sin cambio),Alta,,,,,,,
 803,1005273,"Tuo pu International (Hong Kong) CO., LTD.",,broker,,Broker/Trader,Broker/Trader,CRM original (sin cambio),Alta,,,,,,,
 804,1005274,Trilogy Innovations,,,trilogy...,Otro/Por clasificar,Otro/Por clasificar,"sin senal suficiente (no se adivina, R6)",,,,,,,,
-805,1005275,Trimble Inc.,,Jabil & Benchmark EMS partners,www.t...,EMS/CM,EMS/CM,"CRM original (sin cambio) | CONFLICTO: directorio del estudio lo tipifica como OEM (""OEM (GPS/Geospatial)"") - revisar",Alta,,,Michell Flynn,Global Sourcing Manager,michell_flynn@trimble.com,nominal,Estudio US_Electronics_SMT_Study_ACT/Contacts via nombre exacto
+805,1005275,Trimble Inc.,,Jabil & Benchmark EMS partners,www.t...,EMS/CM,OEM,"CRM original (sin cambio) | RESUELTO: directorio del estudio lo tipifica como OEM (""OEM (GPS/Geospatial)"") - revisar | corregido EMS/CM->OEM contra el directorio de los estudios",Alta,,,Michell Flynn,Global Sourcing Manager,michell_flynn@trimble.com,nominal,Estudio US_Electronics_SMT_Study_ACT/Contacts via nombre exacto
 806,1005276,Vacuum Instruments Corporation,,,viclea...,Otro/Por clasificar,Otro/Por clasificar,"sin senal suficiente (no se adivina, R6)",,,,,,,,
 807,1005277,"Delta Information Systems, Inc",,"Ampex Data Systems, Delta Digital Video, GDP",www.d...,EMS/CM,EMS/CM,CRM original (sin cambio),Alta,,,,,,,
 808,1005278,Proven Process,,,prove...,Otro/Por clasificar,Otro/Por clasificar,"sin senal suficiente (no se adivina, R6)",,,,,,,,
@@ -827,7 +827,7 @@
 826,1005337,Speedy-Tech Electronics,,EMS/ODM,global-i...,EMS/CM,EMS/CM,CRM original (sin cambio),Alta,,,,,,,
 827,1005340,"BREIZ ELEC, INC.","BREIZELEC, Inc.",,breizele...,Otro/Por clasificar,Otro/Por clasificar,"sin senal suficiente (no se adivina, R6)",,,,,,,,
 828,1005342,Greer Industries,,CM,greerind...,Otro/Por clasificar,EMS/CM,"notas: ""CM"" (contract manufacturer)",Alta,,,,,,,
-829,1005343,Spellman High Voltage Electronics Corp,,CM/EMS,spellma...,EMS/CM,EMS/CM,"CRM original (sin cambio) | CONFLICTO: directorio del estudio lo tipifica como OEM (""OEM"") - revisar",Alta,,,Rene Compuesto,Semiconductor Supply Chain,rcompuesto@spellmanhv.com,nominal,Estudio Estudio_Electronica_Mexico_ESTRUCTURADO_ES/Contactos via nombre exacto
+829,1005343,Spellman High Voltage Electronics Corp,,CM/EMS,spellma...,EMS/CM,OEM,"CRM original (sin cambio) | RESUELTO: directorio del estudio lo tipifica como OEM (""OEM"") - revisar | corregido EMS/CM->OEM contra el directorio de los estudios",Alta,,,Rene Compuesto,Semiconductor Supply Chain,rcompuesto@spellmanhv.com,nominal,Estudio Estudio_Electronica_Mexico_ESTRUCTURADO_ES/Contactos via nombre exacto
 830,1005352,"Rohde & Schwarz USA, Inc",,"OEM - industry, infrastructure operators",www.r...,OEM,OEM,CRM original (sin cambio),Alta,,,,,,,
 831,1005354,FHF Funke+Huster Fernsig GmbH,,,www.f...,Otro/Por clasificar,Otro/Por clasificar,"sin senal suficiente (no se adivina, R6)",,,,,,,,
 832,1005356,Iceberg Technology Corporation,,OEM -- connected via Gerald Hom @ Rocket EMS,N/A,EMS/CM,EMS/CM,CRM original (sin cambio),Alta,,,,,,,
@@ -1080,7 +1080,7 @@
 1079,1005997,Nextracker,,OEM - Independent subsidiary of Flex,Nextracker.c...,OEM,OEM,CRM original (sin cambio),Alta,,,,,,,
 1080,1005998,Alaris Antennas,,global defense and security markets,www.a...,Otro/Por clasificar,OEM,"lista curada (nombre exacto): ""alaris antennas""",Alta,,,,,,,
 1081,1006001,Argo AI,,,www.a...,Otro/Por clasificar,Otro/Por clasificar,"sin senal suficiente (no se adivina, R6)",,,,,,,,
-1082,1006002,Astronics,,V1716 - was on the PO from Luminescent Systems,astronic...,EMS/CM,EMS/CM,"CRM original (sin cambio) | CONFLICTO: directorio del estudio lo tipifica como OEM (""OEM (Aerospace)"") - revisar",Alta,,,Madilene Villanueva,Buyer,madilene.villanueva@astronics.com,nominal,Estudio US_Electronics_SMT_Study_ACT/Contacts via nombre exacto
+1082,1006002,Astronics,,V1716 - was on the PO from Luminescent Systems,astronic...,EMS/CM,OEM,"CRM original (sin cambio) | RESUELTO: directorio del estudio lo tipifica como OEM (""OEM (Aerospace)"") - revisar | corregido EMS/CM->OEM contra el directorio de los estudios",Alta,,,Madilene Villanueva,Buyer,madilene.villanueva@astronics.com,nominal,Estudio US_Electronics_SMT_Study_ACT/Contacts via nombre exacto
 1083,1006004,Jaguar de Mexico,,,www.j...,Otro/Por clasificar,Otro/Por clasificar,"sin senal suficiente (no se adivina, R6)",,,,,,,,
 1084,1006005,Ventor Internacional,,,ventorin...,Otro/Por clasificar,Otro/Por clasificar,"sin senal suficiente (no se adivina, R6)",,,,,,,,
 1085,1006007,"Ionics EMS, Inc",,,www.i...,Otro/Por clasificar,EMS/CM,"lista curada (nombre exacto): ""ionics ems""",Alta,,,,,,,
@@ -1775,7 +1775,7 @@
 1774,1007522,Suntan Supply,Luxura V8,supplies new and used tanning,santa...,Otro/Por clasificar,Broker/Trader,"lista curada (nombre exacto): ""suntan supply""",Alta,,,,,,,
 1775,1007532,Quincy Compressor,,,www.q...,Otro/Por clasificar,Otro/Por clasificar,"sin senal suficiente (no se adivina, R6)",,,,,,,,
 1776,1007534,BOSE Corporation,,,www...,Otro/Por clasificar,OEM,"lista curada (nombre exacto): ""bose""",Alta,,,,,,,
-1777,1007538,Federal Electronics,,broker,NA,Broker/Trader,Broker/Trader,"CRM original (sin cambio) | CONFLICTO: directorio del estudio lo tipifica como EMS/CM (""EMS"") - revisar",Alta,,,Nadia Karina Granillo Diaz,Buyer,ngranillo@federalelec.com,nominal,Estudio Estudio_Electronica_Mexico_ESTRUCTURADO_ES/Contactos via nombre exacto
+1777,1007538,Federal Electronics,,broker,NA,Broker/Trader,EMS/CM,"CRM original (sin cambio) | RESUELTO: directorio del estudio lo tipifica como EMS/CM (""EMS"") - revisar | corregido Broker/Trader->EMS/CM contra el directorio de los estudios",Alta,,,Nadia Karina Granillo Diaz,Buyer,ngranillo@federalelec.com,nominal,Estudio Estudio_Electronica_Mexico_ESTRUCTURADO_ES/Contactos via nombre exacto
 1778,1007539,Ventmatika,,,ventmat...,Otro/Por clasificar,Otro/Por clasificar,"sin senal suficiente (no se adivina, R6)",,,,,,,,
 1779,1007540,"SEAKR Engineering, LLC",,Wholly owned subsidiary of Raytheon Intelligence,www.s...,Otro/Por clasificar,OEM,"lista curada (nombre exacto): ""seakr engineering""",Alta,,,,,,,
 1780,1007541,Hankscraft Inc.,,"Since 1920, Hankscraft OEM",www.h...,OEM,OEM,CRM original (sin cambio),Alta,,,,,,,
@@ -2246,7 +2246,7 @@
 2245,1008400,Radysis Asia Sdn. Bhd.,,,radysi...,Otro/Por clasificar,Otro/Por clasificar,"sin senal suficiente (no se adivina, R6)",,,,,,,,
 2246,1008402,Marathon Group,,,www...,Otro/Por clasificar,Otro/Por clasificar,"sin senal suficiente (no se adivina, R6)",,,,,,,,
 2247,1008403,TECHBOARD GROUP,,,techboa...,Otro/Por clasificar,Otro/Por clasificar,"sin senal suficiente (no se adivina, R6)",,,,,,,,
-2248,1008408,ZKW,,LED lighting and electrical systems for car lamps,zkw-g...,EMS/CM,EMS/CM,"CRM original (sin cambio) | CONFLICTO: directorio del estudio lo tipifica como OEM (""Tier-1"") - revisar",Alta,,,,,,,
+2248,1008408,ZKW,,LED lighting and electrical systems for car lamps,zkw-g...,EMS/CM,OEM,"CRM original (sin cambio) | RESUELTO: directorio del estudio lo tipifica como OEM (""Tier-1"") - revisar | corregido EMS/CM->OEM contra el directorio de los estudios",Alta,,,,,,,
 2249,1008409,Inventec Appliances Corporation,,,www.i...,Otro/Por clasificar,EMS/CM,"directorio estudio [Estudio_Electronica_Mexico_ESTRUCTURADO_ES] via token principal del nombre = dominio del estudio (nombre compatible) -> tipo ""EMS/ODM"" (empresa: Inventec)",Alta,,,Alejandra Escalante,"Supervisor, Purchasing",alejandra.escalante@inventec.com,nominal,Estudio Estudio_Electronica_Mexico_ESTRUCTURADO_ES/Contactos via token principal del nombre = dominio del estudio (nombre compatible)
 2250,1008411,SKY Tek Co.,,,N/A,Otro/Por clasificar,Otro/Por clasificar,"sin senal suficiente (no se adivina, R6)",,,,,,,,
 2251,1008413,Fagor Electronica,,EMS - Automotive and others,www.f...,EMS/CM,EMS/CM,CRM original (sin cambio),Alta,,,Carlos Bozalongo,Mexico Plant Manager,cbozalongo@fagorelectronica.es,nominal,Estudio Estudio_Electronica_Mexico_ESTRUCTURADO_ES/Contactos via nombre exacto
@@ -2575,7 +2575,7 @@
 2574,1008978,Comet electronics Ltd.,,,comet.bg,Otro/Por clasificar,Otro/Por clasificar,"sin senal suficiente (no se adivina, R6)",,,,,,,,
 2575,1008979,KATEK,,EST-EMS: market segments - energy/industrial,katek-group.de,EMS/CM,EMS/CM,CRM original (sin cambio),Alta,,,Karon Spurlock,(por confirmar),karon.spurlock@katek-group.com,nominal,Estudio Estudio_Electronica_Mexico_ESTRUCTURADO_ES/Contactos via dominio
 2576,1008980,ZT Systems,,Purchased by AMD?,ztsystems.com,Otro/Por clasificar,Otro/Por clasificar,"sin senal suficiente (no se adivina, R6)",,,,,,,,
-2577,1008981,Bendix Commercial Vehicle,,Bendix Commercial Vehicle Systems,bendix.com,EMS/CM,EMS/CM,"CRM original (sin cambio) | CONFLICTO: directorio del estudio lo tipifica como OEM (""OEM/Tier-1"") - revisar",Alta,,,Alonso Alegria,Senior Manager Supply Chain & Site Leader,alonso.alegria@bendix.com,nominal,Estudio Estudio_Electronica_Mexico_ESTRUCTURADO_ES/Contactos via dominio
+2577,1008981,Bendix Commercial Vehicle,,Bendix Commercial Vehicle Systems,bendix.com,EMS/CM,OEM,"CRM original (sin cambio) | RESUELTO: directorio del estudio lo tipifica como OEM (""OEM/Tier-1"") - revisar | corregido EMS/CM->OEM contra el directorio de los estudios",Alta,,,Alonso Alegria,Senior Manager Supply Chain & Site Leader,alonso.alegria@bendix.com,nominal,Estudio Estudio_Electronica_Mexico_ESTRUCTURADO_ES/Contactos via dominio
 2578,1008987,Eide Tech GmbH,,,eide-tech.com,Otro/Por clasificar,Otro/Por clasificar,"sin senal suficiente (no se adivina, R6)",,,,,,,,
 2579,1008988,Powertec for Electrical Supplies,,,powertec-eg.com,Otro/Por clasificar,Otro/Por clasificar,"sin senal suficiente (no se adivina, R6)",,,,,,,,
 2580,1008989,Avular,,,avular.com,Otro/Por clasificar,Otro/Por clasificar,"sin senal suficiente (no se adivina, R6)",,,,,,,,
