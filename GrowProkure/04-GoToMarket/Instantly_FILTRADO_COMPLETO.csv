@@ -1,7 +1,7 @@
 email,first_name,last_name,company_name,estado,pais,prioridad,arquetipo,idioma_copy,riesgo,fuente
 mariacristina.ramos@bcs-ais.com,Maria,Cristina Ramos Aguilar,BCS Automotive Interface Solutions,Queretaro,Mexico,1 - Clave electrónicos,,ES,,Astute_Instantly_LISTO
 dsanchez@borgwarner.com,Daniel,Sánchez,BorgWarner,Tamaulipas,Mexico,1 - Clave electrónicos,,ES,,Astute_Instantly_LISTO
-andres.kuajara@bosch.com,Andres,Kuajara,Bosch (Brasil),Brasil,Brasil,1 - Clave electrónicos,Compras / Sourcing,ES,,INBOX_MX
+andres.kuajara@bosch.com,Andres,Kuajara,Bosch (Brasil),Brasil,Brasil,1 - Clave electrónicos,Compras / Sourcing,PT,,INBOX_MX
 viridiana.riveradimas@bosch.com,Viridiana,Rivera Dimas,Bosch Mexico,CDMX,Mexico,1 - Clave electrónicos,,ES,,Astute_Instantly_LISTO
 montserrat.mendoza@brose.com,Montserrat,Mendoza,Brose,Queretaro,Mexico,1 - Clave electrónicos,,ES,,Astute_Instantly_LISTO
 philip.schnabel@brose.com,Philip,Schnabel,Brose,Alemania,Mexico,1 - Clave electrónicos,Compras / Sourcing,ES,,INBOX_MX
@@ -26,7 +26,7 @@ g.montiel@kostal.com,Gabriel,Aragon Montiel,KOSTAL,Queretaro,Mexico,1 - Clave el
 m.rojas@kostal.com,Miriam,Rojas,KOSTAL,Queretaro,Mexico,1 - Clave electrónicos,,ES,,Astute_Instantly_LISTO
 azbel.rodriguez@keenfinity-group.com,Azbel,Rodriguez,Keenfinity,Sonora,Mexico,1 - Clave electrónicos,,ES,,Astute_Instantly_LISTO
 issis.melgoza@latecoere.aero,Issis,Maria Melgoza Caballero,Latecoere,Sonora,Mexico,1 - Clave electrónicos,Compras / Sourcing,ES,,INBOX_MX
-tiago.formaggio@lear.com,Tiago,Formaggio,Lear (Brasil),Brasil,Brasil,1 - Clave electrónicos,Compras / Sourcing,ES,,INBOX_MX
+tiago.formaggio@lear.com,Tiago,Formaggio,Lear (Brasil),Brasil,Brasil,1 - Clave electrónicos,Compras / Sourcing,PT,,INBOX_MX
 edorre@lear.com,Edison,Dorre,Lear Corporation,Michigan,United States,1 - Clave electrónicos,Purchasing / Sourcing,EN,,INBOX_US
 vrodriguez@littelfuse.com,Viridiana,Rodriguez Salazar,Littelfuse,Por confirmar,Mexico,1 - Clave electrónicos,,ES,,Astute_Instantly_LISTO
 mosiah.sosa@mahle.com,Mosiah,Sosa,MAHLE,Nuevo Leon,Mexico,1 - Clave electrónicos,,ES,,Astute_Instantly_LISTO
@@ -62,8 +62,8 @@ karla_martinez@whirlpool.com,Karla,Martinez,Whirlpool,Nuevo Leon,Mexico,1 - Clav
 osvaldo_f_duran@whirlpool.com,Osvaldo,Duran,Whirlpool,(por confirmar),Mexico,1 - Clave electrónicos,,ES,,Astute_Instantly_LISTO
 osvaldo_elizondo@whirlpool.com,Osvaldo,Durán Elizondo,Whirlpool,Nuevo León,Mexico,1 - Clave electrónicos,,ES,,Astute_Instantly_LISTO
 valeria_martinez@whirlpool.com,Valeria,González Martínez,Whirlpool,Nuevo León,Mexico,1 - Clave electrónicos,,ES,,Astute_Instantly_LISTO
-eloisa_marcon@whirlpool.com,Eloisa,Bascheroto Marcon,Whirlpool (Brasil),Brasil,Brasil,1 - Clave electrónicos,Compras / Sourcing,ES,,INBOX_MX
-eloisa_bascheroto@whirlpool.com,Eloisa,Marcon Bascheroto,Whirlpool Latin America,,Brasil,1 - Clave electrónicos,Compras / Sourcing,ES,,INBOX_LATAM
+eloisa_marcon@whirlpool.com,Eloisa,Bascheroto Marcon,Whirlpool (Brasil),Brasil,Brasil,1 - Clave electrónicos,Compras / Sourcing,PT,,INBOX_MX
+eloisa_bascheroto@whirlpool.com,Eloisa,Marcon Bascheroto,Whirlpool Latin America,,Brasil,1 - Clave electrónicos,Compras / Sourcing,PT,,INBOX_LATAM
 carlos.tavares@zf.com,Carlos,Tavares,ZF,St. Gallen,Mexico,1 - Clave electrónicos,Compras / Sourcing,ES,,INBOX_MX
 paola.evangelista@zkw.mx,Paola,Evangelista Cruz,ZKW,Guanajuato,Mexico,1 - Clave electrónicos,,ES,,Astute_Instantly_LISTO
 elias.gaxiola@autoliv.com,Elias,Gaxiola,autoliv.com,Puebla,Mexico,1 - Clave electrónicos,,ES,,Astute_Instantly_LISTO
@@ -204,7 +204,7 @@ guillermo.porcayo@bosch.com.mx,Guillermo,Porcayo,Bosch,EdoMex,Mexico,2 - Decisor
 lluvia.flores@bosch.com.mx,Lluvia,Flores,Bosch,EdoMex,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 miljanic.catalanbatan@bosch.com,Miljanic,Batan,Bosch,CDMX,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 monica.luna@bosch.com,Monica,Luna,Bosch,San Luis Potosi,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
-carina.lavacca@bosch.com,Carina,Lavacca,Bosch,,Brasil,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_LATAM
+carina.lavacca@bosch.com,Carina,Lavacca,Bosch,,Brasil,2 - Decisor compras,Compras / Sourcing,PT,,INBOX_LATAM
 yisselle.avila@bosch.com,Yisselle,Avila,Bosch (Monterrey),Nuevo Leon,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 jose.delvalle@bosch.com,Jose,Del Valle Cuenca,Bosch (Toluca),Estado de Mexico,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 marko.zivkovic@bosch.com,Marko,Zivkovic,Bosch (corporativo),,Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX
@@ -269,8 +269,8 @@ brenda.garcia@continental-corporation.com,Brenda,Garcia,Continental,Jalisco,Mexi
 david.hincapie@continental-corporation.com,David,Hincapie,Continental,Jalisco,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 enrique.rubio@continental-corporation.com,Enrique,Rubio,Continental,Guanajuato,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 julio.franco@continental-corporation.com,Julio,Cesar Franco Nava,Continental,CDMX,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
-adriana.gerim@continental.com,Adriana,Gerim,Continental,,Brasil,2 - Decisor compras,Supply Chain,ES,,INBOX_LATAM
-alexon.silva@continental-corporation.com,Alexon,Silva,Continental,,Brasil,2 - Decisor compras,Supply Chain,ES,,INBOX_LATAM
+adriana.gerim@continental.com,Adriana,Gerim,Continental,,Brasil,2 - Decisor compras,Supply Chain,PT,,INBOX_LATAM
+alexon.silva@continental-corporation.com,Alexon,Silva,Continental,,Brasil,2 - Decisor compras,Supply Chain,PT,,INBOX_LATAM
 karla.rocha@continental-corporation.com,Karla,Rocha,Continental (Aumovio),Jalisco,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 luis.villalpando@continental-corporation.com,Luis,Villalpando,Continental (Guadalajara),Jalisco,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 amed.salas@continental-corporation.com,Amed,Salas,Continental (Mexico - varias plantas),MX,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
@@ -413,13 +413,13 @@ yadira.ortega@flex.com,Yadira,Ortega,Flex,Mexico,Mexico,2 - Decisor compras,Comp
 erika.ramirez@flex.com,Erika,Ramirez,Flex,Mexico,Mexico,2 - Decisor compras,Materiales / Planeación,ES,,INBOX_MX
 luisa.escobedo@flex.com,Luisa,Escobedo,Flex,Aguascalientes,Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX
 norma.loyola@flex.com,Norma,Loyola,Flex,Jalisco,Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX
-eduardo.martins@flex.com,Eduardo,Martins,Flex,,Brasil,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_LATAM
-elisabeth.palacio@flex.com,Elisabeth,Palacio,Flex,,Brasil,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_LATAM
+eduardo.martins@flex.com,Eduardo,Martins,Flex,,Brasil,2 - Decisor compras,Compras / Sourcing,PT,,INBOX_LATAM
+elisabeth.palacio@flex.com,Elisabeth,Palacio,Flex,,Brasil,2 - Decisor compras,Compras / Sourcing,PT,,INBOX_LATAM
 amarqu73@ford.com,Alexiz,Marquez,Ford,GUANAJUATO,Mexico,2 - Decisor compras,OEM,ES,,Tsunami_MX_Hueco_ENRIQUECIDO
 naphatphan.cha@forthems.co.th,Naphatphan,Chanphakdi,Forth EMS Public,,Thailand,2 - Decisor compras,EMS/CM,EN,,Tsunami_Fase2_Tanda1
 adriana.aguirre@forvia.com,Adriana,Camarena Aguirre,Forvia Hella,MX,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 keren.sotocruz@forvia.com,Keren,Cruz,Forvia Hella,Guanajuato,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
-nicholas.shirazawa@foxconn.com,Nicholas,Shirazawa,Foxconn,,Brasil,2 - Decisor compras,Supply Chain,ES,,INBOX_LATAM
+nicholas.shirazawa@foxconn.com,Nicholas,Shirazawa,Foxconn,,Brasil,2 - Decisor compras,Supply Chain,PT,,INBOX_LATAM
 shu.ss.chang@foxconn.com,Shuowei,Chang,Foxconn (Baja California),Baja California,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 alejandro.lazos@mail.foxconn.com,Alejandro,Lazos,Foxconn (FII),Chihuahua,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 bill.hooper@mail.foxconn.com,Bill,Hooper,Foxconn (FII),,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
@@ -517,8 +517,8 @@ yashaswini.bs@indicelectronics.com,Yashaswini,Bs,Indic,,Spain,2 - Decisor compra
 joaquin.samaniego@integer.net,Joaquin,Samaniego,Integer Holdings,Baja California,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 michael.whaley@intel.com,Michael,Whaley,Intel (Ocotillo),Arizona,United States,2 - Decisor compras,Purchasing / Sourcing,EN,,INBOX_US
 priya.kothadia@intel.com,Priya,Kothadia,Intel (Ocotillo),California,United States,2 - Decisor compras,Purchasing / Sourcing,EN,,INBOX_US
-paula.alves@intelbras.com.br,Paula,Andrade,Intelbras,,Brasil,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_LATAM
-rosemir.colzani@intelbras.com.br,Rosemir,Colzani,Intelbras,,Brasil,2 - Decisor compras,Supply Chain,ES,,INBOX_LATAM
+paula.alves@intelbras.com.br,Paula,Andrade,Intelbras,,Brasil,2 - Decisor compras,Compras / Sourcing,PT,,INBOX_LATAM
+rosemir.colzani@intelbras.com.br,Rosemir,Colzani,Intelbras,,Brasil,2 - Decisor compras,Supply Chain,PT,,INBOX_LATAM
 alejandra.escalante@inventec.com,Alejandra,Escalante,Inventec,Chihuahua,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 covarrubias.cesar@inventec.com,Cesar,Covarrubias,Inventec,Chihuahua,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 valverde.mayra@inventec.com,Mayra,Valverde,Inventec,Chihuahua,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
@@ -549,8 +549,8 @@ peter_hajdu@jabil.com,Peter,Hajdu,Jabil,TN,United States,2 - Decisor compras,Pur
 yuna_guo@jabil.com,Yuna,Guo,Jabil,TN,United States,2 - Decisor compras,Purchasing / Sourcing,EN,,INBOX_US
 derek_oh@jabil.com,Derek,Oh,Jabil,TN,United States,2 - Decisor compras,Purchasing / Sourcing,EN,,INBOX_US
 mike_walker@jabil.com,Michael,Walker,Jabil,TN,United States,2 - Decisor compras,Purchasing / Sourcing,EN,,INBOX_US
-glauco_alves@jabil.com,Glauco,Alves,Jabil,,Brasil,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_LATAM
-michele_vale@jabil.com,Michele,Vale,Jabil,,Brasil,2 - Decisor compras,Supply Chain,ES,,INBOX_LATAM
+glauco_alves@jabil.com,Glauco,Alves,Jabil,,Brasil,2 - Decisor compras,Compras / Sourcing,PT,,INBOX_LATAM
+michele_vale@jabil.com,Michele,Vale,Jabil,,Brasil,2 - Decisor compras,Supply Chain,PT,,INBOX_LATAM
 dmartinez2@jardencs.com,David,Martinez,Jarden CS,Nuevo Leon,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 benjamin.jara@jci.com,Benjamin,Jara,Johnson Controls (JCI),N/D,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 cynthia.alvarez@jci.com,Cynthia,Alvarez,Johnson Controls (JCI),Nuevo Leon,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
@@ -692,8 +692,8 @@ octavio.garcia@magna.com,Octavio,Garcia,Magna Electronics,Michigan,United States
 arturo.benitez@marelli.com,Arturo,Benitez,Marelli,Queretaro,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 eduardo.castro@marelli.com,Eduardo,Castro Cesaretti,Marelli,Aguascalientes,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 victoria.olayo@marelli.com,Victoria,Olayo,Marelli,Aguascalientes,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
-edileuza.costa@magnetimarelli.com,Edileuza,Costa,Marelli,,Brasil,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_LATAM
-ricardo.penha@magnetimarelli.com,Ricardo,Penha,Marelli,,Brasil,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_LATAM
+edileuza.costa@magnetimarelli.com,Edileuza,Costa,Marelli,,Brasil,2 - Decisor compras,Compras / Sourcing,PT,,INBOX_LATAM
+ricardo.penha@magnetimarelli.com,Ricardo,Penha,Marelli,,Brasil,2 - Decisor compras,Compras / Sourcing,PT,,INBOX_LATAM
 ernesto.espinoza@marelli.com,Ernesto,Espinoza,Marelli (Aguascalientes),Chihuahua,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 fernando.ramirez@marelli.com,Fernando,Ramirez,Marelli (Aguascalientes),Aguascalientes,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 gerardo.varela@marelli.com,Gerardo,Varela,Marelli (Aguascalientes),Chihuahua,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
@@ -733,8 +733,8 @@ polo.aguilera@motherson.com,Polo,Aguilera,Motherson (MSSL),Nuevo Leon,Mexico,2 -
 rodrigo.guzman@motherson.com,Rodrigo,Guzman,Motherson (MSSL),Puebla,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 chrystian.flores@motherson.com,Chrystian,Flores,Motherson / PKC Group (AEES Inc.),Chihuahua,Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX
 olga.chandler@motorolasolutions.com,Olga,Chandler,Motorola Solutions,Texas,United States,2 - Decisor compras,Purchasing / Sourcing,EN,,INBOX_US
-lucas.palauro@grupomultilaser.com.br,Lucas,Palauro,Multilaser,,Brasil,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_LATAM
-patricia.alves@grupomulti.com.br,Patricia,Alves,Multilaser,,Brasil,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_LATAM
+lucas.palauro@grupomultilaser.com.br,Lucas,Palauro,Multilaser,,Brasil,2 - Decisor compras,Compras / Sourcing,PT,,INBOX_LATAM
+patricia.alves@grupomulti.com.br,Patricia,Alves,Multilaser,,Brasil,2 - Decisor compras,Compras / Sourcing,PT,,INBOX_LATAM
 angelmercado@condumex.com.mx,Rafael,Ángel Mercado Dávila,"NACIONAL DE CONDUCTORES ELÉCTRICOS, S.A. DE C.V.",,Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX
 lori.mchenry@neotech.com,Lori,McHenry,NEOTech,Ohio,United States,2 - Decisor compras,Purchasing / Sourcing,EN,,INBOX_US
 samir.agib@neotech.com,Samir,Agib,NEOTech,California,United States,2 - Decisor compras,Purchasing / Sourcing,EN,,INBOX_US
@@ -834,9 +834,9 @@ lizeth.gonzalez2@plexus.com,Lizeth,Gonzalez,Plexus,Jalisco,Mexico,2 - Decisor co
 miriam.martinez@plexus.com,Miriam,Itzel Martinez Cortes,Plexus,Jalisco,Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX
 eduardo.cervantes@plexus.com,Eduardo,Ramirez Cervantes,Plexus,Wisconsin,Mexico,2 - Decisor compras,Materiales / Planeación,ES,,INBOX_MX
 marco.gonzalez@plexus.com,Marco,Gonzalez,Plexus,Jalisco,Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX
-dcolin@positivo.com.br,Daniela,Colin,Positivo Tecnologia,,Brasil,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_LATAM
-ricardoh@positivo.com.br,Ricardo,Haiduk,Positivo Tecnologia,,Brasil,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_LATAM
-valneij@positivo.com.br,Valnei,Junior,Positivo Tecnologia,,Brasil,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_LATAM
+dcolin@positivo.com.br,Daniela,Colin,Positivo Tecnologia,,Brasil,2 - Decisor compras,Compras / Sourcing,PT,,INBOX_LATAM
+ricardoh@positivo.com.br,Ricardo,Haiduk,Positivo Tecnologia,,Brasil,2 - Decisor compras,Compras / Sourcing,PT,,INBOX_LATAM
+valneij@positivo.com.br,Valnei,Junior,Positivo Tecnologia,,Brasil,2 - Decisor compras,Compras / Sourcing,PT,,INBOX_LATAM
 ksmeltzer@goprecise.com,Kierstin,Smeltzer,Precise Systems,,United States,2 - Decisor compras,EMS/CM,EN,,Tsunami_Top100_ENRIQUECIDO
 luis.vargas@preh.com,Luis,Vargas,Preh de Mexico,Nuevo Leon,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 gtovar@pas.com,Gabriel,Tovar,Prettl Electronics,Queretaro,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
@@ -996,10 +996,10 @@ jaime.pacheco@visteon.com,James,(Jaime) Pacheco,Visteon,Chihuahua,Mexico,2 - Dec
 lchapar1@visteon.com,Luis,Chaparro,Visteon,Chihuahua,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 econtreras@vcclite.com,Erika,Contreras,Visual Communications Company (VCC),Baja California,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
 rcervantes@wabtec.com,Lic.,Rosalinda Cervantes de Anda,"WABTEC DE MÉXICO, S. DE R.L. DE C.V.",,Mexico,2 - Decisor compras,Materiales / Planeación,ES,,INBOX_MX
-davim@weg.net,Davi,Martinazzo,WEG,,Brasil,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_LATAM
-fabioarakava@weg.net,Fabio,Arakava,WEG,,Brasil,2 - Decisor compras,Supply Chain,ES,,INBOX_LATAM
-fernandob@weg.net,Fernando,Borges,WEG,,Brasil,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_LATAM
-rossetti@weg.net,Moises,Rossetti,WEG,,Brasil,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_LATAM
+davim@weg.net,Davi,Martinazzo,WEG,,Brasil,2 - Decisor compras,Compras / Sourcing,PT,,INBOX_LATAM
+fabioarakava@weg.net,Fabio,Arakava,WEG,,Brasil,2 - Decisor compras,Supply Chain,PT,,INBOX_LATAM
+fernandob@weg.net,Fernando,Borges,WEG,,Brasil,2 - Decisor compras,Compras / Sourcing,PT,,INBOX_LATAM
+rossetti@weg.net,Moises,Rossetti,WEG,,Brasil,2 - Decisor compras,Compras / Sourcing,PT,,INBOX_LATAM
 rortiz@weg.net,Ing.,Rubén Ortiz,"WEG MÉXICO, S.A. DE C.V.",,Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX
 yolanda.martinez@wicor.com,Yolanda,Martínez,"WEIDMANN TECNOLOGÍA ELÉCTRICA DE MÉXICO, S.A. DE C.V.",,Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX
 mmedina@wkk.com.hk,Martin,Medina Morales,WKK Technology Queretaro,Queretaro,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO
@@ -1218,7 +1218,7 @@ sabas.ortiz@deltaww.com,Sabas,Ortiz,Delta Electronics,Baja California,Mexico,3 -
 bianca.lopez@na.denso.com,Bianca,Lopez Araiza,Denso Mexico,Guanajuato,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO
 kristian.medellin@na.denso.com,Kristian,Medellin Blanco,Denso Mexico,Nuevo Leon,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO
 diana.santiago@denso-ten.com,Diana,Santiago,Denso Ten,Tamaulipas,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO
-cristiane.walter@digitel.com.br,Walter,Cristiane,Digitel,,Brasil,3 - Comprador,Compras / Sourcing,ES,,INBOX_LATAM
+cristiane.walter@digitel.com.br,Walter,Cristiane,Digitel,,Brasil,3 - Comprador,Compras / Sourcing,PT,,INBOX_LATAM
 sdoura@distron.com,Sam,Doura,Distron,FL,United States,3 - Comprador,Purchasing / Sourcing,EN,,INBOX_US
 gustavo.guadarrama@draexlmaier.com,Gustavo,Guadarrama,Draxlmaier (DCM),San Luis Potosi,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO
 maria.garcia@draexlmaier.com,Maria,Garcia,Draxlmaier (DCM),San Luis Potosi,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO
@@ -1285,7 +1285,7 @@ oscar.gonzalez@erich-jaeger.com,Oscar,Gonzalez,Erich Jaeger,Coahuila,Mexico,3 - 
 abalderas@cft.com.mx,Ing.,Alejandro Balderas,"FRIGUS BOHN DE MÉXICO, S.A. DE C.V.",,Mexico,3 - Comprador,Compras / Sourcing,ES,,INBOX_MX
 chinling.yong@flex.com,Chin,Yong,Flex,CA,United States,3 - Comprador,Purchasing / Sourcing,EN,,INBOX_US
 divya.wandhare@flex.com,Divya,Wandhare,Flex,India,Mexico,3 - Comprador,Compras / Sourcing,ES,,INBOX_MX
-caio.ceccarelli@flex.com,Caio,Ceccarelli,Flex,,Brasil,3 - Comprador,Compras / Sourcing,ES,,INBOX_LATAM
+caio.ceccarelli@flex.com,Caio,Ceccarelli,Flex,,Brasil,3 - Comprador,Compras / Sourcing,PT,,INBOX_LATAM
 jorge.silva@forvia.com,Jorge,Mario Silva,Forvia (Faurecia),Mexico,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO
 esmeralda.retana@hella.com,Esmeralda,Retana,Forvia Hella,,Mexico,3 - Comprador,Compras / Sourcing,ES,,INBOX_MX
 daniel.lambarena@foxconn.com,Daniel,Lambarena,Foxconn,,Mexico,3 - Comprador,Compras / Sourcing,ES,,INBOX_MX
@@ -1497,7 +1497,7 @@ jtepe@riversideintegrated.com,Julie,Tepe,RiverSide Integrated Solutions,MN,Unite
 ehammann@riversideintegrated.com,Emily,Hammann,RiverSide Integrated Solutions,MN,United States,3 - Comprador,Purchasing / Sourcing,EN,,INBOX_US
 lratz@riversideintegrated.com,Laurie,Ratz,RiverSide Integrated Solutions,MN,United States,3 - Comprador,Purchasing / Sourcing,EN,,INBOX_US
 even.garcia@robertshaw.com,Even,Garcia,Robertshaw,Tamaulipas,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO
-hercilio.silva@semptcl.com.br,Hercilio,Silva,SEMP TCL,,Brasil,3 - Comprador,Compras / Sourcing,ES,,INBOX_LATAM
+hercilio.silva@semptcl.com.br,Hercilio,Silva,SEMP TCL,,Brasil,3 - Comprador,Compras / Sourcing,PT,,INBOX_LATAM
 afuentes@siix.co.jp,Abril,Itzel Fuentes Lino,SIIX EMS Mexico,San Luis Potosi,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO
 jaldair@siix.co.jp,Jorge,Aldair,SIIX EMS Mexico,San Luis Potosi,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO
 dwayne.grant@smartm.com,Dwayne,Grant,SMART Modular,CA,United States,3 - Comprador,Purchasing / Sourcing,EN,,INBOX_US
@@ -1586,7 +1586,7 @@ pamelamaynez@visteon.com,Pamela,Maynez,Visteon,Chihuahua,Mexico,3 - Comprador,,E
 rkumar20@visteon.com,Ranjith,Kumar,Visteon,MI,United States,3 - Comprador,Purchasing / Sourcing,EN,,INBOX_US
 oastorga@vcclite.com,Omar,Astorga,Visual Communications Company (VCC),Baja California,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO
 gruiz@vcclite.com,Gabriela,Ruiz,Visual Communications Company (VCC),California (EE.UU.),Mexico,3 - Comprador,Materiales / Planeación,ES,,INBOX_MX
-danielab@weg.net,Daniela,Zibetti,WEG,,Brasil,3 - Comprador,Compras / Sourcing,ES,,INBOX_LATAM
+danielab@weg.net,Daniela,Zibetti,WEG,,Brasil,3 - Comprador,Compras / Sourcing,PT,,INBOX_LATAM
 alejandra.rodriguez@watlow.com,Alejandra,Rodriguez,Watlow,(por confirmar),Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO
 julieta.balbino@watlow.com,Julieta,Balbino,Watlow,(por confirmar),Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO
 ssantillan@watlow.com,Salma,Santillan,Watlow,(por confirmar),Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO
@@ -2031,7 +2031,7 @@ neil.campbell@collinsaerospace.com,Neil,Campbell,Collins Aerospace,IA,United Sta
 luisfabian.quinones@commscope.com,Luis,F. Quinones,CommScope,Chihuahua,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
 maribel.morales@construlitalighting.com,Maribel,Morales,Construlita,(por confirmar),Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 alejandro.vilchis@construlita.com.mx,Ing.,Alejandro Vilchis Espínola,Construlita Lighting,,,4 - Directorio ampliado,OEM,,,Tsunami_CRM_gratis
-andre.flores@continental.com,Andre,Flores,Continental,,Brasil,4 - Directorio ampliado,Ingenieria / Manufactura,ES,,INBOX_LATAM
+andre.flores@continental.com,Andre,Flores,Continental,,Brasil,4 - Directorio ampliado,Ingenieria / Manufactura,PT,,INBOX_LATAM
 hugo.gonzalez.arteaga@continental-corporation.com,Hugo,Gonzalez Arteaga,Continental Automotive,,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 theresa@controltek.com,Theresa,Ward,Controltek,,,4 - Directorio ampliado,EMS/CM,,,Tsunami_CRM_gratis
 ricardo.cardenas@cooperstandard.com,Ricardo,Cardenas,Cooper Standard,,,4 - Directorio ampliado,Otro/Por clasificar,,,Tsunami_CRM_gratis
@@ -2293,7 +2293,7 @@ valeria.ruiztamborrell@hella.com,Valeria,Ruiz Tamborrell,Forvia Hella,Por confir
 frida.carolina@foxconn.com,Frida,Carolina,Foxconn,(por confirmar),Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 ricardo.medina@foxconn.com,Ricardo,Medina,Foxconn,(por confirmar),Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 carolina.trejo@foxconn.com,Frida,Carolina Trejo,Foxconn,(por confirmar),Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-efrem.castro@foxconn.com,Efrem,Bittencourt,Foxconn,,Brasil,4 - Directorio ampliado,Ingenieria / Manufactura,ES,,INBOX_LATAM
+efrem.castro@foxconn.com,Efrem,Bittencourt,Foxconn,,Brasil,4 - Directorio ampliado,Ingenieria / Manufactura,PT,,INBOX_LATAM
 luis.valtierra@fii-foxconn.com,Luis,Valtierra,Foxconn (FII Guadalajara),Jalisco,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
 priscilla.avina@mail.foxconn.com,Priscilla,Avina,Foxconn (FII),Jalisco,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
 javier.teran@mail.foxconn.com,Javier,Teran,Foxconn (FII),Jalisco,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
@@ -2443,7 +2443,7 @@ aperez@iusa.com.mx,Lic.,Alfonso Pérez Castillo,"IUSA IZTAPALAPA, S.A. DE C.V.",
 alfredo@ivemsa.com,(contacto,general),IVEMSA ADMINISTRADORA,Baja California,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
 jose.ramirezruiz@imberacooling.com,Jose,Alejandro Ramirez Ruiz,Imbera S.A. de C.V.,,,4 - Directorio ampliado,Otro/Por clasificar,,,Tsunami_CRM_gratis
 ado.rafael@intelbras.com.br,Ado,Evangelista,Intelbras,,,4 - Directorio ampliado,OEM,,,Tsunami_CRM_gratis
-jorge@intelbras.com.br,Jorge,Silva,Intelbras,,Brasil,4 - Directorio ampliado,Ingenieria / Manufactura,ES,,INBOX_LATAM
+jorge@intelbras.com.br,Jorge,Silva,Intelbras,,Brasil,4 - Directorio ampliado,Ingenieria / Manufactura,PT,,INBOX_LATAM
 lupitagarza@internationalassembly.com,(contacto,general),International Assembly,,,4 - Directorio ampliado,EMS/CM,,,Tsunami_CRM_gratis
 hector.sanchez@ipaper.com,Hector,Sanchez,International Paper,CHIHUAHUA,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
 perla.flores@ipaper.com,Perla,Flores,International Paper,CHIHUAHUA,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
@@ -2644,7 +2644,7 @@ manuel.tellezgiron@marelli.com,Manuel,Tellez Giron,Marelli,Jalisco,Mexico,4 - Di
 luis.rendon@marelli.com,Luis,Enrique Rendon Romo,Marelli,Mexico,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
 omar.rodriguezrodriguez@marelli.com,Omar,Rodriguez Rodriguez,Marelli,Aguascalientes,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
 alfredo.genovese@magnetimarelli.com,Alfredo,Genovese,Marelli,,,4 - Directorio ampliado,OEM,,,Tsunami_CRM_gratis
-leonardo.martins@magnetimarelli.com,Leonardo,Martins,Marelli,,Brasil,4 - Directorio ampliado,Ingenieria / Manufactura,ES,,INBOX_LATAM
+leonardo.martins@magnetimarelli.com,Leonardo,Martins,Marelli,,Brasil,4 - Directorio ampliado,Ingenieria / Manufactura,PT,,INBOX_LATAM
 robson.silva@marelli.com,Robson,Alves Silva,Marelli (Aguascalientes),,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 bgaytan@masimo.com,Bgaytan,,Masimo,,,4 - Directorio ampliado,Otro/Por clasificar,,MEDIA,Tsunami_CRM_gratis
 mike.master@matric.com,Michael,Master,Matric Group,,,4 - Directorio ampliado,EMS/CM,,,Tsunami_CRM_gratis
@@ -2688,7 +2688,7 @@ rolando.lopez@molex.com,(contacto,general),Molex,,,4 - Directorio ampliado,OEM,,
 jjohnson2@moog.com,John,Johnson,Moog,NY,United States,4 - Directorio ampliado,Technical / Process Eng.,EN,,INBOX_US
 nschlabach@moog.com,Nathan,Schlabach,Moog GmbH,,,4 - Directorio ampliado,OEM,,,Tsunami_CRM_gratis
 george.kumpf@motorolasolutions.com,George,Kumpf,Motorola Solutions,,,4 - Directorio ampliado,OEM,,,Tsunami_CRM_gratis
-baylon.yason@multilaser.com.br,Baylon,Yason,Multilaser,,Brasil,4 - Directorio ampliado,Ingenieria / Manufactura,ES,,INBOX_LATAM
+baylon.yason@multilaser.com.br,Baylon,Yason,Multilaser,,Brasil,4 - Directorio ampliado,Ingenieria / Manufactura,PT,,INBOX_LATAM
 agomez@condumex.com.mx,Antonio,Gómez García,"NACIONAL DE CONDUCTORES ELÉCTRICOS, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 tomasbarquin@condumex.com.mx,Tomás,Barquín Sordo,"NACIONAL DE CONDUCTORES ELÉCTRICOS, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 augusto.rodriguez@navistar.com,Ing.,Daniel Pichardo Reyes,"NAVISTAR MÉXICO, S. DE R.L. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
@@ -2832,7 +2832,7 @@ aquezada@seaconglobal.com,(contacto,general),"SEACON GLOBAL PRODUCTION, S. DE R.
 aldo.leon@seg-automotive.com,Aldo,Daniel Leon Gonzalez,SEG Automotive india private limited,,,4 - Directorio ampliado,Otro/Por clasificar,,,Tsunami_CRM_gratis
 kguadarrama@enesa.com,Ing.,Carlos Cárdenas Blásquez,"SELMEC EQUIPOS INDUSTRIALES, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 juvencio.trevino@semex.com.mx,Juvencio,de Jesus Trevino Macias,SEMEX,Nuevo Leon,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
-higino.soares@semptcl.com.br,Jose,Higino Soares Neto,SEMP TCL,,Brasil,4 - Directorio ampliado,Ingenieria / Manufactura,ES,,INBOX_LATAM
+higino.soares@semptcl.com.br,Jose,Higino Soares Neto,SEMP TCL,,Brasil,4 - Directorio ampliado,Ingenieria / Manufactura,PT,,INBOX_LATAM
 daniel.palacios@serpromx.com,Daniel,Palacios,"SERVICIOS PROFESIONALES DE AUTOMATIZACIÓN Y COMUNICACIÓN, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 javier.mendez@serpromx.com,Javier,Méndez Franzoni,"SERVICIOS PROFESIONALES DE AUTOMATIZACIÓN Y COMUNICACIÓN, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 guillermo.lopez@siecautomation.com,(contacto,general),SIEC AUTOMATION,,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
@@ -2881,7 +2881,7 @@ miguel.mejia@zodiacaerospace.com,Miguel,Mejia,Safran (Zodiac Aerospace),(por con
 ricardo.carrera@zodiacaerospace.com,Ricardo,Carrera,Safran (Zodiac Aerospace),(por confirmar),Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 stephanie.ramos@mx.labinal.com,Stephanie,Ramos,Safran Electrical (Labinal),Chihuahua,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
 tao.aguilera@safrangroup.com,Tao-ling,Aguilera,Safran Electronics & Defense,BC,Mexico,4 - Directorio ampliado,Técnico / Procesos,ES,,INBOX_MX
-nelson.araujo@salcomp.com,Nelson,Araujo,Salcomp,,Brasil,4 - Directorio ampliado,Ingenieria / Manufactura,ES,,INBOX_LATAM
+nelson.araujo@salcomp.com,Nelson,Araujo,Salcomp,,Brasil,4 - Directorio ampliado,Ingenieria / Manufactura,PT,,INBOX_LATAM
 manuel.cretin@samsara.com,Manuel,Cretin,Samsara,Nuevo Leon,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
 e.gim@samsung.com,Eunji,Gim,Samsung Electronics,CDMX,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
 d.delgadillo@samsung.com,Diana,Delgadillo,Samsung Electronics,Queretaro,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO
@@ -3035,7 +3035,7 @@ rmargan@visteon.com,Reegan,Margan,Visteon,MI,United States,4 - Directorio amplia
 gduarte1@visteon.com,Goncalo,Duarte,Visteon,MI,United States,4 - Directorio ampliado,Technical / Process Eng.,EN,,INBOX_US
 icastaneda@wabtec.com,C.P.,Israel Castañeda Zepeda,"WABTEC DE MÉXICO, S. DE R.L. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 ogomez@wabtec.com,Ing.,Omar Gómez Rosas,"WABTEC DE MÉXICO, S. DE R.L. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
-eduardon@weg.net,Eduardo,Neri,WEG,,Brasil,4 - Directorio ampliado,Ingenieria / Manufactura,ES,,INBOX_LATAM
+eduardon@weg.net,Eduardo,Neri,WEG,,Brasil,4 - Directorio ampliado,Ingenieria / Manufactura,PT,,INBOX_LATAM
 pguerrero@weg.net,(contacto,general),"WEG MEXICO, S.A. DE C.V.",ESTADO DE MEXICO,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 gjacques@weg.net,Ing.,Giovani Jacques Beltrame,"WEG MÉXICO, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX
 jjasso@weg.net,Ing.,Jaime Jasso López,"WEG MÉXICO, S.A. DE C.V.",,Mexico,4 - Directorio ampliado,Técnico / Procesos,ES,,INBOX_MX

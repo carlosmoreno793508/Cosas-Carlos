@@ -71,6 +71,9 @@ def evaluar(email, empresa):
 
 # El pais decide el idioma del copy (R: "la geografia no se infiere del dominio"),
 # asi que se normaliza a un solo nombre por pais.
+# Brasil habla portugues, no espanol: mandarle copy en ES es el mismo error
+# que mandarle espanol a Polonia por el TLD.
+IDIOMA_POR_PAIS = {"United States": "EN", "Canada": "EN", "Brasil": "PT"}
 RE_PAIS_EMPRESA = re.compile(r"\((brasil|brazil|colombia|chile|argentina|peru|costa rica|usa|eeuu|canada|india|china)\)", re.I)
 PAIS_CANON = {
     "mx": "Mexico", "mexico": "Mexico", "méxico": "Mexico",
@@ -90,8 +93,9 @@ def agregar(email, first, last, empresa, estado, pais, prioridad, arquetipo, idi
     if _m:                                  # "Bosch (Brasil)" manda sobre la columna Pais
         pais = PAIS_CANON.get(_m.group(1).lower(), _m.group(1).title())
     pais = PAIS_CANON.get((pais or "").strip().lower(), (pais or "").strip())
+    if pais in IDIOMA_POR_PAIS: idioma = IDIOMA_POR_PAIS[pais]
     if not (idioma or "").strip():          # el idioma se deriva del pais, no se deja vacio
-        idioma = "EN" if pais in ("United States", "Canada") else ("ES" if pais else "")
+        idioma = IDIOMA_POR_PAIS.get(pais, "ES" if pais else "")
     motivo, riesgo_f = evaluar(email, empresa)
     reg = OrderedDict(email=(email or "").strip().lower(), first_name=first or "", last_name=last or "",
                       company_name=empresa or "", estado=estado or "", pais=pais or "",
