@@ -110,11 +110,15 @@ def agregar(email, first, last, empresa, estado, pais, prioridad, arquetipo, idi
     # R2 por (contacto + empresa): la misma persona en dos dominios recibiria dos
     # correos, que es senal de spam justo durante el warm-up.
     raiz = norm(empresa).split()[0] if norm(empresa) else ""
-    kper = (norm(first + " " + last), raiz)
-    if kper[0] and raiz and kper in personas:
+    # Los apellidos compuestos mexicanos llegan en distinto orden segun la fuente
+    # ("Carrillo Segovia" vs "Segovia Carrillo"), y a veces con inicial suelta.
+    # Comparar el CONJUNTO de tokens, no la cadena ordenada.
+    toks = frozenset(t for t in norm(first + " " + last).split() if len(t) > 1)
+    kper = (toks, raiz)
+    if len(kper[0]) >= 2 and raiz and kper in personas:
         reg["motivo_exclusion"] = "misma persona ya incluida con otro correo (R2): %s" % personas[kper]
         excluidos.append(reg); return
-    if kper[0] and raiz: personas[kper] = reg["email"]
+    if len(kper[0]) >= 2 and raiz: personas[kper] = reg["email"]
     vistos.add(reg["email"]); filas.append(reg)
 
 # 1) Astute (estudios propios, ya con prioridad/tier)
@@ -184,6 +188,22 @@ if os.path.exists(_inbox):
         agregar(r["Email"], f, l, r["Empresa"], r["Estado"], r["Pais"], prio,
                 funcion, "ES" if r["region"] in ("MX", "LATAM") else "EN",
                 "INBOX_" + r["region"])
+
+# 7) Refuerzo Queretaro SMT: nuevos comprados + puestos recuperados gratis.
+# Los "PUESTO RECUPERADO" ya estan en el archivo por otra fuente; entran aqui
+# para que el puesto real mande sobre la prioridad (venian sin titulo).
+_ref = os.path.join(INV, "Estudio_Refuerzo_Queretaro_SMT.csv")
+if os.path.exists(_ref):
+    for r in leer(_ref):
+        pue = r.get("Puesto", "")
+        if RE_ELEC.search(pue):                        prio = "1 - Clave electrónicos"
+        elif re.search(r"director|head|manager", pue, re.I): prio = "2 - Decisor compras"
+        else:                                          prio = "3 - Comprador"
+        partes = (r["Contacto"] or "").strip().split()
+        f = partes[0] if partes else ""
+        l = " ".join(partes[1:]) if len(partes) > 1 else ""
+        agregar(r["Email"], f, l, r["Empresa"], r.get("Estado",""), "Mexico",
+                prio, pue, "ES", "Refuerzo_QRO_SMT")
 
 # ---------- salidas ----------
 COLS = ["email","first_name","last_name","company_name","estado","pais",
