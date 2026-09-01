@@ -147,3 +147,55 @@ repetirlo. Los scripts y las búsquedas de esta sesión ya usan la forma correct
 - **94 OEM verificados sin comprar.** Casi todos son multinacionales grandes. Comprarlos requiere decidir primero *qué planta* es el objetivo, si no se repite el caso Continental. Dime si quieres que los compre igual.
 - **32 de la tanda 1 descartados**: 15 por entidad equivocada, 17 sin resultado.
 - **Tandas 2, 3 y 4 (421 cuentas):** 385 siguen sin dominio. Siguen bloqueadas por el re-export del CRM.
+
+---
+
+# Adenda 2 — Los 96 OEM restantes y el patrón de dominio
+
+**Gastado: 9 créditos más. Total de la sesión: 22.** Ningún correo enviado.
+
+## Cómo se resolvió el "qué planta"
+
+Era lo que tenía frenada la compra. La solución salió gratis: `search_contacts`
+con `country=Mexico` devuelve al comprador de la planta mexicana en vez del de
+la matriz. Con eso ya no hay que adivinar.
+
+De las 96 cuentas, **sólo 9 tienen comprador con correo en planta mexicana.**
+Las otras 87 se reparten así: ZF sola acapara 119 contactos mexicanos, y las
+47 restantes juntas tienen 4 — **ninguno con correo**. Cero créditos ahí.
+
+## Lo mejor de la tanda
+
+**ZKW — Paola Evangelista Cruz, `Manager, Purchasing Commodity Electronics`,
+planta mexicana.** Es literalmente el puesto que describe el ICP de Astute:
+compras de commodity de electrónica. Accuracy 95.
+
+Le siguen ZF (Cluster Commodity Head, decide sobre 119 compradores), Thales
+(Director de compras Américas, cubre las 4 filas de Thales del CRM) y GM
+(compradora senior, accuracy 99).
+
+## Dos trampas de dominio más, ambas visibles sólo al comprar
+
+- **ZKW usa `zkw.mx`**, no `zkw-group.com` que traía el CRM. Dominio local mexicano.
+- **Kidde usa `@carrier.com`**, porque Kidde pertenece a Carrier.
+
+Van seis en la sesión: Falco, SEACOMP, Kyungshin, Zollner, ZKW y Kidde.
+
+## Patrón de dominio: cerrado lo que se podía
+
+| Estado | Casos |
+|---|---|
+| Recuperado | Jatco (`jatco.com.mx`), Aisan (`aisanmexico.com`), Reiner (`reiner.mx`), SIIX (`siix-global.com`) |
+| Resuelto comprando el correo | ZKW, Kidde, Zollner |
+| Parcial | Hyundai Mobis (entidad MX existe, sin dominio en ZoomInfo) |
+| No recuperado | Kyungshin, Marquardt, Astemo, Erich Jaeger, Ichimiya, Pollmann |
+
+**Los recuperados dan el dominio, no el correo.** El local-part sigue sin
+confirmar: el patrón japonés `miguel_najeralopez@` no aplica a un `.com.mx`.
+Ninguno se construyó — R3 intacta.
+
+## Estado del archivo de envío
+
+3,679 enviables, 1,124 en la tanda 1 limpia. Cumplimiento re-verificado:
+cero ALTA, cero `no_contactar`, cero DUP/Inactivo, cero duplicados de correo,
+cero de persona, cero malformados.
