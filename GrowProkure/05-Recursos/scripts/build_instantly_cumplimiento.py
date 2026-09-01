@@ -30,6 +30,14 @@ RIESGO_MEDIA = {r["email"].strip().lower() for r in riesgo if r["severidad"] == 
 BLOQUEO_ALTA |= {e.split("(")[0].strip() for e in list(BLOQUEO_ALTA) if "(" in e}
 RIESGO_MEDIA |= {e.split("(")[0].strip() for e in list(RIESGO_MEDIA) if "(" in e}
 
+# El repo Astute lleva el historial REAL de rebotes y bajas. Es autoridad:
+# si ahi rebeto, no vuelve a salir.
+_nb = os.path.join(INV, "Astute_NO_ENVIAR_rebotados.csv")
+NO_ENVIAR = {}
+if os.path.exists(_nb):
+    for _r in leer(_nb):
+        NO_ENVIAR[_r["email"].strip().lower()] = _r["motivo"][:70]
+
 crm = leer(os.path.join(INV, "Tsunami_Prospectos_CLASIFICADO.csv"))
 NO_CONTACTAR = {norm(r["Nombre"]) for r in crm if r["no_contactar"] == "SI"}
 MOTIVO_NC    = {norm(r["Nombre"]): r["motivo_no_contactar"] for r in crm if r["no_contactar"] == "SI"}
@@ -53,6 +61,8 @@ def evaluar(email, empresa):
         return "email construido/inferido, no verificado (R3)", ""
     if not RE_EMAIL.match(e):
         return "email malformado (R3)", ""
+    if e in NO_ENVIAR:
+        return "rebote/baja confirmada en el repo Astute: %s" % NO_ENVIAR[e], ""
     if e in BLOQUEO_ALTA:
         return "riesgo ALTA de rebote (filtro 3, R12)", ""
     dom  = e.split("@")[1]

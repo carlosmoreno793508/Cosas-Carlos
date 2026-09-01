@@ -1,40 +1,90 @@
 email,first_name,last_name,company_name,estado,pais,prioridad,arquetipo,idioma_copy,riesgo,fuente,motivo_exclusion
 antonio.izaguirre@hitachi-automotive.co.jp,Antonio,Izaguirre,Astemo,Queretaro,Mexico,1 - Clave electrónicos,,ES,,Astute_Instantly_LISTO,"riesgo ALTA de rebote (filtro 3, R12)"
 emanuel.campos@mobis.co.kr,Emanuel,Rodríguez Campos,Hyundai Mobis,Nuevo León,Mexico,1 - Clave electrónicos,,ES,,Astute_Instantly_LISTO,"riesgo ALTA de rebote (filtro 3, R12)"
+azbel.rodriguez@keenfinity-group.com,Azbel,Rodriguez,Keenfinity,Sonora,Mexico,1 - Clave electrónicos,,ES,,Astute_Instantly_LISTO,"rebote/baja confirmada en el repo Astute: VERIFICADO (Wiza 2026-07-21, work email valid). DECISOR compra electro"
 beatriz.briones@marquardt.de,Beatriz,Briones de la Paz,Marquardt Mexico,Guanajuato,Mexico,1 - Clave electrónicos,,ES,,Astute_Instantly_LISTO,"riesgo ALTA de rebote (filtro 3, R12)"
+alejandro.garfias@valeo.com,Alejandro,Garfias,Valeo Wiper Systems,San Luis Potosi,Mexico,1 - Clave electrónicos,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: POR VALIDAR (Apollo waterfall 2026-07-22: 'Verified' pero ZeroBounce m
+carlos.roman@bcs-ais.com,Carlos,Roman,BCS Automotive Interface Solutions,Queretaro,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: Rebotado carlos.roman@bcs-ais.com (5.1.1 undeliverable/Access denied 2
+jorge.herrera@bcs-ais.com,Jorge,Herrera,BCS Automotive Interface Solutions,Queretaro,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: Rebotado jorge.herrera@bcs-ais.com (undeliverable/Access denied 2026-0
+monica.luna@bosch.com,Monica,Luna,Bosch,San Luis Potosi,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: Rebotado mluna@logismex.com.mx (550 User unknown 2026-07-15: dominio a
+homero.ruiz@continental.com,Jose,Homero Ruiz Gurrola,Continental (Mexico - varias plantas),MX,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: Inactivo - salio de Continental/ContiTech (usuario 2026-07-15: jose.ho
+carlos.ruvalcaba@daikincomfort.com,Carlos,Ruvalcaba,Daikin,San Luis Potosi,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: Rebotado carlos.ruvalcaba@daikin.co.jp (5.4.1 Access denied JPNP286 20
 weckler@erich-jaeger.de,Philipp,Weckler,Erich Jaeger,Coahuila,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO,"riesgo ALTA de rebote (filtro 3, R12)"
+joseluis.rodriguez@grammer.com,Jose,Luis Rodriguez Mandujano,GRAMMER Americas,Queretaro,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: Rebotado 2026-08-13 (5.4.1; GRAMMER entrega -> localpart incorrecto). 
+cain.camargo@forvia.com,Cain,Camargo,Hella (Forvia Hella),Queretaro,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: Inactivo - salio de Forvia (usuario 2026-07-15); destino por confirmar
 miguel_najeralopez@jatco.co.jp,Miguel,Angel Najera Lopez,Jatco,Aguascalientes,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO,"riesgo ALTA de rebote (filtro 3, R12)"
+kruiz@littelfuse.com,Karla,Ruiz Meza,Littelfuse,San Luis Potosi,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: Rebotado karla.ruiz@littelfuse.com (550 5.4.1 Access denied/DBEB 2026-
 guillermo.ponce@magna.com,Guillermo,Ponce,Magna International,,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO,tipo_final=DUP/Inactivo (filtro 2)
 jesus.salazar@magna.com,Jesus,Esquivel Salazar,Magna International,,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO,tipo_final=DUP/Inactivo (filtro 2)
 octavio.ochoa@magna.com,Octavio,Ochoa,Magna International,,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO,tipo_final=DUP/Inactivo (filtro 2)
 elias.hernandez@melecs.com (inferido),Elias,Hernandez,Melecs,Queretaro,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO,"email construido/inferido, no verificado (R3)"
+cesar.farfan@methode.com,Cesar,Farfan Becerril,Methode Electronics,Nuevo León,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: Rebotado 2026-08-20 (5.1.1 user unknown). 2do rebote Methode (con miru
+emilia.ibarra@motherson.com,Emilia,Ibarra,Motherson (MSSL),N/D,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: Rebotado 2026-08-11 (550 5.1.10 RecipientNotFound - servidor propio Mo
+polo.aguilera@motherson.com,Polo,Aguilera,Motherson (MSSL),Nuevo Leon,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: Rebotado 2026-08-11 (550 5.1.10 RecipientNotFound - servidor propio de
+gtovar@pas.com,Gabriel,Tovar,Prettl Electronics,Queretaro,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: Inactivo - salio de Prettl/PAS (usuario 2026-07-15); destino por confi
 alejandro.coello@safrangroup.com,Alejandro,Coello,Safran,Baja California,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO,tipo_final=DUP/Inactivo (filtro 2)
 alejandra.ochoa@safrangroup.com (inferido),Alejandra,Ochoa,Safran Electronics & Defense,BC,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO,"email construido/inferido, no verificado (R3)"
+amartinez@siix.co.jp,Armando,Martinez Delgado,SIIX EMS Mexico,San Luis Potosi,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: NO COLD-EMAIL: tenant siix.co.jp RECHAZA correo externo (5.4.1 Access 
+erik.castanon@valeo.com,Erik,Castanon Vargas,Valeo,Queretaro,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: Rebotado/CAMBIO EMPRESA 2026-08-11: Erik Castanon ahora en Nissan Moto
+fatima.quintero@valeo.com,Fatima,Quintero,Valeo,Queretaro,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: Rebotado fatima.quintero@valeo.com (Address not found/NoSuchUser 2026-
+jorge.nava@valeo.com,Jorge,Arturo Nava Gonzalez,Valeo,Por confirmar,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: Rebotado arturo.nava@valeo.com (NoSuchUser 2026-07-21: va por 2o nombr
+brenda.hernandez@zkw.mx,Brenda,Hernandez,ZKW,Guanajuato,Mexico,2 - Decisor compras,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: Rebotado hernandez.brenda@zkw-group.com (5.1.1 User Unknown 2026-07-15
+fernandaamairany.pastrana@bcs-ais.com,Fernanda,Amairany Pastrana Coronado,BCS Automotive Interface Solutions,Queretaro,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: Rebotado fernanda.pastrana@bcs-ais.com (undeliverable/Access denied 20
+kenia.morales@bitron.com,Kenia,Morales,Bitron,Queretaro,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: Salio de Bitron (usuario 2026-07-15); correo Bitron probablemente inac
+gustavo.guadarrama@draexlmaier.com,Gustavo,Guadarrama,Draxlmaier (DCM),San Luis Potosi,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: Rebotado gustavo.guadarrama@draexlmaier.com (5.1.1 User Unknown 2026-0
 lizbeth.alvarez@exfo.com (inferido),Lizbeth,Alvarez,EXFO Products,Queretaro,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO,"email construido/inferido, no verificado (R3)"
 elisa.rodriguez@gmail.com,Elisa,Rodriguez De Alba,Gentherm,Guanajuato,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO,"dominio personal/gratuito, no corporativo (R9)"
+marlene.nieves@grammer.com,Marlene,Nieves,GRAMMER Americas,Queretaro,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: Rebotado 2026-08-13 (5.4.1; GRAMMER entrega -> localpart incorrecto). 
 ana_bernal@jatco.co.jp,Ana,Bernal,Jatco,Aguascalientes,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO,"riesgo ALTA de rebote (filtro 3, R12)"
 roberto_garciacerda@jatco.co.jp,Roberto,I. Garcia Cerda,Jatco,Aguascalientes,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO,"riesgo ALTA de rebote (filtro 3, R12)"
+inolazco@masterworkelectronics.com,Ivan,Nolazco,Masterwork Electronics,Baja California,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: Rebotado 2026-08-11 (5.1.1 access denied; patron correcto es nombre.ap
 paulina.fernandez@melecs.com (inferido),Paulina,Fernandez,Melecs,Queretaro,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO,"email construido/inferido, no verificado (R3)"
+ecovarrubias@pas.com,Emmanuel,Covarrubias,Prettl Electronics,Queretaro,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: Inactivo - salio de Prettl/PAS (usuario 2026-07-15); destino por confi
 adriel.corpus@safrangroup.com (inferido),Adriel,Corpus,Safran Electronics & Defense,BC,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO,"email construido/inferido, no verificado (R3)"
 erick.solorzano@safrangroup.com (inferido),Erick,Solorzano,Safran Electronics & Defense,BC,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO,"email construido/inferido, no verificado (R3)"
 kassandra.velazquez@safrangroup.com (inferido),Kassandra,Velazquez,Safran Electronics & Defense,BC,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO,"email construido/inferido, no verificado (R3)"
-ccornejo@siix.co.jp,Cathy,Cornejo,SIIX EMS Mexico,San Luis Potosi,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO,"riesgo ALTA de rebote (filtro 3, R12)"
+afuentes@siix.co.jp,Abril,Itzel Fuentes Lino,SIIX EMS Mexico,San Luis Potosi,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: NO COLD-EMAIL: tenant siix.co.jp RECHAZA correo externo (5.4.1 Access 
+ccornejo@siix.co.jp,Cathy,Cornejo,SIIX EMS Mexico,San Luis Potosi,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: NO COLD-EMAIL: tenant siix.co.jp RECHAZA correo externo (5.4.1 Access 
 dramos@siix.co.jp,Dafne,Ramos Puente,SIIX EMS Mexico,San Luis Potosi,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO,"riesgo ALTA de rebote (filtro 3, R12)"
+jaldair@siix.co.jp,Jorge,Aldair,SIIX EMS Mexico,San Luis Potosi,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: NO COLD-EMAIL: tenant siix.co.jp RECHAZA correo externo (5.4.1 Access 
 rortega@siix.co.jp,Roman,Ortega,SIIX EMS Mexico,San Luis Potosi,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO,"riesgo ALTA de rebote (filtro 3, R12)"
+linda.chapman@vexos.com,Linda,Chapman,Vexos,Chihuahua,Mexico,3 - Comprador,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: Inactivo - salio de Vexos (auto-reply 2026-08-11 'no longer with the c
 alejandro.salguero@exfo.com,Alejandro,Arroyo Salguero,EXFO Products,Queretaro,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO,misma persona ya incluida con otro correo (R2): alejandro.arroyo-salguero@exfo.com
 lizbeth.alvarez@exfo.com,Lizbeth,Alvarez,EXFO Products,Queretaro,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO,"riesgo ALTA de rebote (filtro 3, R12)"
 seger@prodigy.net.mx,(planta),,COMSEGER,CDMX,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO,"dominio personal/gratuito, no corporativo (R9)"
+rgarrido@sistemaselectronicosmty.com,Rodrigo,Garrido,Sistemas Electronicos Monterrey,Nuevo Leon,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: Rebotado 2026-08-11 (No Such User Here). Correo inferido confianza BAJ
+mfinkel@alliport.com,Mauricio,Finkel,Alliport Group (ex-Electronica Eltec),Nuevo Leon,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: Rebotado 2026-08-11 (Google NoSuchUser). Apollo 2026-08-11: cambio de 
+chinojosa@littelfuse.com,Conrado,Hinojosa,Littelfuse,Tamaulipas,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: Rebotado 2026-08-11 (550 5.4.1 access denied). ZoomInfo FULL_MATCH Dir
+mmartinez@visteon.com,Manuel,Martinez Lopez,Visteon,Tamaulipas,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: Rebotado 2026-08-11 (550 Invalid Recipient). Re-descubrimiento sin exi
 ventas@hayakawamexico.com.mx,(planta),,Hayakawa,Queretaro,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO,"buzon generico, no nominal (R3)"
+enrique.romo@amphenol-tcs.com,Kike,Romo,Amphenol TCS,Baja California,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: Rebotado 2026-08-11 (5.4.1 access denied). Sin resultados en ZoomInfo 
 contrataciones@amphenol-optimize.com,(planta),,Amphenol Optimize,Sonora,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO,tipo_final=DUP/Inactivo (filtro 2)
+guillermo.martinez@valeo.com,Guillermo,Martinez,Valeo Sistemas,San Luis Potosi,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: Rebotado 2026-08-11 (Google NoSuchUser). Apollo sugiere G. Martinez Vi
 contacto@pcbrapido.com,(planta),,PCBRAPIDO,Queretaro,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO,"buzon generico, no nominal (R3)"
 vitec.electronica@gmail.com,(planta),,VITEC Electronica,Queretaro,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO,"dominio personal/gratuito, no corporativo (R9)"
+jose.juarez@ecintl.com,Jose,Luis Juarez,ECI (Electrical Components Intl),Chihuahua,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: Rebotado 2026-08-11 ('jose.juarez wasn't found at ecintl.com' = usuari
 contacto@intesc.mx,(planta),,INTESC Electronica y Embebidos,Puebla,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO,"buzon generico, no nominal (R3)"
 sales@lodan.com,(planta),,LODANMEX,Puebla,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO,"buzon generico, no nominal (R3)"
 reclutamiento.infac@gmail.com,(planta,/ RH),INFAC Mexico,Coahuila,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO,"dominio personal/gratuito, no corporativo (R9)"
 ventas@mainco.com.mx,(planta),,MAINCO,Coahuila,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO,"buzon generico, no nominal (R3)"
+jarvizu@warren.com.mx,Joaquin,Arvizu Gudino,Warren Automotive de Mexico (ex-Rompa Group),Queretaro,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: Rebotado 2026-08-20 (5.4.1 access denied; correo inferido). CAMBIO DE 
 aclozanor@avanttechnology.com.mx,Ana,Lozano,Avant Technology,Tamaulipas,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO,tipo_final=DUP/Inactivo (filtro 2)
+lmarquez@siix.co.jp,Leisvi,Marquez,SIIX EMS Mexico,San Luis Potosi,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: NO COLD-EMAIL: tenant siix.co.jp RECHAZA correo externo (5.4.1 Access 
+lperez@siix.co.jp,Luisa,Perez,SIIX EMS Mexico,San Luis Potosi,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: NO COLD-EMAIL: tenant siix.co.jp RECHAZA correo externo (5.4.1 Access 
+mrivera@siix.co.jp,Monica,Rivera,SIIX EMS Mexico,San Luis Potosi,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: NO COLD-EMAIL: tenant siix.co.jp RECHAZA correo externo (5.4.1 Access 
+agaray@siix.co.jp,Alan,Andre Garay Camacho,SIIX EMS Mexico,San Luis Potosi,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: NO COLD-EMAIL: tenant siix.co.jp RECHAZA correo externo (5.4.1 Access 
+vperez@siix.co.jp,G.,Vicente Perez Al Atrache,SIIX EMS Mexico,Coahuila,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: NO COLD-EMAIL: tenant siix.co.jp RECHAZA correo externo (5.4.1 Access 
+jpineda@siix.co.jp,Jose,Guadalupe Pineda Molina,SIIX EMS Mexico,San Luis Potosi,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: NO COLD-EMAIL: tenant siix.co.jp RECHAZA correo externo (5.4.1 Access 
+ymartinez@siix.co.jp,Yuridia,Jasmin Martinez Rocha,SIIX EMS Mexico,San Luis Potosi,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: NO COLD-EMAIL: tenant siix.co.jp RECHAZA correo externo (5.4.1 Access 
+glucero@siix.co.jp,Gerardo,Lucero Rivera,SIIX EMS Mexico,San Luis Potosi,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: NO COLD-EMAIL: tenant siix.co.jp RECHAZA correo externo (5.4.1 Access 
+rhernandez@siix.co.jp,Ricardo,Augusto Hernandez Dominguez,SIIX EMS Mexico,San Luis Potosi,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: NO COLD-EMAIL: tenant siix.co.jp RECHAZA correo externo (5.4.1 Access 
+fdelacruz@siix.co.jp,Felix,de la Cruz,SIIX EMS Mexico,Nuevo Leon,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: NO COLD-EMAIL: tenant siix.co.jp RECHAZA correo externo (5.4.1 Access 
+jaraiza@siix.co.jp,Jose,Araiza,SIIX EMS Mexico,Tamaulipas,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: NO COLD-EMAIL: tenant siix.co.jp RECHAZA correo externo (5.4.1 Access 
+bramirez@siix.co.jp,Berenice,Del Rocio Ramirez Tenorio,SIIX EMS Mexico,San Luis Potosi,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: NO COLD-EMAIL: tenant siix.co.jp RECHAZA correo externo (5.4.1 Access 
+clozano@lodan.com,Carlos,Lozano,LODANMEX,Puebla,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO,rebote/baja confirmada en el repo Astute: Rebotado clozano@lodanmex.com.mx (550 No such recipient 2026-07-17: do
 luis.ramirez@safrangroup.com,Luis,Felipe Ramirez Delgado,Safran,Chihuahua,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO,tipo_final=DUP/Inactivo (filtro 2)
 efren.trejo@mx.panasonic.com,Efren,Trejo,Panasonic,Nuevo Leon,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO,misma persona ya incluida con otro correo (R2): efren.trejo@panasonic.com
+marcela.villasenor@prettl.com,Marcela,Villasenor,Prettl,Queretaro,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO,"rebote/baja confirmada en el repo Astute: REBOTADO 2026-07-27 (5.4.1 Access denied, direccion incorrecta) | VERI"
 monica.ramirez@safrangroup.com,Monica,Ramirez,Safran,Baja California,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO,tipo_final=DUP/Inactivo (filtro 2)
 jorge.pallares@safrangroup.com,Jorge,Pallares,Safran,Queretaro,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO,tipo_final=DUP/Inactivo (filtro 2)
 mario.antonio@safrangroup.com,Mario,Antonio,Safran,Chihuahua,Mexico,4 - Directorio ampliado,,ES,,Astute_Instantly_LISTO,tipo_final=DUP/Inactivo (filtro 2)
@@ -127,7 +177,7 @@ alejandro.tejeda@sanmina.com,Alejandro,Tejeda,Sanmina - Monterrey Plant 2507,,,4
 alejandro.tejeda@sanmina.com,Alejandro,Tejeda,Sanmina Carrollton Plant 1555,,,4 - Directorio ampliado,DUP/Inactivo,,,Tsunami_CRM_gratis,tipo_final=DUP/Inactivo (filtro 2)
 jose.mancillas@creationtech.com,Jose,Ramon Mancillas,"Creation Technologies - Golden, CO",,,4 - Directorio ampliado,EMS/CM,,,Tsunami_CRM_gratis,duplicado por email (R2)
 jose.mancillas@creationtech.com,Jose,Ramon Mancillas,Creation Technologies,,,4 - Directorio ampliado,EMS/CM,,,Tsunami_CRM_gratis,duplicado por email (R2)
-inolazco@masterworkelectronics.com,Ivan,Nolazco,Masterwork Electronics,,,4 - Directorio ampliado,EMS/CM,,,Tsunami_CRM_gratis,duplicado por email (R2)
+inolazco@masterworkelectronics.com,Ivan,Nolazco,Masterwork Electronics,,,4 - Directorio ampliado,EMS/CM,,,Tsunami_CRM_gratis,rebote/baja confirmada en el repo Astute: Rebotado 2026-08-11 (5.1.1 access denied; patron correcto es nombre.ap
 alejandro_larraga@jabil.com,Alejandro,Larraga,Jabil Corp,,,4 - Directorio ampliado,DUP/Inactivo,,,Tsunami_CRM_gratis,tipo_final=DUP/Inactivo (filtro 2)
 alejandro.tejeda@sanmina.com,Alejandro,Tejeda,Sanmina Corporate,,,4 - Directorio ampliado,DUP/Inactivo,,,Tsunami_CRM_gratis,tipo_final=DUP/Inactivo (filtro 2)
 alejandro.tejeda@sanmina.com,Alejandro,Tejeda,Sanmina Agility,,,4 - Directorio ampliado,DUP/Inactivo,,,Tsunami_CRM_gratis,tipo_final=DUP/Inactivo (filtro 2)
@@ -139,7 +189,7 @@ zgalvan@cypressindustries.com,Z.,Galvan,Cypress Industries,,,4 - Directorio ampl
 elizabeth.gutierrez@ttelectronics.com,Elizabeth,Gutierrez,TT Electronics,,,4 - Directorio ampliado,EMS/CM,,,Tsunami_CRM_gratis,duplicado por email (R2)
 heissel.rivera@smtc.com,Heissel,Ayub Rivera,SMTC acquired MC Assembly,,,4 - Directorio ampliado,DUP/Inactivo,,,Tsunami_CRM_gratis,tipo_final=DUP/Inactivo (filtro 2)
 elizabeth.trevino@commscope.com,Elizabeth,Trevino,Commscope,,,4 - Directorio ampliado,OEM,,,Tsunami_CRM_gratis,duplicado por email (R2)
-marcela.villasenor@prettl.com,Marcela,Villasenor,Prettl,,,4 - Directorio ampliado,EMS/CM,,,Tsunami_CRM_gratis,duplicado por email (R2)
+marcela.villasenor@prettl.com,Marcela,Villasenor,Prettl,,,4 - Directorio ampliado,EMS/CM,,,Tsunami_CRM_gratis,"rebote/baja confirmada en el repo Astute: REBOTADO 2026-07-27 (5.4.1 Access denied, direccion incorrecta) | VERI"
 ajaramillo@visteon.com,Adriana,Jaramillo,Visteon,,,4 - Directorio ampliado,OEM,,,Tsunami_CRM_gratis,duplicado por email (R2)
 brett.shields@ngc.com,Brett,Shields,Northrop Grumman,,,4 - Directorio ampliado,DUP/Inactivo,,,Tsunami_CRM_gratis,tipo_final=DUP/Inactivo (filtro 2)
 biplaw.adhikari@amphenol-tcs.com,Biplaw,Adhikari,Amphenol,,,4 - Directorio ampliado,OEM,,,Tsunami_CRM_gratis,duplicado por email (R2)
@@ -268,7 +318,7 @@ jesus.hd@samsung.com,Jesus,Hernández Duhart,"Samsung Electronics Mexico, S.A. D
 jorge.cortes@draexlmaier.com,Jorge,Alfredo Cortes,DRAXLMAIER Group,,,4 - Directorio ampliado,OEM,,,Tsunami_CRM_gratis,duplicado por email (R2)
 jorge.cortes@draexlmaier.com,Jorge,Alfredo Cortes,Draexlmaier,,,4 - Directorio ampliado,OEM,,,Tsunami_CRM_gratis,duplicado por email (R2)
 azhim_morquecho@starkey.com,Azhim,Morquecho,Starkey de Mexico,,,4 - Directorio ampliado,OEM,,,Tsunami_CRM_gratis,duplicado por email (R2)
-marcela.villasenor@prettl.com,Marcela,Villasenor,Prettl Electric del Bajio,,,4 - Directorio ampliado,EMS/CM,,,Tsunami_CRM_gratis,duplicado por email (R2)
+marcela.villasenor@prettl.com,Marcela,Villasenor,Prettl Electric del Bajio,,,4 - Directorio ampliado,EMS/CM,,,Tsunami_CRM_gratis,"rebote/baja confirmada en el repo Astute: REBOTADO 2026-07-27 (5.4.1 Access denied, direccion incorrecta) | VERI"
 jacobos@falco.com,Jacobo,Simon,Falco Electronics,,,4 - Directorio ampliado,EMS/CM,,,Tsunami_CRM_gratis,duplicado por email (R2)
 jfarias@hayakawacorp.com.mx,Juan,Farias Villa Gomez,HAYAKAWA ELECTRONICS,,,4 - Directorio ampliado,Otro/Por clasificar,,,Tsunami_CRM_gratis,duplicado por email (R2)
 araceli.pina@harman.com,Araceli,Pina,Harman International,,,4 - Directorio ampliado,OEM,,,Tsunami_CRM_gratis,duplicado por email (R2)
@@ -303,7 +353,7 @@ amy.ruane@copeland.com,Amy,Ruane,Copeland Motores/Compresores,,,4 - Directorio a
 raul_salas@overheaddoor.com,Raul,Salas,Overhead Door Corporation,,,4 - Directorio ampliado,Otro/Por clasificar,,,Tsunami_CRM_gratis,duplicado por email (R2)
 lopezurquiza@nissan-global.com,Viviana,López Urquiza,"Nissan North America, Inc.",,,4 - Directorio ampliado,Otro/Por clasificar,,,Tsunami_CRM_gratis,duplicado por email (R2)
 jorgejesus.barredagonzalez@mx.bosch.com,Ing.,Jorge Barreda González,Robert Bosch LLC Headquarters,,,4 - Directorio ampliado,OEM,,,Tsunami_CRM_gratis,duplicado por email (R2)
-azbel.rodriguez@keenfinity-group.com,Azbel,Rodriguez,"Bosch Security Systems, LLC",,,4 - Directorio ampliado,OEM,,,Tsunami_CRM_gratis,duplicado por email (R2)
+azbel.rodriguez@keenfinity-group.com,Azbel,Rodriguez,"Bosch Security Systems, LLC",,,4 - Directorio ampliado,OEM,,,Tsunami_CRM_gratis,"rebote/baja confirmada en el repo Astute: VERIFICADO (Wiza 2026-07-21, work email valid). DECISOR compra electro"
 marco.avila@smr-automotive.com,Marco,AVILA,SMR Spain S.A.U,,,4 - Directorio ampliado,Otro/Por clasificar,,,Tsunami_CRM_gratis,duplicado por email (R2)
 anabellematos@eaton.com,Anabelle,Matos,Eaton Electrical Products Ltd,,,4 - Directorio ampliado,OEM,,,Tsunami_CRM_gratis,duplicado por email (R2)
 dulce.saldivar@us.panasonic.com,Dulce,Saldivar,Panasonic Connect North America,,,4 - Directorio ampliado,OEM,,,Tsunami_CRM_gratis,duplicado por email (R2)
@@ -337,11 +387,12 @@ preciador@samsung.com,Roberto,Preciado,Samsung Electronics,Queretaro,Mexico,1 - 
 mark.mcclellan@vitesco-technologies.com,Mark,McClellan,Continental / Vitesco,Chihuahua,Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX,misma persona ya incluida con otro correo (R2): mark.mcclellan@vitesco.com
 oziel.gonzalez@vistancenetworks.com,Oziel,Gonzalez,CommScope,Chihuahua,Mexico,3 - Comprador,Compras / Sourcing,ES,,INBOX_MX,misma persona ya incluida con otro correo (R2): oziel.gonzalez@commscope.com
 norma@fujikura.com,Norma,Perez,Fujikura Automotive Mexico,Coahuila,Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX,misma persona ya incluida con otro correo (R2): perez.norma@jp.fujikura.com
-miguel.huerta@fujikura.com,Miguel,Huerta,Fujikura Automotive Mexico,Coahuila,Mexico,3 - Comprador,Compras / Sourcing,ES,,INBOX_MX,misma persona ya incluida con otro correo (R2): miguel.huerta@jp.fujikura.com
+miguel.huerta@fujikura.com,Miguel,Huerta,Fujikura Automotive Mexico,Coahuila,Mexico,3 - Comprador,Compras / Sourcing,ES,,INBOX_MX,rebote/baja confirmada en el repo Astute: Rebotado 2026-08-11 (jp.fujikura.com user-unknown). Dominio correcto =
 rchavez02@lear.com,Rafael,Chavez,Lear (E-Systems Saltillo),Coahuila,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX,misma persona ya incluida con otro correo (R2): rchavez@lear.com
 viridiana@bosch.com.mx,Viridiana,Rivera Dimas,Bosch México,,Mexico,1 - Clave electrónicos,Compras / Sourcing,ES,,INBOX_MX,misma persona ya incluida con otro correo (R2): viridiana.riveradimas@bosch.com
 jesus.payan@sigmatronintl.com,Jesus,Payan,SigmaTron International,Chihuahua,Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX,misma persona ya incluida con otro correo (R2): payan.jesus@sigmatronintl.com
 miruegas@methode.com,Marco,Iruegas Rodriguez,Methode Electronics,Nuevo León,Mexico,2 - Decisor compras,Materiales / Planeación,ES,,INBOX_MX,misma persona ya incluida con otro correo (R2): miruegasrodriguez@methode.com
+gabriel.valdes@mabe.com.mx,Gabriel,Valdes,Mabe (MPT Electronica),Queretaro,Mexico,1 - Clave electrónicos,Compras / Sourcing,ES,,INBOX_MX,rebote/baja confirmada en el repo Astute: OJO: YA SE MOVIO A OTRA EMPRESA (dato del cliente) - no vigente en Mab
 jose.rangel@mabe.com.mx,Jose,Abraham Rangel,Mabe (MPT Electronica),Queretaro,Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX,misma persona ya incluida con otro correo (R2): joseabraham.rangel@mabe.com.mx
 susana.villalvazo@sanmina-sci.com,Susana,Villalvazo,Sanmina,Jalisco,Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX,tipo_final=DUP/Inactivo (filtro 2)
 tatia.perez@sanmina.com,Tatia,Perez,Sanmina,Jalisco,Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX,tipo_final=DUP/Inactivo (filtro 2)
@@ -364,6 +415,7 @@ hernan.prieto@sanmina.com,Hernan,Prieto,Sanmina,Jalisco,Mexico,2 - Decisor compr
 evelyn.martinezhernandez@sanmina.com,Evelyn,Martinez Hernandez,Sanmina,Jalisco,Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX,tipo_final=DUP/Inactivo (filtro 2)
 manuel.cortes@grammer.com,Juan,Manuel Cortes Limon,GRAMMER Americas,Queretaro,Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX,misma persona ya incluida con otro correo (R2): juanmanuel.cortes@grammer.com
 carmen.paola@global.abb,Carmen,Paola Ortiz Figueroa,ABB,Sonora,Mexico,2 - Decisor compras,Compras / Sourcing,ES,,INBOX_MX,misma persona ya incluida con otro correo (R2): carmen.ortiz-figueroa@mx.abb.com
+cc@tajco-group.com,Christian,Capilla,TAJCO,Queretaro,Mexico,4 - Directorio ampliado,Materiales / Planeación,ES,,INBOX_MX,rebote/baja confirmada en el repo Astute: VERIFICADO (usuario 2026-07-21): correo cc@tajco-group.com. Material P
 raul.gutierrez@safrangroup.com,Raul,Gutierrez,Safran,(por confirmar),Mexico,2 - Decisor compras,Materiales / Planeación,ES,,INBOX_MX,tipo_final=DUP/Inactivo (filtro 2)
 man@safran-group.com,Miguel,(localpart man),Safran,(por confirmar),Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX,tipo_final=DUP/Inactivo (filtro 2)
 lucia.alvarez@safrangroup.com,Lucia,Alvarez,Safran,(por confirmar),Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX,tipo_final=DUP/Inactivo (filtro 2)
@@ -391,8 +443,8 @@ ljuarez@applied.com.mx,Gerardo,Gutierrez,PLC Automation,,Mexico,4 - Directorio a
 rminjares@summit.com,Raul,Minjares,Summit Electric Supply,,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX,misma persona ya incluida con otro correo (R2): raul.minjares@summit.com
 andres.campos@navico.com,(contacto,general),"ELECTRONICA LOWRANCE DE MEXICO, S.A. DE C.V.",BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX,misma persona ya incluida con otro correo (R2): iveth.alvarez@navico.com
 ngarcia@borderassembly.net,(contacto,general),BORDER ASSEMBLY S. DE R.L. DE C.V.,BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX,misma persona ya incluida con otro correo (R2): gangulo@borderassembly.net
+mplascencia@comairrotron.com,(contacto,general),"COMAIR ROTRON DE MEXICO, S. DE R.L. DE C.V.",BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX,rebote/baja confirmada en el repo Astute: POR VALIDAR (Directorio Industrial MX; giro: MAQUILA Y ENSAMBLE DE COM
 sramos@ve1.com,(contacto,general),"ELECTRONICA VANGUARD, S.A. DE C.V.",BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX,misma persona ya incluida con otro correo (R2): iveth.alvarez@navico.com
-jcervantes@comairrotron.com,(contacto,general),"COMAIR ROTRON DE MEXICO, S. DE R.L. DE C.V.",BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX,misma persona ya incluida con otro correo (R2): mplascencia@comairrotron.com
 vera.ana@mx.panasonic.com,(contacto,general),"PANASONIC DE MEXICO, S.A. DE C.V.",BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX,misma persona ya incluida con otro correo (R2): contabilidad@ul.panasonic.com
 alberto.ochoa@kyocera.com,(contacto,general),"KYOCERA MEXICANA, S.A. DE C.V.",BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX,misma persona ya incluida con otro correo (R2): saul.garcia@kyocera.com
 gescandon@techamastermx.com,(contacto,general),"TECHMASTER DE MEXICO, S.A. DE C.V.",BAJA CALIFORNIA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX,misma persona ya incluida con otro correo (R2): mxl_sales@techmastermx.com
@@ -402,6 +454,7 @@ edias@sce.com.mx,(contacto,general),SISTEMAS DE CONTROL ELECTRONICO S.A DE C.V,C
 hlujan@lear.com,(contacto,general),LEAR ELECTRICAL SYSTEMS DE MÉXICO S. DE R.L. M.I.,CHIHUAHUA,Mexico,4 - Directorio ampliado,Técnico / Procesos,ES,,INBOX_MX,misma persona ya incluida con otro correo (R2): cmedrano@lear.com
 rhernand@keytronicems.com,(contacto,general),"KEY TRONIC JUAREZ, S.A. DE C.V. PLANTA No.1",CHIHUAHUA,Mexico,4 - Directorio ampliado,Técnico / Procesos,ES,,INBOX_MX,misma persona ya incluida con otro correo (R2): eperez@keytronicems.com
 samuel_govea@superioressex.com,(contacto,general),"GRUPO ESSEX DE MEXICO,S. DE R.L. DE C.V.",COAHUILA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX,misma persona ya incluida con otro correo (R2): claudio.arriola@qlmex.com
+gerardo.vazquez@alcoa.com,(contacto,general),"ALCOA FUJIKURA DE MEXICO, S. DE R.L. DE C.V.",COAHUILA,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX,rebote/baja confirmada en el repo Astute: POR VALIDAR (Directorio Industrial MX; giro: ARNESES AUTOMOTRICES; niv
 ccelorio@cydesabatteries.com,(contacto,general),"COMPONENTES Y DESARROLLOS ELECTRONICOS, S.A. DE C.V.",DISTRITO FEDERAL,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX,misma persona ya incluida con otro correo (R2): ricardo@thermistor.com
 amocampo@cgs.com.mx,(contacto,general),"COMPAÑIA GENERAL DE ELECTRONICA, S.A. DE C.V.",DISTRITO FEDERAL,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX,misma persona ya incluida con otro correo (R2): diana.vences@regalbeloit.com
 mcouste@condor.com.mx,(contacto,general),"INDUSTRIAS CONDOR, S.A. DE C.V.",DISTRITO FEDERAL,Mexico,4 - Directorio ampliado,Otro,ES,,INBOX_MX,misma persona ya incluida con otro correo (R2): antonio.delgado@onubainc.com
@@ -463,7 +516,7 @@ efren.miller@harman.com,Efren,Miller,Harman de Mexico,Queretaro,Mexico,3 - Compr
 santiago.moya@egoproducts.com,Santiago,Moya,E.G.O. Componentes Electronicos,Queretaro,Mexico,2 - Decisor compras,"Head of Corporate Purchasing, Director (Mexico)",ES,,Refuerzo_QRO_SMT,duplicado por email (R2)
 daniel.mejia@egoproducts.com,Daniel,Mejia Galicia,E.G.O. Componentes Electronicos,Queretaro,Mexico,3 - Comprador,Commodity Buyer,ES,,Refuerzo_QRO_SMT,duplicado por email (R2)
 lorena.meza@valeo.com,Lorena,Meza,Valeo,Queretaro,Mexico,2 - Decisor compras,"Director, Projects Purchasing",ES,,Refuerzo_QRO_SMT,duplicado por email (R2)
-javier.millan@valeo.com,Javier,Millan,Valeo,Queretaro,Mexico,2 - Decisor compras,"Regional Manager, Commodity",ES,,Refuerzo_QRO_SMT,duplicado por email (R2)
+javier_milln@valeo.com,Javier,Millan,Valeo,Queretaro,Mexico,2 - Decisor compras,"Regional Manager, Commodity",ES,,Refuerzo_QRO_SMT,misma persona ya incluida con otro correo (R2): javier.millan@valeo.com
 efrain.valencia@valeo.com,Efrain,Valencia,Valeo,(por confirmar),Mexico,2 - Decisor compras,"Manager, Site Purchasing",ES,,Refuerzo_QRO_SMT,duplicado por email (R2)
 frederic.caron@valeo.com,Frederic,Caron,Valeo,(por confirmar),Mexico,2 - Decisor compras,"Manager, Site Purchasing (Mexico)",ES,,Refuerzo_QRO_SMT,duplicado por email (R2)
 juan-jose.medrano@valeo.com,Juan,Jose Medrano,Valeo,Estado de Mexico,Mexico,2 - Decisor compras,"Senior Manager, Multisite Purchasing",ES,,Refuerzo_QRO_SMT,duplicado por email (R2)
