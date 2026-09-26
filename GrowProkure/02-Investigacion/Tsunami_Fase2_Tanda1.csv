@@ -1,0 +1,151 @@
+tanda,Clave,Nombre,tipo_final,confianza_tipo,dominio,URL_cruda,presencia_mx,estado_mx,listo_para_comprar,Notas
+1,1009110,Baxter International Inc.,OEM,Alta,baxter.com,baxter.com,SI,CDMX | Nuevo Leon,SI,
+1,1008762,General Motors,OEM,Alta,gm.com,gm.com,SI,,SI,
+1,1001037,John Deere Electronic Solutions,OEM,Alta,deere.com,deere.com,SI,Coahuila de Zaragoza,SI,in 2018 JDES aligned their independent suppliers
+1,1011817,Kearfott,OEM,Alta,kearfott.com,kearfott.com,SI,TAMAULIPAS,SI,OEM (Subsidiary of Astronautics) of guidance
+1,1008755,Kidde UTC,OEM,Alta,kidde.com,kidde.com,SI,,SI,
+1,1011974,Kidde-Deugra,OEM,Alta,kidde-deugra.com,kidde-deugra.com,SI,,SI,
+1,1013032,Philips North America LLC,OEM,Alta,usa.philips.com,usa.philips.com,SI,,SI,Philips Healthcare (Precision Diagnosis)
+1,1011039,Thales Imperva,OEM,Alta,imperva.com,imperva.com,SI,CDMX,SI,
+1,1012141,Thales SIXT,OEM,Alta,thalesgroup.com,thalesgroup.com,SI,CDMX,SI,
+1,1012319,ZKW,OEM,Alta,zkw-group.com,zkw-group.com,SI,Guanajuato | Mexico City,SI,
+1,1009654,A-E Electronics SA,EMS/CM,Alta,aee.ro,aee.ro,,,SI,Subsidiary of Elbit Systems
+1,1009819,ADF Technologies Sdn Bhd,EMS/CM,Alta,adftech.com.my,adftech.com.my,,,SI,BMS Building Management System / EMS Energy
+1,1011096,AEVEX Aerospace,OEM,Alta,aevex.com,aevex.com,,,SI,
+1,1012846,APACER TECHNOLOGY INC.,OEM,Alta,apacer.com,apacer.com,,,SI,
+1,1007266,ASML,OEM,Alta,asml.com,asml.com,,,SI,
+1,1009280,ASS.EL. S.R.L.,EMS/CM,Alta,assel.it,assel.it,,,SI,EMS
+1,1009682,Adam Hall GmbH,EMS/CM,Alta,adamhall.com,adamhall.com,,,SI,cem's are based in China and Tschechien
+1,1005729,Advanced Circuits,EMS/CM,Alta,4pcb.com,4pcb.com,,,SI,CM
+1,1009281,Alpha Elettronica S.r.l.,OEM,Alta,alphaelettronica.com,alphaelettronica.com,,,SI,OEM
+1,1012769,Alstom France,OEM,Alta,alstom.com,alstom.com,,,SI,
+1,1012813,Alstom Transport India Limited,OEM,Alta,alstom.com,alstom.com,,,SI,
+1,1009141,Applied Materials India Private Limited,OEM,Alta,appliedmaterials.com,appliedmaterials.com,,,SI,
+1,1009286,Atex Industries s.r.l.,OEM,Alta,atexindustries.it,atexindustries.it,,,SI,OEM
+1,1012452,Atlas Copco Energas GmbH,OEM,Alta,atlascorp.com,atlascorp.com,,,SI,Working this accoun with Klaus
+1,1011646,"Axiomtek Co., Ltd",OEM,Alta,axiomtek.com,axiomtek.com,,,SI,
+1,1010183,BESTec-etp Freiburg GmbH,EMS/CM,Alta,bestec-gmbh.de,bestec-gmbh.de,,,SI,CEM for Northrop
+1,1009265,Becton Dickinson (BD),OEM,Alta,bd.com,bd.com,,,SI,
+1,1012074,"Broadcom, Inc",OEM,Alta,broadcom.com,broadcom.com,,,SI,
+1,1009989,Brooks Instrument,OEM,Alta,BrooksInstrument.com,BrooksInstrument.com,,,SI,
+1,1009287,CBE S.r.l.,EMS/CM,Alta,cbe.it,cbe.it,,,SI,EMS
+1,1008821,Cal-Comp Electronics,EMS/CM,Alta,calcomp.co.th,calcomp.co.th,,,SI,
+1,1010648,CalAmp,OEM,Alta,calamp.com,calamp.com,,,SI,
+1,1011936,Continental Aerospace Technologies GmbH,OEM,Alta,continentaldiesel.com,continentaldiesel.com,,,SI,
+1,1011202,Crown Technical Systems,OEM,Alta,crowntechnicalsystems.com,crowntechnicalsystems.com,,,SI,
+1,1010665,Drager,OEM,Alta,draeger.com,draeger.com,,,SI,
+1,1009648,EbV Elektronikbau- und Vertriebs GmbH,OEM,Alta,ebv-gmbh.eu,ebv-gmbh.eu,,,SI,"ESS customer, OEM is eg Audiotec Fischer"
+1,1012049,FREQUENTIS Deutschland GmbH,OEM,Alta,frequentis.com,frequentis.com,,,SI,
+1,1009760,Fritsch Elektronik GmbH,EMS/CM,Alta,fritsch-gmbh.de,fritsch-gmbh.de,,,SI,EMS for Oban Europe
+1,1010908,General Dynamics European Land Systems-De,OEM,Alta,gdels.com,gdels.com,,,SI,
+1,1010538,Goldmund SA,OEM,Alta,goldmund.com,goldmund.com,,,SI,ESS customer / OEM
+1,1010028,HEM Sp. z o.o.,OEM,Alta,hem-e.com,hem-e.com,,,SI,OEM
+1,1006797,HEXAGON,OEM,Alta,hexagon.com,hexagon.com,,,SI,Hexagon's Agriculture division
+1,1011822,"Howard Industries, Inc.",OEM,Alta,howard.com,howard.com,,,SI,OEM computers and technology solutions
+1,1009421,ICCO EMT,EMS/CM,Alta,icco.ro,icco.ro,,,SI,EMS company
+1,1009953,IMM electronics GmbH,EMS/CM,Alta,imm-electronics.de,imm-electronics.de,,,SI,ESS Customer / EMS
+1,1012383,ITS Electronics,OEM,Alta,itselectronics.com,itselectronics.com,,,SI,OEM
+1,1010863,Ideal Power,OEM,Alta,idealpower.com,idealpower.com,,,SI,"Revenue extremely low $87,000, OEM of power"
+1,1009198,Illinois Tool Works,OEM,Alta,itw.com,itw.com,,,SI,
+1,1008792,Indic EMS Electronics Pvt Ltd,EMS/CM,Alta,indicelectronics.com,indicelectronics.com,,,SI,valued partner
+1,1009454,KOBER S.R.L. - Motan Centrale termice,OEM,Alta,motan.ro,motan.ro,,,SI,OEM
+1,1013370,Kinematics,OEM,Alta,gokinematics.com,gokinematics.com,,,SI,OEM - Motion control solutions
+1,1010072,LENNOX,OEM,Alta,lennox.com,lennox.com,,,SI,
+1,1009182,LSI Industries,OEM,Alta,lsicorp.com,lsicorp.com,,,SI,OEM of commercial lighting and displays
+1,1010141,Lacroix Electronics GmbH,EMS/CM,Alta,lacroix-electronics.de,lacroix-electronics.de,,,SI,
+1,1012303,Leonardo Global Solutions,OEM,Alta,leonardoglobalsolutions.com,leonardoglobalsolutions.com,,,SI,
+1,1012304,Leonardo Italia,OEM,Alta,leonardo.com,leonardo.com,,,SI,
+1,1009539,"Leonardo Romania Aerospace, Defence & Sec.",OEM,Alta,leonardo.com,leonardo.com,,,SI,
+1,1010797,Lightware Visual Engineering,OEM,Alta,lightware.com,lightware.com,,,SI,
+1,1009752,Limtronik GmbH,EMS/CM,Alta,limtronik.de,limtronik.de,,,SI,
+1,1009261,Locus Robotics,OEM,Alta,locusrobotics.com,locusrobotics.com,,,SI,OEM of autonomous mobile robots (AMRs)
+1,1009921,MARIAN GmbH,OEM,Alta,marian.de,marian.de,,,SI,OEM from Epsa and Assmy & Bottger
+1,1010524,MEKRA Lang Gruppe,OEM,Alta,mekra.de,mekra.de,,,SI,
+1,1013198,Magna Yuma Pvt Ltd.,OEM,Alta,yuma.energy,yuma.energy,,,SI,
+1,1009259,Maxwell Energy Systems,OEM,Alta,maxwellenergy.co,maxwellenergy.co,,,SI,Automotive OEM
+1,1008701,"Micro Systems Engineering, Inc",EMS/CM,Alta,mst.com,mst.com,,,SI,
+1,1009118,Microchip Technology,OEM,Alta,mmt-technology.com,mmt-technology.com,,,SI,
+1,1010872,Miltech Hellas SA,OEM,Alta,miltech.gr,miltech.gr,,,SI,
+1,1009135,Nash Industries (I) Pvt Ltd.,EMS/CM,Alta,nashindia.com,nashindia.com,,,SI,Start Up EMS
+1,1011982,Northrop Grumman LITEF GmbH,OEM,Alta,litef.de,litef.de,,,SI,
+1,1009924,ORBAN Europe GmbH,EMS/CM,Alta,orban.com,orban.com,,,SI,ESS Customer / CEM Fritsch Elektronik
+1,1013033,One Stop Systems,OEM,Alta,onestopsystems.com,onestopsystems.com,,,SI,leader in rugged HPC solutions
+1,1009289,Paso SPA,OEM,Alta,paso.it,paso.it,,,SI,OEM
+1,1008637,Pepperl+Fuchs Mannheim,OEM,Alta,amplify.pepperl-fuchs.com,amplify.pepperl-fuchs.com,,,SI,
+1,1007918,Pony AI,OEM,Alta,pony.ai,pony.ai,,,SI,autonomous vehicle technology company
+1,1010221,Premio Inc.,OEM,Alta,premioinc.com,premioinc.com,,,SI,OEM/OCM - Computer Hardware Manufacturing
+1,1009617,Primax Electronics Ltd.,OEM,Alta,primax.com.tw,primax.com.tw,,,SI,
+1,1010109,RD Electronic AS,EMS/CM,Alta,rd.ee,rd.ee,,,SI,EMS
+1,1001070,RTX,OEM,Alta,raytheon.com,raytheon.com,,,SI,Raytheon; NFDs approved by RIS
+1,1004193,RUAG,OEM,Alta,ruag.com,ruag.com,,,SI,Ruag Space now under Beyond Gravity
+1,1011891,Rheinmetall AG,OEM,Alta,rheinmetall.com,rheinmetall.com,,,SI,
+1,1012008,Rheinmetall Air Defence AG,OEM,Alta,rheinmetall.com,rheinmetall.com,,,SI,
+1,1011894,Rheinmetall MAN Military Vehicles GmbH,OEM,Alta,rheinmetall.com,rheinmetall.com,,,SI,
+1,1011895,Rheinmetall MAN Military Vehicles Osterreich,OEM,Alta,rheinmetall.com,rheinmetall.com,,,SI,
+1,1011897,Rheinmetall Waffe Munition GmbH,OEM,Alta,rheinmetall.com,rheinmetall.com,,,SI,
+1,1012223,Richardson Electronics,OEM,Alta,rell.com,rell.com,,,SI,OEM
+1,1009522,SC SOFTRONIC SRL,OEM,Alta,softronic.ro,softronic.ro,,,SI,OEM - Railway
+1,1011603,SEW-EURODRIVE,OEM,Alta,sew-eurodrive.com.br,sew-eurodrive.com.br,,,SI,
+1,1009461,SIELMAN S.A,EMS/CM,Alta,sekpy.gr,sekpy.gr,,,SI,EMS
+1,1008919,STERNA SECURITY DEVICES PRIVATE LIMITED,OEM,Alta,sternasecurity.com,sternasecurity.com,,,SI,oem
+1,1007084,Saab,OEM,Alta,saab.com,saab.com,,,SI,
+1,1009934,Sahasra Electronics,OEM,Alta,sahasraelectronics.com,sahasraelectronics.com,,,SI,
+1,1012252,Sepptronic GmbH & Co. KG,EMS/CM,Alta,sepptronic.de,sepptronic.de,,,SI,EMS for Spinner GmbH
+1,1009162,Sikorsky,OEM,Alta,lockheedmartin.com,lockheedmartin.com,,,SI,Independent subsidiary of Lockheed
+1,1010351,"Smart Start, Inc.",OEM,Alta,smartstartinc.com,smartstartinc.com,,,SI,OEM - ignition interlock
+1,1012335,Spree Hybrid & Kommunikationstechnik GmbH,EMS/CM,Alta,spree-hybrid.de,spree-hybrid.de,,,SI,EMS - Meet at Evertiq Berlin
+1,1011169,Stanley Electric,OEM,Alta,stanley.co.jp,stanley.co.jp,,,SI,OEM
+1,1011431,Teledyne E2V,OEM,Alta,teledyne-e2v.com,teledyne-e2v.com,,,SI,
+1,1008725,Tempo Automation Holdings Inc,EMS/CM,Alta,tempoautomation.com,tempoautomation.com,,,SI,Accelerated Electronics Manufacturing Platform
+1,1011074,Thales DMS France SAS,OEM,Alta,thalesgroup.com,thalesgroup.com,,,SI,
+1,1010746,Thales Deutschland,OEM,Alta,thalesgroup.com,thalesgroup.com,,,SI,
+1,1011762,Thales Italia,OEM,Alta,thalesgroup.com,thalesgroup.com,,,SI,
+1,1011040,Thales Tampa microwave,OEM,Alta,thalesdsi.com,thalesdsi.com,,,SI,
+1,1008950,Thinkmate,OEM,Alta,thinkmate.com,thinkmate.com,,,SI,
+1,1009258,UCAL Ltd,OEM,Alta,ucal.com,ucal.com,,,SI,UCAL automotive OEM company
+1,1013172,Unigen Malaysia,OEM,Alta,unigen.com,unigen.com,,,SI,manufacture of OEM products including SSDs
+1,1009544,V-Guard Industries,OEM,Alta,vguard.in,vguard.in,,,SI,"OEM for Voltage Stabilizer, Digital UPS"
+1,1012135,Watch Guard Video,OEM,Alta,watchguard.com,watchguard.com,,,SI,security mfr oem
+1,1013006,Wincomm International,EMS/CM,Alta,wincomm.com.cn,wincomm.com.cn,,,SI,CM for Bizlink + Eastman Kodak
+1,1013026,YOKOGAWA ELECTRIC ASIA PTE LTD,EMS/CM,Alta,yokogawa.com,yokogawa.com,,,SI,Laurel: ODM for Thales SG
+1,1010234,YURA corporation,OEM,Alta,yuracorp.co.kr,yuracorp.co.kr,,,SI,
+1,1011996,ZF Friedrichshafen,OEM,Alta,zf.com,zf.com,,,SI,
+1,1012402,Zaptec,OEM,Alta,zaptec.com,zaptec.com,,,SI,
+1,1011888,Zollner Electronics GmbH,EMS/CM,Alta,zollner.de,zollner.de,,,SI,EMS
+1,1011525,ballard,OEM,Alta,ballard.com,ballard.com,,,SI,
+1,1008818,digitalSTROM AG,OEM,Alta,digitalstrom.com,digitalstrom.com,,,SI,OEM - smart home application
+1,1010562,magniX,OEM,Alta,magnix.aero,magnix.aero,,,SI,OEM - electric motor mfr for electric aircraft
+1,1008947,APC Manufacturing,OEM,Media,apcmfg.net,apcmfg.net,,,SI,"Fabricacion de electrodomesticos, equipamiento"
+1,1008216,Altel PCB d.o.o.,EMS/CM,Media,altel.si,altel.si,,,SI,
+1,1011848,Altinex,OEM,Media,altinex.com,altinex.com,,,SI,certified manufacturer of modular audiovisual
+1,1013223,Applied Optoelectronics Inc.,OEM,Media,ao-inc.com,ao-inc.com,,,SI,AOI designs and manufactures advanced semi
+1,1010732,"Astro Geo Marine, Inc.",EMS/CM,Media,astrogeomarine.com,astrogeomarine.com,,,SI,Builds for Ontic
+1,1009817,Aurelius Technologies Bhd,OEM,Media,atechgroup.com.my,atechgroup.com.my,,,SI,multicomponent semiconductor
+1,1010249,Avionic Design GmbH,OEM,Media,avionic-design.de,avionic-design.de,,,SI,ESS Customer
+1,1011528,BMS CIRCUITS,EMS/CM,Media,allcircuits.com,allcircuits.com,,,SI,
+1,1008692,BRAMBILIGHT,OEM,Media,brambilight.com,brambilight.com,,,SI,manufacturing of profesional equipment
+1,1009034,Behlen Mfg Co.,OEM,Media,behlenmfg.com,behlenmfg.com,,,SI,diverse businesses
+1,1008801,Bio-Techne,OEM,Media,bio-techne.com,bio-techne.com,,,SI,"Bio-Techne Corporation develops, manufactures"
+1,1009205,Blink Charging,OEM,Media,blinkcharging.com,blinkcharging.com,,,SI,"Design, Manufacture, Own and Operate"
+1,1008955,CIRCUIT SYSTEMS (INDIA) LTD,EMS/CM,Media,pcbpower.com,pcbpower.com,,,SI,
+1,1012651,CSI,EMS/CM,Media,customsi.com,customsi.com,,,SI,Custom Engineering and Manufacturing Services
+1,1010612,Canyon AeroConnect,OEM,Media,canyonaeroconnect.com,canyonaeroconnect.com,,,SI,dba Chelton Avionics Inc.
+1,1010150,DBK EMS GMBH & CO. KG,EMS/CM,Media,dbk-group.com,dbk-group.com,,,SI,
+1,1009886,DINtronics,OEM,Media,dintronics.com,dintronics.com,,,SI,Manufacturer of wide spectrum
+1,1009515,Danlaw EMS Technologies,EMS/CM,Media,danlawtechnologies.com,danlawtechnologies.com,,,SI,
+1,1008808,Digital Circuits Pvt Ltd,EMS/CM,Media,digitalcircuits.in,digitalcircuits.in,,,SI,
+1,1010365,Elna PCB (M) Sdn Bhd,EMS/CM,Media,elnapcb.com,elnapcb.com,,,SI,
+1,1009519,Euler Motors Pvt Ltd,OEM,Media,eulermotors.com,eulermotors.com,,,SI,EV manufacturers Company in India
+1,1012129,Eventide Audio,OEM,Media,eventideaudio.com,eventideaudio.com,,,SI,audio eqp mfr
+1,1013153,Extreme Engineering Solutions,OEM,Media,xes-inc.com,xes-inc.com,,,SI,"design, manufacture, and support of embedded"
+1,1013281,Exxact Corporation,OEM,Media,exxactcorp.com,exxactcorp.com,,,SI,"Mfr's workstations, servers, clusters, and storage"
+1,1010390,Flashline EMS private limited,EMS/CM,Media,flashlineems.com,flashlineems.com,,,SI,
+1,1010316,Forest River,OEM,Media,forestriverinc.com,forestriverinc.com,,,SI,Manufacturer of various types of vehicles
+1,1008697,FormFactor Inc.,OEM,Media,formfactor.com,formfactor.com,,,SI,Manufactures semiconductor products
+1,1008734,Forth EMS Public Company Limited,EMS/CM,Media,forth-ems.com,forth-ems.com,,,SI,
+1,1010112,Forus Health Pvt Ltd,OEM,Media,forushealth.com,forushealth.com,,,SI,highly advanced medical devices
+1,1011828,Fujikura Printed Circuits Ltd.,EMS/CM,Media,fpcl.fujikura.com,fpcl.fujikura.com,,,SI,
+1,1008911,GSM Outdoors,OEM,Media,gsmoutdoors.com,gsmoutdoors.com,,,SI,Sporting goods manufacturer
+1,1013357,General Micro Systems Inc.,OEM,Media,gms4sbc.com,gms4sbc.com,,,SI,designer & mfr rugged embedded computers
+1,1009479,"Gruppo EMS, Inc.",EMS/CM,Media,ems.com.ph,ems.com.ph,,,SI,
+1,1011723,Hanwha Vision,OEM,Media,hanwhavisionamerica.com,hanwhavisionamerica.com,,,SI,Mfr of the small cameras that watch the Astute

@@ -1,0 +1,15 @@
+empresa,contactos_afectados,dominio_en_uso,dominio_local_verificado,estado,accion
+Jatco,3,jatco.co.jp,jatco.com.mx,RECUPERADO,"Jatco Mexico, Penuelas Aguascalientes, 50 empl (id 1304712707). Falta confirmar el local-part: el patron japones no aplica al .com.mx."
+Aisan,1,aisan-ind.co.jp,aisanmexico.com,RECUPERADO,"Aisan Autopartes Mexico, San Luis Potosi, 17 empl (id 1327257961). Falta confirmar el local-part."
+Reiner,1,reiner.es,reiner.mx,RECUPERADO,"Reiner Mexico, CDMX, 12 empl (id 540058795). Falta confirmar el local-part."
+SIIX EMS Mexico,4,siix.co.jp,siix-global.com,RECUPERADO (sesion previa),Llamar +52 444 298-9130 por la ortografia de Cathy Cornejo. Sigue pendiente.
+ZKW,0,zkw-group.com,zkw.mx,RESUELTO POR COMPRA,"El correo verificado de Paola Evangelista ya salio como @zkw.mx. Sin necesidad de adivinar."
+Kidde,0,kidde.com,carrier.com,RESUELTO POR COMPRA,Kidde pertenece a Carrier. El correo verificado es @carrier.com.
+Zollner,0,zollner.de,zollner-electronics.com,RESUELTO POR COMPRA,El correo verificado de Carmen Ramirez salio como @zollner-electronics.com.
+Kyungshin Cable,0,kscable.co.kr,(sin entidad MX en ZoomInfo),NO RECUPERADO,kscable.co.kr es Cheonan Corea. La planta esta en Gomez Palacio Durango. Telefono.
+Hyundai Mobis,1,mobis.co.kr,(entidad MX existe sin sitio),PARCIAL,"Hyundai Mobis Mexico, Pesquera NL (id 1337957656), pero ZoomInfo no le tiene dominio. LinkedIn."
+Marquardt Mexico,1,marquardt.de,(sin resultado),NO RECUPERADO,ZoomInfo no tiene entidad Marquardt en Mexico. LinkedIn.
+Astemo,1,hitachi-automotive.co.jp,(sin resultado),NO RECUPERADO,ZoomInfo no tiene entidad Astemo en Mexico. Telefono a San Juan del Rio.
+Erich Jaeger,1,erich-jaeger.de,(sin resultado),NO RECUPERADO,ZoomInfo no tiene entidad en Mexico. Buscar planta Piedras Negras por LinkedIn.
+Ichimiya,1,ichimiya.co.jp,(sin resultado),NO RECUPERADO,ZoomInfo no tiene entidad en Mexico.
+Pollmann,1,pollmann.at,(sin resultado),NO RECUPERADO,ZoomInfo no tiene entidad en Mexico.

@@ -1,0 +1,16 @@
+planta,direccion,division,smt,evidencia,fuente
+Queretaro 2,Av. de la Montana 102 - PIQ CP 76220 (Valeo Sylvania Iluminacion),Light / Iluminacion,SI CONFIRMADO,"Vacantes 'Ingeniero de SMT' y 'Operador de SMT' en empleo.gob.mx; planta registrada como manufactura electronica automotriz. LinkedIn suma 5 vacantes de ingenieria electronica en Valeo Queretaro (Electronic Engineer x2, Electronic Systems Trainee, Industrial Digital Engineer, R&D Trainee)","repo Astute (empleo.gob.mx) + LinkedIn publico 2026-09-01"
+Queretaro 1,Av. Industria Minera 502 - PIQ (Google la llama 'Planta 4'; tel 442 296 5900),Por confirmar,PROBABLE POR SITIO,"Sin vacante SMT propia. Comparte sitio y equipo de compras con QRO2, que si tiene SMT. Es la planta vecina de Harman, que tambien tiene linea SMT","inferencia por sitio, NO verificado"
+Queretaro 3,La Estacada 121 - PIQ,Por confirmar,SIN EVIDENCIA,Sin vacantes SMT localizadas,busqueda sin resultado
+Queretaro 4 Tech Center,Av. 5 de Febrero 1351,I+D,NO APLICA,Centro tecnico, no planta de manufactura,-
+Valeo SLP 1,Eje 130 / Zona Industrial,Power,NO APARECE,"Valeo NO aparece en ninguna vacante de SMT en San Luis Potosi. Quienes si contratan SMT ahi: G&W Electric, AUMOVIO, ABB, 3M","LinkedIn publico por ciudad 2026-09-01"
+Valeo SLP 2,Carretera Mexico-Piedras Negras Km 416,Power,NO APARECE,idem SLP 1,LinkedIn publico por ciudad
+Valeo SLP 3,Circuito Mexico 160 - Parque Tres Naciones,Power,NO APARECE,idem SLP 1,LinkedIn publico por ciudad
+Valeo SLP 4,Av. Central 505 - Parque Industrial Logistico,Power,NO APARECE,idem SLP 1,LinkedIn publico por ciudad
+Valeo SLP 5,Av. Santiago Sur 112 - Colinas de San Luis / Villa de Pozos,Power,NO APARECE,idem SLP 1,LinkedIn publico por ciudad
+Valeo Juarez,Av. Intermex 1681 - PI Intermex,Visibility / Wipers,NO APARECE,"Valeo NO aparece en vacantes SMT de Ciudad Juarez. Quienes si: Honeywell, Foxconn San Jeronimo, Jabil, Flex, Vishay, Wiwynn","LinkedIn publico por ciudad 2026-09-01"
+Valeo Juarez 2,Pino Seco 460 - Terrazas del Valle,Brain / Electronics,PROBABLE POR DIVISION,"Sin vacante SMT actual, pero la division Brain es electronica pura. Ausencia de vacante NO es ausencia de linea","inferencia por division, NO verificado"
+Valeo Rio Bravo,Carretera Matamoros-Mazatlan Km 99 - Col. Celanese,Brain,PROBABLE POR DIVISION,"Solo 2 vacantes totales en Glassdoor, ninguna SMT. Division Brain = electronica","inferencia por division, NO verificado"
+Valeo Toluca,PI Exportec II Mz 4 Lote 1,Valeo Service,NO,Servicio/refacciones, no manufactura electronica,-
+Valeo Lerma,Blvd. Miguel Aleman 160 Local 17,Power,NO,Power = motores/sistemas,-
+Valeo Puebla,Km 14.5 Autopista Puebla-Orizaba - PI Chachapa Amozoc,Power,NO,Power = motores/sistemas,-
