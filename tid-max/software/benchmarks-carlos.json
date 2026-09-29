@@ -1,0 +1,41 @@
+{
+  "_uso": "Benchmarks (rutas/tests repetibles) de Carlos Moreno. Cada ruta guarda una LÍNEA BASE con sus métricas clave; al repetir la misma ruta, el pipeline/coach compara contra la línea base para medir progreso objetivo (misma FC a menor esfuerzo, recuperación más rápida). Fuente: archivos TCX exportados de Polar Flow.",
+  "atleta": "carlos-moreno",
+  "benchmarks": [
+    {
+      "ruta": "Ruta Escaleras T1+T2",
+      "descripcion": "5 pisos torre 1 y torre 2, con trote entre torres. Sesión indoor de intensidad mixta / umbral.",
+      "zonas_fc_usadas": {"z1": "<103", "z2": "103-120", "z3": "120-137", "z4": "137-154", "z5": ">=154", "_nota": "Zonas de Polar basadas en FCmax estimada por edad (~171)."},
+      "baseline": {
+        "fecha": "2026-09-28",
+        "fuente": "TCX Polar Flow (546e8e7b-Carlos_Moreno_2026-09-28_21-16-12)",
+        "duracion": "16:55",
+        "fc_prom": 129,
+        "fc_max": 156,
+        "fc_min": 72,
+        "tiempo_en_zonas": {
+          "z5": {"seg": 49, "pct": 4},
+          "z4": {"seg": 403, "pct": 39},
+          "z3": {"seg": 296, "pct": 29},
+          "z2": {"seg": 187, "pct": 18},
+          "z1": {"seg": 81, "pct": 7}
+        },
+        "pct_z4_z5": 43,
+        "deriva_fc": {"primer_tercio_ppm": 107, "ultimo_tercio_ppm": 147, "_nota": "Refleja intensidad creciente (2a mitad sostenida en Z4-Z5), no fatiga a carga constante."},
+        "recuperacion_torre1_60s_ppm": 13,
+        "beneficio_polar": "Entrenamiento por velocidad",
+        "notas": [
+          "GPS NO confiable en escaleras (distancia 1.96 km y ritmo son ruido; la FC es el dato válido).",
+          "FCmax 156 submáxima vs estimada 171: la FCmax real probablemente es mayor (sostuvo ~2.5 min cerca del techo).",
+          "R-R latido-a-latido NO disponible (Polar no lo exporta); para HRV/DFA-a1 se necesita H10 + app logger."
+        ]
+      },
+      "metricas_a_seguir": [
+        "Misma FC promedio a igual esfuerzo percibido = mejor forma aeróbica.",
+        "Recuperación entre torres más rápida (mayor caída de ppm en 60s).",
+        "Menos tiempo en Z4-Z5 para completar la misma ruta = menor costo cardiaco."
+      ],
+      "historial": []
+    }
+  ]
+}
