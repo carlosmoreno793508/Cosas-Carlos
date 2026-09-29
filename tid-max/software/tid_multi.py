@@ -139,6 +139,17 @@ def procesar_atleta(atleta, do_sync=True):
         with open(destino, "w", encoding="utf-8") as f:
             json.dump({} if vaciado else ev, f, ensure_ascii=False, indent=2)
 
+    # Consumo del día capturado desde la app (api/comida.js → software/consumo/<slug>.json,
+    # "repo como BD"). Se copia al procesado del atleta como consumo-hoy.json, que es lo que
+    # tid_web lee para pintar "consumido vs meta" en el reporte. Solo aplica el día que coincide
+    # (tid_web ya valida la fecha), así que copiarlo siempre es seguro.
+    cons_app = os.path.join(SCRIPT_DIR, "consumo", f"{slug}.json")
+    if os.path.exists(cons_app):
+        try:
+            shutil.copyfile(cons_app, os.path.join(proc, "consumo-hoy.json"))
+        except OSError:
+            pass
+
     print(f"\n═══ {atleta.get('nombre', slug)}  ({slug} · {atleta.get('fuente')} · {atleta.get('deporte')}) ═══")
 
     if do_sync:

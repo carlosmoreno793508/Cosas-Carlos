@@ -332,7 +332,7 @@ function vEntrenar(d){
   </div>
   <div class="plan"><span class="e">🏊</span><div><div class="t">Entreno</div><div class="d">Sesión del día según tu plan</div></div></div>
   <div class="plan"><span class="e">😴</span><div><div class="t">Sueño</div><div class="d">Meta calibrada a tu recuperación</div></div></div>
-  <div class="plan"><span class="e">🥗</span><div><div class="t">Nutrición</div><div class="d">Consumido vs meta del día</div></div></div>
+  <div class="plan" onclick="openComida()" style="cursor:pointer"><span class="e">🥗</span><div style="flex:1"><div class="t">Nutrición</div><div class="d">${(d.nutricion&&d.nutricion.meta)?`${d.nutricion.consumido||0} / ${d.nutricion.meta} kcal · faltan ~${d.nutricion.falta!=null?d.nutricion.falta:Math.max((d.nutricion.meta||0)-(d.nutricion.consumido||0),0)}`:'Registra tu comida (foto o texto)'}</div></div><span style="opacity:.45;font-size:20px">›</span></div>
   <button class="btn pri" style="margin-top:14px" onclick="openCorrer()">▶  Iniciar entrenamiento</button>
   <button class="btn sec" onclick="openSesion()">＋  Registrar sesión (multisport)</button>
   <div class="sub-note">GPS + FC en vivo · llega en la v1</div>`;
@@ -746,6 +746,7 @@ function paint(){
   else if(screen==="sesion"){ el.innerHTML=vSesion(); }
   else if(screen==="correr"){ el.innerHTML=vCorrer(); bindCorrer(); }
   else if(screen==="bienestar"){ el.innerHTML=vBienestar(); }
+  else if(screen==="comida"){ el.innerHTML=vComida(); bindComida(); }
   else if(DATA){ el.innerHTML = VIEWS[activeTab](DATA); }
   else if(tidToken()){
     // Logueado pero sin datos propios (cuentas independientes): Datos y Perfil
@@ -777,6 +778,81 @@ function openCapturar(id){ screen="capturar"; editId=(id==null?null:id); paint()
 function openSesion(){ screen="sesion"; sesSport=null; sesSegs=[]; paint(); }
 function openCorrer(){ screen="correr"; runReset(); paint(); }
 function openBienestar(){ screen="bienestar"; paint(); }
+function openComida(){ screen="comida"; ultimaEst=null; paint(); }
+
+/* ---------------- Comida (agente de nutrición en la app) ---------------- */
+let comidaHoy=null, ultimaEst=null;
+function nutriState(){
+  if(comidaHoy){
+    const t=comidaHoy.totales||{}, m=comidaHoy.meta||{};
+    return {consumido:t.kcal||0, meta:m.kcal||0,
+      comidas:(comidaHoy.comidas||[]).map(c=>({hora:c.hora,nombre:c.platillo,kcal:c.kcal}))};
+  }
+  const n=(DATA&&DATA.nutricion)||{};
+  return {consumido:n.consumido||0, meta:n.meta||0,
+    comidas:(n.comidas||[]).map(c=>({hora:c.hora,nombre:c.nombre||c.platillo,kcal:c.kcal}))};
+}
+function vComida(){
+  const n=nutriState();
+  const pct = n.meta? Math.min(100, Math.round(100*n.consumido/n.meta)) : 0;
+  const falta = n.meta? Math.max(n.meta-n.consumido,0) : null;
+  const lista = n.comidas.length
+    ? n.comidas.map(c=>`<div class="plan"><span class="e">🍽️</span><div style="flex:1"><div class="t">${esc(c.nombre||"Comida")}</div><div class="d">${esc(c.hora||"")}</div></div><div style="font-weight:800">${c.kcal||0} kcal</div></div>`).join("")
+    : `<div class="hint" style="opacity:.7">Aún no registras comidas hoy.</div>`;
+  const e=ultimaEst;
+  const est = e ? `<div class="card" style="margin-top:12px;border-color:color-mix(in srgb,var(--good) 34%,var(--line));background:color-mix(in srgb,var(--good) 8%,transparent)">
+      <div class="k" style="color:var(--good)">✓ ${esc(e.platillo)} · ${e.kcal} kcal <span style="opacity:.7">(confianza ${esc(e.confianza)})</span></div>
+      <div class="hint" style="margin-top:6px">C ${e.carb_g} · P ${e.prot_g} · G ${e.grasa_g} g</div>
+      ${e.cubre_demanda?`<div class="hint" style="margin-top:6px;color:var(--ink)">${esc(e.cubre_demanda)}</div>`:""}
+      ${e.sugerencia?`<div class="hint" style="margin-top:4px;opacity:.85">💡 ${esc(e.sugerencia)}</div>`:""}
+    </div>` : "";
+  return `
+  <div class="top">
+    <div class="back" onclick="switchTab('hoy')">‹</div>
+    <div style="flex:1"><div class="h">Comida de hoy</div><div class="s">Regístrala por foto o descríbela</div></div>
+  </div>
+  <div class="card">
+    <div class="k">${n.consumido||0}${n.meta?` / ${n.meta}`:""} kcal${n.meta?` · ${pct}%`:""}</div>
+    ${n.meta?`<div style="height:10px;border-radius:6px;background:var(--line);margin-top:8px;overflow:hidden"><div style="height:100%;width:${pct}%;background:var(--good)"></div></div>`:""}
+    ${falta!=null?`<div class="hint" style="margin-top:6px">Faltan ~${falta} kcal para tu meta del día.</div>`:`<div class="hint" style="margin-top:6px">Registra tus comidas y te digo si cubres tu día.</div>`}
+  </div>
+  <div class="row2" style="margin-top:12px">
+    <button class="btn pri" onclick="document.getElementById('f_foto').click()">📷 Agregar foto</button>
+    <button class="btn sec" onclick="const b=document.getElementById('comida_txt'); b.hidden=!b.hidden;">✍️ Describir</button>
+  </div>
+  <input id="f_foto" type="file" accept="image/*" capture="environment" style="display:none">
+  <div id="comida_txt" hidden style="margin-top:10px">
+    <div class="field"><input class="inp" id="f_texto" placeholder="Ej. 6 huevos, licuado, 50 g totopos"></div>
+    <button class="btn sec" onclick="enviarComidaTexto()">Analizar descripción</button>
+  </div>
+  <div id="comida_res">${est}</div>
+  <div class="k" style="margin-top:16px">Hoy</div>
+  ${lista}
+  <div class="sub-note">Estimación por IA: cantidades aproximadas. No sustituye a un nutriólogo.</div>`;
+}
+function bindComida(){
+  const f=document.getElementById("f_foto");
+  if(f) f.onchange=async()=>{ const file=f.files&&f.files[0]; if(!file) return;
+    setComidaRes('<div class="hint">Analizando foto… 📸</div>');
+    try{ const foto=await downscaleImg(file); await enviarComida({foto}); }
+    catch(err){ setComidaRes('<div class="hint" style="color:var(--crit)">No pude leer la foto. Intenta otra.</div>'); }
+  };
+}
+function setComidaRes(html){ const r=document.getElementById("comida_res"); if(r) r.innerHTML=html; }
+function enviarComidaTexto(){ const t=(document.getElementById("f_texto")||{}).value||""; if(!t.trim()){ toast("Escribe qué comiste"); return; } setComidaRes('<div class="hint">Analizando… 🍽️</div>'); enviarComida({texto:t.trim()}); }
+async function enviarComida(bodyExtra){
+  const tok=tidToken(); if(!tok){ toast("Inicia sesión para registrar comida."); return; }
+  try{
+    const r=await fetch("/api/comida",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({token:tok,...bodyExtra})});
+    const j=await r.json();
+    if(!r.ok){ setComidaRes(`<div class="hint" style="color:var(--crit)">${esc(j.error||"No se pudo registrar.")}</div>`); return; }
+    comidaHoy=j.consumo; ultimaEst=j.estimacion; toast("Comida registrada ✓"); paint();
+  }catch(err){ setComidaRes('<div class="hint" style="color:var(--crit)">Error de red.</div>'); }
+}
+function downscaleImg(file,max=1024,q=0.8){ return new Promise((resolve,reject)=>{ const img=new Image(); const url=URL.createObjectURL(file);
+  img.onload=()=>{ URL.revokeObjectURL(url); let w=img.width,h=img.height; const sc=Math.min(1,max/Math.max(w,h)); w=Math.round(w*sc); h=Math.round(h*sc);
+    const cv=document.createElement("canvas"); cv.width=w; cv.height=h; cv.getContext("2d").drawImage(img,0,0,w,h); resolve(cv.toDataURL("image/jpeg",q)); };
+  img.onerror=reject; img.src=url; }); }
 document.querySelectorAll(".tabs button").forEach(b=>b.addEventListener("click",()=>switchTab(b.dataset.tab)));
 
 let tt; function toast(m){ const t=document.getElementById("toast"); t.textContent=m; t.classList.add("show"); clearTimeout(tt); tt=setTimeout(()=>t.classList.remove("show"),1900); }
