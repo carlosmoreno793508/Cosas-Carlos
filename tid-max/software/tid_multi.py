@@ -109,6 +109,11 @@ def procesar_atleta(atleta, do_sync=True):
     zonas = atleta.get("zonas") or f"zonas-{slug}.json"
     if os.path.exists(os.path.join(SCRIPT_DIR, zonas)):
         env["TID_ZONAS"] = zonas
+    # Perfil de NUTRICIÓN POR-ATLETA (nutricion-<slug>.json). El agente de nutrición lo usa
+    # como plantilla base (comidas, metas, ayuno). Si no existe, cae al de Gael por defecto.
+    nutri = atleta.get("nutricion") or f"nutricion-{slug}.json"
+    if os.path.exists(os.path.join(SCRIPT_DIR, nutri)):
+        env["TID_NUTRI"] = nutri
 
     # Copia los archivos de planificación de ESTE atleta a su carpeta aislada. En modo
     # multiusuario tid_data NO cae al SCRIPT_DIR compartido (para no filtrar el plan de

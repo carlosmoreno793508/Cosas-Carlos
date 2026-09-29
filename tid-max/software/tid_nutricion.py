@@ -43,7 +43,10 @@ import base64
 import datetime
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-BASE_NUTRI = os.path.join(SCRIPT_DIR, "nutricion-gael.json")
+# Perfil de nutrición POR-ATLETA: TID_NUTRI elige el archivo (nutricion-<slug>.json).
+# Sin él, cae al de Gael (compatibilidad). tid_multi lo setea por atleta, igual que TID_ZONAS.
+_NUTRI_FILE = os.environ.get("TID_NUTRI", "nutricion-gael.json")
+BASE_NUTRI = _NUTRI_FILE if os.path.isabs(_NUTRI_FILE) else os.path.join(SCRIPT_DIR, _NUTRI_FILE)
 # Registro del consumo del día (lo que Carlos manda: foto/texto). La tarjeta lo lee.
 CONSUMO_JSON = os.path.join(SCRIPT_DIR, "datos", "procesado", "consumo-hoy.json")
 # MEMORIA de alimentos: bitácora acumulada de TODAS las comidas estimadas (todos los días).
@@ -156,6 +159,29 @@ def _memoria_txt():
             f"{json.dumps(mem, ensure_ascii=False)}")
 
 
+def _ayuno_txt(base):
+    """Si el perfil del atleta trae una estrategia de AYUNO activa, se la pasa al agente
+    para que la respete (ventana de alimentación, no ayunar sesiones clave, romper el ayuno
+    con proteína+carbohidrato post-entreno). Aplica solo a quien lo tenga configurado; los
+    atletas sin bloque 'ayuno' (p. ej. Gael) no se ven afectados."""
+    ay = (base or {}).get("ayuno") or {}
+    if not ay.get("activo"):
+        return ""
+    partes = [f"El atleta sigue una estrategia de AYUNO: {ay.get('tipo', 'ayuno intermitente')}"]
+    if ay.get("ventana_alimentacion"):
+        partes.append(f"ventana de alimentación {ay['ventana_alimentacion']}")
+    reglas = ay.get("reglas") or []
+    txt = ("\n\nAYUNO (estrategia elegida por ESTE atleta — tenla en cuenta al aconsejar): "
+           + ". ".join(partes) + ".")
+    if reglas:
+        txt += " Reglas de seguridad: " + " ".join(f"({i+1}) {r}" for i, r in enumerate(reglas))
+    txt += (" Considera si la comida cae dentro o fuera de la ventana (coméntalo con tacto), y cuida "
+            "que el ayuno NO choque con el combustible de una sesión larga o de calidad. Ajusta "
+            "'cubre_demanda' y 'sugerencia' a esta estrategia, sin romper los guardrails de seguridad "
+            "ni recomendar sub-alimentar una sesión clave.")
+    return txt
+
+
 def _contexto(tipo_dia, base, dia_ctx=None):
     dia_ctx = dia_ctx or {}
     linea = f"Contexto: hoy es un día de entrenamiento '{tipo_dia}'."
@@ -178,6 +204,7 @@ def _contexto(tipo_dia, base, dia_ctx=None):
                   "cargar carbohidrato como si fuera un doble; compara lo del plato contra la META DEL DÍA, no contra un día pesado genérico.")
     return (linea + "\n\nPlantilla base del atleta (lo que suele comer y sus suplementos):\n"
             f"{json.dumps(base, ensure_ascii=False)}"
+            + _ayuno_txt(base)
             + _memoria_txt())
 
 
