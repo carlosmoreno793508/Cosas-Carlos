@@ -109,6 +109,11 @@ def procesar_atleta(atleta, do_sync=True):
     zonas = atleta.get("zonas") or f"zonas-{slug}.json"
     if os.path.exists(os.path.join(SCRIPT_DIR, zonas)):
         env["TID_ZONAS"] = zonas
+    # Perfil de NUTRICIÓN POR-ATLETA (nutricion-<slug>.json). El agente de nutrición lo usa
+    # como plantilla base (comidas, metas, ayuno). Si no existe, cae al de Gael por defecto.
+    nutri = atleta.get("nutricion") or f"nutricion-{slug}.json"
+    if os.path.exists(os.path.join(SCRIPT_DIR, nutri)):
+        env["TID_NUTRI"] = nutri
 
     # Copia los archivos de planificación de ESTE atleta a su carpeta aislada. En modo
     # multiusuario tid_data NO cae al SCRIPT_DIR compartido (para no filtrar el plan de
@@ -133,6 +138,17 @@ def procesar_atleta(atleta, do_sync=True):
         vaciado = (not isinstance(ev, dict)) or ev.get("_vaciado") or not ev.get("nombre")
         with open(destino, "w", encoding="utf-8") as f:
             json.dump({} if vaciado else ev, f, ensure_ascii=False, indent=2)
+
+    # Consumo del día capturado desde la app (api/comida.js → software/consumo/<slug>.json,
+    # "repo como BD"). Se copia al procesado del atleta como consumo-hoy.json, que es lo que
+    # tid_web lee para pintar "consumido vs meta" en el reporte. Solo aplica el día que coincide
+    # (tid_web ya valida la fecha), así que copiarlo siempre es seguro.
+    cons_app = os.path.join(SCRIPT_DIR, "consumo", f"{slug}.json")
+    if os.path.exists(cons_app):
+        try:
+            shutil.copyfile(cons_app, os.path.join(proc, "consumo-hoy.json"))
+        except OSError:
+            pass
 
     print(f"\n═══ {atleta.get('nombre', slug)}  ({slug} · {atleta.get('fuente')} · {atleta.get('deporte')}) ═══")
 

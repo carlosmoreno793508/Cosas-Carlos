@@ -1,0 +1,67 @@
+{
+  "_fuente": "Perfil de NUTRICION del atleta #2 de TID-MAX: Carlos Moreno (corredor master). Espejo de nutricion-gael.json pero calibrado a un corredor de 49 anos que retoma rumbo a medio maraton (11-oct-2026) y maraton (dic-2026). Datos base tomados de perfil-carlos.json. Los campos marcados POR_CONFIRMAR los completa Carlos.",
+  "_uso": "El agente de nutricion (tid_nutricion.py) usa este archivo como plantilla base del atleta cuando TID_NUTRI apunta aqui. Estima macros de una foto/texto y los compara contra la meta DEL DIA (que escala con el volumen de carrera). Enfoque master: combustible suficiente para entrenar y recuperar + composicion corporal saludable y gradual; NUNCA dietas extremas ni sub-alimentar una tirada larga o una sesion de calidad.",
+  "atleta": "Carlos Moreno",
+  "deporte": "running",
+  "reloj": "Polar",
+  "perfil": {
+    "fecha_nacimiento": "1976-10-01",
+    "edad": 49,
+    "sexo": "M",
+    "peso_kg": 93,
+    "altura_cm": null,
+    "fc_max_estimada": 171,
+    "nivel_inicial": "bajo",
+    "kcal_por_km_carrera": 95,
+    "factor_actividad_no_entreno": 1.4,
+    "_nota_perfil": "Peso 93 kg y edad 49 vienen de perfil-carlos.json. kcal_por_km_carrera ~95 es una ESTIMACION (aprox 1 kcal/kg/km ajustada); se afina con el gasto real del Polar. altura_cm falta (POR_CONFIRMAR) para calcular BMR con mas precision."
+  },
+  "objetivo_nutricional": {
+    "prioridad_1": "Combustible suficiente para las sesiones (sobre todo la tirada larga y las de calidad) y para recuperar bien entre dias.",
+    "prioridad_2": "Composicion corporal saludable y gradual (deficit LIGERO permitido en dias faciles/descanso si Carlos lo busca), protegiendo masa muscular y recuperacion.",
+    "proteina_g_por_kg": 1.8,
+    "proteina_g_objetivo": 167,
+    "reglas": [
+      "NUNCA sub-alimentar el dia de tirada larga o de series: esos dias se come para rendir.",
+      "Deficit, si aplica, SOLO ligero y en dias faciles/descanso; jamas dietas extremas ni saltarse comidas alrededor del entreno.",
+      "Proteina alta y repartida (atleta master, protege musculo): ~1.8 g/kg.",
+      "Hidratacion y electrolitos, sobre todo en tiradas largas y calor.",
+      "Nutricion deportiva y bienestar, NO medicina: dudas de dosis/salud -> nutriologo o medico del deporte."
+    ],
+    "_nota_diferencia_gael": "A diferencia de Gael (juvenil, 'nunca restringir', cubrir gasto altisimo), Carlos es master retomando: el objetivo combina rendimiento CON composicion corporal. Por eso el guardrail NO es el de Gael."
+  },
+  "ayuno": {
+    "activo": true,
+    "tipo": "ayuno intermitente 16:8",
+    "ventana_alimentacion": "12:00-20:00",
+    "_estado_ventana": "POR_CONFIRMAR — confirma tu ventana real de alimentacion",
+    "entreno_en_ayunas": "las sesiones FACILES/cortas de la manana pueden ir en ayunas si te sientes bien",
+    "reglas": [
+      "NUNCA en ayunas una tirada larga ni una sesion de calidad: esas se combustionan antes y despues.",
+      "Tras un entreno en ayunas, romper el ayuno con proteina + carbohidrato dentro de ~30-60 min.",
+      "Si hay mareo, bajon fuerte, mal sueno o baja la recuperacion, se acorta o pausa el ayuno: la recuperacion manda.",
+      "El ayuno es una ESTRATEGIA elegida por el atleta, no una regla del agente; dudas de salud -> nutriologo/medico del deporte."
+    ],
+    "_nota": "El agente respeta esta ventana: comenta si una comida cae fuera de la ventana y cuida que el ayuno no choque con el combustible de las sesiones clave. Aplica SOLO a este atleta (Gael no ayuna)."
+  },
+  "estructura_semana": {
+    "_estado": "POR_CONFIRMAR con Carlos",
+    "dias_carrera": "POR_CONFIRMAR (que dias corre y cuales son largo/calidad/facil)",
+    "tirada_larga": "POR_CONFIRMAR (dia y km aprox)",
+    "descanso": "POR_CONFIRMAR",
+    "_nota": "El tipo de dia real lo auto-detecta el agente desde el dataset (plan_dias). Esta seccion es solo referencia legible; confirmala para afinar el consejo."
+  },
+  "alimentos_preferidos": {
+    "_estado": "POR_CONFIRMAR — necesito lo que TU sueles comer",
+    "desayuno": ["POR_CONFIRMAR"],
+    "comida": {"proteinas": ["POR_CONFIRMAR"], "carbohidratos": ["POR_CONFIRMAR"], "verduras_fruta": ["POR_CONFIRMAR"]},
+    "cena": ["POR_CONFIRMAR"],
+    "pre_entreno": ["POR_CONFIRMAR"],
+    "post_entreno": ["POR_CONFIRMAR"],
+    "grasa_para_cocinar": "POR_CONFIRMAR"
+  },
+  "suplementos": [
+    {"_estado": "POR_CONFIRMAR — que suplementos tomas hoy (p. ej. proteina, creatina, electrolitos, magnesio, vitamina D)"}
+  ],
+  "_nota_guardrails": "Corredor master (49) retomando tras tiempo sin correr. El agente prioriza COMBUSTIBLE para entrenar/recuperar y una composicion corporal saludable y gradual; permite deficit LIGERO en dias faciles solo si Carlos lo busca, nunca alrededor de sesiones clave. No recomienda dietas extremas ni cambios de suplementos; dudas de dosis/seguridad -> nutriologo/medico deportivo."
+}
