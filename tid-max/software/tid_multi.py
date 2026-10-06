@@ -81,6 +81,9 @@ def sync_fuente(atleta, base, env):
         elif fuente == "polar":
             print(f"    → sync Polar Flow → {base}")
             correr("polar_sync.py", env)
+        elif fuente == "intervals":
+            print(f"    → sync intervals.icu (agregador gratis: Polar/Garmin/…) → {base}")
+            correr("intervals_sync.py", env)
         else:
             print(f"    (fuente '{fuente}' desconocida; sin sync)")
     except Exception as e:  # noqa: BLE001 — nunca tumbamos el pipeline por un sync
