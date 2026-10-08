@@ -1,0 +1,192 @@
+<title>GrowProkure Radar — Edición 0.1 (datos reales)</title>
+<style>
+  :root {
+    --bg:#f3efe8; --paper:#fbf9f5; --line:#e0d8cb; --hair:#23211d14;
+    --ink:#26231e; --muted:#6c6659; --faint:#948c7c;
+    --copper:#af5a2c; --copper-2:#c17b4e; --copper-wash:#f5e7dd;
+    --good:#3f8f63; --plastic:#7a6cae; --plastic-wash:#ece8f5;
+    --shadow:0 1px 2px rgba(40,34,24,.05),0 10px 30px rgba(40,34,24,.06);
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{--bg:#131418;--paper:#1b1d22;--line:#2f333d;--hair:#ffffff12;--ink:#ece7df;--muted:#9c9589;--faint:#6c6961;--copper:#d5854f;--copper-2:#bf6f3d;--copper-wash:#2a1d14;--good:#5cb181;--plastic:#a99bd8;--plastic-wash:#211d2e;--shadow:0 1px 2px rgba(0,0,0,.3),0 12px 34px rgba(0,0,0,.3);}
+  }
+  :root[data-theme="light"]{--bg:#f3efe8;--paper:#fbf9f5;--line:#e0d8cb;--hair:#23211d14;--ink:#26231e;--muted:#6c6659;--faint:#948c7c;--copper:#af5a2c;--copper-2:#c17b4e;--copper-wash:#f5e7dd;--good:#3f8f63;--plastic:#7a6cae;--plastic-wash:#ece8f5;--shadow:0 1px 2px rgba(40,34,24,.05),0 10px 30px rgba(40,34,24,.06);}
+  :root[data-theme="dark"]{--bg:#131418;--paper:#1b1d22;--line:#2f333d;--hair:#ffffff12;--ink:#ece7df;--muted:#9c9589;--faint:#6c6961;--copper:#d5854f;--copper-2:#bf6f3d;--copper-wash:#2a1d14;--good:#5cb181;--plastic:#a99bd8;--plastic-wash:#211d2e;--shadow:0 1px 2px rgba(0,0,0,.3),0 12px 34px rgba(0,0,0,.3);}
+
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased;}
+  .paper{max-width:680px;margin:24px auto;background:var(--paper);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;}
+  .pad{padding:30px 34px;}
+  @media (max-width:560px){.pad{padding:22px 20px;}}
+
+  .mast{border-bottom:2px solid var(--ink);padding-bottom:16px;}
+  .brandrow{display:flex;align-items:center;justify-content:space-between;gap:12px;}
+  .lockup{display:flex;align-items:center;gap:11px;}
+  .glyph{width:34px;height:34px;border-radius:8px;background:linear-gradient(150deg,var(--copper),var(--copper-2));color:#fff;display:grid;place-items:center;font-family:var(--mono);font-weight:700;}
+  .name{font-family:var(--mono);font-weight:600;letter-spacing:-.01em;font-size:15px;}
+  .name b{color:var(--copper);}
+  .radar{font-family:var(--mono);font-size:11px;letter-spacing:.34em;color:var(--faint);text-transform:uppercase;}
+  .issue{text-align:right;font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.5;}
+  .kicker{margin-top:14px;font-family:var(--serif);font-style:italic;font-size:15px;color:var(--muted);}
+  .by{margin-top:6px;font-family:var(--mono);font-size:11px;color:var(--faint);}
+
+  .demo{margin:0;background:var(--copper-wash);color:var(--copper);font-family:var(--mono);font-size:11.5px;letter-spacing:.02em;text-align:center;padding:9px 16px;border-bottom:1px solid var(--line);}
+
+  h2.sec{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--copper);margin:34px 0 4px;display:flex;align-items:center;gap:9px;}
+  h2.sec.pl{color:var(--plastic);}
+  h2.sec .ln{flex:1;height:2px;background:var(--copper-wash);}
+  h2.sec.pl .ln{background:var(--plastic-wash);}
+  .seclead{font-size:13px;color:var(--muted);margin:0 0 16px;}
+
+  .lead{margin:8px 0 4px;}
+  .lead h1{font-family:var(--serif);font-weight:700;font-size:27px;line-height:1.22;letter-spacing:-.01em;text-wrap:balance;margin:0 0 8px;}
+  .lead p{font-size:15px;margin:0;}
+
+  .item{padding:16px 0;border-bottom:1px solid var(--hair);}
+  .item:last-child{border-bottom:0;}
+  .tags{display:flex;gap:7px;margin-bottom:7px;flex-wrap:wrap;}
+  .tag{font-family:var(--mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;padding:2px 8px;border-radius:999px;font-weight:600;}
+  .t-el{background:var(--copper-wash);color:var(--copper);}
+  .t-pl{background:var(--plastic-wash);color:var(--plastic);}
+  .t-geo{background:var(--hair);color:var(--muted);}
+  .item h3{font-family:var(--serif);font-size:18px;font-weight:700;line-height:1.3;margin:0 0 5px;letter-spacing:-.01em;text-wrap:balance;}
+  .item p{font-size:14.5px;margin:0;color:var(--ink);}
+  .src{font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:6px;}
+  .signal{margin-top:10px;padding:10px 13px;background:var(--copper-wash);border-left:3px solid var(--copper);border-radius:0 8px 8px 0;font-size:13.5px;}
+  .signal.pl{background:var(--plastic-wash);border-left-color:var(--plastic);}
+  .signal b{font-family:var(--mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--copper);display:block;margin-bottom:2px;}
+  .signal.pl b{color:var(--plastic);}
+
+  .note{margin-top:14px;padding:14px 16px;border:1px dashed var(--line);border-radius:10px;background:var(--bg);}
+  .note b{font-family:var(--mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px;}
+  .note p{font-size:13.5px;margin:0;color:var(--muted);}
+
+  .stat{display:flex;gap:18px;flex-wrap:wrap;margin:6px 0 2px;}
+  .stat div{flex:1;min-width:120px;}
+  .stat .n{font-family:var(--mono);font-size:23px;font-weight:650;letter-spacing:-.02em;color:var(--copper);}
+  .stat .l{font-size:12px;color:var(--muted);}
+
+  .cta{margin-top:30px;background:linear-gradient(150deg,var(--copper),var(--copper-2));color:#fff;border-radius:12px;padding:22px 24px;text-align:center;}
+  .cta h3{font-family:var(--serif);font-size:20px;margin:0 0 6px;}
+  .cta p{margin:0 0 14px;font-size:14px;opacity:.95;}
+  .btn{display:inline-block;background:#fff;color:var(--copper);font-weight:650;font-size:14px;padding:10px 20px;border-radius:8px;}
+
+  .foot{background:var(--bg);border-top:1px solid var(--line);}
+  .foot .pad{padding:20px 34px 26px;}
+  .foot h4{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin:0 0 8px;}
+  .foot p{font-size:12px;color:var(--muted);margin:0 0 6px;line-height:1.6;}
+  .foot .sig{font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:12px;}
+</style>
+
+<div class="paper">
+  <p class="demo">◆ EDICIÓN 0.1 · datos reales (jul 2026) · borrador para tu revisión antes de publicar</p>
+
+  <div class="pad">
+    <div class="mast">
+      <div class="brandrow">
+        <div class="lockup">
+          <div class="glyph">G</div>
+          <div>
+            <div class="name">Grow<b>Prokure</b></div>
+            <div class="radar">Radar</div>
+          </div>
+        </div>
+        <div class="issue">Edición 0.1<br>Julio 2026</div>
+      </div>
+      <p class="kicker">Señales de la industria electrónica y plástica en LATAM — quién llega, quién se mueve, y qué significa para ti.</p>
+      <div class="by">Curado por Prokure · el motor de inteligencia de GrowProkure</div>
+    </div>
+
+    <!-- LEAD -->
+    <div class="lead" style="margin-top:22px">
+      <div class="tags"><span class="tag t-el">Electrónica</span><span class="tag t-geo">México</span></div>
+      <h1>Foxconn ancla la mayor ola de nearshoring — pero el Bajío es la nueva frontera</h1>
+      <p>México cerró 2025 con IED récord y el nearshoring de electrónica creció ~34% interanual. Mientras el norte se satura (Nuevo León al 97% de ocupación industrial), el Bajío toma la estafeta con espacio, talento y costos. Para un distribuidor, cada planta nueva es un BOM por abastecer. Esto movió el tablero este mes.</p>
+    </div>
+
+    <!-- ELECTRONICA -->
+    <h2 class="sec">🏭 Electrónica · nuevas plantas & expansiones <span class="ln"></span></h2>
+    <p class="seclead">Capacidad nueva = componentes nuevos por surtir.</p>
+
+    <div class="item">
+      <div class="tags"><span class="tag t-el">Electrónica / IA</span><span class="tag t-geo">Jalisco</span></div>
+      <h3>Foxconn levanta en El Salto la mayor planta de servidores de IA del mundo (US$900M)</h3>
+      <p>Ensambla los superchips NVIDIA GB200 con capacidad de ~20,000 servidores de IA al año, en dos fases (amplía su planta actual + construye una nueva). En marzo de 2026 sumó US$136M adicionales.</p>
+      <div class="src">Fuentes: Mexico News Daily · Bloomberg · Expansión · Focus Taiwan</div>
+      <div class="signal"><b>🎯 Señal para ti</b>Una operación así arrastra toda su cadena: ensamble, pasivos, conectores, gestión térmica, cableado. Los proveedores Tier-2/3 alrededor de El Salto son cuentas calientes HOY.</div>
+    </div>
+
+    <div class="item">
+      <div class="tags"><span class="tag t-el">EMS</span><span class="tag t-geo">Sonora</span></div>
+      <h3>Federal Electronics amplía su planta de Hermosillo: de 30,000 a 80,000+ ft²</h3>
+      <p>El EMS aumentó capacidad e integración vertical en Sonora para atender demanda creciente de sus clientes.</p>
+      <div class="src">Fuente: SMT Today (feb 2025)</div>
+      <div class="signal"><b>🎯 Señal para ti</b>EMS que crece = más líneas SMT = más consumo de componentes. Momento para ofrecer segundas fuentes franquiciadas y cobertura de cortos.</div>
+    </div>
+
+    <!-- PLASTICOS -->
+    <h2 class="sec pl">🧩 Plásticos & decoración <span class="ln"></span></h2>
+    <p class="seclead">Más piezas plásticas técnicas = más foil, tintas y acabados (vertical TID).</p>
+
+    <div class="item">
+      <div class="tags"><span class="tag t-pl">Plásticos</span><span class="tag t-geo">Querétaro</span></div>
+      <h3>Plásticos Durex amplía en Querétaro: nueva línea (+2,600 m²) para suspensión y chasis</h3>
+      <p>Inversión de US$3M en infraestructura + US$1.5M en maquinaria; la empresa prevé crecer ~20%.</p>
+      <div class="src">Fuentes: Auto-Revista · SomosIndustria · PressDigital (ene 2026)</div>
+      <div class="signal pl"><b>🎯 Señal para ti</b>Más piezas plásticas técnicas = demanda de decoración y acabados. Cuenta a vigilar para foil/tintas: entra con muestras y abasto local.</div>
+    </div>
+
+    <div class="item">
+      <div class="tags"><span class="tag t-pl">Plásticos</span><span class="tag t-geo">Guanajuato</span></div>
+      <h3>Auto Plastek inaugura planta en Silao (US$5.5M) y el Bajío suma US$44M automotriz en 1T-2026</h3>
+      <p>Auto Plastek abre en el parque Sky Plus; Guanajuato acumuló US$44M en inversión automotriz en el trimestre (6 proyectos, 318 empleos), incluyendo plásticos técnicos.</p>
+      <div class="src">Fuentes: Inmobiliare · Cluster Industrial</div>
+      <div class="signal pl"><b>🎯 Señal para ti</b>Nuevos inyectores/transformadores de plástico en el corredor del Bajío = prospectos directos para decoración y consumibles.</div>
+    </div>
+
+    <!-- CONTEXTO -->
+    <h2 class="sec">📊 El contexto · qué significa <span class="ln"></span></h2>
+    <div class="item">
+      <h3>El norte se satura; el Bajío toma la estafeta</h3>
+      <div class="stat">
+        <div><div class="n">~34%</div><div class="l">crecimiento anual del nearshoring en electrónica</div></div>
+        <div><div class="n">97%</div><div class="l">ocupación de parques en Nuevo León</div></div>
+        <div><div class="n">400k+</div><div class="l">empleos formales del nearshoring (2023–26, IMSS)</div></div>
+      </div>
+      <p style="margin-top:8px">Querétaro, Guanajuato y Jalisco concentran lo nuevo. La presión arancelaria y el T-MEC empujan el abasto hacia Norteamérica.</p>
+      <div class="src">Fuentes: Cluster Industrial · El Financiero · American Industrial Magazine · IMSS</div>
+      <div class="signal"><b>🎯 Lectura</b>Si tu operación cubre el Bajío, ahí está creciendo la demanda no atendida. Y el argumento de "abasto local vs. importar" nunca fue tan vendible.</div>
+    </div>
+
+    <!-- VACANTES -->
+    <h2 class="sec">💼 Señal de empleo <span class="ln"></span></h2>
+    <div class="item" style="border-bottom:0;padding-bottom:4px">
+      <p>Los corredores de electrónica y automotriz siguen contratando ingeniería y producción — señal temprana de líneas nuevas.</p>
+      <div class="signal"><b>🎯 Señal para ti</b>Vigila vacantes SMT/procesos por región (LinkedIn + asociaciones como ARHITAC en Tijuana o ERIAC en Monterrey). 100+ vacantes en una ciudad = planta en marcha.</div>
+    </div>
+
+    <!-- PROXIMAMENTE -->
+    <div class="note">
+      <b>Próxima edición · movimientos de personas</b>
+      <p>Arrancamos el rastreo de cambios de puesto (compras / ingeniería entre EMS y OEMs). Cada movimiento = una relación nueva por abrir y un contacto por actualizar. Se nutre de LinkedIn + asociaciones regionales.</p>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta">
+      <h3>¿Buscas proveedor o tienes un corto?</h3>
+      <p>Responde con tu número de parte o tu necesidad. El Radar te conecta con quien lo tiene.</p>
+      <span class="btn">Suscríbete al GrowProkure Radar</span>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div class="pad">
+      <h4>Fuentes de esta edición</h4>
+      <p>Mexico News Daily · Bloomberg · Expansión · Focus Taiwan · SMT Today · Auto-Revista · SomosIndustria · Inmobiliare · Cluster Industrial · El Financiero · American Industrial Magazine · IMSS.</p>
+      <p class="sig">GrowProkure · Industrial Growth Intelligence · Edición 0.1 · Julio 2026 · Curado por Prokure</p>
+    </div>
+  </div>
+</div>

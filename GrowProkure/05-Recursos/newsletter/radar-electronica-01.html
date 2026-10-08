@@ -1,0 +1,201 @@
+<title>GrowProkure Radar · Electrónica — LATAM</title>
+<style>
+  :root {
+    --bg:#f3efe8; --paper:#fbf9f5; --line:#e0d8cb; --hair:#23211d14;
+    --ink:#26231e; --muted:#6c6659; --faint:#948c7c;
+    --copper:#af5a2c; --copper-2:#c17b4e; --copper-wash:#f5e7dd;
+    --shadow:0 1px 2px rgba(40,34,24,.05),0 10px 30px rgba(40,34,24,.06);
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{--bg:#131418;--paper:#1b1d22;--line:#2f333d;--hair:#ffffff12;--ink:#ece7df;--muted:#9c9589;--faint:#6c6961;--copper:#d5854f;--copper-2:#bf6f3d;--copper-wash:#2a1d14;--shadow:0 1px 2px rgba(0,0,0,.3),0 12px 34px rgba(0,0,0,.3);}
+  }
+  :root[data-theme="light"]{--bg:#f3efe8;--paper:#fbf9f5;--line:#e0d8cb;--hair:#23211d14;--ink:#26231e;--muted:#6c6659;--faint:#948c7c;--copper:#af5a2c;--copper-2:#c17b4e;--copper-wash:#f5e7dd;--shadow:0 1px 2px rgba(40,34,24,.05),0 10px 30px rgba(40,34,24,.06);}
+  :root[data-theme="dark"]{--bg:#131418;--paper:#1b1d22;--line:#2f333d;--hair:#ffffff12;--ink:#ece7df;--muted:#9c9589;--faint:#6c6961;--copper:#d5854f;--copper-2:#bf6f3d;--copper-wash:#2a1d14;--shadow:0 1px 2px rgba(0,0,0,.3),0 12px 34px rgba(0,0,0,.3);}
+
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased;}
+  .paper{max-width:680px;margin:24px auto;background:var(--paper);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;}
+  .pad{padding:30px 34px;}
+  @media (max-width:560px){.pad{padding:22px 20px;}}
+
+  .mast{border-bottom:2px solid var(--ink);padding-bottom:16px;}
+  .brandrow{display:flex;align-items:center;justify-content:space-between;gap:12px;}
+  .lockup{display:flex;align-items:center;gap:11px;}
+  .glyph{width:34px;height:34px;border-radius:8px;background:linear-gradient(150deg,var(--copper),var(--copper-2));color:#fff;display:grid;place-items:center;font-family:var(--mono);font-weight:700;}
+  .name{font-family:var(--mono);font-weight:600;letter-spacing:-.01em;font-size:15px;}
+  .name b{color:var(--copper);}
+  .radar{font-family:var(--mono);font-size:11px;letter-spacing:.22em;color:var(--faint);text-transform:uppercase;}
+  .radar span{color:var(--copper);}
+  .issue{text-align:right;font-family:var(--mono);font-size:11px;color:var(--muted);line-height:1.5;}
+  .kicker{margin-top:14px;font-family:var(--serif);font-style:italic;font-size:15px;color:var(--muted);}
+  .by{margin-top:6px;font-family:var(--mono);font-size:11px;color:var(--faint);}
+
+  .demo{margin:0;background:var(--copper-wash);color:var(--copper);font-family:var(--mono);font-size:11.5px;letter-spacing:.02em;text-align:center;padding:9px 16px;border-bottom:1px solid var(--line);}
+
+  h2.sec{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--copper);margin:32px 0 4px;display:flex;align-items:center;gap:9px;}
+  h2.sec .ln{flex:1;height:2px;background:var(--copper-wash);}
+  .seclead{font-size:13px;color:var(--muted);margin:0 0 14px;}
+
+  .lead{margin:8px 0 4px;}
+  .lead h1{font-family:var(--serif);font-weight:700;font-size:26px;line-height:1.22;letter-spacing:-.01em;text-wrap:balance;margin:0 0 8px;}
+  .lead p{font-size:15px;margin:0;}
+
+  .pull{margin:22px 0 4px;padding:4px 0 4px 20px;border-left:3px solid var(--copper);}
+  .pull p{font-family:var(--serif);font-style:italic;font-size:19px;line-height:1.4;color:var(--ink);margin:0;text-wrap:balance;}
+  .pull cite{display:block;margin-top:8px;font-family:var(--mono);font-style:normal;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--copper);}
+
+  .item{padding:15px 0;border-bottom:1px solid var(--hair);}
+  .item:last-child{border-bottom:0;}
+  .tags{display:flex;gap:7px;margin-bottom:7px;flex-wrap:wrap;}
+  .tag{font-family:var(--mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;padding:2px 8px;border-radius:999px;font-weight:600;}
+  .t-el{background:var(--copper-wash);color:var(--copper);}
+  .t-geo{background:var(--hair);color:var(--muted);}
+  .item h3{font-family:var(--serif);font-size:17.5px;font-weight:700;line-height:1.3;margin:0 0 5px;letter-spacing:-.01em;text-wrap:balance;}
+  .item p{font-size:14px;margin:0;color:var(--ink);}
+  .src{font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:6px;}
+  .signal{margin-top:9px;padding:10px 13px;background:var(--copper-wash);border-left:3px solid var(--copper);border-radius:0 8px 8px 0;font-size:13px;}
+  .signal b{font-family:var(--mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--copper);display:block;margin-bottom:2px;}
+
+  .analyst{margin-top:12px;padding:14px 16px;background:var(--bg);border:1px solid var(--line);border-radius:10px;}
+  .analyst .q{font-family:var(--serif);font-size:15px;font-style:italic;margin:0;}
+  .analyst .a{font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--muted);margin-top:7px;}
+
+  .cta{margin-top:28px;background:linear-gradient(150deg,var(--copper),var(--copper-2));color:#fff;border-radius:12px;padding:22px 24px;text-align:center;}
+  .cta h3{font-family:var(--serif);font-size:20px;margin:0 0 6px;}
+  .cta p{margin:0 0 14px;font-size:14px;opacity:.95;}
+  .btn{display:inline-block;background:#fff;color:var(--copper);font-weight:650;font-size:14px;padding:10px 20px;border-radius:8px;}
+
+  .cred{margin-top:26px;border-top:1px solid var(--line);padding-top:22px;}
+  .cred .tt{font-family:var(--serif);font-size:18px;font-weight:700;margin:0 0 3px;}
+  .cred .ss{font-size:13px;color:var(--muted);margin:0 0 16px;}
+  .credgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;text-align:center;}
+  @media (max-width:560px){.credgrid{grid-template-columns:repeat(2,1fr);}}
+  .credgrid .n{font-family:var(--mono);font-size:22px;font-weight:650;color:var(--copper);letter-spacing:-.02em;}
+  .credgrid .l{font-size:11px;color:var(--muted);margin-top:2px;line-height:1.35;}
+
+  .foot{background:var(--bg);border-top:1px solid var(--line);}
+  .foot .pad{padding:20px 34px 26px;}
+  .foot h4{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin:0 0 8px;}
+  .foot p{font-size:12px;color:var(--muted);margin:0 0 6px;line-height:1.6;}
+  .foot .sig{font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:12px;}
+</style>
+
+<div class="paper">
+  <p class="demo">◆ RADAR ELECTRÓNICA · Edición 01 · datos reales (jul 2026) · borrador para tu revisión</p>
+
+  <div class="pad">
+    <div class="mast">
+      <div class="brandrow">
+        <div class="lockup">
+          <div class="glyph">G</div>
+          <div>
+            <div class="name">Grow<b>Prokure</b></div>
+            <div class="radar">Radar · <span>Electrónica</span></div>
+          </div>
+        </div>
+        <div class="issue">Edición 01<br>Julio 2026<br>LATAM</div>
+      </div>
+      <p class="kicker">Dónde crece la manufactura electrónica en LATAM — y a quién le vendes esta semana.</p>
+      <div class="by">Curado por Prokure · el motor de inteligencia de GrowProkure</div>
+    </div>
+
+    <!-- LEAD -->
+    <div class="lead" style="margin-top:22px">
+      <div class="tags"><span class="tag t-el">Electrónica</span><span class="tag t-geo">LATAM</span></div>
+      <h1>El mapa electrónico de LATAM ya no es solo México</h1>
+      <p>De Costa Rica a Manaos, la región está armando su propia cadena de semiconductores y ensamble. México lidera el volumen, pero Centroamérica, el Caribe y Sudamérica suman capacidad — y con ella, BOMs nuevos por abastecer. Esto movió el tablero este mes.</p>
+    </div>
+
+    <div class="pull">
+      <p>La señal más rentable no es el precio del chip — es saber qué planta abrió esta semana y quién firma sus órdenes de compra.</p>
+      <cite>— Prokure · motor de inteligencia de GrowProkure</cite>
+    </div>
+
+    <!-- MEXICO -->
+    <h2 class="sec">🇲🇽 México & Norteamérica <span class="ln"></span></h2>
+    <div class="item">
+      <div class="tags"><span class="tag t-el">IA / Servidores</span><span class="tag t-geo">Jalisco</span></div>
+      <h3>Foxconn levanta en El Salto la mayor planta de servidores de IA del mundo (US$900M)</h3>
+      <p>Ensambla los superchips NVIDIA GB200, ~20,000 servidores/año en dos fases; en marzo de 2026 sumó US$136M adicionales.</p>
+      <div class="src">Fuentes: Mexico News Daily · Bloomberg · Expansión · Focus Taiwan</div>
+      <div class="signal"><b>🎯 Señal para ti</b>Arrastra toda su cadena: pasivos, conectores, térmica, cableado. Proveedores Tier-2/3 alrededor de El Salto = cuentas calientes HOY.</div>
+    </div>
+    <div class="item">
+      <div class="tags"><span class="tag t-el">EMS</span><span class="tag t-geo">Sonora</span></div>
+      <h3>Federal Electronics amplía Hermosillo: de 30,000 a 80,000+ ft²</h3>
+      <p>Más capacidad e integración vertical para atender demanda creciente.</p>
+      <div class="src">Fuente: SMT Today</div>
+      <div class="signal"><b>🎯 Señal para ti</b>Más líneas SMT = más consumo de componentes. Momento para segundas fuentes y cobertura de cortos.</div>
+    </div>
+
+    <!-- CENTROAMERICA Y CARIBE -->
+    <h2 class="sec">🌎 Centroamérica & Caribe <span class="ln"></span></h2>
+    <div class="item">
+      <div class="tags"><span class="tag t-el">Semiconductores</span><span class="tag t-geo">Costa Rica</span></div>
+      <h3>Costa Rica consolida su hub de semiconductores: Intel + fondo del CHIPS Act</h3>
+      <p>Intel opera ahí la única planta de ensamble y prueba (ATP) de semiconductores del hemisferio occidental (inversión ~US$1.2B). Fue el primer país con el fondo ITSI del CHIPS Act de EE.UU. (US$500M en 5 años). Además, 14 de las 30 mayores multinacionales de dispositivos médicos operan en el país (+50% anual en medtech).</p>
+      <div class="src">Fuentes: Investment Monitor · MDDI Online · Banco Mundial</div>
+      <div class="signal"><b>🎯 Señal para ti</b>Ecosistema ATP + medtech = demanda de componentes de precisión, semiconductores y electrónica de alta confiabilidad. Mercado premium para segundas fuentes trazables.</div>
+    </div>
+    <div class="item">
+      <div class="tags"><span class="tag t-el">Zonas francas</span><span class="tag t-geo">Rep. Dominicana</span></div>
+      <h3>República Dominicana arranca su Estrategia Nacional de Semiconductores (ENFIS)</h3>
+      <p>Entró a fase de implementación con foco en ATP/OSAT. Jabil, Eaton, GE y Rockwell ya operan en sus zonas francas; en 2025 se aprobaron 82 empresas nuevas y 10 parques. El sector de zonas francas ya supera los 200,000 empleos.</p>
+      <div class="src">Fuentes: Esco Global Strategies · DR1 · Yahoo Finance</div>
+      <div class="signal"><b>🎯 Señal para ti</b>Nuevo polo de ensamble electrónico bajo CAFTA-DR (acceso a EE.UU.). Cuentas y OEMs nuevos entrando — territorio fresco para prospectar.</div>
+    </div>
+
+    <!-- SUDAMERICA -->
+    <h2 class="sec">🌎 Sudamérica <span class="ln"></span></h2>
+    <div class="item">
+      <div class="tags"><span class="tag t-el">Manufactura</span><span class="tag t-geo">Brasil</span></div>
+      <h3>Brasil moderniza Manaos: R$475M para encapsulado y prueba de circuitos integrados</h3>
+      <p>La Zona Franca de Manaos (donde opera Foxconn/Fênix con líneas SMT) recibe nuevo equipo para packaging y ensamble de dispositivos con semiconductores.</p>
+      <div class="src">Fuentes: IndexBox · Click Petróleo e Gás</div>
+      <div class="signal"><b>🎯 Señal para ti</b>Líneas SMT y de packaging que crecen = demanda local de componentes. El mayor mercado de LATAM, con reglas propias (Zona Franca).</div>
+    </div>
+    <div class="item">
+      <div class="tags"><span class="tag t-el">Data centers</span><span class="tag t-geo">Colombia · Chile</span></div>
+      <h3>El boom de data centers dispara la demanda de servidores en la región Andina</h3>
+      <p>Colombia: ODATA invierte US$1.3B en dos data centers en Bogotá (mercado US$450M→US$1.44B). Chile: AWS anuncia US$4B y ya concentra ~15% de los data centers de LATAM.</p>
+      <div class="src">Fuentes: DCD · GlobeNewswire · BNamericas · InvestChile</div>
+      <div class="signal"><b>🎯 Señal para ti</b>Data centers = servidores, componentes de potencia, gestión térmica y respaldo. Demanda de hardware de alto valor fuera de los polos tradicionales.</div>
+    </div>
+
+    <!-- CONTEXTO -->
+    <h2 class="sec">📊 La lectura <span class="ln"></span></h2>
+    <div class="analyst">
+      <p class="q">"LATAM está pasando de 'ensamblar para exportar' a construir capacidad de semiconductores (ATP/OSAT). Costa Rica y República Dominicana ya reciben fondos del CHIPS Act — es una cadena regional en formación."</p>
+      <p class="a">— Lectura del sector, con base en Investment Monitor, Esco Global Strategies y OCDE (2026)</p>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta">
+      <h3>¿Buscas proveedor o tienes un corto?</h3>
+      <p>Responde con tu número de parte o tu necesidad. El Radar te conecta con quien lo tiene.</p>
+      <span class="btn">Suscríbete al Radar · Electrónica</span>
+    </div>
+
+    <div class="cred">
+      <p class="tt">Inteligencia electrónica para LATAM</p>
+      <p class="ss">GrowProkure conecta a proveedores y compradores de componentes electrónicos en toda la región con datos, señales y oportunidades reales.</p>
+      <div class="credgrid">
+        <div><div class="n">8+</div><div class="l">países<br>en cobertura</div></div>
+        <div><div class="n">18+</div><div class="l">fuentes<br>monitoreadas</div></div>
+        <div><div class="n">1,100+</div><div class="l">contactos<br>de electrónica</div></div>
+        <div><div class="n">2</div><div class="l">verticales<br>(ver Radar · Plásticos)</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div class="pad">
+      <h4>Fuentes de esta edición</h4>
+      <p>Mexico News Daily · Bloomberg · Expansión · Focus Taiwan · SMT Today · Investment Monitor · MDDI Online · Banco Mundial · Esco Global Strategies · DR1 · Yahoo Finance · IndexBox · Click Petróleo e Gás · Data Center Dynamics · GlobeNewswire · BNamericas · InvestChile.</p>
+      <p class="sig">GrowProkure · Radar · Electrónica · Edición 01 · Julio 2026 · Curado por Prokure</p>
+    </div>
+  </div>
+</div>
