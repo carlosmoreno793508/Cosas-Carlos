@@ -79,4 +79,40 @@ for r in ws5.iter_rows(min_row=2):
         for c in r: c.fill = PatternFill("solid", fgColor=PINK)
 ws5.freeze_panes = "D2"; ws5.auto_filter.ref = ws5.dimensions
 
+import os
+lat = []
+for f in ["latam_centroamerica.json", "latam_caribe.json", "latam_sudamerica.json"]:
+    fp = os.path.join("src", f)
+    if os.path.exists(fp):
+        lat += json.load(open(fp, encoding="utf-8"))["prospects"]
+if lat:
+    ws6 = wb.create_sheet("Latinoamérica", 2)
+    lc = ["Prioridad", "Región", "País", "Empresa", "Ciudad", "Tipo", "Dirección publicada", "A qué se dedica", "Marcas que surte (según fuente)", "Subsector textil", "Segmento", "Verificado", "Sitio web", "Contacto publicado", "Por qué es prospecto", "Fuente", "Estatus"]
+    ws6.append(lc)
+    ro = {"Centroamérica": 0, "Caribe": 1, "Sudamérica": 2}
+    lat.sort(key=lambda p: ({"A": 0, "B": 1, "C": 2}.get(p.get("priority"), 3), ro.get(p.get("region"), 9), p.get("country", ""), p.get("company", "")))
+    for p in lat:
+        ws6.append([p.get("priority"), p.get("region"), p.get("country"), p.get("company"), p.get("city"), p.get("type"), p.get("address"), p.get("activity"), p.get("brands_served"), p.get("subsector"), p.get("segment"), {True: "Sí", False: "No"}.get(p.get("verified"), ""), p.get("website"), p.get("phone_or_email"), p.get("why"), p.get("source"), "Por contactar"])
+    for c in ws6[1]: c.font, c.fill = head, fill
+    for col, w in zip("ABCDEFGHIJKLMNOPQ", [10, 16, 18, 34, 18, 26, 45, 50, 36, 30, 11, 11, 30, 24, 50, 36, 14]): ws6.column_dimensions[col].width = w
+    for r in ws6.iter_rows(min_row=2):
+        for c in r: c.alignment = wrap
+        if r[0].value == "A":
+            for c in r: c.fill = PatternFill("solid", fgColor=PINK)
+    ws6.freeze_panes = "E2"; ws6.auto_filter.ref = ws6.dimensions
+    dv2 = DataValidation(type="list", formula1='"Por contactar,Contactado,Visita agendada,Demo,Cotización,Ganado,Perdido"', allow_blank=True)
+    ws6.add_data_validation(dv2); dv2.add(f"Q2:Q{ws6.max_row}")
+    ws7 = wb.create_sheet("Resumen Latam", 3)
+    ws7.append(["Región", "País", "A", "B", "C", "Total"])
+    cnt = {}
+    for p in lat:
+        k = (p.get("region"), p.get("country")); cnt.setdefault(k, {"A": 0, "B": 0, "C": 0}); cnt[k][p.get("priority", "C")] = cnt[k].get(p.get("priority", "C"), 0) + 1
+    for (rg, ct), v in sorted(cnt.items(), key=lambda x: (ro.get(x[0][0], 9), -sum(x[1].values()))):
+        ws7.append([rg, ct, v["A"], v["B"], v["C"], v["A"] + v["B"] + v["C"]])
+    n = ws7.max_row
+    ws7.append(["Total", "", f"=SUM(C2:C{n})", f"=SUM(D2:D{n})", f"=SUM(E2:E{n})", f"=SUM(F2:F{n})"])
+    for c in ws7[1]: c.font, c.fill = head, fill
+    for c in ws7[ws7.max_row]: c.font = Font(bold=True)
+    ws7.column_dimensions["A"].width = 18; ws7.column_dimensions["B"].width = 22
+
 wb.save(sys.argv[1]); print("ok", sys.argv[1], len(rows))
