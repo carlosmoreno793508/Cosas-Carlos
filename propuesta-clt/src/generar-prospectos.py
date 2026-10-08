@@ -1,5 +1,5 @@
 # Genera el Excel interno de prospectos a partir de src/prospectos.json
-import json, sys
+import json, sys, os
 from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill, Alignment
 from openpyxl.worksheet.datavalidation import DataValidation
@@ -100,22 +100,51 @@ ws8.freeze_panes = "D2"; ws8.auto_filter.ref = ws8.dimensions
 dv8 = DataValidation(type="list", formula1='"Por contactar,Contactado,Visita agendada,Demo,Cotización,Ganado,Perdido"', allow_blank=True)
 ws8.add_data_validation(dv8); dv8.add(f"J2:J{ws8.max_row}")
 
+# Hoja de comercio exterior (investigación pública oct-2026, src/comex/*.json)
+def flat(v):
+    if v is None: return ""
+    if isinstance(v, (list, tuple)): return "\n".join(flat(x) for x in v)
+    if isinstance(v, dict): return "\n".join(f"{k}: {flat(x)}" for k, x in v.items())
+    return str(v)
+cx_files = [("México", "src/comex/mexico_prospectos.json"), ("México", "src/comex/mexico_oem.json"),
+            ("Latinoamérica", "src/comex/latam_centroamerica.json"), ("Latinoamérica", "src/comex/latam_caribe_sudamerica.json")]
+if all(os.path.exists(f) for _, f in cx_files):
+    wsx = wb.create_sheet("Comercio exterior", 2)
+    cx = ["Mercado", "Empresa", "Ubicación", "ID fiscal (RFC/RUC/RNC)", "Régimen / IMMEX", "Exportación (según fuente)", "Importación de insumos de impresión", "Equipo importado", "Marcas de tinta", "Gasto anual en tinta", "Confianza", "Fuentes"]
+    wsx.append(cx)
+    for mkt, f in cx_files:
+        for e in json.load(open(f, encoding="utf-8"))["empresas"]:
+            g = lambda *ks: next((e[k] for k in ks if k in e), "")
+            loc = g("ubicacion") or ", ".join(x for x in [flat(e.get("ciudad")), flat(e.get("pais"))] if x)
+            wsx.append([mkt, flat(g("empresa", "nombre")), flat(loc), flat(g("rfc", "razon_social_id_fiscal", "razon_social")),
+                        flat(g("immex", "regimen")), flat(g("exportaciones")), flat(g("importaciones_insumos_impresion")),
+                        flat(g("importaciones_equipo")), flat(g("marcas_tinta")),
+                        flat(g("gasto_anual_estimado_tintas", "gasto_anual_tinta_estimado", "gasto_tinta_estimado")), flat(g("confianza")), flat(g("fuentes"))])
+    for c in wsx[1]: c.font, c.fill = head, fill
+    for col, w in zip("ABCDEFGHIJKL", [13, 32, 26, 24, 30, 55, 50, 30, 26, 24, 22, 50]): wsx.column_dimensions[col].width = w
+    for r in wsx.iter_rows(min_row=2):
+        for c in r: c.alignment = wrap
+        if r[9].value and str(r[9].value).lower() not in ("sin dato", "no encontrado", ""):
+            for c in r: c.fill = PatternFill("solid", fgColor=PINK)
+    wsx.freeze_panes = "C2"; wsx.auto_filter.ref = wsx.dimensions
+    wsx.append([]); wsx.append(["Nota: el SAT no publica importaciones por empresa. Datos de resúmenes públicos (Veritrade, Trademo, Panjiva, ImportYeti) y sitios de las empresas; el detalle de tintas por proveedor requiere suscripción de pago."])
+
 import os
 lat = []
-for f in ["latam_centroamerica.json", "latam_caribe.json", "latam_sudamerica.json"]:
-    fp = os.path.join("src", f)
-    if os.path.exists(fp):
+import glob
+for fp in sorted(glob.glob(os.path.join("src", "latam_*.json"))):
+    if True:
         lat += json.load(open(fp, encoding="utf-8"))["prospects"]
 if lat:
     ws6 = wb.create_sheet("Latinoamérica", 2)
-    lc = ["Prioridad", "Región", "País", "Empresa", "Ciudad", "Tipo", "Dirección publicada", "A qué se dedica", "Marcas que surte (según fuente)", "Subsector textil", "Segmento", "Verificado", "Sitio web", "Contacto publicado", "Por qué es prospecto", "Fuente", "Estatus"]
+    lc = ["Prioridad", "Región", "País", "Empresa", "Ciudad", "Tipo", "Dirección publicada", "A qué se dedica", "Marcas que surte (según fuente)", "Subsector textil", "Segmento", "Verificado", "Sitio web", "Contacto publicado", "Por qué es prospecto", "Fuente", "Estatus", "Cuenta foco", "Notas"]
     ws6.append(lc)
     ro = {"Centroamérica": 0, "Caribe": 1, "Sudamérica": 2}
-    lat.sort(key=lambda p: ({"A": 0, "B": 1, "C": 2}.get(p.get("priority"), 3), ro.get(p.get("region"), 9), p.get("country", ""), p.get("company", "")))
+    lat.sort(key=lambda p: ({"A": 0, "B": 1, "C": 2}.get(p.get("priority"), 3), not p.get("foco"), ro.get(p.get("region"), 9), p.get("country", ""), p.get("company", "")))
     for p in lat:
-        ws6.append([p.get("priority"), p.get("region"), p.get("country"), p.get("company"), p.get("city"), p.get("type"), p.get("address"), p.get("activity"), p.get("brands_served"), p.get("subsector"), p.get("segment"), {True: "Sí", False: "No"}.get(p.get("verified"), ""), p.get("website"), p.get("phone_or_email"), p.get("why"), p.get("source"), "Por contactar"])
+        ws6.append([p.get("priority"), p.get("region"), p.get("country"), p.get("company"), p.get("city"), p.get("type"), p.get("address"), p.get("activity"), p.get("brands_served"), p.get("subsector"), p.get("segment"), {True: "Sí", False: "No"}.get(p.get("verified"), ""), p.get("website"), p.get("phone_or_email"), p.get("why"), p.get("source"), "Por contactar", "Sí" if p.get("foco") else "", p.get("flag", "")])
     for c in ws6[1]: c.font, c.fill = head, fill
-    for col, w in zip("ABCDEFGHIJKLMNOPQ", [10, 16, 18, 34, 18, 26, 45, 50, 36, 30, 11, 11, 30, 24, 50, 36, 14]): ws6.column_dimensions[col].width = w
+    for col, w in zip("ABCDEFGHIJKLMNOPQRS", [10, 16, 18, 34, 18, 26, 45, 50, 36, 30, 11, 11, 30, 24, 50, 36, 14, 11, 45]): ws6.column_dimensions[col].width = w
     for r in ws6.iter_rows(min_row=2):
         for c in r: c.alignment = wrap
         if r[0].value == "A":

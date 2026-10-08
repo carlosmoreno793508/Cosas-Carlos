@@ -14,10 +14,11 @@
       "address_source": "https://opensupplyhub.org/facilities/DO2021145HHXNVH",
       "activity": "Planta textil (tejido, teñido y acabado) de Gildan en zona franca, con estampado registrado como tipo de proceso.",
       "subsector": "Tejido de punto y confección",
-      "priority": "A",
+      "priority": "B",
       "verified": true,
       "source": "https://opensupplyhub.org/facilities/DO2021145HHXNVH",
-      "segment": "OEM"
+      "segment": "OEM",
+      "flag": "Baja a B: Planta de tejido y teñido; vende prenda en blanco (SEC)."
     },
     {
       "region": "Caribe",
@@ -55,7 +56,9 @@
       "priority": "A",
       "verified": true,
       "source": "https://opensupplyhub.org/facilities/DO20223082TTER0",
-      "segment": "Prospecto"
+      "segment": "Prospecto",
+      "foco": true,
+      "flag": "Grupo Willbes (Seúl): TCPL + Willbes Haitian + Willbes Dominicana; negociar como grupo."
     },
     {
       "region": "Caribe",
@@ -71,10 +74,12 @@
       "address_source": "https://opensupplyhub.org/facilities/DO20191087GN8HD",
       "activity": "Ensamble final (corte y costura) de tops de punto para exportación, filial del grupo coreano The Willbes & Co.",
       "subsector": "Maquila de exportación de confección",
-      "priority": "B",
+      "priority": "A",
       "verified": true,
       "source": "https://opensupplyhub.org/facilities/DO20191087GN8HD",
-      "segment": "OEM"
+      "segment": "OEM",
+      "foco": true,
+      "flag": "Grupo Willbes (Seúl): TCPL + Willbes Haitian + Willbes Dominicana; negociar como grupo."
     },
     {
       "region": "Caribe",
@@ -378,7 +383,9 @@
       "priority": "A",
       "verified": true,
       "source": "https://opensupplyhub.org/facilities/HT2020330F0DJH5",
-      "segment": "Prospecto"
+      "segment": "Prospecto",
+      "foco": true,
+      "flag": "Grupo Willbes (Seúl): TCPL + Willbes Haitian + Willbes Dominicana; negociar como grupo."
     },
     {
       "region": "Caribe",
@@ -435,25 +442,6 @@
       "priority": "A",
       "verified": true,
       "source": "https://uniwellapparel.com/",
-      "segment": "OEM"
-    },
-    {
-      "region": "Caribe",
-      "country": "Haití",
-      "company": "Palm, S.A.",
-      "city": "Port-au-Prince",
-      "type": "OEM / maquila de paquete completo",
-      "why": "Contratista de costura de Gildan con 1,020 trabajadores; volumen alto de básicos.",
-      "brands_served": "Gildan Activewear",
-      "website": "",
-      "phone_or_email": "",
-      "address": "65, Rue Souchet Thor, Port-au-Prince, Haití",
-      "address_source": "https://opensupplyhub.org/facilities/HT20200797JA3H7",
-      "activity": "Ensamble final y costura de prendas para Gildan.",
-      "subsector": "Maquila de exportación de confección",
-      "priority": "C",
-      "verified": true,
-      "source": "https://opensupplyhub.org/facilities/HT20200797JA3H7",
       "segment": "OEM"
     },
     {
@@ -658,6 +646,7 @@
     "Hanesbrands (ahora parte de Gildan tras la adquisición) tiene planta en Bonao ('Hanesbrands Dos Rios', OS ID DO202218804RKHA) y otras en RD. No se incluyó porque Open Supply Hub no detalla sus procesos; puede revisarse como cuenta corporativa junto con Gildan.",
     "Teléfonos y correos: solo se incluyeron cuando aparecen en el sitio propio de la empresa. Los teléfonos de directorios de terceros (CNZFE, redes sociales) se dejaron en blanco.",
     "Cuba excluida. Sin hallazgos relevantes de maquila con estampado en Jamaica más allá de talleres locales. La zona franca de Jamaica tiene hoy poca actividad de confección.",
-    "Otros posibles prospectos que no se verificaron: Serigrafía Tiburón (Santo Domingo), Hilos A&E Dominicana (proveedor de hilos, no estampador), Mas Akansyel (Caracol), BrandM Apparel Haiti (CODEVI), Caribbean Island Apparel (Port-au-Prince) y Polanco Fashion (La Vega)."
+    "Otros posibles prospectos que no se verificaron: Serigrafía Tiburón (Santo Domingo), Hilos A&E Dominicana (proveedor de hilos, no estampador), Mas Akansyel (Caracol), BrandM Apparel Haiti (CODEVI), Caribbean Island Apparel (Port-au-Prince) y Polanco Fashion (La Vega).",
+    "Baja (oct-2026): Palm, S.A. — Cerró en 2025 (Worker Rights Consortium)."
   ]
 }

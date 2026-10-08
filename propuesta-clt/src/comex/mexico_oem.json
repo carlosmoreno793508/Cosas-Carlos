@@ -1,0 +1,242 @@
+{
+  "meta": {
+    "fecha_investigacion": "2026-10-08",
+    "alcance": "Fuentes públicas gratuitas (vistas previas de Panjiva, ImportYeti, Veritrade, Trademo; sitios corporativos; prensa; directorios). Sin login, pago ni paywalls.",
+    "advertencias_generales": [
+      "Panjiva muestra solo 1 pedimento/BL de muestra por página, con la descripción de mercancía enmascarada; los conteos de registros son totales del perfil, no solo insumos.",
+      "ImportYeti solo cubre BL marítimos hacia EE.UU.; las exportaciones por camión de Baja California (la mayoría) no aparecen ahí.",
+      "Los valores de Veritrade y Trademo son agregados de pedimentos mexicanos; bajo IMMEX incluyen el valor declarado de importaciones temporales (p. ej. prendas en blanco del cliente), no compras propias. Las páginas de Veritrade traen filas de relleno de la plantilla (Argentina/Ecuador, 'Materiales industriales certificados') que se ignoraron.",
+      "Veritrade muestra el RFC truncado (sin los 2 primeros caracteres); el RFC completo se tomó de Panjiva cuando estaba disponible.",
+      "Ninguna fuente pública gratuita mostró nombres de proveedores de tintas (Avient/Wilflex/Rutland, International Coatings, Union Ink, Matsui, Green Galaxy, Lawson) enviando a estas empresas. Los insumos de impresión de las maquilas de Baja parecen entrar mediante la afiliada estadounidense bajo IMMEX (inferencia)."
+    ],
+    "firecrawl": "La cuenta de Firecrawl tiene pocos créditos; se usaron WebSearch y WebFetch como respaldo."
+  },
+  "empresas": [
+    {
+      "id": 1,
+      "nombre": "Vertical Knits, S.A. de C.V.",
+      "ubicacion": "Baca (Calle 20 #131-C), Tizimín, Espita y Peto, Yucatán",
+      "rfc": "Veritrade muestra 'N0306273Q9' (truncado). El RFC completo probablemente es VKN0306273Q9, pero esto es una inferencia no verificada.",
+      "immex": "no encontrado (ninguna fuente pública lo confirma)",
+      "matriz_shelter": "no encontrado",
+      "perfil": "Integración vertical: tejido, teñido, acabado, corte, costura, serigrafía, bordado y empaque. Prensa de 2022: ~1,700 trabajadores en Baca, ~1,300 en Tizimín y ~250 en Espita; nueva planta de 12,000 m2 en Peto para confección y serigrafía. Prensa de 2025-2026: despidos de >40% del personal y protestas laborales en Tizimín (may-2026).",
+      "exportaciones": {
+        "veritrade_2019_2024": "Exportaciones FOB US$512.7M (38,287 registros); importaciones CIF US$47.9M (9,623 registros); 47,910 operaciones en total; pico de importaciones en 2019. País principal: EE.UU. con 3,875 registros y US$93.9M (81%), seguido de Países Bajos (US$7.2M) y Japón (US$4.5M). Ejemplos 2023: HS 61091003 'PLAYERA 100% ALGODON DE PUNTO' a EE.UU., Países Bajos y Sudáfrica.",
+        "importyeti_bl_maritimos": "33 envíos marítimos (ago-2015 a dic-2025): Converse 13, Reebok/CCM Hockey 7, Nike Retail BV 6 (jul-dic 2025, vía Maersk), American Fashion Wear 3, American Sportswear 3, Jofa 1.",
+        "panjiva": "334 envíos de importación a EE.UU.; 8,536 registros; '403 customers'. Ejemplo: 25-ago-2025, Progreso a Panama City FL, consignatario Hugo Boss Fashions Inc., 472 cajas, 4,653 kg, HTS 6212.10. También dos envíos a Nike Retail BV el 22-jul-2025."
+      },
+      "importaciones_insumos_impresion": "no encontrado. Veritrade solo muestra prendas en blanco/telas ('PARA HOMBRES Y MUJERES' con 49% del valor).",
+      "importaciones_equipo": "no encontrado",
+      "marcas_tinta": "no encontrado",
+      "gasto_anual_estimado_tintas": "sin dato",
+      "fuentes": [
+        "https://www.importyeti.com/supplier/vertical-knits",
+        "https://panjiva.com/Vertical-Knits-S-A-De-C-V/36150657",
+        "https://www.veritradecorp.com/en/mexico/imports-and-exports-vertical-knits-sa-de-cv/rfc-n0306273q9",
+        "https://mexicoindustry.com/noticia/vertical-knits-inicia-construccion-de-su-planta-en-yucatan",
+        "https://www.poresto.com/yucatan/2026/5/25/eso-no-alcanza-ni-para-el-pasaje-empleados-de-una-maquiladora-de-tizimin-mantienen-protesta-tras-recibir-al-menos-8-pesos-de-utilidades.html"
+      ],
+      "confianza": "media para las exportaciones; baja para los insumos"
+    },
+    {
+      "id": 2,
+      "nombre": "Ink Throwers de México, S.A. de C.V.",
+      "ubicacion": "Tijuana, B.C. (La Esmeralda 4435; Blvd. La Esmeralda 20100)",
+      "rfc": "ITM041105SZ3 (Panjiva); Veritrade muestra 'M041105SZ3'",
+      "immex": "sí. Pedimentos con régimen 'Temporary Import ... (Immex)' y permiso IM25T0004037 (Panjiva, 30-jul-2025).",
+      "matriz_shelter": "Ink Throwers / T.R.B. Inc., Encinitas CA (EE.UU.), que es el remitente de los insumos y prendas bajo IMMEX. Panjiva le atribuye 135 registros y 2 clientes.",
+      "perfil": "Serigrafía por contrato. El sitio menciona producciones de 100k o más; un directorio de empleo reporta ~900 empleados y 50,000 impresiones/día. Técnicas declaradas: discharge, puff, gel, flock, UV, glow, scented, foil, glitter, sublimación.",
+      "exportaciones": {
+        "veritrade_2019_2024": "Exportaciones FOB US$152.7M (53,953 registros); importaciones CIF US$135.9M (52,106 registros), con pico en 2021; 106,059 operaciones. Producto principal: prendas para hombre y mujer, US$27.5M (84% de la muestra). País: EE.UU. Ejemplos dic-2023: HS 61091003 'CAMISETA HOMBRE 100% ALGODON DE PUNTO ESTAMPADAS', 24,247 piezas a US$1.50/pza (servicio de estampado).",
+        "trademo_via_fortune": "Ink Throwers aparece como comprador principal de Fortune Fashions Baja: US$2.44M en 2025."
+      },
+      "importaciones_insumos_impresion": "Parcial. Panjiva registra un envío del 30-oct-2023 de Ink Throwers/T.R.B. Inc. desde EE.UU.: HS 9612 (cintas entintadas/almohadillas), ~47 kg, ~US$1,752. Panjiva reporta un HS 84 (maquinaria) entre los principales códigos del remitente estadounidense. No se encontró ningún proveedor de tinta textil nombrado.",
+      "importaciones_equipo": "HS 84 entre los códigos principales de Ink Throwers/T.R.B. Inc.; un registro de dic-2016 con HS 84142001 (compresores). No hay detalle de prensas.",
+      "marcas_tinta": "no encontrado",
+      "gasto_anual_estimado_tintas": "sin dato",
+      "fuentes": [
+        "https://panjiva.com/Ink-Throwers-T-R-B-Inc/38557104",
+        "https://www.veritradecorp.com/en/mexico/imports-and-exports-ink-throwers-de-mexico-sa-de-cv/rfc-m041105sz3",
+        "https://inkthrowers.com/services",
+        "https://inkthrowers.com/techniques",
+        "https://www.empleonuevo.com/empleo-en/ink-throwers"
+      ],
+      "confianza": "alta para identidad, IMMEX y matriz; media para valores; baja para insumos"
+    },
+    {
+      "id": 3,
+      "nombre": "MD International Baja, S. de R.L. de C.V.",
+      "ubicacion": "Estancia 1190, Ensenada, B.C.",
+      "rfc": "MIB090513V16 (Panjiva)",
+      "immex": "sí. Regímenes 'Return Of Goods (Immex)' y 'Temporary Import ... (Immex)'; permiso IM25T0040943 (Panjiva).",
+      "matriz_shelter": "Remitente estadounidense recurrente: Massive Prints (2035 E. Vista Bella Way, Rancho Dominguez CA). Panjiva le atribuye 1,034 registros y 6 clientes, con HS 61, 48, 32, 98 y 39 como códigos principales. Que sea afiliada es una inferencia no confirmada.",
+      "perfil": "Maquila textil de corte, costura, lavado e impresión según directorios (CANACINTRA Ensenada, discoverbusiness).",
+      "exportaciones": {
+        "veritrade_2019_2024": "Importaciones US$119.3M (58,452 registros) y exportaciones US$199.6M (44,799 registros); 103,251 operaciones. Origen principal de importación: EE.UU. Cifras tomadas de un resumen automático de la página.",
+        "panjiva": "Perfil exportador con 2,956 registros y 22 clientes, sin nombres públicos. Ejemplo: 8-oct-2025, HS 6109100301, retorno IMMEX vía Tijuana por camión, CIF US$78,754. Perfil importador con 4,106 registros y 30 proveedores; HS principales 61, 48, 60, 39, 32 (tintas/pigmentos) y 37 (fotográficos, que incluyen emulsiones y películas)."
+      },
+      "importaciones_insumos_impresion": "Indirecta. HS 32 aparece entre los 5 capítulos principales de importación de MD Intl y de los envíos de Massive Prints a MD Intl (Panjiva). No hay producto, valor ni marca visibles.",
+      "importaciones_equipo": "no encontrado",
+      "marcas_tinta": "no encontrado",
+      "gasto_anual_estimado_tintas": "sin dato",
+      "fuentes": [
+        "https://panjiva.com/Md-International-Baja-S-De-Rl-De-Cv/31128282",
+        "https://panjiva.com/Md-International-Baja-S-De-Rl-De-Cv/31202092",
+        "https://es.panjiva.com/Massive-Prints/32705543",
+        "https://www.veritradecorp.com/en/mexico/imports-and-exports-md-international-baja-s-de-rl-de-cv/rfc-b090513v16",
+        "https://directorio.canacintraens.org/listing/md-international-baja/"
+      ],
+      "confianza": "alta para identidad e IMMEX; media para valores; baja para insumos"
+    },
+    {
+      "id": 4,
+      "nombre": "Fortune Fashions Baja, S. de R.L. de C.V. (Mad Engine Global)",
+      "ubicacion": "Griselda Camacho s/n, Lomas de San Fernando, Ensenada, B.C. (también Calle Tortuga, Maneadero)",
+      "rfc": "FFB090910AV5 (Panjiva)",
+      "immex": "sí. Pedimentos con régimen 'Temporary Import ... (Immex)' (Panjiva).",
+      "matriz_shelter": "Mad Engine Global (subsidiaria según UN Global Compact y un directorio). Remitente estadounidense principal: Fortune Screenprinting Inc./LLC (San Diego), con 1,653 registros y HS 61, 48, 39, 32 y 84 como códigos principales.",
+      "perfil": "Serigrafía y empaque industrial (Walmart, Disney); además DTG y POD; 1,000-2,000 empleados (directorio). Mad Engine declara a nivel corporativo el uso de 'eco-friendly water-based inks' y tiene un caso publicado con Kornit Digital para POD (no se especifica que sea en Ensenada).",
+      "exportaciones": {
+        "trademo_ene2022_sep2025": "Exportaciones US$241.64M (104,038 envíos); importaciones US$189.89M (36,593 envíos). HS de exportación: 610910 US$186.28M, 610990 US$28.76M, 611020, 611030 y 610620. Comprador visible: Ink Throwers de México (US$2.44M en 2025).",
+        "veritrade_2019_2024": "Importaciones US$320.7M (53,465) y exportaciones US$273.6M (110,606); 164,071 operaciones. Cifras tomadas de un resumen automático de la página.",
+        "panjiva": "5,238 registros; 33 proveedores."
+      },
+      "importaciones_insumos_impresion": [
+        {
+          "producto": "Tintas de impresión, 'otras'",
+          "hs": "321519",
+          "valor": "US$8.28M (5.03% de las importaciones)",
+          "periodo": "ene-2022 a sep-2025 (rango que declara Trademo)",
+          "proveedor": "no especificado por HS. El proveedor principal total es Fortune Screenprinting Inc.: US$2.16M en 2022, 4.1M en 2023, 6.99M en 2024 y 0.75M en 2025. También L&K Irving Inc.",
+          "origen": "EE.UU. principalmente; la página también lista Suiza (US$1.08M en 2025), Alemania (US$0.46M) y Francia",
+          "fuente": "https://www.trademo.com/companies/fortune-fashions-baja-s-de-rl-de-cv/25582730"
+        },
+        {
+          "producto": "Químico, HS 2905320100 (propilenglicol), 39.97 L",
+          "hs": "2905.32",
+          "valor": "US$3,041 por partida (CIF del pedimento US$18,248)",
+          "periodo": "6-oct-2025",
+          "proveedor": "Fortune Screenprinting LLC",
+          "origen": "Israel (origen típico de Kornit, pero esto es una inferencia: la descripción está enmascarada)",
+          "fuente": "https://panjiva.com/Fortune-Fashions-Baja-S-De-R-L-De-C-V/31106047"
+        },
+        {
+          "producto": "Limpiador industrial de pantallas (screen cleaner)",
+          "hs": "no indicado",
+          "valor": "no indicado",
+          "periodo": "ene-2026",
+          "proveedor": "empresa de serigrafía (según un resumen de búsqueda de Trademo; no verificado en la página)",
+          "fuente": "https://www.trademo.com/companies/fortune-fashions-baja-s-de-rl-de-cv/25582730"
+        }
+      ],
+      "importaciones_equipo": "HS 84 entre los 5 códigos principales (Panjiva). Kornit está vinculado a Mad Engine a nivel corporativo.",
+      "marcas_tinta": "Ninguna marca de plastisol nombrada. Mad Engine declara a nivel corporativo tintas base agua.",
+      "gasto_anual_estimado_tintas": "~US$2.2M/año = US$8.28M / 45 meses (ene-2022 a sep-2025) x 12 = US$2.21M. Advertencias: valor aduanal bajo IMMEX que puede incluir tintas no textiles; la página de Trademo tiene inconsistencias (muestra valores de 2026 y porcentajes que no cuadran). Es un orden de magnitud, no una cifra contable.",
+      "fuentes": [
+        "https://www.trademo.com/companies/fortune-fashions-baja-s-de-rl-de-cv/25582730",
+        "https://panjiva.com/Fortune-Fashions-Baja-S-De-R-L-De-C-V/31106047",
+        "https://panjiva.com/Fortune-Screenprinting-Inc/98113310",
+        "https://www.veritradecorp.com/en/mexico/imports-and-exports-fortune-fashions-baja-s-de-rl-de-cv/rfc-b090910av5",
+        "https://www.empleonuevo.com/empleo-en/fortune-fashions",
+        "https://www.sourceready.com/supplier/list/best-mexican-clothing-manufacturers-mx"
+      ],
+      "confianza": "alta para identidad e IMMEX; media para la existencia de importaciones HS 3215; baja-media para el monto"
+    },
+    {
+      "id": 5,
+      "nombre": "SOIR Textiles, S. de R.L. de C.V. (TJ Factory Clothing)",
+      "ubicacion": "Manuel Cullinfor 65 / Camino Vecinal Parcela 192, Ensenada, B.C.",
+      "rfc": "STE120718L59 (Panjiva)",
+      "immex": "sí. Panjiva muestra 'Temporary Import Fixed Assets (Immex)' (nov-2024) y transferencias virtuales.",
+      "matriz_shelter": "no encontrado",
+      "perfil": "Confección y serigrafía (Columbia y Disney según el briefing; no verificado en fuentes de comercio exterior).",
+      "exportaciones": {
+        "veritrade_5_anios": "Importaciones US$63.1M (15,601) y exportaciones US$74.5M (16,513); 32,114 operaciones; mercado principal EE.UU. Cifras tomadas de un resumen automático de la página.",
+        "panjiva": "1,676 registros y 39 proveedores (otro perfil: 1,108-1,375). Ejemplo de ene-2025: exportación HS 6109, CIF US$403,406."
+      },
+      "importaciones_insumos_impresion": "Indirecta. HS 32 (tintas y pigmentos) y HS 37 (fotográficos/emulsiones) entre los 5 capítulos principales (Panjiva). Ejemplo de ago-2025: HS 3919909900 (autoadhesivos plásticos), US$2,241, transferencia virtual nacional. No hay marca ni proveedor de tinta visibles.",
+      "importaciones_equipo": "Activo fijo IMMEX nov-2024, HS 84 (un resumen de búsqueda lo cita como HS 8443, máquinas de impresión), CIF US$6,151. Panjiva.",
+      "marcas_tinta": "no encontrado",
+      "gasto_anual_estimado_tintas": "sin dato",
+      "fuentes": [
+        "https://panjiva.com/Soir-Textiles-S-De-Rl-De-Cv/31114736",
+        "https://panjiva.com/Soir-Textiles-S-De-Rl-De-Cv/31188659",
+        "https://www.veritradecorp.com/en/mexico/imports-and-exports-soir-textiles-s-de-rl-de-cv/rfc-e120718l59"
+      ],
+      "confianza": "media"
+    },
+    {
+      "id": 6,
+      "nombre": "Factory I, S.A. de C.V. (Factory1 Group)",
+      "ubicacion": "Alisos 113 y Aquiles Serdán 983, Ensenada, B.C.",
+      "rfc": "FIX040823BVA (Panjiva)",
+      "immex": "sí. Permiso IM25T0022948 y transferencias virtuales (Panjiva).",
+      "matriz_shelter": "Factory 1 LLC (San Diego/Chula Vista CA). LinkedIn: fundada en 2005; 'two high tech print shops (37 presses)', tintorería, capacidad declarada de 6 millones de unidades/mes; tienda DTC Factory One Shop.",
+      "perfil": "Serigrafía, tintes y lavados de playera, empaque. Aparece en la lista de fábricas de Disney (Scribd) como 'Factory 1, SA de CV, Calle Alisos No. 113'.",
+      "exportaciones": {
+        "trademo_ene2022_sep2025": "Importaciones US$121.49M (37,482) y exportaciones US$49.83M (9,968). Proveedor principal: Factory 1 LLC, con US$15.88M en 2022, 12.18M en 2023, 10.56M en 2024 y 12.56M en 2025; también L&K Irving Inc. Importaciones principales: HS 610910 US$84.55M y cajas de cartón 481910 US$2.72M. Exportaciones: HS 610910 US$27.28M, principalmente a EE.UU. Descripción: 'CAMISETA DE NIÑO DE PUNTO 100% ALGODON (PARA SERVICIO DE IMPRESION)'. ADVERTENCIA: Trademo mezcla exportaciones ajenas (HS 8536/8538, JTI Brasil, Samsung), posible error de entidad.",
+        "panjiva": "5,108 registros y 26 proveedores; HS principales 61, 48, 39, 32 (tintas/pigmentos) y 38 (químicos)."
+      },
+      "importaciones_insumos_impresion": "Indirecta. HS 32 y HS 38 entre los 5 capítulos principales (Panjiva); Trademo no muestra HS 3215 entre los códigos principales. No hay proveedor ni marca visibles.",
+      "importaciones_equipo": "no encontrado (Panjiva y Trademo no muestran 8443)",
+      "marcas_tinta": "no encontrado. LinkedIn menciona 'specialty inks' sin marca.",
+      "gasto_anual_estimado_tintas": "sin dato",
+      "fuentes": [
+        "https://panjiva.com/Factory-Isa-De-Cv/31176168",
+        "https://www.trademo.com/companies/factory-i-sa-de-cv/25247558",
+        "https://linkedin.com/company/factory1",
+        "https://www.scribd.com/document/504572041/Walt-Disney-Manufacturing-List-China"
+      ],
+      "confianza": "alta para identidad e IMMEX; media para volúmenes; baja para insumos"
+    },
+    {
+      "id": 7,
+      "nombre": "Codipsa / San Fernando Screenprinting. Razón social: Confecciones y Diseños de Puebla, S.A. de C.V.",
+      "ubicacion": "6 Oriente 3408/3602, Col. Resurgimiento, Puebla, Pue.",
+      "rfc": "Posible CDP890928?7Y5. Proviene de un resumen de búsqueda de un registro Panjiva sin verificar; confianza baja.",
+      "immex": "no encontrado",
+      "matriz_shelter": "no aplica / no encontrado",
+      "perfil": "Integración vertical (hilatura, tejido, teñido, estampado, confección); 'screen t-shirts is what we do'; capacidad de 400,000 piezas/mes; exporta a EE.UU. desde 1989. Fuentes: sitio propio y artículo patrocinado de Forbes MX. Aparece en la lista de fábricas de Disney.",
+      "exportaciones": {
+        "importyeti": "2 envíos marítimos (jun-ago 2018), Veracruz a Houston, cliente EMP Merchandising (Alemania), playeras y tank tops.",
+        "panjiva": "Un registro de exportación vía Tijuana a EE.UU. (cliente Mighty Fine Inc.), HS 61099001, CIF US$15,400, sin fecha visible.",
+        "nota": "Los perfiles 'Codipsa' de Panjiva/ImportGenius corresponden a empresas homónimas de Paraguay/Venezuela (almidones), NO a la de Puebla."
+      },
+      "importaciones_insumos_impresion": "no encontrado",
+      "importaciones_equipo": "no encontrado (ImportYeti lista a Welker Vakuum, Alemania, entre sus relaciones; no verificado)",
+      "marcas_tinta": "no encontrado",
+      "gasto_anual_estimado_tintas": "sin dato",
+      "fuentes": [
+        "https://www.codipsa.mx/",
+        "https://forbes.com.mx/ad-precision-calidad-y-compromiso-el-modelo-codipsa/",
+        "https://www.importyeti.com/supplier/confecciones-y-disenos-de-puebla",
+        "https://maquiladoras.infomaquila.com/listing/confecciones-y-disenos-de-puebla-sa-de-cv-e6ew/",
+        "https://www.scribd.com/document/504572041/Walt-Disney-Manufacturing-List-China"
+      ],
+      "confianza": "baja"
+    },
+    {
+      "id": 8,
+      "nombre": "RMC de México, S.A. de C.V.",
+      "ubicacion": "Calle Industria Alimenticia 2311, Parque Industrial Linares, N.L. 67735",
+      "rfc": "RME960815J56 (Panjiva)",
+      "immex": "sí. Régimen 'Return Of Goods (Immex)' (Panjiva, 25-sep-2025).",
+      "matriz_shelter": "Robinson Manufacturing Company Inc. (Dayton, TN, EE.UU.), notify party en BL marítimos (Panjiva). Que sea la matriz es una inferencia razonable.",
+      "perfil": "Confección de ropa interior y de dormir en masa (InfoMaquila/pymes.org.mx). Kompass la marca como 'no activa', pero Panjiva muestra pedimentos de 2025. La relación con Under Armour y Nordstrom NO se verificó en ninguna fuente pública.",
+      "exportaciones": {
+        "panjiva": "2,065 registros y 3 clientes (nombres no visibles); HS principales 61, 62, 39, 48 y 42; exporta vía Reynosa por camión. Perfil importador con 1,855 registros y 30 proveedores (p. ej. C&S Textile Co., Vietnam: telas HTS 5210.59, dic-2019)."
+      },
+      "importaciones_insumos_impresion": "no encontrado (HS 32 no aparece entre sus códigos principales)",
+      "importaciones_equipo": "HS 84 entre los 5 códigos principales de importación (Panjiva); sin detalle.",
+      "marcas_tinta": "no encontrado",
+      "gasto_anual_estimado_tintas": "sin dato",
+      "fuentes": [
+        "https://panjiva.com/Rmc-De-Mexico-SA-De-Cv/31226815",
+        "https://panjiva.com/Rmc-De-Mexico-SA-De-Cv/38768777",
+        "https://maquiladoras.infomaquila.com/listing/rmc-de-mexico-sa-de-cv/",
+        "https://mx.kompass.com/c/rmc-de-mexico-s-a-de-c-v/mx643350/"
+      ],
+      "confianza": "media para identidad e IMMEX; baja para serigrafía e insumos (no hay evidencia pública de serigrafía propia)"
+    }
+  ]
+}

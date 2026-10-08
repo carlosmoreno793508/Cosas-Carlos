@@ -6,7 +6,8 @@ const { T } = require("./generar-ppt");
 const top8020 = require("./top8020");
 const foda = require("./foda");
 const prospects = require("./prospectos.json").prospects;
-const latam = ["latam_centroamerica", "latam_caribe", "latam_sudamerica"].flatMap((f) => require(`./${f}.json`).prospects);
+const fs = require("fs");
+const latam = fs.readdirSync(__dirname).filter((f) => /^latam_.*\.json$/.test(f)).sort().flatMap((f) => require(`./${f}`).prospects);
 
 const S = {
   es: {
@@ -150,6 +151,21 @@ const S = {
     contact: "Carlos Moreno — TID México · carlos.moreno@tidmexico.com.mx · +52 446 479 4420",
   },
 };
+
+// Cifras de Latinoamérica calculadas de los datos (cambian al agregar países o dar de baja empresas)
+{
+  const n = latam.length, a = latam.filter((x) => x.priority === "A").length;
+  const nc = new Set(latam.map((x) => x.country)).size;
+  const byC = (c) => latam.filter((x) => x.country === c).length;
+  const ca = latam.filter((x) => x.region === "Centroamérica").length;
+  S.es.exec[2][0] = String(n); S.en.exec[2][0] = String(n);
+  S.es.s_latam = `Latinoamérica: ${n} prospectos en ${nc} países`;
+  S.en.s_latam = `Latin America: ${n} prospects in ${nc} countries`;
+  const top = [...new Set(latam.filter((x) => x.region === "Sudamérica").map((x) => x.country))].sort((x, y) => byC(y) - byC(x)).slice(0, 2);
+  S.es.latamSide = [[String(a), "prioridad A"], [String(ca), "Centroamérica: maquila para marcas de EE. UU."], [`${byC(top[0])} + ${byC(top[1])}`, `${top[0]} y ${top[1]}`]];
+  const en = { "Perú": "Peru", "Brasil": "Brazil", "Colombia": "Colombia" };
+  S.en.latamSide = [[String(a), "priority A"], [String(ca), "Central America: contractors for U.S. brands"], [`${byC(top[0])} + ${byC(top[1])}`, `${en[top[0]] || top[0]} and ${en[top[1]] || top[1]}`]];
+}
 
 // Zona corta para la gráfica de prospectos
 const ZONE = {
@@ -371,10 +387,10 @@ function build(lang) {
 
   s = content(t.s_latamTop);
   const typeEn = { "OEM / maquila de paquete completo": "OEM / full-package contractor", "Estampador por contrato": "Contract printer", "Fabricante de ropa deportiva/uniformes": "Sportswear / uniform maker" };
-  const latA = latam.filter((x) => x.priority === "A" && x.region !== "Caribe").slice(0, 12)
+  const latA = latam.filter((x) => x.priority === "A").sort((x, y) => (y.foco ? 1 : 0) - (x.foco ? 1 : 0)).slice(0, 12)
     .map((x) => [x.company.replace(/\s*\(.*\)$/, "").replace(/,? S\.A\.( de C\.V\.)?|,? S\.A\.C\.|,? Ltda\. de C\.V\./g, ""), x.country, es ? x.type : typeEn[x.type] || x.type]);
   tbl(s, latA, t.latamCols, [4.2, 1.8, 3.0], 9, 0.29);
-  note(s, es ? "Caribe: Gildan RD, The Caribbean Print, Serigrafía Moderna, Willbes Haitian, Uniwell, Sun Island Jamaica." : "Caribbean: Gildan DR, The Caribbean Print, Serigrafía Moderna, Willbes Haitian, Uniwell, Sun Island Jamaica.");
+  note(s, es ? "Primero las 8 cuentas foco (estampado en volumen o equipo M&R / híbrido); el resto de prioridad A está en el Excel." : "Focus accounts first (volume printing or M&R / hybrid equipment); the rest of priority A is in the workbook.");
 
   s = content(t.s_waves);
   t.waves.forEach(([h, c, d], i) => {

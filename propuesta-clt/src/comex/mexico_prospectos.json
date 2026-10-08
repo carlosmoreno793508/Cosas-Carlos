@@ -1,0 +1,163 @@
+{
+  "fecha_investigacion": "2026-10-08",
+  "metodo": "Solo fuentes públicas/snippets gratuitos (sitios web de las empresas, directorios, perfiles públicos de Panjiva/Volza/Veritrade vía buscador). Sin login ni pago. ImportYeti devolvió HTTP 403 al consultarlo directamente. Créditos de Firecrawl bajos; se usaron WebSearch/WebFetch/curl.",
+  "nota_general": "No se encontró ningún registro público de importación de tintas (HS 3215), pigmentos (3204/3206), siliconas (3910), emulsiones (3707), malla (5911) ni maquinaria (8443) a nombre de ninguna de las 9 empresas. Tampoco se encontró un padrón IMMEX descargable con razones sociales vigentes (la SE solo publica en el DOF listas de programas suspendidos/cancelados).",
+  "empresas": [
+    {
+      "empresa": "ADN Serigrafía",
+      "ubicacion": "Naucalpan de Juárez, Edo. Méx.",
+      "razon_social": "no encontrado",
+      "rfc": "no encontrado",
+      "immex": "no encontrado",
+      "exportaciones": "Según su web: '65% de nuestra producción se exporta'; 'producción apta para USA y Canadá'; trabaja para 'marcas globales, retailers y licencias internacionales'. Muestras de trabajos con licencias (Care Bears, Guns N' Roses, Jeep, Mobil, Peanuts, Simpsons, SpongeBob, Stitch, Stranger Things, Pure Breeze). No hay registros de embarques ni destinatarios en fuentes públicas de comercio exterior (inferencia: probablemente exporta de forma indirecta, vía clientes maquiladores o marcas, no como exportador directo).",
+      "importaciones_insumos_impresion": "no encontrado",
+      "importaciones_equipo": "No se encontraron registros de importación. Su web declara 3 carruseles automáticos: 2 M&R ('M&R — Unidad 1/2') y un carrusel oval automático de 18 estaciones (marca no indicada). LinkedIn: 'contamos con maquinaria M&R'.",
+      "marcas_tinta": "Ninguna marca nombrada. La web dice: 'Trabajamos exclusivamente con tintas ECO PASSPORT — libres de ftalatos y metales pesados'. Tipos: alta densidad, base agua, plastisol, puff, glitters, metalizados; hasta 18 tintas por pieza.",
+      "datos_operativos_declarados": "32,000 piezas/24 h; 130,000–145,000 piezas/semana; mínimo 1,800 piezas por corrida; operación 24 h.",
+      "gasto_anual_estimado_tintas": "sin dato (no hay cifra de compra de tintas ni de consumo por pieza en ninguna fuente)",
+      "fuentes": [
+        "https://adnserigrafia.com.mx/",
+        "https://www.linkedin.com/company/adn-serigraf%C3%ADa-y-tecnolog%C3%ADa-en-impres%C3%ADon"
+      ],
+      "confianza": "media (datos operativos y de tinta son autodeclarados en su web; nada verificado en registros aduanales)"
+    },
+    {
+      "empresa": "Serigrafía Textil Automatizada (KW Artículos Promocionales)",
+      "ubicacion": "Puebla, Pue.",
+      "razon_social": "no encontrado",
+      "rfc": "no encontrado",
+      "immex": "no encontrado",
+      "exportaciones": "no encontrado",
+      "importaciones_insumos_impresion": "no encontrado",
+      "importaciones_equipo": "no encontrado",
+      "marcas_tinta": "no encontrado",
+      "gasto_anual_estimado_tintas": "sin dato",
+      "fuentes": [],
+      "confianza": "baja (no se localizó presencia web pública con ninguno de los dos nombres)"
+    },
+    {
+      "empresa": "Manufacturas Textiles RF (Reitex)",
+      "ubicacion": "Guadalupe, N.L. (planta Cerro de la Silla 3011, Col. 15 de Mayo); sucursal en Valle de Chalco, Edo. Méx.",
+      "razon_social": "Manufacturas Textiles RF, S.A.P.I. de C.V. (pie de página de reitex.mx y Directorio de Fábricas)",
+      "rfc": "no encontrado",
+      "immex": "no encontrado",
+      "exportaciones": "no encontrado (directorio menciona logística hacia norte y frontera, sin exportación declarada; mercado principal: licitaciones de gobierno, campañas políticas, eventos masivos)",
+      "importaciones_insumos_impresion": "no encontrado. El directorio lista como insumos que compra: algodón en paca, fibras de poliéster, aceites para hilatura y químicos para tratamiento de aguas (no tintas).",
+      "importaciones_equipo": "no encontrado. Web declara '600 impresiones en serigrafía por hora con 12 colores' (implica al menos un carrusel automático de 12 colores; marca no indicada).",
+      "marcas_tinta": "no encontrado",
+      "datos_operativos_declarados": "5,000 camisas por día; integración vertical hilatura-tejido-acabado; aplicaciones: serigrafía, sublimación, bordado, vinil textil, transfer.",
+      "gasto_anual_estimado_tintas": "sin dato",
+      "fuentes": [
+        "https://reitex.mx/",
+        "https://www.directoriodefabricas.com/mexico/fabricas/playeras_reitex.html"
+      ],
+      "confianza": "media (razón social confirmada; sin datos de comercio exterior)"
+    },
+    {
+      "empresa": "Diermi (Playeras Mindy)",
+      "ubicacion": "Av. Dr. Mateo del Regil 6, El Briseño, Zapopan, Jal.",
+      "razon_social": "Diermi, S.A. de C.V. (grupodiermi.com: '© Diermi S.A. de C.V.'; también 'Grupo Diermi S.A. de C.V.')",
+      "rfc": "no encontrado",
+      "immex": "no encontrado",
+      "exportaciones": "Directorio de Fábricas afirma exportación a EE.UU. (declaración del directorio, no verificada); no se hallaron embarques en Panjiva/Volza/ImportGenius por búsqueda pública.",
+      "importaciones_insumos_impresion": "no encontrado. Directorio lista compras de hilos sintéticos, tela de poliéster por tonelada y servicios de agente aduanal (sugiere que importa algo, sin detalle).",
+      "importaciones_equipo": "no encontrado (directorio: 'maquinaria automatizada de última generación', sin marcas).",
+      "marcas_tinta": "no encontrado. Su enfoque visible es sublimación ('Full Print Sublimadas', tela 'sublimable'), no serigrafía.",
+      "datos_operativos_declarados": "Planta de 5,000 m²; líneas Dry-Tec.",
+      "gasto_anual_estimado_tintas": "sin dato",
+      "fuentes": [
+        "https://grupodiermi.com/",
+        "https://www.directoriodefabricas.com/mexico/fabricas/playeras_mindy.html"
+      ],
+      "confianza": "media para identidad; baja para comercio exterior"
+    },
+    {
+      "empresa": "GOCA'S",
+      "ubicacion": "Juan E. Hernández y Dávalos 61, Col. Algarín, 06880 CDMX",
+      "razon_social": "no encontrado",
+      "rfc": "no encontrado",
+      "immex": "no encontrado",
+      "exportaciones": "no encontrado",
+      "importaciones_insumos_impresion": "no encontrado. Directorio lista como consumibles que compra: tintas textiles, emulsiones fotográficas, raseros, rollos de tela.",
+      "importaciones_equipo": "no encontrado (el directorio menciona 'pulpo automático' solo como oportunidad para proveedores, no confirma que lo tenga).",
+      "marcas_tinta": "no encontrado (procesos: tintas directas, selección de color, corrosión, sublimación full-print, bordado, vinil).",
+      "datos_operativos_declarados": "Mínimo 100 piezas por modelo/color/corte; más de 25 años.",
+      "gasto_anual_estimado_tintas": "sin dato",
+      "fuentes": [
+        "https://gocas.com.mx/",
+        "https://www.directoriodefabricas.com/mexico/fabricas/playeras_gocas.html"
+      ],
+      "confianza": "media para perfil; sin datos de comercio exterior"
+    },
+    {
+      "empresa": "SerigrafiarteSP",
+      "ubicacion": "CDMX",
+      "razon_social": "no encontrado",
+      "rfc": "no encontrado",
+      "immex": "no encontrado",
+      "exportaciones": "no encontrado",
+      "importaciones_insumos_impresion": "no encontrado",
+      "importaciones_equipo": "no encontrado",
+      "marcas_tinta": "Ninguna marca. Su web anuncia 'PLASTISOL - BASE AGUA - CORROSIÓN - DTF' y 'Maquila serigráfica industrial en CDMX'; también sublimación y vinil.",
+      "gasto_anual_estimado_tintas": "sin dato",
+      "fuentes": ["https://serigrafiartesp.com/"],
+      "confianza": "baja-media (solo web propia)"
+    },
+    {
+      "empresa": "Grupo Martex",
+      "ubicacion": "Oficina: Hormona 11, Col. El Conde, Naucalpan, Edo. Méx.; planta principal reportada en Irapuato, Gto. (prensa)",
+      "razon_social": "No confirmada. Directorio Cosmos lista 'Martex Potosí, S.A. de C.V.' en Hormona 11 Naucalpan (fabricación de telas). Posible entidad productiva en Irapuato: 'Industrias Manufactureras MYR, S.A. de C.V.' (misma ciudad, mismos clientes; vínculo con Martex NO confirmado por fuente — inferencia).",
+      "rfc": "no encontrado",
+      "immex": "no encontrado (ninguna fuente lo menciona; inferencia: muy probable por su perfil maquilador exportador para Adidas/Puma, pero sin prueba)",
+      "exportaciones": "Prensa (El CEO, El Financiero, Bloomberg Línea): fabrica jerseys para Adidas y Puma (también Umbro, Reebok), 5 millones de camisetas de la Selección Mexicana para Adidas; capacidad 120,000 unidades/día; >5,000 empleados; inversión acumulada >USD 500 M. Panjiva (público) para Industrias Manufactureras MYR (Irapuato): 79 embarques a EE.UU. + 5 a Sudamérica; clientes visibles Adidas AG y Adidas Colombia; HS 61 (prendas de punto), embarques visibles jun–sep 2024, ruta Veracruz→Houston; 18 clientes en total.",
+      "importaciones_insumos_impresion": "no encontrado",
+      "importaciones_equipo": "no encontrado (prensa: inversión de USD 35 M en modernización de maquinaria en Irapuato, sin detalle de equipos de impresión). Proceso mencionado: sublimado.",
+      "marcas_tinta": "no encontrado",
+      "gasto_anual_estimado_tintas": "sin dato",
+      "fuentes": [
+        "https://grupomartex.com/",
+        "https://elceo.com/negocios/grupo-martex-tres-generaciones-convirtieron-a-la-empresa-textil-en-un-proveedor-global-y-en-el-mayor-empleador-de-guanajuato/",
+        "https://www.elfinanciero.com.mx/empresas/2026/01/08/martex-aumenta-en-66-su-produccion-para-el-mundial/",
+        "https://www.bloomberglinea.com/estilo-de-vida/el-poder-textil-de-mexico-la-fabrica-detras-de-millones-de-camisetas-del-mundial-2026/",
+        "https://www.comercialtextil.com/partners/grupo-martex-3741",
+        "https://www.cosmos.com.mx/empresa/martex-potosi-blyb.html",
+        "https://panjiva.com/Industrias-Manufactureras-Myr-SA-Cv/39861332",
+        "https://www.ejecentral.com.mx/de-vestir-al-tri-a-la-produccion-de-cubrebocas?p=504"
+      ],
+      "confianza": "alta para perfil exportador (Adidas/Puma); baja para el vínculo MYR=Martex y para razón social"
+    },
+    {
+      "empresa": "Uniformes Carmen",
+      "ubicacion": "Av. Enrique Díaz de León Sur 761, Col. Moderna, Guadalajara, Jal. 44190",
+      "razon_social": "no encontrado",
+      "rfc": "no encontrado",
+      "immex": "no encontrado",
+      "exportaciones": "no encontrado",
+      "importaciones_insumos_impresion": "no encontrado",
+      "importaciones_equipo": "no encontrado",
+      "marcas_tinta": "no encontrado (web: 'Bordado, serigrafía y personalización incluidos en un solo proveedor'; uniformes industriales)",
+      "gasto_anual_estimado_tintas": "sin dato",
+      "fuentes": ["https://uniformescarmen.com.mx/", "https://www.seccionamarilla.com.mx/resultados/uniformes-ejecutivos/jalisco/10"],
+      "confianza": "media para perfil; sin datos de comercio exterior"
+    },
+    {
+      "empresa": "Charly (Grupo Charly)",
+      "ubicacion": "León, Gto.",
+      "razon_social": "Prensa (El CEO) indica que la marca pertenece a la sociedad 'Inter Tenis' (forma societaria no confirmada).",
+      "rfc": "no encontrado",
+      "immex": "no encontrado",
+      "exportaciones": "No se hallaron embarques públicos de 'Inter Tenis'/'Grupo Charly'. Su sitio (citado por prensa) declara >1,500 tiendas y 3,500 puntos de venta en México y EE.UU. (venta, no embarques documentados).",
+      "importaciones_insumos_impresion": "no encontrado",
+      "importaciones_equipo": "no encontrado",
+      "marcas_tinta": "no encontrado",
+      "observacion": "Un listado (comercialtextil.com, snippet) dice que Grupo Martex 'produce para Puma, Adidas y Charly' — indicio de que parte de la confección/estampado textil de Charly se maquila fuera.",
+      "gasto_anual_estimado_tintas": "sin dato",
+      "fuentes": [
+        "https://elceo.com/negocios/charly-como-surgio-y-quien-es-el-dueno-de-la-empresa-de-tenis/",
+        "https://expansion.mx/empresas/2026/08/16/empresa-familiar-charly-marca-viste-a-equipos-de-la-liga-mx",
+        "https://www.comercialtextil.com/partners/grupo-martex-3741"
+      ],
+      "confianza": "baja para comercio exterior"
+    }
+  ]
+}

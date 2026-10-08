@@ -36,7 +36,8 @@
       "priority": "A",
       "verified": true,
       "source": "https://www.topytop.com.pe/index.php/quienes-somos",
-      "segment": "OEM"
+      "segment": "OEM",
+      "foco": true
     },
     {
       "region": "Sudamérica",
@@ -71,10 +72,11 @@
       "address_source": "https://opensupplyhub.org/facilities/PE20211660GQNPS",
       "activity": "Maquila de confección para exportación en el clúster de Chincha, con estampado registrado en planta.",
       "subsector": "Maquila de exportación de confección",
-      "priority": "A",
+      "priority": "B",
       "verified": true,
       "source": "https://opensupplyhub.org/facilities/PE20211660GQNPS",
-      "segment": "OEM"
+      "segment": "OEM",
+      "flag": "Baja a B: Solo corte y confección (~1,368 trabajadores); sin estampado propio."
     },
     {
       "region": "Sudamérica",
@@ -93,7 +95,8 @@
       "priority": "A",
       "verified": true,
       "source": "https://www.nettalco.com.pe/",
-      "segment": "OEM"
+      "segment": "OEM",
+      "foco": true
     },
     {
       "region": "Sudamérica",
@@ -549,7 +552,8 @@
       "priority": "C",
       "verified": true,
       "source": "https://opensupplyhub.org/facilities/CO2019087DZEY38",
-      "segment": "OEM"
+      "segment": "OEM",
+      "flag": "Posiblemente inactiva: su dominio aloja un sitio ajeno (oct-2026)."
     },
     {
       "region": "Sudamérica",
@@ -588,25 +592,6 @@
       "verified": true,
       "source": "https://www.artextil.com.co/",
       "segment": "Prospecto"
-    },
-    {
-      "region": "Sudamérica",
-      "country": "Colombia",
-      "company": "Everfit S.A.",
-      "city": "Medellín",
-      "type": "OEM / maquila de paquete completo",
-      "why": "Registrada en Open Supply Hub (2 contribuyentes) como proveedor de marcas en Medellín; procesos por confirmar.",
-      "brands_served": "",
-      "website": "",
-      "phone_or_email": "",
-      "address": "Calle 71 # 65-74, Medellín, Antioquia",
-      "address_source": "https://opensupplyhub.org/facilities/CO2019096XSPQ2J",
-      "activity": "Confeccionista de prendas para marcas.",
-      "subsector": "Maquila de exportación de confección",
-      "priority": "C",
-      "verified": true,
-      "source": "https://opensupplyhub.org/facilities/CO2019096XSPQ2J",
-      "segment": "OEM"
     },
     {
       "region": "Sudamérica",
@@ -826,6 +811,7 @@
     "Textil del Valle, Creditex, Crystal, Cotton Knit: OEM grandes sin estampado declarado públicamente; Topy Top, Camones, Nettalco, Precotex, Textimax y CMT del Sur sí lo tienen confirmado.",
     "Chile, Argentina y Brasil con cobertura ligera (prioridad C/B); Ecuador y Chile tienen pocos OEM exportadores; el mercado es de estampadores/promocionales pyme.",
     "Artextil y Supertex son también actores de estampado de tela/sublimación: más afines a consumibles (pastas, tintas) que a pulpos ovales.",
-    "Teléfonos/correos solo generales publicados en el sitio de la empresa; se omitieron correos nominativos (p.ej. de Topy Top y Divitex)."
+    "Teléfonos/correos solo generales publicados en el sitio de la empresa; se omitieron correos nominativos (p.ej. de Topy Top y Divitex).",
+    "Baja (oct-2026): Everfit S.A. — Pidió liquidación judicial en jul-2025 (El Colombiano)."
   ]
 }

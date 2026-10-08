@@ -22,25 +22,6 @@
     {
       "region": "Centroamérica",
       "country": "Honduras",
-      "company": "Hanes Ink Honduras, S.A. de C.V. (Hanesbrands)",
-      "city": "Choloma, Cortés",
-      "type": "OEM / maquila de paquete completo",
-      "why": "Unidad de decoración de Hanesbrands: embellishment, serigrafía, bordado y heat transfer según directorio AHM; alto volumen.",
-      "brands_served": "Hanesbrands (marca propia)",
-      "website": "https://www.hanes.com",
-      "phone_or_email": "",
-      "address": "Zona Libre INHDELVA Norte, edifs. #11 y 12, desvío a la Jutosa, Choloma, Cortés",
-      "address_source": "https://www.ahm-honduras.com/wp-content/uploads/2023/02/Directory2023.pdf",
-      "activity": "Planta de decoración (serigrafía, bordado, transfer y empaque) del grupo Hanesbrands en zona libre.",
-      "subsector": "Estampado y serigrafía textil",
-      "priority": "A",
-      "verified": false,
-      "source": "https://www.ahm-honduras.com/wp-content/uploads/2023/02/Directory2023.pdf",
-      "segment": "OEM"
-    },
-    {
-      "region": "Centroamérica",
-      "country": "Honduras",
       "company": "Hanes Choloma, S. de R.L.",
       "city": "Choloma, Cortés",
       "type": "OEM / maquila de paquete completo",
@@ -71,10 +52,11 @@
       "address_source": "https://tegraglobal.com/contact.php",
       "activity": "Fabricante de paquete completo de ropa deportiva y uniformes con capacidades de embellishment.",
       "subsector": "Maquila de exportación de confección",
-      "priority": "A",
+      "priority": "B",
       "verified": true,
       "source": "https://tegraglobal.com/contact.php",
-      "segment": "OEM"
+      "segment": "OEM",
+      "flag": "Baja a B: Solo ensamble final, no imprime (Open Supply Hub)."
     },
     {
       "region": "Centroamérica",
@@ -302,7 +284,8 @@
       "priority": "A",
       "verified": true,
       "source": "https://www.cygnusinv.com/services.php",
-      "segment": "Prospecto"
+      "segment": "Prospecto",
+      "foco": true
     },
     {
       "region": "Centroamérica",
@@ -321,7 +304,8 @@
       "priority": "A",
       "verified": true,
       "source": "https://www.techno-screen.com",
-      "segment": "Prospecto"
+      "segment": "Prospecto",
+      "foco": true
     },
     {
       "region": "Centroamérica",
@@ -644,7 +628,8 @@
       "priority": "A",
       "verified": true,
       "source": "https://opensupplyhub.org/facilities/GT2019269JBMQSS",
-      "segment": "Prospecto"
+      "segment": "Prospecto",
+      "foco": true
     },
     {
       "region": "Centroamérica",
@@ -865,6 +850,7 @@
     "Hilasal: hilasal.com parece dominio estacionado; se usó su división Confecciones del Valle (CAMTEX). Delta Apparel (Honduras) se omitió por su quiebra en 2024 y la incertidumbre sobre la operación actual; Grupo Lovable y Grupo Kattan se omitieron por enfocarse en ropa íntima/camisería de tejido plano.",
     "Dunlap Sunbrand International de Honduras aparece en AHM como venta de refacciones textiles, no como estampador: se descartó.",
     "Young Shin Group (YS Print, Guatemala) estampa tela en rollo, no prendas; se dejó fuera, pero podría interesar para tintas.",
-    "Nicaragua, Costa Rica y Panamá tienen poca maquila de decoración documentada públicamente; en Nicaragua revisar plantas de Hansae, Kaitai e Istmo Textil vía ANITEC/CNZF."
+    "Nicaragua, Costa Rica y Panamá tienen poca maquila de decoración documentada públicamente; en Nicaragua revisar plantas de Hansae, Kaitai e Istmo Textil vía ANITEC/CNZF.",
+    "Baja (oct-2026): Hanes Ink Honduras, S.A. de C.V. (Hanesbrands) — Cerró en dic-2024 (La Prensa HN)."
   ]
 }
