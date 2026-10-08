@@ -41,6 +41,13 @@ CITY = [
 
 # Sudamérica (se busca primero cuando el país es sudamericano; evita confundir Santiago de Chile con Santiago, R. D.)
 SA_CITY = [
+    ("Jaraguá do Sul", -26.49, -49.07), ("Jaraguá (GO)", -15.76, -49.33), ("Saudades", -26.93, -53.00), ("Apiúna", -27.04, -49.39),
+    ("Belo Horizonte", -19.92, -43.94), ("Brusque", -27.10, -48.92), ("Caetité", -14.07, -42.48), ("Caxias do Sul", -29.17, -51.18),
+    ("Cianorte", -23.66, -52.61), ("Estrela", -29.50, -51.96), ("Fortaleza", -3.73, -38.53), ("Guaramirim", -26.47, -49.00),
+    ("Guarulhos", -23.46, -46.53), ("Itajaí", -26.91, -48.66), ("Joinville", -26.30, -48.85), ("Juiz de Fora", -21.76, -43.35),
+    ("Londrina", -23.31, -51.16), ("Luiz Alves", -26.72, -48.93), ("Maringá", -23.42, -51.94), ("Natal", -5.79, -35.21),
+    ("Pomerode", -26.74, -49.18), ("Rio de Janeiro", -22.91, -43.17), ("Capibaribe", -7.96, -36.20), ("São Paulo", -23.55, -46.63),
+    ("São Roque", -23.53, -47.14),
     ("Lima", -12.05, -77.04), ("Chincha", -13.42, -76.13), ("Envigado", 6.17, -75.59), ("Yumbo", 3.58, -76.49),
     ("Bello", 6.34, -75.56), ("Itagüí", 6.17, -75.61), ("Medellín", 6.25, -75.56), ("Tebaida", 4.45, -75.79),
     ("Bogotá", 4.71, -74.07), ("Sabaneta", 6.15, -75.62), ("Cali", 3.45, -76.53), ("Ibagué", 4.44, -75.23), ("Bucaramanga", 7.12, -73.12), ("Barranquilla", 10.96, -74.80), ("Dosquebradas", 4.84, -75.67), ("Antioquia", 6.25, -75.56),
