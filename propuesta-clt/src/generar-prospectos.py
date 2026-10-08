@@ -15,22 +15,22 @@ head = Font(bold=True, color="FFFFFF"); fill = PatternFill("solid", fgColor=INK)
 wrap = Alignment(wrap_text=True, vertical="top")
 
 wb = Workbook(); ws = wb.active; ws.title = "Prospectos"
-cols = ["Prioridad", "Zona", "Empresa", "Ciudad", "Tipo", "Por qué es prospecto", "Sitio web", "Contacto publicado", "Fuente", "Estatus", "Responsable", "Próximo paso", "Notas"]
-widths = [10, 22, 28, 24, 24, 60, 32, 24, 32, 16, 16, 24, 30]
+cols = ["Prioridad", "Zona", "Empresa", "Ciudad", "Dirección publicada", "A qué se dedica", "Subsector textil", "Dirección verificada", "Tipo", "Por qué es prospecto", "Sitio web", "Contacto publicado", "Fuente", "Estatus", "Responsable", "Próximo paso", "Notas"]
+widths = [10, 22, 28, 24, 45, 50, 32, 12, 24, 60, 32, 24, 32, 16, 16, 24, 30]
 ws.append(cols)
 rows = sorted(d["prospects"], key=lambda p: ({"A": 0, "B": 1, "C": 2}.get(p["priority"], 3), zkey(p["zone"]), p["company"]))
 for p in rows:
-    ws.append([p["priority"], p["zone"], p["company"], p["city"], p["type"], p["why"], p["website"], p["phone_or_email"], p["source"], "Por contactar", "", "", ""])
+    ws.append([p["priority"], p["zone"], p["company"], p["city"], p.get("address", ""), p.get("activity", ""), p.get("subsector", ""), {True: "Sí", False: "No"}.get(p.get("verified"), ""), p["type"], p["why"], p["website"], p["phone_or_email"], p["source"], "Por contactar", "", "", p.get("flag", "")])
 for i, w in enumerate(widths, 1):
     ws.column_dimensions[ws.cell(1, i).column_letter].width = w
 for c in ws[1]: c.font, c.fill = head, fill
 for r in ws.iter_rows(min_row=2):
     for c in r: c.alignment = wrap
     if r[0].value == "A":
-        for c in r[:9]: c.fill = PatternFill("solid", fgColor=PINK)
+        for c in r[:13]: c.fill = PatternFill("solid", fgColor=PINK)
 ws.freeze_panes = "D2"; ws.auto_filter.ref = ws.dimensions
 dv = DataValidation(type="list", formula1='"Por contactar,Contactado,Visita agendada,Demo,Cotización,Ganado,Perdido"', allow_blank=True)
-ws.add_data_validation(dv); dv.add(f"J2:J{ws.max_row}")
+ws.add_data_validation(dv); dv.add(f"N2:N{ws.max_row}")
 
 ws2 = wb.create_sheet("Resumen por zona")
 ws2.append(["Zona", "Total", "A", "B", "C"])
