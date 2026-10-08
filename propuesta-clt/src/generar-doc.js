@@ -25,12 +25,14 @@ function cell(text, width, opts = {}) {
     width: { size: width, type: WidthType.DXA },
     shading: opts.fill ? { fill: opts.fill, type: ShadingType.CLEAR, color: "auto" } : undefined,
     margins: { top: 80, bottom: 80, left: 110, right: 110 },
-    children: [
+    // Una línea por renglón; los saltos "\n" se muestran como viñetas
+    children: text.split("\n").map((line, i, all) =>
       new Paragraph({
         keepNext: !!opts.keepNext,
-        children: [new TextRun({ text, bold: !!opts.bold, color: opts.color, size: 19, font: FONT })],
-      }),
-    ],
+        spacing: all.length > 1 ? { after: 60 } : undefined,
+        children: [new TextRun({ text: all.length > 1 ? "• " + line : line, bold: !!opts.bold, color: opts.color, size: 19, font: FONT })],
+      })
+    ),
   });
 }
 

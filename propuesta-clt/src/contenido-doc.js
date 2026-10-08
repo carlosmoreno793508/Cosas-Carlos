@@ -25,6 +25,25 @@ function top8020Blocks(lang) {
   ];
 }
 
+const foda = require("./foda");
+
+// FODA de la competencia (sección 8)
+function fodaBlocks(lang) {
+  const f = foda[lang];
+  const L = f.ourLabels;
+  return [
+    { h2: f.inksTitle },
+    { table: { cols: f.inksCols, widths: [2500, 2500, 2700, 1660], rows: f.inks } },
+    { note: f.inksNote },
+    { h2: f.swotTitle },
+    { table: { cols: f.swotCols, widths: [1560, 1950, 1950, 1950, 1950], rows: f.swot } },
+    { h2: f.ourTitle },
+    { table: { cols: [L.F, L.D], widths: [4680, 4680], rows: [[f.our.F.join("\n"), f.our.D.join("\n")]] } },
+    { table: { cols: [L.O, L.A], widths: [4680, 4680], rows: [[f.our.O.join("\n"), f.our.A.join("\n")]] } },
+    { p: f.answer },
+  ];
+}
+
 const es = {
   meta: {
     file: "Propuesta_Distribucion_CLT_Mexico_ES",
@@ -202,11 +221,13 @@ const es = {
           ["DTG / digital de alta gama", "Kornit (vía Sun Digital México)", "Líder en DTG; inversión alta; servicio establecido"],
           ["Pulpos automáticos", "M&R, ROQ, MHM, Anatol, Workhorse", "Base instalada en México: clientes naturales para agregar estaciones digitales"],
           ["Híbridos chinos", "Textalk, Hanglory y otros", "Venta principalmente por redes sociales y WhatsApp, sin estructura local visible"],
-          ["Siliconas y pastas", "ScreenTec (Siltex) y distribuidores locales", "Competencia directa en consumibles"],
+          ["Siliconas y pastas", "ScreenTec (Siltex), Avient (Wilflex, Rutland), Matsui y marcas económicas", "Competencia directa en consumibles"],
           ["Sustitutos", "DTF, sublimación, serigrafía tradicional", "El DTF crece rápido en tirajes cortos"],
         ],
       },
     },
+
+    ...fodaBlocks("es"),
 
     { h1: "9. Comercio exterior y regulación" },
     {
@@ -442,6 +463,7 @@ const es = {
         "FESPA México — Panorama y desafíos de la industria textil mexicana 2025.",
         "Decreto de aranceles a países sin tratado (vigente desde el 1 de enero de 2026); El País, El Economista, Expansión.",
         "Precios de referencia de equipos: distribuidores públicos en EE. UU. (Texsource / M&R).",
+        "Tintas: avientspecialtyinks.com, screentec.com.mx, sanchez.com.mx, casadiaz.com.mx (Matsui), marabu-tintas.es, ruco-druckfarben.de (distribuidores), tampoprint.com; precios en screenprinting.com, spsi.com, graficosleo.com.mx, Mercado Libre y Alibaba (octubre 2026).",
       ],
     },
   ],
@@ -624,11 +646,13 @@ const en = {
           ["High-end DTG / digital", "Kornit (via Sun Digital México)", "DTG leader; high investment; established service"],
           ["Automatic presses", "M&R, ROQ, MHM, Anatol, Workhorse", "Installed base in Mexico: natural customers for add-on digital stations"],
           ["Chinese hybrids", "Textalk, Hanglory and others", "Sold mainly via social media and WhatsApp, with no visible local structure"],
-          ["Silicones and pastes", "ScreenTec (Siltex) and local distributors", "Direct competition in consumables"],
+          ["Silicones and pastes", "ScreenTec (Siltex), Avient (Wilflex, Rutland), Matsui and budget brands", "Direct competition in consumables"],
           ["Substitutes", "DTF, sublimation, traditional screen printing", "DTF is growing fast in short runs"],
         ],
       },
     },
+
+    ...fodaBlocks("en"),
 
     { h1: "9. Trade and regulation" },
     {
@@ -864,6 +888,7 @@ const en = {
         "FESPA México — Overview and challenges of the Mexican textile industry 2025.",
         "Decree on tariffs for non-FTA countries (in force since January 1, 2026); El País, El Economista, Expansión.",
         "Equipment price references: public U.S. distributors (Texsource / M&R).",
+        "Inks: avientspecialtyinks.com, screentec.com.mx, sanchez.com.mx, casadiaz.com.mx (Matsui), marabu-tintas.es, ruco-druckfarben.de (distributors), tampoprint.com; prices from screenprinting.com, spsi.com, graficosleo.com.mx, Mercado Libre and Alibaba (October 2026).",
       ],
     },
   ],

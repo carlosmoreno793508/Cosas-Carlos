@@ -4,6 +4,7 @@ const path = require("path");
 const pptxgen = require("pptxgenjs");
 const JSZip = require("jszip");
 const top8020 = require("./top8020");
+const foda = require("./foda");
 
 const THEME = {
   name: "CLT Propuesta",
@@ -96,7 +97,7 @@ const T = {
       ["DTG alta gama", "Kornit (Sun Digital México)", "Inversión alta"],
       ["Pulpos automáticos", "M&R, ROQ, MHM, Anatol", "Clientes para estaciones digitales"],
       ["Híbridos chinos", "Textalk, Hanglory", "Sin estructura local visible"],
-      ["Siliconas y pastas", "ScreenTec (Siltex)", "Competencia en consumibles"],
+      ["Tintas y siliconas", "ScreenTec, Avient, Matsui", "Precio vs. aprobaciones de marca"],
       ["Sustitutos", "DTF, sublimación", "DTF crece en tirajes cortos"],
     ],
     s_trade: "Importación y regulación",
@@ -229,7 +230,7 @@ const T = {
       ["High-end DTG", "Kornit (Sun Digital México)", "High investment"],
       ["Automatic presses", "M&R, ROQ, MHM, Anatol", "Customers for digital stations"],
       ["Chinese hybrids", "Textalk, Hanglory", "No visible local structure"],
-      ["Silicones & pastes", "ScreenTec (Siltex)", "Consumables competition"],
+      ["Inks & silicones", "ScreenTec, Avient, Matsui", "Price vs. brand approvals"],
       ["Substitutes", "DTF, sublimation", "DTF growing in short runs"],
     ],
     s_trade: "Import and regulation",
@@ -465,6 +466,30 @@ function build(lang) {
   const head = t.compCols.map((c) => ({ text: c, options: { bold: true, color: "FFFFFF", fill: { color: HEX.dk1 } } }));
   const rows = t.comp.map((r, i) => r.map((c, j) => ({ text: c, options: { bold: j === 0, fill: { color: i % 2 ? HEX.lt1 : HEX.lt2 }, color: HEX.dk1 } })));
   s.addTable([head, ...rows], { x: 0.5, y: 1.2, w: 9, colW: [2.4, 3.3, 3.3], fontSize: 13, rowH: 0.52, border: { type: "solid", pt: 0.5, color: "C9D1DC" }, valign: "middle" });
+
+// FODA de la competencia
+  {
+    const f = foda[lang];
+    const tbl = (rows, cols, colW, fs, rowH) => {
+      const hd = cols.map((c) => ({ text: c, options: { bold: true, color: "FFFFFF", fill: { color: HEX.dk1 } } }));
+      const rw = rows.map((r, i) => r.map((c, j) => ({ text: c, options: { bold: j === 0, fill: { color: i % 2 ? HEX.lt1 : HEX.lt2 }, color: HEX.dk1 } })));
+      s.addTable([hd, ...rw], { x: 0.5, y: 1.05, w: 9, colW, fontSize: fs, rowH, border: { type: "solid", pt: 0.5, color: "C9D1DC" }, valign: "middle", margin: 0.04 });
+    };
+    s = content(f.inksTitle);
+    tbl(f.inks.map((r) => [r[0], r[2], r[3]]), [f.inksCols[0], f.inksCols[2], f.inksCols[3]], [3.3, 3.9, 1.8], 9, 0.36);
+    note(s, f.inksNote);
+    s = content(f.swotTitle);
+    tbl(f.swot, f.swotCols, [1.6, 1.85, 1.85, 1.85, 1.85], 9, 0.58);
+    s = content(lang === "es" ? "FODA: nuestra posición frente a la competencia" : "SWOT: our position against the competition");
+    const L = f.ourLabels;
+    [["F", HEX.accent2], ["D", HEX.accent5], ["O", "2E7D32"], ["A", HEX.accent1]].forEach(([k, col], i) => {
+      const x = 0.5 + (i % 2) * 4.6, y = 1.1 + Math.floor(i / 2) * 1.9;
+      card(s, x, y, 4.4, 1.75);
+      s.addText(L[k], { x: x + 0.2, y: y + 0.1, w: 4.0, h: 0.4, fontSize: 15, bold: true, color: col, isTextBox: true, margin: 0 });
+      s.addText(f.our[k].map((it, n) => ({ text: it, options: { bullet: true, breakLine: n < f.our[k].length - 1 } })),
+        { x: x + 0.2, y: y + 0.5, w: 4.0, h: 1.2, fontSize: 11, color: HEX.dk1, paraSpaceAfter: 3, valign: "top", isTextBox: true, margin: 0 });
+    });
+  }
 
   s = content(t.s_trade);
   t.trade.forEach(([h, d], i) => {
