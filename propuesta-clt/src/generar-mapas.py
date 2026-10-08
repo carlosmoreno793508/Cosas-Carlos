@@ -39,7 +39,22 @@ CITY = [
     ("Santiago", 19.45, -70.70),
 ]
 
-def locate(city):
+# Sudamérica (se busca primero cuando el país es sudamericano; evita confundir Santiago de Chile con Santiago, R. D.)
+SA_CITY = [
+    ("Lima", -12.05, -77.04), ("Chincha", -13.42, -76.13), ("Envigado", 6.17, -75.59), ("Yumbo", 3.58, -76.49),
+    ("Bello", 6.34, -75.56), ("Itagüí", 6.17, -75.61), ("Medellín", 6.25, -75.56), ("Tebaida", 4.45, -75.79),
+    ("Bogotá", 4.71, -74.07), ("Barranquilla", 10.96, -74.80), ("Dosquebradas", 4.84, -75.67), ("Antioquia", 6.25, -75.56),
+    ("Cuenca", -2.90, -79.00), ("Guayaquil", -2.19, -79.89), ("Santiago", -33.45, -70.67), ("Blumenau", -26.92, -49.07),
+    ("Luján", -34.57, -59.11), ("Villa Lynch", -34.58, -58.53), ("San Martín", -34.58, -58.54), ("Buenos Aires", -34.60, -58.38),
+]
+SA = {"Perú", "Colombia", "Ecuador", "Chile", "Argentina", "Brasil"}
+
+def locate(city, country=None):
+    if country in SA:
+        for k, la, lo in SA_CITY:
+            if k.lower() in city.lower():
+                return la, lo
+        raise KeyError(city)
     for k, la, lo in CITY:
         if k.lower() in city.lower():
             return la, lo
@@ -50,6 +65,7 @@ def node(mod):
 
 mx = json.load(open(f"{SRC}/prospectos.json", encoding="utf-8"))["prospects"]
 la = [x for f in ["latam_centroamerica", "latam_caribe"] for x in json.load(open(f"{SRC}/{f}.json", encoding="utf-8"))["prospects"]]
+sa = json.load(open(f"{SRC}/latam_sudamerica.json", encoding="utf-8"))["prospects"]
 top = node("top8020")
 top_p = [r[0] for r in top["prospects"]]
 top_o = [r[0] for r in top["oems"]]
@@ -145,5 +161,74 @@ def build(kind):
     fig.savefig(f, dpi=150); plt.close(fig)
     print("ok", f, len(sel_mx), len(sel_la), len(kx), len(kl))
 
+def build_latam(kind):
+    """Escenario LATAM completo: México + Centroamérica y Caribe + Sudamérica en un solo mapa por tipo."""
+    oem = kind == "oem"
+    title = ("Escenario LATAM — prospectos OEM (maquila de exportación)" if oem else "Escenario LATAM — prospectos estampadores y fabricantes")
+    color = MAG if oem else CYAN
+    names = top_o if oem else top_p
+    regions = [
+        ("México", [x for x in mx if (x.get("segment") == "OEM") == oem], "80/20"),
+        ("Centroamérica y Caribe", [x for x in la if (x.get("segment") == "OEM") == oem], "A"),
+        ("Sudamérica", [x for x in sa if (x.get("segment") == "OEM") == oem], "A"),
+    ]
+    pts, keys = [], {}
+    for reg, items, mode in regions:
+        keys[reg] = []
+        for x in sorted(items, key=lambda x: (x.get("country", ""), x["company"])):
+            lat, lon = locate(x["city"], x.get("country"))
+            if mode == "80/20":
+                t = is_top(x["company"], names); label = t; place = x["city"]
+            else:
+                t = x["priority"] == "A"; label = x["company"].split(" (")[0]
+                place = f'{x["city"].split(",")[0].split(" (")[0]}, {x["country"].replace("República Dominicana", "Rep. Dominicana")}'
+                if "Hanes Ink" in x["company"]: place += " — cerró 2024"
+            num = None
+            if t:
+                keys[reg].append((len(keys[reg]) + 1, label, place)); num = len(keys[reg])
+            pts.append({"lat": lat, "lon": lon, "top": bool(t), "num": num, "reg": reg})
+    spread(pts)
+    counts = {reg: len(items) for reg, items, _ in regions}
+
+    fig = plt.figure(figsize=(18, 14), dpi=140, facecolor="white")
+    fig.text(0.03, 0.965, title, fontsize=22, fontweight="bold", color=INK)
+    fig.text(0.03, 0.942, f"{sum(counts.values())} empresas en {len(regions)} regiones  ·  México {counts['México']} ({len(keys['México'])} del 80/20)  ·  "
+             f"Centroamérica y Caribe {counts['Centroamérica y Caribe']} ({len(keys['Centroamérica y Caribe'])} prioridad A)  ·  "
+             f"Sudamérica {counts['Sudamérica']} ({len(keys['Sudamérica'])} prioridad A)", fontsize=12, color=GREY)
+    panels = [
+        ("México", (-118.5, -86, 14, 34), [0.02, 0.60, 0.50, 0.32]),
+        ("Centroamérica y Caribe", (-93, -64, 7.5, 21.5), [0.02, 0.30, 0.50, 0.27]),
+        ("Sudamérica", (-84, -34, -42, 13), [0.54, 0.30, 0.44, 0.62]),
+    ]
+    for reg, ext, rect in panels:
+        ax = fig.add_axes(rect); draw_geo(ax, ext)
+        n = counts[reg]
+        ax.set_title(f"{reg} — {n} empresas", loc="left", fontsize=13, fontweight="bold", color=INK)
+        for p in pts:
+            if p["reg"] != reg: continue
+            if p["top"]:
+                ax.plot(p["lon"], p["lat"], marker="*", markersize=18, color=GOLD, markeredgecolor=INK, markeredgewidth=0.8, zorder=5)
+                a = p.get("ang", 0.6)
+                ax.annotate(str(p["num"]), (p["lon"], p["lat"]), xytext=(12 * math.cos(a), 10 * math.sin(a)), textcoords="offset points",
+                            ha="center", va="center", fontsize=8.5, fontweight="bold", color=INK, zorder=6,
+                            bbox=dict(boxstyle="round,pad=0.15", fc="white", ec=INK, lw=0.5))
+            else:
+                ax.plot(p["lon"], p["lat"], marker="*", markersize=8, color=color, markeredgecolor="white", markeredgewidth=0.4, zorder=4)
+        if reg == "Sudamérica":
+            leg = [Line2D([], [], marker="*", ls="", markersize=15, color=GOLD, markeredgecolor=INK, label="80/20 (México) o prioridad A (resto de LATAM)"),
+                   Line2D([], [], marker="*", ls="", markersize=10, color=color, label="Otros prospectos")]
+            ax.legend(handles=leg, loc="lower right", fontsize=9, frameon=True, framealpha=0.95)
+    heads = [("México — 80/20", "México"), ("Centroamérica y Caribe — prioridad A", "Centroamérica y Caribe"), ("Sudamérica — prioridad A", "Sudamérica")]
+    for i, (h, reg) in enumerate(heads):
+        x0 = 0.03 + i * 0.32
+        fig.text(x0, 0.265, h, fontsize=12, fontweight="bold", color=MAG)
+        for j, (num, name, place) in enumerate(keys[reg]):
+            fig.text(x0, 0.243 - j * 0.0165, f"{num}. {name[:30].rstrip(', .')} — {place[:34]}", fontsize=8.8, color=INK)
+    fig.text(0.03, 0.012, "Fuente: estudio de prospectos TID · VSP · CEB (oct. 2026). Ubicación aproximada por ciudad. Mapa base: Natural Earth.", fontsize=8.5, color=GREY)
+    f = os.path.join(OUT, f"Mapa_LATAM_{'OEM' if oem else 'Estampadores_Fabricantes'}.png")
+    fig.savefig(f, dpi=140); plt.close(fig)
+    print("ok", f, counts, {k: len(v) for k, v in keys.items()})
+
 for k in ("oem", "fab"):
     build(k)
+    build_latam(k)
