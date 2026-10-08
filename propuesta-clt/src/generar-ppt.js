@@ -17,6 +17,8 @@ const THEME = {
 const HEX = THEME.colors;
 
 // ---------- Textos ----------
+const IMG = (f) => path.join(__dirname, "..", "img", f);
+
 const T = {
   es: {
     file: "Presentacion_Propuesta_CLT_ES",
@@ -55,6 +57,13 @@ const T = {
       ["Captación digital", "Sitio multilingüe y WhatsApp"],
     ],
     modelGap: "Lo que falta en México: servicio técnico local, inventario en el país, atención en español y sala de demostración",
+    s_gal1: "Muestras: color digital ilimitado",
+    gal1: [["01-vineyard.jpg", "Acuarela digital sobre base blanca, prenda de color"], ["02-perro.jpg", "Fotorrealismo sobre prenda oscura"], ["03-living.jpg", "Collage fotográfico a todo color"], ["10-aguila.jpg", "Impresión digital transpirable"]],
+    s_gal2: "Muestras: efectos especiales y uniformes",
+    gal2: [["04-clt-pastas.jpg", "Alto relieve, espumante y foil en frío"], ["05-escudo.jpg", "Escudo deportivo con relieve y brillo"], ["07-tigre.jpg", "Serigrafía de tintas planas en prenda de color"], ["09-huskies.jpg", "Relieve, foil dorado y destellos metálicos"]],
+    s_booth: "CLT en PRINTING United 2026 (Las Vegas)",
+    booth: "Pulpo automático con estación digital funcionando en vivo: así vende CLT, y así lo replicaremos en México",
+    boothSide: [["Stand C3397", "Línea híbrida en operación"], ["Fotos propias", "Visita del equipo TID / VSP"]],
     sec2: "El mercado mexicano", sec2n: "02",
     s_mkt: "Una industria que necesita diferenciarse",
     mkt: [["$91,165 M", "PIB textil-confección (MXN, 2025)"], ["102,492", "unidades económicas"], ["519 mil", "puestos de trabajo"], ["89%", "exportaciones a EE. UU."]],
@@ -175,6 +184,13 @@ const T = {
       ["Digital lead capture", "Multilingual site and WhatsApp"],
     ],
     modelGap: "Missing in Mexico: local technical service, in-country inventory, Spanish-language support and a demo showroom",
+    s_gal1: "Samples: unlimited digital color",
+    gal1: [["01-vineyard.jpg", "Digital watercolor over white base, colored garment"], ["02-perro.jpg", "Photorealism on a dark garment"], ["03-living.jpg", "Full-color photographic collage"], ["10-aguila.jpg", "Breathable digital print"]],
+    s_gal2: "Samples: special effects and uniforms",
+    gal2: [["04-clt-pastas.jpg", "High build, puff and cold foil"], ["05-escudo.jpg", "Sports crest with relief and shimmer"], ["07-tigre.jpg", "Spot-color screen print on colored garment"], ["09-huskies.jpg", "Relief, gold foil and metallic sparkle"]],
+    s_booth: "CLT at PRINTING United 2026 (Las Vegas)",
+    booth: "Automatic carousel with a live digital station: this is how CLT sells, and how we will replicate it in Mexico",
+    boothSide: [["Booth C3397", "Hybrid line running live"], ["Our own photos", "TID / VSP team visit"]],
     sec2: "The Mexican market", sec2n: "02",
     s_mkt: "An industry that needs to differentiate",
     mkt: [["MXN 91.2 B", "textile & apparel GDP (2025)"], ["102,492", "businesses"], ["519k", "jobs"], ["89%", "of exports go to the U.S."]],
@@ -378,6 +394,20 @@ function build(lang) {
   });
   s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 0.5, y: 4.0, w: 9, h: 0.8, rectRadius: 0.08, fill: { color: HEX.dk1 }, line: { color: HEX.dk1 } });
   s.addText(t.modelGap, { x: 0.7, y: 4.0, w: 8.6, h: 0.8, fontSize: 14, bold: true, color: "FFFFFF", valign: "middle", isTextBox: true, margin: 0 });
+
+  // Galería de muestras y stand
+  [[t.s_gal1, t.gal1], [t.s_gal2, t.gal2]].forEach(([title, items]) => {
+    s = content(title);
+    items.forEach(([f, cap], i) => {
+      const x = 0.5 + i * 2.3;
+      s.addImage({ path: IMG(f), x, y: 1.15, w: 2.1, h: 2.85, sizing: { type: "cover", w: 2.1, h: 2.85 }, altText: cap });
+      s.addText(cap, { x, y: 4.1, w: 2.1, h: 0.6, fontSize: 11, color: C.text2, isTextBox: true, margin: 0, valign: "top" });
+    });
+  });
+  s = content(t.s_booth);
+  s.addImage({ path: IMG("06-stand-printing-united.jpg"), x: 0.5, y: 1.1, w: 5.6, h: 3.6, sizing: { type: "cover", w: 5.6, h: 3.6 }, altText: t.s_booth });
+  t.boothSide.forEach(([b, l], i) => stat(s, 6.4, 1.15 + i * 1.3, 3.1, b, l, i ? C.accent2 : C.accent1));
+  s.addText(t.booth, { x: 6.4, y: 3.75, w: 3.1, h: 1.0, fontSize: 12, bold: true, color: C.text1, isTextBox: true, margin: 0, valign: "top" });
 
   // Sección 2
   section(t.sec2, t.sec2n);

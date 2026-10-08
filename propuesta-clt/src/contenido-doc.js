@@ -390,6 +390,23 @@ const es = {
       ],
     },
 
+    { pagebreak: true },
+    { h1: "Anexo: muestras de CLT" },
+    { p: "Fotografías tomadas por el equipo TID / VSP en el stand de CLT en PRINTING United 2026 (Las Vegas) y de muestras de producción de CLT." },
+    { images: [
+      ["06-stand-printing-united.jpg", "Stand C3397: pulpo automático con estación digital en operación"],
+      ["08-folleto-clt.jpg", "Folleto corporativo de CLT (clave 301618)"],
+      ["01-vineyard.jpg", "Acuarela digital sobre base blanca en prenda de color"],
+      ["02-perro.jpg", "Fotorrealismo digital sobre prenda oscura"],
+      ["03-living.jpg", "Collage fotográfico a todo color"],
+      ["10-aguila.jpg", "Impresión digital transpirable sobre prenda oscura"],
+      ["04-clt-pastas.jpg", "Pastas CLT: alto relieve 511-1, espumante MP399, foil en frío 105-3"],
+      ["05-escudo.jpg", "Escudo deportivo con relieve y brillo en poliéster"],
+      ["07-tigre.jpg", "Serigrafía de tintas planas en prenda de color"],
+      ["09-huskies.jpg", "Relieve, foil dorado y destellos metálicos combinados"],
+    ] },
+    { note: "Las técnicas indicadas se identificaron visualmente y deben confirmarse con CLT." },
+
     { h1: "Anexo: fuentes" },
     {
       bullets: [
@@ -792,6 +809,23 @@ const en = {
         "Sign a letter of intent and define the 6-month launch plan.",
       ],
     },
+
+    { pagebreak: true },
+    { h1: "Appendix: CLT samples" },
+    { p: "Photos taken by the TID / VSP team at CLT’s PRINTING United 2026 booth (Las Vegas) and of CLT production samples." },
+    { images: [
+      ["06-stand-printing-united.jpg", "Booth C3397: automatic carousel with a digital station running"],
+      ["08-folleto-clt.jpg", "CLT corporate brochure (code 301618)"],
+      ["01-vineyard.jpg", "Digital watercolor over white base on a colored garment"],
+      ["02-perro.jpg", "Digital photorealism on a dark garment"],
+      ["03-living.jpg", "Full-color photographic collage"],
+      ["10-aguila.jpg", "Breathable digital print on a dark garment"],
+      ["04-clt-pastas.jpg", "CLT pastes: high build 511-1, puff MP399, cold foil 105-3"],
+      ["05-escudo.jpg", "Sports crest with relief and shimmer on polyester"],
+      ["07-tigre.jpg", "Spot-color screen print on a colored garment"],
+      ["09-huskies.jpg", "Relief, gold foil and metallic sparkle combined"],
+    ] },
+    { note: "Techniques were identified visually and should be confirmed with CLT." },
 
     { h1: "Appendix: sources" },
     {

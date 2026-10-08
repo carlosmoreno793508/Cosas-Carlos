@@ -4,7 +4,7 @@ const path = require("path");
 const {
   Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell, WidthType,
   ShadingType, HeadingLevel, AlignmentType, BorderStyle, LevelFormat, Footer,
-  Header, PageNumber, PageBreak,
+  Header, PageNumber, PageBreak, ImageRun,
 } = require("docx");
 const content = require("./contenido-doc");
 
@@ -79,6 +79,21 @@ function build(lang) {
     else if (b.table) {
       children.push(table(b.table));
       children.push(new Paragraph({ spacing: { after: 120 }, children: [] }));
+    } else if (b.images) {
+      const W = [4680, 4680];
+      const rows = [];
+      for (let k = 0; k < b.images.length; k += 2) {
+        rows.push(new TableRow({ cantSplit: true, children: b.images.slice(k, k + 2).map(([f, cap]) => new TableCell({
+          width: { size: 4680, type: WidthType.DXA },
+          borders: { top: { style: BorderStyle.NONE }, bottom: { style: BorderStyle.NONE }, left: { style: BorderStyle.NONE }, right: { style: BorderStyle.NONE } },
+          margins: { top: 80, bottom: 160, left: 80, right: 80 },
+          children: [
+            new Paragraph({ alignment: AlignmentType.CENTER, children: [new ImageRun({ type: "jpg", data: fs.readFileSync(path.join(__dirname, "..", "img", "doc", f)), transformation: { width: 280, height: 280 }, altText: { title: cap, description: cap, name: f } })] }),
+            new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 60 }, children: [new TextRun({ text: cap, size: 18, color: "555555" })] }),
+          ],
+        })) }));
+      }
+      children.push(new Table({ width: { size: TABLE_W, type: WidthType.DXA }, columnWidths: W, rows }));
     } else if (b.pagebreak) children.push(new Paragraph({ children: [new PageBreak()] }));
   }
 
