@@ -65,4 +65,18 @@ ws4.column_dimensions["A"].width = 120
 for r in ws4.iter_rows(min_row=2):
     for c in r: c.alignment = Alignment(wrap_text=True)
 
+ws5 = wb.create_sheet("OEM", 1)
+oc = ["Prioridad", "Zona", "Empresa", "Ciudad", "Dirección publicada", "A qué se dedica", "Marcas que surte (según fuente)", "Subsector textil", "Dirección verificada", "Contacto publicado", "Fuente", "Notas"]
+ws5.append(oc)
+oem = sorted([p for p in d["prospects"] if p.get("segment") == "OEM"], key=lambda p: ({"A": 0, "B": 1, "C": 2}.get(p["priority"], 3), zkey(p["zone"]), p["company"]))
+for p in oem:
+    ws5.append([p["priority"], p["zone"], p["company"], p["city"], p.get("address", ""), p.get("activity", ""), p.get("brands_served", ""), p.get("subsector", ""), {True: "Sí", False: "No"}.get(p.get("verified"), ""), p.get("phone_or_email", ""), p.get("source", ""), p.get("flag", "")])
+for c in ws5[1]: c.font, c.fill = head, fill
+for col, w in zip("ABCDEFGHIJKL", [10, 24, 34, 22, 45, 50, 36, 32, 12, 22, 36, 30]): ws5.column_dimensions[col].width = w
+for r in ws5.iter_rows(min_row=2):
+    for c in r: c.alignment = wrap
+    if r[0].value == "A":
+        for c in r: c.fill = PatternFill("solid", fgColor=PINK)
+ws5.freeze_panes = "D2"; ws5.auto_filter.ref = ws5.dimensions
+
 wb.save(sys.argv[1]); print("ok", sys.argv[1], len(rows))
