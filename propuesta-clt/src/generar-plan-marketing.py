@@ -236,6 +236,18 @@ for name, h1, title, widths in [
     ws = sheet(wb, name, title)
     blocks(ws, 3, section(h1), widths)
 
+# Mapas: el escenario LATAM completo con la lista numerada de cuentas (generar-mapas.py)
+import os
+from openpyxl.drawing.image import Image as XLImage
+MAPAS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "mapas")
+ws = sheet(wb, "Mapas", "Mapas de prospectos LATAM", "Estrella dorada: cuenta 80/20 en México o prioridad A en el resto de LATAM. Ubicación aproximada por ciudad.")
+row = 4
+for f, h in [("Mapa_LATAM_OEM.png", "OEM — maquila de exportación"), ("Mapa_LATAM_Estampadores_Fabricantes.png", "Estampadores y fabricantes")]:
+    ws.cell(row, 1, h).font = Font(bold=True, size=12, color="C2185B")
+    img = XLImage(os.path.join(MAPAS, f)); img.width, img.height = 1100, int(1100 * img.height / img.width)
+    ws.add_image(img, f"A{row + 1}")
+    row += 1 + img.height // 20 + 2
+
 for ws in wb.worksheets:
     ws.sheet_properties.tabColor = "C2185B" if ws.title in ("Resumen", "ABM 17 cuentas", "Presupuesto", "Calendario") else "1B1F3B"
     ws.page_setup.orientation = "landscape"; ws.page_setup.fitToWidth = 1; ws.sheet_properties.pageSetUpPr.fitToPage = True; ws.page_setup.fitToHeight = 0

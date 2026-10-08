@@ -392,6 +392,15 @@ function build(lang) {
   tbl(s, latA, t.latamCols, [4.2, 1.8, 3.0], 9, 0.29);
   note(s, es ? "Primero las 8 cuentas foco (estampado en volumen o equipo M&R / híbrido); el resto de prioridad A está en el Excel." : "Focus accounts first (volume printing or M&R / hybrid equipment); the rest of priority A is in the workbook.");
 
+  // Mapas LATAM (versión para diapositiva; el mapa con claves numeradas está en mapas/)
+  [["OEM", es ? "Mapa LATAM: prospectos OEM (maquila de exportación)" : "LATAM map: OEM prospects (export contract manufacturing)"],
+   ["Estampadores_Fabricantes", es ? "Mapa LATAM: estampadores y fabricantes" : "LATAM map: printers and manufacturers"]].forEach(([k, ttl]) => {
+    s = content(ttl);
+    s.addImage({ path: path.join(__dirname, "..", "mapas", "diapositivas", `Mapa_LATAM_${k}_${es ? "ES" : "EN"}.png`), x: 1.37, y: 1.0, w: 7.26, h: 3.75, altText: ttl });
+    note(s, es ? "Estrella dorada: cuenta 80/20 en México o prioridad A en el resto de LATAM. Lista numerada por cuenta en la hoja Mapas del Excel del plan de marketing."
+               : "Gold star: 80/20 account in Mexico or priority A elsewhere in LATAM. Numbered account list in the Mapas sheet of the marketing plan workbook.");
+  });
+
   s = content(t.s_waves);
   t.waves.forEach(([h, c, d], i) => {
     const x = 0.5 + i * 3.05;

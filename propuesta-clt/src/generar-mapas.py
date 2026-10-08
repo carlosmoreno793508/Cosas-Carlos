@@ -237,6 +237,54 @@ def build_latam(kind):
     fig.savefig(f, dpi=140); plt.close(fig)
     print("ok", f, counts, {k: len(v) for k, v in keys.items()})
 
+def build_slide(kind, lang):
+    """Versión para diapositiva: solo los tres paneles, sin claves numeradas (texto ilegible al reducir)."""
+    oem = kind == "oem"
+    es = lang == "es"
+    color = MAG if oem else CYAN
+    names = top_o if oem else top_p
+    lab = {"México": "México" if es else "Mexico",
+           "Centroamérica y Caribe": "Centroamérica y Caribe" if es else "Central America & Caribbean",
+           "Sudamérica": "Sudamérica" if es else "South America"}
+    regions = [("México", [x for x in mx if (x.get("segment") == "OEM") == oem], True),
+               ("Centroamérica y Caribe", [x for x in la if (x.get("segment") == "OEM") == oem], False),
+               ("Sudamérica", [x for x in sa if (x.get("segment") == "OEM") == oem], False)]
+    pts, counts, tops = [], {}, {}
+    for reg, items, is_mx in regions:
+        counts[reg] = len(items); tops[reg] = 0
+        for x in items:
+            lat, lon = locate(x["city"], x.get("country"))
+            t = bool(is_top(x["company"], names)) if is_mx else x["priority"] == "A"
+            tops[reg] += t
+            pts.append({"lat": lat, "lon": lon, "top": t, "reg": reg})
+    spread(pts)
+    fig = plt.figure(figsize=(12, 6.2), dpi=200, facecolor="white")
+    panels = [("México", (-118.5, -86, 14, 34), [0.01, 0.52, 0.56, 0.42]),
+              ("Centroamérica y Caribe", (-93, -64, 7.5, 21.5), [0.01, 0.04, 0.56, 0.42]),
+              ("Sudamérica", (-84, -34, -42, 13), [0.59, 0.04, 0.40, 0.90])]
+    word = "empresas" if es else "companies"
+    for reg, ext, rect in panels:
+        ax = fig.add_axes(rect); draw_geo(ax, ext)
+        sub = (f"{tops[reg]} del 80/20" if es else f"{tops[reg]} in the 80/20") if reg == "México" else (f"{tops[reg]} prioridad A" if es else f"{tops[reg]} priority A")
+        ax.set_title(f"{lab[reg]} — {counts[reg]} {word} ({sub})", loc="left", fontsize=12, fontweight="bold", color=INK)
+        for p in pts:
+            if p["reg"] != reg: continue
+            if p["top"]:
+                ax.plot(p["lon"], p["lat"], marker="*", markersize=17, color=GOLD, markeredgecolor=INK, markeredgewidth=0.8, zorder=5)
+            else:
+                ax.plot(p["lon"], p["lat"], marker="*", markersize=9, color=color, markeredgecolor="white", markeredgewidth=0.4, zorder=4)
+        if reg == "Sudamérica":
+            leg = [Line2D([], [], marker="*", ls="", markersize=15, color=GOLD, markeredgecolor=INK,
+                          label="80/20 (México) o prioridad A" if es else "80/20 (Mexico) or priority A"),
+                   Line2D([], [], marker="*", ls="", markersize=10, color=color, label="Otros prospectos" if es else "Other prospects")]
+            ax.legend(handles=leg, loc="lower right", fontsize=10, frameon=True, framealpha=0.95)
+    d = os.path.join(OUT, "diapositivas"); os.makedirs(d, exist_ok=True)
+    f = os.path.join(d, f"Mapa_LATAM_{'OEM' if oem else 'Estampadores_Fabricantes'}_{lang.upper()}.png")
+    fig.savefig(f, dpi=200); plt.close(fig)
+    print("ok", f)
+
 for k in ("oem", "fab"):
     build(k)
     build_latam(k)
+    for lg in ("es", "en"):
+        build_slide(k, lg)
