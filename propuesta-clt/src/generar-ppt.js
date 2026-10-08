@@ -546,6 +546,34 @@ function build(lang) {
     s.addText(d, { x, y: 3.1, w: 2.1, h: 1.3, fontSize: 12, color: C.text2, isTextBox: true, margin: 0, valign: "top" });
   });
 
+// Plan de marketing (resumen)
+  {
+    const es = lang === "es";
+    s = content(es ? "Plan de marketing: ser la n.º 1 en México" : "Marketing plan: becoming No. 1 in Mexico");
+    s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 0.5, y: 1.05, w: 9, h: 0.55, rectRadius: 0.08, fill: { color: HEX.dk1 }, line: { color: HEX.dk1 } });
+    s.addText(es ? "«Serigrafía + digital. Un solo paso.» — con química y servicio en México" : "“Screen + digital. One pass.” — with chemistry and service in Mexico",
+      { x: 0.7, y: 1.05, w: 8.6, h: 0.55, fontSize: 15, bold: true, color: HEX.accent3, valign: "middle", isTextBox: true, margin: 0 });
+    const levers = es
+      ? [["Cuentas 80/20", "Muestra con su diseño, demo y piloto en su tela"], ["Sala demo", "Demos, talleres y Academia Híbrida CLT"], ["Contenido", "Reels de efectos, casos, LinkedIn y WhatsApp"], ["Eventos", "FESPA, Días Híbridos en 6 ciudades, PRINTING United"]]
+      : [["80/20 accounts", "Sample with their design, demo and pilot on their fabric"], ["Demo room", "Demos, workshops and CLT Hybrid Academy"], ["Content", "Effect reels, cases, LinkedIn and WhatsApp"], ["Events", "FESPA, Hybrid Days in 6 cities, PRINTING United"]];
+    levers.forEach(([h, d], i) => {
+      const y = 1.8 + i * 0.78;
+      card(s, 0.5, y, 5.3, 0.68);
+      badge(s, 0.65, y + 0.14, String(i + 1), DOTS[i], 0.4);
+      s.addText(h, { x: 1.2, y: y + 0.04, w: 4.5, h: 0.3, fontSize: 13, bold: true, color: C.text1, isTextBox: true, margin: 0 });
+      s.addText(d, { x: 1.2, y: y + 0.34, w: 4.5, h: 0.3, fontSize: 11, color: C.text2, isTextBox: true, margin: 0 });
+    });
+    card(s, 6.0, 1.8, 3.5, 3.02);
+    s.addText(es ? "Metas año 1" : "Year-1 targets", { x: 6.2, y: 1.9, w: 3.1, h: 0.35, fontSize: 14, bold: true, color: C.accent1, isTextBox: true, margin: 0 });
+    (es ? [["300", "leads calificados"], ["40", "demostraciones"], ["30", "talleres con consumibles"], ["US$50k", "presupuesto (US$65k · 80k años 2–3)"]]
+        : [["300", "qualified leads"], ["40", "demos"], ["30", "shops on consumables"], ["US$50k", "budget (US$65k · 80k years 2–3)"]]).forEach(([b, l], i) => {
+      const y = 2.35 + i * 0.6;
+      s.addText(b, { x: 6.2, y, w: 1.25, h: 0.5, fontSize: 18, bold: true, color: HEX.dk1, valign: "middle", isTextBox: true, margin: 0 });
+      s.addText(l, { x: 7.45, y, w: 1.95, h: 0.5, fontSize: 11, color: C.text2, valign: "middle", isTextBox: true, margin: 0 });
+    });
+    note(s, es ? "Latam: Centroamérica años 2–3; Perú y Colombia año 3. Plan completo en Excel." : "Latam: Central America years 2–3; Peru and Colombia year 3. Full plan in Excel.");
+  }
+
   s = content(t.s_inv);
   t.inv.forEach(([n, v, d], i) => {
     const x = 0.5 + i * 3.05, rec = i === 1;

@@ -44,6 +44,54 @@ function fodaBlocks(lang) {
   ];
 }
 
+// Resumen del plan de marketing (sección 11); el plan completo está en Plan_Marketing_CLT_Mexico_Latam.xlsx
+function marketingBlocks(lang) {
+  const es = lang === "es";
+  return [
+    { h2: es ? "Plan de marketing (resumen)" : "Marketing plan (summary)" },
+    { p: es
+      ? "Objetivo: que en 24 meses CLT sea la marca de referencia en impresión híbrida textil en México y replicar el modelo en Latinoamérica en el año 3. Posicionamiento: «Serigrafía + digital en un solo paso, con química y servicio en México». No vendemos una máquina: vendemos color ilimitado al costo de la serigrafía, efectos que el DTF no logra y un socio técnico local."
+      : "Goal: within 24 months, make CLT the reference brand for hybrid textile printing in Mexico and replicate the model in Latin America in year 3. Positioning: “Screen + digital in one pass, with chemistry and service in Mexico.” We do not sell a machine: we sell unlimited color at screen printing cost, effects DTF cannot achieve and a local technical partner." },
+    { table: {
+      cols: es ? ["Palanca", "Qué haremos"] : ["Lever", "What we will do"],
+      widths: [2300, 7060],
+      rows: es ? [
+        ["Marketing por cuentas", "Muestra con el diseño de cada una de las 17 cuentas 80/20, calculadora de retorno, demo y prueba piloto en su tela"],
+        ["Sala de demostración", "Querétaro como motor de ventas: demos, talleres de efectos y Academia Híbrida CLT (certificación de operadores)"],
+        ["Contenido y digital", "Reels de efectos (vidrio, bordado, 3D), casos de clientes, LinkedIn para OEM, WhatsApp para consumibles"],
+        ["Eventos", "FESPA México, inauguración de la sala demo, «Días Híbridos» en 6 ciudades y PRINTING United con VSP"],
+        ["Oferta", "Paquetes Inicio, Pro y Completo; programa «Clientes fundadores» para los primeros 5 compradores; consumibles como puerta de entrada"],
+      ] : [
+        ["Account-based marketing", "Sample with each of the 17 80/20 accounts’ own design, ROI calculator, demo and pilot on their fabric"],
+        ["Demo room", "Querétaro as the sales engine: demos, effect workshops and the CLT Hybrid Academy (operator certification)"],
+        ["Content and digital", "Effect reels (glass, embroidery, 3D), customer cases, LinkedIn for OEMs, WhatsApp for consumables"],
+        ["Events", "FESPA México, demo room opening, “Hybrid Days” in 6 cities and PRINTING United with VSP"],
+        ["Offer", "Starter, Pro and Full packages; “founding customers” program for the first 5 buyers; consumables as the entry point"],
+      ],
+    } },
+    { table: {
+      bold: true,
+      cols: es ? ["Meta y presupuesto", "Año 1", "Año 2", "Año 3"] : ["Targets and budget", "Year 1", "Year 2", "Year 3"],
+      widths: [3960, 1800, 1800, 1800],
+      rows: es ? [
+        ["Leads calificados", "300", "600", "900"],
+        ["Demostraciones", "40", "80", "120"],
+        ["Talleres con consumibles CLT", "30", "70", "120"],
+        ["Presupuesto de marketing", "US$50k", "US$65k", "US$80k"],
+      ] : [
+        ["Qualified leads", "300", "600", "900"],
+        ["Demos", "40", "80", "120"],
+        ["Shops buying CLT consumables", "30", "70", "120"],
+        ["Marketing budget", "US$50k", "US$65k", "US$80k"],
+      ],
+    } },
+    { p: es
+      ? "Latinoamérica: ola 1 en El Salvador, Honduras y Guatemala (años 2–3), ola 2 en Perú y Colombia (año 3), con México como condición (5 líneas y casos documentados). Pedimos a CLT un fondo cooperativo de marketing del 3–5% de las compras, material de marca en español y apoyo de un ingeniero en el lanzamiento. Plan completo con calendario, presupuesto y tablero de indicadores en el Excel adjunto."
+      : "Latin America: wave 1 in El Salvador, Honduras and Guatemala (years 2–3), wave 2 in Peru and Colombia (year 3), conditional on Mexico (5 lines and documented cases). We ask CLT for a co-op marketing fund of 3–5% of purchases, Spanish brand material and an engineer at the launch. Full plan with calendar, budget and KPI dashboard in the attached Excel workbook." },
+    { note: es ? "Metas y presupuesto: estimación a validar con CLT." : "Targets and budget: estimate to be validated with CLT." },
+  ];
+}
+
 const es = {
   meta: {
     file: "Propuesta_Distribucion_CLT_Mexico_ES",
@@ -299,6 +347,7 @@ const es = {
         "Ingreso recurrente: consumibles, refacciones y contratos de mantenimiento preventivo.",
       ],
     },
+    ...marketingBlocks("es"),
 
     { h1: "12. Estructura del equipo y capacitación" },
     { p: "La división textil operará con un equipo dedicado, apoyado por la estructura actual de TID (2 técnicos), VSP (1 técnico) y CEB (importación y logística)." },
@@ -724,6 +773,7 @@ const en = {
         "Recurring revenue: consumables, spare parts and preventive-maintenance contracts.",
       ],
     },
+    ...marketingBlocks("en"),
 
     { h1: "12. Team structure and training" },
     { p: "The textile division will run with a dedicated team, backed by the existing structure of TID (2 technicians), VSP (1 technician) and CEB (import and logistics)." },
