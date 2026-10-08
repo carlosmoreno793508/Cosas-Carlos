@@ -239,7 +239,7 @@ const es = {
         cols: ["Fase", "Periodo", "Actividades clave"],
         widths: [2000, 1600, 5760],
         rows: [
-          ["1. Arranque", "Meses 0–6", "Firma de acuerdo, capacitación en China, inventario inicial, venta de siliconas y pastas a talleres, lanzamiento en FESPA México"],
+          ["1. Arranque", "Meses 0–6", "Firma de acuerdo, contratación de vendedor, atención al cliente y técnico, capacitación en China, inventario inicial, venta de siliconas y pastas a talleres, lanzamiento en FESPA México"],
           ["2. Demostración", "Meses 6–18", "Sala de demostración, pruebas con clientes, primeras 2–5 líneas híbridas, contratos de servicio"],
           ["3. Escala", "Meses 18–36", "Cobertura de clústeres prioritarios, segundo técnico, programa de refacciones, inicio de expansión EE. UU. (VSP)"],
           ["4. Latinoamérica", "Año 3 en adelante", "Centroamérica, Colombia, Perú y Rep. Dominicana según metas cumplidas"],
@@ -254,8 +254,37 @@ const es = {
       ],
     },
 
+    { h1: "12. Estructura del equipo y capacitación" },
+    { p: "La división textil operará con un equipo dedicado, apoyado por la estructura actual de TID (2 técnicos), VSP (1 técnico) y CEB (importación y logística)." },
+    {
+      table: {
+        cols: ["Puesto", "Funciones", "Cuándo", "Costo mensual aprox."],
+        widths: [2000, 4260, 1300, 1800],
+        rows: [
+          ["Vendedor especializado textil", "Prospección por zonas, visitas y demostraciones, cotizaciones llave en mano, cálculo de retorno por cliente y cierre de ventas", "Año 1", "~$40,000 MXN + comisión"],
+          ["Atención al cliente", "Pedidos y reabasto de consumibles, seguimiento posventa, garantías, agenda de servicio técnico y de capacitaciones, encuestas de satisfacción", "Año 1", "~$20,000 MXN"],
+          ["Técnico textil", "Instalación, puesta en marcha, mantenimiento preventivo y correctivo, soporte en pruebas de producción", "Año 1 (+1 en año 2)", "~$30,000 MXN"],
+          ["Soporte del grupo", "Técnicos de TID (2) y VSP (1), importación y logística (CEB), administración", "Existente", "—"],
+        ],
+      },
+    },
+    { h2: "Programa de capacitación en máquinas y productos" },
+    {
+      table: {
+        cols: ["Capacitación", "Dirigida a", "Contenido"],
+        widths: [2200, 2300, 4860],
+        rows: [
+          ["Inicial en planta CLT", "Vendedor, técnicos y atención al cliente", "Operación y mantenimiento de híbridas, pulpos y DTG; química textil (siliconas, pastas, tintas); efectos especiales; certificación técnica"],
+          ["En máquinas para clientes", "Operadores y supervisores del cliente", "Instalación, operación, calibración, limpieza de cabezales, mantenimiento preventivo y solución de fallas; incluida en el paquete llave en mano"],
+          ["En productos (consumibles)", "Clientes y prospectos", "Uso de siliconas (3D, vidrio, bordado), pastas base agua, curado, pruebas de lavado y recetas de efectos; talleres en la sala de demostración"],
+          ["Actualización continua", "Equipo interno y clientes", "Nuevos productos y modelos de CLT, sesiones remotas con ingenieros de CLT, actualización anual"],
+        ],
+      },
+    },
+    { note: "Sueldos mensuales antes de prestaciones (~35%). La capacitación puede ofrecerse con costo a clientes cuyas máquinas no se adquirieron con el grupo." },
+
     { pagebreak: true },
-    { h1: "12. Inversión inicial (estimación)" },
+    { h1: "13. Inversión inicial (estimación)" },
     {
       table: {
         bold: true,
@@ -274,10 +303,10 @@ const es = {
       },
     },
     {
-      p: "Gastos de operación año 1 (escenario base): ~US$120 mil, que incluyen gerente comercial textil (~$50,000 MXN/mes), técnico textil (~$30,000 MXN/mes), prestaciones, ferias, espacio y viáticos. El IVA de importación es acreditable pero afecta el flujo de efectivo.",
+      p: "Gastos de operación año 1 (escenario base): ~US$131 mil, que incluyen vendedor especializado textil (~$40,000 MXN/mes más comisión), atención al cliente (~$20,000 MXN/mes), técnico textil (~$30,000 MXN/mes), prestaciones, capacitación continua, ferias, espacio y viáticos. El IVA de importación es acreditable pero afecta el flujo de efectivo.",
     },
 
-    { h1: "13. Proyección financiera (escenario base, estimación)" },
+    { h1: "14. Proyección financiera (escenario base, estimación)" },
     {
       table: {
         bold: true,
@@ -287,9 +316,9 @@ const es = {
           ["Líneas híbridas vendidas", "2", "5", "8"],
           ["Margen por equipos (20% sobre US$150k)", "US$60k", "US$150k", "US$240k"],
           ["Margen por consumibles (35%)", "US$34k", "US$99k", "US$209k"],
-          ["Gastos de operación", "-US$122k", "-US$140k", "-US$160k"],
-          ["Resultado del año", "-US$28k", "+US$109k", "+US$289k"],
-          ["Resultado acumulado", "-US$28k", "+US$81k", "+US$370k"],
+          ["Gastos de operación", "-US$131k", "-US$160k", "-US$180k"],
+          ["Resultado del año", "-US$37k", "+US$89k", "+US$269k"],
+          ["Resultado acumulado", "-US$37k", "+US$52k", "+US$321k"],
         ],
       },
     },
@@ -301,7 +330,7 @@ const es = {
       ],
     },
 
-    { h1: "14. Propuesta de términos con CLT" },
+    { h1: "15. Propuesta de términos con CLT" },
     { h2: "Lo que solicitamos a CLT" },
     {
       bullets: [
@@ -319,13 +348,14 @@ const es = {
       bullets: [
         "Importación, inventario local y logística a través de CEB.",
         "Sala de demostración, servicio técnico en español y mantenimiento preventivo.",
-        "División textil con personal dedicado.",
+        "Equipo textil dedicado: vendedor especializado, atención al cliente y técnico.",
+        "Programa de capacitación en máquinas y productos para clientes.",
         "Metas mínimas de venta propuestas: 2 líneas en el año 1, 5 en el año 2 y 8 en el año 3, más volumen de consumibles por acordar.",
         "Reportes trimestrales de mercado, pipeline y satisfacción de clientes.",
       ],
     },
 
-    { h1: "15. Riesgos y mitigación" },
+    { h1: "16. Riesgos y mitigación" },
     {
       table: {
         cols: ["Riesgo", "Mitigación"],
@@ -341,7 +371,7 @@ const es = {
       },
     },
 
-    { h1: "16. Expansión: Estados Unidos y Latinoamérica" },
+    { h1: "17. Expansión: Estados Unidos y Latinoamérica" },
     {
       bullets: [
         "Estados Unidos (VSP Printing, Los Ángeles): CLT ya participa en PRINTING United; VSP puede ofrecer servicio local y seguimiento a prospectos. Se debe evaluar el impacto de los aranceles estadounidenses sobre productos chinos.",
@@ -349,7 +379,7 @@ const es = {
       ],
     },
 
-    { h1: "17. Próximos pasos" },
+    { h1: "18. Próximos pasos" },
     {
       bullets: [
         "Recibir cotización formal de CLT (CLT-016B, CLT-012R, pulpo SM60-85 y consumibles) para sustituir las estimaciones.",
@@ -612,7 +642,7 @@ const en = {
         cols: ["Phase", "Period", "Key activities"],
         widths: [2000, 1600, 5760],
         rows: [
-          ["1. Launch", "Months 0–6", "Agreement signed, training in China, initial inventory, silicone and paste sales to shops, launch at FESPA México"],
+          ["1. Launch", "Months 0–6", "Agreement signed, hiring of sales specialist, customer service and technician, training in China, initial inventory, silicone and paste sales to shops, launch at FESPA México"],
           ["2. Demonstration", "Months 6–18", "Showroom, customer trials, first 2–5 hybrid lines, service contracts"],
           ["3. Scale", "Months 18–36", "Coverage of priority clusters, second technician, spare-parts program, start of U.S. expansion (VSP)"],
           ["4. Latin America", "Year 3 onward", "Central America, Colombia, Peru and Dominican Republic, subject to targets met"],
@@ -627,8 +657,37 @@ const en = {
       ],
     },
 
+    { h1: "12. Team structure and training" },
+    { p: "The textile division will run with a dedicated team, backed by the existing structure of TID (2 technicians), VSP (1 technician) and CEB (import and logistics)." },
+    {
+      table: {
+        cols: ["Role", "Responsibilities", "When", "Approx. monthly cost"],
+        widths: [2000, 4260, 1300, 1800],
+        rows: [
+          ["Textile sales specialist", "Prospecting by region, visits and demos, turnkey quotes, customer ROI calculation and closing", "Year 1", "~MXN 40,000 + commission"],
+          ["Customer service", "Consumables orders and replenishment, after-sales follow-up, warranties, scheduling of service and training, satisfaction surveys", "Year 1", "~MXN 20,000"],
+          ["Textile technician", "Installation, commissioning, preventive and corrective maintenance, production-trial support", "Year 1 (+1 in year 2)", "~MXN 30,000"],
+          ["Group support", "TID (2) and VSP (1) technicians, import and logistics (CEB), administration", "Existing", "—"],
+        ],
+      },
+    },
+    { h2: "Machine and product training program" },
+    {
+      table: {
+        cols: ["Training", "Audience", "Content"],
+        widths: [2200, 2300, 4860],
+        rows: [
+          ["Initial, at CLT’s plant", "Sales, technicians and customer service", "Operation and maintenance of hybrids, presses and DTG; textile chemistry (silicones, pastes, inks); special effects; technical certification"],
+          ["Machine training for customers", "Customer operators and supervisors", "Installation, operation, calibration, head cleaning, preventive maintenance and troubleshooting; included in the turnkey package"],
+          ["Product (consumables) training", "Customers and prospects", "Use of silicones (3D, glass-like, embroidery-like), water-based pastes, curing, wash tests and effect recipes; workshops in the demo showroom"],
+          ["Ongoing updates", "Internal team and customers", "New CLT products and models, remote sessions with CLT engineers, annual refresher"],
+        ],
+      },
+    },
+    { note: "Monthly salaries before benefits (~35%). Training can be offered for a fee to customers whose machines were not purchased through the group." },
+
     { pagebreak: true },
-    { h1: "12. Initial investment (estimate)" },
+    { h1: "13. Initial investment (estimate)" },
     {
       table: {
         bold: true,
@@ -647,10 +706,10 @@ const en = {
       },
     },
     {
-      p: "Year-1 operating expenses (base case): ~US$120k, including a textile sales manager (~MXN 50,000/month), a textile technician (~MXN 30,000/month), benefits, trade shows, space and travel. Import VAT is creditable but affects cash flow.",
+      p: "Year-1 operating expenses (base case): ~US$131k, including a textile sales specialist (~MXN 40,000/month plus commission), customer service (~MXN 20,000/month), a textile technician (~MXN 30,000/month), benefits, ongoing training, trade shows, space and travel. Import VAT is creditable but affects cash flow.",
     },
 
-    { h1: "13. Financial projection (base case, estimate)" },
+    { h1: "14. Financial projection (base case, estimate)" },
     {
       table: {
         bold: true,
@@ -660,9 +719,9 @@ const en = {
           ["Hybrid lines sold", "2", "5", "8"],
           ["Equipment margin (20% on US$150k)", "US$60k", "US$150k", "US$240k"],
           ["Consumables margin (35%)", "US$34k", "US$99k", "US$209k"],
-          ["Operating expenses", "-US$122k", "-US$140k", "-US$160k"],
-          ["Annual result", "-US$28k", "+US$109k", "+US$289k"],
-          ["Cumulative result", "-US$28k", "+US$81k", "+US$370k"],
+          ["Operating expenses", "-US$131k", "-US$160k", "-US$180k"],
+          ["Annual result", "-US$37k", "+US$89k", "+US$269k"],
+          ["Cumulative result", "-US$37k", "+US$52k", "+US$321k"],
         ],
       },
     },
@@ -674,7 +733,7 @@ const en = {
       ],
     },
 
-    { h1: "14. Proposed terms with CLT" },
+    { h1: "15. Proposed terms with CLT" },
     { h2: "What we request from CLT" },
     {
       bullets: [
@@ -692,13 +751,14 @@ const en = {
       bullets: [
         "Import, local inventory and logistics through CEB.",
         "Demo showroom, Spanish-language technical service and preventive maintenance.",
-        "A textile division with dedicated staff.",
+        "A dedicated textile team: sales specialist, customer service and technician.",
+        "A machine and product training program for customers.",
         "Proposed minimum sales targets: 2 lines in year 1, 5 in year 2 and 8 in year 3, plus consumables volume to be agreed.",
         "Quarterly reports on market, pipeline and customer satisfaction.",
       ],
     },
 
-    { h1: "15. Risks and mitigation" },
+    { h1: "16. Risks and mitigation" },
     {
       table: {
         cols: ["Risk", "Mitigation"],
@@ -714,7 +774,7 @@ const en = {
       },
     },
 
-    { h1: "16. Expansion: United States and Latin America" },
+    { h1: "17. Expansion: United States and Latin America" },
     {
       bullets: [
         "United States (VSP Printing, Los Angeles): CLT already exhibits at PRINTING United; VSP can provide local service and lead follow-up. The impact of U.S. tariffs on Chinese goods must be assessed.",
@@ -722,7 +782,7 @@ const en = {
       ],
     },
 
-    { h1: "17. Next steps" },
+    { h1: "18. Next steps" },
     {
       bullets: [
         "Receive CLT’s formal quotation (CLT-016B, CLT-012R, SM60-85 press and consumables) to replace the estimates.",

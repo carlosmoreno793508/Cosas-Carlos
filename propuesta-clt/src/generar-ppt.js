@@ -102,18 +102,27 @@ const T = {
     fitLItems: ["Mismo modelo llave en mano", "Negocio basado en consumibles", "Servicio técnico en español", "Cobertura México + EE. UU.", "Importadora propia (CEB)"],
     fitR: "Brecha → acción",
     fitRItems: ["Experiencia textil → división textil dedicada", "Química textil → certificación en CLT", "3 técnicos → +2 técnicos textiles", "Eventos textiles → FESPA México", "Demostración → sala con línea híbrida"],
+    s_team: "Equipo dedicado y capacitación",
+    team: [
+      ["Vendedor textil", "Prospección, demos, cotizaciones llave en mano y cierre"],
+      ["Atención al cliente", "Pedidos de consumibles, posventa, garantías y agenda de servicio"],
+      ["Técnico textil", "Instalación, mantenimiento y soporte; +1 técnico en año 2"],
+    ],
+    trainT: "Programa de capacitación",
+    train: ["Inicial en planta CLT: máquinas, química y certificación", "Clientes – máquinas: operación, calibración y mantenimiento", "Clientes – productos: siliconas, pastas, curado y efectos", "Actualización continua con ingenieros de CLT"],
+    teamNote: "Apoyo existente: 2 técnicos TID, 1 técnico VSP, importación y logística CEB",
     sec4: "Plan e inversión", sec4n: "04",
     s_plan: "Plan comercial en cuatro fases",
-    plan: [["0–6 meses", "Arranque", "Acuerdo, capacitación, consumibles, FESPA"], ["6–18 meses", "Demostración", "Sala demo, primeras 2–5 líneas"], ["18–36 meses", "Escala", "Clústeres prioritarios, EE. UU. vía VSP"], ["Año 3+", "Latinoamérica", "Centroamérica, Colombia, Perú, R. Dominicana"]],
+    plan: [["0–6 meses", "Arranque", "Acuerdo, contrataciones, capacitación, consumibles, FESPA"], ["6–18 meses", "Demostración", "Sala demo, primeras 2–5 líneas"], ["18–36 meses", "Escala", "Clústeres prioritarios, EE. UU. vía VSP"], ["Año 3+", "Latinoamérica", "Centroamérica, Colombia, Perú, R. Dominicana"]],
     s_inv: "Inversión inicial",
     inv: [["Ligero", "~US$53k", "Demo en consignación o en taller ancla; consumibles primero"], ["Base", "~US$262k", "Pulpo + estación híbrida, inventario, sala demo, lanzamiento"], ["Completo", "~US$450k", "Línea completa con DTG de 6 estaciones"]],
     invRec: "Recomendado",
-    invNote: "Gasto operativo año 1: ~US$120k (gerente textil, técnico, ferias, espacio)",
+    invNote: "Gasto operativo año 1: ~US$131k (vendedor, atención al cliente, técnico, capacitación, ferias)",
     s_fin: "Proyección: el ingreso recurrente crece cada año",
     finSeries: ["Margen equipos", "Margen consumibles"],
     finYears: ["Año 1", "Año 2", "Año 3"],
     finChartTitle: "Margen bruto (miles de US$)",
-    finRes: [["Año 1", "-US$28k"], ["Año 2", "+US$109k"], ["Año 3", "+US$289k"]],
+    finRes: [["Año 1", "-US$37k"], ["Año 2", "+US$89k"], ["Año 3", "+US$269k"]],
     finResTitle: "Resultado anual",
     finNote: "Supuestos: línea US$150k, margen 20% equipos / 35% consumibles, ~US$36k de consumo por línea al año",
     sec5: "La propuesta", sec5n: "05",
@@ -121,7 +130,7 @@ const T = {
     askT: "Solicitamos a CLT",
     ask: ["Exclusividad en México; Latam según metas", "Margen ~20% equipos / ~35% consumibles", "Demo en consignación o 30–50% desc.", "Inventario inicial a consignación o 90 días", "Capacitación y certificación sin costo", "Prospectos de México canalizados a TID / CEB"],
     giveT: "Nos comprometemos a",
-    give: ["Importación e inventario local (CEB)", "Sala demo y servicio en español", "División textil dedicada", "Metas: 2 · 5 · 8 líneas en años 1–3", "Reportes trimestrales"],
+    give: ["Importación e inventario local (CEB)", "Sala demo y servicio en español", "Vendedor, atención al cliente y técnico textil", "Capacitación en máquinas y productos", "Metas: 2 · 5 · 8 líneas en años 1–3", "Reportes trimestrales"],
     s_risk: "Riesgos y mitigación",
     risk: [["Industria descapitalizada", "Inversión por etapas y financiamiento"], ["DTF en tirajes cortos", "Enfoque en volumen y efectos"], ["Aranceles", "Fracciones confirmadas; PROSEC; CEB"], ["Curva textil", "Certificación CLT y personal del sector"]],
     s_next: "Próximos pasos",
@@ -213,18 +222,27 @@ const T = {
     fitLItems: ["Same turnkey model", "Consumables-driven business", "Technical service in Spanish", "Mexico + U.S. coverage", "In-house importer (CEB)"],
     fitR: "Gap → action",
     fitRItems: ["Textile experience → dedicated textile division", "Textile chemistry → CLT certification", "3 technicians → +2 textile technicians", "Textile events → FESPA México", "Demonstration → showroom with hybrid line"],
+    s_team: "Dedicated team and training",
+    team: [
+      ["Textile sales", "Prospecting, demos, turnkey quotes and closing"],
+      ["Customer service", "Consumables orders, after-sales, warranties and service scheduling"],
+      ["Textile technician", "Installation, maintenance and support; +1 technician in year 2"],
+    ],
+    trainT: "Training program",
+    train: ["Initial at CLT’s plant: machines, chemistry and certification", "Customers – machines: operation, calibration and maintenance", "Customers – products: silicones, pastes, curing and effects", "Ongoing updates with CLT engineers"],
+    teamNote: "Existing support: 2 TID technicians, 1 VSP technician, CEB import and logistics",
     sec4: "Plan and investment", sec4n: "04",
     s_plan: "A four-phase commercial plan",
-    plan: [["Months 0–6", "Launch", "Agreement, training, consumables, FESPA"], ["Months 6–18", "Demonstration", "Demo showroom, first 2–5 lines"], ["Months 18–36", "Scale", "Priority clusters, U.S. via VSP"], ["Year 3+", "Latin America", "Central America, Colombia, Peru, D.R."]],
+    plan: [["Months 0–6", "Launch", "Agreement, hiring, training, consumables, FESPA"], ["Months 6–18", "Demonstration", "Demo showroom, first 2–5 lines"], ["Months 18–36", "Scale", "Priority clusters, U.S. via VSP"], ["Year 3+", "Latin America", "Central America, Colombia, Peru, D.R."]],
     s_inv: "Initial investment",
     inv: [["Light", "~US$53k", "Demo on consignment or at an anchor shop; consumables first"], ["Base", "~US$262k", "Press + hybrid station, inventory, showroom, launch"], ["Full", "~US$450k", "Complete line incl. 6-station DTG"]],
     invRec: "Recommended",
-    invNote: "Year-1 operating expense: ~US$120k (textile manager, technician, shows, space)",
+    invNote: "Year-1 operating expense: ~US$131k (sales, customer service, technician, training, shows)",
     s_fin: "Projection: recurring revenue grows every year",
     finSeries: ["Equipment margin", "Consumables margin"],
     finYears: ["Year 1", "Year 2", "Year 3"],
     finChartTitle: "Gross margin (US$ thousands)",
-    finRes: [["Year 1", "-US$28k"], ["Year 2", "+US$109k"], ["Year 3", "+US$289k"]],
+    finRes: [["Year 1", "-US$37k"], ["Year 2", "+US$89k"], ["Year 3", "+US$269k"]],
     finResTitle: "Annual result",
     finNote: "Assumptions: US$150k line, 20% equipment / 35% consumables margin, ~US$36k consumption per line per year",
     sec5: "The proposal", sec5n: "05",
@@ -232,7 +250,7 @@ const T = {
     askT: "We request from CLT",
     ask: ["Exclusivity in Mexico; LatAm subject to targets", "~20% equipment / ~35% consumables margin", "Demo on consignment or 30–50% off", "Initial inventory on consignment or 90 days", "Free training and certification", "Mexican leads referred to TID / CEB"],
     giveT: "We commit to",
-    give: ["Import and local inventory (CEB)", "Demo showroom and Spanish service", "Dedicated textile division", "Targets: 2 · 5 · 8 lines in years 1–3", "Quarterly reports"],
+    give: ["Import and local inventory (CEB)", "Demo showroom and Spanish service", "Sales, customer service and textile technician", "Machine and product training", "Targets: 2 · 5 · 8 lines in years 1–3", "Quarterly reports"],
     s_risk: "Risks and mitigation",
     risk: [["Cash-strapped industry", "Phased investment and financing"], ["DTF in short runs", "Focus on volume and effects"], ["Tariffs", "Confirmed lines; PROSEC; CEB"], ["Textile learning curve", "CLT certification and industry hires"]],
     s_next: "Next steps",
@@ -424,6 +442,20 @@ function build(lang) {
     s.addText(items.map((it, k) => ({ text: it, options: { bullet: true, breakLine: k < items.length - 1 } })),
       { x: x + 0.25, y: 1.85, w: 3.95, h: 2.8, fontSize: 14, color: HEX.dk1, paraSpaceAfter: 6, valign: "top", isTextBox: true, margin: 0 });
   });
+
+  s = content(t.s_team);
+  t.team.forEach(([h, d], i) => {
+    const y = 1.15 + i * 1.2;
+    card(s, 0.5, y, 4.6, 1.05);
+    badge(s, 0.68, y + 0.3, String(i + 1), DOTS[i], 0.45);
+    s.addText(h, { x: 1.3, y: y + 0.1, w: 3.65, h: 0.4, fontSize: 16, bold: true, color: C.text1, valign: "middle", isTextBox: true, margin: 0 });
+    s.addText(d, { x: 1.3, y: y + 0.5, w: 3.65, h: 0.5, fontSize: 12, color: C.text2, isTextBox: true, margin: 0, valign: "top" });
+  });
+  s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 5.4, y: 1.15, w: 4.1, h: 3.45, rectRadius: 0.08, fill: { color: HEX.dk1 }, line: { color: HEX.dk1 } });
+  s.addText(t.trainT, { x: 5.65, y: 1.3, w: 3.6, h: 0.45, fontSize: 17, bold: true, color: HEX.accent3, isTextBox: true, margin: 0 });
+  s.addText(t.train.map((it, k) => ({ text: it, options: { bullet: true, breakLine: k < t.train.length - 1 } })),
+    { x: 5.65, y: 1.85, w: 3.65, h: 2.6, fontSize: 14, color: "FFFFFF", paraSpaceAfter: 8, valign: "top", isTextBox: true, margin: 0 });
+  note(s, t.teamNote);
 
   // Sección 4
   section(t.sec4, t.sec4n);
