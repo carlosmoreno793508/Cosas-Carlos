@@ -43,7 +43,7 @@ CITY = [
 SA_CITY = [
     ("Lima", -12.05, -77.04), ("Chincha", -13.42, -76.13), ("Envigado", 6.17, -75.59), ("Yumbo", 3.58, -76.49),
     ("Bello", 6.34, -75.56), ("Itagüí", 6.17, -75.61), ("Medellín", 6.25, -75.56), ("Tebaida", 4.45, -75.79),
-    ("Bogotá", 4.71, -74.07), ("Barranquilla", 10.96, -74.80), ("Dosquebradas", 4.84, -75.67), ("Antioquia", 6.25, -75.56),
+    ("Bogotá", 4.71, -74.07), ("Sabaneta", 6.15, -75.62), ("Cali", 3.45, -76.53), ("Ibagué", 4.44, -75.23), ("Bucaramanga", 7.12, -73.12), ("Barranquilla", 10.96, -74.80), ("Dosquebradas", 4.84, -75.67), ("Antioquia", 6.25, -75.56),
     ("Cuenca", -2.90, -79.00), ("Guayaquil", -2.19, -79.89), ("Santiago", -33.45, -70.67), ("Blumenau", -26.92, -49.07),
     ("Luján", -34.57, -59.11), ("Villa Lynch", -34.58, -58.53), ("San Martín", -34.58, -58.54), ("Buenos Aires", -34.60, -58.38),
 ]
@@ -65,7 +65,8 @@ def node(mod):
 
 mx = json.load(open(f"{SRC}/prospectos.json", encoding="utf-8"))["prospects"]
 la = [x for f in ["latam_centroamerica", "latam_caribe"] for x in json.load(open(f"{SRC}/{f}.json", encoding="utf-8"))["prospects"]]
-sa = json.load(open(f"{SRC}/latam_sudamerica.json", encoding="utf-8"))["prospects"]
+sa = [x for f in ["latam_sudamerica", "latam_colombia", "latam_brasil"] if os.path.exists(f"{SRC}/{f}.json")
+      for x in json.load(open(f"{SRC}/{f}.json", encoding="utf-8"))["prospects"]]
 top = node("top8020")
 top_p = [r[0] for r in top["prospects"]]
 top_o = [r[0] for r in top["oems"]]

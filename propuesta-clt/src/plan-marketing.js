@@ -1,5 +1,8 @@
 // Plan de marketing CLT México → Latinoamérica: fuente del Excel (src/generar-plan-marketing.py), español e inglés.
 // Cifras de presupuesto y metas: estimación a validar con CLT.
+const fs = require("fs");
+const LATAM = fs.readdirSync(__dirname).filter((f) => /^latam_.*\.json$/.test(f)).flatMap((f) => require(`./${f}`).prospects);
+const LN = LATAM.length, LA = LATAM.filter((x) => x.priority === "A").length;
 
 const es = {
   meta: {
@@ -244,7 +247,7 @@ const es = {
     { bullets: [
       "Condición para entrar: México con al menos 5 líneas instaladas y casos de éxito documentados.",
       "Se reutiliza todo el material en español; ajustes locales por país (precios, crédito, logística).",
-      "Prospectos ya identificados: 122 empresas en Centroamérica, Caribe y Sudamérica (27 de prioridad A).",
+      `Prospectos ya identificados: ${LN} empresas en Centroamérica, Caribe y Sudamérica (${LA} de prioridad A).`,
     ] },
 
     { h1: "17. Lo que pedimos a CLT para el marketing" },
@@ -527,7 +530,7 @@ const en = {
     { bullets: [
       "Entry condition: Mexico with at least 5 installed lines and documented success cases.",
       "All Spanish material is reused; local adjustments per country (pricing, credit, logistics).",
-      "Prospects already identified: 122 companies in Central America, the Caribbean and South America (27 priority A).",
+      `Prospects already identified: ${LN} companies in Central America, the Caribbean and South America (${LA} priority A).`,
     ] },
 
     { h1: "17. What we ask CLT for marketing" },
