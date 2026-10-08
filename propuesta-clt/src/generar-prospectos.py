@@ -58,7 +58,7 @@ ws4.append(["Notas y advertencias"]); ws4["A1"].font = Font(bold=True)
 for t in d.get("notes", []) + [
     "Prioridad A: estampado en volumen confirmado o fuerte; B: buen perfil; C: posible.",
     "Solo ADN Serigrafía y KW Puebla confirman pulpos automáticos en su propio sitio; el resto debe validarse por llamada.",
-    "Uso interno de TID / VSP / CEB: no compartir con CLT.",
+    "Uso interno de TID / VSP / CEB. La hoja 80-20 sí aparece en la propuesta para socios (sección 7).",
 ]:
     ws4.append([t])
 ws4.column_dimensions["A"].width = 120
@@ -78,6 +78,27 @@ for r in ws5.iter_rows(min_row=2):
     if r[0].value == "A":
         for c in r: c.fill = PatternFill("solid", fgColor=PINK)
 ws5.freeze_panes = "D2"; ws5.auto_filter.ref = ws5.dimensions
+
+# Hoja 80/20: las 17 cuentas prioritarias de la propuesta (src/top8020.js)
+import subprocess
+top = json.loads(subprocess.check_output(["node", "-e", "console.log(JSON.stringify(require('./src/top8020')))"]))
+by_name = {p["company"]: p for p in d["prospects"]}
+def find(name):
+    key = name.split(" (")[0].lower()
+    return next((p for n, p in by_name.items() if n.lower().startswith(key)), {})
+ws8 = wb.create_sheet("80-20", 0)
+ws8.append(["#", "Segmento", "Empresa", "Ciudad", "Zona", "A qué se dedica", "Marcas y clientes / subsector", "Dirección publicada", "Sitio web", "Estatus"])
+for i, (kind, lst) in enumerate([("Prospecto", top["prospects"]), ("OEM", top["oems"])]):
+    for r in lst:
+        p = find(r[0])
+        ws8.append([ws8.max_row, kind, r[0], r[1], p.get("zone", ""), r[2], r[4], p.get("address", ""), p.get("website", ""), "Por contactar"])
+for c in ws8[1]: c.font, c.fill = head, fill
+for col, w in zip("ABCDEFGHIJ", [5, 12, 34, 22, 26, 60, 34, 45, 32, 16]): ws8.column_dimensions[col].width = w
+for r in ws8.iter_rows(min_row=2):
+    for c in r: c.alignment = wrap
+ws8.freeze_panes = "D2"; ws8.auto_filter.ref = ws8.dimensions
+dv8 = DataValidation(type="list", formula1='"Por contactar,Contactado,Visita agendada,Demo,Cotización,Ganado,Perdido"', allow_blank=True)
+ws8.add_data_validation(dv8); dv8.add(f"J2:J{ws8.max_row}")
 
 import os
 lat = []

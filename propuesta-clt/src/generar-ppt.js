@@ -3,6 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const pptxgen = require("pptxgenjs");
 const JSZip = require("jszip");
+const top8020 = require("./top8020");
 
 const THEME = {
   name: "CLT Propuesta",
@@ -63,7 +64,7 @@ const T = {
     gal2: [["04-clt-pastas.jpg", "Alto relieve, espumante y foil en frío"], ["05-escudo.jpg", "Escudo deportivo con relieve y brillo"], ["07-tigre.jpg", "Serigrafía de tintas planas en prenda de color"], ["09-huskies.jpg", "Relieve, foil dorado y destellos metálicos"]],
     s_booth: "CLT en PRINTING United 2026 (Las Vegas)",
     booth: "Pulpo automático con estación digital funcionando en vivo: así vende CLT, y así lo replicaremos en México",
-    boothSide: [["Stand C3397", "Línea híbrida en operación"], ["Fotos propias", "Visita del equipo TID / VSP"]],
+    boothSide: [["Stand C3397", "Línea híbrida en operación"], ["Fotos: VSP Printing", "Reunión de VSP con CLT"]],
     sec2: "El mercado mexicano", sec2n: "02",
     s_mkt: "Una industria que necesita diferenciarse",
     mkt: [["$91,165 M", "PIB textil-confección (MXN, 2025)"], ["102,492", "unidades económicas"], ["519 mil", "puestos de trabajo"], ["89%", "exportaciones a EE. UU."]],
@@ -79,10 +80,16 @@ const T = {
     geo: [
       ["1", "Edomex y CDMX", "Estampadores, marcas, promocionales"],
       ["1", "Jalisco", "Moda, deportivo, marcas nacionales"],
+      ["1", "Baja California", "Serigrafía de exportación; TID + VSP en la frontera"],
       ["2", "Puebla y Tlaxcala", "Maquila de exportación, punto"],
       ["2", "Guanajuato", "Punto y mayoreo; a 1–2 h de TID"],
       ["3", "Laguna, Ags., N.L., Yucatán", "Mezclilla, IMMEX, uniformes"],
     ],
+    s_top1: "80/20: prospectos prioritarios (9 de 47)",
+    s_top2: "80/20: OEM prioritarios (8 de 35)",
+    topCols: ["Empresa", "Ciudad", "A qué se dedica"],
+    topCols2: ["Empresa", "Ciudad", "Marcas y clientes"],
+    topNote: "17 de 82 cuentas (20%) reciben el 80% del esfuerzo comercial del año 1",
     s_comp: "Competencia: el hueco está en el servicio local",
     compCols: ["Tipo", "Jugadores", "Lectura"],
     comp: [
@@ -190,7 +197,7 @@ const T = {
     gal2: [["04-clt-pastas.jpg", "High build, puff and cold foil"], ["05-escudo.jpg", "Sports crest with relief and shimmer"], ["07-tigre.jpg", "Spot-color screen print on colored garment"], ["09-huskies.jpg", "Relief, gold foil and metallic sparkle"]],
     s_booth: "CLT at PRINTING United 2026 (Las Vegas)",
     booth: "Automatic carousel with a live digital station: this is how CLT sells, and how we will replicate it in Mexico",
-    boothSide: [["Booth C3397", "Hybrid line running live"], ["Our own photos", "TID / VSP team visit"]],
+    boothSide: [["Booth C3397", "Hybrid line running live"], ["Photos: VSP Printing", "VSP meeting with CLT"]],
     sec2: "The Mexican market", sec2n: "02",
     s_mkt: "An industry that needs to differentiate",
     mkt: [["MXN 91.2 B", "textile & apparel GDP (2025)"], ["102,492", "businesses"], ["519k", "jobs"], ["89%", "of exports go to the U.S."]],
@@ -206,10 +213,16 @@ const T = {
     geo: [
       ["1", "State of Mexico & CDMX", "Printers, brands, promotional"],
       ["1", "Jalisco", "Fashion, sportswear, domestic brands"],
+      ["1", "Baja California", "Export screen printing; TID + VSP at the border"],
       ["2", "Puebla & Tlaxcala", "Export maquila, knitwear"],
       ["2", "Guanajuato", "Knitwear, wholesale; 1–2 h from TID"],
       ["3", "Laguna, Ags., N.L., Yucatán", "Denim, IMMEX, uniforms"],
     ],
+    s_top1: "80/20: priority prospects (9 of 47)",
+    s_top2: "80/20: priority OEMs (8 of 35)",
+    topCols: ["Company", "City", "What they do"],
+    topCols2: ["Company", "City", "Brands and customers"],
+    topNote: "17 of 82 accounts (20%) get 80% of the year-1 sales effort",
     s_comp: "Competition: the gap is local service",
     compCols: ["Type", "Players", "Reading"],
     comp: [
@@ -432,11 +445,20 @@ function build(lang) {
 
   s = content(t.s_geo);
   t.geo.forEach(([p, z, w], i) => {
-    const y = 1.15 + i * 0.72;
-    card(s, 0.5, y, 9, 0.62);
-    badge(s, 0.65, y + 0.1, p, p === "1" ? HEX.accent1 : p === "2" ? HEX.accent2 : HEX.accent3, 0.42);
-    s.addText(z, { x: 1.25, y, w: 3.4, h: 0.62, fontSize: 15, bold: true, color: C.text1, valign: "middle", isTextBox: true, margin: 0 });
-    s.addText(w, { x: 4.7, y, w: 4.6, h: 0.62, fontSize: 13, color: C.text2, valign: "middle", isTextBox: true, margin: 0 });
+    const y = 1.1 + i * 0.63;
+    card(s, 0.5, y, 9, 0.55);
+    badge(s, 0.65, y + 0.065, p, p === "1" ? HEX.accent1 : p === "2" ? HEX.accent2 : HEX.accent3, 0.42);
+    s.addText(z, { x: 1.25, y, w: 3.4, h: 0.55, fontSize: 15, bold: true, color: C.text1, valign: "middle", isTextBox: true, margin: 0 });
+    s.addText(w, { x: 4.7, y, w: 4.6, h: 0.55, fontSize: 13, color: C.text2, valign: "middle", isTextBox: true, margin: 0 });
+  });
+
+  // Cuentas prioritarias 80/20
+  [[t.s_top1, top8020.prospects, t.topCols, 2], [t.s_top2, top8020.oems, t.topCols2, 4]].forEach(([title, list, cols, k]) => {
+    s = content(title);
+    const hd = cols.map((c) => ({ text: c, options: { bold: true, color: "FFFFFF", fill: { color: HEX.dk1 } } }));
+    const rw = list.map((r, i) => [r[0], r[1], r[lang === "es" ? k : k + 1]].map((c, j) => ({ text: c, options: { bold: j === 0, fill: { color: i % 2 ? HEX.lt1 : HEX.lt2 }, color: HEX.dk1 } })));
+    s.addTable([hd, ...rw], { x: 0.5, y: 1.05, w: 9, colW: [2.3, 1.5, 5.2], fontSize: 9, rowH: 0.34, border: { type: "solid", pt: 0.5, color: "C9D1DC" }, valign: "middle", margin: 0.04 });
+    note(s, t.topNote);
   });
 
   s = content(t.s_comp);

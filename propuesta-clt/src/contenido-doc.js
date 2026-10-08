@@ -2,6 +2,29 @@
 // Bloques: { h1 }, { h2 }, { p }, { bullets: [] }, { table: { cols, rows, widths, bold? } }, { note }, { pagebreak: true }
 // Las cifras marcadas como estimación deben reemplazarse con la cotización y condiciones reales de CLT.
 
+const top8020 = require("./top8020");
+
+// Cuentas prioritarias (regla 80/20), sección 7
+function top8020Blocks(lang) {
+  const es = lang === "es";
+  const rows = (list) => list.map((r) => [r[0], r[1], es ? r[2] : r[3], es ? r[4] : r[5]]);
+  const widths = [2200, 1500, 3860, 1800];
+  return [
+    { h2: es ? "Cuentas prioritarias: regla 80/20" : "Priority accounts: the 80/20 rule" },
+    { p: es
+      ? "De los 82 prospectos identificados en México (47 estampadores y fabricantes, y 35 OEM y maquiladoras), seleccionamos el 20% con mayor potencial: volumen de producción, decoración propia, exportación y encaje con la línea híbrida. Estas 17 cuentas recibirán el 80% del esfuerzo comercial del primer año (visitas, demostraciones y pruebas con su tela)."
+      : "Out of the 82 prospects identified in Mexico (47 printers and manufacturers, and 35 OEMs and contract manufacturers), we selected the top 20% by potential: production volume, in-house decoration, exports and fit with the hybrid line. These 17 accounts will receive 80% of the first-year sales effort (visits, demos and tests on their own fabric)." },
+    { h2: es ? "Prospectos prioritarios: estampadores y fabricantes (9 de 47)" : "Priority prospects: printers and manufacturers (9 of 47)" },
+    { table: { cols: es ? ["Empresa", "Ciudad", "A qué se dedica", "Subsector"] : ["Company", "City", "What they do", "Subsector"], widths, rows: rows(top8020.prospects) } },
+    { h2: es ? "OEM prioritarios: maquila de exportación (8 de 35)" : "Priority OEMs: export contract manufacturing (8 of 35)" },
+    { table: { cols: es ? ["Empresa", "Ciudad", "A qué se dedica", "Marcas y clientes"] : ["Company", "City", "What they do", "Brands and customers"], widths, rows: rows(top8020.oems) } },
+    { p: top8020.next[lang] },
+    { note: es
+      ? "Fuentes: sitios web de cada empresa, Open Supply Hub y directorios industriales. Marcas y clientes según fuentes públicas; confirmar en la primera visita."
+      : "Sources: company websites, Open Supply Hub and industry directories. Brands and customers per public sources; to be confirmed at the first visit." },
+  ];
+}
+
 const es = {
   meta: {
     file: "Propuesta_Distribucion_CLT_Mexico_ES",
@@ -42,7 +65,7 @@ const es = {
           ["Definición del mercado", "Equipos híbridos, consumibles (siliconas, pastas, tintas) y servicio técnico; tecnologías sustitutas: serigrafía tradicional, DTG, DTF, sublimación"],
           ["Segmentos", "Maquiladoras de exportación (IMMEX), marcas nacionales, talleres de serigrafía medianos/grandes, promocionales, uniformes y deportivos"],
           ["Dimensionamiento", "Mercado total, alcanzable y capturable (TAM / SAM / SOM) con escenarios conservador, base y optimista"],
-          ["Geografía", "Clústeres: Edomex/CDMX, Jalisco, Puebla/Tlaxcala, Guanajuato, La Laguna, Aguascalientes, Nuevo León, Yucatán"],
+          ["Geografía", "Clústeres: Edomex/CDMX, Jalisco, Puebla/Tlaxcala, Guanajuato, Baja California, La Laguna, Aguascalientes, Nuevo León, Yucatán"],
           ["Competencia", "Fabricantes y distribuidores de DTG, pulpos automáticos, híbridos chinos y consumibles"],
           ["Economía", "Inversión del distribuidor, márgenes, punto de equilibrio y retorno"],
           ["Regulación", "Aranceles 2026, importación vía CEB, T-MEC, NOM eléctricas"],
@@ -160,6 +183,7 @@ const es = {
         rows: [
           ["1", "Estado de México y CDMX", "Mayor concentración de estampadores, marcas, promocionales y corporativo"],
           ["1", "Jalisco (Guadalajara, Zapotlanejo)", "Moda, ropa deportiva y marcas nacionales"],
+          ["1", "Baja California (Tijuana, Ensenada, Tecate)", "Serigrafía de exportación para marcas de EE. UU. (Disney, Fanatics, Columbia); cobertura conjunta TID + VSP desde la frontera"],
           ["2", "Puebla y Tlaxcala", "Maquila de exportación y tejido de punto"],
           ["2", "Guanajuato (Moroleón, Uriangato, León)", "Tejido de punto y mayoreo; a 1–2 horas de TID en Querétaro"],
           ["3", "La Laguna, Aguascalientes, Nuevo León, Yucatán", "Mezclilla, maquila IMMEX y uniformes"],
@@ -167,6 +191,7 @@ const es = {
       },
     },
     { note: "Priorización preliminar por concentración de industria mediana y grande; se validará con el directorio DENUE de INEGI." },
+    ...top8020Blocks("es"),
 
     { h1: "8. Competencia" },
     {
@@ -392,7 +417,7 @@ const es = {
 
     { pagebreak: true },
     { h1: "Anexo: muestras de CLT" },
-    { p: "Fotografías tomadas por el equipo TID / VSP en el stand de CLT en PRINTING United 2026 (Las Vegas) y de muestras de producción de CLT." },
+    { p: "Fotografías del stand de CLT en PRINTING United 2026 (Las Vegas), tomadas por VSP Printing durante su reunión con CLT, y de muestras de producción de CLT." },
     { images: [
       ["06-stand-printing-united.jpg", "Stand C3397: pulpo automático con estación digital en operación"],
       ["08-folleto-clt.jpg", "Folleto corporativo de CLT (clave 301618)"],
@@ -462,7 +487,7 @@ const en = {
           ["Market definition", "Hybrid equipment, consumables (silicones, pastes, inks) and technical service; substitutes: traditional screen printing, DTG, DTF, sublimation"],
           ["Segments", "Export maquiladoras (IMMEX), domestic brands, medium/large screen-print shops, promotional, uniforms and sportswear"],
           ["Sizing", "Total, serviceable and obtainable market (TAM / SAM / SOM) with conservative, base and optimistic scenarios"],
-          ["Geography", "Clusters: State of Mexico/Mexico City, Jalisco, Puebla/Tlaxcala, Guanajuato, La Laguna, Aguascalientes, Nuevo León, Yucatán"],
+          ["Geography", "Clusters: State of Mexico/Mexico City, Jalisco, Puebla/Tlaxcala, Guanajuato, Baja California, La Laguna, Aguascalientes, Nuevo León, Yucatán"],
           ["Competition", "DTG makers and distributors, automatic carousels, Chinese hybrids and consumables"],
           ["Economics", "Distributor investment, margins, break-even and payback"],
           ["Regulation", "2026 tariffs, import through CEB, USMCA, electrical standards (NOM)"],
@@ -580,6 +605,7 @@ const en = {
         rows: [
           ["1", "State of Mexico and Mexico City", "Largest concentration of printers, brands, promotional and corporate buyers"],
           ["1", "Jalisco (Guadalajara, Zapotlanejo)", "Fashion, sportswear and domestic brands"],
+          ["1", "Baja California (Tijuana, Ensenada, Tecate)", "Export screen printing for U.S. brands (Disney, Fanatics, Columbia); joint TID + VSP coverage from the border"],
           ["2", "Puebla and Tlaxcala", "Export maquila and knitwear"],
           ["2", "Guanajuato (Moroleón, Uriangato, León)", "Knitwear and wholesale; 1–2 hours from TID in Querétaro"],
           ["3", "La Laguna, Aguascalientes, Nuevo León, Yucatán", "Denim, IMMEX maquila and uniforms"],
@@ -587,6 +613,7 @@ const en = {
       },
     },
     { note: "Preliminary ranking by concentration of medium and large industry; to be validated with INEGI’s DENUE business directory." },
+    ...top8020Blocks("en"),
 
     { h1: "8. Competition" },
     {
@@ -812,7 +839,7 @@ const en = {
 
     { pagebreak: true },
     { h1: "Appendix: CLT samples" },
-    { p: "Photos taken by the TID / VSP team at CLT’s PRINTING United 2026 booth (Las Vegas) and of CLT production samples." },
+    { p: "Photos of CLT’s PRINTING United 2026 booth (Las Vegas), taken by VSP Printing during its meeting with CLT, and of CLT production samples." },
     { images: [
       ["06-stand-printing-united.jpg", "Booth C3397: automatic carousel with a digital station running"],
       ["08-folleto-clt.jpg", "CLT corporate brochure (code 301618)"],
