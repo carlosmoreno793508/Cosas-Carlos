@@ -1,0 +1,375 @@
+{
+  "meta": {
+    "fecha": "2026-10-08",
+    "metodo": "Solo fuentes públicas o snippets gratuitos (Veritrade minisites, Panjiva, ImportInfo, ImportKey, Datamyne, BID/IFC, Wayback Machine, directorios). Sin login ni paywall.",
+    "advertencias": [
+      "Las páginas públicas de Veritrade muestran solo los totales de 5 años y las principales partidas de exportación; NO desglosan importaciones de tintas (3215) ni pigmentos (3204/3206).",
+      "En las páginas públicas de Veritrade, las filas 5 a 7 de 'Shipment Detail' (ADVANCED MATERIALS INC, PRECISION PARTS LTD, GLOBAL COMPONENTS SA) y las filas 'Argentina/Ecuador' y 'Materiales industriales certificados' son plantillas o relleno del sitio. Se ignoraron.",
+      "Las descripciones de mercancía de Panjiva están redactadas en la vista gratuita. Los conteos de envíos varían entre perfiles duplicados.",
+      "Ninguna fuente pública consultada nombra la marca, el volumen o el valor de las tintas compradas por estas empresas. Por eso el gasto estimado en tinta es 'sin dato' en todos los casos.",
+      "Firecrawl se quedó sin créditos durante la investigación; se continuó con WebSearch/WebFetch y curl."
+    ]
+  },
+  "empresas": [
+    {
+      "id": 1,
+      "empresa": "Gildan Activewear Dominican Republic Textile Company Inc.",
+      "pais": "República Dominicana",
+      "ciudad": "Santo Domingo (Zona Franca Industrial Bella Vista; Panjiva también muestra 'Guerra / Monte Plata')",
+      "razon_social_id_fiscal": "RNC 1-30-05080-5 (aparece en la dirección de Panjiva; no verificado en DGII)",
+      "regimen": "Zona franca (Zona Franca Industrial Bella Vista, según la dirección en Panjiva)",
+      "matriz_o_embarcador_eeuu": "Gildan Activewear Inc. (Canadá). Contrapartes intragrupo en registros de EE. UU.: Gildan Honduras Properties S de RL, Gildan Activewear (Eden) Inc., Gildan Yarns LLC; también aparece Hanes Supply Chain Holdings",
+      "exportaciones": [
+        "ImportInfo: 4,532 conocimientos de embarque (B/L) de EE. UU., del 20-oct-2012 al 30-sep-2026; 271 en el último año. Puertos de carga: Río Haina (2,412) y Puerto Cortés (2,085). Muestra: 'fabric cut goods for T-shirt HTS 6109.10' (piezas cortadas, flujo intragrupo DR-Honduras)",
+        "Panjiva (ID 1468907): 1,059 envíos de EE. UU.; clientes visibles: Gildan Yarns LLC, Dae Sung Apparel S.A.; capítulos HS 39, 61, 52, 84, 62",
+        "Snippet de marketinsidedata: 'import turnover of $166.64M' (sin periodo visible; la página dio 403, no verificado)"
+      ],
+      "importaciones_insumos_impresion": [
+        "Panjiva (ID 89384641): 1,938 envíos de EE. UU.; principales productos: 'colorants, knit fabric, chemicals, textile machinery parts, yarn cotton'; principales HS: 84, 29, 39, 32, 33. B/L de muestra del 17-ago-2025 con HTS 3204.12 (colorantes), embarcador Gildan Honduras Properties (Choloma), 18,253.9 kg. Proveedor externo o marca: no visible (descripción redactada)"
+      ],
+      "importaciones_equipo": "Panjiva lista 'textile machines' y el capítulo HS 84 entre sus productos; sin marca ni modelo",
+      "marcas_tinta": "no encontrado",
+      "gasto_tinta_estimado": "sin dato",
+      "notas": "Según la 40-F de Gildan, la marca vende prendas en blanco (sin decorar) a serigrafistas. La planta de RD es textil (tejido y teñido), no de estampado. Por inferencia, el HS 32 corresponde a colorantes de teñido, no a tintas de serigrafía. Como prospecto de tintas es de baja probabilidad, aunque puede tener interés para pigmentos o químicos.",
+      "fuentes": [
+        "https://www.importinfo.com/gildan-activewear-dominican",
+        "https://panjiva.com/Gildan-Activewear-Dom-Rep-Textile-C/1468907",
+        "https://panjiva.com/Gildan-Activewear-Dom-Rep-Textile-C/89384641",
+        "https://www.marketinsidedata.com/en/company/gildan-activewear-dominican/f98f15033e8e14228c186507d503a88f",
+        "https://gildancorp.com/en/careers/discover-where-we-work/dominican-republic-operations/",
+        "https://www.sec.gov/Archives/edgar/data/1061894/000120445906001186/gildanf40f.htm"
+      ],
+      "confianza": "media"
+    },
+    {
+      "id": 2,
+      "empresa": "TCPL The Caribbean Print Limitada S.R.L.",
+      "pais": "República Dominicana",
+      "ciudad": "Barahona (Zona Franca Industrial de Barahona, Villa Central)",
+      "razon_social_id_fiscal": "THE CARIBBEAN PRINT LIMITADA, RNC 1-32-35205-1 (pie de página del sitio web propio, archivado en jul-2025)",
+      "regimen": "Zona franca (Zona Franca Industrial de Barahona)",
+      "matriz_o_embarcador_eeuu": "Grupo Willbes (Corea del Sur). El sitio de 2021 dice 'TheCaribbeanPrint(WillbesPrint)… We have factories in Haiti and Dominican Republic', y el pie de página de 2025 lista a THE WILLBES HAITIAN S.A. (Parc Industriel SONAPI, Bldg #12, Port-au-Prince). The Willbes Dominicana Inc. opera en Barahona y Baní.",
+      "exportaciones": [
+        "No se encontraron registros de aduana a nombre de TCPL. La lista de fábricas de Gap (marzo de 2023) incluye 'Tcpl The Caribbean Print Limitada S R L'. El sitio dice 'Products sold in the United States' (post del 14-ene-2025)."
+      ],
+      "importaciones_insumos_impresion": [
+        "no encontrado"
+      ],
+      "importaciones_equipo": "El sitio propio publica un post sobre el 'i-Image STE I™ Computer-to-Screen (CTS) Imaging & Exposure System' (sistema CTS de M&R) y describe serigrafía automática. No hay registro de importación.",
+      "marcas_tinta": "no encontrado (el sitio tiene un post 'Ink Color Preparation' sin marca visible en el índice)",
+      "gasto_tinta_estimado": "sin dato",
+      "notas": "Taller de serigrafía automática por contrato (paneles cortados y prendas), muy probablemente para Willbes Dominicana y Gap (inferencia). Usa un flujo CTS de M&R. Para ventas, encaja bien con plastisol o tintas base agua y con máquinas híbridas.",
+      "fuentes": [
+        "https://web.archive.org/web/20250714152028/https://thecaribbeanprint.com/",
+        "https://web.archive.org/web/20210824140846/http://www.thecaribbeanprint.com/",
+        "https://www.scribd.com/document/661654734/gap-inc-factory-list-march-2023",
+        "https://eldia.com.do/danilo-medina-recibe-a-empresarios-asiaticos-interesados-en-desarrollar-proyectos-textiles-en-el-pais/",
+        "https://panjiva.com/The-Willbes-Dominicana-Inc/1853943"
+      ],
+      "confianza": "media"
+    },
+    {
+      "id": 3,
+      "empresa": "Serigrafía Moderna",
+      "pais": "República Dominicana",
+      "ciudad": "Santo Domingo",
+      "razon_social_id_fiscal": "no encontrado",
+      "regimen": "no encontrado",
+      "matriz_o_embarcador_eeuu": "no encontrado",
+      "exportaciones": [
+        "no encontrado"
+      ],
+      "importaciones_insumos_impresion": [
+        "no encontrado"
+      ],
+      "importaciones_equipo": "no encontrado",
+      "marcas_tinta": "no encontrado",
+      "gasto_tinta_estimado": "sin dato",
+      "notas": "Cuatro búsquedas sin ningún resultado de la empresa. Probablemente es un taller local que no aparece en las bases de comercio exterior. Hay que verificar el RNC en DGII y la presencia en redes sociales.",
+      "fuentes": [],
+      "confianza": "baja"
+    },
+    {
+      "id": 4,
+      "empresa": "The Willbes Haitian S.A. (screen printing)",
+      "pais": "Haití",
+      "ciudad": "Port-au-Prince (Parc Industriel SONAPI/PIM, Route de l'Aéroport)",
+      "razon_social_id_fiscal": "The Willbes Haitian S.A. (no se encontró ID fiscal)",
+      "regimen": "Parque industrial SONAPI/PIM, exportación bajo HOPE/HELP (inferencia sobre el régimen)",
+      "matriz_o_embarcador_eeuu": "The Willbes & Co., Ltd. (Seúl, Corea)",
+      "exportaciones": [
+        "Panjiva: 168 envíos de EE. UU.; 8 clientes, de los que se ven Gap (UK Holdings) Ltd. y Old Navy Canada; HS 61 y 62 (muestra HTS 6204.62, 29-oct-2015)",
+        "Expeditors International lista a Willbes Haitian como proveedor en B/L del 16-oct-2024 y del 27-nov-2024 (snippet de Panjiva)",
+        "BID/IFC (2011): ampliación de 40 a 70 líneas, capacidad de unas 1,875,000 docenas al año; incluye 'the addition of a printing facility in Haiti'; inversión de 12 MUSD en la primera etapa; préstamo de hasta 8 MUSD (IFC 4 MUSD + BID 4 MUSD); 'large US customer base'"
+      ],
+      "importaciones_insumos_impresion": [
+        "no encontrado"
+      ],
+      "importaciones_equipo": "no encontrado (el BID menciona que se prevé invertir 32 MUSD en maquinaria y líneas hasta 2019, sin desglose de impresión)",
+      "marcas_tinta": "no encontrado",
+      "gasto_tinta_estimado": "sin dato",
+      "notas": "La lista de Gap de 2023 la registra como 'The Willbes Haitian Sa (Screen Printing Shop)'. Comparte grupo y sitio web con TCPL (#2). Conviene abordarlas juntas a través de Willbes & Co.",
+      "fuentes": [
+        "https://panjiva.com/The-Willbes-Haitian-S-A/35327416",
+        "https://ewsdata.rightsindevelopment.org/files/documents/69/IADB-HA-L1069.pdf",
+        "https://www.caribjournal.com/?p=24496",
+        "https://disclosures.ifc.org/project-detail/ESRS/30350/willbes-in-haiti",
+        "https://www.scribd.com/document/661654734/gap-inc-factory-list-march-2023"
+      ],
+      "confianza": "media"
+    },
+    {
+      "id": 5,
+      "empresa": "Uniwell Apparel (Uniwell Haiti LLC)",
+      "pais": "Haití",
+      "ciudad": "Ouanaminthe (parque CODEVI)",
+      "razon_social_id_fiscal": "UNIWELL HAITI LLC (según ImportKey; no se encontró ID fiscal)",
+      "regimen": "Zona franca CODEVI (Grupo M), Ouanaminthe",
+      "matriz_o_embarcador_eeuu": "Comprador: MOSHAY INC DBA A4 (A4 Moshay Inc), Vernon, CA. Proveedor relacionado en los registros: MD INDUSTRIES S.A.",
+      "exportaciones": [
+        "ImportKey: 54 envíos; compradores MOSHAY INC DBA A4 (41) y A4 MOSHAY INC (13); camisetas, pullovers y hoodies de punto (HTS 6109901007, 6110303053, 6109901009, 6110303059, 6109901050); muestras del 21 y 28 de sep-2026 desde Puerto Plata (RD)",
+        "WRC (2025): 'Key Buyers: A4'"
+      ],
+      "importaciones_insumos_impresion": [
+        "no encontrado"
+      ],
+      "importaciones_equipo": "no encontrado",
+      "marcas_tinta": "no encontrado",
+      "gasto_tinta_estimado": "sin dato",
+      "notas": "A4 es una marca de uniformes y ropa deportiva que decora mucho (inferencia). No hay evidencia de que la planta tenga estampado propio.",
+      "fuentes": [
+        "https://importkey.com/i/uniwell-haiti-llc",
+        "https://www.workersrights.org/?p=12212"
+      ],
+      "confianza": "media"
+    },
+    {
+      "id": 6,
+      "empresa": "Sun Island Jamaica Ltd.",
+      "pais": "Jamaica",
+      "ciudad": "Kingston",
+      "razon_social_id_fiscal": "Sun Island Jamaica Limited (no se encontró TRN)",
+      "regimen": "no encontrado",
+      "matriz_o_embarcador_eeuu": "Filial minorista: My Jamaica (Liguanea Plaza)",
+      "exportaciones": [
+        "Datamyne: 4 envíos a EE. UU. entre el 1-sep-2019 y el 31-ago-2020; importador principal 'Margaritaville (wo)'; HS 610910 y 610990",
+        "En 2007 fabricó mercancía licenciada de la Copa Mundial de Críquet (sportcal)"
+      ],
+      "importaciones_insumos_impresion": [
+        "Panjiva: un envío del 7-mar-2014 de Gifts Story Industries Co. Ltd. (Taiwán) a Sun Island Jamaica Ltd. (producto no visible)"
+      ],
+      "importaciones_equipo": "no encontrado",
+      "marcas_tinta": "no encontrado",
+      "gasto_tinta_estimado": "sin dato",
+      "notas": "Fabricante y distribuidor de souvenirs y camisetas diseñados y producidos localmente (Gleaner 2014). Por inferencia, decora camisetas con serigrafía. Prospecto pequeño o mediano.",
+      "fuentes": [
+        "https://past.jamaica-gleaner.com/article/social/20141219/my-jamaicas-treasure-chest",
+        "https://www.datamyne.com/supplier/6277554/sun-island-jamaica-ltd",
+        "https://cn.panjiva.com/Gifts-Story-Industries-Co-Ltd/1103460",
+        "https://www.sportcal.com/?p=18417"
+      ],
+      "confianza": "baja"
+    },
+    {
+      "id": 7,
+      "empresa": "Textiles Camones S.A. (BIC)",
+      "pais": "Perú",
+      "ciudad": "Lima",
+      "razon_social_id_fiscal": "TEXTILES CAMONES S.A., RUC 20293847038",
+      "regimen": "Exportador régimen general / Drawback (inferencia)",
+      "matriz_o_embarcador_eeuu": "no encontrado",
+      "exportaciones": [
+        "Veritrade (2020-2024): exportación FOB de 323.8 MUSD (21,744 registros); destinos Brasil (62%), Colombia (27%) y EE. UU. (5%) sobre el total de la tabla; productos: T-shirts de algodón (26%), tejidos teñidos. Muestras de may-jun 2024: T-shirts para Brasil (3.24 a 5.82 USD/u)",
+        "Panjiva: entre 91 y 844 envíos de EE. UU., según la página"
+      ],
+      "importaciones_insumos_impresion": [
+        "Veritrade (2020-2024): importación CIF de 126.1 MUSD (7,911 registros), concentrada en textiles, productos químicos y maquinaria; orígenes India, Indonesia y China. No se ven partidas 3215/3204 ni proveedores de tinta en la vista pública"
+      ],
+      "importaciones_equipo": "Veritrade incluye maquinaria y equipo eléctrico entre las importaciones, sin detalle",
+      "marcas_tinta": "no encontrado",
+      "gasto_tinta_estimado": "sin dato",
+      "notas": "Empresa textil integrada (hilatura, tejido y teñido). El grueso del CIF importado es fibra e hilado.",
+      "fuentes": [
+        "https://www.veritradecorp.com/en/peru/imports-and-exports-textiles-camones-sa/ruc-20293847038",
+        "https://panjiva.com/Textiles-Camones-S-A/2159735",
+        "https://tradeint.com/search/peru/import-data/company/textiles-camones-s-a",
+        "https://gestion.pe/economia/empresas/exportacion-textil-tejidos-mercado-textil-textiles-camones-con-perspectivas-positivas-tras-nueva-linea-de-tejidos-noticia/"
+      ],
+      "confianza": "alta"
+    },
+    {
+      "id": 8,
+      "empresa": "Topy Top S.A.",
+      "pais": "Perú",
+      "ciudad": "Lima (Av. El Santuario 1323, San Juan de Lurigancho) y Chincha",
+      "razon_social_id_fiscal": "TOPY TOP S.A., RUC 20100047056",
+      "regimen": "Exportador régimen general / Drawback (inferencia)",
+      "matriz_o_embarcador_eeuu": "no encontrado",
+      "exportaciones": [
+        "Veritrade (2020-2024): exportación FOB de 529.9 MUSD (29,808 registros); EE. UU. 79%, Alemania 13%, Reino Unido 2%; productos: T-shirts de algodón (28%), camisetas interiores (17%). Muestras de jul-ago 2024 con 'T-SHIRT CON APLICACION' (estampado o aplicación) para las marcas KITH (vía OMLOG USA), ORVIS (World Textile Sourcing), HUGO BOSS y LACOSTE (Devanlay México)",
+        "Panjiva: 3,804 envíos de EE. UU. en un perfil y 255 en otro; clientes Hugo Boss Canada y Hugo Boss Fashions (2023)"
+      ],
+      "importaciones_insumos_impresion": [
+        "Veritrade (2020-2024): importación CIF de 12.1 MUSD (8,943 registros), con pico en 2024; textiles, papel y manufacturas diversas; orígenes China, Alemania e Italia; aranceles pagados 894.3 mil USD. La vista pública no desglosa tintas"
+      ],
+      "importaciones_equipo": "no encontrado",
+      "marcas_tinta": "no encontrado",
+      "gasto_tinta_estimado": "sin dato",
+      "notas": "La exportadora de confecciones más grande de la lista y la que más aplicaciones estampadas declara en sus exportaciones. Prospecto prioritario. Un CIF de 12.1 MUSD en 5 años es bajo, lo que sugiere que compra insumos químicos y tintas en el mercado local (inferencia).",
+      "fuentes": [
+        "https://www.veritradecorp.com/en/peru/imports-and-exports-topy-top-s-a/ruc-20100047056",
+        "https://www.veritradecorp.com/es/importaciones-exportaciones-peru/topy-top/ruc-20100047056",
+        "https://panjiva.com/Topy-Top-S-A-20100047056/113560915",
+        "https://panjiva.com/Topy-Top-S-A/3746842"
+      ],
+      "confianza": "alta"
+    },
+    {
+      "id": 9,
+      "empresa": "Confecciones Textimax S.A.",
+      "pais": "Perú",
+      "ciudad": "Lima (Santa Anita)",
+      "razon_social_id_fiscal": "CONFECCIONES TEXTIMAX S A, RUC 20101362702",
+      "regimen": "Exportador régimen general / Drawback (inferencia)",
+      "matriz_o_embarcador_eeuu": "no encontrado",
+      "exportaciones": [
+        "Veritrade (2020-2024): exportación FOB de 262.5 MUSD (11,740 operaciones en total); EE. UU. 79%, Alemania 10%, Canadá 6%; productos: T-shirts de algodón. Muestras de ene-feb 2024 para Costco Wholesale Japan y Korea, World Textile Sourcing y Richer Poorer (EE. UU.)"
+      ],
+      "importaciones_insumos_impresion": [
+        "Veritrade (2020-2024): importación CIF de 11.3 MUSD; textiles, papel y productos químicos; orígenes China, Portugal e Italia. Sin desglose de tintas"
+      ],
+      "importaciones_equipo": "no encontrado",
+      "marcas_tinta": "no encontrado",
+      "gasto_tinta_estimado": "sin dato",
+      "notas": "Las muestras públicas son mayormente de tejido teñido liso (sin 'aplicación').",
+      "fuentes": [
+        "https://www.veritradecorp.com/en/peru/imports-and-exports-confecciones-textimax-s-a/ruc-20101362702",
+        "https://www.veritradecorp.com/es/peru/importaciones-y-exportaciones-confecciones-textimax-s-a/ruc-20101362702"
+      ],
+      "confianza": "alta"
+    },
+    {
+      "id": 10,
+      "empresa": "CMT del Sur S.A.C.",
+      "pais": "Perú",
+      "ciudad": "Chincha (Av. Industrial 402, Chincha Baja; depósito en Chincha Alta). Domicilio fiscal en Chorrillos, Lima",
+      "razon_social_id_fiscal": "CMT DEL SUR S.A.C, RUC 20506883301 (identidad verificada en datosperu/SUNAT)",
+      "regimen": "Exportador (SUNAT: 'Actividad Comercio Exterior: EXPORTADOR'); CIIU 1410",
+      "matriz_o_embarcador_eeuu": "Filial 100% de STN Group (Southern Textile Network S.A.C.)",
+      "exportaciones": [
+        "No se encontraron cifras de exportación por empresa. Las exportaciones del grupo probablemente se facturan vía Southern Textile Network S.A.C. (inferencia; Panjiva muestra embarques de STN de Callao a Florida y Colombia)"
+      ],
+      "importaciones_insumos_impresion": [
+        "datosperu: 13 partidas con registros de comercio exterior; las de más registros son el cap. 84 (47 registros), el 85 (23) y el 90 (7). No aparece el cap. 32"
+      ],
+      "importaciones_equipo": "Cap. 84: 47 registros (sin detalle)",
+      "marcas_tinta": "no encontrado",
+      "gasto_tinta_estimado": "sin dato",
+      "notas": "Taller CMT (corte, confección y acabado). Planilla de 1,368 trabajadores en nov-2025 y 1,522 en ene-2025. No hay evidencia de estampado propio.",
+      "fuentes": [
+        "https://www.datosperu.org/empresa-cmt-del-sur-sac-20506883301.php",
+        "https://www.universidadperu.com/empresas/cmt-sur.php",
+        "https://pe.linkedin.com/company/southern-textile-network-sac",
+        "https://www.emis.com/php/company-profile/PE/Cmt_Del_Sur_SAC_es_4075010.html",
+        "https://panjiva.com/Southern-Textile-Network-S-A-C/1272868"
+      ],
+      "confianza": "media"
+    },
+    {
+      "id": 11,
+      "empresa": "Industrias Nettalco S.A.",
+      "pais": "Perú",
+      "ciudad": "Lima (Ate)",
+      "razon_social_id_fiscal": "INDUSTRIAS NETTALCO S.A., RUC 20100064571",
+      "regimen": "Exportador régimen general / Drawback (inferencia)",
+      "matriz_o_embarcador_eeuu": "no encontrado",
+      "exportaciones": [
+        "Veritrade (2020-2024): exportación FOB de 348.2 MUSD (32,891 operaciones en total); EE. UU. 83%, Brasil 6%, Francia 2%; productos: camisas de punto, suéteres y T-shirts. Muestras de sep-2024 con 'T-SHIRTS… CON APLICACIÓN' para L.L.Bean y la marca 'LAC…' (Canadá)"
+      ],
+      "importaciones_insumos_impresion": [
+        "Veritrade (2020-2024): importación CIF de 11.3 MUSD; textiles, maquinaria y manufacturas diversas; orígenes Italia, China y Brasil. Sin desglose de tintas"
+      ],
+      "importaciones_equipo": "Maquinaria entre las importaciones (sin detalle)",
+      "marcas_tinta": "no encontrado",
+      "gasto_tinta_estimado": "sin dato",
+      "notas": "Sus exportaciones declaran prendas con aplicación (estampado o bordado).",
+      "fuentes": [
+        "https://www.veritradecorp.com/en/peru/imports-and-exports-industrias-nettalco-sa/ruc-20100064571"
+      ],
+      "confianza": "alta"
+    },
+    {
+      "id": 12,
+      "empresa": "Precotex S.A.C.",
+      "pais": "Perú",
+      "ciudad": "Lima (Av. Santa María 296, Urb. La Aurora, Ate)",
+      "razon_social_id_fiscal": "Precotex S.A.C. (RUC no encontrado en fuentes abiertas; verificar en SUNAT)",
+      "regimen": "Exportador (inferencia)",
+      "matriz_o_embarcador_eeuu": "no encontrado",
+      "exportaciones": [
+        "Panjiva: 495 envíos de EE. UU. en un perfil y 20 en otro; HS 61 y 60; B/L de feb-2025 Callao→Canadá (6,550 kg)"
+      ],
+      "importaciones_insumos_impresion": [
+        "Panjiva (ID 2477568): 18,712 envíos de Sudamérica; HS 32 ('Dyes, pigments, paints, inks') entre sus capítulos; proveedores visibles: Archroma Colombia S.A.S. (colorantes y químicos de teñido y estampado), Finotex S.A., Mariplast Central America, Nahar Spinning Mills, Grupo Empresarial PEMC. Valores no visibles"
+      ],
+      "importaciones_equipo": "Panjiva: HS 84 y 85; muestra HTS 8477.90 (partes de maquinaria para plásticos)",
+      "marcas_tinta": "Archroma (proveedor de HS 32, producto concreto no visible; puede ser colorante de teñido y no tinta de estampar)",
+      "gasto_tinta_estimado": "sin dato",
+      "notas": "Es la única empresa peruana con un proveedor químico nombrado (Archroma Colombia).",
+      "fuentes": [
+        "https://panjiva.com/Precotex-S-A-C/2477568",
+        "https://panjiva.com/Precotex-S-A-C/24492314"
+      ],
+      "confianza": "media"
+    },
+    {
+      "id": 13,
+      "empresa": "Supertex S.A. (S.A.S.)",
+      "pais": "Colombia",
+      "ciudad": "Yumbo, Valle del Cauca (Cra. 35 #10-707, Acopi)",
+      "razon_social_id_fiscal": "Supertex S.A.S., NIT 800130149-8",
+      "regimen": "no encontrado",
+      "matriz_o_embarcador_eeuu": "no encontrado",
+      "exportaciones": [
+        "Panjiva: B/L del 4-jun-2025 Cartagena→Houston, 3,156 kg, 549 CTN, HTS 6110.30, con notify Flexport"
+      ],
+      "importaciones_insumos_impresion": [
+        "Panjiva: 12,995 envíos de Sudamérica y 595 proveedores; HS 60, 58, 48, 49 y 61; producto principal 'labels'; proveedores visibles: Pride Performance Fabrics, Willingtex, Skytex México (2021, CIF 9,128 USD). No aparece el cap. 32",
+        "Veritrade, ranking de importadores textiles de Colombia: 'SUPERTEX S.A.' con 37,046,456 USD en el último año (sin NIT en la página)"
+      ],
+      "importaciones_equipo": "HS 84 entre sus capítulos (sin detalle)",
+      "marcas_tinta": "no encontrado",
+      "gasto_tinta_estimado": "sin dato",
+      "notas": "Confeccionista de prendas deportivas o activewear de gran volumen. Las importaciones son sobre todo tejidos.",
+      "fuentes": [
+        "https://panjiva.com/Supertex-S-A/28386555",
+        "https://directorio-empresas.einforma.co/informacion-empresa/supertex-sa",
+        "https://www.veritradecorp.com/en/countries/colombia/imports/companies/textiles"
+      ],
+      "confianza": "media"
+    },
+    {
+      "id": 14,
+      "empresa": "Estampados Divitex (Divitex S.A.S.)",
+      "pais": "Colombia",
+      "ciudad": "Envigado, Antioquia (Cl 48C Sur #43A-270)",
+      "razon_social_id_fiscal": "Divitex S.A.S. (NIT no encontrado; verificar en RUES)",
+      "regimen": "no encontrado",
+      "matriz_o_embarcador_eeuu": "no encontrado",
+      "exportaciones": [
+        "no encontrado"
+      ],
+      "importaciones_insumos_impresion": [
+        "no encontrado"
+      ],
+      "importaciones_equipo": "no encontrado",
+      "marcas_tinta": "no encontrado",
+      "gasto_tinta_estimado": "sin dato",
+      "notas": "EMIS: actividad de acabado textil, constituida el 12-mar-2002, 121 empleados (2025), web estampadosdivitex.com.co (no resolvía en oct-2026). Estampadora de servicio para el clúster de Medellín. Posiblemente compra tintas a distribuidores locales (inferencia).",
+      "fuentes": [
+        "https://www.emis.cn/php/company-profile/CO/Divitex_SAS_en_2653418.html"
+      ],
+      "confianza": "baja"
+    }
+  ]
+}
