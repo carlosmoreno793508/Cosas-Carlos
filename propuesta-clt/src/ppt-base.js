@@ -50,7 +50,6 @@ function makeDeck(lang, t) {
     margin: [0.5, 0.5, 0.5, 0.5],
     objects: [
       { placeholder: { options: { name: "title", type: "title", x: 0.5, y: 0.3, w: 9.0, h: 0.7, fontSize: 26, bold: true, color: C.text1, valign: "middle" }, text: "" } },
-      { text: { text: t.footer, options: { x: 0.5, y: 5.25, w: 7.5, h: 0.25, fontSize: 9, color: HEX.accent5 } } },
     ],
     slideNumber: { x: 9.0, y: 5.25, w: 0.5, h: 0.25, fontSize: 9, color: HEX.accent5, align: "right" },
   });
