@@ -16,6 +16,8 @@
 | **Leadsales** | CRM WhatsApp+IG+FB con IA (MX) | SaaS SMB (suscripción) | **$97 USD/mes** + asesores, prueba 14 días | 🟢 Alta (+2,800 clientes, Shark Tank MX, Forbes) | **El benchmark real de Vocero.** Build-vs-buy |
 | **Difraxion Group** | Agencia de estrategia de contenido/redes | Agencia DFY (contenido) | Oculto | 🟡 Media (86% recomendación, 22 opiniones) | El dolor "publicar sin estrategia cuesta clientes" |
 | **Aircall** | SaaS de telefonía/llamadas con IA (ventas+soporte) | SaaS tool | Suscripción | 🟢 Alta (marca establecida) | IA en el canal de voz; no es nuestro canal |
+| **Darwin AI** (getdarwin.ai) | "Empleados-IA" (SDR/CX/cobranza) en WhatsApp/IG/llamada, conectados al CRM | SaaS "Service as Software" | Oculto | 🟢 Alta (WhatsApp API partner) | Posicionamiento fuerte: **"contrata un empleado IA"** (agentes con nombre: Alba, Bruno, Eva) |
+| **Vambe** (vambe.ai) | Plataforma IA comercial omnicanal (ventas+mkt+postventa) para LatAm | SaaS | Oculto | 🟡 Media | **Garantía real:** "si no subimos tus ventas en 2 meses, devolvemos el 100%" + "con tu propio tono" |
 
 ### Patrón común (lo que TODOS hacen)
 - Canal: **WhatsApp / llamada** como canal de ventas.
@@ -25,6 +27,10 @@
 - Precio: casi siempre **oculto** (se los dicen en la llamada).
 
 > Conclusión: el canal (WhatsApp+IA) está **validado pero saturado** de herramientas genéricas. Competir como "otro CRM/agencia genérica" = cuesta arriba.
+
+### Dos lecciones de copy que SÍ robamos
+1. **Posicionamiento "empleado IA" (Darwin):** vender el agente como *"contrata a tu vendedor que trabaja 24/7"* conecta mejor que "software". Darle nombre/rol humaniza.
+2. **Garantía fuerte (Vambe):** *"si no subimos tus ventas en 2 meses, te devolvemos el 100%"* = risk-reversal real. La mayoría la esconde; ponerla **por escrito** es diferenciador. (Para nosotros: usar una garantía **cumplible** — ej. "muestra gratis" o "primeras X reuniones o no cobras", no promesas que no controlamos — R3.)
 
 ---
 
