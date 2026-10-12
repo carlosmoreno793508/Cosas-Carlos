@@ -1,0 +1,288 @@
+{
+  "meta": {
+    "fecha_investigacion": "2026-10-08",
+    "alcance": "Comercio exterior público (páginas gratuitas) de 13 empresas de confección/serigrafía en Centroamérica; evidencia de compra de tintas/insumos de impresión.",
+    "fuentes_consultadas": ["ImportInfo (B/L EE.UU., vista pública)", "Panjiva (vista pública, campos enmascarados)", "Open Supply Hub (vía render)", "sitios corporativos", "prensa (La Prensa HN, Just Style)", "WRC"],
+    "fuentes_sin_acceso": ["Seair (HTTP 403)", "Veritrade/Volza/52wmb/Trademo (sin páginas públicas útiles indexadas para estas razones sociales)", "ImportYeti (sin resultados indexados)", "API Open Supply Hub (requiere token)"],
+    "nota_metodologica": "Los datos de ImportInfo/Panjiva/ImportYeti son importaciones marítimas a EE.UU. (B/L); reflejan EXPORTACIONES de estas plantas hacia EE.UU., no sus importaciones de insumos en origen. Las importaciones de tintas en HN/SV/GT/NI (HS 3215, 3204, 3910, etc.) solo aparecerían en bases de aduana local (Veritrade/Volza, de pago). En ninguna fuente pública gratuita se encontró una partida de tinta con proveedor/marca/valor para estas empresas.",
+    "creditos_firecrawl": "Cuenta Firecrawl con créditos bajos; se usó WebSearch/WebFetch como respaldo."
+  },
+  "empresas": [
+    {
+      "id": 1,
+      "empresa": "Gildan Activewear – planta de serigrafía Green Valley",
+      "pais": "Honduras", "ciudad": "Naco, Quimistán, Santa Bárbara",
+      "razon_social_id_fiscal": "Entidad legal específica de la planta: no encontrado. Entidad hondureña relacionada: GILDAN ACTIVEWEAR HONDURAS TEXTILE (RTN 05019002067947 según ImportInfo, Choloma); Gildan Honduras Properties S. de R.L. (Choloma).",
+      "regimen": "Parque Industrial Green Valley (privado, Grupo Karim's) – estatus ZOLI de la planta específica: no confirmado.",
+      "matriz_embarcador_eeuu": "Gildan Activewear Inc. (Canadá). Gildan confirma: 'one screenprinting facility, where we print designs on our blank apparel' en Parque Industrial Green Valley, Km 23-24 Carretera a Occidente, Naco, Quimistán.",
+      "exportaciones": [
+        "Gildan Activewear Honduras Textile (ImportInfo): 2,942 B/L, 3-nov-2012 a 27-may-2026; 66 en el último año; consignatario Gildan Activewear Dom Rep Textile; muestras recientes = máquinas circulares de tejer y repuestos (HTS 8447.11), no prendas.",
+        "Gildan Honduras Properties S de RL (Panjiva): 3,818 embarques; top HS 84, 29, 32, 39, 38; productos 'colorants, chemicals'; B/L 17-ago-2025 HTS 3204.12 (colorantes) 18,254 kg hacia Gildan Activewear Dominican vía Miami."
+      ],
+      "importaciones_insumos_impresion": "no encontrado (no hay registro público de HS 3215 para la planta de serigrafía). Hecho relacionado: Gildan Honduras Properties re-embarca colorantes HS 3204.12 (tintes de teñido, no tinta de serigrafía) a R. Dominicana.",
+      "importaciones_equipo": "no encontrado para serigrafía (solo maquinaria de tejido HS 8447 en la entidad textil).",
+      "marcas_tinta": "no encontrado",
+      "gasto_anual_tinta_estimado": "sin dato",
+      "inferencias": "Inferencia (baja): Gildan adquirió Anvil (2012), que operaba en Green Valley, y New Buffalo Shirt Factory (2015, con afiliada en Honduras); la planta podría provenir de esos activos. La compra de tintas probablemente está centralizada corporativamente (no visible en datos públicos).",
+      "fuentes": [
+        "https://gildancorp.com/en/careers/discover-where-we-work/honduras-operations/",
+        "https://www.importinfo.com/gildan-activewear-honduras-textile",
+        "https://panjiva.com/Gildan-Honduras-Properties-S-De-Rl/36847323",
+        "https://www.printandpromomarketing.com/article/gildan-activewear-announces-agreement-acquire-new-buffalo-shirt-factory/",
+        "https://karimsindustrialpark.com/contact-us/"
+      ],
+      "confianza": "media (ubicación/actividad alta; comercio de la planta específica baja)"
+    },
+    {
+      "id": 2,
+      "empresa": "Hanes Ink Honduras, S.A. de C.V. (Hanesbrands)",
+      "pais": "Honduras", "ciudad": "Choloma, Cortés",
+      "razon_social_id_fiscal": "Hanes Ink Honduras, S.A. de C.V. (listada como subsidiaria en anexo 21 de Hanesbrands ante SEC). RTN: no encontrado.",
+      "regimen": "Zona Libre INHDELVA, carretera a La Jutosa (ZOLI).",
+      "matriz_embarcador_eeuu": "Hanesbrands Inc., Winston-Salem NC; agente/notify Customs and Trade Services Inc. (Miami Lakes, FL).",
+      "exportaciones": [
+        "ImportInfo: 1,491 B/L, 21-oct-2012 a 14-mar-2024; 0 en el último año. Camisetas hombre/niño, sudaderas; consignatarios visibles Customs and Trade Services Inc., GFSI Inc.; puerto origen Puerto Cortés; destinos Miami (1,183), Port Everglades (180), Houston (126).",
+        "Panjiva: 1,389 embarques; último 14-mar-2024 (HTS 6107.11, 910 cartones, 9,238 kg, Houston)."
+      ],
+      "importaciones_insumos_impresion": "no encontrado",
+      "importaciones_equipo": "no encontrado",
+      "marcas_tinta": "no encontrado",
+      "gasto_anual_tinta_estimado": "sin dato",
+      "alerta": "CERRADA: La Prensa (1-oct-2024) reporta cierre de Hanes Choloma y Hanes Ink a finales de diciembre 2024 (~2,400 empleos, tras venta de Champion). Coincide con último embarque mar-2024. Prospecto probablemente no vigente; verificar si activos fueron vendidos.",
+      "fuentes": [
+        "https://www.importinfo.com/hanes-ink-honduras-sa-de-cv",
+        "https://panjiva.com/Hanes-Ink-Honduras-SA-De-Cv/10360534",
+        "https://www.laprensa.hn/economia/hanes-brands-anuncia-cierre-tres-plantas-zona-norte-honduras-CN21863155",
+        "https://www.sec.gov/Archives/edgar/data/1359841/000119312513041391/d455500dex211.htm"
+      ],
+      "confianza": "alta (comercio y cierre)"
+    },
+    {
+      "id": 3,
+      "empresa": "Southern Apparel Contractors, S.A. (Tegra)",
+      "pais": "Honduras", "ciudad": "San Pedro Sula, Cortés",
+      "razon_social_id_fiscal": "Southern Apparel Contractors, S.A. RTN: no encontrado.",
+      "regimen": "ZOLI (dirección embarcador 'Zoli Inhdelva, SPS El Guanal, 33 Calle S.E.'); OSH: Zip Calpules, Carretera a La Lima Km 7.",
+      "matriz_embarcador_eeuu": "Tegra (Atlanta); Tegra fue objeto de acuerdo de adquisición por Sae-A Trading.",
+      "exportaciones": [
+        "ImportInfo: 1,125 B/L, 29-nov-2012 a 1-oct-2026; 116 en el último año; asociados: Adidas International Trading AG, Fanatics, Adidas Canada/America, Nike (varias); destino principal Port Everglades (907).",
+        "Panjiva (perfil 4914031): 854 embarques; top HS 61, 62, 39; cliente visible Adidas International Trading AG; 51 clientes totales.",
+        "OSH: 1,438 trabajadores; proceso 'Final Product Assembly'; fuentes Nike, Unrivaled Teamwear, WRC."
+      ],
+      "importaciones_insumos_impresion": "no encontrado",
+      "importaciones_equipo": "no encontrado",
+      "marcas_tinta": "no encontrado",
+      "gasto_anual_tinta_estimado": "sin dato",
+      "inferencias": "OSH no reporta 'printing' para esta planta; la decoración de Tegra en Centroamérica parece concentrarse en Decotex (inferencia).",
+      "fuentes": [
+        "https://www.importinfo.com/southern-apparel-contractors",
+        "https://panjiva.com/Southern-Apparel-Contractors/4914031",
+        "https://opensupplyhub.org/facilities/HN20210771AFNSH",
+        "https://www.workersrights.org/our-work/factory-investigations/southern-apparel-contractors-tegra-global/",
+        "https://www.sae-a.com/sae-a-trading-announces-definitive-agreement-to-acquire-tegra?lang=en"
+      ],
+      "confianza": "alta (exportaciones); insumos sin dato"
+    },
+    {
+      "id": 4,
+      "empresa": "Pinehurst Manufacturing",
+      "pais": "Honduras", "ciudad": "San Pedro Sula, Cortés",
+      "razon_social_id_fiscal": "Pinehurst Manufacturing Inc / Pinehurst de Honduras (variantes en B/L). RTN: no encontrado.",
+      "regimen": "ZOLI St. Andrews, Col. Agua Prieta, Sector Rivera Hernández.",
+      "matriz_embarcador_eeuu": "Pinehurst Manufacturing Inc, 1135 Chattahoochee Ave NW, Atlanta GA 30318; notify Customized Brokers (Miami).",
+      "exportaciones": [
+        "ImportInfo: 2,086 B/L, 20-oct-2012 a 20-sep-2026; 89 en el último año; consignatarios principalmente entidades Adidas (International Trading AG, America, Latin America, Canada, Colombia, Brasil, Argentina); también Luxottica, Peter Millar; HS 6109.10, 6104.42.",
+        "Panjiva: 1,345 embarques; top HS 61, 85, 84, 62, 38; 70 clientes; muestra 3-oct-2025 HTS 6110.20, 13,260 kg, Puerto Cortés→Gulfport."
+      ],
+      "importaciones_insumos_impresion": "no encontrado (Panjiva lista HS 38 y 84 entre top códigos del perfil, sin detalle visible; no se puede afirmar que sean tintas).",
+      "importaciones_equipo": "no encontrado (HS 84/85 aparecen en perfil Panjiva sin detalle).",
+      "marcas_tinta": "no encontrado",
+      "gasto_anual_tinta_estimado": "sin dato",
+      "inferencias": "Genesis Capital describe sublimación y 'full range of decoration' (incluiría serigrafía; no confirmado).",
+      "fuentes": [
+        "https://www.importinfo.com/pinehurst-manufacturing-inc",
+        "https://panjiva.com/Pinehurst-Mfg/33417570",
+        "https://pinehurstmfg.com/",
+        "https://genesis-capital.com/genesis-capital-advises-pinehurst-manufacturing-on-its-recapitalization/"
+      ],
+      "confianza": "alta (exportaciones); insumos sin dato"
+    },
+    {
+      "id": 5,
+      "empresa": "DecoTex International Ltda. de C.V. (Tegra)",
+      "pais": "El Salvador", "ciudad": "Ciudad Arce, La Libertad",
+      "razon_social_id_fiscal": "Decotex International Ltda. de C.V. NIT: no encontrado.",
+      "regimen": "Zona Franca American Park, Km 36 Carretera a Santa Ana.",
+      "matriz_embarcador_eeuu": "Tegra (Atlanta); ArtFX LLC (filial Tegra) como consignatario.",
+      "exportaciones": [
+        "ImportInfo: 3,847 B/L, 20-oct-2012 a 28-sep-2026; 149 en el último año (45 en 90 días); consignatarios ArtFX LLC, Nike Canada, Wilson Sporting Goods; asociados Nike USA, Fanatics, Carhartt; camisetas 100% algodón, jerseys réplica; origen principal Santo Tomás (GT) 3,558; destino Port Everglades 3,380.",
+        "Just Style/prensa: planta ampliada a ~250,000 ft²; >2,000 trabajadores (2019); clientes Nike, Outerstuff, HanesBrands."
+      ],
+      "importaciones_insumos_impresion": "no encontrado",
+      "importaciones_equipo": "no encontrado",
+      "marcas_tinta": "no encontrado",
+      "gasto_anual_tinta_estimado": "sin dato",
+      "inferencias": "El nombre 'Deco' y el rol de ArtFX (decoración Tegra en EE.UU.) sugieren capacidad de decoración; no confirmado en fuente pública accesible (decotexintl.com devolvió 503).",
+      "fuentes": [
+        "https://www.importinfo.com/decotex-international-ltda-de-c-v",
+        "https://www.just-style.com/features/tegra-ramps-up-central-america-supply-chain-strategy/",
+        "https://www.sae-a.com/sae-a-trading-announces-definitive-agreement-to-acquire-tegra?lang=en"
+      ],
+      "confianza": "alta (exportaciones); insumos sin dato"
+    },
+    {
+      "id": 6,
+      "empresa": "Cygnus Investments, S.A. de C.V.",
+      "pais": "El Salvador", "ciudad": "Olocuilta, La Paz",
+      "razon_social_id_fiscal": "Cygnus Investments, S.A. de C.V. NIT: no encontrado.",
+      "regimen": "Zona Franca Miramar, Km 30.5 Carretera a Comalapa, Edificio/Nave #2.",
+      "matriz_embarcador_eeuu": "Cygnus Investments LLC (consignatario en B/L).",
+      "exportaciones": [
+        "ImportInfo: 377 B/L, 26-may-2022 a 24-sep-2026; 156 en el último año; consignatarios Fanatics LLC (Jacksonville), Cygnus Investments LLC, Adidas International Trading AG; jerseys poliéster, camisetas algodón HTS 6109.10; origen Santo Tomás 250.",
+        "OSH (planta M-2): 205 trabajadores; procesos Embellishment, Sewing, Final Product Assembly; fuentes Gildan, adidas, Nike, SLCP (verificado 25-abr-2025)."
+      ],
+      "importaciones_insumos_impresion": "no encontrado",
+      "importaciones_equipo": "Indicio: ImportInfo lista 'M and R Printing Equipment Inc' como compañía asociada (1 asociación). No es prueba de compra ni indica modelo/valor.",
+      "marcas_tinta": "no encontrado",
+      "gasto_anual_tinta_estimado": "sin dato",
+      "fuentes": [
+        "https://www.importinfo.com/cygnus-investments-sa-de-cv",
+        "https://opensupplyhub.org/facilities/SV2023198S5EC1V"
+      ],
+      "confianza": "media-alta (exportaciones y embellishment); equipo M&R baja"
+    },
+    {
+      "id": 7,
+      "empresa": "Techno Screen, S.A. de C.V.",
+      "pais": "El Salvador", "ciudad": "Antiguo Cuscatlán (Facebook indica La Libertad)",
+      "razon_social_id_fiscal": "Techno Screen, S.A. de C.V. NIT: no encontrado.",
+      "regimen": "no encontrado (proveedor B2B de decoración para maquilas; WRAP plantas 1 y 3).",
+      "matriz_embarcador_eeuu": "no encontrado",
+      "exportaciones": ["no encontrado en B/L públicos (sin perfil ImportInfo/Panjiva localizado)."],
+      "importaciones_insumos_impresion": "no encontrado",
+      "importaciones_equipo": "no encontrado",
+      "marcas_tinta": "no encontrado (sitio solo menciona 'tintas ecológicas').",
+      "datos_operativos": "Desde jul-1997; >500–600 empleados; 26 máquinas automáticas de serigrafía; 3 plantas; servicios: serigrafía industrial, 'Hybrid Screen Printing', sublimación, heat transfer, impresión digital, rhinestone, lentejuela, embossing, corte láser; robot y máquina automática de tinta; OEKO-TEX Standard 100, WRAP.",
+      "gasto_anual_tinta_estimado": "sin dato",
+      "inferencias": "Alta afinidad con propuesta de máquinas híbridas (ya ofrece 'Hybrid Screen Printing').",
+      "fuentes": [
+        "https://www.techno-screen.com/sobre-nosotros",
+        "https://www.facebook.com/TechnoScreenSAdeCV/",
+        "https://sv.linkedin.com/company/techno-screen"
+      ],
+      "confianza": "alta (perfil operativo); comercio exterior sin dato"
+    },
+    {
+      "id": 8,
+      "empresa": "Apple Tree El Salvador, S.A. de C.V.",
+      "pais": "El Salvador", "ciudad": "San Marcos, San Salvador",
+      "razon_social_id_fiscal": "Apple Tree El Salvador, S.A. de C.V. NIT: no encontrado.",
+      "regimen": "Zona F, Km 4½ Carretera a Comalapa, San Marcos (dirección de embarcador; régimen zona franca probable, no confirmado).",
+      "matriz_embarcador_eeuu": "no encontrado",
+      "exportaciones": [
+        "ImportInfo: 2,526 B/L, 22-oct-2012 a 1-oct-2026; 234 en el último año (65 en 90 días); consignatarios The North Face (VF), Chapter 4 Corp, Academy Sports & Outdoors; asociados Moshay, Dickies, Vans; HS 6109.10, 6110.20, 6103.42; destinos LA 698, Miami 619, Long Beach 356."
+      ],
+      "importaciones_insumos_impresion": "no encontrado",
+      "importaciones_equipo": "no encontrado",
+      "marcas_tinta": "no encontrado",
+      "gasto_anual_tinta_estimado": "sin dato",
+      "fuentes": ["https://www.importinfo.com/apple-tree-el-salvador-sa-de-cv"],
+      "confianza": "alta (exportaciones); actividad de serigrafía no confirmada"
+    },
+    {
+      "id": 9,
+      "empresa": "OA, S.A. de C.V.",
+      "pais": "El Salvador", "ciudad": "Olocuilta, La Paz",
+      "razon_social_id_fiscal": "no confirmado. Posible coincidencia (aggregator): 'Oa De', Zona Franca Internacional, Edificio 2, Km 28½ Carretera a Comalapa, Olocuilta; tejidos de punto/private label, 21–50 empleados, fundada 2012.",
+      "regimen": "Probable Zona Franca Internacional (no confirmado).",
+      "matriz_embarcador_eeuu": "no encontrado",
+      "exportaciones": ["no encontrado (ImportInfo 'O.A.S.A.' corresponde a empresa italiana, descartada). Posible entidad vecina Olocuilta Apparel S.A. de C.V. (Panjiva: Takedown Sportswear, Free Fly Apparel) – relación no confirmada."],
+      "importaciones_insumos_impresion": "no encontrado",
+      "importaciones_equipo": "no encontrado",
+      "marcas_tinta": "no encontrado",
+      "gasto_anual_tinta_estimado": "sin dato",
+      "fuentes": ["https://es.panjiva.com/Olocuilta-Apparel-S-A-De-C-V/34629258"],
+      "confianza": "baja (identidad no verificada)"
+    },
+    {
+      "id": 10,
+      "empresa": "Industrias Intradeco",
+      "pais": "El Salvador", "ciudad": "Soyapango",
+      "razon_social_id_fiscal": "no encontrado (grupo Intradeco Holdings / Intradeco Apparel).",
+      "regimen": "no encontrado",
+      "matriz_embarcador_eeuu": "Intradeco Holdings (Miami); Intradeco Logistics LLC como notify en B/L con lugar de recepción Soyapango.",
+      "exportaciones": ["Perfiles Panjiva de Intradeco Apparel existen (cn.panjiva.com/Intradeco-Apparel/2029396) sin detalle accesible; cifras no obtenidas."],
+      "importaciones_insumos_impresion": "no encontrado",
+      "importaciones_equipo": "Prensa: inversión >US$100M en CA; planta de hilo reciclado en El Salvador; JV con Recover (US$14M, 12,500 t/año de fibra reciclada a fines de 2026). Sin relación con serigrafía.",
+      "marcas_tinta": "no encontrado",
+      "gasto_anual_tinta_estimado": "sin dato",
+      "fuentes": [
+        "https://fashionunited.com/news/business/recover-partners-with-us-based-intradeco-to-build-a-recycled-fibre-plant-in-el-salvador/2025051566040",
+        "https://www.textileexcellence.com/single-news/5870/intradeco-holdings-invests-over-100-million-in-central-america",
+        "https://diario.elmundo.sv/economia/intradeco-holdings-invierte-mas-de-15-millones-en-paneles-solares-y-campus-deportivo"
+      ],
+      "confianza": "baja (planta de Soyapango y serigrafía no confirmadas)"
+    },
+    {
+      "id": 11,
+      "empresa": "ACSA Colors Printing, S.A.",
+      "pais": "Guatemala", "ciudad": "Mixco",
+      "razon_social_id_fiscal": "ACSA Colors Printing, S.A. (reclamó en OSH el perfil 'Acssa – Accesorios Costura y Serigrafía, S.A.' el 17-abr-2024). NIT: no encontrado.",
+      "regimen": "no encontrado (bodegas A8A/A8B, Condominio Mixco Norte, Km 16.5 Carretera a San Juan Sacatepéquez).",
+      "matriz_embarcador_eeuu": "no encontrado; directivos Tony Kim (CEO), Cindy Lee (GM) – gestión coreana.",
+      "exportaciones": ["no encontrado en B/L públicos (es subcontratista de decoración para maquilas)."],
+      "importaciones_insumos_impresion": "no encontrado",
+      "importaciones_equipo": "no encontrado",
+      "marcas_tinta": "no encontrado. Tipos de tinta declarados: plastisol, base agua, UV, rubber, reflectiva, metálica, glow, silk oil foil; técnicas discharge, HD, puff, flock, foil, CMYK. Silicona no mencionada.",
+      "datos_operativos": "Capacidad declarada 2 millones de piezas/mes; >1,000 muestras/mes; 24 h; marcas en logos: Gap, Old Navy, Disney, Vans, Puma, Timberland, Nautica, The North Face, Polo, Walmart, Aeropostale, Lee, Kontoor, Lucky (según nombres de archivo de logos).",
+      "gasto_anual_tinta_estimado": "sin dato (la capacidad de 2M piezas/mes no es suficiente para derivar gasto sin consumo/precio por pieza declarados).",
+      "fuentes": [
+        "https://www.acsa-guatemala.com/",
+        "https://opensupplyhub.org/facilities/GT2019269JBMQSS",
+        "https://opensupplyhub.org/facilities/GT2023215YR6H6X"
+      ],
+      "confianza": "alta (perfil operativo); comercio exterior sin dato"
+    },
+    {
+      "id": 12,
+      "empresa": "Romatextil",
+      "pais": "Guatemala", "ciudad": "Ciudad de Guatemala (21 Calle 0-53, Zona 3)",
+      "razon_social_id_fiscal": "no encontrado",
+      "regimen": "no encontrado (empresa familiar desde 1985; mercado local/CA de uniformes y promocionales).",
+      "matriz_embarcador_eeuu": "no aplica / no encontrado",
+      "exportaciones": ["no encontrado en B/L públicos; el sitio menciona programas para Guatemala y Centroamérica."],
+      "importaciones_insumos_impresion": "no encontrado",
+      "importaciones_equipo": "no encontrado",
+      "marcas_tinta": "no encontrado",
+      "datos_operativos": "Corte y confección, bordado y serigrafía; uniformes, workwear reflectivo, polos, camisetas, gorras, toallas.",
+      "gasto_anual_tinta_estimado": "sin dato",
+      "fuentes": ["https://www.romatextil.com.gt/en/about/", "https://www.romatextil.com.gt/en/"],
+      "confianza": "media (perfil); comercio exterior sin dato"
+    },
+    {
+      "id": 13,
+      "empresa": "JJ Serigrafía, S.A. (grupo Hansae)",
+      "pais": "Nicaragua", "ciudad": "Managua",
+      "razon_social_id_fiscal": "JJ Serigrafia, S.A. RUC: no encontrado.",
+      "regimen": "Zona Franca Las Mercedes, Módulo 27B, Km 12.5 Carretera Norte (régimen de zona franca).",
+      "matriz_embarcador_eeuu": "Hansae Co. Ltd. (Corea) según OSH.",
+      "exportaciones": ["no encontrado en B/L públicos (probable servicio de decoración a plantas Hansae locales; inferencia). OSH: fuentes Gap Inc., Fanatics, WRC, SLCP (verificación 27-nov-2025); 0–1,000 trabajadores; procesos Printing, Product Dyeing and Laundering."],
+      "importaciones_insumos_impresion": "no encontrado",
+      "importaciones_equipo": "no encontrado (video de inauguración menciona 'tecnología de punta' en serigrafía textil, sin marcas).",
+      "marcas_tinta": "no encontrado",
+      "gasto_anual_tinta_estimado": "sin dato",
+      "fuentes": [
+        "https://opensupplyhub.org/facilities/NI2020030PGJJGR",
+        "https://www.youtube.com/watch?v=xGUl-WXLgm4"
+      ],
+      "confianza": "media-alta (identidad/procesos); comercio sin dato"
+    }
+  ],
+  "advertencias_clave": [
+    "Ninguna fuente pública gratuita mostró importaciones de tintas (HS 3215), pigmentos (3204/3206), siliconas (3910), ligantes (3906/3907), emulsiones (3707) o mallas (5911/7314) con proveedor, marca, volumen o valor para ninguna de las 13 empresas.",
+    "Los conteos de B/L corresponden a exportaciones hacia EE.UU.; no miden compras de insumos.",
+    "Hanes Ink Honduras cerró (anuncio oct-2024, cierre dic-2024).",
+    "Identidad no verificada para OA, S.A. de C.V. e Industrias Intradeco (Soyapango).",
+    "Gasto anual en tinta: sin dato para todas; no se derivó por falta de cifras declaradas."
+  ]
+}
