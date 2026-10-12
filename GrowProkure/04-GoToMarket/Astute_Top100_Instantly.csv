@@ -1,0 +1,67 @@
+email,first_name,last_name,company_name,estado,pais,arquetipo,angulo,idioma_copy
+cgonzalez@parpro.com,Cynthia,Verenice Gonzalez Franco,Parpro,Baja California,MX,EMS,shortage / alt sourcing / EOL,ES
+adrianaelizabeth.rivera@aernnova.com,Adriana,Perrusquia Rivera,Aernnova,Queretaro,MX,Aero/Defensa,obsolescence / hard-to-find / trazabilidad,EN
+carina.lavacca@bosch.com,Carina,Lavacca,Bosch,Guanajuato,MX,Auto Tier-1,allocation / EOL / cost-down,ES
+elizabeth.leon@melecs.com,Elizabeth,Leon,Melecs,Queretaro,MX,EMS,shortage / alt sourcing / EOL,ES
+rortega@siix.co.jp,Roman,Ortega,SIIX EMS Mexico,San Luis Potosi,MX,EMS,shortage / alt sourcing / EOL,ES
+roy.prieser@kratosdefense.com,Roy,Prieser,Kratos Defense & Security,CA,US,Aero/Defensa,obsolescence / hard-to-find / trazabilidad,EN
+carlos.ugalde@abbott.com,Carlos,Ugalde,Abbott,Queretaro,MX,Medico,obsolescencia / EOL,ES
+asmith@heico.com,Smith,Alice,HEICO Corporation,FL,US,Aero/Defensa,obsolescence / hard-to-find / trazabilidad,EN
+thanh.dang@virtium.com,Thanh,Dang,Virtium,CA,US,Industrial,hard-to-find / cost / alt sourcing,ES
+o.campos@kostal.com,Omar,Campos,KOSTAL Electro-Mobility,Queretaro,MX,Auto Tier-1,allocation / EOL / cost-down,ES
+javier.pinon@aptiv.com,Javier,Pinon,Aptiv,Tamaulipas,MX,Auto Tier-1,allocation / EOL / cost-down,ES
+diego.murillo@leoni.com,Diego,Murillo,Leoni Mexico,Yucatan,MX,Auto Tier-1,allocation / EOL / cost-down,ES
+oscar.gonzalez@erich-jaeger.com,Oscar,Gonzalez,Erich Jaeger,Coahuila,MX,Auto Tier-1,allocation / EOL / cost-down,ES
+mjulien@blueorigin.com,Michael,Julien,Blue Origin,WA,US,Aero/Defensa,obsolescence / hard-to-find / trazabilidad,EN
+christine.wojak@boeing.com,Christine,Wojak,"Boeing Defense, Space & Security",VA,US,Aero/Defensa,obsolescence / hard-to-find / trazabilidad,EN
+ricardo.moreno-robles@exfo.com,Ricardo,Robles,EXFO Products,Queretaro,MX,Industrial,hard-to-find / cost / alt sourcing,ES
+drivera@keytronic.com,Daniel,Rivera,Key Tronic,Chihuahua,MX,EMS,shortage / alt sourcing / EOL,ES
+norma@fujikura.com,Norma,Perez,Fujikura Automotive Mexico,Coahuila,MX,Auto Tier-1,allocation / EOL / cost-down,ES
+parent@kimchuk.com,Pam,Arent,Kimchuk Inc.,CT,US,EMS,shortage / alt sourcing / EOL,ES
+jeffrey.bill@rtx.com,Jeffrey,Bill,Raytheon (RTX),MA,US,Aero/Defensa,obsolescence / hard-to-find / trazabilidad,EN
+jesus.navarro@bitron.com,Jesus,Omar Navarro Avila,Bitron de Mexico,Queretaro,MX,Auto Tier-1,allocation / EOL / cost-down,ES
+santiago.moya@egoproducts.com,Santiago,Moya,E.G.O. Componentes Electronicos (Elektro-Geratebau),Guanajuato,MX,Industrial,hard-to-find / cost / alt sourcing,ES
+takayuki.tsuguri@taxan-swe.com,Takayuki,Tsuguri,TAXAN-SWE Mexico,San Luis Potosi,MX,EMS,shortage / alt sourcing / EOL,ES
+alondra.soria@magna.com,Alondra,Soria,Magna Exteriors (Queretaro),Queretaro,MX,Aero/Defensa,obsolescence / hard-to-find / trazabilidad,EN
+sharen.chin@wdc.com,Sharen,Chin,Western Digital,CA,US,Industrial,hard-to-find / cost / alt sourcing,ES
+racquel.tobias@lgmagna.com,Racquel,Jacqueline Tobias,LG Magna e-Powertrain,Coahuila,MX,Auto Tier-1,allocation / EOL / cost-down,ES
+gustavo.garcia@yazaki-na.com,Gustavo,Luis Garcia Contreras,Yazaki (Saltillo),Coahuila,MX,Auto Tier-1,allocation / EOL / cost-down,ES
+adaljisa.rodriguez@daikinapplied.com,Adaljisa,Rodriguez,Daikin,San Luis Potosi,MX,Industrial,hard-to-find / cost / alt sourcing,ES
+swang@delkin.com,Sabrina,Wang,Delkin Devices,CA,US,Industrial,hard-to-find / cost / alt sourcing,ES
+ksalazar@hisense.com,Karina,Salazar,Hisense,Baja California,MX,Industrial,hard-to-find / cost / alt sourcing,ES
+francisco.miranda@kyungshin.co.kr,Francisco,Miranda Bernal,Kyungshin Mexico Obregon,Sonora,MX,Auto Tier-1,allocation / EOL / cost-down,ES
+dboyer@distron.com,Debra,Boyer,Distron,FL,US,EMS,shortage / alt sourcing / EOL,ES
+kaye.becher@vishay.com,Kaye,Becher,Vishay Intertechnology,PA,US,Industrial,hard-to-find / cost / alt sourcing,ES
+robert.shaw@viasat.com,Bob,Shaw,Viasat,CA,US,Industrial,hard-to-find / cost / alt sourcing,ES
+iahluwalia@netlist.com,Ish,Ahluwalia,Netlist,CA,US,Industrial,hard-to-find / cost / alt sourcing,ES
+ezequiel.leandrogarcia@mirgor.com,Ezequiel,Leandro Garcia,Mirgor,,AR,Auto Tier-1,allocation / EOL / cost-down,ES
+manuel.cortes@grammer.com,Juan,Manuel Cortes Limon,GRAMMER Americas,Queretaro,MX,Auto Tier-1,allocation / EOL / cost-down,ES
+mgarfio@lexmark.com,Martin,Garfio Tarin,Lexmark,Chihuahua,MX,Industrial,hard-to-find / cost / alt sourcing,ES
+jgutierrez2@littelfuse.com,Jose,Luis Gutierrez,Littelfuse (Piedras Negras),Coahuila,MX,Industrial,hard-to-find / cost / alt sourcing,ES
+guillermo.martinez@valeo.com,Guillermo,Martinez,Valeo Sistemas,San Luis Potosi,MX,Auto Tier-1,allocation / EOL / cost-down,ES
+odille_concha@wistron.com,Odil,R. Concha Delgado,Wistron NeWeb (WNC),Chihuahua,MX,EMS,shortage / alt sourcing / EOL,ES
+marco.castaneda@mabe.com.mx,Marco,Antonio Castaneda Garcia,MPT Electronica,Queretaro,MX,EMS,shortage / alt sourcing / EOL,ES
+thomas.sheridan@bosch.com,Thomas,Sheridan,Robert Bosch (Mobility),MI,US,Auto Tier-1,allocation / EOL / cost-down,ES
+jennifer.deegan@subzero.com,Jenny,Deegan,Sub-Zero Group,WI,US,Industrial,hard-to-find / cost / alt sourcing,ES
+contacto@pcbrapido.com,(planta),,PCBRAPIDO,Queretaro,MX,EMS,shortage / alt sourcing / EOL,ES
+vitec.electronica@gmail.com,(planta),,VITEC Electronica,Queretaro,MX,EMS,shortage / alt sourcing / EOL,ES
+rgarrido@sistemaselectronicosmty.com,Rodrigo,Garrido,Sistemas Electronicos Monterrey,Nuevo Leon,MX,EMS,shortage / alt sourcing / EOL,ES
+karla.ramirez@seiru.mx,Karla,Ramirez,Seiru,CDMX,MX,EMS,shortage / alt sourcing / EOL,ES
+juan.arvizu@rompagroup.com,Juan,Arvizu,Rompa Group,Queretaro,MX,EMS,shortage / alt sourcing / EOL,ES
+brian.lockhart@circuitcheck.com,Brian,Lockhart,Circuit Check,MN,US,EMS,shortage / alt sourcing / EOL,ES
+tiffany.liao@corsair.com,Tiffany,Liao,Corsair Gaming,CA,US,Industrial,hard-to-find / cost / alt sourcing,ES
+bbarker@aosmith.com,Brad,Barker,A. O. Smith,WI,US,Industrial,hard-to-find / cost / alt sourcing,ES
+antoniohernandez@kemet.com,Antonio,Hernandez,KEMET (Yageo),Tamaulipas,MX,Industrial,hard-to-find / cost / alt sourcing,ES
+caltamirano@cirexx.com,Christine,Altamirano,Cirexx International,CA,US,Industrial,hard-to-find / cost / alt sourcing,ES
+grace.baker@patriotmemory.com,Grace,Baker,Patriot Memory,CA,US,Industrial,hard-to-find / cost / alt sourcing,ES
+guillermo.cadirola@newsan.com.ar,Guillermo,Cadirola,Newsan,,AR,EMS,shortage / alt sourcing / EOL,ES
+clozano@lodan.com,Carlos,Lozano,LODANMEX,Puebla,MX,EMS,shortage / alt sourcing / EOL,ES
+seger@prodigy.net.mx,(planta),,COMSEGER,CDMX,MX,EMS,shortage / alt sourcing / EOL,ES
+ventas@mainco.com.mx,(planta),,MAINCO,Coahuila,MX,EMS,shortage / alt sourcing / EOL,ES
+contacto@intesc.mx,(planta),,INTESC Electronica y Embebidos,Puebla,MX,EMS,shortage / alt sourcing / EOL,ES
+ricardoh@positivo.com.br,Ricardo,Haiduk,Positivo Tecnologia,,BR,Industrial,hard-to-find / cost / alt sourcing,ES
+cristiane.walter@digitel.com.br,Walter,Cristiane,Digitel,,BR,Industrial,hard-to-find / cost / alt sourcing,ES
+ywtsengo@tsmc.com,Jeff,Tseng,TSMC Arizona,AZ,US,Industrial,hard-to-find / cost / alt sourcing,ES
+kevin.besecker@qorvo.com,Kevin,Besecker,Qorvo,NC,US,Industrial,hard-to-find / cost / alt sourcing,ES
+thomas.smyth@analog.com,Thomas,Smyth,Analog Devices,MA,US,Industrial,hard-to-find / cost / alt sourcing,ES
+jcastellanos@qualcomm.com,Juan,Castellanos,Qualcomm,CA,US,Industrial,hard-to-find / cost / alt sourcing,ES

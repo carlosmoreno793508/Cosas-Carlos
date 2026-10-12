@@ -1,0 +1,151 @@
+tanda,Clave,Nombre,zi_nombre,match_entidad,verificado,tipo_final,confianza_tipo,dominio,pais,estado,ciudad,empleados,zi_company_id,presencia_mx,estado_mx,Notas
+1,1009110,Baxter International Inc.,Baxter,OK,SI,OEM,Alta,baxter.com,United States,Illinois,Deerfield,37500,14946173,SI,CDMX | Nuevo Leon,
+1,1008762,General Motors,General Motors,OK,SI,OEM,Alta,gm.com,United States,Michigan,Detroit,156000,16220332,SI,,
+1,1001037,John Deere Electronic Solutions,Deere,OK,SI,OEM,Alta,deere.com,United States,Illinois,Moline,73100,10814149,SI,Coahuila de Zaragoza,in 2018 JDES aligned their independent suppliers
+1,1011817,Kearfott,Kearfott,OK,SI,OEM,Alta,kearfott.com,United States,New Jersey,Pine Brook,691,66571668,SI,TAMAULIPAS,OEM (Subsidiary of Astronautics) of guidance
+1,1008755,Kidde UTC,Kidde,OK,SI,OEM,Alta,kidde.com,United States,North Carolina,Mebane,400,21447231,SI,,
+1,1011974,Kidde-Deugra,KIDDE-DEUGRA Brandschutzsysteme,OK,SI,OEM,Alta,kidde-deugra.com,Germany,Nordrhein-Westfalen,Ratingen,21,452252589,SI,,
+1,1013032,Philips North America LLC,,,NO - ZoomInfo no devolvio la empresa para ese dominio,OEM,Alta,usa.philips.com,,,,,,SI,,Philips Healthcare (Precision Diagnosis)
+1,1011039,Thales Imperva,Imperva,OK,SI,OEM,Alta,imperva.com,United States,Texas,Austin,1300,25199709,SI,CDMX,
+1,1012141,Thales SIXT,Thales,OK,SI,OEM,Alta,thalesgroup.com,France,Ile-de-France,Meudon,78189,143048837,SI,CDMX,
+1,1012319,ZKW,ZKW,OK,SI,OEM,Alta,zkw-group.com,Austria,,Wieselburg,8823,369169793,SI,Guanajuato | Mexico City,
+1,1009654,A-E Electronics SA,A-E Electronics,OK,SI,EMS/CM,Alta,aee.ro,Romania,Bacau,Bacau,250,431557124,,,Subsidiary of Elbit Systems
+1,1009819,ADF Technologies Sdn Bhd,ADF Technologies,OK,SI,EMS/CM,Alta,adftech.com.my,Malaysia,Pulau Pinang,Bayan Lepas,66,429724561,,,BMS Building Management System / EMS Energy
+1,1011096,AEVEX Aerospace,AEVEX,OK,SI,OEM,Alta,aevex.com,United States,California,Solana Beach,650,79956106,,,
+1,1012846,APACER TECHNOLOGY INC.,Apacer,OK,SI,OEM,Alta,apacer.com,Taiwan,Taipei,New Taipei City,466,2376083,,,
+1,1007266,ASML,ASML,OK,SI,OEM,Alta,asml.com,Netherlands,North Brabant,Veldhoven,44000,2982389,,,
+1,1009280,ASS.EL. S.R.L.,Assel Elettronica,REVISAR - el nombre del CRM no coincide con la entidad del dominio,SI,EMS/CM,Alta,assel.it,Italy,Latium,Aprilia,40,1343077739,,,EMS
+1,1009682,Adam Hall GmbH,adam hall,OK,SI,EMS/CM,Alta,adamhall.com,Germany,Hessen,Neu-Anspach,274,351334195,,,cem's are based in China and Tschechien
+1,1005729,Advanced Circuits,,,NO - ZoomInfo no devolvio la empresa para ese dominio,EMS/CM,Alta,4pcb.com,,,,,,,,CM
+1,1009281,Alpha Elettronica S.r.l.,Alpha - Elettronica,OK,SI,OEM,Alta,alphaelettronica.com,Italy,Emilia-Romagna,Collecchio,19,8851298,,,OEM
+1,1012769,Alstom France,Alstom,OK,SI,OEM,Alta,alstom.com,France,Ile-de-France,Saint-Ouen,86039,2360474,,,
+1,1012813,Alstom Transport India Limited,Alstom,OK,SI,OEM,Alta,alstom.com,France,Ile-de-France,Saint-Ouen,86039,2360474,,,
+1,1009141,Applied Materials India Private Limited,Applied Materials,OK,SI,OEM,Alta,appliedmaterials.com,United States,California,Santa Clara,36400,4901834,,,
+1,1009286,Atex Industries s.r.l.,ATEX Industries,OK,SI,OEM,Alta,atexindustries.it,Italy,Friuli Venezia Giulia,San Vito al Tagliamento,66,372767873,,,OEM
+1,1012452,Atlas Copco Energas GmbH,,,NO - ZoomInfo no devolvio la empresa para ese dominio,OEM,Alta,atlascorp.com,,,,,,,,Working this accoun with Klaus
+1,1011646,"Axiomtek Co., Ltd",,,NO - ZoomInfo no devolvio la empresa para ese dominio,OEM,Alta,axiomtek.com,,,,,,,,
+1,1010183,BESTec-etp Freiburg GmbH,BESTec-etp Freiburg,OK,SI,EMS/CM,Alta,bestec-gmbh.de,Germany,Baden-Wuerttemberg,Freiburg,19,425114503,,,CEM for Northrop
+1,1009265,Becton Dickinson (BD),BD,OK,SI,OEM,Alta,bd.com,United States,New Jersey,Franklin Lakes,72000,4211217,,,
+1,1012074,"Broadcom, Inc",Broadcom,OK,SI,OEM,Alta,broadcom.com,United States,California,Palo Alto,33000,5619763,,,
+1,1009989,Brooks Instrument,Brooks Instrument,OK,SI,OEM,Alta,BrooksInstrument.com,United States,Pennsylvania,Hatfield,800,24252131,,,
+1,1009287,CBE S.r.l.,CBE,OK,SI,EMS/CM,Alta,cbe.it,Italy,Trentino-Alto Adige,Trento,93,461595928,,,EMS
+1,1008821,Cal-Comp Electronics,Cal-Comp Electronics Thailand,OK,SI,EMS/CM,Alta,calcomp.co.th,Thailand,Phra Nakhon Si Ayutthaya,Wattana,34035,15732454,,,
+1,1010648,CalAmp,CalAmp,OK,SI,OEM,Alta,calamp.com,United States,California,Carlsbad,644,6242627,,,
+1,1011936,Continental Aerospace Technologies GmbH,Continental Diesel,REVISAR - el nombre del CRM no coincide con la entidad del dominio,SI,OEM,Alta,continentaldiesel.com,United States,New York,Bronx,1,436504027,,,
+1,1011202,Crown Technical Systems,Crown Technical Systems,OK,SI,OEM,Alta,crowntechnicalsystems.com,United States,California,Fontana,613,348159810,,,
+1,1010665,Drager,Dräger,OK,SI,OEM,Alta,draeger.com,Germany,Schleswig-Holstein,Luebeck,16684,15763351,,,
+1,1009648,EbV Elektronikbau- und Vertriebs GmbH,EbV Elektronik,OK,SI,OEM,Alta,ebv-gmbh.eu,Germany,Nordrhein-Westfalen,Burbach,21,430278562,,,"ESS customer, OEM is eg Audiotec Fischer"
+1,1012049,FREQUENTIS Deutschland GmbH,Frequentis,OK,SI,OEM,Alta,frequentis.com,Austria,Vienna,Vienna,2335,346652275,,,
+1,1009760,Fritsch Elektronik GmbH,Fritsch Elektronik,OK,SI,EMS/CM,Alta,fritsch-gmbh.de,Germany,Baden-Wuerttemberg,Achern,77,430187446,,,EMS for Oban Europe
+1,1010908,General Dynamics European Land Systems-De,General Dynamics European Land Systems,OK,SI,OEM,Alta,gdels.com,Spain,Madrid,Madrid,2400,25739459,,,
+1,1010538,Goldmund SA,Goldmund,OK,SI,OEM,Alta,goldmund.com,Switzerland,Geneva,Vernier,20,16334990,,,ESS customer / OEM
+1,1010028,HEM Sp. z o.o.,HEM Sp z oo,OK,SI,OEM,Alta,hem-e.com,Poland,Masovian Voivodeship,Pruszkow,18,556900180,,,OEM
+1,1006797,HEXAGON,Hexagon,OK,SI,OEM,Alta,hexagon.com,Sweden,Stockholm,Stockholm,24500,17662709,,,Hexagon's Agriculture division
+1,1011822,"Howard Industries, Inc.",Howard Industries,OK,SI,OEM,Alta,howard.com,United States,Mississippi,Ellisville,3200,344788287,,,OEM computers and technology solutions
+1,1009421,ICCO EMT,ICCO Group,REVISAR - el nombre del CRM no coincide con la entidad del dominio,SI,EMS/CM,Alta,icco.ro,Romania,Brasov,Brasov,19,430008458,,,EMS company
+1,1009953,IMM electronics GmbH,IMM electronics,OK,SI,EMS/CM,Alta,imm-electronics.de,Germany,Saxony,Mittweida,85,372867281,,,ESS Customer / EMS
+1,1012383,ITS Electronics,ITS Electronics,OK,SI,OEM,Alta,itselectronics.com,Canada,Ontario,Vaughan,71,56297952,,,OEM
+1,1010863,Ideal Power,Ideal Power,OK,SI,OEM,Alta,idealpower.com,United States,Texas,Austin,17,354546239,,,"Revenue extremely low $87,000, OEM of power"
+1,1009198,Illinois Tool Works,ITW,REVISAR - el nombre del CRM no coincide con la entidad del dominio,SI,OEM,Alta,itw.com,United States,Illinois,Glenview,43000,26248523,,,
+1,1008792,Indic EMS Electronics Pvt Ltd,Indic,OK,SI,EMS/CM,Alta,indicelectronics.com,Spain,Catalonia,Castellar del Valles,1100,353907783,,,valued partner
+1,1009454,KOBER S.R.L. - Motan Centrale termice,,,NO - ZoomInfo no devolvio la empresa para ese dominio,OEM,Alta,motan.ro,,,,,,,,OEM
+1,1013370,Kinematics,Kinematics,OK,SI,OEM,Alta,gokinematics.com,United States,Arizona,Phoenix,500,1186981369,,,OEM - Motion control solutions
+1,1010072,LENNOX,Lennox,OK,SI,OEM,Alta,lennox.com,United States,Texas,Richardson,5400,102009645,,,
+1,1009182,LSI Industries,LSI,OK,SI,OEM,Alta,lsicorp.com,United States,Ohio,Blue Ash,2000,72683171,,,OEM of commercial lighting and displays
+1,1010141,Lacroix Electronics GmbH,LACROIX Electronics,OK,SI,EMS/CM,Alta,lacroix-electronics.de,Germany,,,57,473105240,,,
+1,1012303,Leonardo Global Solutions,Leonardo Global Solutions,OK,SI,OEM,Alta,leonardoglobalsolutions.com,Italy,Campania,Rome,910,463576239,,,
+1,1012304,Leonardo Italia,Leonardo,OK,SI,OEM,Alta,leonardo.com,Italy,Lazio,Rome,62762,357806922,,,
+1,1009539,"Leonardo Romania Aerospace, Defence & Sec.",Leonardo,OK,SI,OEM,Alta,leonardo.com,Italy,Lazio,Rome,62762,357806922,,,
+1,1010797,Lightware Visual Engineering,Lightware,OK,SI,OEM,Alta,lightware.com,Australia,New South Wales,Hornsby,382,22643578,,,
+1,1009752,Limtronik GmbH,Limtronik,OK,SI,EMS/CM,Alta,limtronik.de,Germany,Hessen,Limburg an der Lahn,119,356019313,,,
+1,1009261,Locus Robotics,Locus Robotics,OK,SI,OEM,Alta,locusrobotics.com,United States,Massachusetts,Wilmington,469,374953326,,,OEM of autonomous mobile robots (AMRs)
+1,1009921,MARIAN GmbH,,,NO - ZoomInfo no devolvio la empresa para ese dominio,OEM,Alta,marian.de,,,,,,,,OEM from Epsa and Assmy & Bottger
+1,1010524,MEKRA Lang Gruppe,MEKRA LANG GMBH & CO. KG,REVISAR - el nombre del CRM no coincide con la entidad del dominio,SI,OEM,Alta,mekra.de,Germany,Bavaria,Ergersheim,2836,50760178,,,
+1,1013198,Magna Yuma Pvt Ltd.,,,NO - ZoomInfo no devolvio la empresa para ese dominio,OEM,Alta,yuma.energy,,,,,,,,
+1,1009259,Maxwell Energy Systems,Maxwell Energy Systems,OK,SI,OEM,Alta,maxwellenergy.co,India,Maharashtra,Chh. Sambhaji Nagar,128,1324493080,,,Automotive OEM
+1,1008701,"Micro Systems Engineering, Inc",Micro Systems Technologies,REVISAR - el nombre del CRM no coincide con la entidad del dominio,SI,EMS/CM,Alta,mst.com,Germany,Berlin,Berlin,1065,38569706,,,
+1,1009118,Microchip Technology,Microchip Technology Thailand,OK,SI,OEM,Alta,mmt-technology.com,,,,21,370322878,,,
+1,1010872,Miltech Hellas SA,Miltech Hellas,OK,SI,OEM,Alta,miltech.gr,Greece,Attica,Koropi,108,372602648,,,
+1,1009135,Nash Industries (I) Pvt Ltd.,Nash Industries (i) Private,OK,SI,EMS/CM,Alta,nashindia.com,India,Karnataka,Peenya I Stage,24,352782238,,,Start Up EMS
+1,1011982,Northrop Grumman LITEF GmbH,Northrop Grumman LITEF,OK,SI,OEM,Alta,litef.de,Germany,Baden-Wuerttemberg,Freiburg,245,69796864,,,
+1,1009924,ORBAN Europe GmbH,Orban,OK,SI,EMS/CM,Alta,orban.com,United States,New Jersey,Pennsauken,34,17123746,,,ESS Customer / CEM Fritsch Elektronik
+1,1013033,One Stop Systems,One Stop Systems,OK,SI,OEM,Alta,onestopsystems.com,United States,California,Escondido,56,66864317,,,leader in rugged HPC solutions
+1,1009289,Paso SPA,PASO SpA,OK,SI,OEM,Alta,paso.it,Italy,Lombardy,Lainate,25,399583751,,,OEM
+1,1008637,Pepperl+Fuchs Mannheim,,,NO - ZoomInfo no devolvio la empresa para ese dominio,OEM,Alta,amplify.pepperl-fuchs.com,,,,,,,,
+1,1007918,Pony AI,Pony AI,OK,SI,OEM,Alta,pony.ai,China,Guangdong,Guangzhou,1460,451581154,,,autonomous vehicle technology company
+1,1010221,Premio Inc.,Premio,OK,SI,OEM,Alta,premioinc.com,United States,California,City of Industry,212,41059212,,,OEM/OCM - Computer Hardware Manufacturing
+1,1009617,Primax Electronics Ltd.,Primax Electronics,OK,SI,OEM,Alta,primax.com.tw,Taiwan,,Taipei,14359,41174133,,,
+1,1010109,RD Electronic AS,RD Electronic,OK,SI,EMS/CM,Alta,rd.ee,Estonia,,,18,457026090,,,EMS
+1,1001070,RTX,,,NO - ZoomInfo no devolvio la empresa para ese dominio,OEM,Alta,raytheon.com,,,,,,,,Raytheon; NFDs approved by RIS
+1,1004193,RUAG,RUAG,OK,SI,OEM,Alta,ruag.com,Switzerland,Bern,Bern,3000,350770346,,,Ruag Space now under Beyond Gravity
+1,1011891,Rheinmetall AG,Rheinmetall,OK,SI,OEM,Alta,rheinmetall.com,Germany,Nordrhein-Westfalen,Duesseldorf,44000,122765597,,,
+1,1012008,Rheinmetall Air Defence AG,Rheinmetall,OK,SI,OEM,Alta,rheinmetall.com,Germany,Nordrhein-Westfalen,Duesseldorf,44000,122765597,,,
+1,1011894,Rheinmetall MAN Military Vehicles GmbH,Rheinmetall,OK,SI,OEM,Alta,rheinmetall.com,Germany,Nordrhein-Westfalen,Duesseldorf,44000,122765597,,,
+1,1011895,Rheinmetall MAN Military Vehicles Osterreich,Rheinmetall,OK,SI,OEM,Alta,rheinmetall.com,Germany,Nordrhein-Westfalen,Duesseldorf,44000,122765597,,,
+1,1011897,Rheinmetall Waffe Munition GmbH,Rheinmetall,OK,SI,OEM,Alta,rheinmetall.com,Germany,Nordrhein-Westfalen,Duesseldorf,44000,122765597,,,
+1,1012223,Richardson Electronics,Richardson Electronics,OK,SI,OEM,Alta,rell.com,United States,Illinois,Lafox,392,86885394,,,OEM
+1,1009522,SC SOFTRONIC SRL,Softronic,OK,SI,OEM,Alta,softronic.ro,Romania,Dolj,Craiova,287,406568630,,,OEM - Railway
+1,1011603,SEW-EURODRIVE,SEW-EURODRIVE,OK,SI,OEM,Alta,sew-eurodrive.com.br,Brazil,Sao Paulo,Indaiatuba,185,468794995,,,
+1,1009461,SIELMAN S.A,,,NO - ZoomInfo no devolvio la empresa para ese dominio,EMS/CM,Alta,sekpy.gr,,,,,,,,EMS
+1,1008919,STERNA SECURITY DEVICES PRIVATE LIMITED,Sterna security,OK,SI,OEM,Alta,sternasecurity.com,India,Tamil Nadu,Rathinasabapathy Puram,17,350606996,,,oem
+1,1007084,Saab,Saab,OK,SI,OEM,Alta,saab.com,Sweden,Stockholm,Stockholm,29380,33506164,,,
+1,1009934,Sahasra Electronics,Sahasra Electronics Pvt,OK,SI,OEM,Alta,sahasraelectronics.com,India,Karnataka,Richmond Town,346,351336376,,,
+1,1012252,Sepptronic GmbH & Co. KG,Sepptronic,OK,SI,EMS/CM,Alta,sepptronic.de,Germany,Bavaria,Tuntenhausen,250,426187356,,,EMS for Spinner GmbH
+1,1009162,Sikorsky,Lockheed Martin,REVISAR - el nombre del CRM no coincide con la entidad del dominio,SI,OEM,Alta,lockheedmartin.com,United States,Maryland,Bethesda,123000,21712070,,,Independent subsidiary of Lockheed
+1,1010351,"Smart Start, Inc.",Smart Start,OK,SI,OEM,Alta,smartstartinc.com,United States,Texas,Grapevine,672,97141111,,,OEM - ignition interlock
+1,1012335,Spree Hybrid & Kommunikationstechnik GmbH,Spree Hybrid & Kommunikationstechnik,OK,SI,EMS/CM,Alta,spree-hybrid.de,Germany,Berlin,Berlin,14,563069225,,,EMS - Meet at Evertiq Berlin
+1,1011169,Stanley Electric,Stanley,OK,SI,OEM,Alta,stanley.co.jp,Japan,Hiroshima,Shiwachouokuya,16778,353806406,,,OEM
+1,1011431,Teledyne E2V,Teledyne e2v,OK,SI,OEM,Alta,teledyne-e2v.com,United Kingdom,Essex,Chelmsford,1638,440546513,,,
+1,1008725,Tempo Automation Holdings Inc,,,NO - ZoomInfo no devolvio la empresa para ese dominio,EMS/CM,Alta,tempoautomation.com,,,,,,,,Accelerated Electronics Manufacturing Platform
+1,1011074,Thales DMS France SAS,Thales,OK,SI,OEM,Alta,thalesgroup.com,France,Ile-de-France,Meudon,78189,143048837,,,
+1,1010746,Thales Deutschland,Thales,OK,SI,OEM,Alta,thalesgroup.com,France,Ile-de-France,Meudon,78189,143048837,,,
+1,1011762,Thales Italia,Thales,OK,SI,OEM,Alta,thalesgroup.com,France,Ile-de-France,Meudon,78189,143048837,,,
+1,1011040,Thales Tampa microwave,Thales Defense & Security,REVISAR - el nombre del CRM no coincide con la entidad del dominio,SI,OEM,Alta,thalesdsi.com,United States,Maryland,Clarksburg,440,282165461,,,
+1,1008950,Thinkmate,Thinkmate,OK,SI,OEM,Alta,thinkmate.com,United States,Massachusetts,Waltham,163,184057938,,,
+1,1009258,UCAL Ltd,Ucal,OK,SI,OEM,Alta,ucal.com,India,Tamil Nadu,Chennai,21,473200660,,,UCAL automotive OEM company
+1,1013172,Unigen Malaysia,Unigen,OK,SI,OEM,Alta,unigen.com,United States,California,Newark,446,39452986,,,manufacture of OEM products including SSDs
+1,1009544,V-Guard Industries,V-GUARD INDUSTRIES,OK,SI,OEM,Alta,vguard.in,India,Kerala,Cochin,2612,300711947,,,"OEM for Voltage Stabilizer, Digital UPS"
+1,1012135,Watch Guard Video,WatchGuard,OK,SI,OEM,Alta,watchguard.com,United States,Washington,Seattle,1200,198787086,,,security mfr oem
+1,1013006,Wincomm International,,,NO - ZoomInfo no devolvio la empresa para ese dominio,EMS/CM,Alta,wincomm.com.cn,,,,,,,,CM for Bizlink + Eastman Kodak
+1,1013026,YOKOGAWA ELECTRIC ASIA PTE LTD,Yokogawa,OK,SI,EMS/CM,Alta,yokogawa.com,Japan,Tokyo,Musashino-shi,17365,68813864,,,Laurel: ODM for Thales SG
+1,1010234,YURA corporation,Yura,OK,SI,OEM,Alta,yuracorp.co.kr,Serbia,Central Serbia,Raca,2602,430341361,,,
+1,1011996,ZF Friedrichshafen,ZF,OK,SI,OEM,Alta,zf.com,Germany,Baden-Wuerttemberg,Friedrichshafen,161600,195641802,,,
+1,1012402,Zaptec,ZAPTEC -,OK,SI,OEM,Alta,zaptec.com,Norway,Rogaland,Stavanger,175,368503644,,,
+1,1011888,Zollner Electronics GmbH,Zollner,OK,SI,EMS/CM,Alta,zollner.de,Germany,Bavaria,Zandt,13000,372646850,,,EMS
+1,1011525,ballard,Ballard Power Systems,OK,SI,OEM,Alta,ballard.com,Canada,British Columbia,Burnaby,887,11325447,,,
+1,1008818,digitalSTROM AG,digitalSTROM,OK,SI,OEM,Alta,digitalstrom.com,Switzerland,Zurich,Schlieren,63,358993613,,,OEM - smart home application
+1,1010562,magniX,magniX,OK,SI,OEM,Alta,magnix.aero,United States,Washington,Everett,87,455273116,,,OEM - electric motor mfr for electric aircraft
+1,1008947,APC Manufacturing,APC Manufacturing,OK,SI,OEM,Media,apcmfg.net,Mexico,Guanajuato,Las Flores,302,1155233363,,,"Fabricacion de electrodomesticos, equipamiento"
+1,1008216,Altel PCB d.o.o.,Altel,OK,SI,EMS/CM,Media,altel.si,Slovenia,Sentjernej,Sentjernej,15,451994625,,,
+1,1011848,Altinex,ALTINEX,OK,SI,OEM,Media,altinex.com,United States,California,Placentia,130,1425673,,,certified manufacturer of modular audiovisual
+1,1013223,Applied Optoelectronics Inc.,AOI,REVISAR - el nombre del CRM no coincide con la entidad del dominio,SI,OEM,Media,ao-inc.com,United States,Texas,Sugar Land,4691,6260636,,,AOI designs and manufactures advanced semi
+1,1010732,"Astro Geo Marine, Inc.",Astro Geo Marine,OK,SI,EMS/CM,Media,astrogeomarine.com,United States,California,Ventura,7,8047469,,,Builds for Ontic
+1,1009817,Aurelius Technologies Bhd,,,NO - ZoomInfo no devolvio la empresa para ese dominio,OEM,Media,atechgroup.com.my,,,,,,,,multicomponent semiconductor
+1,1010249,Avionic Design GmbH,Avionic Design,OK,SI,OEM,Media,avionic-design.de,Germany,Hamburg,Hamburg,56,426081567,,,ESS Customer
+1,1011528,BMS CIRCUITS,ALL Circuits,OK,SI,EMS/CM,Media,allcircuits.com,France,Centre,Meung-sur-Loire,1888,400954713,,,
+1,1008692,BRAMBILIGHT,Brambilight SA de,OK,SI,OEM,Media,brambilight.com,Mexico,Jalisco,Santa Monica,14,452546803,,,manufacturing of profesional equipment
+1,1009034,Behlen Mfg Co.,Behlen Manufacturing,REVISAR - el nombre del CRM no coincide con la entidad del dominio,SI,OEM,Media,behlenmfg.com,United States,Nebraska,Columbus,1200,4309379,,,diverse businesses
+1,1008801,Bio-Techne,Bio-Techne,OK,SI,OEM,Media,bio-techne.com,United States,Minnesota,Minneapolis,3100,37699867,,,"Bio-Techne Corporation develops, manufactures"
+1,1009205,Blink Charging,Blink Charging,OK,SI,OEM,Media,blinkcharging.com,United States,Maryland,Bowie,320,398392063,,,"Design, Manufacture, Own and Operate"
+1,1008955,CIRCUIT SYSTEMS (INDIA) LTD,PCB Power Market,REVISAR - el nombre del CRM no coincide con la entidad del dominio,SI,EMS/CM,Media,pcbpower.com,United States,California,Northridge,331,356239741,,,
+1,1012651,CSI,Custom Systems Integration,REVISAR - el nombre del CRM no coincide con la entidad del dominio,SI,EMS/CM,Media,customsi.com,United States,New York,Binghamton,21,1139093298,,,Custom Engineering and Manufacturing Services
+1,1010612,Canyon AeroConnect,Canyon AeroConnect,OK,SI,OEM,Media,canyonaeroconnect.com,United States,Arizona,Prescott,200,130711588,,,dba Chelton Avionics Inc.
+1,1010150,DBK EMS GMBH & CO. KG,Dbk Group,REVISAR - el nombre del CRM no coincide con la entidad del dominio,SI,EMS/CM,Media,dbk-group.com,Germany,Rheinland-Pfalz,Rülzheim,18,51744190,,,
+1,1009886,DINtronics,,,NO - ZoomInfo no devolvio la empresa para ese dominio,OEM,Media,dintronics.com,,,,,,,,Manufacturer of wide spectrum
+1,1009515,Danlaw EMS Technologies,Danlaw Technologies India,OK,SI,EMS/CM,Media,danlawtechnologies.com,India,Telangana,Cyberabad,194,23448466,,,
+1,1008808,Digital Circuits Pvt Ltd,Digital Circuits Private,OK,SI,EMS/CM,Media,digitalcircuits.in,India,Karnataka,Konanakunte,19,435479311,,,
+1,1010365,Elna PCB (M) Sdn Bhd,Share Capital,REVISAR - el nombre del CRM no coincide con la entidad del dominio,SI,EMS/CM,Media,elnapcb.com,,,,23,346217401,,,
+1,1009519,Euler Motors Pvt Ltd,Euler Motors,OK,SI,OEM,Media,eulermotors.com,India,Nct,Badarpur,450,449782244,,,EV manufacturers Company in India
+1,1012129,Eventide Audio,Eventide Audio,OK,SI,OEM,Media,eventideaudio.com,United States,New Jersey,Little Ferry,22,5000039090,,,audio eqp mfr
+1,1013153,Extreme Engineering Solutions,Extreme Engineering Solutions,OK,SI,OEM,Media,xes-inc.com,United States,Wisconsin,Verona,296,32214323,,,"design, manufacture, and support of embedded"
+1,1013281,Exxact Corporation,Exxact,OK,SI,OEM,Media,exxactcorp.com,United States,California,Fremont,72,18351205,,,"Mfr's workstations, servers, clusters, and storage"
+1,1010390,Flashline EMS private limited,,,NO - ZoomInfo no devolvio la empresa para ese dominio,EMS/CM,Media,flashlineems.com,,,,,,,,
+1,1010316,Forest River,Forest River,OK,SI,OEM,Media,forestriverinc.com,United States,Indiana,Elkhart,10917,62571668,,,Manufacturer of various types of vehicles
+1,1008697,FormFactor Inc.,FormFactor,OK,SI,OEM,Media,formfactor.com,United States,California,Livermore,2153,14893875,,,Manufactures semiconductor products
+1,1008734,Forth EMS Public Company Limited,Forth EMS Public,OK,SI,EMS/CM,Media,forth-ems.com,Thailand,Nakhon Pathom,Nakhon Pathom,541,1245361638,,,
+1,1010112,Forus Health Pvt Ltd,Forus Health Pvt,OK,SI,OEM,Media,forushealth.com,United States,California,San Leandro,145,355294795,,,highly advanced medical devices
+1,1011828,Fujikura Printed Circuits Ltd.,,,NO - ZoomInfo no devolvio la empresa para ese dominio,EMS/CM,Media,fpcl.fujikura.com,,,,,,,,
+1,1008911,GSM Outdoors,Gsm Outdoors,OK,SI,OEM,Media,gsmoutdoors.com,United States,Texas,Irving,151,1146267616,,,Sporting goods manufacturer
+1,1013357,General Micro Systems Inc.,General Micro Systems,OK,SI,OEM,Media,gms4sbc.com,United States,California,Rancho Cucamonga,104,25249563,,,designer & mfr rugged embedded computers
+1,1009479,"Gruppo EMS, Inc.",EMS Services International,REVISAR - el nombre del CRM no coincide con la entidad del dominio,SI,EMS/CM,Media,ems.com.ph,Philippines,Bicol,Laguna,43,348030948,,,
+1,1011723,Hanwha Vision,,,NO - ZoomInfo no devolvio la empresa para ese dominio,OEM,Media,hanwhavisionamerica.com,,,,,,,,Mfr of the small cameras that watch the Astute
