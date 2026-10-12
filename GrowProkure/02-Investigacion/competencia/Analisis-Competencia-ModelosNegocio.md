@@ -18,6 +18,9 @@
 | **Aircall** | SaaS de telefonía/llamadas con IA (ventas+soporte) | SaaS tool | Suscripción | 🟢 Alta (marca establecida) | IA en el canal de voz; no es nuestro canal |
 | **Darwin AI** (getdarwin.ai) | "Empleados-IA" (SDR/CX/cobranza) en WhatsApp/IG/llamada, conectados al CRM | SaaS "Service as Software" | Oculto | 🟢 Alta (WhatsApp API partner) | Posicionamiento fuerte: **"contrata un empleado IA"** (agentes con nombre: Alba, Bruno, Eva) |
 | **Vambe** (vambe.ai) | Plataforma IA comercial omnicanal (ventas+mkt+postventa) para LatAm | SaaS | Oculto | 🟡 Media | **Garantía real:** "si no subimos tus ventas en 2 meses, devolvemos el 100%" + "con tu propio tono" |
+| **chattigo** | Plataforma SaaS omnicanal de chatbots/atención (WhatsApp+) | SaaS | Oculto | 🟡 Media | Otra plataforma omnicanal — refuerza saturación |
+| **Admira LATAM** | IA que optimiza campañas de marketing | SaaS/tool | Oculto | 🟡 Media | IA de optimización de ads; no es nuestro core |
+| **Dinametra** | Agencia de growth B2B (Google/Meta Partner) | Agencia DFY | Oculto | 🟢 Alta (caso con números) | **Lecc.: liderar con caso concreto** ("0→35 clientes en 60 días, $1.1M pipeline") |
 
 ### Patrón común (lo que TODOS hacen)
 - Canal: **WhatsApp / llamada** como canal de ventas.
