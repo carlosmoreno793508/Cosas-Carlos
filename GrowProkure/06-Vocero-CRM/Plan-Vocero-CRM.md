@@ -90,6 +90,27 @@ Vocero usa la **API oficial de WhatsApp (Meta Graph API v25.0)** → compliant, 
 
 ---
 
+## B2) Dónde hospedarlo — comparativa de VPS (2026-10-11)
+
+**Lo que necesita Vocero:** Linux amd64, 2-4 GB RAM, 1-2 vCPU, 20-40 GB SSD persistente, Docker, IP pública fija (puertos 80/443), prendido 24/7 (el webhook de WhatsApp no puede dormirse).
+
+| | Hostinger KVM2 | Oracle Free | AWS | Cloudflare |
+|---|---|---|---|---|
+| Costo/mes | ~$5-8 USD promo (sube al renovar) | $0 | ~$15-25 USD real | — |
+| ¿Corre Vocero? | ✅ directo | ⚠️ ARM, hay que compilar | ✅ | ❌ no (serverless, sin Docker/Postgres) |
+| 24/7 estable | ✅ | ❌ apaga instancias "ociosas" (<20% uso en 7 días) | ✅ | n/a |
+| Cobro sorpresa | No (precio fijo) | Solo si haces upgrade a pago | Alto (disco, tráfico, IP aparte) | n/a |
+
+```
+Más barato de verdad ........ Oracle ($0) — pero frágil, no para clientes
+Mejor relación precio/dolor .. HOSTINGER (~$5-8/mes) ← recomendación
+Más caro y complejo ......... AWS (~$15-25/mes) — evitar para esto
+No aplica para hospedar ..... Cloudflare (gratis solo enfrente: DNS/SSL/DDoS)
+```
+> El VPS es el gasto chico. Los costos que escalan son los mensajes de Meta y los tokens de IA. Precios aproximados: verificar antes de contratar.
+
+---
+
 ## C) Enriquecimiento de contactos — estado y siguiente paso
 (Lo seguimos en paralelo, no depende de Vocero.)
 - **Wiza:** se quedó en **0 créditos API** (500 email, 0 phone) → no puede enriquecer; hay que recargar.
