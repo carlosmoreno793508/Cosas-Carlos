@@ -241,6 +241,29 @@ const es = {
         "Referencia de precio de la competencia: pulpo automático M&R Cobra 10 estaciones / 8 colores, ~US$88 mil en EE. UU.",
       ],
     },
+    { h2: "Mercado en valor: impresión textil digital en México" },
+    {
+      table: {
+        cols: ["Indicador", "Dato", "Fuente"],
+        widths: [3000, 3960, 2400],
+        rows: [
+          ["Tamaño 2024", "US$116.5 millones (2.0% del mercado mundial)", "Grand View Research"],
+          ["Proyección 2030", "US$217.6 millones; crecimiento de 11.5% anual (2025–2030)", "Grand View Research"],
+          ["Proceso dominante", "Directo a tela (rollo): 74% de los ingresos en 2024", "Grand View Research"],
+          ["Segmento de mayor crecimiento", "Directo a prenda (DTG): el más dinámico y rentable", "Grand View Research"],
+          ["Latinoamérica", "~11.8% de crecimiento anual hasta 2034; Brasil y México son los mercados líderes", "Cannata Report"],
+          ["Competidor principal en digital", "Epson declara ~60% del textil digital en México (sin estudio independiente)", "Epson en FESPA, sept. 2026"],
+        ],
+      },
+    },
+    {
+      bullets: [
+        "Lectura para CLT: el mercado digital es chico (US$116.5 millones) pero crece 11.5% al año, y el segmento que más crece es la impresión directa sobre prenda, donde compite la impresora híbrida.",
+        "Este dato mide solo impresión digital. La oportunidad de CLT es mayor porque la híbrida también reemplaza estaciones de serigrafía y vende química (siliconas y pastas) al mercado de serigrafía, que no entra en esta cifra.",
+        "Escenario: si CLT capta 5–10% del mercado digital en 2030, serían US$11–22 millones al año, en línea con el rango de equipos y consumibles estimado arriba.",
+        "El mercado de sublimación (US$468 millones en 2025) incluye papel, planchas, señalización y artículos promocionales; no es comparable con esta cifra.",
+      ],
+    },
 
     { h1: "7. Zonas geográficas prioritarias" },
     {
@@ -665,6 +688,29 @@ const en = {
         "Equipment: 30–90 lines × US$120–250k landed in Mexico = US$3.6–22 million over 5 years (estimate; to be confirmed with CLT’s quotation).",
         "Consumables: US$1,500–5,000 per line per month (hypothesis to validate with shops). With 50 lines: US$0.9–3 million per year, plus silicone and paste sales to shops without hybrid equipment.",
         "Competitor price reference: M&R Cobra automatic press, 10 stations / 8 colors, ~US$88k in the U.S.",
+      ],
+    },
+    { h2: "Market value: digital textile printing in Mexico" },
+    {
+      table: {
+        cols: ["Indicator", "Figure", "Source"],
+        widths: [3000, 3960, 2400],
+        rows: [
+          ["2024 size", "US$116.5 million (2.0% of the global market)", "Grand View Research"],
+          ["2030 forecast", "US$217.6 million; 11.5% annual growth (2025–2030)", "Grand View Research"],
+          ["Leading process", "Direct to fabric (roll): 74% of 2024 revenue", "Grand View Research"],
+          ["Fastest-growing segment", "Direct to garment (DTG): the most dynamic and profitable", "Grand View Research"],
+          ["Latin America", "~11.8% annual growth to 2034; Brazil and Mexico lead", "Cannata Report"],
+          ["Main digital competitor", "Epson claims ~60% of digital textile printing in Mexico (no independent study)", "Epson at FESPA, Sept. 2026"],
+        ],
+      },
+    },
+    {
+      bullets: [
+        "What it means for CLT: the digital market is small (US$116.5 million) but grows 11.5% a year, and the fastest-growing segment is direct-to-garment printing, where the hybrid printer competes.",
+        "This figure covers digital printing only. CLT’s opportunity is larger because the hybrid also replaces screen-printing stations and sells chemistry (silicones and pastes) to the screen-printing market, which this figure leaves out.",
+        "Scenario: if CLT captures 5–10% of the digital market by 2030, that is US$11–22 million a year, in line with the equipment and consumables range above.",
+        "The sublimation market (US$468 million in 2025) includes paper, heat presses, signage and promotional products; it is not comparable to this figure.",
       ],
     },
 

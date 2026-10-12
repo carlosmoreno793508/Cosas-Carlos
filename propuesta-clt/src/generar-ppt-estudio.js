@@ -307,6 +307,7 @@ function build(lang) {
   });
   p.sizeSide.forEach(([b, l], i) => stat(s, 6.6, 1.3 + i * 1.5, 2.9, b, l, i ? C.accent2 : C.accent1));
   note(s, p.estimate);
+  require("./mercado-valor")({ pres, content, stat, note, C, HEX }, es);
 
   s = content(p.s_geo);
   p.geo.forEach(([pr, z, w], i) => {
