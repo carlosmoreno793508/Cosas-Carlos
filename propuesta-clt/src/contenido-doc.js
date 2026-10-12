@@ -260,7 +260,7 @@ const es = {
       bullets: [
         "Lectura para CLT: el mercado digital es chico (US$116.5 millones) pero crece 11.5% al año, y el segmento que más crece es la impresión directa sobre prenda, donde compite la impresora híbrida.",
         "Este dato mide solo impresión digital. La oportunidad de CLT es mayor porque la híbrida también reemplaza estaciones de serigrafía y vende química (siliconas y pastas) al mercado de serigrafía, que no entra en esta cifra.",
-        "Escenario: si CLT capta 5–10% del mercado digital en 2030, serían US$11–22 millones al año, en línea con el rango de equipos y consumibles estimado arriba.",
+        "Contraste con nuestra estimación: la proyección base (sección 14) vende ~US$0.4 millones en el año 1 y ~US$1.8 millones en el año 3 (equipos más consumibles), es decir, ~1% del mercado digital y ~3–4% de la parte de impresión sobre prenda (~26% del total). Con 30–90 líneas instaladas en 5 años, la venta anual llegaría a US$2–8 millones: 1–3.5% del mercado de 2030. Es una meta conservadora y alcanzable.",
         "El mercado de sublimación (US$468 millones en 2025) incluye papel, planchas, señalización y artículos promocionales; no es comparable con esta cifra.",
       ],
     },
@@ -709,7 +709,7 @@ const en = {
       bullets: [
         "What it means for CLT: the digital market is small (US$116.5 million) but grows 11.5% a year, and the fastest-growing segment is direct-to-garment printing, where the hybrid printer competes.",
         "This figure covers digital printing only. CLT’s opportunity is larger because the hybrid also replaces screen-printing stations and sells chemistry (silicones and pastes) to the screen-printing market, which this figure leaves out.",
-        "Scenario: if CLT captures 5–10% of the digital market by 2030, that is US$11–22 million a year, in line with the equipment and consumables range above.",
+        "Against our estimate: the base projection (section 14) sells ~US$0.4 million in year 1 and ~US$1.8 million in year 3 (equipment plus consumables), about 1% of the digital market and ~3–4% of the garment-printing share (~26% of the total). With 30–90 lines installed in 5 years, annual sales would reach US$2–8 million: 1–3.5% of the 2030 market. A conservative, achievable target.",
         "The sublimation market (US$468 million in 2025) includes paper, heat presses, signage and promotional products; it is not comparable to this figure.",
       ],
     },
