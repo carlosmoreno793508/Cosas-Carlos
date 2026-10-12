@@ -55,7 +55,10 @@ function table({ cols, rows, widths, bold }) {
 }
 
 function build(lang) {
-  const { meta, body } = content[lang];
+  return buildDoc(content[lang]);
+}
+
+function buildDoc({ meta, body }) {
   const children = [];
 
   // Portada
@@ -96,6 +99,9 @@ function build(lang) {
         })) }));
       }
       children.push(new Table({ width: { size: TABLE_W, type: WidthType.DXA }, columnWidths: W, rows }));
+    } else if (b.img) {
+      children.push(new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 80 }, children: [new ImageRun({ type: "png", data: fs.readFileSync(b.img), transformation: { width: b.w, height: b.h }, altText: { title: b.alt, description: b.alt, name: path.basename(b.img) } })] }));
+      if (b.caption) children.push(new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 60, after: 160 }, children: [new TextRun({ text: b.caption, size: 18, italics: true, color: "555555" })] }));
     } else if (b.pagebreak) children.push(new Paragraph({ children: [new PageBreak()] }));
   }
 
@@ -127,7 +133,9 @@ function build(lang) {
   });
 }
 
-(async () => {
+module.exports = { buildDoc };
+
+if (require.main === module) (async () => {
   const out = process.argv[2] || ".";
   fs.mkdirSync(out, { recursive: true });
   for (const lang of ["es", "en"]) {
