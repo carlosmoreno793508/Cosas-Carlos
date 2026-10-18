@@ -1,7 +1,7 @@
 name: TID-MAX · reporte diario
 
 # Corre el pipeline en la NUBE (sin la Mac de Carlos): baja WHOOP, procesa, genera el reporte
-# y actualiza tid-max/web/data.json. Vercel redepliega solo la web al hacer push.
+# y actualiza tid-max/web/data.json. Cloudflare Pages redespliega solo la web al hacer push.
 #
 # Requiere estos SECRETS del repo (Settings → Secrets and variables → Actions):
 #   WHOOP_CLIENT_ID, WHOOP_CLIENT_SECRET, WHOOP_REFRESH_TOKEN, ANTHROPIC_API_KEY

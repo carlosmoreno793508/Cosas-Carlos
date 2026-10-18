@@ -1,0 +1,6 @@
+# Cloudflare Pages — dashboard web de TID-MAX (proyecto estático + 1 función).
+# nodejs_compat habilita Buffer, que usa functions/api/comida.js.
+name = "tid-max-web"
+pages_build_output_dir = "."
+compatibility_date = "2026-10-01"
+compatibility_flags = ["nodejs_compat"]
