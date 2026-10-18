@@ -1,0 +1,15 @@
+# Configuración de Cloudflare Pages para TID-MAX (proyecto independiente).
+#
+# - pages_build_output_dir = "." : el sitio estático es esta carpeta (tid-max/app).
+# - compatibility_flags = nodejs_compat : habilita node:crypto (HMAC/scrypt) y Buffer,
+#   que usan las funciones de functions/api/*.js.
+# - compatibility_date reciente: desde 2026-08-04 nodejs_compat_v2 va por defecto.
+#
+# Las VARIABLES SECRETAS (AUTH_SECRET, GH_TOKEN, TID_LOGINS, ANTHROPIC_API_KEY, etc.)
+# NO van aquí: se configuran en el dashboard (Settings -> Environment variables) o con
+# `wrangler pages secret put`. Ver guias/08-migracion-cloudflare-pages.md.
+
+name = "tid-max"
+pages_build_output_dir = "."
+compatibility_date = "2026-10-01"
+compatibility_flags = ["nodejs_compat"]
