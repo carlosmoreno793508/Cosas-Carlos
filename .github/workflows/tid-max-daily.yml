@@ -46,6 +46,10 @@ jobs:
         run: printf 'WHOOP_REFRESH_TOKEN=%s\n' "$WHOOP_REFRESH_TOKEN" > .env
 
       - name: Correr pipeline MULTIUSUARIO (por atleta → reporte privado + dashboard público)
+        id: pipeline
+        # Sale !=0 si el atleta público no generó reporte (dashboard congelado). Seguimos para
+        # publicar lo que sí salió y reguardar el token; el paso final pone el run en ROJO.
+        continue-on-error: true
         working-directory: tid-max/software
         env:
           WHOOP_CLIENT_ID: ${{ secrets.WHOOP_CLIENT_ID }}
@@ -103,4 +107,13 @@ jobs:
             sleep $((intento * 3))
           done
           echo "::error::No pude reguardar el token WHOOP tras 5 intentos. Si el reporte se congela, re-autoriza WHOOP con whoop_auth.py y actualiza el secret WHOOP_REFRESH_TOKEN."
+          exit 1
+
+      # Antes un token WHOOP vencido dejaba el dashboard congelado con el run en VERDE
+      # (24-ago → 18-oct-2026 sin que nadie se enterara). Ahora el run queda en ROJO y
+      # GitHub te manda el correo de "workflow failed".
+      - name: Alertar si el dashboard no se actualizó
+        if: ${{ steps.pipeline.outcome == 'failure' }}
+        run: |
+          echo "::error::El pipeline no actualizó el dashboard (ver anotaciones del paso 'Correr pipeline'). Si es WHOOP: corre 'python whoop_auth.py' en tid-max/software y actualiza el secret WHOOP_REFRESH_TOKEN."
           exit 1
