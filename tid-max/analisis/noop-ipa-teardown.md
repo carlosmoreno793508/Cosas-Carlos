@@ -231,9 +231,23 @@ segundos).
 
 ### A.4 Pantalla "Cronología profunda" — el pipeline de R-R expuesto
 La pantalla más relevante para TID-MAX. Subtítulo: *"Cada segundo de tu día, con zoom."*
-Pestañas: **Frecuencia cardíaca · rMSSD por ventanas · SpO2 · …** con timeline
-interactivo (*"Pinch to zoom · drag to pan · hold to read"*) y toggle de procedencia
-**"En propiedad / Todo"** sobre la fuente (WHOOP).
+**7 streams** en pestañas: **Frecuencia cardíaca · rMSSD por ventanas · SpO2 · Temp. de
+piel · Respiración · Movimiento · Band Sleep State**, con timeline interactivo
+(*"Pinch to zoom · drag to pan · hold to read"*) y toggle de procedencia **"En propiedad /
+Todo"** sobre la fuente (WHOOP).
+
+**Estados vacíos "capability-aware" (gran patrón de honestidad):** NOOP sabe qué puede
+físicamente cada sensor y lo dice, distinguiendo tres casos:
+- *"This strap doesn't send SpO₂ over Bluetooth. Import a WHOOP export or Health Connect
+  to see it."* → la banda **no puede** por BLE, con el fallback de importación.
+- *"This strap sends no raw respiration stream. Your estimated respiratory rate appears on
+  the Health screen."* → distingue **stream crudo vs métrica estimada/derivada**.
+- *"Aún no se ha descargado nada para esta ventana."* → simplemente **no hay dato** aún.
+
+Lección para TID-MAX: nuestro caso multi-sensor es idéntico — el **H10** da R-R limpio
+(ECG), el **Verity Sense** da R-R más ruidoso (óptico), y WHOOP **no** expone R-R crudo por
+API. Un estado que diga qué da cada fuente evita prometer métricas que el sensor no puede
+sostener.
 
 - **"rMSSD por ventanas"** es el hallazgo clave: NOOP calcula **RMSSD rodante (por
   ventanas) sobre el R-R crudo**, no un solo número diario. Ése es **el eslabón
