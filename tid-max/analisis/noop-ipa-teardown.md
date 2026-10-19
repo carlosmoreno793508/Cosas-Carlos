@@ -423,7 +423,46 @@ Dos métodos nuevos (más sofisticados que el CON/SIN):
 prior** son el estándar a copiar — nuestro coach con contexto del atleta puede además
 explicar el *porqué* fisiológico, no solo el patrón.
 
+### A.12 ⭐ LA FÓRMULA DEL SCORE DE RECUPERACIÓN ("Charge") — lo más accionable
+La pantalla **Inteligencia → "Cómo funciona esto"** expone el modelo con **pesos exactos**
+que NOOP usa para calcular su score de recuperación, todo **en el dispositivo desde el R-R
+crudo** (*"no WHOOP cloud required"*). Esta es la receta implementable para un score de
+recuperación propio de TID-MAX, independiente de WHOOP.
+
+**MODELO DE CARGA (recuperación, 0-100):**
+
+| Componente | Peso | Cómo |
+|---|---|---|
+| **HRV vs baseline personal** | **~55%** | tu HRV del día contra tu línea base |
+| **FC en reposo** | **~20%** | RHR vs baseline |
+| **Calidad del descanso (sueño)** | **~15%** | estadios de sueño |
+| **Respiración** | **~5%** | frecuencia respiratoria |
+| **Desviación de temp. de piel** | **~5%** | skin-temp deviation |
+
+- **Esfuerzo (Strain)** = carga cardiovascular 0-100 derivada del **tiempo en zonas de FC**.
+- **Descanso** = estadificado (staged) a partir de **movimiento + FC**.
+- *"Everything is computed here from the strap's raw data. Works for any day NOOP collected
+  raw streams."* → 100% on-device, cero dependencia de la nube de WHOOP.
+
+**Dosis-respuesta de cafeína (detalle):** la "dosis" es el **horario**, no los mg (más tarde
+= más fuerte). Pronóstico por franja (AM / Mediodía / 14h+ / Noche): *"un café a las 14h+
+tiende a ≈ −4 ms de HRV a la mañana siguiente (n=9)"*, con HRV de mañana proyectado.
+
+**"Cómo leer esto" (su carta de honestidad):** *"asociación con tamaño de efecto y
+confianza, nunca causa ni diagnóstico. Los patrones poblacionales se muestran como «típicos»
+y siempre quedan reemplazados por tus propios datos una vez que tienes suficientes.
+Aproximaciones, no las puntuaciones de WHOOP; no es un dispositivo médico."* → confirma el
+**prior bayesiano**: arranca con un prior poblacional y hace shrinkage hacia tus datos.
+
+**Plan para TID-MAX (el gran entregable del teardown):**
+1. Con el **pipeline de HRV** ya construido (`hrv_rr.py`: R-R → ectópicos → RMSSD/DFA-α1)
+   tenemos el insumo #1 (HRV, 55% del score).
+2. Falta: baseline personal rodante de HRV y RHR, calidad de sueño, respiración y temp.
+3. Combinar con **estos pesos (55/20/15/5/5)** da un **score de recuperación propio**,
+   calculado de datos crudos del Polar, sin WHOOP ni su nube. Eso es independencia total.
+
 > **Dossier NOOP completo** — binario + mapa de navegación completo (INSIGHTS/BODY/DATA/APP),
 > las 5 pestañas, captura en vivo, la capa de inteligencia (diario → análisis causal con lag
-> por hallazgo → dosis-respuesta bayesiana → N-of-1) y sus métodos estadísticos
-> (Cohen's d, Pearson r+p, dosis-respuesta con prior). Sin pendientes.
+> por hallazgo → dosis-respuesta bayesiana → N-of-1), sus métodos estadísticos
+> (Cohen's d, Pearson r+p, dosis-respuesta con prior) y **la fórmula del score de
+> recuperación con pesos exactos (55/20/15/5/5)**. Sin pendientes.
