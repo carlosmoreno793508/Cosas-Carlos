@@ -138,6 +138,13 @@ teoría, NOOP lo trae compilado.
   contexto real del atleta** (perfil, plan, umbrales). Ventaja nuestra; no la perdamos.
 - **Ingeniería inversa de Oura** (`OURA_PROTOCOL.md`, `SetFeatureMode`, muestreo PPG) y de
   WHOOP — lee varias bandas, no una.
+- **CORRECCIÓN (verificado en vivo 2026-10-19):** la "Consola corporal en vivo" de NOOP
+  (captura latido-a-latido por BLE) es **exclusiva de WHOOP** — el selector de banda solo
+  ofrece *WHOOP 4.0 / WHOOP 5.0/MG* y el log escanea solo WHOOP (*"WHOOP PUFFIN service 1150
+  detected but unsupported"*). NOOP **NO** conecta Polar ni bandas BLE genéricas en vivo;
+  ingiere Polar/Mi Band **por Apple Health / importación**, no por su propio BLE. Implicación
+  para TID-MAX: para capturar R-R del Polar usamos **nuestro** `polar_capture.py` (perfil BLE
+  estándar 0x2A37), que sí lee Verity/H10 nativamente — no dependemos del BLE de NOOP.
 - **Etiquetado honesto** en toda la UI: *"estimación en el dispositivo, no es un
   diagnóstico"*, *"importa un CSV de WHOOP para un % real"*. Buen tono; copiémoslo.
 - **Hidratación** con meta ajustada por esfuerzo, y **correlaciones** entre métricas con
