@@ -25,6 +25,8 @@ import json
 import csv
 from datetime import datetime, timezone, timedelta
 
+import hrv_rr  # pipeline de HRV sobre R-R crudo (RMSSD/SDNN/pNN50, Poincaré, DFA-α1)
+
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = sys.argv[1] if len(sys.argv) > 1 else os.path.join(SCRIPT_DIR, "datos")
 OUT_DIR = sys.argv[2] if len(sys.argv) > 2 else os.path.join(DATA_DIR, "procesado")
@@ -474,13 +476,18 @@ def build_polar():
                     except ValueError:
                         pass
         esfuerzo = detecta_esfuerzo(serie)
-        out.append({
+        fila = {
             "archivo": name, "sujeto": subject, "muestras": len(hrs),
             "hr_prom": round(sum(hrs) / len(hrs)) if hrs else None,
             "hr_max": max(hrs) if hrs else None,
             "rr_muestras": len(rrs),
             "esfuerzo": esfuerzo,
-        })
+        }
+        # El R-R crudo ya no se tira: se procesa (ectópicos → RMSSD/SDNN/pNN50,
+        # Poincaré, DFA-α1, RMSSD por ventanas). Esto es lo que WHOOP NO da por API.
+        if rrs:
+            fila["hrv"] = hrv_rr.analiza_rr(rrs)
+        out.append(fila)
     return out
 
 
