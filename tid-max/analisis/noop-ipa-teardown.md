@@ -365,6 +365,13 @@ para TID-MAX:
   cafeína."* Es **inferencia causal ligera** que liga los hábitos del diario → outcomes
   (Carga/recuperación), teniendo en cuenta el **lag** (el alcohol de anoche pega hoy). Es
   justo el tipo de insight que el coach de TID-MAX podría dar con el contexto del atleta.
+  **Método (verificado en vivo):** por cada hábito compara días CON vs SIN y reporta
+  `avg CON vs avg SIN`, la **n de cada grupo**, el **% de cambio** y el **tamaño del efecto
+  (Cohen's d)** etiquetado (pequeño/moderado). Ejemplos reales de Carlos: *"Took a rest day?"*
+  → Carga +25% (63 vs 50, n=5 vs 13, d=0.57 moderado); *"Worked late?"* → −23% (d=−0.56);
+  *"Consumed caffeine?"* → +10% (d=0.23 pequeño). **Clave de honestidad:** todo se marca
+  **"EXPLORATORIO"** porque la n es chica — no se vende como causa probada. Ese rigor
+  (efecto + n + exploratorio) es exactamente cómo TID-MAX debe presentar estos hallazgos.
 - **Experimento personal (N-of-1, "SOLO LOCAL").** Eliges un hábito que registras, un
   resultado y una ventana corta → una prueba A/B personal limpia. Feature de autoexperimento
   sofisticada y barata de implementar.
