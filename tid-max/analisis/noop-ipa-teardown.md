@@ -351,5 +351,34 @@ Consistencia 81% (+17%), Horas vs Necesarias 75% (+7%), Reparador 56% (−2%), R
   nada hasta que tú lo pidas."* — refuerza el carácter local-first (y el "NO copiar" del
   coach BYO-key).
 
+### A.10 Las features de INTELIGENCIA (lo más valioso para copiar)
+Más allá de visualizar datos, NOOP tiene una capa de *análisis* que es la más interesante
+para TID-MAX:
+
+- **Diario de hábitos (Sí/No).** Preguntas diarias agrupadas: Nutrición (alcohol, cafeína
+  tarde, comer antes de dormir), Suplementos (magnesio), Estilo de vida (pantalla en cama,
+  sauna, compartir cama, leer antes de dormir), Salud (enfermo), Comportamiento (estrés) +
+  **13 ítems "Otro"** y **ítems personalizados** ("Add a custom item"). Misma atribución de
+  día que WHOOP (la noche/día previos) para que registros e importaciones coincidan.
+- **Análisis "¿Qué te mueve?" (causal con retardo).** *"Clasificado y con retardo en cuenta:
+  qué hábitos realmente mueven tu Carga, más tu respuesta personal a la dosis de alcohol y
+  cafeína."* Es **inferencia causal ligera** que liga los hábitos del diario → outcomes
+  (Carga/recuperación), teniendo en cuenta el **lag** (el alcohol de anoche pega hoy). Es
+  justo el tipo de insight que el coach de TID-MAX podría dar con el contexto del atleta.
+- **Experimento personal (N-of-1, "SOLO LOCAL").** Eliges un hábito que registras, un
+  resultado y una ventana corta → una prueba A/B personal limpia. Feature de autoexperimento
+  sofisticada y barata de implementar.
+- **Cafeína con modelo de semivida** (5-6 h): registras ingesta (Ahora/hace 1-3h) y estima
+  cuánta sigue activa; límite opcional antes de dormir. Honesto: *"es una guía, no una
+  medición."*
+- **Ánimo 1-5** (emoji) con etiquetado honesto: *"Autoseguimiento, no una evaluación clínica.
+  Si el ánimo bajo persiste, habla con un profesional. Mereces apoyo."*
+
+**Lectura para TID-MAX:** esta capa (diario de hábitos → análisis causal con lag →
+experimentos N-of-1) es **la que mejor encaja con nuestro coach con contexto del atleta**.
+NOOP lo hace genérico; nosotros podríamos hacerlo dirigido (el coach sabe el plan y los
+umbrales del atleta). Es un diferenciador fuerte y copiable sin tocar hardware.
+
 > **Dossier NOOP completo** — binario + las 5 pestañas (Hoy/Tendencias/Sueño/Entrenador/Más),
-> captura en vivo y sus detalles. Sin capturas pendientes.
+> captura en vivo, la capa de inteligencia (diario/análisis/N-of-1) y sus detalles.
+> Sin capturas pendientes.
