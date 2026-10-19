@@ -261,6 +261,22 @@ sostener.
 Esto refuerza la recomendación #1 del dossier: **pipeline de R-R crudo → RMSSD por
 ventanas → DFA-α1 (Plews) / Poincaré**. NOOP demuestra que es viable y lo enseña en UI.
 
-### A.5 Pendiente de captura
+### A.5 Drill-down de una métrica (ej. "Frecuencia cardíaca media")
+Al tocar cualquier señal se abre su detalle, con un layout reusable:
+- **Selector de rango fino**: M · 2S · 3S · L · 3M · 6M · 1A · TODO (día → 2–3 semanas →
+  mes → …).
+- Valor grande + fecha + *"30 lecturas · mes"* (cuántos datos respaldan el número).
+- Gráfica de área con puntos + footer **VENTANA / PUNTOS / MÁS RECIENTE**.
+- Tarjetas: **PROMEDIO con sparkline de 30 días**, **MÍN**, **MÁX**, **Δ vs período
+  anterior** (`+1 bpm vs mes ant.` con chip de tendencia), **Más reciente**.
+- **Tabla "LECTURAS" con columna `Fuente` por fila** (Fecha · Valor · WHOOP): la
+  procedencia llevada **al nivel de cada lectura**, no sólo de la métrica. Es la
+  confirmación más fuerte de la filosofía "cada dato sabe de dónde viene".
+
+Para TID-MAX: este detalle (Δ-vs-período, sparkline, tabla con fuente por fila) es un
+**componente reusable** — se define una vez y sirve para cualquier métrica. Encaja con el
+badge de procedencia ya recomendado, llevándolo a nivel de fila.
+
+### A.6 Pendiente de captura
 Falta sólo **"Entrenador"** (el coach de NOOP) para cerrar el panorama. Se anexará aquí
 cuando se capture.
