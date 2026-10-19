@@ -229,6 +229,24 @@ segundos).
 6. **Métricas de sueño que nos faltan:** *Deuda de sueño*, *Horas vs Horas Necesarias*,
    *Consistencia* — todas derivables de lo que ya baja WHOOP.
 
-### A.4 Pendiente de captura
-Faltan **"Entrenador"** (el coach de NOOP) y **"Más → En vivo"** (sensor en tiempo real)
-para cerrar el panorama. Se anexarán aquí cuando se capturen.
+### A.4 Pantalla "Cronología profunda" — el pipeline de R-R expuesto
+La pantalla más relevante para TID-MAX. Subtítulo: *"Cada segundo de tu día, con zoom."*
+Pestañas: **Frecuencia cardíaca · rMSSD por ventanas · SpO2 · …** con timeline
+interactivo (*"Pinch to zoom · drag to pan · hold to read"*) y toggle de procedencia
+**"En propiedad / Todo"** sobre la fuente (WHOOP).
+
+- **"rMSSD por ventanas"** es el hallazgo clave: NOOP calcula **RMSSD rodante (por
+  ventanas) sobre el R-R crudo**, no un solo número diario. Ése es **el eslabón
+  intermedio que a TID-MAX le falta**: hoy tomamos un RMSSD/día ya calculado por WHOOP;
+  deberíamos calcular RMSSD por ventanas desde el R-R del Polar que ya capturamos. Es el
+  paso natural *antes* de DFA-α1 (que también se computa por ventanas).
+- **Estado vacío honesto** (*"No hay frecuencia cardíaca aquí — Aún no se ha descargado
+  nada para esta ventana"*): "Hoy" sale vacío porque los datos de Carlos son **CSV de
+  WHOOP importado (histórico)**, no un stream en vivo. Confirma el camino de ingesta.
+
+Esto refuerza la recomendación #1 del dossier: **pipeline de R-R crudo → RMSSD por
+ventanas → DFA-α1 (Plews) / Poincaré**. NOOP demuestra que es viable y lo enseña en UI.
+
+### A.5 Pendiente de captura
+Falta sólo **"Entrenador"** (el coach de NOOP) para cerrar el panorama. Se anexará aquí
+cuando se capture.
