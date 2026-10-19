@@ -398,6 +398,32 @@ experimentos N-of-1) es **la que mejor encaja con nuestro coach con contexto del
 NOOP lo hace genérico; nosotros podríamos hacerlo dirigido (el coach sabe el plan y los
 umbrales del atleta). Es un diferenciador fuerte y copiable sin tocar hardware.
 
-> **Dossier NOOP completo** — binario + las 5 pestañas (Hoy/Tendencias/Sueño/Entrenador/Más),
-> captura en vivo, la capa de inteligencia (diario/análisis/N-of-1) y sus detalles.
-> Sin capturas pendientes.
+### A.11 Mapa de navegación completo + métodos avanzados
+**Arquitectura de información de NOOP (menú "Más"):**
+- **INSIGHTS:** Lo que te mueve · Inteligencia · Análisis · Explorar · Comparar
+- **BODY:** En vivo · Entrenamientos · Registro de fuerza · Salud · **Cuaderno de
+  laboratorio** · Estrés · Respira · Intervalos · Ritmo
+- **DATA · APP** (ajustes/exportación)
+
+Dos métodos nuevos (más sofisticados que el CON/SIN):
+- **Lag explícito por hallazgo.** Cada relación hábito→métrica muestra SU retardo: etiqueta
+  *"same day"* o *"2 mornings later"*. Ej.: la cafeína baja la Carga **2 mañanas después**
+  (no el mismo día). Es clave — el efecto no siempre es inmediato, y mostrar el lag correcto
+  evita conclusiones falsas.
+- **Curva dosis-respuesta con prior bayesiano.** Sección "Dosis-respuesta · CURVA PERSONAL ·
+  **AJUSTADA AL PRIOR**": en vez de binario CON/SIN, ajusta una curva continua *"cada unidad
+  extra ≈ 4.0 HRV más bajo (n=9)"* con **shrinkage bayesiano** hacia un prior (regulariza
+  cuando hay pocos datos — por eso es honesto con n chica). Para la cafeína la "dosis" es el
+  horario (más tarde = peor).
+- **Framing honesto del análisis:** *"Patrones en tus propios datos: asociación, no causa."*
+- **Export PDF confirmado** (vista previa): informe de 1 página "Qué cambió" con deltas
+  (recuperación/sueño/HRV/RHR/esfuerzo), rango 30d/90d/6M/1A, *"nada sale del dispositivo"*.
+
+**Lectura para TID-MAX:** el **lag correcto por métrica** y la **curva dosis-respuesta con
+prior** son el estándar a copiar — nuestro coach con contexto del atleta puede además
+explicar el *porqué* fisiológico, no solo el patrón.
+
+> **Dossier NOOP completo** — binario + mapa de navegación completo (INSIGHTS/BODY/DATA/APP),
+> las 5 pestañas, captura en vivo, la capa de inteligencia (diario → análisis causal con lag
+> por hallazgo → dosis-respuesta bayesiana → N-of-1) y sus métodos estadísticos
+> (Cohen's d, Pearson r+p, dosis-respuesta con prior). Sin pendientes.
