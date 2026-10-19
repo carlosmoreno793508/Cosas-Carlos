@@ -301,6 +301,35 @@ timeline), eficiencia %, *"compara con tu típico de 30 días"* (contexto vs bas
 personal), siestas manuales y **Deuda de sueño** — todo lo que ya vimos en el catálogo
 "Explorar", ahora renderizado.
 
-### A.7 Pendiente de captura
-Falta sólo **"Entrenador"** (el coach de NOOP) para cerrar el panorama. Se anexará aquí
-cuando se capture.
+### A.7 Pantalla "Entrenador" (el coach) — cierra el panorama
+La última pantalla. Confirma al pie de la letra lo que vio el teardown del binario:
+*"El coach usa tu propia clave de API. Elige un proveedor, pega una clave y selecciona un
+modelo. Tu clave se guarda de forma segura en el Llavero y nunca sale de este iPhone salvo
+en la solicitud que tú haces."*
+
+- **Proveedores:** OpenAI · Anthropic · Google Gemini · **Custom (OpenAI-compatible)**
+  (Ollama/LM Studio/llama.cpp). Modelo seleccionable (ej. `gpt-5-mini`).
+- *"Esta es la única función que sale de este iPhone."* → NOOP es local-first; el coach es
+  la **única** salida a la nube, y con la llave del usuario.
+
+**Veredicto (refuerza la recomendación "NO copiar" #8):** el modelo "trae-tu-API-key" es
+lo que hace a NOOP 100% local/privado, pero traslada al usuario la fricción (conseguir y
+pagar su propia API key) y **no conoce el contexto del atleta**. La ventaja de TID-MAX es
+exactamente la contraria: **coach servido por nosotros, con el perfil/plan/umbrales del
+atleta cargados**. No lo cambiemos.
+
+### A.8 "vs lo típico" en todo (patrón de contextualización)
+El detalle de sueño muestra CADA métrica contra la **línea base personal de 30 días**, no
+contra un promedio poblacional: Descanso 80% (+9% vs típico), Eficiencia 86% (−3%),
+Consistencia 81% (+17%), Horas vs Necesarias 75% (+7%), Reparador 56% (−2%), Respiración
+16.1 (−0.6 rpm). Fases "vs lo habitual" (Profundo +10m, REM −3m, Ligero +14m).
+
+- **Modelo de Deuda de sueño explicado:** *"Meeting that complete sleep need clears the
+  displayed debt; recent shortfalls carry forward at a reduced weight."* (Balance −1h4m,
+  necesidad 8h/noche, ventana 14 noches). Algoritmo concreto y copiable.
+- **Para TID-MAX:** comparar siempre contra el baseline personal del atleta (no contra la
+  población) hace el número accionable — es más honesto y más útil para el coach.
+- **Otro bug i18n:** esa tarjeta de deuda sale en inglés (como la nota de Tendencias).
+
+> **Dossier NOOP completo** — binario + las 5 pestañas (Hoy/Tendencias/Sueño/Entrenador/Más)
+> y sus detalles. Sin capturas pendientes.
