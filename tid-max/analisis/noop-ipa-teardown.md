@@ -372,6 +372,18 @@ para TID-MAX:
   *"Consumed caffeine?"* → +10% (d=0.23 pequeño). **Clave de honestidad:** todo se marca
   **"EXPLORATORIO"** porque la n es chica — no se vende como causa probada. Ese rigor
   (efecto + n + exploratorio) es exactamente cómo TID-MAX debe presentar estos hallazgos.
+- **Correlaciones entre métricas (Pearson r + p-valor).** Sección "Relaciones entre
+  métricas": por cada par reporta **r de Pearson, significancia (p<0,05) y n**, con etiqueta
+  verbal ("Relación Fuerte positivo"). Ejemplos reales de Carlos: *Descanso ↔ Carga*
+  r=+0.54 (n=248), *VFC ↔ Carga* r=+0.65 — "qué tanto una buena noche se refleja en la carga
+  de la mañana siguiente". Complementa el análisis CON/SIN (Cohen's d): aquí es correlación
+  continua **con prueba de significancia**. Para TID-MAX: mostrar r + p + n (no solo "sube/
+  baja") es el estándar honesto.
+- **Costo de actividad por deporte** (ya en `noop-metricas.md` como *Activity Cost*): por
+  deporte estima puntos de Carga que "cuesta" la mañana siguiente y días de rebote, con
+  **etiqueta de confianza por n** ("Construyendo" <~10 sesiones vs "Sólida"). Insight real:
+  para Gael *Swimming apenas mueve la Carga del día siguiente* (n=162) — su deporte base
+  tiene costo de recuperación casi nulo.
 - **Experimento personal (N-of-1, "SOLO LOCAL").** Eliges un hábito que registras, un
   resultado y una ventana corta → una prueba A/B personal limpia. Feature de autoexperimento
   sofisticada y barata de implementar.
