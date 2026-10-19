@@ -331,5 +331,18 @@ Consistencia 81% (+17%), Horas vs Necesarias 75% (+7%), Reparador 56% (−2%), R
   población) hace el número accionable — es más honesto y más útil para el coach.
 - **Otro bug i18n:** esa tarjeta de deuda sale en inglés (como la nota de Tendencias).
 
-> **Dossier NOOP completo** — binario + las 5 pestañas (Hoy/Tendencias/Sueño/Entrenador/Más)
-> y sus detalles. Sin capturas pendientes.
+### A.9 Captura en vivo ("Choose a workout") + coach Custom
+- **Grabación de entrenamiento en vivo:** *"Pick an activity to begin recording heart rate,
+  effort, peak, and average."* Actividades: Running · Walking · Hiking · Cycling ·
+  **Open-water swim** — todas con GPS Outdoor. Es la entrada al modo en vivo (BLE + el
+  keep-alive de audio mudo que vimos en el binario). **Incluye natación en aguas abiertas**,
+  lo que conecta directo con el módulo de natación de TID-MAX (`modulo-natacion-tidmax.md`).
+  Es el flujo que usaríamos para probar el Polar en vivo y alimentar el pipeline de R-R.
+- **Coach Custom (OpenAI-compatible) a detalle:** URL del servidor (ej.
+  `http://localhost:11434/v1` = Ollama), toggle de encabezado **Bearer / x-api-key**, modelo
+  seleccionable, clave opcional. *"Se queda en tu red; nada sale de este iPhone… No se envía
+  nada hasta que tú lo pidas."* — refuerza el carácter local-first (y el "NO copiar" del
+  coach BYO-key).
+
+> **Dossier NOOP completo** — binario + las 5 pestañas (Hoy/Tendencias/Sueño/Entrenador/Más),
+> captura en vivo y sus detalles. Sin capturas pendientes.
