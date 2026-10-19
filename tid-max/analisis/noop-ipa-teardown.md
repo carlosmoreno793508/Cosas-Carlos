@@ -277,6 +277,30 @@ Para TID-MAX: este detalle (Δ-vs-período, sparkline, tabla con fuente por fila
 **componente reusable** — se define una vez y sirve para cualquier métrica. Encaja con el
 badge de procedencia ya recomendado, llevándolo a nivel de fila.
 
-### A.6 Pendiente de captura
+### A.6 Pantalla "Sueño", "Carga de entrenamiento" y "Exportar"
+Más pantallas capturadas, con 4 patrones de producto nuevos:
+
+- **Badge de fuente BAJO la métrica hero.** El score de sueño (80/100 "Bien") lleva el
+  chip **`WHOOP`** justo debajo del anillo. La procedencia no es un detalle escondido:
+  está al lado del número principal. Es la validación más fuerte de la recomendación del
+  *badge de procedencia* — y a nivel hero, no sólo en tablas.
+- **"¿Por qué este sueño?"** — enlace de **explicabilidad** sobre una métrica derivada
+  (por qué la app decidió esa ventana de sueño). Transparencia que genera confianza; TID-MAX
+  puede hacer lo mismo con el coach ("por qué este número").
+- **Exportar informe en PDF de 1 página** — *"recuperación, sueño, VFC, FC en reposo y
+  esfuerzo en un rango, guardado en tu iPhone."* TID-MAX ya genera reportes; un **PDF
+  compartible de una página** es una feature directa (para mandar al entrenador/médico).
+- **Calendario heatmap + ACWR con gating honesto.** Calendario tipo GitHub de 247 días
+  (Agotado→En su pico, rojo→verde). La tarjeta de **Carga de entrenamiento (crónica vs
+  aguda = ACWR)** dice *"Necesita 14+ días consecutivos de Esfuerzo para empezar. 0 hasta
+  ahora."* — no inventa un número sin datos suficientes. TID-MAX ya calcula ACWR; copiar
+  ese gating honesto evita falsos positivos.
+
+Detalle de sueño confirmado: desglose de fases (Despierto/REM/Ligero/Profundo con
+timeline), eficiencia %, *"compara con tu típico de 30 días"* (contexto vs baseline
+personal), siestas manuales y **Deuda de sueño** — todo lo que ya vimos en el catálogo
+"Explorar", ahora renderizado.
+
+### A.7 Pendiente de captura
 Falta sólo **"Entrenador"** (el coach de NOOP) para cerrar el panorama. Se anexará aquí
 cuando se capture.
