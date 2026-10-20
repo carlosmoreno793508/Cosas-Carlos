@@ -372,6 +372,12 @@ para TID-MAX:
   *"Consumed caffeine?"* → +10% (d=0.23 pequeño). **Clave de honestidad:** todo se marca
   **"EXPLORATORIO"** porque la n es chica — no se vende como causa probada. Ese rigor
   (efecto + n + exploratorio) es exactamente cómo TID-MAX debe presentar estos hallazgos.
+  **El análisis corre sobre 4 métricas-objetivo** (pestañas Carga / HRV / Descanso / RHR):
+  cada una recalcula su propio ranking de hábitos, con su lag y su Cohen's d. Un mismo
+  hábito puede pegar distinto según el objetivo y el lag — ej. de Gael: estirar mueve su
+  **HRV** más (−19%, d=−0.74) que su Carga (−15%, d=−0.36); la cafeína sube el HRV **el
+  mismo día** (+20%, d=0.70) pero lo baja **2 mañanas después** (−4 ms). Esos signos
+  opuestos según el retardo son justo por qué el lag correcto importa tanto.
 - **Correlaciones entre métricas (Pearson r + p-valor).** Sección "Relaciones entre
   métricas": por cada par reporta **r de Pearson, significancia (p<0,05) y n**, con etiqueta
   verbal ("Relación Fuerte positivo"). Ejemplos reales de Carlos: *Descanso ↔ Carga*
