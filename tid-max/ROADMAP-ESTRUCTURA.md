@@ -44,26 +44,38 @@ Destilados de NOOP; son la "marca de calidad" del producto:
 - ✅ `software/recovery_score.py` — **score de Carga** (z-score + logística, pesos
   55/20/15/5/5, logística k=1.6/z0=-0.2, baseline EWMA 14/21 noches, gate cold-start,
   detección-no-aplicación de saturación parasimpática). (PR #53)
+- ✅ `software/sleep_score.py` — **score de Descanso** (compuesto 0.50/0.20/0.20/0.10 +
+  necesidad personalizada cuartil-75/piso poblacional + **deuda de sueño** 14n/0.55). (PR #53)
+- ✅ `software/strain_score.py` — **score de Esfuerzo** (Karvonen→Edwards/Banister→log D=7201,
+  re-escala 0-21↔0-100) + **ACWR** (EWMA CTL42/ATL7, TSB, estados). (PR #53)
+- ✅ `software/live_session.py` — **loop esfuerzo-objetivo** ("guardián silencioso": zona FC
+  condicionada por Carga, warmup/stale/dwell/cooldown/histéresis, PUSH/EASE_OFF). (PR #53)
 - ✅ `analisis/noop-ipa-teardown.md` — dossier completo (Anexos A: UI; B: código fuente).
 - ✅ Validación N-of-1 con datos reales de Carlos: HRV↔Carga +0.96, RHR↔Carga −0.79,
   necesidad↔Descanso +0.82, calorías↔Esfuerzo +0.82 → confirman las jerarquías del motor.
 
 ---
 
-## FASE 1 — Motor de scores completo  ⭐ núcleo del producto
+## FASE 1 — Motor de scores completo  ⭐ núcleo del producto — ✅ COMPLETADA (PR #53)
 
-Completar los 3 anillos + el loop. Todo stdlib-only, con autoprueba `__main__`, mismo estilo
-que `hrv_rr.py` / `recovery_score.py`.
+Los 3 anillos + el loop, stdlib-only con autoprueba `__main__`. **Pesos/constantes portados
+fiel del código fuente de `ryanbr/noop`** (`StrainScorer`, `AnalyticsEngine.Rest`, `SleepDebt`,
+`TrainingLoadEngine`, `LiveSessionEngine`) y validados con los datos reales de Carlos.
 
-| Entregable | Archivo | Contenido | Criterio de aceptación |
-|---|---|---|---|
-| **Descanso** | `software/sleep_score.py` | Necesidad de sueño (ratio, driver dominante) + eficiencia + reparador (deep+REM) + consistencia de horario + **deuda de sueño (14n, déficits recientes con peso decreciente, necesidad personal ~8h)** + respiración | z=baseline → score neutro; deuda = Σ(dormido−necesidad) con decaimiento; cold-start → None |
-| **Esfuerzo** | `software/strain_score.py` | Zonas Karvonen (HR-reserva) → TRIMP **Edwards** (default, umbral 50% HRR) / **Banister** (exponencial, opcional) → log 0-100; piso por pasos/energía; re-escala a 0-21 para vista | Edwards hace que pesas marquen ~0 (volumen de fuerza NO toca Esfuerzo HR); ambas escalas mismo techo |
-| **ACWR** | dentro de `strain_score.py` | Carga crónica vs aguda: aguda ≈ EWMA 7d, crónica ≈ EWMA 28d, ratio; requiere ≥14 días consecutivos | Devuelve None hasta 14 días; ratio en rango sano ~0.8–1.3 |
-| **Loop esfuerzo-objetivo** | `software/live_session.py` | Recuperación de hoy (Carga) → **zona FC objetivo**; clasifica tiempo dentro/debajo/encima; guía "silencio = vas bien" | zona se estrecha/baja con Carga baja; "demasiado corto para juzgar" < N min |
+| Entregable | Archivo | Estado |
+|---|---|---|
+| **Descanso** (0.50/0.20/0.20/0.10 + deuda 14n/0.55 + necesidad personalizada) | `software/sleep_score.py` | ✅ |
+| **Esfuerzo** (Karvonen→Edwards/Banister→log D=7201, 0-21↔0-100) | `software/strain_score.py` | ✅ |
+| **ACWR** (EWMA CTL42/ATL7, TSB, estados; ≥14 días contiguos) | en `strain_score.py` | ✅ |
+| **Loop esfuerzo-objetivo** (zona FC por Carga, PUSH/EASE_OFF, silencio=ok) | `software/live_session.py` | ✅ |
 
-Integración: cablear en `tid_data.py` (ya adjunta `fila["hrv"]`), añadir `fila["carga"]`,
-`fila["descanso"]`, `fila["esfuerzo"]`, `fila["acwr"]`.
+Validaciones clave en las autopruebas: Descanso de la noche real de Carlos ≈ 88 (app 80);
+pesas a 45% HRR → Esfuerzo 0 por Edwards (el volumen de fuerza no toca el Esfuerzo HR);
+banda a Charge 66 → **136–158 bpm** (idéntico al Live Session real de Carlos).
+
+**Pendiente de Fase 1 (siguiente paso):** cablear en `tid_data.py` (ya adjunta `fila["hrv"]`)
+→ `fila["carga"]`, `fila["descanso"]`, `fila["esfuerzo"]`, `fila["acwr"]`, alimentando los
+baselines personales (EWMA) desde el historial del atleta.
 
 ---
 
