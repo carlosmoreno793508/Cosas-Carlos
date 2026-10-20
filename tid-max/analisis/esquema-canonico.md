@@ -1,4 +1,4 @@
-# Esquema de datos canónico — TID-MAX (v1.0)
+# Esquema de datos canónico — TID-MAX (v1.1)
 
 El **contrato** entre la ingesta y todo lo demás (dashboard, coach, agentes AI). No importa de qué
 dispositivo venga el dato (WHOOP, Polar, Garmin, banda TID-MAX…): se normaliza a este esquema.
@@ -53,7 +53,14 @@ Lo produce `software/tid_data.py` en `datos/procesado/`.
 | swim_km | km | registro manual |
 | swim_sessions | # | registro manual |
 | pesas_min | min | registro manual |
-| fuentes | [string] | qué fuentes aportaron ese día |
+| **carga_tidmax** / carga_banda | 0–100 / rojo·amarillo·verde | **TID-MAX** (`recovery_score`) |
+| **descanso_tidmax** | 0–100 | **TID-MAX** (`sleep_score`) |
+| **esfuerzo_ref_0_100** | 0–100 | WHOOP (Day Strain re-escalado, **referencia**) |
+| **acwr / ctl / atl / tsb** | ratio / carga | **TID-MAX** (`strain_score`, en la fila más reciente) |
+| fuentes | [string] | qué fuentes aportaron ese día (incluye `tidmax` si calculamos scores) |
+> Los `*_tidmax` los produce el pase `_scores_tidmax` de `tid_data.build_daily` a partir de los
+> datos crudos + baselines personales rodantes; `esfuerzo_ref_0_100` es el score AJENO de WHOOP
+> re-escalado y marcado **referencia** (recomputamos el nuestro cuando haya stream de HR del Polar).
 
 ### `workouts[]` — una fila por sesión
 `fecha, inicio, fin, dur_min, deporte, strain, fc_prom, fc_max, kcal, km_whoop, fuente[, atleta]`
@@ -67,6 +74,30 @@ Lo produce `software/tid_data.py` en `datos/procesado/`.
 ### `polar_capturas[]` — resumen de cada captura BLE del Polar
 `archivo, sujeto, muestras, hr_prom, hr_max, rr_muestras`
 > El sujeto sale del nombre del archivo (`polar_<sujeto>_...csv`) para no mezclar pruebas vs. Gael.
+
+## Procedencia (3 ejes) — `software/provenance.py`
+
+Inspirado en NOOP (columna `Source` + tabla `scoreInputProvenance`; ver dossier). Todo valor puede
+llevar su procedencia para que el producto **nunca muestre un número sin saber de dónde salió**.
+
+- **Eje 1 · Fuente** — `whoop_device` (BLE en vivo), `import_whoop`, `apple_health`, `polar`,
+  `garmin`, `oura`, `fitbit`, `manual`, `tidmax` (calculado por nosotros).
+- **Eje 2 · Tipo** — `medido` (sensor directo: HR, R-R) · `estimado` (derivado en dispositivo:
+  temp de piel, respiración) · `importado` · `derivado` (nuestros scores) · `manual` ·
+  `referencia` (score ajeno que solo guardamos como referencia).
+- **Eje 3 · Confianza + Madurez** — madurez por nº de noches de baseline:
+  `calibrando` (<4) → `construyendo` (<14) → `solida` (≥14).
+
+**Reglas de honestidad (codificadas + con tests en `provenance.py`):**
+1. **`no disponible ≠ 0`**: un dato ausente es `null`/`None`, jamás `0`. `marca(None, …)` → `None`.
+2. **Scores ajenos = referencia**: el recovery/strain de WHOOP u Oura se guarda como `referencia`
+   y **nunca gana** una fusión; recomputamos los nuestros (`tidmax`, tipo `derivado`).
+3. **Degradación por capacidad de fuente**: cada fuente solo provee lo que puede —
+   `polar` da HR+R-R en vivo pero **no** sueño profundo; WHOOP no da SpO₂ en vivo (necesita import).
+4. **Fusión "mejor valor por métrica"**: `medido > manual > importado > estimado/derivado >
+   referencia`, empatando por confianza, conservando la procedencia del valor elegido.
+5. **Dedup por solape temporal**: una sesión auto-detectada que pisa una guardada/importada
+   (incl. Apple Health) se omite.
 
 ## Reglas de normalización
 - Fechas: todo a `YYYY-MM-DD`; horas de sesión en **hora local** (aplicando `timezone_offset`).

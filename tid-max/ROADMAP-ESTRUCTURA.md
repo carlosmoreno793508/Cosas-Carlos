@@ -82,9 +82,11 @@ de HR del Polar (vive en `build_polar`, requiere captura — Fase 5).
 
 ---
 
-## FASE 2 — Procedencia y modelo de datos  (transversal)
+## FASE 2 — Procedencia y modelo de datos  (transversal) — ✅ COMPLETADA (PR #53)
 
-Actualizar `analisis/esquema-canonico.md` y el almacenamiento:
+Hecho: `software/provenance.py` (modelo de 3 ejes EJECUTABLE con fusión, dedup e invariantes
+de honestidad + autoprueba) y `analisis/esquema-canonico.md` v1.1 (sección Procedencia + campos
+`*_tidmax` en `daily[]`). Lo entregado:
 
 - **Badge de 3 ejes**: `fuente` (NOOP-device/import-WHOOP/import-AppleHealth/Polar/manual) ×
   `confianza` (Calibrando/Bien/Fuerte/Sólida/Genial) × `madurez` (Calibrando→Construyendo→Sólida).
