@@ -196,3 +196,15 @@ cuanto haya banda disponible.
 | Coach BYOK local-first | `tid_coach.py` (Fase 3) |
 | 5 pestañas + anillos + drill-down + heatmap + PDF | PWA `app/` (Fase 4) |
 | Raw sensor export (streams muestra-a-muestra) | `polar_capture.py` CSV (Fase 5) |
+
+---
+
+## Extras del motor (post-merge PR #53)
+
+Dos módulos distintivos de NOOP que faltaban, puros y testeados (sin hardware):
+
+- ✅ `software/fitness_age.py` — **Edad fitness + VO₂max** (Nes 2011 HUNT, variante cintura;
+  edad fitness auto-consistente). Validado: VO₂max de Carlos ~60.7 ≈ el ~59 que mostraba la app.
+- ✅ `software/readiness.py` — **HRV readiness (Plews/Altini, SWC)**: baseline de 7 noches en
+  dominio log vs banda normal ±0.5·SD → primed/normal/suppressed + overreaching watch. **Sólo
+  lectura, no cambia la Carga.** Cold-start honesto (<14 noches → None).
