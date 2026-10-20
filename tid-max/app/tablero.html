@@ -41,7 +41,21 @@
 body{margin:0;background:radial-gradient(1200px 620px at 82% -12%, var(--ground2), transparent 60%), var(--ground);
   color:var(--ink);font-family:"SF Pro Text",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   line-height:1.5;-webkit-font-smoothing:antialiased;}
-.wrap{max-width:760px;margin:0 auto;padding:22px 16px 64px;}
+.wrap{max-width:760px;margin:0 auto;padding:22px 16px 96px;}
+/* barra de pestañas inferior */
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;justify-content:center;gap:2px;
+  padding:8px 8px calc(8px + env(safe-area-inset-bottom)) 8px;
+  background:color-mix(in srgb,var(--card) 88%,transparent);backdrop-filter:blur(14px);
+  border-top:1px solid var(--line);}
+.tabbar button{flex:1;max-width:120px;display:flex;flex-direction:column;align-items:center;gap:3px;
+  background:none;border:none;color:var(--faint);font-size:.64rem;font-weight:700;letter-spacing:.02em;
+  padding:4px 2px;border-radius:12px;cursor:pointer;}
+.tabbar button svg{width:22px;height:22px;fill:currentColor;}
+.tabbar button svg[fill="none"]{stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.tabbar button.active{color:var(--accent);}
+.tab{animation:fade .18s ease;}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@media print{.tabbar{display:none !important;} .tab[hidden]{display:block !important;}}
 .num{font-variant-numeric:tabular-nums lining-nums;}
 header.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:4px;}
 .brand{font-weight:800;letter-spacing:.14em;font-size:.8rem;color:var(--accent);text-transform:uppercase;}
@@ -112,6 +126,17 @@ h2{font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mu
 .stile{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:10px;}
 .stile .k{color:var(--muted);font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;font-weight:700;}
 .stile .v{font-size:1.25rem;font-weight:800;}
+/* coach BYOK */
+.pills{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;}
+.ppill{border:1px solid var(--line);background:var(--card2);color:var(--muted);border-radius:999px;
+  padding:6px 12px;font-size:.82rem;font-weight:700;cursor:pointer;}
+.ppill.on{color:var(--ink);border-color:color-mix(in srgb,var(--accent) 55%,var(--line));background:color-mix(in srgb,var(--accent) 12%,var(--card2));}
+.cin{width:100%;background:var(--card2);border:1px solid var(--line);border-radius:10px;color:var(--ink);
+  padding:10px 12px;font-size:.9rem;margin-bottom:8px;font-family:inherit;}
+.cin::placeholder{color:var(--faint);}
+.cbtn{width:100%;background:color-mix(in srgb,var(--good) 22%,var(--card2));border:1px solid color-mix(in srgb,var(--good) 40%,var(--line));
+  color:var(--ink);border-radius:12px;padding:11px;font-size:.92rem;font-weight:700;cursor:pointer;}
+.cbtn:hover{background:color-mix(in srgb,var(--good) 30%,var(--card2));}
 footer{color:var(--faint);font-size:.74rem;text-align:center;margin-top:24px;}
 footer b{color:var(--muted);}
 /* export PDF — 1 página, fondo claro, sin interacción */
@@ -139,43 +164,72 @@ footer b{color:var(--muted);}
   <h1 id="hoyfecha">Hoy</h1>
   <div class="sub" id="athsub">—</div>
 
-  <div class="card">
-    <div class="row" style="margin-bottom:8px">
-      <div style="font-weight:700">Resumen del día</div>
-      <span class="badge" id="madurez">—</span>
+  <!-- ===== HOY ===== -->
+  <section class="tab" data-tab="hoy">
+    <div class="card">
+      <div class="row" style="margin-bottom:8px">
+        <div style="font-weight:700">Resumen del día</div>
+        <span class="badge" id="madurez">—</span>
+      </div>
+      <div class="rings" id="rings"></div>
+      <div class="sub" style="margin:10px 2px 0;font-size:.84rem" id="recomend"></div>
     </div>
-    <div class="rings" id="rings"></div>
-    <div class="sub" style="margin:10px 2px 0;font-size:.84rem" id="recomend"></div>
-  </div>
+    <div class="card" id="hoy_destacados"></div>
+  </section>
 
-  <h2>Carga — últimos 90 días</h2>
-  <div class="card"><div class="sig" id="sig_carga"></div></div>
-
-  <h2>Señales diarias</h2>
-  <div class="card" id="signals"></div>
-
-  <h2>Sueño · anoche</h2>
-  <div class="card" id="sueno"></div>
-
-  <h2>Calendario de Carga</h2>
-  <div class="card">
-    <div class="calnav">
-      <button id="calprev" aria-label="Mes anterior">‹</button>
-      <div class="m" id="calmonth">—</div>
-      <button id="calnext" aria-label="Mes siguiente">›</button>
+  <!-- ===== TENDENCIAS ===== -->
+  <section class="tab" data-tab="tend" hidden>
+    <h2>Carga — últimos 90 días</h2>
+    <div class="card"><div class="sig" id="sig_carga"></div></div>
+    <h2>Señales diarias</h2>
+    <div class="card" id="signals"></div>
+    <h2>Calendario de Carga</h2>
+    <div class="card">
+      <div class="calnav">
+        <button id="calprev" aria-label="Mes anterior">‹</button>
+        <div class="m" id="calmonth">—</div>
+        <button id="calnext" aria-label="Mes siguiente">›</button>
+      </div>
+      <div class="cal" id="cal"></div>
+      <div class="heatleg"><span>Agotado</span><span class="heatbar"></span><span>En su pico</span></div>
     </div>
-    <div class="cal" id="cal"></div>
-    <div class="heatleg"><span>Agotado</span><span class="heatbar"></span><span>En su pico</span></div>
-  </div>
+    <h2>Qué se correlaciona con tu Carga</h2>
+    <div class="card" id="corr"></div>
+  </section>
 
-  <h2>Qué se correlaciona con tu Carga</h2>
-  <div class="card" id="corr"></div>
+  <!-- ===== SUEÑO ===== -->
+  <section class="tab" data-tab="sueno" hidden>
+    <h2>Sueño · anoche</h2>
+    <div class="card" id="sueno"></div>
+  </section>
+
+  <!-- ===== ENTRENADOR ===== -->
+  <section class="tab" data-tab="coach" hidden>
+    <h2>Entrenador</h2>
+    <div class="card" id="coachcard"></div>
+  </section>
+
+  <!-- ===== MÁS ===== -->
+  <section class="tab" data-tab="mas" hidden>
+    <h2>Procedencia (3 ejes)</h2>
+    <div class="card" id="provcard"></div>
+    <h2>Datos y exportación</h2>
+    <div class="card" id="mascard"></div>
+  </section>
 
   <footer>
     Scores <b>APROXIMADOS</b> — no son de WHOOP ni diagnóstico médico · motor local TID-MAX<br>
     <span id="dataorigin"></span>
   </footer>
 </div>
+
+<nav class="tabbar" id="tabbar">
+  <button data-go="hoy" class="active"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg><span>Hoy</span></button>
+  <button data-go="tend"><svg viewBox="0 0 24 24" fill="none"><path d="M3 17l5-6 4 3 8-9"/><path d="M17 5h4v4"/></svg><span>Tendencias</span></button>
+  <button data-go="sueno"><svg viewBox="0 0 24 24"><path d="M21 12.8A8 8 0 1 1 11.2 3 6.5 6.5 0 0 0 21 12.8z"/></svg><span>Sueño</span></button>
+  <button data-go="coach"><svg viewBox="0 0 24 24"><path d="M12 2l1.8 4.6L18 8l-4.2 1.4L12 14l-1.8-4.6L6 8l4.2-1.4z"/><circle cx="18.5" cy="17.5" r="1.6"/><circle cx="6" cy="16" r="1.2"/></svg><span>Entrenador</span></button>
+  <button data-go="mas"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg><span>Más</span></button>
+</nav>
 
 <script>
 "use strict";
@@ -451,6 +505,78 @@ function render(data){
 
   $("#dataorigin").textContent=data.origin==="demo"
     ?"datos demo (sin daily.json) — publica datos/procesado para datos reales":"datos: "+data.origin;
+
+  // ----- Hoy · destacados (resumen rápido) -----
+  (function(){
+    const items=[["VFC",fmt(hoy.hrv_ms)+" ms"],["FC reposo",fmt(hoy.rhr_bpm)+" lpm"],
+      ["Sueño",hoy.sleep_asleep_noche_h?hoy.sleep_asleep_noche_h+" h":"–"],
+      ["Esfuerzo",hoy.esfuerzo_ref_0_100!=null?fmt(hoy.esfuerzo_ref_0_100):"–"]];
+    $("#hoy_destacados").innerHTML=`<div style="font-weight:700;margin-bottom:10px">Destacados</div>
+      <div class="stiles">${items.map(([k,v])=>`<div class="stile"><div class="k">${k}</div><div class="v num">${v}</div></div>`).join("")}</div>`;
+  })();
+
+  // ----- Entrenador (coach BYOK local-first + recomendación local) -----
+  (function(){
+    const c=hoy.carga_tidmax;
+    let rec=[];
+    if(c!=null){
+      if(c<=34)rec.push("Carga baja: <b>recupérate</b>. Prioriza sueño y movilidad; evita alta intensidad hoy.");
+      else if(c<=67)rec.push("Carga media: <b>mantén</b>. Intensidad moderada, técnica sobre esfuerzo máximo.");
+      else rec.push("Carga alta: <b>empuja</b>. Tu cuerpo puede con una sesión exigente.");
+    }
+    if(hoy.deuda_sueno_min&&hoy.deuda_sueno_min>=30)rec.push(`Tienes <b>${Math.round(hoy.deuda_sueno_min)} min</b> de deuda de sueño: adelanta la hora de dormir.`);
+    if(hoy.acwr!=null&&hoy.acwr>1.5)rec.push(`ACWR <b>${fmt(hoy.acwr,2)}</b> (carga aguda alta vs crónica): cuida el riesgo de sobrecarga.`);
+    let cfg={};try{cfg=JSON.parse(localStorage.getItem("tidmax_coach")||"{}");}catch(e){}
+    const prov=cfg.prov||"openai";
+    $("#coachcard").innerHTML=`
+      <div style="font-weight:700;margin-bottom:8px">Recomendación de hoy</div>
+      ${rec.map(r=>`<div class="why">${r}</div>`).join("")||"<div class='sub'>Sin datos suficientes.</div>"}
+      <hr style="border:none;border-top:1px solid var(--line);margin:14px 0">
+      <div style="font-weight:700;margin-bottom:4px">Conectar un proveedor <span class="badge aprox">BYOK</span></div>
+      <div class="sub" style="font-size:.82rem;margin-bottom:10px">El coach usa <b>tu propia clave</b>. Se guarda solo en este navegador y <b>nunca sale salvo en tu petición</b>. Apúntalo a un modelo local (Ollama/LM Studio) y nada sale de tu red.</div>
+      <div class="pills" id="provpills">
+        ${["openai|OpenAI","anthropic|Anthropic","google|Gemini","local|Local (Ollama)"].map(p=>{const[v,l]=p.split("|");
+          return `<button class="ppill${v===prov?" on":""}" data-prov="${v}">${l}</button>`;}).join("")}
+      </div>
+      <input class="cin" id="coach_model" placeholder="Modelo (p. ej. gpt-5-mini / claude-sonnet-4-6 / llama3)" value="${cfg.model||""}">
+      <input class="cin" id="coach_url" placeholder="URL del servidor (solo local, p. ej. http://localhost:11434/v1)" value="${cfg.url||""}">
+      <input class="cin" id="coach_key" type="password" placeholder="Clave de API (opcional en local)" value="${cfg.key||""}">
+      <button class="cbtn" id="coach_save">Guardar configuración</button>
+      <div class="sub" id="coach_saved" style="font-size:.78rem;margin-top:8px"></div>`;
+    const pills=$("#coachcard").querySelectorAll(".ppill");
+    pills.forEach(b=>b.onclick=()=>{pills.forEach(x=>x.classList.remove("on"));b.classList.add("on");});
+    $("#coach_save").onclick=()=>{
+      const sel=$("#coachcard").querySelector(".ppill.on");
+      const nc={prov:sel?sel.dataset.prov:"openai",model:$("#coach_model").value.trim(),
+        url:$("#coach_url").value.trim(),key:$("#coach_key").value};
+      try{localStorage.setItem("tidmax_coach",JSON.stringify(nc));$("#coach_saved").textContent="Guardado en este navegador ✓";}
+      catch(e){$("#coach_saved").textContent="No se pudo guardar (almacenamiento bloqueado).";}
+    };
+  })();
+
+  // ----- Procedencia (3 ejes) + Más -----
+  $("#provcard").innerHTML=`
+    <div class="why"><b>Fuente</b>: de qué vino (WHOOP, Polar, Apple Health, manual, <b>tidmax</b>=calculado).</div>
+    <div class="why"><b>Tipo</b>: medido · estimado · importado · derivado · <b>referencia</b> (score ajeno, no gana).</div>
+    <div class="why"><b>Madurez</b>: calibrando (&lt;4 noches) → construyendo (&lt;14) → sólida.</div>
+    <div class="sub" style="margin-top:10px;font-size:.82rem">Regla: <b>“no disponible ≠ 0”</b> — un dato ausente se muestra vacío, nunca como 0. Los scores ajenos se guardan como referencia; recomputamos los nuestros.</div>`;
+  $("#mascard").innerHTML=`
+    <button class="cbtn" id="mas_pdf">⤓ Exportar informe (PDF, 1 página)</button>
+    <div class="sub" style="font-size:.82rem;margin-top:12px">${$("#dataorigin").textContent}</div>
+    <div class="sub" style="font-size:.78rem;margin-top:8px">Scores <b>APROXIMADOS</b> — no son los de WHOOP ni un diagnóstico médico. Motor local TID-MAX · basado en el teardown de NOOP (uso no comercial).</div>`;
+  $("#mas_pdf").onclick=()=>window.print();
+
+  // ----- navegación de pestañas -----
+  const titulos={hoy:"Hoy · "+(hoy.fecha||""),tend:"Tendencias",sueno:"Sueño",coach:"Entrenador",mas:"Más"};
+  const subs={hoy:(data.atleta?data.atleta+" · ":"")+rows.length+" lecturas",tend:"Últimos 90 días",
+    sueno:(hoy.fecha||""),coach:"Tu propia clave · local-first",mas:"Procedencia · exportar · acerca de"};
+  function go(tab){
+    document.querySelectorAll(".tab").forEach(s=>s.hidden=(s.dataset.tab!==tab));
+    document.querySelectorAll(".tabbar button").forEach(b=>b.classList.toggle("active",b.dataset.go===tab));
+    $("#hoyfecha").textContent=titulos[tab]||tab; $("#athsub").textContent=subs[tab]||"";
+    window.scrollTo({top:0,behavior:"instant"in window?"instant":"auto"});
+  }
+  document.querySelectorAll(".tabbar button").forEach(b=>b.onclick=()=>go(b.dataset.go));
 
   const pdf=$("#pdfbtn"); if(pdf) pdf.onclick=()=>window.print();
 }

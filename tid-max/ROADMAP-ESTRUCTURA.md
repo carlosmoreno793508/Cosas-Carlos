@@ -121,7 +121,15 @@ sólo `urllib`, clave sólo en cabecera, apuntable a Ollama/LM Studio local). Lo
 
 ---
 
-## FASE 4 — UX / estructura de la app (PWA en `app/`) — 🟡 NÚCLEO HECHO (PR #53)
+## FASE 4 — UX / estructura de la app (PWA en `app/`) — ✅ COMPLETADA (PR #53)
+
+**SPA de 5 pestañas** (`app/tablero.html`): barra inferior fija Hoy · Tendencias · Sueño ·
+Entrenador · Más, con iconos. Hoy (anillos + destacados), Tendencias (Carga 90d + señales +
+calendario mensual + correlación), Sueño (hipnograma + sub-scores), Entrenador (recomendación
+local + conectar proveedor BYOK OpenAI/Anthropic/Gemini/Ollama con clave guardada solo en el
+navegador), Más (procedencia 3 ejes + export PDF + disclaimer). Export PDF de 1 página.
+Pendiente opcional: integrar en `app/index.html` (la PWA grande ya existente).
+
 
 Hecho: `app/tablero.html` — vista "Hoy + Tendencias" autocontenida (lee `daily.json`/`data.json`
 o cae a demo embebido con los números reales de Carlos). Incluye los **3 anillos**
