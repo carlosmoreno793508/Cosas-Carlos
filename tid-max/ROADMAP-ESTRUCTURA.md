@@ -101,7 +101,12 @@ Tabla de procedencia inspirada en `scoreInputProvenance` (migración v29 de NOOP
 
 ---
 
-## FASE 3 — Capa de inteligencia
+## FASE 3 — Capa de inteligencia — ✅ COMPLETADA (PR #53)
+
+Hecho: `correlacion.py` (motor N-of-1 Pearson+OLS+p, alineación por día, lag, panel
+"qué se correlaciona" |r|≥0.30/n≥10), `explica.py` (explicabilidad "¿por qué este número?"
+que consume la traza de los scores sin recalcular) y `coach_llm.py` (coach BYOK local-first,
+sólo `urllib`, clave sólo en cabecera, apuntable a Ollama/LM Studio local). Lo planeado era:
 
 - **Motor de correlación N-of-1**: Pearson r por métrica/score sobre la ventana visible,
   **|r| ≥ 0.30, n ≥ 10** → panel "qué se correlaciona" (ya descrito en dossier A.10/A.11).
