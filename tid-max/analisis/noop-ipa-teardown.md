@@ -472,3 +472,127 @@ Aproximaciones, no las puntuaciones de WHOOP; no es un dispositivo médico."* �
 > por hallazgo → dosis-respuesta bayesiana → N-of-1), sus métodos estadísticos
 > (Cohen's d, Pearson r+p, dosis-respuesta con prior) y **la fórmula del score de
 > recuperación con pesos exactos (55/20/15/5/5)**. Sin pendientes.
+
+---
+
+## Anexo B — teardown del CÓDIGO FUENTE (`github.com/ryanbr/noop`) · 2026-10-20
+
+Carlos consiguió el repo fuente completo de NOOP ("la joya de la corona"). Es un artefacto
+distinto del `.ipa`: aquí se ve el **código real** y, sobre todo, un **informe de validación
+contra datos reales de WHOOP** que **corrige una suposición que teníamos** y entrega el motor
+de Carga con constantes exactas. Licencia **PolyForm Noncommercial 1.0.0** (uso no comercial:
+sirve de referencia/estudio, no para copiar-pegar en producto comercial).
+
+**Layout:** app iOS/watchOS/macOS en Swift (`Strand`, `Packages/*`) + app Android en Kotlin
+(`android/`), motor portado a ambas plataformas. Paquetes clave: `Packages/StrandAnalytics`
+(motor de scores), `Packages/WhoopProtocol` (decodificador BLE), `Packages/WhoopStore`
+(SQLite/GRDB). Decenas de docs en `docs/` (`PROTOCOL_*`, `BLE_REVERSE_ENGINEERING`,
+`DATA_MODEL`, `RR-OPTIMIZATION`, `FITNESS_AGE`, `VALIDATION_PROTOCOL`...). "Basado en"
+`johnmiddleton12/my-whoop` (WHOOP 4.0) y `b-nnett/goose` (WHOOP 5.0).
+
+### B.1 🔴 Corrección validada: la ventana "sueño profundo = compatible-WHOOP" está REFUTADA
+
+El texto de ayuda de la app (SWS-only = lectura inferior, compatible con WHOOP) **lo
+contradice su propio `docs/RR-OPTIMIZATION.md`** con datos reales (289,940 R-R, 8 noches,
+pareadas a export WHOOP):
+
+> "El sueño profundo tiene la HRV **más alta** (HR bajo, tono vagal alto), así que una ventana
+> profunda lee **más alto, no más bajo**, y correlacionó **negativamente** con WHOOP. El
+> over-read de NOOP vs WHOOP es **inflación por artefactos** de R-R escaso/recortado, **no**
+> una cuestión de ventana. **No uses la ventana profunda para perseguir el valor de WHOOP.**"
+
+**Lo que SÍ vive:** selección de ventana **por varianza/calidad** (no por etapa). Elegir las
+ventanas más quietas (menor varianza) y tomar la **mediana de RMSSD** movió la correlación
+leave-one-out con la recuperación de WHOOP de **−0.485 → +0.665 (n=20)**.
+
+→ **Implementado** en `software/hrv_rr.py` como `hrv_calidad()` (en vez del
+`whole_night`/`sws_only` que teníamos planeado). La distinción clave: **selección por
+etapa = muerta; por varianza = viva.**
+
+### B.2 🔵 Gap-aware RMSSD/pNN50 — mejora validada, ya portada
+
+Al borrar un latido ectópico, sus dos vecinos quedan adyacentes y la diferencia a través del
+"empalme" se cuenta como un delta latido-a-latido real; como RMSSD lo eleva al cuadrado, **un
+latido quitado infla RMSSD**. NOOP shippeo `cleanRRGapAware`/`rmssdGapAware`/`pnn50GapAware`
+(saltan cualquier diferencia que cruce un latido descartado). Resultado real: **MAE de HRV
+nocturna vs WHOOP 8.47 → 5.47 ms (−35%)**. En datos sin descartes es idéntico al camino plano.
+
+→ **Implementado** en `hrv_rr.py`: `limpia_segmentos()` (cleaning en segmentos contiguos),
+`rmssd_gap()`, `pnn50_gap()`, `poincare_gap()`. `analiza_rr` expone ahora `rmssd_gap_ms`,
+`pnn50_gap`, `poincare_gap`, `n_segmentos` junto a los planos (compatibilidad). Otros apuntes
+del doc: `ln(RMSSD)` (Plews) **no ayudó** en rango de HRV estrecho (parkeado); subir el floor
+de latidos por ventana a **20–30** (Baek 2015).
+
+### B.3 🟢 Score de Carga — constantes EXACTAS del código (confirma y amplía A.12)
+
+`RecoveryScorer.swift` (portado de `server/ingest/app/analysis/recovery.py`). z-score +
+logística, **declarado APPROXIMATE** (no WHOOP-idéntico):
+
+| Driver | Peso | Signo / estandarización |
+|---|---|---|
+| HRV vs baseline | **0.55** | z = (x−μ)/σ, ↑ mejor |
+| RHR vs baseline | 0.20 | z = (μ−x)/σ, ↓ mejor |
+| Sueño (calidad) | 0.15 | (sp − 0.85)/0.12, sin baseline |
+| Respiración | 0.05 | z = (μ−x)/σ, ↓ mejor |
+| Temp piel | 0.05 | **−\|Δ°C\|/1.0 simétrico** (frío o calor bajan) |
+| *(opc)* Recovery Index | 0.05 | −pendiente/2.0 bpm·h⁻¹ (RHR cayendo = bueno) |
+| *(opc)* Activity Balance | 0.05 | z=(μ−x)/σ del Effort de ayer |
+
+- z robusto: `σ = max(1.253·spread, 1e-9)`, spread = **EWMA de la desviación absoluta**
+  (1.253·MAD ≈ σ). Baseline EWMA: vida media **centro 14 noches / spread 21 noches**.
+- Logística: `100/(1+exp(−k·(z−z0)))`, **k=1.6, z0=−0.20** → z=0 ≈ **58%** (media WHOOP).
+  Bandas: Rojo ≤34, Amarillo ≤67, Verde >67.
+- **Cold-start:** si baseline HRV no usable (<4 noches válidas, `MIN_NIGHTS_SEED`) → **nil**
+  (más honesto que fabricar). Usable (provisional) ≥4; confiable ≥14 noches.
+- Términos ausentes se **caen y renormalizan** → sin un término el score es idéntico.
+- **Guard de saturación parasimpática: DETECTADO Y LOGUEADO, NO APLICADO.** Firma: HRV "mala"
+  (z<0) con RHR "buena" (z>0). No se corrige el score por *validation gap* (0 disparos reales
+  en 2 semanas) + *premisa en disputa* (saturación benigna vs sobre-entrenamiento son
+  indistinguibles del par HRV/RHR y quieren correcciones opuestas). Honestidad ejemplar.
+
+→ **Implementado** en `software/recovery_score.py` (port fiel: pesos, signos,
+renormalización, logística, EWMA, gate cold-start, detección-no-aplicación de saturación).
+Autoprueba: z=0 → 57.93 ≈ 58 ✓.
+
+**Drivers de WHOOP (reverse-engineered, del mismo doc):** la recovery de WHOOP correlaciona
+más con el sueño (r=0.80), luego el ratio HRV/RHR (r=0.78), luego HRV (0.74) y RHR (−0.63);
+respiración y temp ≈ 0. WHOOP pesa el sueño mucho más que NOOP (wSleep=0.15), y el **ratio
+HRV/RHR** rastrea mejor que HRV sola. Candidato futuro para nuestro motor: subir peso de sueño
++ término HRV/RHR (pendiente de más noches para fijar pesos — el propio NOOP lo dejó sin
+shippear por overfitting a 8 noches).
+
+### B.4 Modelo de datos y procedencia (`docs/DATA_MODEL.md`) — valida `esquema-canonico`
+
+- SQLite local (GRDB/`WhoopStore`). **8 streams decodificados durables**: `hrSample`,
+  `rrInterval`, `event`, `battery`, `spo2Sample`, `skinTempSample`, `respSample`,
+  `gravitySample`. SpO2/skin-temp/resp se guardan como **raw ADC** (crudo, no unidades).
+- **`scoreInputProvenance`** (migración v29) = **tabla de procedencia por métrica** para los
+  scores calculados en-device. Es literalmente nuestro badge de procedencia, confirmado como
+  tabla real. Export CSV en "formato WHOOP" con columna **`Source`**; las filas calculadas en
+  el dispositivo se marcan **`APPROXIMATE`** → retener-no-inventar materializado por fila.
+- `rrInterval` PK `(deviceId, ts, rrMs, seq)` + columna `ord` (orden de emisión). Lección
+  sutil (#823/#830): **ordenar por valor de `rrMs` sesga RMSSD a la baja** (latidos sucesivos
+  salen artificialmente parecidos); hay que preservar el orden de emisión. A tener en cuenta
+  si guardamos R-R por segundo.
+- HR sólo de frames `REALTIME_DATA` (type 40). Outbox `rawBatch` guarda los frames BLE crudos
+  comprimidos aun cuando no se puedan decodificar.
+
+### B.5 Otros módulos (de capturas durante la pausa, pendientes de profundizar en código)
+
+- **Live Sessions (beta):** entreno guiado háptico — la pulsera vigila tu FC contra una banda
+  **condicionada por el Charge de hoy** y sólo vibra para corregir; silencio = vas bien. **Es
+  nuestro loop "objetivo de esfuerzo" ya implementado** (`LiveSessionEngine.swift`).
+- **Estadificación de sueño V1/V2** (default V2, receta cardiorrespiratoria): arquitectura en
+  **capas independientes** `detección → estadificación → puntuación` (cambiar la receta no
+  toca detección ni scores; re-estadifica sólo noches ya detectadas, hacia adelante).
+- **Motion-aware wake refinement:** usa el acelerómetro (cadencia, cambio de postura) para
+  distinguir despertares reales de falsos positivos por FC (calor, voltearse).
+- **Patrón transversal:** al cambiar un parámetro (Edwards↔Banister, ventana, baseline) se
+  **re-puntúa retroactivamente el historial reciente, no-destructivo** ("historial se conserva").
+
+### B.6 Pendientes en el repo (no leídos aún)
+
+`PROTOCOL_WHOOP4/5` + `BLE_REVERSE_ENGINEERING` (de dónde sale el R-R y los eventos del
+stream), motor de **Esfuerzo** (Banister/Edwards, `StrainScorer`), `FITNESS_AGE`,
+`IllnessSignalEngine`, `WHOOP5_OPTICAL_EXPERIMENT` (PPG→HR), y la suite de **tests con
+replicación numpy** de los scores (`RecoveryAgreementTest`, etc.) para pinear constantes.

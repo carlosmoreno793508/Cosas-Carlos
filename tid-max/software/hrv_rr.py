@@ -8,8 +8,18 @@ las muestras). Inspirado en lo que NOOP hace y enseña ("rMSSD por ventanas", Po
 DFA-α1): parte del R-R crudo, filtra latidos raros (ectópicos) y de ahí deriva todo.
 
 Flujo:
-    R-R crudo → filtra_ectopicos (Malik 20%) → métricas de dominio temporal
-    (RMSSD, SDNN, pNN50), Poincaré (SD1/SD2), DFA-α1 (Plews) y RMSSD por ventanas.
+    R-R crudo → limpieza Malik 20% en SEGMENTOS contiguos (gap-aware) → métricas de
+    dominio temporal (RMSSD, SDNN, pNN50), Poincaré (SD1/SD2), DFA-α1 (Plews),
+    RMSSD por ventanas y HRV nocturna por selección de CALIDAD (no por etapa de sueño).
+
+Dos mejoras validadas contra datos reales de WHOOP (del `RR-OPTIMIZATION.md` del proyecto
+NOOP, código abierto; ver dossier `analisis/noop-ipa-teardown.md`):
+  1. RMSSD/pNN50/Poincaré GAP-AWARE: las diferencias sucesivas no cruzan un latido
+     descartado (evita el empalme que infla RMSSD). MAE de HRV nocturna vs WHOOP
+     8.47 → 5.47 ms (−35%). En datos sin descartes es idéntico al camino plano.
+  2. HRV por VARIANZA/CALIDAD: mediana de RMSSD de las ventanas más quietas (no por
+     sueño profundo — eso quedó refutado). Corrigió la correlación de recuperación de
+     −0.485 a +0.665 (n=20).
 
 Sin dependencias externas (sólo stdlib `math`), igual que el resto del motor.
 
@@ -33,6 +43,18 @@ def _desv_est(xs):
         return 0.0
     m = _media(xs)
     return math.sqrt(sum((x - m) ** 2 for x in xs) / n)
+
+
+def _mediana(xs):
+    """Mediana (robusta a atípicos). Devuelve None si la lista está vacía."""
+    if not xs:
+        return None
+    ys = sorted(xs)
+    n = len(ys)
+    mid = n // 2
+    if n % 2:
+        return ys[mid]
+    return (ys[mid - 1] + ys[mid]) / 2.0
 
 
 def _difs_sucesivas(rr):
@@ -70,6 +92,60 @@ def filtra_ectopicos(rr_ms, umbral=0.2):
     return limpio, descartados
 
 
+def limpia_segmentos(rr_ms, umbral=0.2):
+    """
+    Variante GAP-AWARE del filtro de Malik. Acepta exactamente los MISMOS latidos que
+    `filtra_ectopicos` (mismo umbral, mismos rangos), pero en lugar de una lista plana
+    devuelve una lista de SEGMENTOS contiguos: cada vez que se descarta ≥1 latido entre
+    dos aceptados, se abre un segmento nuevo.
+
+    ¿Por qué importa? (lección del `RR-OPTIMIZATION.md` de NOOP, validada contra datos
+    reales de WHOOP): al borrar un latido, sus dos vecinos quedan adyacentes en la lista
+    limpia y la diferencia sucesiva a través de ese "empalme" se cuenta como un delta
+    latido-a-latido real. Como RMSSD eleva cada delta al cuadrado, UN latido quitado puede
+    inflar RMSSD. Calcular las diferencias sucesivas SÓLO dentro de cada segmento evita el
+    empalme. En una serie sin descartes hay un único segmento y el resultado es idéntico al
+    camino plano (por eso no rompe los vectores de prueba ni los datos limpios).
+
+    Nota de honestidad (misma fuente): el over-read de NOOP vs WHOOP venía de ESTO —
+    inflación por artefactos de R-R escaso/recortado— y NO de la ventana de sueño elegida.
+    El fix correcto es limpiar gap-aware, no re-ventanear hacia sueño profundo.
+
+    Devuelve (segmentos, descartados) donde `segmentos` es lista de listas de R-R (ms).
+    `[x for seg in segmentos for x in seg]` == la salida de `filtra_ectopicos`.
+    """
+    segmentos = []
+    actual = []
+    descartados = 0
+    previo = None
+    hueco = False  # ¿se descartó algún latido desde el último aceptado?
+    for x in rr_ms:
+        if x is None or x < 300 or x > 2000:
+            descartados += 1
+            hueco = True
+            continue
+        if previo is None:
+            actual = [x]
+            previo = x
+            hueco = False
+            continue
+        if abs(x - previo) > umbral * previo:
+            descartados += 1
+            hueco = True
+            continue
+        # Latido aceptado.
+        if hueco and actual:
+            segmentos.append(actual)
+            actual = [x]
+        else:
+            actual.append(x)
+        previo = x
+        hueco = False
+    if actual:
+        segmentos.append(actual)
+    return segmentos, descartados
+
+
 # ------------------------------------------------------- dominio temporal
 
 def rmssd(rr):
@@ -95,6 +171,30 @@ def pnn50(rr):
     return 100.0 * sum(1 for x in d if abs(x) > 50) / len(d)
 
 
+def _difs_segmentos(segmentos):
+    """Diferencias sucesivas agrupadas SÓLO dentro de cada segmento (nunca cruzan un hueco)."""
+    d = []
+    for seg in segmentos:
+        d.extend(_difs_sucesivas(seg))
+    return d
+
+
+def rmssd_gap(segmentos):
+    """RMSSD gap-aware: salta cualquier diferencia que cruce un latido descartado."""
+    d = _difs_segmentos(segmentos)
+    if not d:
+        return None
+    return math.sqrt(_media([x * x for x in d]))
+
+
+def pnn50_gap(segmentos):
+    """pNN50 gap-aware: sólo diferencias dentro de segmento."""
+    d = _difs_segmentos(segmentos)
+    if not d:
+        return None
+    return 100.0 * sum(1 for x in d if abs(x) > 50) / len(d)
+
+
 def poincare(rr):
     """
     Gráfico de Poincaré: SD1 (variabilidad latido a latido, ≈ parasimpático) y
@@ -106,6 +206,28 @@ def poincare(rr):
     sdsd = _desv_est(d)
     sd1 = math.sqrt(0.5) * sdsd
     var_nn = _desv_est(rr) ** 2
+    arg = 2 * var_nn - 0.5 * sdsd ** 2
+    sd2 = math.sqrt(arg) if arg > 0 else 0.0
+    return {
+        "sd1": round(sd1, 2),
+        "sd2": round(sd2, 2),
+        "ratio": round(sd1 / sd2, 3) if sd2 > 0 else None,
+    }
+
+
+def poincare_gap(segmentos):
+    """
+    Poincaré gap-aware: SD1 se deriva de SDSD (diferencias sucesivas), así que usa sólo
+    diferencias intra-segmento; SD2 usa la varianza de TODOS los NN (no cruza huecos porque
+    es un estadístico global, no latido-a-latido).
+    """
+    flat = [x for seg in segmentos for x in seg]
+    d = _difs_segmentos(segmentos)
+    if len(d) < 1 or len(flat) < 2:
+        return None
+    sdsd = _desv_est(d)
+    sd1 = math.sqrt(0.5) * sdsd
+    var_nn = _desv_est(flat) ** 2
     arg = 2 * var_nn - 0.5 * sdsd ** 2
     sd2 = math.sqrt(arg) if arg > 0 else 0.0
     return {
@@ -208,9 +330,47 @@ def rmssd_por_ventanas(rr, ventana_s=120, paso_s=60, min_latidos=20):
                     "t_s": round(inicio, 1),
                     "rmssd": round(v, 2),
                     "n": len(ventana),
+                    # SDNN de la ventana = proxy de "quietud" (menor = más estable/limpia).
+                    # Base para seleccionar las ventanas menos ruidosas (ver hrv_calidad).
+                    "sdnn": round(sdnn(ventana), 2) if sdnn(ventana) is not None else None,
                 })
         inicio += paso_s
     return salida
+
+
+def hrv_calidad(ventanas, frac_quietas=0.5, min_ventanas=3):
+    """
+    HRV nocturna por SELECCIÓN DE CALIDAD (no por etapa de sueño).
+
+    Hallazgo validado en `RR-OPTIMIZATION.md` de NOOP (n=20 noches): seleccionar las
+    ventanas de MENOR varianza (las más quietas) y tomar la MEDIANA de su RMSSD movió la
+    correlación leave-one-out con la recuperación de WHOOP de −0.485 a +0.665. Es la misma
+    idea de "libre de artefactos" aplicada en la SELECCIÓN de ventana en vez de en la
+    limpieza de latidos, así que COMPONE con el camino gap-aware (no compite).
+
+    IMPORTANTE (corrección de NOOP a la hipótesis previa): la selección por ETAPA de sueño
+    (sueño profundo / SWS) está DESCARTADA — el sueño profundo tiene la HRV MÁS ALTA (HR
+    bajo, tono vagal alto) y correlacionó NEGATIVAMENTE con WHOOP. Lo que vive es la
+    selección por VARIANZA/calidad, que es esto.
+
+    `frac_quietas`: fracción de ventanas más quietas a conservar (0.5 = mitad más estable).
+    Devuelve dict con la mediana de RMSSD de esas ventanas, o None si no hay suficientes.
+    """
+    elegibles = [w for w in ventanas if w.get("sdnn") is not None and w.get("rmssd") is not None]
+    if len(elegibles) < min_ventanas:
+        return None
+    elegibles.sort(key=lambda w: w["sdnn"])  # más quietas primero
+    k = max(min_ventanas, int(round(len(elegibles) * frac_quietas)))
+    k = min(k, len(elegibles))
+    quietas = elegibles[:k]
+    med = _mediana([w["rmssd"] for w in quietas])
+    return {
+        "rmssd_mediana_ms": round(med, 2) if med is not None else None,
+        "n_ventanas_usadas": k,
+        "n_ventanas_total": len(elegibles),
+        "frac_quietas": frac_quietas,
+        "metodo": "mediana RMSSD de ventanas de menor varianza (selección por calidad, no por etapa)",
+    }
 
 
 # ------------------------------------------------------- orquestador
@@ -221,20 +381,33 @@ def analiza_rr(rr_ms, umbral_ectopicos=0.2):
     y metadatos de calidad (cuántos latidos se descartaron). Campos en None cuando no
     hay suficientes datos para calcularlos con sentido.
     """
-    limpio, descartados = filtra_ectopicos(rr_ms, umbral_ectopicos)
+    # Camino gap-aware: mismos latidos aceptados, pero en segmentos contiguos.
+    segmentos, descartados = limpia_segmentos(rr_ms, umbral_ectopicos)
+    limpio = [x for seg in segmentos for x in seg]  # == filtra_ectopicos(...) salida plana
     n = len(limpio)
     pct_desc = round(100.0 * descartados / len(rr_ms), 1) if rr_ms else None
+    ventanas = rmssd_por_ventanas(limpio)
     res = {
         "n_latidos_crudos": len(rr_ms),
         "n_latidos_limpios": n,
         "descartados": descartados,
         "pct_descartados": pct_desc,
+        "n_segmentos": len(segmentos),
+        # Camino PLANO (compatibilidad con lo ya construido; idéntico a gap-aware sin huecos).
         "rmssd_ms": round(rmssd(limpio), 2) if n >= 2 else None,
-        "sdnn_ms": round(sdnn(limpio), 2) if n >= 2 else None,
         "pnn50": round(pnn50(limpio), 2) if n >= 2 else None,
         "poincare": poincare(limpio) if n >= 3 else None,
+        # Camino GAP-AWARE (recomendado: no sesga RMSSD al alza por empalmes de latidos
+        # eliminados; en datos limpios coincide con el plano). Fuente: RR-OPTIMIZATION.md.
+        "rmssd_gap_ms": round(rmssd_gap(segmentos), 2) if n >= 2 else None,
+        "pnn50_gap": round(pnn50_gap(segmentos), 2) if n >= 2 else None,
+        "poincare_gap": poincare_gap(segmentos) if n >= 3 else None,
+        # SDNN usa los valores NN (no diferencias sucesivas): no le afectan los empalmes.
+        "sdnn_ms": round(sdnn(limpio), 2) if n >= 2 else None,
         "dfa_alpha1": dfa_alpha1(limpio),
-        "rmssd_ventanas": rmssd_por_ventanas(limpio),
+        "rmssd_ventanas": ventanas,
+        # HRV nocturna por selección de calidad (mediana de ventanas más quietas).
+        "hrv_calidad": hrv_calidad(ventanas),
         "fuente": "R-R crudo (Polar) · estimación en dispositivo, no es diagnóstico",
     }
     return res
@@ -252,13 +425,27 @@ if __name__ == "__main__":
     r = analiza_rr(base)
     print("Latidos crudos:   ", r["n_latidos_crudos"])
     print("Latidos limpios:  ", r["n_latidos_limpios"], f"(descartó {r['descartados']})")
-    print("RMSSD (ms):       ", r["rmssd_ms"])
+    print("Segmentos:        ", r["n_segmentos"])
+    print("RMSSD plano (ms): ", r["rmssd_ms"])
+    print("RMSSD gap (ms):   ", r["rmssd_gap_ms"])
+    print("pNN50 / gap (%):  ", r["pnn50"], "/", r["pnn50_gap"])
     print("SDNN (ms):        ", r["sdnn_ms"])
-    print("pNN50 (%):        ", r["pnn50"])
-    print("Poincaré:         ", r["poincare"])
+    print("Poincaré gap:     ", r["poincare_gap"])
     print("DFA-α1:           ", r["dfa_alpha1"])
     print("Ventanas RMSSD:   ", len(r["rmssd_ventanas"]), "ventanas")
+    print("HRV calidad:      ", r["hrv_calidad"])
     assert r["n_latidos_limpios"] < r["n_latidos_crudos"], "debió descartar ectópicos"
+    assert r["n_segmentos"] >= 2, "los ectópicos debieron partir la serie en segmentos"
     assert r["rmssd_ms"] is not None and r["rmssd_ms"] > 0
-    assert r["dfa_alpha1"] is not None
-    print("\nOK — pipeline de R-R funcional.")
+    assert r["rmssd_gap_ms"] is not None and r["rmssd_gap_ms"] > 0
+    # Con huecos presentes, gap-aware no cuenta los empalmes → RMSSD ≤ plano.
+    assert r["rmssd_gap_ms"] <= r["rmssd_ms"], "gap-aware debió ser ≤ plano al haber descartes"
+
+    # Serie SIN ectópicos: gap-aware debe ser IDÉNTICO al plano (un solo segmento).
+    limpia = [1000 + random.gauss(0, 20) for _ in range(200)]
+    rc = analiza_rr(limpia)
+    assert rc["n_segmentos"] == 1, "sin descartes debe haber un único segmento"
+    assert rc["rmssd_gap_ms"] == rc["rmssd_ms"], "sin huecos gap-aware == plano"
+    assert rc["pnn50_gap"] == rc["pnn50"]
+    assert rc["hrv_calidad"] is not None and rc["hrv_calidad"]["rmssd_mediana_ms"] > 0
+    print("\nOK — pipeline de R-R funcional (gap-aware + ventana por calidad).")
