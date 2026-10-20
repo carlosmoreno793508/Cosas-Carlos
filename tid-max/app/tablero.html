@@ -301,6 +301,31 @@ function areaChart(host, opts){
   const line=smoothPath(pts);
   const area=line+` L${X(S.length-1).toFixed(1)},${(H-padB)} L${padL},${(H-padB)} Z`;
   const col=opts.color;
+  // Banda de baseline personal (rango normal rodante ±k·SD, concepto SWC Plews/Altini).
+  // Convierte "una línea" en "tu línea vs tu normal". Sólo donde hay historia suficiente.
+  let bandSVG="", bandInfo=null;
+  if(opts.band){
+    const win=opts.bandWin||14, k=opts.bandK||0.5, minN=opts.bandMinN||7;
+    const lo_=[],hi_=[],mean_=[];
+    for(let i=0;i<S.length;i++){
+      const w=[]; for(let j=Math.max(0,i-win+1);j<=i;j++)w.push(S[j].v);
+      if(w.length>=minN){const m=w.reduce((a,b)=>a+b,0)/w.length;
+        const sd=Math.sqrt(w.reduce((a,b)=>a+(b-m)*(b-m),0)/(w.length-1));
+        mean_.push(m);lo_.push(m-k*sd);hi_.push(m+k*sd);}
+      else{mean_.push(null);lo_.push(null);hi_.push(null);}
+    }
+    bandInfo={lo:lo_,hi:hi_};
+    const a=mean_.findIndex(v=>v!=null), cl=v=>Math.max(lo,Math.min(hi,v));
+    if(a>=0){
+      const edge=[];
+      for(let i=a;i<S.length;i++)edge.push([X(i),Y(cl(hi_[i]))]);
+      for(let i=S.length-1;i>=a;i--)edge.push([X(i),Y(cl(lo_[i]))]);
+      const poly=edge.map((p,idx)=>(idx?"L":"M")+p[0].toFixed(1)+","+p[1].toFixed(1)).join(" ")+" Z";
+      const mp=[];for(let i=a;i<S.length;i++)mp.push([X(i),Y(cl(mean_[i]))]);
+      bandSVG=`<path d="${poly}" fill="${col}" opacity="0.13"/>
+        <path d="${smoothPath(mp)}" fill="none" stroke="${col}" stroke-width="1" stroke-dasharray="3 4" opacity="0.45"/>`;
+    }
+  }
   // gradiente de trazo por valor (Carga) o sólido
   let strokeRef=col, strokeDefs="";
   if(opts.byValue){
@@ -327,7 +352,7 @@ function areaChart(host, opts){
       ${yticks.map(t=>`<line x1="${padL}" y1="${t.y.toFixed(1)}" x2="${W-padR}" y2="${t.y.toFixed(1)}" stroke="${gridC}" stroke-width="1"/>
         <text x="4" y="${(t.y+3).toFixed(1)}" font-size="10" fill="${muted}">${fmt(t.v,opts.decimals||0)}</text>`).join("")}
       ${xticks.map(t=>`<text x="${t.x.toFixed(1)}" y="${H-6}" font-size="10" fill="${muted}" text-anchor="${t.anchor}">${t.label}</text>`).join("")}
-      <path d="${area}" fill="url(#${id}f)"/>
+      ${opts.band?bandSVG:`<path d="${area}" fill="url(#${id}f)"/>`}
       <path d="${line}" fill="none" stroke="${strokeRef}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
       <circle cx="${last[0].toFixed(1)}" cy="${last[1].toFixed(1)}" r="4" fill="${opts.byValue?heatColor(lastV):col}" stroke="var(--card)" stroke-width="2"/>
       <line class="cross" x1="0" y1="${padT}" x2="0" y2="${H-padB}" stroke="${muted}" stroke-width="1" opacity="0"/>
@@ -348,7 +373,12 @@ function areaChart(host, opts){
     cdot.setAttribute("cx",px);cdot.setAttribute("cy",py);cdot.setAttribute("opacity","1");
     if(opts.byValue)cdot.setAttribute("fill",heatColor(S[i].v));
     tt.style.left=(px/W*r.width)+"px"; tt.style.top=(py/H*r.height)+"px"; tt.style.opacity="1";
-    tt.innerHTML=`${fechaCorta(S[i].fecha)} · <b>${fmt(S[i].v,opts.decimals||0)}${opts.unit||""}</b>`;
+    let estado="";
+    if(bandInfo&&bandInfo.lo[i]!=null){const v=S[i].v;
+      estado=v>bandInfo.hi[i]?" · <span style='color:var(--faint)'>sobre tu normal</span>"
+        :v<bandInfo.lo[i]?" · <span style='color:var(--faint)'>bajo tu normal</span>"
+        :" · <span style='color:var(--faint)'>en tu normal</span>";}
+    tt.innerHTML=`${fechaCorta(S[i].fecha)} · <b>${fmt(S[i].v,opts.decimals||0)}${opts.unit||""}</b>${estado}`;
   }
   function leave(){cross.setAttribute("opacity","0");cdot.setAttribute("opacity","0");tt.style.opacity="0";}
   chart.addEventListener("mousemove",move);chart.addEventListener("mouseleave",leave);
@@ -453,11 +483,12 @@ function render(data){
   $("#sig_carga").innerHTML=`<div class="hd"><span class="nm">Carga</span>
     <span class="cur num">${fmt(hoy.carga_tidmax)}<small>/100</small></span></div>`;
   const chh=document.createElement("div");$("#sig_carga").appendChild(chh);
-  areaChart(chh,{series:serie(rows,"carga_tidmax"),color:cssvar("--carga"),byValue:true,yMin:0,yMax:100,h:160});
+  areaChart(chh,{series:serie(rows,"carga_tidmax"),color:cssvar("--carga"),byValue:true,yMin:0,yMax:100,h:160,band:true});
   $("#sig_carga").insertAdjacentHTML("beforeend",
     `<div class="st"><span>prom <b>${fmt(mean(cargaV))}</b></span><span>pico <b>${fmt(Math.max(...cargaV))}</b></span>
      <span>bajo <b>${fmt(Math.min(...cargaV))}</b></span><span>días <b>${cargaV.length}</b></span>
-     <span class="trend ${tc.cls}">${tc.t}</span></div>`);
+     <span class="trend ${tc.cls}">${tc.t}</span></div>
+     <div class="sub" style="margin:8px 2px 0;font-size:.74rem">La franja sombreada es <b>tu rango normal</b> (±0.5·SD, 14 días) — fuera de ella, el día se sale de tu baseline.</div>`);
 
   // Señales diarias (VFC, FC reposo, Esfuerzo, Descanso)
   const sg=$("#signals");sg.innerHTML="";
@@ -471,7 +502,7 @@ function render(data){
       <span class="cur num">${fmt(xs[xs.length-1],dec)}<small>${unit}</small></span></div>`;
     const ch=document.createElement("div");wrap.appendChild(ch);
     sg.appendChild(wrap);
-    areaChart(ch,{series:serie(rows,key),color:col,unit:unit.replace("/100",""),decimals:dec,h:120});
+    areaChart(ch,{series:serie(rows,key),color:col,unit:unit.replace("/100",""),decimals:dec,h:120,band:true});
     wrap.insertAdjacentHTML("beforeend",
       `<div class="st"><span>prom <b>${fmt(mean(xs),dec)}</b></span><span>mín <b>${fmt(Math.min(...xs),dec)}</b></span>
        <span>máx <b>${fmt(Math.max(...xs),dec)}</b></span><span class="trend ${tr.cls}">${tr.t}</span></div>`);
