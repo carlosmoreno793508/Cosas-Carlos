@@ -41,8 +41,11 @@ Lo produce `software/tid_data.py` en `datos/procesado/`.
 | campo | unidad | fuente |
 |---|---|---|
 | recovery_pct | % | WHOOP |
-| hrv_ms | ms (rMSSD) | WHOOP |
-| rhr_bpm | lpm | WHOOP |
+| hrv_ms | ms (rMSSD) | **Polar H10 (BLE, medido)** si hay lectura de reposo ese día; si no, WHOOP |
+| rhr_bpm | lpm | **Polar H10 (BLE, p10)** si hay lectura de reposo; si no, WHOOP |
+| hrv_ms_polar / rhr_bpm_polar | ms / lpm | Polar H10 por BLE (R-R latido a latido, `_polar_ble_diario`) |
+| hrv_ms_whoop / rhr_bpm_whoop | ms / lpm | valor de WHOOP **conservado** cuando el H10 lo reemplaza (transparencia) |
+| hrv_rr_muestras | # | intervalos R-R que respaldan la HVC del H10 ese día |
 | spo2_pct | % | WHOOP |
 | skin_temp_c | °C | WHOOP |
 | sleep_perf_pct | % | WHOOP |
@@ -61,6 +64,11 @@ Lo produce `software/tid_data.py` en `datos/procesado/`.
 > Los `*_tidmax` los produce el pase `_scores_tidmax` de `tid_data.build_daily` a partir de los
 > datos crudos + baselines personales rodantes; `esfuerzo_ref_0_100` es el score AJENO de WHOOP
 > re-escalado y marcado **referencia** (recomputamos el nuestro cuando haya stream de HR del Polar).
+> **Polar H10 (BLE)**: `_polar_ble_diario` lee `datos/polar_*.csv` (latido a latido). De cada captura
+> en **reposo** (sin arranque de esfuerzo sostenido) saca la HVC (RMSSD por calidad de ventanas) y la
+> FC en reposo MEDIDAS; al ser grado investigación, **manda sobre la HVC derivada de WHOOP** para los
+> scores (Carga/readiness/illness), y el valor de WHOOP se conserva en `*_whoop`. Las capturas de
+> entrenamiento NO cuentan como reposo. Fuente `polar_h10` en `fuentes`.
 
 ### `workouts[]` — una fila por sesión
 `fecha, inicio, fin, dur_min, deporte, strain, fc_prom, fc_max, kcal, km_whoop, fuente[, atleta]`

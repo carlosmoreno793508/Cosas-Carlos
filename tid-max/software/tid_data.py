@@ -267,6 +267,23 @@ def build_daily():
                     r["pesas_min"] = None
                 mark(r, "manual")
 
+    # Polar H10 por BLE (R-R latido a latido): la HVC/FC de reposo MEDIDA, grado
+    # investigación. Es la mejor medición posible de HVC, así que cuando hay lectura de
+    # reposo del H10 MANDA sobre la derivada de WHOOP para los scores; el valor de WHOOP
+    # se conserva aparte (hrv_ms_whoop/rhr_bpm_whoop) por transparencia. 'No disponible ≠ 0'.
+    for fecha, p in _polar_ble_diario().items():
+        r = row(fecha)
+        if r.get("hrv_ms") is not None and "whoop" in r["fuentes"]:
+            r.setdefault("hrv_ms_whoop", r["hrv_ms"])
+            r.setdefault("rhr_bpm_whoop", r.get("rhr_bpm"))
+        r["hrv_ms"] = p["hrv_ms"]
+        if p["rhr_bpm"] is not None:
+            r["rhr_bpm"] = p["rhr_bpm"]
+        r["hrv_ms_polar"] = p["hrv_ms"]
+        r["rhr_bpm_polar"] = p["rhr_bpm"]
+        r["hrv_rr_muestras"] = p["rr_muestras"]
+        mark(r, "polar_h10")
+
     filas = [daily[k] for k in sorted(daily)]
     _scores_tidmax(filas)
     return filas
@@ -630,6 +647,59 @@ def build_polar():
             fila["hrv"] = hrv_rr.analiza_rr(rrs)
         out.append(fila)
     return out
+
+
+def _polar_ble_diario():
+    """Lee las capturas BLE del Polar (datos/polar_*.csv, latido a latido) y devuelve,
+    por fecha, la mejor lectura de REPOSO: HVC (RMSSD) + FC en reposo MEDIDAS del H10.
+
+    Solo cuentan las capturas que parecen lectura en reposo (sin arranque de esfuerzo
+    sostenido): una captura de ENTRENAMIENTO no es HVC/FC de reposo. Si hay varias
+    lecturas de reposo el mismo día, gana la de MÁS intervalos RR (más fiable). HVC =
+    'hrv_calidad' (mediana de las ventanas más quietas) si existe, si no RMSSD gap-aware.
+    'No disponible ≠ 0': sin RMSSD utilizable, la fecha no aporta nada."""
+    por_dia = {}
+    for path in sorted(glob.glob(os.path.join(DATA_DIR, "polar_*.csv"))):
+        hrs, rrs, serie, primera_t = [], [], [], None
+        with open(path, encoding="utf-8", newline="") as f:
+            for rec in csv.DictReader(f):
+                t = _parse_dt(rec.get("t_iso"))
+                try:
+                    hr = int(rec.get("hr_bpm") or 0)
+                except ValueError:
+                    hr = 0
+                if hr > 0:
+                    hrs.append(hr)
+                    if t:
+                        serie.append((t, hr))
+                        if primera_t is None:
+                            primera_t = t
+                if rec.get("rr_ms"):
+                    try:
+                        rrs.append(float(rec["rr_ms"]))
+                    except ValueError:
+                        pass
+        if not rrs or primera_t is None:
+            continue
+        if detecta_esfuerzo(serie) is not None:   # parece entrenamiento → no es reposo
+            continue
+        hrv = hrv_rr.analiza_rr(rrs)
+        hc = hrv.get("hrv_calidad")   # dict (mediana de ventanas quietas) o None
+        rmssd = (hc.get("rmssd_mediana_ms") if isinstance(hc, dict) else None) \
+            or hrv.get("rmssd_gap_ms") or hrv.get("rmssd_ms")
+        if rmssd is None:
+            continue
+        cand = {
+            "hrv_ms": _round(rmssd),
+            "rhr_bpm": _percentil(hrs, 10),   # FC reposo robusta (p10, ignora picos sueltos)
+            "rr_muestras": len(rrs),
+            "calidad": hc if isinstance(hc, dict) else None,
+        }
+        fecha = primera_t.date().isoformat()
+        prev = por_dia.get(fecha)
+        if prev is None or cand["rr_muestras"] > prev["rr_muestras"]:
+            por_dia[fecha] = cand
+    return por_dia
 
 
 def build_athlete():
