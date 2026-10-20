@@ -74,10 +74,20 @@ h2{font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mu
 .tt{position:absolute;pointer-events:none;background:var(--card2);border:1px solid var(--line);border-radius:10px;
   padding:6px 9px;font-size:.78rem;box-shadow:var(--shadow);transform:translate(-50%,-120%);white-space:nowrap;opacity:0;transition:opacity .08s;}
 .tt b{font-variant-numeric:tabular-nums;}
-/* heatmap */
-.heat{display:grid;grid-template-rows:repeat(7,1fr);grid-auto-flow:column;grid-auto-columns:1fr;gap:3px;}
-.heat i{aspect-ratio:1;border-radius:3px;background:var(--grid);}
-.heatleg{display:flex;align-items:center;justify-content:space-between;color:var(--muted);font-size:.74rem;margin-top:10px;}
+/* calendario mensual */
+.calnav{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.calnav .m{font-weight:800;font-size:1.05rem;text-transform:capitalize;}
+.calnav button{border:1px solid var(--line);background:var(--card2);color:var(--ink);border-radius:10px;
+  width:34px;height:34px;font-size:1.1rem;cursor:pointer;line-height:1;}
+.calnav button:disabled{opacity:.35;cursor:default;}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;}
+.cal .dow{text-align:center;color:var(--faint);font-size:.66rem;font-weight:700;padding-bottom:2px;}
+.cal .d{aspect-ratio:1;border-radius:9px;display:flex;align-items:flex-start;justify-content:flex-end;
+  padding:4px 6px;font-size:.7rem;font-weight:700;color:rgba(0,0,0,.6);background:var(--grid);}
+.cal .d.empty{background:transparent;}
+.cal .d.nodata{color:var(--faint);}
+.cal .d.today{box-shadow:0 0 0 2px var(--accent);}
+.heatleg{display:flex;align-items:center;justify-content:space-between;color:var(--muted);font-size:.74rem;margin-top:12px;}
 .heatbar{height:8px;flex:1;margin:0 10px;border-radius:999px;background:linear-gradient(90deg,var(--crit),var(--warn),var(--good));}
 /* correlación */
 .corr{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);}
@@ -117,7 +127,12 @@ footer b{color:var(--muted);}
 
   <h2>Calendario de Carga</h2>
   <div class="card">
-    <div class="heat" id="heat"></div>
+    <div class="calnav">
+      <button id="calprev" aria-label="Mes anterior">‹</button>
+      <div class="m" id="calmonth">—</div>
+      <button id="calnext" aria-label="Mes siguiente">›</button>
+    </div>
+    <div class="cal" id="cal"></div>
     <div class="heatleg"><span>Agotado</span><span class="heatbar"></span><span>En su pico</span></div>
   </div>
 
@@ -327,10 +342,31 @@ function render(data){
        <span>máx <b>${fmt(Math.max(...xs),dec)}</b></span><span class="trend ${tr.cls}">${tr.t}</span></div>`);
   });
 
-  // Heatmap
-  const h=$("#heat");h.innerHTML="";
-  rows.slice(-91).forEach(r=>{const i=document.createElement("i");i.style.background=heatColor(r.carga_tidmax);
-    i.title=`${r.fecha}: Carga ${r.carga_tidmax??"–"}`;h.appendChild(i);});
+  // Calendario mensual de Carga
+  const byDay={}; rows.forEach(r=>{if(r.carga_tidmax!=null)byDay[r.fecha]=r.carga_tidmax;});
+  const months=[...new Set(rows.map(r=>r.fecha.slice(0,7)))].sort();
+  const MESL=["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+  let mi=months.length-1;
+  function renderMonth(){
+    const [Y,M]=months[mi].split("-").map(Number);
+    $("#calmonth").textContent=MESL[M-1]+" "+Y;
+    $("#calprev").disabled=mi<=0; $("#calnext").disabled=mi>=months.length-1;
+    const cal=$("#cal"); cal.innerHTML="";
+    ["L","M","X","J","V","S","D"].forEach(d=>{const e=document.createElement("div");e.className="dow";e.textContent=d;cal.appendChild(e);});
+    const firstDow=(new Date(Y,M-1,1).getDay()+6)%7, days=new Date(Y,M,0).getDate();
+    for(let k=0;k<firstDow;k++){const e=document.createElement("div");e.className="d empty";cal.appendChild(e);}
+    for(let day=1;day<=days;day++){
+      const key=`${Y}-${String(M).padStart(2,"0")}-${String(day).padStart(2,"0")}`, v=byDay[key];
+      const e=document.createElement("div");
+      e.className="d"+(v==null?" nodata":"")+(key===hoy.fecha?" today":"");
+      e.style.background=v==null?"var(--grid)":heatColor(v);
+      e.textContent=day; e.title=v==null?key:`${key}: Carga ${v}`;
+      cal.appendChild(e);
+    }
+  }
+  $("#calprev").onclick=()=>{if(mi>0){mi--;renderMonth();}};
+  $("#calnext").onclick=()=>{if(mi<months.length-1){mi++;renderMonth();}};
+  renderMonth();
 
   // Qué se correlaciona
   const cands={"VFC":"hrv_ms","FC en reposo":"rhr_bpm","Descanso":"descanso_tidmax","Esfuerzo":"esfuerzo_ref_0_100"};
