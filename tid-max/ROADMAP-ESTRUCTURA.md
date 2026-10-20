@@ -208,3 +208,8 @@ Dos módulos distintivos de NOOP que faltaban, puros y testeados (sin hardware):
 - ✅ `software/readiness.py` — **HRV readiness (Plews/Altini, SWC)**: baseline de 7 noches en
   dominio log vs banda normal ±0.5·SD → primed/normal/suppressed + overreaching watch. **Sólo
   lectura, no cambia la Carga.** Cold-start honesto (<14 noches → None).
+- ✅ `software/illness_signal.py` — **alerta temprana de enfermedad** (IllnessSignalEngine):
+  score 0–100 compuesto (RHR↑ + temp piel↑ + HVC↓ + resp↑ z-scoreadas), corroboración ≥2
+  señales, gate de baseline (<14 noches → no alerta), y **supresión por confusores**
+  (alcohol/estrés/sauna/entreno duro/viaje → amortigua ×0.45). Niveles: tranquilo / leve /
+  elevado / suprimido / ya-enfermo. APROXIMADO, no diagnóstico.
