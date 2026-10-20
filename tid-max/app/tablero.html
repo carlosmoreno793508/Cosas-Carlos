@@ -97,15 +97,44 @@ h2{font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mu
 .corr .bar b{position:absolute;top:0;bottom:0;border-radius:999px;}
 .corr .cr{width:54px;text-align:right;font-weight:700;font-variant-numeric:tabular-nums;}
 .pos{color:var(--good);} .neg{color:var(--crit);}
+/* sueño */
+.pdfbtn{border:1px solid var(--line);background:var(--card2);color:var(--muted);border-radius:999px;
+  padding:4px 10px;font-size:.72rem;font-weight:700;cursor:pointer;letter-spacing:.03em;}
+.pdfbtn:hover{color:var(--ink);}
+.snhd{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:10px;}
+.snhd .big{font-size:1.5rem;font-weight:800;} .snhd .big small{font-size:.74rem;color:var(--muted);font-weight:600;}
+.hyp{display:flex;height:26px;border-radius:7px;overflow:hidden;background:var(--grid);margin-bottom:8px;}
+.hyp b{display:block;}
+.hypleg{display:flex;flex-wrap:wrap;gap:12px;font-size:.78rem;color:var(--muted);margin-bottom:12px;}
+.hypleg span{display:inline-flex;align-items:center;gap:5px;}
+.hypleg i{width:9px;height:9px;border-radius:2px;display:inline-block;}
+.stiles{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
+.stile{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:10px;}
+.stile .k{color:var(--muted);font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;font-weight:700;}
+.stile .v{font-size:1.25rem;font-weight:800;}
 footer{color:var(--faint);font-size:.74rem;text-align:center;margin-top:24px;}
 footer b{color:var(--muted);}
+/* export PDF — 1 página, fondo claro, sin interacción */
+@media print{
+  @page{size:A4 portrait;margin:12mm;}
+  body{background:#fff !important;color:#10232f !important;}
+  .wrap{max-width:none;padding:0;}
+  .pdfbtn,.calnav button{display:none !important;}
+  .card{box-shadow:none;border-color:#dce7ee;break-inside:avoid;background:#fff;}
+  .tt{display:none !important;}
+  h2{margin-top:12px;color:#51697a;}
+  .sig{break-inside:avoid;}
+}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header class="top">
     <div class="brand">TID-MAX <small>Tablero</small></div>
-    <span class="badge src" id="srcbadge">—</span>
+    <div style="display:flex;gap:8px;align-items:center">
+      <span class="badge src" id="srcbadge">—</span>
+      <button class="pdfbtn" id="pdfbtn" title="Exportar a PDF (1 página)">⤓ PDF</button>
+    </div>
   </header>
   <h1 id="hoyfecha">Hoy</h1>
   <div class="sub" id="athsub">—</div>
@@ -124,6 +153,9 @@ footer b{color:var(--muted);}
 
   <h2>Señales diarias</h2>
   <div class="card" id="signals"></div>
+
+  <h2>Sueño · anoche</h2>
+  <div class="card" id="sueno"></div>
 
   <h2>Calendario de Carga</h2>
   <div class="card">
@@ -280,10 +312,18 @@ function demoData(){
     const hrv=Math.round(87+(rnd()-0.5)*60),rhr=Math.round(53+(rnd()-0.5)*8);
     const descanso=Math.round(clamp(80+(rnd()-0.5)*22,16,95)),esf=+(clamp(45+(rnd()-0.5)*70,19,97)).toFixed(1);
     const carga=Math.round(clamp((hrv-60)*1.1-(rhr-52)*2+40+(rnd()-0.5)*18,4,98));
+    const asleep=+(6.6+(rnd()-0.5)*2).toFixed(2);
     rows.push({fecha:d.toISOString().slice(0,10),carga_tidmax:carga,descanso_tidmax:descanso,
-      esfuerzo_ref_0_100:esf,hrv_ms:hrv,rhr_bpm:rhr,fuentes:["whoop","tidmax"]});}
+      esfuerzo_ref_0_100:esf,hrv_ms:hrv,rhr_bpm:rhr,
+      sleep_asleep_noche_h:asleep,sleep_efficiency_pct:+(82+(rnd()-0.5)*12).toFixed(0),
+      sleep_deep_h:+(asleep*0.28).toFixed(2),sleep_rem_h:+(asleep*0.27).toFixed(2),
+      sleep_light_h:+(asleep*0.45).toFixed(2),deuda_sueno_min:Math.round((rnd())*90),
+      fuentes:["whoop","tidmax"]});}
   const h=rows[rows.length-1];h.carga_tidmax=66;h.descanso_tidmax=80;h.esfuerzo_ref_0_100=null;
   h.hrv_ms=100;h.rhr_bpm=50;h.acwr=1.21;h.carga_entrenamiento_estado="construyendo";
+  // Anoche (dom 18 oct) — números reales de Carlos.
+  h.sleep_asleep_noche_h=6.9;h.sleep_efficiency_pct=84;h.sleep_deep_h=1.97;h.sleep_rem_h=1.87;
+  h.sleep_light_h=3.07;h.deuda_sueno_min=64;
   return{daily:rows,atleta:"Carlos",madurez:"construyendo"};
 }
 async function getData(){
@@ -342,6 +382,34 @@ function render(data){
        <span>máx <b>${fmt(Math.max(...xs),dec)}</b></span><span class="trend ${tr.cls}">${tr.t}</span></div>`);
   });
 
+  // Sueño · anoche (hipnograma + sub-scores)
+  (function(){
+    const sn=$("#sueno");
+    const asleep=hoy.sleep_asleep_noche_h, eff=hoy.sleep_efficiency_pct;
+    if(!asleep||eff==null){sn.innerHTML="<div class='sub'>Sin datos de sueño anoche.</div>";return;}
+    const deep=hoy.sleep_deep_h||0, rem=hoy.sleep_rem_h||0, light=hoy.sleep_light_h||0;
+    const inBed=asleep/Math.max(eff/100,0.01), awake=Math.max(inBed-asleep,0);
+    const hhmm=h=>{const m=Math.round(h*60);return Math.floor(m/60)+"h "+String(m%60).padStart(2,"0")+"m";};
+    const total=inBed||1;
+    const fases=[["Despierto",awake,cssvar("--faint")],["REM",rem,cssvar("--esf")],
+                 ["Ligero",light,cssvar("--desc")],["Profundo",deep,"#d98cff"]];
+    const rep=asleep>0?Math.round((deep+rem)/asleep*100):0;
+    const deudaMin=hoy.deuda_sueno_min;
+    sn.innerHTML=`
+      <div class="snhd">
+        <div><span class="badge src">${(hoy.fuentes||[]).join(" · ")||"—"}</span></div>
+        <div class="big num">${hhmm(asleep)}<small> dormido · ${fmt(eff)}% efic.</small></div>
+      </div>
+      <div class="hyp">${fases.map(([,v,c])=>`<b style="width:${v/total*100}%;background:${c}"></b>`).join("")}</div>
+      <div class="hypleg">${fases.map(([n,v,c])=>`<span><i style="background:${c}"></i>${n} ${Math.round(v/total*100)}% · ${hhmm(v)}</span>`).join("")}</div>
+      <div class="stiles">
+        <div class="stile"><div class="k">Descanso</div><div class="v num">${fmt(hoy.descanso_tidmax)}<small style="font-size:.7rem;color:var(--muted)">/100</small></div></div>
+        <div class="stile"><div class="k">Deuda de sueño</div><div class="v num">${deudaMin!=null?hhmm(deudaMin/60):"–"}</div></div>
+        <div class="stile"><div class="k">Reparador (prof+REM)</div><div class="v num">${rep}%</div></div>
+        <div class="stile"><div class="k">Eficiencia</div><div class="v num">${fmt(eff)}%</div></div>
+      </div>`;
+  })();
+
   // Calendario mensual de Carga
   const byDay={}; rows.forEach(r=>{if(r.carga_tidmax!=null)byDay[r.fecha]=r.carga_tidmax;});
   const months=[...new Set(rows.map(r=>r.fecha.slice(0,7)))].sort();
@@ -383,6 +451,8 @@ function render(data){
 
   $("#dataorigin").textContent=data.origin==="demo"
     ?"datos demo (sin daily.json) — publica datos/procesado para datos reales":"datos: "+data.origin;
+
+  const pdf=$("#pdfbtn"); if(pdf) pdf.onclick=()=>window.print();
 }
 getData().then(render).catch(e=>{$(".wrap").insertAdjacentHTML("beforeend","<div class='card'>Error: "+e+"</div>");});
 </script>

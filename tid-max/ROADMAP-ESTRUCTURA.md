@@ -131,8 +131,10 @@ y de **fuente** (procedencia visible), **Señales diarias** (tiles prom/mín/má
 `correlacion.py`), **drill-down** por score/métrica (modal con sparkline + stats + "por qué"), y
 etiqueta **APROXIMADO**. Validado por render (Chromium): VFC↔Carga +0.95 ≈ el +0.96 real.
 
-**Pendiente de Fase 4:** nav de 5 pestañas completa, pestaña Sueño con hipnograma, **export PDF**
-de 1 página, e integración en `app/index.html` (la PWA grande). Lo planeado completo:
+Añadido: **sección Sueño** (hipnograma Despierto/REM/Ligero/Profundo + sub-tiles Descanso/Deuda/
+Reparador/Eficiencia), **calendario mensual** navegable de Carga, y **export PDF de 1 página**
+(`window.print()` + `@media print`, A4, verificado). **Pendiente:** nav de 5 pestañas como SPA
+e integración en `app/index.html` (la PWA grande). Lo planeado completo:
 
 - **5 pestañas**: Hoy · Tendencias · Sueño · Entrenador · Más.
 - **Hoy**: 3 anillos (Carga/Esfuerzo/Descanso) + badge de **madurez** + recomendación del día
