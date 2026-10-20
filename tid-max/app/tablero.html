@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TID-MAX · Tablero</title>
+<!--
+  tablero.html — Vista "Hoy + Tendencias" de TID-MAX (Fase 4, post-teardown NOOP).
+  Gráficos: curvas suaves con relleno degradado, ejes con fechas, línea de Carga coloreada por
+  valor (rojo→verde), marcador final y hover (crosshair+tooltip). Diales SVG con trazo en gradiente.
+  Autocontenido: lee ./daily.json o ./data.json (array de tid_data.build_daily) o cae a demo
+  embebido (números reales de Carlos). Principios: "no disponible ≠ 0", procedencia visible,
+  madurez del score, scores APROXIMADOS (no diagnóstico). Sin dependencias externas.
+-->
+<style>
+:root{
+  --ground:#0a1622; --ground2:#0d1c2b; --card:#122232; --card2:#16293b; --surface:#122232;
+  --ink:#eaf2f7; --muted:#8aa3b6; --faint:#5e7589; --line:#21364a; --grid:#1b2d3f; --accent:#22d3ee;
+  --good:#35d39a; --warn:#f5b64c; --crit:#f8737f;
+  --carga:#35d39a; --vfc:#56a7ff; --rhr:#f0a35a; --esf:#9b8cff; --desc:#8ea2ff;
+  --shadow:0 1px 0 rgba(255,255,255,.03),0 14px 34px rgba(0,0,0,.4);
+  --r:18px;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --ground:#eef3f6; --ground2:#f3f8fa; --card:#ffffff; --card2:#f5f9fb; --surface:#ffffff;
+    --ink:#10232f; --muted:#51697a; --faint:#8aa0ad; --line:#dce7ee; --grid:#e8eff4; --accent:#0a97b0;
+    --good:#0f9d6b; --warn:#c07d12; --crit:#d0505c;
+    --carga:#0f9d6b; --vfc:#2f7fd6; --rhr:#d9812e; --esf:#6a53e6; --desc:#4f63d6;
+    --shadow:0 1px 0 rgba(0,0,0,.02),0 10px 26px rgba(20,50,70,.1);
+  }
+}
+:root[data-theme="light"]{
+  --ground:#eef3f6; --ground2:#f3f8fa; --card:#ffffff; --card2:#f5f9fb; --surface:#ffffff;
+  --ink:#10232f; --muted:#51697a; --faint:#8aa0ad; --line:#dce7ee; --grid:#e8eff4; --accent:#0a97b0;
+  --good:#0f9d6b; --warn:#c07d12; --crit:#d0505c;
+  --carga:#0f9d6b; --vfc:#2f7fd6; --rhr:#d9812e; --esf:#6a53e6; --desc:#4f63d6;
+  --shadow:0 1px 0 rgba(0,0,0,.02),0 10px 26px rgba(20,50,70,.1);
+}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(1200px 620px at 82% -12%, var(--ground2), transparent 60%), var(--ground);
+  color:var(--ink);font-family:"SF Pro Text",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  line-height:1.5;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:760px;margin:0 auto;padding:22px 16px 96px;}
+/* barra de pestañas inferior */
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;justify-content:center;gap:2px;
+  padding:8px 8px calc(8px + env(safe-area-inset-bottom)) 8px;
+  background:color-mix(in srgb,var(--card) 88%,transparent);backdrop-filter:blur(14px);
+  border-top:1px solid var(--line);}
+.tabbar button{flex:1;max-width:120px;display:flex;flex-direction:column;align-items:center;gap:3px;
+  background:none;border:none;color:var(--faint);font-size:.64rem;font-weight:700;letter-spacing:.02em;
+  padding:4px 2px;border-radius:12px;cursor:pointer;}
+.tabbar button svg{width:22px;height:22px;fill:currentColor;}
+.tabbar button svg[fill="none"]{stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.tabbar button.active{color:var(--accent);}
+.tab{animation:fade .18s ease;}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@media print{.tabbar{display:none !important;} .tab[hidden]{display:block !important;}}
+.num{font-variant-numeric:tabular-nums lining-nums;}
+header.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:4px;}
+.brand{font-weight:800;letter-spacing:.14em;font-size:.8rem;color:var(--accent);text-transform:uppercase;}
+.brand small{color:var(--muted);font-weight:600;}
+h1{font-size:1.5rem;margin:.1em 0 .05em;}
+.sub{color:var(--muted);font-size:.9rem;margin-bottom:16px;}
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:.68rem;font-weight:700;letter-spacing:.05em;
+  text-transform:uppercase;padding:3px 9px;border-radius:999px;border:1px solid var(--line);color:var(--muted);}
+.badge.src{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 38%,var(--line));}
+.badge.aprox{color:var(--warn);border-color:color-mix(in srgb,var(--warn) 38%,var(--line));}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:16px;margin-bottom:14px;}
+.rings{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;}
+.ring{display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;border:none;background:none;color:inherit;padding:6px 0;border-radius:14px;}
+.ring:hover{background:var(--card2);}
+.ring .lbl{font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:700;}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+h2{font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:22px 4px 8px;font-weight:800;}
+/* tarjeta de señal (chart) */
+.sig{margin-bottom:12px;}
+.sig .hd{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:2px;}
+.sig .nm{font-size:.76rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700;}
+.sig .cur{font-size:1.5rem;font-weight:800;}
+.sig .cur small{font-size:.72rem;color:var(--muted);font-weight:600;}
+.sig .st{display:flex;gap:14px;flex-wrap:wrap;color:var(--faint);font-size:.76rem;margin-top:6px;}
+.sig .st b{color:var(--muted);}
+.chart{position:relative;width:100%;}
+.chart svg{display:block;width:100%;height:auto;touch-action:none;}
+.trend{font-weight:700;font-size:.78rem;padding:1px 7px;border-radius:999px;border:1px solid var(--line);}
+.trend.up{color:var(--good);} .trend.down{color:var(--crit);} .trend.flat{color:var(--muted);}
+.tt{position:absolute;pointer-events:none;background:var(--card2);border:1px solid var(--line);border-radius:10px;
+  padding:6px 9px;font-size:.78rem;box-shadow:var(--shadow);transform:translate(-50%,-120%);white-space:nowrap;opacity:0;transition:opacity .08s;}
+.tt b{font-variant-numeric:tabular-nums;}
+/* calendario mensual */
+.calnav{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.calnav .m{font-weight:800;font-size:1.05rem;text-transform:capitalize;}
+.calnav button{border:1px solid var(--line);background:var(--card2);color:var(--ink);border-radius:10px;
+  width:34px;height:34px;font-size:1.1rem;cursor:pointer;line-height:1;}
+.calnav button:disabled{opacity:.35;cursor:default;}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;}
+.cal .dow{text-align:center;color:var(--faint);font-size:.66rem;font-weight:700;padding-bottom:2px;}
+.cal .d{aspect-ratio:1;border-radius:9px;display:flex;align-items:flex-start;justify-content:flex-end;
+  padding:4px 6px;font-size:.7rem;font-weight:700;color:rgba(0,0,0,.6);background:var(--grid);}
+.cal .d.empty{background:transparent;}
+.cal .d.nodata{color:var(--faint);}
+.cal .d.today{box-shadow:0 0 0 2px var(--accent);}
+.heatleg{display:flex;align-items:center;justify-content:space-between;color:var(--muted);font-size:.74rem;margin-top:12px;}
+.heatbar{height:8px;flex:1;margin:0 10px;border-radius:999px;background:linear-gradient(90deg,var(--crit),var(--warn),var(--good));}
+/* correlación */
+.corr{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);}
+.corr:last-child{border-bottom:none;}
+.corr .cn{flex:1;font-size:.92rem;} .corr .cn small{color:var(--muted);display:block;font-size:.72rem;}
+.corr .bar{width:120px;height:9px;border-radius:999px;background:var(--grid);position:relative;overflow:hidden;}
+.corr .bar b{position:absolute;top:0;bottom:0;border-radius:999px;}
+.corr .cr{width:54px;text-align:right;font-weight:700;font-variant-numeric:tabular-nums;}
+.pos{color:var(--good);} .neg{color:var(--crit);}
+/* sueño */
+.pdfbtn{border:1px solid var(--line);background:var(--card2);color:var(--muted);border-radius:999px;
+  padding:4px 10px;font-size:.72rem;font-weight:700;cursor:pointer;letter-spacing:.03em;}
+.pdfbtn:hover{color:var(--ink);}
+.snhd{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:10px;}
+.snhd .big{font-size:1.5rem;font-weight:800;} .snhd .big small{font-size:.74rem;color:var(--muted);font-weight:600;}
+.hyp{display:flex;height:26px;border-radius:7px;overflow:hidden;background:var(--grid);margin-bottom:8px;}
+.hyp b{display:block;}
+.hypleg{display:flex;flex-wrap:wrap;gap:12px;font-size:.78rem;color:var(--muted);margin-bottom:12px;}
+.hypleg span{display:inline-flex;align-items:center;gap:5px;}
+.hypleg i{width:9px;height:9px;border-radius:2px;display:inline-block;}
+.stiles{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
+.stile{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:10px;}
+.stile .k{color:var(--muted);font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;font-weight:700;}
+.stile .v{font-size:1.25rem;font-weight:800;}
+/* coach BYOK */
+.pills{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;}
+.ppill{border:1px solid var(--line);background:var(--card2);color:var(--muted);border-radius:999px;
+  padding:6px 12px;font-size:.82rem;font-weight:700;cursor:pointer;}
+.ppill.on{color:var(--ink);border-color:color-mix(in srgb,var(--accent) 55%,var(--line));background:color-mix(in srgb,var(--accent) 12%,var(--card2));}
+.cin{width:100%;background:var(--card2);border:1px solid var(--line);border-radius:10px;color:var(--ink);
+  padding:10px 12px;font-size:.9rem;margin-bottom:8px;font-family:inherit;}
+.cin::placeholder{color:var(--faint);}
+.cbtn{width:100%;background:color-mix(in srgb,var(--good) 22%,var(--card2));border:1px solid color-mix(in srgb,var(--good) 40%,var(--line));
+  color:var(--ink);border-radius:12px;padding:11px;font-size:.92rem;font-weight:700;cursor:pointer;}
+.cbtn:hover{background:color-mix(in srgb,var(--good) 30%,var(--card2));}
+footer{color:var(--faint);font-size:.74rem;text-align:center;margin-top:24px;}
+footer b{color:var(--muted);}
+/* export PDF — 1 página, fondo claro, sin interacción */
+@media print{
+  @page{size:A4 portrait;margin:12mm;}
+  body{background:#fff !important;color:#10232f !important;}
+  .wrap{max-width:none;padding:0;}
+  .pdfbtn,.calnav button{display:none !important;}
+  .card{box-shadow:none;border-color:#dce7ee;break-inside:avoid;background:#fff;}
+  .tt{display:none !important;}
+  h2{margin-top:12px;color:#51697a;}
+  .sig{break-inside:avoid;}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">TID-MAX <small>Tablero</small></div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <span class="badge src" id="srcbadge">—</span>
+      <button class="pdfbtn" id="pdfbtn" title="Exportar a PDF (1 página)">⤓ PDF</button>
+    </div>
+  </header>
+  <h1 id="hoyfecha">Hoy</h1>
+  <div class="sub" id="athsub">—</div>
+
+  <!-- ===== HOY ===== -->
+  <section class="tab" data-tab="hoy">
+    <div class="card">
+      <div class="row" style="margin-bottom:8px">
+        <div style="font-weight:700">Resumen del día</div>
+        <span class="badge" id="madurez">—</span>
+      </div>
+      <div class="rings" id="rings"></div>
+      <div class="sub" style="margin:10px 2px 0;font-size:.84rem" id="recomend"></div>
+    </div>
+    <div class="card" id="hoy_destacados"></div>
+  </section>
+
+  <!-- ===== TENDENCIAS ===== -->
+  <section class="tab" data-tab="tend" hidden>
+    <h2>Carga — últimos 90 días</h2>
+    <div class="card"><div class="sig" id="sig_carga"></div></div>
+    <h2>Señales diarias</h2>
+    <div class="card" id="signals"></div>
+    <h2>Calendario de Carga</h2>
+    <div class="card">
+      <div class="calnav">
+        <button id="calprev" aria-label="Mes anterior">‹</button>
+        <div class="m" id="calmonth">—</div>
+        <button id="calnext" aria-label="Mes siguiente">›</button>
+      </div>
+      <div class="cal" id="cal"></div>
+      <div class="heatleg"><span>Agotado</span><span class="heatbar"></span><span>En su pico</span></div>
+    </div>
+    <h2>Qué se correlaciona con tu Carga</h2>
+    <div class="card" id="corr"></div>
+  </section>
+
+  <!-- ===== SUEÑO ===== -->
+  <section class="tab" data-tab="sueno" hidden>
+    <h2>Sueño · anoche</h2>
+    <div class="card" id="sueno"></div>
+  </section>
+
+  <!-- ===== ENTRENADOR ===== -->
+  <section class="tab" data-tab="coach" hidden>
+    <h2>Entrenador</h2>
+    <div class="card" id="coachcard"></div>
+  </section>
+
+  <!-- ===== MÁS ===== -->
+  <section class="tab" data-tab="mas" hidden>
+    <h2>Procedencia (3 ejes)</h2>
+    <div class="card" id="provcard"></div>
+    <h2>Datos y exportación</h2>
+    <div class="card" id="mascard"></div>
+  </section>
+
+  <footer>
+    Scores <b>APROXIMADOS</b> — no son de WHOOP ni diagnóstico médico · motor local TID-MAX<br>
+    <span id="dataorigin"></span>
+  </footer>
+</div>
+
+<nav class="tabbar" id="tabbar">
+  <button data-go="hoy" class="active"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg><span>Hoy</span></button>
+  <button data-go="tend"><svg viewBox="0 0 24 24" fill="none"><path d="M3 17l5-6 4 3 8-9"/><path d="M17 5h4v4"/></svg><span>Tendencias</span></button>
+  <button data-go="sueno"><svg viewBox="0 0 24 24"><path d="M21 12.8A8 8 0 1 1 11.2 3 6.5 6.5 0 0 0 21 12.8z"/></svg><span>Sueño</span></button>
+  <button data-go="coach"><svg viewBox="0 0 24 24"><path d="M12 2l1.8 4.6L18 8l-4.2 1.4L12 14l-1.8-4.6L6 8l4.2-1.4z"/><circle cx="18.5" cy="17.5" r="1.6"/><circle cx="6" cy="16" r="1.2"/></svg><span>Entrenador</span></button>
+  <button data-go="mas"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg><span>Más</span></button>
+</nav>
+
+<script>
+"use strict";
+const $=(s,r=document)=>r.querySelector(s);
+const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+const fmt=(v,d=0)=>(v==null||Number.isNaN(v))?"–":Number(v).toFixed(d);
+const mean=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:null;
+const cssvar=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+function bandColor(v){if(v==null)return cssvar("--grid");if(v<=34)return cssvar("--crit");if(v<=67)return cssvar("--warn");return cssvar("--good");}
+function mix(c1,c2,t){const p=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16));const a=p(c1),b=p(c2);
+  return "#"+a.map((x,i)=>Math.round(x+(b[i]-x)*t).toString(16).padStart(2,"0")).join("");}
+function heatColor(v){if(v==null)return cssvar("--grid");const C=cssvar("--crit"),W=cssvar("--warn"),G=cssvar("--good");
+  return v<=50?mix(C,W,v/50):mix(W,G,(v-50)/50);}
+
+// ---- fecha corta para el eje x ----
+const MES=["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
+function fechaCorta(iso){const d=new Date(iso+"T00:00:00");return d.getDate()+" "+MES[d.getMonth()];}
+
+// ---- suavizado Catmull-Rom → path bezier ----
+function smoothPath(pts){
+  if(pts.length<2)return pts.length?`M${pts[0][0]},${pts[0][1]}`:"";
+  let d=`M${pts[0][0]},${pts[0][1]}`;
+  for(let i=0;i<pts.length-1;i++){
+    const p0=pts[i-1]||pts[i],p1=pts[i],p2=pts[i+1],p3=pts[i+2]||p2;
+    const c1x=p1[0]+(p2[0]-p0[0])/6, c1y=p1[1]+(p2[1]-p0[1])/6;
+    const c2x=p2[0]-(p3[0]-p1[0])/6, c2y=p2[1]-(p3[1]-p1[1])/6;
+    d+=` C${c1x.toFixed(1)},${c1y.toFixed(1)} ${c2x.toFixed(1)},${c2y.toFixed(1)} ${p2[0].toFixed(1)},${p2[1].toFixed(1)}`;
+  }
+  return d;
+}
+
+let UID=0;
+// ---- gráfico de área suave con ejes + hover ----
+// opts: {series:[{fecha,v}], color, byValue:bool(gradiente por valor), unit, decimals, yMin,yMax}
+function areaChart(host, opts){
+  const S=opts.series.filter(p=>p.v!=null);
+  if(S.length<2){host.innerHTML="<div class='sub'>Pocos datos para graficar.</div>";return;}
+  const id="g"+(UID++);
+  const W=680,H=opts.h||150, padL=34,padR=10,padT=10,padB=22;
+  const vals=S.map(p=>p.v);
+  let lo=opts.yMin!=null?opts.yMin:Math.min(...vals), hi=opts.yMax!=null?opts.yMax:Math.max(...vals);
+  if(hi===lo){hi+=1;lo-=1;} const span=hi-lo;
+  if(opts.yMin==null)lo-=span*0.12; if(opts.yMax==null)hi+=span*0.12;  // padding solo en ejes automáticos
+  const X=i=>padL+(i/(S.length-1))*(W-padL-padR);
+  const Y=v=>padT+(1-(v-lo)/(hi-lo))*(H-padT-padB);
+  const pts=S.map((p,i)=>[X(i),Y(p.v)]);
+  const line=smoothPath(pts);
+  const area=line+` L${X(S.length-1).toFixed(1)},${(H-padB)} L${padL},${(H-padB)} Z`;
+  const col=opts.color;
+  // gradiente de trazo por valor (Carga) o sólido
+  let strokeRef=col, strokeDefs="";
+  if(opts.byValue){
+    const stops=S.map((p,i)=>`<stop offset="${(i/(S.length-1)*100).toFixed(1)}%" stop-color="${heatColor(p.v)}"/>`).join("");
+    strokeDefs=`<linearGradient id="${id}s" x1="0" y1="0" x2="1" y2="0">${stops}</linearGradient>`;
+    strokeRef=`url(#${id}s)`;
+  }
+  // ticks y (3) y x (4 fechas)
+  const yticks=[hi,(hi+lo)/2,lo].map(v=>({v,y:Y(v)}));
+  const nX=Math.min(4,S.length), xticks=[];
+  for(let k=0;k<nX;k++){const i=Math.round(k/(nX-1)*(S.length-1));
+    xticks.push({i,x:X(i),label:fechaCorta(S[i].fecha),anchor:k===0?"start":(k===nX-1?"end":"middle")});}
+  const last=pts[pts.length-1], lastV=S[S.length-1].v;
+  const gridC=cssvar("--grid"), muted=cssvar("--faint");
+
+  host.innerHTML=`<div class="chart">
+    <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="serie temporal">
+      <defs>
+        <linearGradient id="${id}f" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="${col}" stop-opacity="0.30"/>
+          <stop offset="100%" stop-color="${col}" stop-opacity="0.02"/>
+        </linearGradient>${strokeDefs}
+      </defs>
+      ${yticks.map(t=>`<line x1="${padL}" y1="${t.y.toFixed(1)}" x2="${W-padR}" y2="${t.y.toFixed(1)}" stroke="${gridC}" stroke-width="1"/>
+        <text x="4" y="${(t.y+3).toFixed(1)}" font-size="10" fill="${muted}">${fmt(t.v,opts.decimals||0)}</text>`).join("")}
+      ${xticks.map(t=>`<text x="${t.x.toFixed(1)}" y="${H-6}" font-size="10" fill="${muted}" text-anchor="${t.anchor}">${t.label}</text>`).join("")}
+      <path d="${area}" fill="url(#${id}f)"/>
+      <path d="${line}" fill="none" stroke="${strokeRef}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="${last[0].toFixed(1)}" cy="${last[1].toFixed(1)}" r="4" fill="${opts.byValue?heatColor(lastV):col}" stroke="var(--card)" stroke-width="2"/>
+      <line class="cross" x1="0" y1="${padT}" x2="0" y2="${H-padB}" stroke="${muted}" stroke-width="1" opacity="0"/>
+      <circle class="cdot" r="4" fill="${col}" stroke="var(--card)" stroke-width="2" opacity="0"/>
+      <rect class="hit" x="${padL}" y="0" width="${W-padL-padR}" height="${H}" fill="transparent"/>
+    </svg>
+    <div class="tt"></div>
+  </div>`;
+  // hover
+  const svg=host.querySelector("svg"), cross=svg.querySelector(".cross"), cdot=svg.querySelector(".cdot"),
+        tt=host.querySelector(".tt"), chart=host.querySelector(".chart");
+  function move(ev){
+    const r=svg.getBoundingClientRect();
+    const cx=((ev.touches?ev.touches[0].clientX:ev.clientX)-r.left)/r.width*W;
+    let i=Math.round((cx-padL)/(W-padL-padR)*(S.length-1)); i=clamp(i,0,S.length-1);
+    const px=X(i),py=Y(S[i].v);
+    cross.setAttribute("x1",px);cross.setAttribute("x2",px);cross.setAttribute("opacity","0.5");
+    cdot.setAttribute("cx",px);cdot.setAttribute("cy",py);cdot.setAttribute("opacity","1");
+    if(opts.byValue)cdot.setAttribute("fill",heatColor(S[i].v));
+    tt.style.left=(px/W*r.width)+"px"; tt.style.top=(py/H*r.height)+"px"; tt.style.opacity="1";
+    tt.innerHTML=`${fechaCorta(S[i].fecha)} · <b>${fmt(S[i].v,opts.decimals||0)}${opts.unit||""}</b>`;
+  }
+  function leave(){cross.setAttribute("opacity","0");cdot.setAttribute("opacity","0");tt.style.opacity="0";}
+  chart.addEventListener("mousemove",move);chart.addEventListener("mouseleave",leave);
+  chart.addEventListener("touchstart",move,{passive:true});chart.addEventListener("touchmove",move,{passive:true});
+  chart.addEventListener("touchend",leave);
+}
+
+// ---- anillo SVG con trazo en gradiente ----
+function ring(label,val,color){
+  const R=44,C=2*Math.PI*R,pct=val==null?0:clamp(val/100,0,1),id="r"+(UID++);
+  const b=document.createElement("button");b.className="ring";
+  b.innerHTML=`<div class="lbl">${label}</div>
+    <svg width="104" height="104" viewBox="0 0 104 104">
+      <defs><linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="${color}" stop-opacity="0.65"/><stop offset="100%" stop-color="${color}"/>
+      </linearGradient></defs>
+      <circle cx="52" cy="52" r="${R}" fill="none" stroke="var(--grid)" stroke-width="9"/>
+      <circle cx="52" cy="52" r="${R}" fill="none" stroke="url(#${id})" stroke-width="9" stroke-linecap="round"
+        stroke-dasharray="${C}" stroke-dashoffset="${C*(1-pct)}" transform="rotate(-90 52 52)"/>
+      <text x="52" y="59" text-anchor="middle" font-size="27" font-weight="800" fill="var(--ink)" class="num">${val==null?"–":fmt(val)}</text>
+    </svg>`;
+  return b;
+}
+
+function pearson(pairs){const n=pairs.length;if(n<3)return null;let sx=0,sy=0;for(const[a,b]of pairs){sx+=a;sy+=b;}
+  const mx=sx/n,my=sy/n;let sxx=0,syy=0,sxy=0;for(const[a,b]of pairs){const dx=a-mx,dy=b-my;sxx+=dx*dx;syy+=dy*dy;sxy+=dx*dy;}
+  if(sxx<=0||syy<=0)return null;return clamp(sxy/Math.sqrt(sxx*syy),-1,1);}
+function trend(series){const xs=series.filter(v=>v!=null);if(xs.length<3)return{cls:"flat",t:"–"};
+  const last=xs[xs.length-1],base=mean(xs.slice(0,-1)),d=last-base;
+  return{cls:d>0.5?"up":(d<-0.5?"down":"flat"),t:(d>=0?"↗ +":"↘ ")+Math.abs(d).toFixed(0)};}
+
+// ---- demo embebido (números reales de Carlos) ----
+function demoData(){
+  const days=90,rows=[],today=new Date("2026-10-19");let seed=42;const rnd=()=>{seed=(seed*1103515245+12345)&0x7fffffff;return seed/0x7fffffff;};
+  for(let i=days-1;i>=0;i--){const d=new Date(today);d.setDate(today.getDate()-i);
+    const hrv=Math.round(87+(rnd()-0.5)*60),rhr=Math.round(53+(rnd()-0.5)*8);
+    const descanso=Math.round(clamp(80+(rnd()-0.5)*22,16,95)),esf=+(clamp(45+(rnd()-0.5)*70,19,97)).toFixed(1);
+    const carga=Math.round(clamp((hrv-60)*1.1-(rhr-52)*2+40+(rnd()-0.5)*18,4,98));
+    const asleep=+(6.6+(rnd()-0.5)*2).toFixed(2);
+    rows.push({fecha:d.toISOString().slice(0,10),carga_tidmax:carga,descanso_tidmax:descanso,
+      esfuerzo_ref_0_100:esf,hrv_ms:hrv,rhr_bpm:rhr,
+      sleep_asleep_noche_h:asleep,sleep_efficiency_pct:+(82+(rnd()-0.5)*12).toFixed(0),
+      sleep_deep_h:+(asleep*0.28).toFixed(2),sleep_rem_h:+(asleep*0.27).toFixed(2),
+      sleep_light_h:+(asleep*0.45).toFixed(2),deuda_sueno_min:Math.round((rnd())*90),
+      fuentes:["whoop","tidmax"]});}
+  const h=rows[rows.length-1];h.carga_tidmax=66;h.descanso_tidmax=80;h.esfuerzo_ref_0_100=null;
+  h.hrv_ms=100;h.rhr_bpm=50;h.acwr=1.21;h.carga_entrenamiento_estado="construyendo";
+  // Anoche (dom 18 oct) — números reales de Carlos.
+  h.sleep_asleep_noche_h=6.9;h.sleep_efficiency_pct=84;h.sleep_deep_h=1.97;h.sleep_rem_h=1.87;
+  h.sleep_light_h=3.07;h.deuda_sueno_min=64;
+  return{daily:rows,atleta:"Carlos",madurez:"construyendo"};
+}
+async function getData(){
+  for(const url of ["./daily.json","./data.json"]){
+    try{const r=await fetch(url,{cache:"no-store"});if(!r.ok)continue;const j=await r.json();
+      const rows=Array.isArray(j)?j:(j.daily||j.dias);
+      if(Array.isArray(rows)&&rows.length&&("carga_tidmax"in rows[rows.length-1]))
+        return{daily:rows,atleta:j.atleta||"",madurez:rows[rows.length-1].carga_entrenamiento_estado||"",origin:url};
+    }catch(e){}
+  }
+  return Object.assign(demoData(),{origin:"demo"});
+}
+
+function serie(rows,key){return rows.map(r=>({fecha:r.fecha,v:r[key]??null}));}
+
+function render(data){
+  const rows=data.daily,hoy=rows[rows.length-1];
+  $("#hoyfecha").textContent="Hoy · "+(hoy.fecha||"");
+  $("#athsub").textContent=(data.atleta?data.atleta+" · ":"")+rows.length+" lecturas";
+  $("#srcbadge").textContent=(hoy.fuentes||["—"]).join(" · ");
+  $("#madurez").textContent="Madurez: "+({calibrando:"Calibrando",construyendo:"Construyendo",solida:"Sólida",establecido:"Sólida"}[data.madurez]||"—");
+
+  const rg=$("#rings");rg.innerHTML="";
+  [["Carga",hoy.carga_tidmax,cssvar("--carga")],["Esfuerzo",hoy.esfuerzo_ref_0_100,cssvar("--esf")],
+   ["Descanso",hoy.descanso_tidmax,cssvar("--desc")]].forEach(([l,v,c])=>rg.appendChild(ring(l,v,c)));
+  const banda=hoy.carga_tidmax==null?"—":(hoy.carga_tidmax<=34?"recupérate":hoy.carga_tidmax<=67?"mantén":"empuja");
+  $("#recomend").innerHTML=`Recomendación: <b>${banda}</b>`+(hoy.acwr!=null?` · ACWR <b>${fmt(hoy.acwr,2)}</b> (aguda/crónica)`:"");
+
+  // Carga (área grande, línea coloreada por valor)
+  const cargaV=rows.map(r=>r.carga_tidmax).filter(v=>v!=null);
+  const tc=trend(rows.map(r=>r.carga_tidmax));
+  $("#sig_carga").innerHTML=`<div class="hd"><span class="nm">Carga</span>
+    <span class="cur num">${fmt(hoy.carga_tidmax)}<small>/100</small></span></div>`;
+  const chh=document.createElement("div");$("#sig_carga").appendChild(chh);
+  areaChart(chh,{series:serie(rows,"carga_tidmax"),color:cssvar("--carga"),byValue:true,yMin:0,yMax:100,h:160});
+  $("#sig_carga").insertAdjacentHTML("beforeend",
+    `<div class="st"><span>prom <b>${fmt(mean(cargaV))}</b></span><span>pico <b>${fmt(Math.max(...cargaV))}</b></span>
+     <span>bajo <b>${fmt(Math.min(...cargaV))}</b></span><span>días <b>${cargaV.length}</b></span>
+     <span class="trend ${tc.cls}">${tc.t}</span></div>`);
+
+  // Señales diarias (VFC, FC reposo, Esfuerzo, Descanso)
+  const sg=$("#signals");sg.innerHTML="";
+  [["VFC","hrv_ms"," ms",cssvar("--vfc"),0],["FC en reposo","rhr_bpm"," lpm",cssvar("--rhr"),0],
+   ["Esfuerzo","esfuerzo_ref_0_100","/100",cssvar("--esf"),1],["Descanso","descanso_tidmax","/100",cssvar("--desc"),0]]
+  .forEach(([nm,key,unit,col,dec],idx)=>{
+    const s=rows.map(r=>r[key]??null),xs=s.filter(v=>v!=null),tr=trend(s);
+    const wrap=document.createElement("div");wrap.className="sig";
+    if(idx>0)wrap.style.borderTop="1px solid var(--line)",wrap.style.paddingTop="14px",wrap.style.marginTop="2px";
+    wrap.innerHTML=`<div class="hd"><span class="nm">${nm}</span>
+      <span class="cur num">${fmt(xs[xs.length-1],dec)}<small>${unit}</small></span></div>`;
+    const ch=document.createElement("div");wrap.appendChild(ch);
+    sg.appendChild(wrap);
+    areaChart(ch,{series:serie(rows,key),color:col,unit:unit.replace("/100",""),decimals:dec,h:120});
+    wrap.insertAdjacentHTML("beforeend",
+      `<div class="st"><span>prom <b>${fmt(mean(xs),dec)}</b></span><span>mín <b>${fmt(Math.min(...xs),dec)}</b></span>
+       <span>máx <b>${fmt(Math.max(...xs),dec)}</b></span><span class="trend ${tr.cls}">${tr.t}</span></div>`);
+  });
+
+  // Sueño · anoche (hipnograma + sub-scores)
+  (function(){
+    const sn=$("#sueno");
+    const asleep=hoy.sleep_asleep_noche_h, eff=hoy.sleep_efficiency_pct;
+    if(!asleep||eff==null){sn.innerHTML="<div class='sub'>Sin datos de sueño anoche.</div>";return;}
+    const deep=hoy.sleep_deep_h||0, rem=hoy.sleep_rem_h||0, light=hoy.sleep_light_h||0;
+    const inBed=asleep/Math.max(eff/100,0.01), awake=Math.max(inBed-asleep,0);
+    const hhmm=h=>{const m=Math.round(h*60);return Math.floor(m/60)+"h "+String(m%60).padStart(2,"0")+"m";};
+    const total=inBed||1;
+    const fases=[["Despierto",awake,cssvar("--faint")],["REM",rem,cssvar("--esf")],
+                 ["Ligero",light,cssvar("--desc")],["Profundo",deep,"#d98cff"]];
+    const rep=asleep>0?Math.round((deep+rem)/asleep*100):0;
+    const deudaMin=hoy.deuda_sueno_min;
+    sn.innerHTML=`
+      <div class="snhd">
+        <div><span class="badge src">${(hoy.fuentes||[]).join(" · ")||"—"}</span></div>
+        <div class="big num">${hhmm(asleep)}<small> dormido · ${fmt(eff)}% efic.</small></div>
+      </div>
+      <div class="hyp">${fases.map(([,v,c])=>`<b style="width:${v/total*100}%;background:${c}"></b>`).join("")}</div>
+      <div class="hypleg">${fases.map(([n,v,c])=>`<span><i style="background:${c}"></i>${n} ${Math.round(v/total*100)}% · ${hhmm(v)}</span>`).join("")}</div>
+      <div class="stiles">
+        <div class="stile"><div class="k">Descanso</div><div class="v num">${fmt(hoy.descanso_tidmax)}<small style="font-size:.7rem;color:var(--muted)">/100</small></div></div>
+        <div class="stile"><div class="k">Deuda de sueño</div><div class="v num">${deudaMin!=null?hhmm(deudaMin/60):"–"}</div></div>
+        <div class="stile"><div class="k">Reparador (prof+REM)</div><div class="v num">${rep}%</div></div>
+        <div class="stile"><div class="k">Eficiencia</div><div class="v num">${fmt(eff)}%</div></div>
+      </div>`;
+  })();
+
+  // Calendario mensual de Carga
+  const byDay={}; rows.forEach(r=>{if(r.carga_tidmax!=null)byDay[r.fecha]=r.carga_tidmax;});
+  const months=[...new Set(rows.map(r=>r.fecha.slice(0,7)))].sort();
+  const MESL=["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+  let mi=months.length-1;
+  function renderMonth(){
+    const [Y,M]=months[mi].split("-").map(Number);
+    $("#calmonth").textContent=MESL[M-1]+" "+Y;
+    $("#calprev").disabled=mi<=0; $("#calnext").disabled=mi>=months.length-1;
+    const cal=$("#cal"); cal.innerHTML="";
+    ["L","M","X","J","V","S","D"].forEach(d=>{const e=document.createElement("div");e.className="dow";e.textContent=d;cal.appendChild(e);});
+    const firstDow=(new Date(Y,M-1,1).getDay()+6)%7, days=new Date(Y,M,0).getDate();
+    for(let k=0;k<firstDow;k++){const e=document.createElement("div");e.className="d empty";cal.appendChild(e);}
+    for(let day=1;day<=days;day++){
+      const key=`${Y}-${String(M).padStart(2,"0")}-${String(day).padStart(2,"0")}`, v=byDay[key];
+      const e=document.createElement("div");
+      e.className="d"+(v==null?" nodata":"")+(key===hoy.fecha?" today":"");
+      e.style.background=v==null?"var(--grid)":heatColor(v);
+      e.textContent=day; e.title=v==null?key:`${key}: Carga ${v}`;
+      cal.appendChild(e);
+    }
+  }
+  $("#calprev").onclick=()=>{if(mi>0){mi--;renderMonth();}};
+  $("#calnext").onclick=()=>{if(mi<months.length-1){mi++;renderMonth();}};
+  renderMonth();
+
+  // Qué se correlaciona
+  const cands={"VFC":"hrv_ms","FC en reposo":"rhr_bpm","Descanso":"descanso_tidmax","Esfuerzo":"esfuerzo_ref_0_100"};
+  const panel=[];
+  for(const[nm,key]of Object.entries(cands)){
+    const pairs=rows.map(r=>[r.carga_tidmax,r[key]]).filter(p=>p[0]!=null&&p[1]!=null);
+    const r=pearson(pairs);if(r!=null&&Math.abs(r)>=0.30&&pairs.length>=10)panel.push({nm,r,n:pairs.length});}
+  panel.sort((a,b)=>Math.abs(b.r)-Math.abs(a.r));
+  const cc=$("#corr");cc.innerHTML=panel.length?"":"<div class='sub'>Aún no hay correlaciones fuertes (|r|≥0.30, n≥10).</div>";
+  panel.forEach(p=>{const w=Math.abs(p.r)*100,pos=p.r>=0;const d=document.createElement("div");d.className="corr";
+    d.innerHTML=`<div class="cn">${p.nm}<small>Carga · n=${p.n}</small></div>
+      <div class="bar"><b style="width:${w}%;${pos?"left:0;background:var(--good)":"right:0;background:var(--crit)"}"></b></div>
+      <div class="cr ${pos?"pos":"neg"}">${pos?"+":""}${p.r.toFixed(2)}</div>`;cc.appendChild(d);});
+
+  $("#dataorigin").textContent=data.origin==="demo"
+    ?"datos demo (sin daily.json) — publica datos/procesado para datos reales":"datos: "+data.origin;
+
+  // ----- Hoy · destacados (resumen rápido) -----
+  (function(){
+    const items=[["VFC",fmt(hoy.hrv_ms)+" ms"],["FC reposo",fmt(hoy.rhr_bpm)+" lpm"],
+      ["Sueño",hoy.sleep_asleep_noche_h?hoy.sleep_asleep_noche_h+" h":"–"],
+      ["Esfuerzo",hoy.esfuerzo_ref_0_100!=null?fmt(hoy.esfuerzo_ref_0_100):"–"]];
+    $("#hoy_destacados").innerHTML=`<div style="font-weight:700;margin-bottom:10px">Destacados</div>
+      <div class="stiles">${items.map(([k,v])=>`<div class="stile"><div class="k">${k}</div><div class="v num">${v}</div></div>`).join("")}</div>`;
+  })();
+
+  // ----- Entrenador (coach BYOK local-first + recomendación local) -----
+  (function(){
+    const c=hoy.carga_tidmax;
+    let rec=[];
+    if(c!=null){
+      if(c<=34)rec.push("Carga baja: <b>recupérate</b>. Prioriza sueño y movilidad; evita alta intensidad hoy.");
+      else if(c<=67)rec.push("Carga media: <b>mantén</b>. Intensidad moderada, técnica sobre esfuerzo máximo.");
+      else rec.push("Carga alta: <b>empuja</b>. Tu cuerpo puede con una sesión exigente.");
+    }
+    if(hoy.deuda_sueno_min&&hoy.deuda_sueno_min>=30)rec.push(`Tienes <b>${Math.round(hoy.deuda_sueno_min)} min</b> de deuda de sueño: adelanta la hora de dormir.`);
+    if(hoy.acwr!=null&&hoy.acwr>1.5)rec.push(`ACWR <b>${fmt(hoy.acwr,2)}</b> (carga aguda alta vs crónica): cuida el riesgo de sobrecarga.`);
+    let cfg={};try{cfg=JSON.parse(localStorage.getItem("tidmax_coach")||"{}");}catch(e){}
+    const prov=cfg.prov||"openai";
+    $("#coachcard").innerHTML=`
+      <div style="font-weight:700;margin-bottom:8px">Recomendación de hoy</div>
+      ${rec.map(r=>`<div class="why">${r}</div>`).join("")||"<div class='sub'>Sin datos suficientes.</div>"}
+      <hr style="border:none;border-top:1px solid var(--line);margin:14px 0">
+      <div style="font-weight:700;margin-bottom:4px">Conectar un proveedor <span class="badge aprox">BYOK</span></div>
+      <div class="sub" style="font-size:.82rem;margin-bottom:10px">El coach usa <b>tu propia clave</b>. Se guarda solo en este navegador y <b>nunca sale salvo en tu petición</b>. Apúntalo a un modelo local (Ollama/LM Studio) y nada sale de tu red.</div>
+      <div class="pills" id="provpills">
+        ${["openai|OpenAI","anthropic|Anthropic","google|Gemini","local|Local (Ollama)"].map(p=>{const[v,l]=p.split("|");
+          return `<button class="ppill${v===prov?" on":""}" data-prov="${v}">${l}</button>`;}).join("")}
+      </div>
+      <input class="cin" id="coach_model" placeholder="Modelo (p. ej. gpt-5-mini / claude-sonnet-4-6 / llama3)" value="${cfg.model||""}">
+      <input class="cin" id="coach_url" placeholder="URL del servidor (solo local, p. ej. http://localhost:11434/v1)" value="${cfg.url||""}">
+      <input class="cin" id="coach_key" type="password" placeholder="Clave de API (opcional en local)" value="${cfg.key||""}">
+      <button class="cbtn" id="coach_save">Guardar configuración</button>
+      <div class="sub" id="coach_saved" style="font-size:.78rem;margin-top:8px"></div>`;
+    const pills=$("#coachcard").querySelectorAll(".ppill");
+    pills.forEach(b=>b.onclick=()=>{pills.forEach(x=>x.classList.remove("on"));b.classList.add("on");});
+    $("#coach_save").onclick=()=>{
+      const sel=$("#coachcard").querySelector(".ppill.on");
+      const nc={prov:sel?sel.dataset.prov:"openai",model:$("#coach_model").value.trim(),
+        url:$("#coach_url").value.trim(),key:$("#coach_key").value};
+      try{localStorage.setItem("tidmax_coach",JSON.stringify(nc));$("#coach_saved").textContent="Guardado en este navegador ✓";}
+      catch(e){$("#coach_saved").textContent="No se pudo guardar (almacenamiento bloqueado).";}
+    };
+  })();
+
+  // ----- Procedencia (3 ejes) + Más -----
+  $("#provcard").innerHTML=`
+    <div class="why"><b>Fuente</b>: de qué vino (WHOOP, Polar, Apple Health, manual, <b>tidmax</b>=calculado).</div>
+    <div class="why"><b>Tipo</b>: medido · estimado · importado · derivado · <b>referencia</b> (score ajeno, no gana).</div>
+    <div class="why"><b>Madurez</b>: calibrando (&lt;4 noches) → construyendo (&lt;14) → sólida.</div>
+    <div class="sub" style="margin-top:10px;font-size:.82rem">Regla: <b>“no disponible ≠ 0”</b> — un dato ausente se muestra vacío, nunca como 0. Los scores ajenos se guardan como referencia; recomputamos los nuestros.</div>`;
+  $("#mascard").innerHTML=`
+    <button class="cbtn" id="mas_pdf">⤓ Exportar informe (PDF, 1 página)</button>
+    <div class="sub" style="font-size:.82rem;margin-top:12px">${$("#dataorigin").textContent}</div>
+    <div class="sub" style="font-size:.78rem;margin-top:8px">Scores <b>APROXIMADOS</b> — no son los de WHOOP ni un diagnóstico médico. Motor local TID-MAX · basado en el teardown de NOOP (uso no comercial).</div>`;
+  $("#mas_pdf").onclick=()=>window.print();
+
+  // ----- navegación de pestañas -----
+  const titulos={hoy:"Hoy · "+(hoy.fecha||""),tend:"Tendencias",sueno:"Sueño",coach:"Entrenador",mas:"Más"};
+  const subs={hoy:(data.atleta?data.atleta+" · ":"")+rows.length+" lecturas",tend:"Últimos 90 días",
+    sueno:(hoy.fecha||""),coach:"Tu propia clave · local-first",mas:"Procedencia · exportar · acerca de"};
+  function go(tab){
+    document.querySelectorAll(".tab").forEach(s=>s.hidden=(s.dataset.tab!==tab));
+    document.querySelectorAll(".tabbar button").forEach(b=>b.classList.toggle("active",b.dataset.go===tab));
+    $("#hoyfecha").textContent=titulos[tab]||tab; $("#athsub").textContent=subs[tab]||"";
+    window.scrollTo({top:0,behavior:"instant"in window?"instant":"auto"});
+  }
+  document.querySelectorAll(".tabbar button").forEach(b=>b.onclick=()=>go(b.dataset.go));
+
+  const pdf=$("#pdfbtn"); if(pdf) pdf.onclick=()=>window.print();
+}
+getData().then(render).catch(e=>{$(".wrap").insertAdjacentHTML("beforeend","<div class='card'>Error: "+e+"</div>");});
+</script>
+</body>
+</html>
