@@ -29,6 +29,8 @@ import hrv_rr          # pipeline de HRV sobre R-R crudo (RMSSD/SDNN/pNN50, Poin
 import recovery_score  # score de Carga (z-score + logística, pesos 55/20/15/5/5)
 import sleep_score     # score de Descanso (0.50/0.20/0.20/0.10) + deuda de sueño
 import strain_score    # score de Esfuerzo + carga de entrenamiento (ACWR)
+import readiness       # HRV readiness (Plews/Altini, SWC) — sólo lectura
+import illness_signal  # alerta temprana de enfermedad (multiparámetro)
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = sys.argv[1] if len(sys.argv) > 1 else os.path.join(SCRIPT_DIR, "datos")
@@ -363,6 +365,43 @@ def _scores_tidmax(filas):
             ultima["tsb"] = ct["tsb"]
             ultima["carga_entrenamiento_estado"] = ct["estado"]
             mark(ultima, "tidmax")
+    except Exception:
+        pass
+
+    # --- HRV readiness (Plews/Altini) + alerta de enfermedad (adjuntas a la fila más reciente) ---
+    if not filas:
+        return
+    ultima = filas[-1]
+    try:
+        rd = readiness.evaluate([f.get("hrv_ms") for f in filas])
+        if rd is not None:
+            ultima["readiness_tier"] = rd["tier"]
+            ultima["readiness_base7_ms"] = rd["baseline7_ms"]
+            mark(ultima, "tidmax")
+    except Exception:
+        pass
+    try:
+        # Baselines sobre el historial SIN hoy; z illness-ward de la última noche.
+        prev = filas[:-1]
+        hb = recovery_score.baseline_ewma([f.get("hrv_ms") for f in prev])
+        rb = recovery_score.baseline_ewma([f.get("rhr_bpm") for f in prev])
+        pb = recovery_score.baseline_ewma([f.get("resp_rate") for f in prev])
+        sb = recovery_score.baseline_ewma([f.get("skin_temp_c") for f in prev])
+        z = recovery_score.z_robusto
+        senales = {}
+        if rb and ultima.get("rhr_bpm") is not None:
+            senales["rhr"] = z(ultima["rhr_bpm"], rb["mean"], rb["spread"])          # ↑ illness
+        if sb and ultima.get("skin_temp_c") is not None:
+            senales["temp_piel"] = z(ultima["skin_temp_c"], sb["mean"], sb["spread"])  # ↑ illness
+        if hb and ultima.get("hrv_ms") is not None:
+            senales["hvc"] = z(hb["mean"], ultima["hrv_ms"], hb["spread"])           # caída = ↑ illness
+        if pb and ultima.get("resp_rate") is not None:
+            senales["respiracion"] = z(ultima["resp_rate"], pb["mean"], pb["spread"])  # ↑ illness
+        confiable = bool(hb) and hb.get("n_valid", 0) >= readiness.MIN_NIGHTS
+        il = illness_signal.evaluate(senales, baseline_confiable=confiable)
+        ultima["illness_nivel"] = il["nivel"]
+        ultima["illness_score"] = il["score"]
+        mark(ultima, "tidmax")
     except Exception:
         pass
 
