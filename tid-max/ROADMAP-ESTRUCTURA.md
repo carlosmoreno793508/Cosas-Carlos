@@ -73,9 +73,12 @@ Validaciones clave en las autopruebas: Descanso de la noche real de Carlos ≈ 8
 pesas a 45% HRR → Esfuerzo 0 por Edwards (el volumen de fuerza no toca el Esfuerzo HR);
 banda a Charge 66 → **136–158 bpm** (idéntico al Live Session real de Carlos).
 
-**Pendiente de Fase 1 (siguiente paso):** cablear en `tid_data.py` (ya adjunta `fila["hrv"]`)
-→ `fila["carga"]`, `fila["descanso"]`, `fila["esfuerzo"]`, `fila["acwr"]`, alimentando los
-baselines personales (EWMA) desde el historial del atleta.
+✅ **Cableado en `tid_data.py`** (`_scores_tidmax`, pase final de `build_daily`): añade
+`carga_tidmax`/`carga_banda` (HRV/RHR + respiración + temp vs baseline EWMA de noches previas,
+cold-start honesto), `descanso_tidmax` (necesidad personalizada rodante), `esfuerzo_ref_0_100`
+(Day Strain de WHOOP re-escalado, marcado referencia) y `acwr`/`ctl`/`atl`/`tsb` en la fila más
+reciente. Marca la fuente `tidmax`. Pendiente real: recompute propio de Esfuerzo desde el stream
+de HR del Polar (vive en `build_polar`, requiere captura — Fase 5).
 
 ---
 

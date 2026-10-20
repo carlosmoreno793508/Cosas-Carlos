@@ -25,7 +25,10 @@ import json
 import csv
 from datetime import datetime, timezone, timedelta
 
-import hrv_rr  # pipeline de HRV sobre R-R crudo (RMSSD/SDNN/pNN50, Poincaré, DFA-α1)
+import hrv_rr          # pipeline de HRV sobre R-R crudo (RMSSD/SDNN/pNN50, Poincaré, DFA-α1)
+import recovery_score  # score de Carga (z-score + logística, pesos 55/20/15/5/5)
+import sleep_score     # score de Descanso (0.50/0.20/0.20/0.10) + deuda de sueño
+import strain_score    # score de Esfuerzo + carga de entrenamiento (ACWR)
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = sys.argv[1] if len(sys.argv) > 1 else os.path.join(SCRIPT_DIR, "datos")
@@ -262,7 +265,106 @@ def build_daily():
                     r["pesas_min"] = None
                 mark(r, "manual")
 
-    return [daily[k] for k in sorted(daily)]
+    filas = [daily[k] for k in sorted(daily)]
+    _scores_tidmax(filas)
+    return filas
+
+
+def _scores_tidmax(filas):
+    """
+    Pase final: computa NUESTROS scores (Carga, Descanso, ACWR) sobre las filas diarias ya
+    fusionadas y ordenadas cronológicamente, con baselines personales rodantes.
+
+    - Carga: HRV/RHR (+ respiración + temp de piel) de hoy vs baseline EWMA de las noches
+      PREVIAS; cold-start (<4 noches usables de HRV) → sin número (no inventa).
+    - Descanso: compuesto de los campos de sueño de la fila (necesidad personalizada rodante).
+    - Esfuerzo (referencia): el Day Strain de WHOOP re-escalado 0-21 → 0-100 (import, se marca
+      como referencia; el recompute propio necesita el stream de HR y vive en build_polar).
+    - ACWR: carga de entrenamiento EWMA sobre la serie diaria de Esfuerzo; se adjunta a hoy.
+
+    Sólo AÑADE campos; cada fila va protegida para que un dato raro nunca rompa el build.
+    """
+    def mark(r, src):
+        r.setdefault("fuentes", [])
+        if src not in r["fuentes"]:
+            r["fuentes"].append(src)
+
+    hrv_hist, rhr_hist, resp_hist, skin_hist, noche_h_hist = [], [], [], [], []
+    load_series = []
+    for r in filas:
+        try:
+            hrv = r.get("hrv_ms")
+            rhr = r.get("rhr_bpm")
+            eff = r.get("sleep_efficiency_pct")
+            noche_h = r.get("sleep_asleep_noche_h")
+
+            # Baselines a partir de las noches PREVIAS (no incluyen hoy).
+            hrv_base = recovery_score.baseline_ewma(hrv_hist) if hrv_hist else None
+            rhr_base = recovery_score.baseline_ewma(rhr_hist) if rhr_hist else None
+            resp_base = recovery_score.baseline_ewma(resp_hist) if resp_hist else None
+            skin_base = recovery_score.baseline_ewma(skin_hist) if skin_hist else None
+
+            # --- Descanso ---
+            if noche_h and eff is not None:
+                need_h = sleep_score.necesidad_personalizada_h(noche_h_hist + [noche_h])
+                deep_min = (r.get("sleep_deep_h") * 60) if r.get("sleep_deep_h") is not None else None
+                rem_min = (r.get("sleep_rem_h") * 60) if r.get("sleep_rem_h") is not None else None
+                consis = (r["sleep_consistency_pct"] / 100.0) if r.get("sleep_consistency_pct") is not None else None
+                desc = sleep_score.descanso_de_noche(
+                    total_sleep_min=noche_h * 60, efficiency=eff / 100.0, need_hours=need_h,
+                    deep_min=deep_min, rem_min=rem_min, consistency=consis)
+                if desc:
+                    r["descanso_tidmax"] = desc["score"]
+                    mark(r, "tidmax")
+
+            # --- Carga ---
+            if hrv is not None and rhr is not None and hrv_base and hrv_base.get("usable"):
+                skin_dev = (r["skin_temp_c"] - skin_base["mean"]) if (skin_base and r.get("skin_temp_c") is not None) else None
+                sueno_q = (r["descanso_tidmax"] / 100.0) if r.get("descanso_tidmax") is not None else None
+                carga = recovery_score.carga(
+                    hrv=hrv, rhr=rhr, hrv_baseline=hrv_base, rhr_baseline=rhr_base,
+                    resp=r.get("resp_rate"), resp_baseline=resp_base,
+                    sueno_calidad=sueno_q, temp_piel_dev=skin_dev)
+                if carga:
+                    r["carga_tidmax"] = carga["score"]
+                    r["carga_banda"] = carga["banda"]
+                    mark(r, "tidmax")
+
+            # --- Esfuerzo (referencia, re-escalado del Day Strain de WHOOP) ---
+            if r.get("strain") is not None:
+                r["esfuerzo_ref_0_100"] = round(r["strain"] * (strain_score.MAX_STRAIN / strain_score.WHOOP_MAX_STRAIN), 2)
+                load_series.append((r["fecha"], r["esfuerzo_ref_0_100"]))
+            else:
+                load_series.append((r["fecha"], None))
+        except Exception:
+            # Un dato atípico nunca debe romper el build diario; la fila simplemente no lleva score.
+            load_series.append((r.get("fecha"), None))
+        finally:
+            # Actualizar historiales DESPUÉS de computar (baselines = noches previas).
+            if r.get("hrv_ms") is not None:
+                hrv_hist.append(r["hrv_ms"])
+            if r.get("rhr_bpm") is not None:
+                rhr_hist.append(r["rhr_bpm"])
+            if r.get("resp_rate") is not None:
+                resp_hist.append(r["resp_rate"])
+            if r.get("skin_temp_c") is not None:
+                skin_hist.append(r["skin_temp_c"])
+            if r.get("sleep_asleep_noche_h"):
+                noche_h_hist.append(r["sleep_asleep_noche_h"])
+
+    # --- ACWR / carga de entrenamiento (adjunta a la fila más reciente) ---
+    try:
+        ct = strain_score.carga_entrenamiento(load_series)
+        if filas and ct.get("estado") != "no_disponible":
+            ultima = filas[-1]
+            ultima["acwr"] = ct["acwr"]
+            ultima["ctl"] = ct["ctl"]
+            ultima["atl"] = ct["atl"]
+            ultima["tsb"] = ct["tsb"]
+            ultima["carga_entrenamiento_estado"] = ct["estado"]
+            mark(ultima, "tidmax")
+    except Exception:
+        pass
 
 
 def build_workouts():
