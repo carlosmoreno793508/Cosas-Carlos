@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TID-MAX · Tablero</title>
+<!--
+  tablero.html — Vista "Hoy + Tendencias" de TID-MAX (Fase 4 del roadmap post-teardown NOOP).
+  UX inspirada en NOOP (3 anillos, señales diarias, heatmap, "qué se correlaciona", drill-down)
+  pero sobre NUESTROS scores (carga_tidmax / descanso_tidmax / esfuerzo_ref_0_100 / acwr).
+  Autocontenido: intenta cargar ./daily.json (array de filas de tid_data.build_daily) o ./data.json;
+  si no hay, usa el demo embebido (números reales de Carlos). Sin dependencias externas.
+  Principios: "no disponible ≠ 0" (anillo vacío, nunca 0), procedencia visible (badge de fuente),
+  madurez del score, y scores marcados APROXIMADO (no diagnóstico).
+-->
+<style>
+:root{
+  --ground:#0a1622; --ground2:#0d1c2b; --card:#122232; --card2:#16293b;
+  --ink:#eaf2f7; --muted:#89a3b6; --line:#1f3446; --accent:#22d3ee;
+  --good:#35d39a; --warn:#f5b64c; --crit:#f8737f;
+  --carga:#9fe6c7; --esfuerzo:#6cb8ff; --descanso:#b8c6ff;
+  --shadow:0 1px 0 rgba(255,255,255,.03),0 12px 32px rgba(0,0,0,.35);
+  --r:18px;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --ground:#e9eff3; --ground2:#eef4f7; --card:#ffffff; --card2:#f4f8fa;
+    --ink:#0e2230; --muted:#577182; --line:#d8e4ec; --accent:#0a97b0;
+    --good:#0f9d6b; --warn:#c8811a; --crit:#d0505c;
+    --carga:#1aa877; --esfuerzo:#2f7fd6; --descanso:#5a6fd6;
+    --shadow:0 1px 0 rgba(0,0,0,.02),0 10px 26px rgba(20,50,70,.10);
+  }
+}
+:root[data-theme="light"]{
+  --ground:#e9eff3; --ground2:#eef4f7; --card:#ffffff; --card2:#f4f8fa;
+  --ink:#0e2230; --muted:#577182; --line:#d8e4ec; --accent:#0a97b0;
+  --good:#0f9d6b; --warn:#c8811a; --crit:#d0505c;
+  --carga:#1aa877; --esfuerzo:#2f7fd6; --descanso:#5a6fd6;
+  --shadow:0 1px 0 rgba(0,0,0,.02),0 10px 26px rgba(20,50,70,.10);
+}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(1200px 600px at 80% -10%, var(--ground2), transparent 60%), var(--ground);
+  color:var(--ink);font-family:"SF Pro Text",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  line-height:1.5;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:780px;margin:0 auto;padding:22px 16px 60px;}
+.num{font-variant-numeric:tabular-nums lining-nums;}
+header.top{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:6px;}
+.brand{font-weight:800;letter-spacing:.14em;font-size:.8rem;color:var(--accent);text-transform:uppercase;}
+h1{font-size:1.5rem;margin:.1em 0 .1em;}
+.sub{color:var(--muted);font-size:.9rem;margin-bottom:18px;}
+.badge{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  padding:2px 8px;border-radius:999px;border:1px solid var(--line);color:var(--muted);}
+.badge.src{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 40%,var(--line));}
+.badge.aprox{color:var(--warn);border-color:color-mix(in srgb,var(--warn) 40%,var(--line));}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:16px;margin-bottom:14px;}
+.rings{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.ring{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;border:none;background:none;color:inherit;padding:6px 2px;border-radius:14px;}
+.ring:hover{background:var(--card2);}
+.ring .lbl{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700;}
+.ring svg{display:block;}
+.ring .val{font-size:1.9rem;font-weight:800;}
+.ring .na{font-size:1rem;color:var(--muted);}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.tile{background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:12px;}
+.tile .tl{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700;}
+.tile .tv{font-size:1.5rem;font-weight:800;}
+.tile .tm{font-size:.78rem;color:var(--muted);}
+.trend.up{color:var(--good);} .trend.down{color:var(--crit);} .trend.flat{color:var(--muted);}
+h2{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:22px 2px 8px;font-weight:800;}
+.heat{display:grid;grid-template-rows:repeat(7,1fr);grid-auto-flow:column;grid-auto-columns:1fr;gap:2px;}
+.heat i{aspect-ratio:1;border-radius:3px;background:var(--line);}
+.heatleg{display:flex;align-items:center;justify-content:space-between;color:var(--muted);font-size:.74rem;margin-top:8px;}
+.heatbar{height:8px;flex:1;margin:0 10px;border-radius:999px;background:linear-gradient(90deg,var(--crit),var(--warn),var(--good));}
+.corr{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);}
+.corr:last-child{border-bottom:none;}
+.corr .cn{flex:1;font-size:.92rem;}
+.corr .cn small{color:var(--muted);display:block;font-size:.72rem;}
+.corr .bar{width:120px;height:8px;border-radius:999px;background:var(--line);position:relative;overflow:hidden;}
+.corr .bar b{position:absolute;top:0;bottom:0;border-radius:999px;}
+.corr .cr{width:52px;text-align:right;font-weight:700;font-variant-numeric:tabular-nums;}
+.pos{color:var(--good);} .neg{color:var(--crit);}
+dialog{border:1px solid var(--line);border-radius:var(--r);background:var(--card);color:var(--ink);max-width:560px;width:92%;box-shadow:var(--shadow);padding:0;}
+dialog::backdrop{background:rgba(2,8,14,.6);}
+.dlg{padding:18px;}
+.dlg h3{margin:.1em 0;font-size:1.15rem;}
+.dlg .x{float:right;border:none;background:var(--card2);color:var(--muted);border-radius:10px;padding:6px 10px;cursor:pointer;font-weight:700;}
+.pills{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0;}
+.spark{width:100%;height:60px;display:block;}
+.why{font-size:.92rem;margin:6px 0;padding-left:16px;position:relative;}
+.why:before{content:"";position:absolute;left:2px;top:9px;width:6px;height:6px;border-radius:50%;background:var(--accent);}
+footer{color:var(--muted);font-size:.74rem;text-align:center;margin-top:24px;}
+footer a{color:var(--accent);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">TID-MAX <small style="color:var(--muted);font-weight:600">Tablero</small></div>
+    <span class="badge src" id="srcbadge">—</span>
+  </header>
+  <h1 id="hoyfecha">Hoy</h1>
+  <div class="sub" id="athsub">—</div>
+
+  <!-- 3 anillos -->
+  <div class="card">
+    <div class="row" style="margin-bottom:10px">
+      <div style="font-weight:700">Resumen del día</div>
+      <span class="badge" id="madurez">—</span>
+    </div>
+    <div class="rings" id="rings"></div>
+    <div class="sub" style="margin:10px 2px 0;font-size:.82rem" id="recomend"></div>
+  </div>
+
+  <!-- Señales diarias -->
+  <h2>Señales diarias</h2>
+  <div class="tiles" id="tiles"></div>
+
+  <!-- Heatmap de Carga -->
+  <h2>Carga — últimos 90 días</h2>
+  <div class="card">
+    <div class="heat" id="heat"></div>
+    <div class="heatleg"><span>Agotado</span><span class="heatbar"></span><span>En su pico</span></div>
+  </div>
+
+  <!-- Qué se correlaciona -->
+  <h2>Qué se correlaciona con tu Carga</h2>
+  <div class="card" id="corr"></div>
+
+  <footer>
+    Scores <b>APROXIMADOS</b>, no son de WHOOP ni diagnóstico médico · motor local TID-MAX<br>
+    <span id="dataorigin"></span>
+  </footer>
+</div>
+
+<dialog id="dlg"><div class="dlg" id="dlgbody"></div></dialog>
+
+<script>
+"use strict";
+// ---------- utilidades ----------
+const $ = (s,r=document)=>r.querySelector(s);
+const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+const fmt=(v,d=0)=> (v==null||Number.isNaN(v))?"–":Number(v).toFixed(d);
+const mean=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:null;
+
+// Color de banda por score 0-100 (rojo→amarillo→verde).
+function bandColor(v){ if(v==null) return "var(--line)"; if(v<=34) return "var(--crit)"; if(v<=67) return "var(--warn)"; return "var(--good)"; }
+function heatColor(v){ // 0..100 → gradiente
+  if(v==null) return "var(--line)";
+  const stops=[[0,"#f8737f"],[50,"#f5b64c"],[100,"#35d39a"]];
+  for(let i=0;i<stops.length-1;i++){const[a,ca]=stops[i],[b,cb]=stops[i+1];if(v<=b){const t=(v-a)/(b-a);return mix(ca,cb,t);}}
+  return stops[stops.length-1][1];
+}
+function mix(c1,c2,t){const p=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16));const a=p(c1),b=p(c2);
+  return "#"+a.map((x,i)=>Math.round(x+(b[i]-x)*t).toString(16).padStart(2,"0")).join("");}
+
+// Anillo SVG.
+function ring(label,val,color,suffix=""){
+  const R=46,C=2*Math.PI*R, pct=val==null?0:clamp(val/100,0,1);
+  const btn=document.createElement("button"); btn.className="ring";
+  btn.innerHTML=`<div class="lbl">${label}</div>
+    <svg width="108" height="108" viewBox="0 0 108 108">
+      <circle cx="54" cy="54" r="${R}" fill="none" stroke="var(--line)" stroke-width="9"/>
+      <circle cx="54" cy="54" r="${R}" fill="none" stroke="${color}" stroke-width="9" stroke-linecap="round"
+        stroke-dasharray="${C}" stroke-dashoffset="${C*(1-pct)}" transform="rotate(-90 54 54)"/>
+      <text x="54" y="60" text-anchor="middle" font-size="26" font-weight="800" fill="var(--ink)"
+        class="num">${val==null?"–":fmt(val)+suffix}</text>
+    </svg>`;
+  return btn;
+}
+
+// Sparkline SVG de una serie.
+function spark(series,color){
+  const xs=series.filter(v=>v!=null); if(xs.length<2) return "";
+  const min=Math.min(...xs),max=Math.max(...xs),rng=(max-min)||1,W=520,H=60;
+  const pts=series.map((v,i)=>{const x=i/(series.length-1)*W;const y=H-((v==null?min:v)-min)/rng*(H-8)-4;return `${x.toFixed(1)},${y.toFixed(1)}`;});
+  return `<svg class="spark" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">
+    <polyline fill="none" stroke="${color}" stroke-width="2" points="${pts.join(" ")}"/></svg>`;
+}
+
+// Tendencia (último vs media) → flecha.
+function trend(series){const xs=series.filter(v=>v!=null);if(xs.length<3)return {cls:"flat",t:"–"};
+  const last=xs[xs.length-1],base=mean(xs.slice(0,-1));const d=last-base;
+  return {cls:d>0.5?"up":(d<-0.5?"down":"flat"),t:(d>=0?"↗ +":"↘ ")+Math.abs(d).toFixed(0)};}
+
+// Pearson (para el panel "qué se correlaciona", igual que correlacion.py).
+function pearson(pairs){const n=pairs.length;if(n<3)return null;
+  let sx=0,sy=0;for(const[a,b]of pairs){sx+=a;sy+=b;}const mx=sx/n,my=sy/n;
+  let sxx=0,syy=0,sxy=0;for(const[a,b]of pairs){const dx=a-mx,dy=b-my;sxx+=dx*dx;syy+=dy*dy;sxy+=dx*dy;}
+  if(sxx<=0||syy<=0)return null;return clamp(sxy/Math.sqrt(sxx*syy),-1,1);}
+
+// ---------- demo embebido (números reales de Carlos de las capturas) ----------
+function demoData(){
+  const days=90, rows=[]; const today=new Date("2026-10-19");
+  let seed=42; const rnd=()=>{seed=(seed*1103515245+12345)&0x7fffffff;return seed/0x7fffffff;};
+  for(let i=days-1;i>=0;i--){
+    const d=new Date(today); d.setDate(today.getDate()-i);
+    const hrv=Math.round(87+(rnd()-0.5)*60);       // prom 87, 13..149
+    const rhr=Math.round(53+(rnd()-0.5)*8);        // prom 53, 45..75
+    const descanso=Math.round(clamp(80+(rnd()-0.5)*22,16,95));
+    const esf=+(clamp(45+(rnd()-0.5)*70,19,97)).toFixed(1);
+    // Carga sigue a HRV (inverso RHR), con ruido — como la validación real (+0.96 / −0.79).
+    const carga=Math.round(clamp((hrv-60)*1.1 - (rhr-52)*2 + 40 + (rnd()-0.5)*18, 4, 98));
+    rows.push({fecha:d.toISOString().slice(0,10),
+      carga_tidmax:carga, descanso_tidmax:descanso, esfuerzo_ref_0_100:esf,
+      hrv_ms:hrv, rhr_bpm:rhr, fuentes:["whoop","tidmax"]});
+  }
+  rows[rows.length-1].carga_tidmax=66; rows[rows.length-1].descanso_tidmax=80;
+  rows[rows.length-1].esfuerzo_ref_0_100=null; // hoy aún sin esfuerzo → anillo vacío, no 0
+  rows[rows.length-1].hrv_ms=100; rows[rows.length-1].rhr_bpm=50;
+  rows[rows.length-1].acwr=1.21; rows[rows.length-1].carga_entrenamiento_estado="construyendo";
+  return {daily:rows, atleta:"Carlos", madurez:"construyendo"};
+}
+
+// ---------- carga de datos ----------
+async function getData(){
+  for(const url of ["./daily.json","./data.json"]){
+    try{const r=await fetch(url,{cache:"no-store"});if(!r.ok)continue;const j=await r.json();
+      const rows=Array.isArray(j)?j:(j.daily||j.dias);
+      if(Array.isArray(rows)&&rows.length&&("carga_tidmax"in rows[rows.length-1])){
+        return {daily:rows, atleta:j.atleta||"", madurez:(rows[rows.length-1].carga_entrenamiento_estado)||"", origin:url};
+      }
+    }catch(e){/* sigue al fallback */}
+  }
+  return Object.assign(demoData(),{origin:"demo"});
+}
+
+// ---------- render ----------
+function render(data){
+  const rows=data.daily, hoy=rows[rows.length-1];
+  $("#hoyfecha").textContent="Hoy · "+(hoy.fecha||"");
+  $("#athsub").textContent=(data.atleta?data.atleta+" · ":"")+rows.length+" lecturas";
+  $("#srcbadge").textContent=(hoy.fuentes||["—"]).join(" · ");
+  const mad={calibrando:"Calibrando",construyendo:"Construyendo",solida:"Sólida",establecido:"Sólida"}[data.madurez]||"—";
+  $("#madurez").textContent="Madurez: "+mad;
+
+  // Anillos
+  const rg=$("#rings"); rg.innerHTML="";
+  const defs=[["Carga",hoy.carga_tidmax,"var(--carga)","carga_tidmax"],
+              ["Esfuerzo",hoy.esfuerzo_ref_0_100,"var(--esfuerzo)","esfuerzo_ref_0_100"],
+              ["Descanso",hoy.descanso_tidmax,"var(--descanso)","descanso_tidmax"]];
+  defs.forEach(([lbl,val,col,key])=>{const r=ring(lbl,val,col); r.onclick=()=>drill(lbl,key,rows,col); rg.appendChild(r);});
+  const banda=hoy.carga_tidmax==null?"—":(hoy.carga_tidmax<=34?"recupérate":hoy.carga_tidmax<=67?"mantén":"empuja");
+  $("#recomend").innerHTML=`Recomendación: <b>${banda}</b>`+(hoy.acwr!=null?` · ACWR <b>${fmt(hoy.acwr,2)}</b> (aguda/crónica)`:"");
+
+  // Tiles: VFC y FC reposo
+  const tl=$("#tiles"); tl.innerHTML="";
+  [["VFC","hrv_ms"," ms"],["FC reposo","rhr_bpm"," lpm"]].forEach(([lbl,key,suf])=>{
+    const s=rows.map(r=>r[key]??null), xs=s.filter(v=>v!=null), tr=trend(s);
+    const el=document.createElement("button"); el.className="tile"; el.style.textAlign="left"; el.style.cursor="pointer"; el.style.color="inherit";
+    el.innerHTML=`<div class="tl">${lbl}</div><div class="tv num">${fmt(xs[xs.length-1])}<span style="font-size:.8rem;color:var(--muted)">${suf}</span></div>
+      <div class="tm">prom ${fmt(mean(xs))} · mín ${fmt(Math.min(...xs))} · máx ${fmt(Math.max(...xs))} <span class="trend ${tr.cls}">${tr.t}</span></div>`;
+    el.onclick=()=>drill(lbl,key,rows,"var(--accent)"); tl.appendChild(el);
+  });
+
+  // Heatmap (últimos 90 días de Carga)
+  const h=$("#heat"); h.innerHTML="";
+  rows.slice(-90).forEach(r=>{const i=document.createElement("i");i.style.background=heatColor(r.carga_tidmax);
+    i.title=`${r.fecha}: Carga ${r.carga_tidmax??"–"}`;h.appendChild(i);});
+
+  // Qué se correlaciona (con Carga)
+  const carga=rows.map(r=>r.carga_tidmax);
+  const cands={"VFC":"hrv_ms","FC en reposo":"rhr_bpm","Descanso":"descanso_tidmax","Esfuerzo":"esfuerzo_ref_0_100"};
+  const panel=[];
+  for(const[nm,key]of Object.entries(cands)){
+    const pairs=rows.map(r=>[r.carga_tidmax,r[key]]).filter(p=>p[0]!=null&&p[1]!=null);
+    const r=pearson(pairs); if(r!=null&&Math.abs(r)>=0.30&&pairs.length>=10) panel.push({nm,r,n:pairs.length});
+  }
+  panel.sort((a,b)=>Math.abs(b.r)-Math.abs(a.r));
+  const cc=$("#corr"); cc.innerHTML = panel.length?"":"<div class='sub'>Aún no hay correlaciones fuertes (|r|≥0.30, n≥10).</div>";
+  panel.forEach(p=>{const w=Math.abs(p.r)*100, pos=p.r>=0;
+    const d=document.createElement("div"); d.className="corr";
+    d.innerHTML=`<div class="cn">${p.nm}<small>Carga · n=${p.n}</small></div>
+      <div class="bar"><b style="width:${w}%;${pos?"left:0;background:var(--good)":"right:0;background:var(--crit)"}"></b></div>
+      <div class="cr ${pos?"pos":"neg"}">${pos?"+":""}${p.r.toFixed(2)}</div>`;
+    cc.appendChild(d);
+  });
+
+  $("#dataorigin").textContent = data.origin==="demo"
+    ? "datos demo (sin daily.json) — publica datos/procesado para datos reales"
+    : "datos: "+data.origin;
+}
+
+// Drill-down de una métrica/score.
+function drill(label,key,rows,color){
+  const s=rows.map(r=>r[key]??null), xs=s.filter(v=>v!=null);
+  const dlg=$("#dlg"), b=$("#dlgbody");
+  const isScore=key.endsWith("tidmax")||key.startsWith("esfuerzo");
+  b.innerHTML=`<button class="x" onclick="document.getElementById('dlg').close()">Cerrar</button>
+    <h3>${label}</h3>
+    <div class="pills"><span class="badge src">${(rows[rows.length-1].fuentes||[]).join(" · ")||"—"}</span>
+      ${isScore?'<span class="badge aprox">Aproximado</span>':''}</div>
+    ${spark(s,color)}
+    <div class="tm" style="color:var(--muted);margin-top:8px">
+      prom <b>${fmt(mean(xs), isScore?0:0)}</b> · mín <b>${fmt(Math.min(...xs))}</b> ·
+      máx <b>${fmt(Math.max(...xs))}</b> · n <b>${xs.length}</b> ·
+      más reciente <b>${fmt(xs[xs.length-1])}</b></div>
+    <div class="why" style="margin-top:12px">Último valor vs media de ${xs.length} días: ${trend(s).t}.</div>`;
+  if(typeof dlg.showModal==="function") dlg.showModal(); else alert(label);
+}
+
+getData().then(render).catch(e=>{document.querySelector(".wrap").insertAdjacentHTML("beforeend",
+  "<div class='card'>No se pudieron cargar datos: "+e+"</div>");});
+</script>
+</body>
+</html>

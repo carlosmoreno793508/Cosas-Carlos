@@ -121,7 +121,18 @@ sólo `urllib`, clave sólo en cabecera, apuntable a Ollama/LM Studio local). Lo
 
 ---
 
-## FASE 4 — UX / estructura de la app (PWA en `app/`)
+## FASE 4 — UX / estructura de la app (PWA en `app/`) — 🟡 NÚCLEO HECHO (PR #53)
+
+Hecho: `app/tablero.html` — vista "Hoy + Tendencias" autocontenida (lee `daily.json`/`data.json`
+o cae a demo embebido con los números reales de Carlos). Incluye los **3 anillos**
+(Carga/Esfuerzo/Descanso) con **`no disponible ≠ 0`** (anillo vacío, no 0), **badge de madurez**
+y de **fuente** (procedencia visible), **Señales diarias** (tiles prom/mín/máx/tendencia),
+**heatmap de Carga** 90 días, panel **"qué se correlaciona"** (Pearson |r|≥0.30/n≥10, replica de
+`correlacion.py`), **drill-down** por score/métrica (modal con sparkline + stats + "por qué"), y
+etiqueta **APROXIMADO**. Validado por render (Chromium): VFC↔Carga +0.95 ≈ el +0.96 real.
+
+**Pendiente de Fase 4:** nav de 5 pestañas completa, pestaña Sueño con hipnograma, **export PDF**
+de 1 página, e integración en `app/index.html` (la PWA grande). Lo planeado completo:
 
 - **5 pestañas**: Hoy · Tendencias · Sueño · Entrenador · Más.
 - **Hoy**: 3 anillos (Carga/Esfuerzo/Descanso) + badge de **madurez** + recomendación del día
