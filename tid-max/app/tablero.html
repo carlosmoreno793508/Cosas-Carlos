@@ -67,6 +67,24 @@ h1{font-size:1.5rem;margin:.1em 0 .05em;}
 .badge.src{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 38%,var(--line));}
 .badge.aprox{color:var(--warn);border-color:color-mix(in srgb,var(--warn) 38%,var(--line));}
 .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:16px;margin-bottom:14px;}
+/* readiness chip + aviso de enfermedad + edad fitness */
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:.72rem;font-weight:700;letter-spacing:.04em;
+  padding:4px 10px;border-radius:999px;border:1px solid var(--line);color:var(--muted);}
+.chip i{width:8px;height:8px;border-radius:50%;background:currentColor;display:inline-block;}
+.chip.primed{color:var(--good);border-color:color-mix(in srgb,var(--good) 40%,var(--line));}
+.chip.normal{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 36%,var(--line));}
+.chip.suppressed{color:var(--warn);border-color:color-mix(in srgb,var(--warn) 40%,var(--line));}
+.alert{display:flex;gap:10px;align-items:flex-start;border-radius:14px;padding:12px 14px;margin-top:12px;
+  border:1px solid;font-size:.86rem;line-height:1.4;}
+.alert .ai{font-size:1.1rem;line-height:1;margin-top:1px;}
+.alert.leve{color:var(--warn);background:color-mix(in srgb,var(--warn) 9%,transparent);border-color:color-mix(in srgb,var(--warn) 34%,var(--line));}
+.alert.elevado,.alert.ya_enfermo{color:var(--crit);background:color-mix(in srgb,var(--crit) 10%,transparent);border-color:color-mix(in srgb,var(--crit) 38%,var(--line));}
+.alert.suprimido{color:var(--muted);background:color-mix(in srgb,var(--faint) 8%,transparent);border-color:var(--line);}
+.alert b{color:inherit;}
+.fage{display:flex;align-items:center;gap:16px;}
+.fage .big{font-size:2.3rem;font-weight:800;line-height:1;color:var(--carga);}
+.fage .big small{font-size:.9rem;font-weight:600;color:var(--muted);}
+.fage .fd{flex:1;}
 .rings{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;}
 .ring{display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;border:none;background:none;color:inherit;padding:6px 0;border-radius:14px;}
 .ring:hover{background:var(--card2);}
@@ -173,6 +191,7 @@ footer b{color:var(--muted);}
       </div>
       <div class="rings" id="rings"></div>
       <div class="sub" style="margin:10px 2px 0;font-size:.84rem" id="recomend"></div>
+      <div id="hoy_alerta"></div>
     </div>
     <div class="card" id="hoy_destacados"></div>
   </section>
@@ -211,6 +230,8 @@ footer b{color:var(--muted);}
 
   <!-- ===== MÁS ===== -->
   <section class="tab" data-tab="mas" hidden>
+    <h2>Edad fitness · VO₂max</h2>
+    <div class="card" id="fagecard"></div>
     <h2>Procedencia (3 ejes)</h2>
     <div class="card" id="provcard"></div>
     <h2>Datos y exportación</h2>
@@ -375,17 +396,20 @@ function demoData(){
       fuentes:["whoop","tidmax"]});}
   const h=rows[rows.length-1];h.carga_tidmax=66;h.descanso_tidmax=80;h.esfuerzo_ref_0_100=null;
   h.hrv_ms=100;h.rhr_bpm=50;h.acwr=1.21;h.carga_entrenamiento_estado="construyendo";
+  h.readiness_tier="primed";h.readiness_base7_ms=98.4;
+  h.illness_nivel="tranquilo";h.illness_score=4.0;
   // Anoche (dom 18 oct) — números reales de Carlos.
   h.sleep_asleep_noche_h=6.9;h.sleep_efficiency_pct=84;h.sleep_deep_h=1.97;h.sleep_rem_h=1.87;
   h.sleep_light_h=3.07;h.deuda_sueno_min=64;
-  return{daily:rows,atleta:"Carlos",madurez:"construyendo"};
+  return{daily:rows,atleta:"Carlos",madurez:"construyendo",
+    perfil:{edad:18,sexo:"m",cintura_cm:78,rhr:50,dias_activos_semana:6}};
 }
 async function getData(){
   for(const url of ["./daily.json","./data.json"]){
     try{const r=await fetch(url,{cache:"no-store"});if(!r.ok)continue;const j=await r.json();
       const rows=Array.isArray(j)?j:(j.daily||j.dias);
       if(Array.isArray(rows)&&rows.length&&("carga_tidmax"in rows[rows.length-1]))
-        return{daily:rows,atleta:j.atleta||"",madurez:rows[rows.length-1].carga_entrenamiento_estado||"",origin:url};
+        return{daily:rows,atleta:j.atleta||"",perfil:j.perfil||null,madurez:rows[rows.length-1].carga_entrenamiento_estado||"",origin:url};
     }catch(e){}
   }
   return Object.assign(demoData(),{origin:"demo"});
@@ -404,7 +428,24 @@ function render(data){
   [["Carga",hoy.carga_tidmax,cssvar("--carga")],["Esfuerzo",hoy.esfuerzo_ref_0_100,cssvar("--esf")],
    ["Descanso",hoy.descanso_tidmax,cssvar("--desc")]].forEach(([l,v,c])=>rg.appendChild(ring(l,v,c)));
   const banda=hoy.carga_tidmax==null?"—":(hoy.carga_tidmax<=34?"recupérate":hoy.carga_tidmax<=67?"mantén":"empuja");
-  $("#recomend").innerHTML=`Recomendación: <b>${banda}</b>`+(hoy.acwr!=null?` · ACWR <b>${fmt(hoy.acwr,2)}</b> (aguda/crónica)`:"");
+  const RTXT={primed:"Preparado",normal:"Normal",suppressed:"Suprimido"};
+  const chip=hoy.readiness_tier?`<span class="chip ${hoy.readiness_tier}" title="HVC readiness (Plews/Altini) · sólo lectura, no cambia la Carga"><i></i>HVC ${RTXT[hoy.readiness_tier]||hoy.readiness_tier}${hoy.readiness_base7_ms!=null?` · ${hoy.readiness_base7_ms} ms`:""}</span>`:"";
+  $("#recomend").innerHTML=`Recomendación: <b>${banda}</b>`+(hoy.acwr!=null?` · ACWR <b>${fmt(hoy.acwr,2)}</b> (aguda/crónica)`:"")+(chip?`<div style="margin-top:8px">${chip}</div>`:"");
+
+  // Aviso de enfermedad (sólo si leve/elevado/suprimido/ya_enfermo; tranquilo no se muestra)
+  (function(){
+    const n=hoy.illness_nivel;
+    if(!n||n==="tranquilo"){$("#hoy_alerta").innerHTML="";return;}
+    const ICO={leve:"◔",elevado:"⚠",ya_enfermo:"🤒",suprimido:"◇"};
+    const MSG={
+      leve:"Algunas señales (FC reposo, temperatura, respiración) un poco elevadas. Nada alarmante — vale un día más tranquilo.",
+      elevado:"Varios signos que suelen preceder a una infección. Prioriza descanso e hidratación.",
+      ya_enfermo:"Registraste sentirte mal y tus números coinciden. Descansa.",
+      suprimido:"Unas señales subieron, pero hay un factor que lo explica (alcohol/estrés/sauna/viaje) — probablemente eso, no enfermedad."};
+    $("#hoy_alerta").innerHTML=`<div class="alert ${n}"><span class="ai">${ICO[n]||"•"}</span><div>
+      <b>Aviso de salud${hoy.illness_score!=null?` · ${hoy.illness_score}/100`:""}</b> — ${MSG[n]||""}
+      <div class="sub" style="margin:4px 0 0;font-size:.74rem">Estimación en el dispositivo, no es un diagnóstico.</div></div></div>`;
+  })();
 
   // Carga (área grande, línea coloreada por valor)
   const cargaV=rows.map(r=>r.carga_tidmax).filter(v=>v!=null);
@@ -552,6 +593,40 @@ function render(data){
       try{localStorage.setItem("tidmax_coach",JSON.stringify(nc));$("#coach_saved").textContent="Guardado en este navegador ✓";}
       catch(e){$("#coach_saved").textContent="No se pudo guardar (almacenamiento bloqueado).";}
     };
+  })();
+
+  // ----- Edad fitness / VO₂max (Nes 2011 HUNT, port del motor) -----
+  (function(){
+    const fc=$("#fagecard"), p=data.perfil;
+    if(!p||p.edad==null){fc.innerHTML="<div class='sub'>Añade tu perfil (edad, sexo, cintura) para estimar tu edad fitness y VO₂max.</div>";return;}
+    const C=/^(f|mujer|femenino)/i.test(String(p.sexo||""))
+      ?{intercept:74.74,age:0.247,wc:0.259,rhr:0.114,pai:0.198}
+      :{intercept:100.27,age:0.296,wc:0.369,rhr:0.155,pai:0.226};
+    const rhrV=rows.map(r=>r.rhr_bpm).filter(v=>v!=null);
+    const rhr=p.rhr!=null?p.rhr:(rhrV.length?mean(rhrV):null);
+    if(rhr==null){fc.innerHTML="<div class='sub'>Sin FC en reposo suficiente para estimar la edad fitness.</div>";return;}
+    // PAI (0–15) desde el Esfuerzo medido (ruta universal): freq×(intensidad·duración), cal. ref ~5.
+    const esfV=rows.map(r=>r.esfuerzo_ref_0_100).filter(v=>v!=null);
+    const dias=p.dias_activos_semana!=null?p.dias_activos_semana:6;
+    const freq=dias<1?0:dias===1?0.5:dias===2?1:dias<=4?2.5:5;
+    const pai=freq===0?0:freq*clamp((esfV.length?mean(esfV):0)/30,0,3);
+    const edad=p.edad;
+    const faRaw=edad+(C.rhr*(rhr-65)-C.pai*(pai-5))/C.age, fa=clamp(faRaw,20,80);
+    const clamped=faRaw<20||edad<20;   // modelo Nes válido 20–80
+    const vo2=(p.cintura_cm>0)?(C.intercept-C.age*edad+C.pai*pai-C.wc*p.cintura_cm-C.rhr*rhr):null;
+    const delta=+(edad-fa).toFixed(1);
+    let dtxt;
+    if(clamped) dtxt=`en el <b>mínimo del modelo (20 años)</b> — por debajo de 20 la escala Nes no aplica`;
+    else if(delta>0) dtxt=`<b style="color:var(--good)">${delta} años más joven</b> que tu edad real`;
+    else if(delta<0) dtxt=`<b style="color:var(--warn)">${-delta} años mayor</b> que tu edad real`;
+    else dtxt="igual a tu edad real";
+    fc.innerHTML=`<div class="fage">
+      <div class="big">${fmt(fa,0)}<small> años</small></div>
+      <div class="fd">
+        <div style="font-weight:700;margin-bottom:2px">Edad fitness ${dtxt}</div>
+        <div class="sub" style="margin:0;font-size:.82rem">Edad real ${fmt(edad,0)} · ${vo2!=null?`VO₂max ≈ <b>${fmt(vo2,1)}</b> ml·kg⁻¹·min⁻¹`:"VO₂max: añade cintura"} · PAI ${fmt(pai,1)}</div>
+      </div></div>
+    <div class="sub" style="margin:12px 0 0;font-size:.76rem">Marcador cardiorrespiratorio (FC reposo + actividad), complementario a la Carga (VFC). <b>APROXIMADO</b> — modelo poblacional Nes 2011 (HUNT), no es una prueba de esfuerzo ni diagnóstico. El modelo es válido de 20 a 80 años.</div>`;
   })();
 
   // ----- Procedencia (3 ejes) + Más -----
