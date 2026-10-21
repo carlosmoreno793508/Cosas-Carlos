@@ -65,32 +65,35 @@ def correr(script, env, args=None, fatal=False):
 
 def sync_fuente(atleta, base, env):
     """Baja el crudo de la fuente del atleta a SU carpeta. Defensivo: si falla
-    (p. ej. sin tokens en la nube), se sigue con lo que ya exista en disco."""
+    (p. ej. sin tokens en la nube), se sigue con lo que ya exista en disco.
+    Devuelve True si el sync salió 0 (False = falló; main() lo reporta)."""
     fuente = (atleta.get("fuente") or "").lower()
     slug = atleta["slug"]
     try:
         if fuente == "whoop":
             print(f"    → sync WHOOP → {base}")
-            correr("whoop_sync.py", env)
+            return correr("whoop_sync.py", env)
         elif fuente == "agregador":
             # 'agregador_atleta' = la carpeta del usuario en Junction (por defecto el slug;
             # se alinea cuando el atleta reconecta su fuente desde la app con su nombre).
             ja = atleta.get("agregador_atleta") or slug
             print(f"    → sync agregador (Junction, atleta '{ja}') → {base}")
-            correr("agregador_sync.py", env, ["--atleta", ja])
+            return correr("agregador_sync.py", env, ["--atleta", ja])
         elif fuente == "polar":
             print(f"    → sync Polar Flow → {base}")
-            correr("polar_sync.py", env)
+            return correr("polar_sync.py", env)
         elif fuente == "intervals":
             print(f"    → sync intervals.icu (agregador gratis: Polar/Garmin/…) → {base}")
-            correr("intervals_sync.py", env)
+            return correr("intervals_sync.py", env)
         else:
             print(f"    (fuente '{fuente}' desconocida; sin sync)")
+            return False
     except Exception as e:  # noqa: BLE001 — nunca tumbamos el pipeline por un sync
         print(f"    (sync {fuente} no fatal: {e})")
+        return False
 
 
-def procesar_atleta(atleta, do_sync=True):
+def procesar_atleta(atleta, do_sync=True, fallas_sync=None):
     slug = atleta["slug"]
     base = os.path.join(ATLETAS_BASE, slug)
     proc = os.path.join(base, "procesado")
@@ -155,8 +158,8 @@ def procesar_atleta(atleta, do_sync=True):
 
     print(f"\n═══ {atleta.get('nombre', slug)}  ({slug} · {atleta.get('fuente')} · {atleta.get('deporte')}) ═══")
 
-    if do_sync:
-        sync_fuente(atleta, base, env)
+    if do_sync and not sync_fuente(atleta, base, env) and fallas_sync is not None:
+        fallas_sync.append(slug)
 
     # Normalizar: tid_data lee de 'base' y escribe en 'proc'. Si NO hay datos, sale
     # !=0; lo tomamos como 'sin datos aún' y no generamos reporte este run.
@@ -216,9 +219,10 @@ def main():
     print(f"Dashboard público lo refresca: {publico}")
 
     generados = {}
+    fallas_sync = []
     for atleta in activos:
         try:
-            reporte = procesar_atleta(atleta, do_sync=not args.sin_sync)
+            reporte = procesar_atleta(atleta, do_sync=not args.sin_sync, fallas_sync=fallas_sync)
         except Exception as e:  # noqa: BLE001 — un atleta no tumba a los demás
             print(f"    ✗ error procesando {atleta['slug']}: {e}")
             reporte = None
@@ -242,6 +246,19 @@ def main():
     print(f"\nReportes privados en: {os.path.relpath(REPORTES_DIR, SCRIPT_DIR)}/")
     if not generados:
         print("(Ningún atleta generó reporte todavía — falta que fluya su fuente de datos.)")
+
+    # Alertas: antes un token vencido dejaba el dashboard congelado con el run en verde
+    # (pasó del 24-ago al 18-oct-2026). En GitHub Actions salen como anotaciones visibles.
+    gha = os.getenv("GITHUB_ACTIONS") == "true"
+    for slug in fallas_sync:
+        msg = f"Falló el sync de la fuente de '{slug}' (revisa su log arriba: token vencido, plan, etc.)."
+        print(f"::warning::{msg}" if gha else f"⚠ {msg}")
+    if publico and publico not in generados:
+        msg = (f"El atleta público '{publico}' NO generó reporte: el dashboard (web/app data.json) "
+               f"quedó SIN actualizar. Si es WHOOP, re-autoriza con whoop_auth.py y actualiza "
+               f"el secret WHOOP_REFRESH_TOKEN.")
+        print(f"::error::{msg}" if gha else f"✗ {msg}")
+        sys.exit(1)
 
 
 if __name__ == "__main__":
