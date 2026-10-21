@@ -85,6 +85,8 @@ h1{font-size:1.5rem;margin:.1em 0 .05em;}
 .fage .big{font-size:2.3rem;font-weight:800;line-height:1;color:var(--carga);}
 .fage .big small{font-size:.9rem;font-weight:600;color:var(--muted);}
 .fage .fd{flex:1;}
+.ovleg{display:flex;gap:16px;font-size:.74rem;color:var(--muted);margin-bottom:6px;font-weight:600;}
+.ovleg i{display:inline-block;width:12px;height:3px;border-radius:2px;margin-right:5px;vertical-align:middle;}
 .rings{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;}
 .ring{display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;border:none;background:none;color:inherit;padding:6px 0;border-radius:14px;}
 .ring:hover{background:var(--card2);}
@@ -200,6 +202,8 @@ footer b{color:var(--muted);}
   <section class="tab" data-tab="tend" hidden>
     <h2>Carga — últimos 90 días</h2>
     <div class="card"><div class="sig" id="sig_carga"></div></div>
+    <h2>Carga vs Esfuerzo</h2>
+    <div class="card" id="overlay"></div>
     <h2>Señales diarias</h2>
     <div class="card" id="signals"></div>
     <h2>Calendario de Carga</h2>
@@ -387,6 +391,54 @@ function areaChart(host, opts){
 }
 
 // ---- anillo SVG con trazo en gradiente ----
+// ---- overlay de dos series 0-100 (Carga vs Esfuerzo), con huecos ----
+function overlayChart(host, rows){
+  const A=rows.map(r=>({fecha:r.fecha,v:r.carga_tidmax??null}));
+  const B=rows.map(r=>({fecha:r.fecha,v:r.esfuerzo_ref_0_100??null}));
+  const n=rows.length;
+  if(n<2||(A.every(p=>p.v==null))){host.innerHTML="<div class='sub'>Pocos datos para graficar.</div>";return;}
+  const W=680,H=180,padL=30,padR=10,padT=12,padB=22,lo=0,hi=100;
+  const X=i=>padL+(i/(n-1))*(W-padL-padR), Y=v=>padT+(1-(v-lo)/(hi-lo))*(H-padT-padB);
+  const cA=cssvar("--carga"),cB=cssvar("--esf"),muted=cssvar("--faint"),grid=cssvar("--grid");
+  const pathFor=S=>{const segs=[];let cur=[];
+    S.forEach((p,i)=>{if(p.v==null){if(cur.length>1)segs.push(cur);cur=[];}else cur.push([X(i),Y(p.v)]);});
+    if(cur.length>1)segs.push(cur);return segs.map(s=>smoothPath(s)).join(" ");};
+  const yt=[100,50,0].map(v=>({v,y:Y(v)}));
+  const nX=Math.min(4,n),xt=[];for(let k=0;k<nX;k++){const i=Math.round(k/(nX-1)*(n-1));
+    xt.push({x:X(i),label:fechaCorta(rows[i].fecha),anchor:k===0?"start":k===nX-1?"end":"middle"});}
+  host.innerHTML=`
+    <div class="ovleg"><span><i style="background:${cA}"></i>Carga</span><span><i style="background:${cB}"></i>Esfuerzo</span></div>
+    <div class="chart"><svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="Carga vs Esfuerzo">
+      ${yt.map(t=>`<line x1="${padL}" y1="${t.y.toFixed(1)}" x2="${W-padR}" y2="${t.y.toFixed(1)}" stroke="${grid}" stroke-width="1"/><text x="4" y="${(t.y+3).toFixed(1)}" font-size="10" fill="${muted}">${t.v}</text>`).join("")}
+      ${xt.map(t=>`<text x="${t.x.toFixed(1)}" y="${H-6}" font-size="10" fill="${muted}" text-anchor="${t.anchor}">${t.label}</text>`).join("")}
+      <path d="${pathFor(B)}" fill="none" stroke="${cB}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+      <path d="${pathFor(A)}" fill="none" stroke="${cA}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+      <line class="cross" x1="0" y1="${padT}" x2="0" y2="${H-padB}" stroke="${muted}" stroke-width="1" opacity="0"/>
+      <circle class="cdA" r="4" fill="${cA}" stroke="var(--card)" stroke-width="2" opacity="0"/>
+      <circle class="cdB" r="4" fill="${cB}" stroke="var(--card)" stroke-width="2" opacity="0"/>
+      <rect class="hit" x="${padL}" y="0" width="${W-padL-padR}" height="${H}" fill="transparent"/>
+    </svg><div class="tt"></div></div>`;
+  const rec=rows.slice(-14).filter(r=>r.carga_tidmax!=null&&r.esfuerzo_ref_0_100!=null);
+  const over=rec.filter(r=>r.esfuerzo_ref_0_100>r.carga_tidmax).length;
+  let msg;
+  if(rec.length<5)msg="Aún pocos días con ambas señales para leer el balance.";
+  else if(over>=Math.ceil(rec.length*0.5))msg="<b style='color:var(--warn)'>Ojo:</b> el Esfuerzo viene superando a la Carga varios días — vigila la sobrecarga.";
+  else msg="El Esfuerzo se mantiene por debajo de la Carga: hay margen para empujar.";
+  host.insertAdjacentHTML("beforeend",`<div class="sub" style="margin:8px 2px 0;font-size:.78rem">Cuando el <b>Esfuerzo</b> supera a la <b>Carga</b> de forma sostenida, recibes más de lo que recuperas. ${msg}</div>`);
+  const svg=host.querySelector("svg"),cross=svg.querySelector(".cross"),cdA=svg.querySelector(".cdA"),
+    cdB=svg.querySelector(".cdB"),tt=host.querySelector(".tt"),chart=host.querySelector(".chart");
+  function move(ev){const r=svg.getBoundingClientRect();const cx=((ev.touches?ev.touches[0].clientX:ev.clientX)-r.left)/r.width*W;
+    let i=Math.round((cx-padL)/(W-padL-padR)*(n-1));i=clamp(i,0,n-1);const px=X(i),a=A[i].v,b=B[i].v;
+    cross.setAttribute("x1",px);cross.setAttribute("x2",px);cross.setAttribute("opacity","0.5");
+    if(a!=null){cdA.setAttribute("cx",px);cdA.setAttribute("cy",Y(a));cdA.setAttribute("opacity","1");}else cdA.setAttribute("opacity","0");
+    if(b!=null){cdB.setAttribute("cx",px);cdB.setAttribute("cy",Y(b));cdB.setAttribute("opacity","1");}else cdB.setAttribute("opacity","0");
+    tt.style.left=(px/W*r.width)+"px";tt.style.top="4px";tt.style.opacity="1";
+    tt.innerHTML=`${fechaCorta(rows[i].fecha)} · Carga <b>${a==null?"–":fmt(a)}</b> · Esf <b>${b==null?"–":fmt(b)}</b>`;}
+  function leave(){cross.setAttribute("opacity","0");cdA.setAttribute("opacity","0");cdB.setAttribute("opacity","0");tt.style.opacity="0";}
+  chart.addEventListener("mousemove",move);chart.addEventListener("mouseleave",leave);
+  chart.addEventListener("touchstart",move,{passive:true});chart.addEventListener("touchmove",move,{passive:true});chart.addEventListener("touchend",leave);
+}
+
 function ring(label,val,color){
   const R=44,C=2*Math.PI*R,pct=val==null?0:clamp(val/100,0,1),id="r"+(UID++);
   const b=document.createElement("button");b.className="ring";
@@ -489,6 +541,9 @@ function render(data){
      <span>bajo <b>${fmt(Math.min(...cargaV))}</b></span><span>días <b>${cargaV.length}</b></span>
      <span class="trend ${tc.cls}">${tc.t}</span></div>
      <div class="sub" style="margin:8px 2px 0;font-size:.74rem">La franja sombreada es <b>tu rango normal</b> (±0.5·SD, 14 días) — fuera de ella, el día se sale de tu baseline.</div>`);
+
+  // Carga vs Esfuerzo (overlay, recovery vs strain)
+  overlayChart($("#overlay"),rows);
 
   // Señales diarias (VFC, FC reposo, Esfuerzo, Descanso)
   const sg=$("#signals");sg.innerHTML="";
