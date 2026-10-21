@@ -1,0 +1,7 @@
+#,Clave,Nombre,Nombre 2,Notas,URL,Tipo,tipo_final,metodo_clasificacion,confianza_tipo,no_contactar,motivo_no_contactar,contacto,puesto_contacto,email_contacto,tipo_email,fuente_contacto
+28,1001076,CRFS,,DO NOT CALL,www.c...,Otro/Por clasificar,Otro/Por clasificar,nota: prohibicion explicita -> no_contactar,Media,SI,prohibicion explicita en notas del CRM,,,,,
+330,1003134,Concurrent Technologies Inc.,,SALES OFFICE - NO PURCHASING,www.g...,Otro/Por clasificar,Sin compras,"nota: oficina de ventas, no compra",Media,,,,,,,
+347,1003219,NASA Goddard Space Flight Center,,Government Agency,www.n...,Otro/Por clasificar,Gobierno/Institucional,nota: agencia de gobierno,Media,,,,,,,
+3208,1010198,Numbat GmbH,,Customer filed for Bankruptcy,numbat.energy,Otro/Por clasificar,DUP/Inactivo,nota: empresa cerrada/inactiva,Media,SI,Empresa en quiebra,,,,,
+3294,1010383,UniBo Motorsport,,Racing Team at the University of Bologna,motorsport.unibo.it,Otro/Por clasificar,Gobierno/Institucional,nota: academia/instituto,Media,,,,,,,
+3654,1011097,Saronic Technologies,,Unmanned surface vessels for the US Navy,saronic.com,Otro/Por clasificar,Gobierno/Institucional,nota: agencia de gobierno,Media,,,,,,,
