@@ -23,6 +23,7 @@ import sys
 import glob
 import json
 import csv
+import math
 from datetime import datetime, timezone, timedelta
 
 import hrv_rr          # pipeline de HRV sobre R-R crudo (RMSSD/SDNN/pNN50, Poincaré, DFA-α1)
@@ -284,6 +285,17 @@ def build_daily():
         r["hrv_rr_muestras"] = p["rr_muestras"]
         mark(r, "polar_h10")
 
+    # Esfuerzo MEDIDO del H10 (capturas de entrenamiento): NUESTRO Esfuerzo desde el HR,
+    # para dejar de depender del Day Strain de WHOOP (que queda como referencia). _scores_tidmax
+    # lo prefiere sobre WHOOP cuando existe.
+    _perfil = (_load_config().get("perfil") or {})
+    for fecha, e in _polar_esfuerzo_diario(_perfil.get("edad"), _perfil.get("sexo", "m")).items():
+        r = row(fecha)
+        r["esfuerzo_tidmax"] = e["esfuerzo"]
+        r["esfuerzo_trimp"] = e["trimp"]
+        r["esfuerzo_sesiones"] = e["n_sesiones"]
+        mark(r, "polar_h10")
+
     filas = [daily[k] for k in sorted(daily)]
     _scores_tidmax(filas)
     return filas
@@ -349,9 +361,16 @@ def _scores_tidmax(filas):
                     r["carga_banda"] = carga["banda"]
                     mark(r, "tidmax")
 
-            # --- Esfuerzo (referencia, re-escalado del Day Strain de WHOOP) ---
-            if r.get("strain") is not None:
+            # --- Esfuerzo: NUESTRO (medido del H10) si existe; si no, Day Strain de WHOOP (referencia) ---
+            if r.get("esfuerzo_tidmax") is not None:
+                if r.get("strain") is not None:   # conserva el de WHOOP como referencia
+                    r["esfuerzo_ref_whoop"] = round(r["strain"] * (strain_score.MAX_STRAIN / strain_score.WHOOP_MAX_STRAIN), 2)
+                r["esfuerzo_ref_0_100"] = r["esfuerzo_tidmax"]
+                r["esfuerzo_fuente"] = "polar_h10"
+                load_series.append((r["fecha"], r["esfuerzo_tidmax"]))
+            elif r.get("strain") is not None:
                 r["esfuerzo_ref_0_100"] = round(r["strain"] * (strain_score.MAX_STRAIN / strain_score.WHOOP_MAX_STRAIN), 2)
+                r["esfuerzo_fuente"] = "whoop_ref"
                 load_series.append((r["fecha"], r["esfuerzo_ref_0_100"]))
             else:
                 load_series.append((r["fecha"], None))
@@ -700,6 +719,48 @@ def _polar_ble_diario():
         if prev is None or cand["rr_muestras"] > prev["rr_muestras"]:
             por_dia[fecha] = cand
     return por_dia
+
+
+def _polar_esfuerzo_diario(edad=None, sexo="m"):
+    """Esfuerzo (0-100) MEDIDO del H10 por día, desde las capturas de ENTRENAMIENTO (con
+    arranque de esfuerzo sostenido) vía strain_score (Karvonen→Edwards→log). Varias sesiones
+    el mismo día: se SUMA el TRIMP y se mapea una vez con la D de Edwards (aditivo, correcto).
+    La FC de reposo para Karvonen sale del reposo estimado (p15) de cada captura. Devuelve
+    {fecha: {esfuerzo, trimp, n_sesiones}}. 'No disponible ≠ 0': sin entrenamiento, no aporta."""
+    por_dia = {}
+    for path in sorted(glob.glob(os.path.join(DATA_DIR, "polar_*.csv"))):
+        serie, primera_t = [], None
+        with open(path, encoding="utf-8", newline="") as f:
+            for rec in csv.DictReader(f):
+                t = _parse_dt(rec.get("t_iso"))
+                try:
+                    hr = int(rec.get("hr_bpm") or 0)
+                except ValueError:
+                    hr = 0
+                if t and hr > 0:
+                    serie.append((t, hr))
+                    if primera_t is None:
+                        primera_t = t
+        if len(serie) < 5 or primera_t is None:
+            continue
+        esf0 = detecta_esfuerzo(serie)
+        if esf0 is None:          # lectura de reposo, no entrenamiento → no cuenta para Esfuerzo
+            continue
+        rhr = esf0.get("hr_reposo") or strain_score.DEFAULT_RESTING_HR
+        muestras = [(t.timestamp(), hr) for t, hr in serie]
+        res = strain_score.esfuerzo(muestras, edad=edad or strain_score.DEFAULT_AGE, rhr=rhr, sexo=sexo)
+        if not res:
+            continue
+        fecha = primera_t.date().isoformat()
+        d = por_dia.setdefault(fecha, {"trimp": 0.0, "n_sesiones": 0})
+        d["trimp"] += res["trimp"]
+        d["n_sesiones"] += 1
+    out = {}
+    for fecha, d in por_dia.items():
+        strain = 100.0 * math.log(d["trimp"] + 1.0) / math.log(strain_score.STRAIN_DENOMINATOR)
+        strain = max(0.0, min(strain_score.MAX_STRAIN, strain))
+        out[fecha] = {"esfuerzo": round(strain, 2), "trimp": round(d["trimp"], 1), "n_sesiones": d["n_sesiones"]}
+    return out
 
 
 def build_athlete():

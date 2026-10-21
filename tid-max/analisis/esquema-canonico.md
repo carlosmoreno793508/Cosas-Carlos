@@ -58,7 +58,10 @@ Lo produce `software/tid_data.py` en `datos/procesado/`.
 | pesas_min | min | registro manual |
 | **carga_tidmax** / carga_banda | 0–100 / rojo·amarillo·verde | **TID-MAX** (`recovery_score`) |
 | **descanso_tidmax** | 0–100 | **TID-MAX** (`sleep_score`) |
-| **esfuerzo_ref_0_100** | 0–100 | WHOOP (Day Strain re-escalado, **referencia**) |
+| **esfuerzo_ref_0_100** | 0–100 | **Polar H10 (medido)** si hay entrenamiento ese día; si no, WHOOP Day Strain re-escalado (**referencia**) |
+| esfuerzo_tidmax / esfuerzo_trimp | 0–100 / TRIMP | Esfuerzo MEDIDO del H10 (Karvonen→Edwards→log; suma de sesiones) |
+| esfuerzo_ref_whoop | 0–100 | Day Strain de WHOOP re-escalado, **conservado** cuando el H10 lo reemplaza |
+| esfuerzo_fuente | polar_h10 / whoop_ref | de dónde salió el Esfuerzo elegido ese día |
 | **acwr / ctl / atl / tsb** | ratio / carga | **TID-MAX** (`strain_score`, en la fila más reciente) |
 | fuentes | [string] | qué fuentes aportaron ese día (incluye `tidmax` si calculamos scores) |
 > Los `*_tidmax` los produce el pase `_scores_tidmax` de `tid_data.build_daily` a partir de los
