@@ -37,12 +37,14 @@ def _media(xs):
 
 
 def _desv_est(xs):
-    """Desviación estándar poblacional."""
+    """Desviación estándar MUESTRAL (ddof=1, ÷(n−1)). Es el estándar Task Force (1996) /
+    neurokit2 para SDNN, SDSD y los descriptores de Poincaré — coincide con NOOP
+    (HrvAnalyzer.sdnnRaw, "Matches neurokit2 HRV_SDNN")."""
     n = len(xs)
     if n < 2:
         return 0.0
     m = _media(xs)
-    return math.sqrt(sum((x - m) ** 2 for x in xs) / n)
+    return math.sqrt(sum((x - m) ** 2 for x in xs) / (n - 1))
 
 
 def _mediana(xs):
