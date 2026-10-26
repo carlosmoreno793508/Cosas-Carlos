@@ -2,3 +2,4 @@ requests>=2.31
 python-dotenv>=1.0
 openpyxl>=3.1
 bleak>=0.22        # Bluetooth (Polar Verity Sense / H10)
+fitdecode>=0.10    # parser .FIT (capa Garmin: extraer R-R de los .FIT) — opcional, solo si usas Garmin
