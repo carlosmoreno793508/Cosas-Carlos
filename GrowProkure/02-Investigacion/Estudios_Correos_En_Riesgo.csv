@@ -1,0 +1,59 @@
+severidad,estudio,empresa,contacto,puesto,email,dom,ciudad,motivo
+ALTA,Compras y Sourcing,Astemo,Antonio Izaguirre,Sr Category Buyer - Electronics & Electromechanical Components,antonio.izaguirre@hitachi-automotive.co.jp,hitachi-automotive.co.jp,San Juan del Rio,dominio de matriz extranjera en contacto MX (patron SIIX)
+ALTA,Compras y Sourcing,EXFO Products,Lizbeth Alvarez,Production Buyer,lizbeth.alvarez@exfo.com (inferido),exfo.com (inferido),El Marques,correo malformado
+ALTA,Compras y Sourcing,Erich Jaeger,Philipp Weckler,Global Director Purchasing (Jaeger Group),weckler@erich-jaeger.de,erich-jaeger.de,Piedras Negras,dominio de matriz extranjera en contacto MX (patron SIIX)
+ALTA,Compras y Sourcing,Hyundai Mobis,Emanuel Rodríguez Campos,"Manager, Electronics Procurement",emanuel.campos@mobis.co.kr,mobis.co.kr,Monterrey,dominio de matriz extranjera en contacto MX (patron SIIX)
+ALTA,Compras y Sourcing,Jatco,Miguel Angel Najera Lopez,Purchasing General Supervisor,miguel_najeralopez@jatco.co.jp,jatco.co.jp,Aguascalientes,dominio de matriz extranjera en contacto MX (patron SIIX)
+ALTA,Compras y Sourcing,Jatco,Roberto I. Garcia Cerda,Purchasing Staff,roberto_garciacerda@jatco.co.jp,jatco.co.jp,Aguascalientes,dominio de matriz extranjera en contacto MX (patron SIIX)
+ALTA,Compras y Sourcing,Jatco,Ana Bernal,Buyer,ana_bernal@jatco.co.jp,jatco.co.jp,Aguascalientes,dominio de matriz extranjera en contacto MX (patron SIIX)
+ALTA,Compras y Sourcing,Marquardt Mexico,Beatriz Briones de la Paz,Buyer Senior Lead (Electronic & Electromechanical Components),beatriz.briones@marquardt.de,marquardt.de,Guanajuato,dominio de matriz extranjera en contacto MX (patron SIIX)
+ALTA,Compras y Sourcing,SIIX EMS Mexico,Roman Ortega,Indirect Buyer,rortega@siix.co.jp,siix.co.jp,San Luis Potosi,dominio de matriz extranjera en contacto MX (patron SIIX)
+ALTA,Compras y Sourcing,SIIX EMS Mexico,Cathy Cornejo,Analista de Compras Directas,ccornejo@siix.co.jp,siix.co.jp,San Luis Potosi,dominio de matriz extranjera en contacto MX (patron SIIX)
+ALTA,Compras y Sourcing,SIIX EMS Mexico,Dafne Suheid Ramos Puente,Analista de Compras,dramos@siix.co.jp,siix.co.jp,San Luis Potosi,dominio de matriz extranjera en contacto MX (patron SIIX)
+ALTA,Compras y Sourcing,SIIX EMS Mexico,Dafne Ramos Puente,Analista de Compras,dramos@siix.co.jp,siix.co.jp,San Luis Potosi,dominio de matriz extranjera en contacto MX (patron SIIX)
+ALTA,Compras y Sourcing,Safran,Nancy Judith Pérez Godinez,Tactical Buyer,017022349@upq.edu.mx,upq.edu.mx,Queretaro,"dominio educativo, no es la empresa"
+ALTA,Compras y Sourcing,Safran,Martinez Arroyo,Buyer,jymartinez@outlook.es,outlook.es,"Chihuahua, México","dominio de matriz extranjera en contacto MX (patron SIIX) | dominio personal/gratuito, no corporativo"
+ALTA,Compras y Sourcing,Safran Electronics & Defense,Alejandra Ochoa,"Manager, Commodity",alejandra.ochoa@safrangroup.com (inferido),safrangroup.com (inferido),Mexicali,correo malformado
+ALTA,Compras y Sourcing,Safran Electronics & Defense,Kassandra Velazquez,Buyer,kassandra.velazquez@safrangroup.com (inferido),safrangroup.com (inferido),Mexicali,correo malformado
+ALTA,Compras y Sourcing,Safran Electronics & Defense,Erick Solorzano,Buyer,erick.solorzano@safrangroup.com (inferido),safrangroup.com (inferido),Mexicali,correo malformado
+ALTA,Compras y Sourcing,Safran Electronics & Defense,Adriel Corpus,Outsourcing Buyer,adriel.corpus@safrangroup.com (inferido),safrangroup.com (inferido),Mexicali,correo malformado
+ALTA,Compras y Sourcing,aisan-ind.co.jp,Ryosuke Roy Ishii,Comprador Manager,ryosuke_ishii@aisan-ind.co.jp,aisan-ind.co.jp,(por confirmar),dominio de matriz extranjera en contacto MX (patron SIIX)
+ALTA,Compras y Sourcing,bos,Evelyn Rodriguez,compras,evrodriguez@bos.de,bos.de,(por confirmar),dominio de matriz extranjera en contacto MX (patron SIIX)
+ALTA,Compras y Sourcing,dahs.co.kr,Imelda Garcia,Comprador,comprador1@dahs.co.kr,dahs.co.kr,(por confirmar),dominio de matriz extranjera en contacto MX (patron SIIX)
+ALTA,Compras y Sourcing,ichimiya.co.jp,Masaki Ueno,Comprador,ueno-masaki@ichimiya.co.jp,ichimiya.co.jp,(por confirmar),dominio de matriz extranjera en contacto MX (patron SIIX)
+ALTA,Compras y Sourcing,pollmann.at,Matthias Kitzler,Comprador Director,mkitzler@pollmann.at,pollmann.at,(por confirmar),dominio de matriz extranjera en contacto MX (patron SIIX)
+ALTA,Compras y Sourcing,reiner.es,Hector Aguirre,Comprador,h.aguirre@reiner.es,reiner.es,(por confirmar),dominio de matriz extranjera en contacto MX (patron SIIX)
+ALTA,Compras y Sourcing,utcj.edu.mx,Julieta Trujillo,Comprador,julieta_trujillo@utcj.edu.mx,utcj.edu.mx,(por confirmar),"dominio educativo, no es la empresa"
+MEDIA,Compras y Sourcing,American Axle & Manufacturing,Kevin Espinoza Vázquez,Indirect Buyer AAM,kevin_espinoza95@outlook.com,outlook.com,Irapuato,"dominio personal/gratuito, no corporativo"
+MEDIA,Compras y Sourcing,CAES (antes cobran Advanced electrónica soluciona ),Cobhamrh,Compras,cobhamrh@honeywell.com,honeywell.com,Tijuana,"nombre = buzon (correo construido, no persona verificada)"
+MEDIA,Compras y Sourcing,"CORPORACIÓN MANDRINKA, S.A. DE C.V.",Ambrosio Pérez,Jefe de Compras,compras@crossline.com.mx,crossline.com.mx,"Cuautitlán Izcalli, Méx.","buzon generico, no nominal"
+MEDIA,Compras y Sourcing,Centracore,Ivan Valencia,Compras,compras@centracore.com,centracore.com,(por confirmar),"buzon generico, no nominal"
+MEDIA,Compras y Sourcing,Circuit Works Corporation de Mexico,Vcordova,buyer,vcordova@cwcems.com,cwcems.com,sonora,"nombre = buzon (correo construido, no persona verificada)"
+MEDIA,Compras y Sourcing,"DURO DE MÉXICO, S.A. DE C.V.",Srita. Rosalina Varela Rojas,Encargado de Compras,compras@duromex.com.mx,duromex.com.mx,"Tultitlán, Méx.","buzon generico, no nominal"
+MEDIA,Compras y Sourcing,"ELECTROLOG, S.A. DE C.V.",(contacto general),"(giro: FAB, MAQUILA COMPRA-VTA. DE MATE)",gadam@prodigy.net.mx,prodigy.net.mx,QUERETARO,"dominio personal/gratuito, no corporativo"
+MEDIA,Compras y Sourcing,Eaton,Athenasanchez,Compras,athenasanchez@eaton.com,eaton.com,Tijuana,"nombre = buzon (correo construido, no persona verificada)"
+MEDIA,Compras y Sourcing,Eaton,Alexisaramirez,Compras,alexisaramirez@eaton.com,eaton.com,Tijuana,"nombre = buzon (correo construido, no persona verificada)"
+MEDIA,Compras y Sourcing,"GST AutoLeather, Inc.",Daniel Escuder,Purchasing Coordinator,daniel.escuder@outlook.com,outlook.com,"León, Guanajuato, México","dominio personal/gratuito, no corporativo"
+MEDIA,Compras y Sourcing,"INTEC DE MÉXICO, S.A.P.I. DE C.V.",Lic. Martín Granados,Gerente de Compras,compras@intec.com.mx,intec.com.mx,"México, CDMX","buzon generico, no nominal"
+MEDIA,Compras y Sourcing,MASIMO,Bgaytan,Compras,bgaytan@masimo.com,masimo.com,Mexicali,"nombre = buzon (correo construido, no persona verificada)"
+MEDIA,Compras y Sourcing,"MITSUBISHI ELECTRIC DE MÉXICO, S.A. DE C.V.",Ing. Alberto Tlalolini Meza,Jefe de Compras Nacionales,compras@melco.com.mx,melco.com.mx,"Tlalnepantla, Méx.","buzon generico, no nominal"
+MEDIA,Compras y Sourcing,Martinrea International,(nombre por confirmar),BUYER at MARTINREA SILAO,maggy_her@outlook.com,outlook.com,"León, Guanajuato, México","dominio personal/gratuito, no corporativo"
+MEDIA,Compras y Sourcing,Milwaukee Electronics,Jbustos,Compras,jbustos@milwaukeeelectronics.com,milwaukeeelectronics.com,Tecate,"nombre = buzon (correo construido, no persona verificada)"
+MEDIA,Compras y Sourcing,Milwaukee Electronics,Mbello,buyer,mbello@milwaukee.com,milwaukee.com,Tecate,"nombre = buzon (correo construido, no persona verificada)"
+MEDIA,Compras y Sourcing,Milwaukee Electronics,Jyepiz,Jr buyer,jyepiz@milwaukeeelectronics.com,milwaukeeelectronics.com,Tecate,"nombre = buzon (correo construido, no persona verificada)"
+MEDIA,Compras y Sourcing,Osi electrónic,Romaldonado,Compras,romaldonado@osielectronics.com,osielectronics.com,tecate,"nombre = buzon (correo construido, no persona verificada)"
+MEDIA,Compras y Sourcing,Osi electrónic,Sochavez,Compras,sochavez@osielectronics.com,osielectronics.com,tecate,"nombre = buzon (correo construido, no persona verificada)"
+MEDIA,Compras y Sourcing,Osi electrónic,Zpalafox,Compras,zpalafox@osielectronics.com,osielectronics.com,tecate,"nombre = buzon (correo construido, no persona verificada)"
+MEDIA,Compras y Sourcing,Parpro,Jbenitez,Compras,jbenitez@parpro.com,parpro.com,Tijuana,"nombre = buzon (correo construido, no persona verificada)"
+MEDIA,Compras y Sourcing,Parpro,Uleduc,Compras,uleduc@parprom.com,parprom.com,Tijuana,"nombre = buzon (correo construido, no persona verificada)"
+MEDIA,Compras y Sourcing,Parpro,Vflores,Compras,vflores@parpro.com,parpro.com,Tijuana,"nombre = buzon (correo construido, no persona verificada)"
+MEDIA,Compras y Sourcing,Parpro,Maramos,Compras,maramos@parpro.com,parpro.com,Tijuana,"nombre = buzon (correo construido, no persona verificada)"
+MEDIA,Compras y Sourcing,"Revere Plastics Systems, LLC",Alejandro Rodriguez,Junior Buyer,ardzfdz13@outlook.com,outlook.com,"Coahuila de Zaragoza, México","dominio personal/gratuito, no corporativo"
+MEDIA,Compras y Sourcing,SMK Electronics,Ppreciado,buyer,ppreciado@smkusa.com,smkusa.com,Tijuana,"nombre = buzon (correo construido, no persona verificada)"
+MEDIA,Compras y Sourcing,SURTIDORA ELECTRONEUMATICA INDUSTRIAL SA DE CV,(contacto general),(giro: compra vetna de equipo electrico),grupoosma12@yahoo.com.mx,yahoo.com.mx,DELICIAS,"dominio personal/gratuito, no corporativo"
+MEDIA,Compras y Sourcing,Sanko,Acmx,Compras,acmx@sankoelec.com,sankoelec.com,,"nombre = buzon (correo construido, no persona verificada)"
+MEDIA,Compras y Sourcing,Stepan Company,Eduardo Portales,Indirect Purchasing Coordinator,eduardo.portales@outlook.com,outlook.com,Tamaulipas,"dominio personal/gratuito, no corporativo"
+MEDIA,Compras y Sourcing,"TECNOLOGÍAS UNIDAS, S.A. DE C.V.",Sra. Fátima Garduño,Gerente de Compras,compras@complet.com.mx,complet.com.mx,"México, CDMX","buzon generico, no nominal"
+MEDIA,Compras y Sourcing,celestica,Rmeza,Compras,rmeza@celestica.com,celestica.com,mty,"nombre = buzon (correo construido, no persona verificada)"
+MEDIA,Compras y Sourcing,eaton,Mynamartinez,Compras,mynamartinez@eaton.com,eaton.com,Tijuana,"nombre = buzon (correo construido, no persona verificada)"
+MEDIA,Compras y Sourcing,foxconn,Rociochocolatl,Compras,rociochocolatl@foxconn.com,foxconn.com,Tijuana,"nombre = buzon (correo construido, no persona verificada)"

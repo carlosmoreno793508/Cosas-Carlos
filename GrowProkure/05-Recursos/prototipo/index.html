@@ -1,0 +1,327 @@
+<title>GrowProkure — Industrial Growth Intelligence</title>
+<style>
+  :root{
+    --paper:#EBEDEE; --panel:#F6F7F7; --ink:#14181C; --ink-soft:#39434B;
+    --steel:#5B6B77; --line:#D4D8DA; --copper:#B45F27; --copper-br:#D67C3C;
+    --signal:#2F8F63; --risk:#C58A22; --alert:#B4402F;
+    --mono:ui-monospace,"SF Mono",Menlo,"Cascadia Mono",monospace;
+    --sans:system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+    --maxw:1120px;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --paper:#0E1216; --panel:#161B20; --ink:#E7EAEB; --ink-soft:#AAB4BB;
+      --steel:#8494A0; --line:#242B31; --copper:#D67C3C; --copper-br:#E9995A; }
+  }
+  :root[data-theme="light"]{ --paper:#EBEDEE; --panel:#F6F7F7; --ink:#14181C; --ink-soft:#39434B; --steel:#5B6B77; --line:#D4D8DA; --copper:#B45F27; --copper-br:#D67C3C; }
+  :root[data-theme="dark"]{ --paper:#0E1216; --panel:#161B20; --ink:#E7EAEB; --ink-soft:#AAB4BB; --steel:#8494A0; --line:#242B31; --copper:#D67C3C; --copper-br:#E9995A; }
+
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+    line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  a{color:inherit}
+  .ey{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--copper)}
+  h1,h2,h3{text-wrap:balance;line-height:1.08;margin:0;font-weight:640}
+  h1{font-size:clamp(34px,6vw,62px);letter-spacing:-.02em}
+  h2{font-size:clamp(24px,3.4vw,36px);letter-spacing:-.015em}
+  p{margin:0}
+  .muted{color:var(--ink-soft)}
+
+  nav{position:sticky;top:0;z-index:20;backdrop-filter:blur(8px);
+    background:color-mix(in srgb,var(--paper) 82%,transparent);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:680;letter-spacing:-.01em}
+  .mark{width:22px;height:22px;position:relative;flex:none}
+  .mark::before,.mark::after{content:"";position:absolute;inset:0;border:2px solid var(--copper)}
+  .mark::after{transform:translate(5px,5px);opacity:.45}
+  .navlinks{display:flex;gap:26px;font-size:14px}
+  .navlinks a{color:var(--ink-soft);text-decoration:none}
+  .navlinks a:hover{color:var(--ink)}
+  @media(max-width:720px){.navlinks{display:none}}
+
+  section{padding:72px 0;border-bottom:1px solid var(--line)}
+  .tag{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--steel);border:1px solid var(--line);padding:4px 9px;border-radius:2px}
+
+  .hero{padding:84px 0 76px}
+  .hero h1 span{color:var(--copper)}
+  .lede{font-size:clamp(17px,2vw,20px);max-width:56ch;margin-top:22px;color:var(--ink-soft)}
+  .cta{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap}
+  .btn{font:inherit;font-weight:580;font-size:15px;padding:12px 20px;border-radius:3px;
+    text-decoration:none;border:1px solid var(--copper);cursor:pointer;display:inline-block}
+  .btn.p{background:var(--copper);color:#fff}
+  .btn.p:hover{background:var(--copper-br);border-color:var(--copper-br)}
+  .btn.s{background:transparent;color:var(--ink)}
+  .btn.s:hover{background:color-mix(in srgb,var(--copper) 10%,transparent)}
+  .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:56px;
+    background:var(--line);border:1px solid var(--line)}
+  .kpi{background:var(--paper);padding:20px 22px}
+  .kpi b{font-size:30px;font-variant-numeric:tabular-nums;letter-spacing:-.01em;display:block}
+  .kpi span{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--steel)}
+
+  .two{display:grid;grid-template-columns:1fr auto 1fr;gap:20px;align-items:stretch;margin-top:40px}
+  @media(max-width:820px){.two{grid-template-columns:1fr}}
+  .side{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:26px}
+  .side h3{font-size:19px;margin-bottom:6px}
+  .side ul{margin:14px 0 0;padding-left:18px;color:var(--ink-soft);font-size:14.5px}
+  .side li{margin:6px 0}
+  .core{display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;padding:10px;min-width:150px}
+  .core .disc{width:64px;height:64px;border-radius:50%;border:2px solid var(--copper);
+    display:flex;align-items:center;justify-content:center;font-family:var(--mono);
+    font-size:11px;color:var(--copper);letter-spacing:.1em}
+  .core small{font-family:var(--mono);font-size:11px;color:var(--steel);margin-top:10px;letter-spacing:.08em;text-transform:uppercase}
+
+  .layers{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;margin-top:38px;background:var(--line);border:1px solid var(--line)}
+  @media(max-width:820px){.layers{grid-template-columns:1fr 1fr}}
+  @media(max-width:480px){.layers{grid-template-columns:1fr}}
+  .layer{background:var(--paper);padding:22px 18px}
+  .layer .n{font-family:var(--mono);font-size:12px;color:var(--copper)}
+  .layer h4{margin:10px 0 6px;font-size:16px;font-weight:620}
+  .layer p{font-size:13.5px;color:var(--ink-soft)}
+
+  .board{background:var(--panel);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:38px}
+  .board .bar{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:12px;color:var(--steel)}
+  .dot{width:9px;height:9px;border-radius:50%}
+  .rows{display:grid}
+  .row{display:grid;grid-template-columns:1.4fr 1fr .9fr auto;gap:14px;align-items:center;
+    padding:14px 16px;border-bottom:1px solid var(--line);font-size:14px}
+  .row:last-child{border-bottom:0}
+  .row .co{font-weight:580}
+  .row .sig{font-family:var(--mono);font-size:12px;color:var(--ink-soft)}
+  .chip{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+    padding:3px 8px;border-radius:2px;justify-self:start}
+  .c-alert{background:color-mix(in srgb,var(--alert) 16%,transparent);color:var(--alert)}
+  .c-risk{background:color-mix(in srgb,var(--risk) 20%,transparent);color:var(--risk)}
+  .c-sig{background:color-mix(in srgb,var(--signal) 18%,transparent);color:var(--signal)}
+  .score{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:13px;justify-self:end;color:var(--ink-soft)}
+  @media(max-width:640px){.row{grid-template-columns:1fr auto}.row .sig,.row .score{display:none}}
+
+  .verts{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:36px}
+  @media(max-width:720px){.verts{grid-template-columns:1fr}}
+  .vert{border:1px solid var(--line);border-radius:4px;padding:26px;background:var(--panel)}
+  .vert .ey{color:var(--steel)}
+  .vert h3{font-size:21px;margin:8px 0 8px}
+  .vert p{font-size:14.5px;color:var(--ink-soft)}
+
+  footer{padding:48px 0;color:var(--ink-soft);font-size:13px}
+  footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+  .note{font-family:var(--mono);font-size:11px;color:var(--steel);letter-spacing:.06em}
+  .langsw{display:inline-flex;border:1px solid var(--line);border-radius:3px;overflow:hidden;font-family:var(--mono);font-size:12px}
+  .langsw button{font:inherit;background:transparent;color:var(--ink-soft);border:0;padding:6px 12px;cursor:pointer;letter-spacing:.08em}
+  .langsw button[aria-pressed="true"]{background:var(--copper);color:#fff}
+  .langsw button:focus-visible{outline:2px solid var(--copper);outline-offset:2px}
+</style>
+
+<nav><div class="wrap">
+  <div class="logo"><span class="mark"></span> GrowProkure</div>
+  <div class="navlinks">
+    <a href="#modelo" data-i18n="nav.model">Modelo</a>
+    <a href="#ecosistema" data-i18n="nav.eco">Ecosistema</a>
+    <a href="#senales" data-i18n="nav.signals">Señales</a>
+    <a href="#verticales" data-i18n="nav.verticals">Verticales</a>
+  </div>
+  <a class="btn p" href="#contacto" style="padding:8px 16px;font-size:14px" data-i18n="nav.cta">Agendar</a>
+</div></nav>
+
+<header class="hero"><div class="wrap">
+  <span class="ey" data-i18n="hero.eyebrow">Industrial Growth Intelligence</span>
+  <h1 style="margin-top:18px" data-i18n-html="hero.h1">No entregamos leads.<br>Entregamos <span>oportunidades.</span></h1>
+  <p class="lede" data-i18n-html="hero.lede">Motor de inteligencia para la cadena de suministro industrial. Conectamos a <b>proveedores</b> con proyectos reales y a <b>compradores</b> con fuentes confiables — sobre la misma base de datos e inteligencia de señales.</p>
+  <div class="cta">
+    <a class="btn p" href="#contacto" data-i18n="hero.cta1">Ver una oportunidad</a>
+    <a class="btn s" href="#modelo" data-i18n="hero.cta2">Cómo funciona</a>
+  </div>
+  <div class="kpis">
+    <div class="kpi"><b>2</b><span data-i18n="kpi.1">Verticales · Electrónica + Plásticos</span></div>
+    <div class="kpi"><b>5</b><span data-i18n="kpi.2">Capas de ecosistema</span></div>
+    <div class="kpi"><b>2</b><span data-i18n="kpi.3">Lados de la red · oferta + demanda</span></div>
+  </div>
+</div></header>
+
+<section id="modelo"><div class="wrap">
+  <span class="tag" data-i18n="model.tag">El diferenciador</span>
+  <h2 style="margin-top:16px" data-i18n="model.h2">Una red de dos lados</h2>
+  <p class="muted" style="max-width:60ch;margin-top:12px" data-i18n="model.desc">Cada proveedor que atendemos aporta datos de demanda; cada comprador aporta señales de compra. Los dos lados se alimentan — un competidor de cold email nunca tendrá esto.</p>
+  <div class="two">
+    <div class="side">
+      <span class="ey" data-i18n="supply.ey">Oferta</span>
+      <h3 data-i18n="supply.h3">Proveedores</h3>
+      <p class="muted" style="font-size:14px" data-i18n="supply.p">Distribuidores, fabricantes, EMS, casas de decoración.</p>
+      <ul>
+        <li data-i18n="supply.li1">Oportunidades calificadas, no leads fríos</li>
+        <li data-i18n="supply.li2">Reuniones con compradores reales</li>
+        <li data-i18n="supply.li3">Inteligencia de cuentas y competencia</li>
+      </ul>
+    </div>
+    <div class="core">
+      <div class="disc">GP</div>
+      <small data-i18n-html="core.small">Datos + IA<br>de señales</small>
+    </div>
+    <div class="side">
+      <span class="ey" data-i18n="demand.ey">Demanda</span>
+      <h3 data-i18n="demand.h3">Compradores</h3>
+      <p class="muted" style="font-size:14px" data-i18n="demand.p">Buyers, Commodity &amp; Procurement, Supply Chain.</p>
+      <ul>
+        <li data-i18n="demand.li1">Fuentes validadas y trazables</li>
+        <li data-i18n="demand.li2">Alertas de riesgo (EOL, escasez, aranceles)</li>
+        <li data-i18n="demand.li3">Benchmark de precios y lead-times</li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+
+<section id="ecosistema"><div class="wrap">
+  <span class="tag" data-i18n="eco.tag">Se construye en paralelo</span>
+  <h2 style="margin-top:16px" data-i18n="eco.h2">Ecosistema de 5 capas</h2>
+  <div class="layers">
+    <div class="layer"><div class="n">01</div><h4 data-i18n="eco.l1t">Datos</h4><p data-i18n="eco.l1d">Base industrial propia de dos lados. El activo defensible.</p></div>
+    <div class="layer"><div class="n">02</div><h4 data-i18n="eco.l2t">Inteligencia</h4><p data-i18n="eco.l2d">Motor de señales: EOL, RFQ, expansiones, aranceles, riesgo.</p></div>
+    <div class="layer"><div class="n">03</div><h4 data-i18n="eco.l3t">Servicios</h4><p data-i18n="eco.l3d">Generación de oportunidades. La capa que factura.</p></div>
+    <div class="layer"><div class="n">04</div><h4 data-i18n="eco.l4t">Plataforma</h4><p data-i18n="eco.l4d">Dashboard de cuentas, oportunidades y riesgo.</p></div>
+    <div class="layer"><div class="n">05</div><h4 data-i18n="eco.l5t">Comunidad</h4><p data-i18n="eco.l5d">Red privada de compras y supply chain.</p></div>
+  </div>
+</div></section>
+
+<section id="senales"><div class="wrap">
+  <span class="tag" data-i18n="sig.tag">Vista previa · Capa 4</span>
+  <h2 style="margin-top:16px" data-i18n="sig.h2">El tablero de señales</h2>
+  <p class="muted" style="max-width:58ch;margin-top:12px" data-i18n="sig.desc">Así se ve una oportunidad: una cuenta, la señal que la dispara y un score de prioridad. Datos ilustrativos del piloto de electrónica.</p>
+  <div class="board">
+    <div class="bar"><span class="dot" style="background:var(--alert)"></span><span class="dot" style="background:var(--risk)"></span><span class="dot" style="background:var(--signal)"></span> &nbsp;<span data-i18n="sig.feed">growprokure — signal feed · electrónica</span></div>
+    <div class="rows">
+      <div class="row"><span class="co">Mabe</span><span class="sig" data-i18n="sig.r1">Nueva planta · Saltillo</span><span class="chip c-sig" data-i18n="chip.expansion">Expansión</span><span class="score">92</span></div>
+      <div class="row"><span class="co">Whirlpool</span><span class="sig" data-i18n="sig.r2">PCN — capacitor EOL</span><span class="chip c-alert" data-i18n="chip.eol">EOL</span><span class="score">88</span></div>
+      <div class="row"><span class="co">Jabil</span><span class="sig" data-i18n="sig.r3">Vacante: Commodity Mgr</span><span class="chip c-risk" data-i18n="chip.hiring">Contratación</span><span class="score">74</span></div>
+      <div class="row"><span class="co">GE Appliances</span><span class="sig" data-i18n="sig.r4">Allocation — conectores</span><span class="chip c-alert" data-i18n="chip.shortage">Escasez</span><span class="score">81</span></div>
+      <div class="row"><span class="co">Aptiv</span><span class="sig" data-i18n="sig.r5">Nearshoring — 2ª fuente</span><span class="chip c-sig" data-i18n="chip.nearshoring">Nearshoring</span><span class="score">69</span></div>
+    </div>
+  </div>
+</div></section>
+
+<section id="verticales"><div class="wrap">
+  <span class="tag" data-i18n="verts.tag">Dónde empezamos</span>
+  <h2 style="margin-top:16px" data-i18n="verts.h2">Dos verticales, un motor</h2>
+  <div class="verts">
+    <div class="vert">
+      <span class="ey" data-i18n="verts.v1e">Vertical 01</span>
+      <h3 data-i18n="verts.v1t">Electrónica</h3>
+      <p data-i18n="verts.v1p">Componentes y su cadena: distribución, EMS, OEMs. Señales de obsolescencia, escasez y nearshoring. Piloto en marcha con un distribuidor franquiciado.</p>
+    </div>
+    <div class="vert">
+      <span class="ey" data-i18n="verts.v2e">Vertical 02</span>
+      <h3 data-i18n="verts.v2t">Plásticos · Decoración</h3>
+      <p data-i18n="verts.v2p">Proceso secundario: foil (hot stamping) y tintas (tampografía / serigrafía). Conectamos casas de decoración con fabricantes de piezas plásticas.</p>
+    </div>
+  </div>
+</div></section>
+
+<section id="contacto"><div class="wrap" style="text-align:center">
+  <span class="ey">GrowProkure — Industrial Growth Intelligence</span>
+  <h2 style="margin:16px auto 0;max-width:20ch" data-i18n="cta.h2">¿Listo para ver oportunidades reales?</h2>
+  <div class="cta" style="justify-content:center">
+    <a class="btn p" href="#" data-i18n="cta.b1">Agendar 15 min</a>
+    <a class="btn s" href="#" data-i18n="cta.b2">Recibir el reporte mensual</a>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <div data-i18n="footer.copy">© 2026 GrowProkure · Industrial Growth Intelligence</div>
+  <div class="langsw" role="group" aria-label="Language">
+    <button type="button" data-lang="es" onclick="setLang('es')">ES</button>
+    <button type="button" data-lang="en" onclick="setLang('en')">EN</button>
+  </div>
+  <div class="note" data-i18n="footer.note">PROTOTIPO — CAPA 4 · MX · US · CA</div>
+</div></footer>
+
+<script>
+  var I18N = {
+    es:{
+      "nav.model":"Modelo","nav.eco":"Ecosistema","nav.signals":"Señales","nav.verticals":"Verticales","nav.cta":"Agendar",
+      "hero.eyebrow":"Industrial Growth Intelligence",
+      "hero.h1":"No entregamos leads.<br>Entregamos <span>oportunidades.</span>",
+      "hero.lede":"Motor de inteligencia para la cadena de suministro industrial. Conectamos a <b>proveedores</b> con proyectos reales y a <b>compradores</b> con fuentes confiables — sobre la misma base de datos e inteligencia de señales.",
+      "hero.cta1":"Ver una oportunidad","hero.cta2":"Cómo funciona",
+      "kpi.1":"Verticales · Electrónica + Plásticos","kpi.2":"Capas de ecosistema","kpi.3":"Lados de la red · oferta + demanda",
+      "model.tag":"El diferenciador","model.h2":"Una red de dos lados",
+      "model.desc":"Cada proveedor que atendemos aporta datos de demanda; cada comprador aporta señales de compra. Los dos lados se alimentan — un competidor de cold email nunca tendrá esto.",
+      "supply.ey":"Oferta","supply.h3":"Proveedores","supply.p":"Distribuidores, fabricantes, EMS, casas de decoración.",
+      "supply.li1":"Oportunidades calificadas, no leads fríos","supply.li2":"Reuniones con compradores reales","supply.li3":"Inteligencia de cuentas y competencia",
+      "core.small":"Datos + IA<br>de señales",
+      "demand.ey":"Demanda","demand.h3":"Compradores","demand.p":"Buyers, Commodity & Procurement, Supply Chain.",
+      "demand.li1":"Fuentes validadas y trazables","demand.li2":"Alertas de riesgo (EOL, escasez, aranceles)","demand.li3":"Benchmark de precios y lead-times",
+      "eco.tag":"Se construye en paralelo","eco.h2":"Ecosistema de 5 capas",
+      "eco.l1t":"Datos","eco.l1d":"Base industrial propia de dos lados. El activo defensible.",
+      "eco.l2t":"Inteligencia","eco.l2d":"Motor de señales: EOL, RFQ, expansiones, aranceles, riesgo.",
+      "eco.l3t":"Servicios","eco.l3d":"Generación de oportunidades. La capa que factura.",
+      "eco.l4t":"Plataforma","eco.l4d":"Dashboard de cuentas, oportunidades y riesgo.",
+      "eco.l5t":"Comunidad","eco.l5d":"Red privada de compras y supply chain.",
+      "sig.tag":"Vista previa · Capa 4","sig.h2":"El tablero de señales",
+      "sig.desc":"Así se ve una oportunidad: una cuenta, la señal que la dispara y un score de prioridad. Datos ilustrativos del piloto de electrónica.",
+      "sig.feed":"growprokure — signal feed · electrónica",
+      "sig.r1":"Nueva planta · Saltillo","sig.r2":"PCN — capacitor EOL","sig.r3":"Vacante: Commodity Mgr","sig.r4":"Allocation — conectores","sig.r5":"Nearshoring — 2ª fuente",
+      "chip.expansion":"Expansión","chip.eol":"EOL","chip.hiring":"Contratación","chip.shortage":"Escasez","chip.nearshoring":"Nearshoring",
+      "verts.tag":"Dónde empezamos","verts.h2":"Dos verticales, un motor",
+      "verts.v1e":"Vertical 01","verts.v1t":"Electrónica","verts.v1p":"Componentes y su cadena: distribución, EMS, OEMs. Señales de obsolescencia, escasez y nearshoring. Piloto en marcha con un distribuidor franquiciado.",
+      "verts.v2e":"Vertical 02","verts.v2t":"Plásticos · Decoración","verts.v2p":"Proceso secundario: foil (hot stamping) y tintas (tampografía / serigrafía). Conectamos casas de decoración con fabricantes de piezas plásticas.",
+      "cta.h2":"¿Listo para ver oportunidades reales?","cta.b1":"Agendar 15 min","cta.b2":"Recibir el reporte mensual",
+      "footer.copy":"© 2026 GrowProkure · Industrial Growth Intelligence","footer.note":"PROTOTIPO — CAPA 4 · MX · US · CA"
+    },
+    en:{
+      "nav.model":"Model","nav.eco":"Ecosystem","nav.signals":"Signals","nav.verticals":"Verticals","nav.cta":"Book a call",
+      "hero.eyebrow":"Industrial Growth Intelligence",
+      "hero.h1":"We don't deliver leads.<br>We deliver <span>opportunities.</span>",
+      "hero.lede":"An intelligence engine for the industrial supply chain. We connect <b>suppliers</b> with real projects and <b>buyers</b> with trusted sources — on the same database and signal intelligence.",
+      "hero.cta1":"See an opportunity","hero.cta2":"How it works",
+      "kpi.1":"Verticals · Electronics + Plastics","kpi.2":"Ecosystem layers","kpi.3":"Network sides · supply + demand",
+      "model.tag":"The differentiator","model.h2":"A two-sided network",
+      "model.desc":"Every supplier we serve feeds us demand data; every buyer feeds us buying signals. Both sides compound — a cold-email competitor will never have this.",
+      "supply.ey":"Supply","supply.h3":"Suppliers","supply.p":"Distributors, manufacturers, EMS, decoration houses.",
+      "supply.li1":"Qualified opportunities, not cold leads","supply.li2":"Meetings with real buyers","supply.li3":"Account and competitive intelligence",
+      "core.small":"Data + signal<br>AI",
+      "demand.ey":"Demand","demand.h3":"Buyers","demand.p":"Buyers, Commodity & Procurement, Supply Chain.",
+      "demand.li1":"Validated, traceable sources","demand.li2":"Risk alerts (EOL, shortage, tariffs)","demand.li3":"Price and lead-time benchmarks",
+      "eco.tag":"Built in parallel","eco.h2":"A 5-layer ecosystem",
+      "eco.l1t":"Data","eco.l1d":"Proprietary two-sided industrial database. The defensible asset.",
+      "eco.l2t":"Intelligence","eco.l2d":"Signal engine: EOL, RFQ, expansions, tariffs, risk.",
+      "eco.l3t":"Services","eco.l3d":"Opportunity generation. The layer that bills.",
+      "eco.l4t":"Platform","eco.l4d":"Dashboard of accounts, opportunities and risk.",
+      "eco.l5t":"Community","eco.l5d":"Private procurement & supply chain network.",
+      "sig.tag":"Preview · Layer 4","sig.h2":"The signal board",
+      "sig.desc":"This is what an opportunity looks like: an account, the signal that triggers it, and a priority score. Illustrative data from the electronics pilot.",
+      "sig.feed":"growprokure — signal feed · electronics",
+      "sig.r1":"New plant · Saltillo","sig.r2":"PCN — capacitor EOL","sig.r3":"Job opening: Commodity Mgr","sig.r4":"Allocation — connectors","sig.r5":"Nearshoring — 2nd source",
+      "chip.expansion":"Expansion","chip.eol":"EOL","chip.hiring":"Hiring","chip.shortage":"Shortage","chip.nearshoring":"Nearshoring",
+      "verts.tag":"Where we start","verts.h2":"Two verticals, one engine",
+      "verts.v1e":"Vertical 01","verts.v1t":"Electronics","verts.v1p":"Components and their chain: distribution, EMS, OEMs. Signals for obsolescence, shortage and nearshoring. Pilot underway with a franchised distributor.",
+      "verts.v2e":"Vertical 02","verts.v2t":"Plastics · Decoration","verts.v2p":"Secondary process: foil (hot stamping) and inks (pad printing / screen printing). We connect decoration houses with plastic-part manufacturers.",
+      "cta.h2":"Ready to see real opportunities?","cta.b1":"Book 15 min","cta.b2":"Get the monthly report",
+      "footer.copy":"© 2026 GrowProkure · Industrial Growth Intelligence","footer.note":"PROTOTYPE — LAYER 4 · MX · US · CA"
+    }
+  };
+
+  function getLang(){
+    var m = document.cookie.match(/(?:^|; )gp_lang=(es|en)/);
+    if(m) return m[1];
+    var b = (navigator.language || navigator.userLanguage || 'es').toLowerCase();
+    return b.indexOf('en') === 0 ? 'en' : 'es';
+  }
+  function apply(lang){
+    var dict = I18N[lang] || I18N.es;
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      var k = el.getAttribute('data-i18n'); if(dict[k]!=null) el.textContent = dict[k];
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(function(el){
+      var k = el.getAttribute('data-i18n-html'); if(dict[k]!=null) el.innerHTML = dict[k];
+    });
+    document.documentElement.setAttribute('lang', lang);
+    document.querySelectorAll('.langsw button').forEach(function(b){
+      b.setAttribute('aria-pressed', b.getAttribute('data-lang')===lang ? 'true':'false');
+    });
+  }
+  function setLang(lang){
+    document.cookie = 'gp_lang='+lang+';path=/;max-age=31536000;samesite=lax';
+    apply(lang);
+  }
+  apply(getLang());
+</script>
