@@ -1,8 +1,36 @@
-# Expediente de proveedor — TK35Pro / Shenzhen Tiankang Medical
+# Expediente de proveedor — Shenzhen Tiankang Medical (TK35Pro → **TK36**)
 
-> **Fecha:** 2026-11-02 · **Estado:** candidato serio; pendiente confirmar gating de PPG + validar muestra.
+> **Fecha:** 2026-11-02 · **Estado:** candidato fuerte. **Modelo elegido: TK36.** Falta (a) confirmar que el **RRI viene en el SDK gratis**, y (b) **validar una muestra** contra el Polar H10.
 > Contacto: **Xuelian Liu** (sales). Canal: WhatsApp.
 > Ligado a la guía `guias/09-sourcing-hardware.md` (checklist genérico) y a `analisis/competencia.md`.
+
+---
+
+## ⭐ Actualización 2026-11-02 — TK36 (modelo elegido) + fees aclarados
+
+### Modelo elegido: **TK36** (no TK35Pro)
+Recomendado por el proveedor para "mayor detección"; producción en masa desde oct-2026.
+- **Sensor: 4PD** (4 fotodiodos) — **confirmado por foto y video** del reverso (4 ventanas + LED verde + contactos de carga). Sigue siendo **familia Goodix** (GH3220S+GH3220T), pero el 4PD es mejora óptica real (más captación / mejor rechazo de movimiento) + firmware más nuevo ("estilo WHOOP" = marketing, irrelevante porque corremos NUESTRO motor sobre el R-R crudo).
+- **Batería 7–10 días** (vs 3–5 del TK35Pro). Mismo SoC JL7073A8, BLE 5.3, sin pantalla, IP68, mismo SDK (YCProductSDK).
+- Video/foto confirman producto físico real y bien terminado (módulo delgado + correa nylon tejida).
+- **Sin mínimo de muestras** (TK36 en stock) → se puede pedir **1 unidad**.
+
+### Fees ACLARADOS (clave)
+- **Integración del SDK = GRATIS si la hacemos nosotros** (somos técnicos → **$0**, sin el fee de $4,700 de soporte).
+- **$7,600 USD = licencia de ACCESO A DATOS del PPG**, cobrada por su **software company** (no la fábrica). Ambos fees reembolsables a 10,000 unidades (política indefinida).
+- **PREGUNTA ABIERTA (decisiva):** ¿el **RRI (R-R)** viene en el **SDK gratis**, y los $7,600 son **solo por la onda PPG cruda**? Si el RRI es gratis → **desarrollamos (y quizá lanzamos) con $0 de software**, porque el RRI solo alimenta `hrv_rr` (RMSSD/SDNN/HVC). El fee de PPG crudo se pagaría **solo si** queremos la onda cruda para nuestra propia detección gap-aware. *(Nuestro análisis del código del SDK apoya que el RRI es accesible sin candado; confirmar por escrito.)*
+- **Sample rate:** el software company solo lo da tras ordenar muestra. **No es bloqueo** → lo **medimos nosotros** del PPG/RRI de la muestra.
+
+### Estructura de la empresa
+**Fábrica** (Shenzhen Tiankang Medical) + **su propio software company** (SDK/app, cobra el PPG) + **brazo comercial** (Shenzhen Hongyou Trading, el del catálogo). Normal en China; saber con quién negocias.
+
+### Customización / cotización
+- **Correas:** silicón $0.50/pza · piel $1/pza · tejida $0.50/pza — **MOQ $1,000 de valor** (≈1,000–2,000 pzas).
+- **Banda custom desde cero:** la difieren — *"wait for the order to come in"* (no cotizan OEM a medida en especulativo). Falta el **precio del TK36 por volumen** (100/500/1,000).
+- **Decisión v1:** **TK36 de stock + logo + correa con marca** (white-label), **sensor stock**. Packaging, sensor premium (Maxim/ADI = custom desde cero, caro, 1–2 meses) y **solar** → v2/más adelante.
+
+### Siguiente paso
+Enviar mensaje que: adopta **TK36**, confirma **RRI gratis vs PPG $7,600**, pide **1 muestra TK36** → validar R-R contra **Polar H10** con `software/valida_motor.py`. **Ese número decide.**
 
 ---
 
